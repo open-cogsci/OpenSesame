@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import os
-import math
 from openexp._color.color import color
 from openexp._canvas._richtext.richtext import RichText
 from openexp._canvas.canvas import Canvas
@@ -33,6 +32,11 @@ _ = translation_context(u'sketchpad', category=u'item')
 
 class QtCanvas(Canvas, Coordinates):
 
+	"""
+	desc:
+		A dummy Canvas that can be passed to the RichText element.
+	"""
+
 	def __init__(self, experiment):
 
 		Canvas.__init__(self, experiment)
@@ -40,6 +44,12 @@ class QtCanvas(Canvas, Coordinates):
 
 
 class QtRichText(RichText):
+
+	"""
+	desc:
+		Disables the pyqt initialization in the RichText element, becausee it is
+		not necessary in the context of the GUI.
+	"""
 
 	def _init_pyqt(self, exp):
 
@@ -701,7 +711,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		)
 		im = t._to_pil()
 		qim = QtGui.QImage(
-			im.tobytes('raw', 'RGBA'),
+			im.tobytes('raw', 'BGRA'),
 			im.size[0], im.size[1],
 			QtGui.QImage.Format_ARGB32
 		)
