@@ -31,4 +31,4 @@ class Ellipse(Element):
 
 	@property
 	def rect(self):
-		return self.x-r, self.y-r, self.w, self.h
+		return self.x, self.y, self.w, self.h
