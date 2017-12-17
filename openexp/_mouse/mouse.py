@@ -261,6 +261,9 @@ class Mouse(Backend):
 
 			Collects a mouse-click release.
 
+			*Important:* This function is currently not implemented for the
+			*psycho* backend.
+
 		keyword-dict:
 			resp_args:
 				Optional [response keywords] that will be used for this call to

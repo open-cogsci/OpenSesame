@@ -456,7 +456,7 @@ class Canvas(Backend):
 	def elements_at(self, x, y):
 
 		"""
-		desc:
+		desc: |
 			*New in v3.2.0*
 
 			Gets the names of elements that contain a particular `x, y`
