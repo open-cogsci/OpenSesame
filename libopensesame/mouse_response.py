@@ -98,7 +98,7 @@ class mouse_response_mixin(object):
 				item.canvas.elements_at(*pos)
 			)
 		else:
-			self.experiment.var = u'undefined'
+			self.experiment.var.cursor_roi = u'undefined'
 		base_response_item.process_response(self, (response, t1) )
 
 
