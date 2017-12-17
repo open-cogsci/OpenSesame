@@ -18,7 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.exceptions import osexception
 from libopensesame.base_response_item import base_response_item
+from openexp._canvas.canvas import Canvas
 from openexp.mouse import mouse
 
 
@@ -41,7 +43,7 @@ class mouse_response_mixin(object):
 		u'right' : 3,
 		u'scroll_up' : 4,
 		u'scroll_down': 5
-		}
+	}
 
 	def button_code(self, response):
 
@@ -60,8 +62,11 @@ class mouse_response_mixin(object):
 			buttonlist = None
 		else:
 			buttonlist = [self.button_code(r) for r in self._allowed_responses]
-		self._mouse = mouse(self.experiment, timeout=self._timeout,
-			buttonlist=buttonlist)
+		self._mouse = mouse(
+			self.experiment,
+			timeout=self._timeout,
+			buttonlist=buttonlist
+		)
 		return self._mouse.get_click
 
 	def process_response(self, response_args):
@@ -74,6 +79,26 @@ class mouse_response_mixin(object):
 			self.experiment.var.cursor_y = u'NA'
 		else:
 			self.experiment.var.cursor_x, self.experiment.var.cursor_y = pos
+		if self.var.linked_sketchpad:
+			if self.var.linked_sketchpad not in self.experiment.items:
+				raise osexception(
+					u'Item does not exist: %s'
+					% self.var.linked_sketchpad
+				)
+			item = self.experiment.items[self.var.linked_sketchpad]
+			if (
+				not hasattr(item, u'canvas')
+				or not isinstance(item.canvas, Canvas)
+			):
+				raise osexception(
+					u'Item does not have a canvas: %s'
+					% self.var.linked_sketchpad
+				)
+			self.experiment.var.cursor_roi = u';'.join(
+				item.canvas.elements_at(*pos)
+			)
+		else:
+			self.experiment.var = u'undefined'
 		base_response_item.process_response(self, (response, t1) )
 
 
@@ -95,6 +120,7 @@ class mouse_response(mouse_response_mixin, base_response_item):
 		self.var.show_cursor = u'yes'
 		self.var.timeout = u'infinite'
 		self.var.duration = u'mouseclick'
+		self.var.linked_sketchpad = u''
 		self.var.unset(u'allowed_responses')
 		self.var.unset(u'correct_response')
 
@@ -154,7 +180,8 @@ class mouse_response(mouse_response_mixin, base_response_item):
 
 		"""See item."""
 
-		l = base_response_item.var_info(self)
-		l.append( (u'cursor_x', u'[Depends on response]') )
-		l.append( (u'cursor_y', u'[Depends on response]') )
-		return l
+		return base_response_item.var_info(self) + [
+			(u'cursor_x', u'[Depends on response]'),
+			(u'cursor_y', u'[Depends on response]'),
+			(u'cursor_roi', u'[Depends on response]')
+		]

@@ -18,13 +18,16 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.mouse_response import mouse_response as \
-	mouse_response_runtime
+from libopensesame.mouse_response import (
+	mouse_response as mouse_response_runtime
+)
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.validators import timeout_validator
-from qtpy import QtCore
 from libqtopensesame.misc.translate import translation_context
+from libqtopensesame._input.item_combobox import item_combobox
+from libqtopensesame.items.feedpad import feedpad
 _ = translation_context(u'mouse_response', category=u'item')
+
 
 class mouse_response(mouse_response_runtime, qtplugin):
 
@@ -54,14 +57,42 @@ class mouse_response(mouse_response_runtime, qtplugin):
 
 		"""Initialize controls"""
 
-		super(mouse_response, self).init_edit_widget(stretch=True)
-		# Use auto-controls for most stuff
-		self.add_line_edit_control(u'correct_response', _(u'Correct response'),
-			info=_(u'Leave empty to use "correct_response"'))
-		self.add_line_edit_control(u'allowed_responses', _(u'Allowed responses'),
-			info=_(u'Separated by semicolons, e.g. "left_button;right_button"'))
-		self.add_line_edit_control(u'timeout', _(u'Timeout'),
+		qtplugin.init_edit_widget(self, stretch=True)
+		self.add_line_edit_control(
+			var=u'correct_response',
+			label=_(u'Correct response'),
+			info=_(u'Leave empty to use "correct_response"')
+		)
+		self.add_line_edit_control(
+			var=u'allowed_responses',
+			label=_(u'Allowed responses'),
+			info=_(u'Separated by semicolons, e.g. "left_button;right_button"')
+		)
+		self.add_line_edit_control(
+			var=u'timeout',
+			label=_(u'Timeout'),
 			tooltip=_(u'In milliseconds or "infinite"'),
-			validator=timeout_validator(self))
-		self.add_checkbox_control(u'show_cursor', _(u'Visible mouse cursor'))
-		self.add_checkbox_control(u'flush', _(u'Flush pending mouse clicks'))
+			validator=timeout_validator(self)
+		)
+		combobox = item_combobox(
+			self.main_window,
+			filter_fnc=lambda item: isinstance(
+				self.experiment.items[item],
+				feedpad
+			)
+		)
+		combobox.activated.connect(self.apply_edit_changes)
+		self.auto_combobox[u'linked_sketchpad'] = combobox
+		self.add_control(
+			label=_(u'Linked sketchpad'),
+			widget=combobox,
+			info=_('Elements define regions of interest')
+		)
+		self.add_checkbox_control(
+			var=u'show_cursor',
+			label=_(u'Visible mouse cursor')
+		)
+		self.add_checkbox_control(
+			var=u'flush',
+			label=_(u'Flush pending mouse clicks')
+		)
