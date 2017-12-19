@@ -40,14 +40,16 @@ class mouse_response(mouse_response_runtime, qtplugin):
 	def __init__(self, name, experiment, string=None):
 
 		"""
-		Constructor
+		desc:
+			Constructor
 
-		Arguments:
-		name -- item name
-		experiment -- experiment instance
+		arguments:
+			name:		The item name.
+			experiment: The experiment object.
 
-		Keywords arguments:
-		string -- a definition string (default=None)
+		keywords:
+			string:		The item definition string, or None for default
+						initialization.
 		"""
 
 		mouse_response_runtime.__init__(self, name, experiment, string)
@@ -55,7 +57,10 @@ class mouse_response(mouse_response_runtime, qtplugin):
 
 	def init_edit_widget(self):
 
-		"""Initialize controls"""
+		"""
+		desc:
+			Initialize controls.
+		"""
 
 		qtplugin.init_edit_widget(self, stretch=True)
 		self.add_line_edit_control(
@@ -74,18 +79,18 @@ class mouse_response(mouse_response_runtime, qtplugin):
 			tooltip=_(u'In milliseconds or "infinite"'),
 			validator=timeout_validator(self)
 		)
-		combobox = item_combobox(
+		self._combobox_sketchpad = item_combobox(
 			self.main_window,
 			filter_fnc=lambda item: isinstance(
 				self.experiment.items[item],
 				feedpad
 			)
 		)
-		combobox.activated.connect(self.apply_edit_changes)
-		self.auto_combobox[u'linked_sketchpad'] = combobox
+		self._combobox_sketchpad.activated.connect(self.apply_edit_changes)
+		self.auto_combobox[u'linked_sketchpad'] = self._combobox_sketchpad
 		self.add_control(
 			label=_(u'Linked sketchpad'),
-			widget=combobox,
+			widget=self._combobox_sketchpad,
 			info=_('Elements define regions of interest')
 		)
 		self.add_combobox_control(
@@ -104,3 +109,25 @@ class mouse_response(mouse_response_runtime, qtplugin):
 			var=u'flush',
 			label=_(u'Flush pending mouse clicks')
 		)
+
+	def edit_widget(self):
+
+		"""See qtplugin."""
+
+		self._combobox_sketchpad.refresh()
+		qtplugin.edit_widget(self)
+
+	def rename(self, from_name, to_name):
+
+		"""See qtplugin."""
+
+		qtplugin.rename(self, from_name, to_name)
+		if self.var.linked_sketchpad == from_name:
+			self.var.linked_sketchpad = to_name
+
+	def delete(self, item_name, item_parent=None, index=None):
+
+		"""See qtplugin."""
+
+		if self.var.linked_sketchpad == item_name:
+			self.var.linked_sketchpad = u''
