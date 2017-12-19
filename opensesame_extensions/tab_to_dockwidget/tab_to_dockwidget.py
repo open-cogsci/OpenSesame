@@ -40,19 +40,50 @@ class tab_to_dockwidget(base_extension):
 		"""
 
 		self._docktabs = {}
+		self.overview_area.structure_change.connect(self.update_all)
 		self.tabwidget.add = self._add_tab(self.tabwidget.add)
 		self.tabwidget.remove = self._remove_tab(self.tabwidget.remove)
 		self.tabwidget.close_all = self._close_all_tabs(self.tabwidget.close_all)
+
+	def update_all(self):
+
+		"""
+		desc:
+			Update all item controls.
+		"""
+
+		for docktab in self._docktabs.values():
+			docktab.update()
 
 	def event_rename_item(self, from_name, to_name):
 
 		"""
 		desc:
-			Change the dockwidget titles on item rename.
+			Change the dockwidget titles on item rename, and allow items to
+			update in response to renames.
 		"""
 
 		for docktab in self._docktabs.values():
 			docktab.rename(from_name, to_name)
+
+	def event_new_item(self, name, _type):
+
+		"""
+		desc:
+			Allow items to update in response to new items.
+		"""
+
+		self.update_all()
+
+	def event_delete_item(self, name):
+
+		"""
+		desc:
+			Allow items to update in response to item deletions.
+		"""
+
+		for docktab in self._docktabs.values():
+			docktab.delete(name)
 
 	def activate(self):
 

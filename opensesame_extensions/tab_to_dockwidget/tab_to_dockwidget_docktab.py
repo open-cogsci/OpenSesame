@@ -35,6 +35,17 @@ class DockTab(QDockWidget):
 		self._tab_to_dockwidget = tab_to_dockwidget
 		self.setWidget(widget)
 		self.setObjectName(str(widget))
+		if hasattr(widget, u'__item__'):
+			self._item = tab_to_dockwidget.experiment.items[widget.__item__]
+		else:
+			self._item = None
+
+	def update(self):
+
+		if self._item is None:
+			return
+		self._item.update_script()
+		self._item.edit_widget()
 
 	def closeEvent(self, event):
 
@@ -42,8 +53,16 @@ class DockTab(QDockWidget):
 
 	def rename(self, from_name, to_name):
 
-		if (
-			hasattr(self.widget(), u'__item__')
-			and self.widget().__item__ == to_name
-		):
+		if self._item is None:
+			return
+		if self._item.name == to_name:
 			self.setWindowTitle(to_name)
+		self._item.rename(from_name, to_name)
+		self.update()
+
+	def delete(self, name):
+
+		if self._item is None:
+			return
+		self._item.delete(name)
+		self.update()
