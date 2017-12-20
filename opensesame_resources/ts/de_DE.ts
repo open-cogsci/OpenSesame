@@ -898,7 +898,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="194"/>
         <source> [read only]</source>
-        <translation>schreibgeschützt</translation>
+        <translation> [schreibgeschützt]</translation>
     </message>
 </context>
 <context>
@@ -1232,7 +1232,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translatables-tmp.py" line="135"/>
         <source>The following extra data files where created:</source>
-        <translation>Die folgenden Extradateien wurden erstellt. </translation>
+        <translation>Die folgenden Extradateien wurden erstellt:</translation>
     </message>
 </context>
 <context>
@@ -8880,7 +8880,7 @@ Bearbeite Dein Experiment in Skriptform</translation>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="35"/>
         <source>Polar coordinates:</source>
-        <translation>Polarkoordinaten</translation>
+        <translation>Polarkoordinaten:</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="42"/>
@@ -8915,7 +8915,7 @@ Bearbeite Dein Experiment in Skriptform</translation>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="122"/>
         <source>Cartesian coordinates:</source>
-        <translation>Kartesische Koordinaten</translation>
+        <translation>Kartesische Koordinaten:</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="129"/>
@@ -9073,7 +9073,7 @@ Bearbeite Dein Experiment in Skriptform</translation>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="187"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;The &apos;runner&apos; determines how your OpenSesame experiment is executed. For more information, please visit &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;Der &apos;runner&apos; legt fest wie dein Opensesame Experiment ausgeführt wird. Besuche &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt; &lt;/a&gt; für mehr Informationen&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt; </translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;Der &apos;runner&apos; legt fest wie dein Opensesame Experiment ausgeführt wird. Besuche &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt; &lt;/a&gt; für mehr Informationen&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9334,7 +9334,7 @@ Bearbeite Dein Experiment in Skriptform</translation>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="475"/>
         <source>Rotate </source>
-        <translation>Rotiere</translation>
+        <translation>Rotiere </translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="630"/>
@@ -9798,7 +9798,7 @@ Bearbeite Dein Experiment in Skriptform</translation>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="216"/>
         <source>&lt;small&gt;Live variable updating is not supported by the current runner. You can select a different runner under Preferences. For more information, visit &lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt;.&lt;/small&gt;</source>
-        <translation>&lt;small&gt;Live aktualiseren von Variablen wird nicht unterstützt vom aktuellen Runner. Du kannst einen anderen Runner unter Einstellungen wählen. Besuche &lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt; für mehr Informationen.&lt;/small&gt; </translation>
+        <translation>&lt;small&gt;Live aktualiseren von Variablen wird nicht unterstützt vom aktuellen Runner. Du kannst einen anderen Runner unter Einstellungen wählen. Besuche &lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt; für mehr Informationen.&lt;/small&gt;</translation>
     </message>
 </context>
 <context>
