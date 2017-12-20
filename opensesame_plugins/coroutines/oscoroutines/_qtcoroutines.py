@@ -81,6 +81,8 @@ class qtcoroutines(coroutines, sequence):
 			A setter that maps an items list to a schedule list.
 		"""
 
+		self.schedule = self.schedule[:len(val)]
+		self._items = items_adapter(self.schedule)
 		for i, (item_name, cond) in enumerate(val):
 			start_time = self.schedule[i][1]
 			end_time = self.schedule[i][2]
