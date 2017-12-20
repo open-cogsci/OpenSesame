@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="de_DE" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="de_DE">
 <context>
     <name>Form</name>
     <message>
@@ -875,7 +876,7 @@
         <source>Could not parse script: %s</source>
         <translation>Konnte Skript nicht analysieren: %s</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translatables-tmp.py" line="203"/>
         <source>Save as…</source>
         <translation>Speichern unter…</translation>
@@ -897,7 +898,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="194"/>
         <source> [read only]</source>
-        <translation type="unfinished"></translation>
+        <translation>schreibgeschützt</translation>
     </message>
 </context>
 <context>
@@ -1134,7 +1135,7 @@ Beschreibung: %s</translation>
         <source>Done</source>
         <translation>Fertig</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translatables-tmp.py" line="8"/>
         <source>Loading …</source>
         <translation>Lade …</translation>
@@ -1231,7 +1232,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translatables-tmp.py" line="135"/>
         <source>The following extra data files where created:</source>
-        <translation type="unfinished"></translation>
+        <translation>Die folgenden Extradateien wurden erstellt. </translation>
     </message>
 </context>
 <context>
@@ -1326,7 +1327,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
 </context>
 <context>
     <name>extension_get_started</name>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translatables-tmp.py" line="445"/>
         <source>New…</source>
         <translation>Neu…</translation>
@@ -1538,7 +1539,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translatables-tmp.py" line="123"/>
         <source>Checks the system and provides warnings if necessary</source>
-        <translation type="unfinished"></translation>
+        <translation>Überprüft das System und zeigt Warnungen wenn nötig</translation>
     </message>
 </context>
 <context>
@@ -1559,17 +1560,17 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translatables-tmp.py" line="147"/>
         <source>Tab to dockwidget</source>
-        <translation type="unfinished"></translation>
+        <translation>Tab zu Dockwidget</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="148"/>
         <source>Turns a tab into a dockwidget</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwandelt einen Tab in ein Dockwidget</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="149"/>
         <source>Turn tab into dockwidget</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwandel Tab in Dockwidget</translation>
     </message>
 </context>
 <context>
@@ -2403,7 +2404,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
         <source>* Has no effect in psycho back-end</source>
         <translation type="obsolete">* Hat im psycho Back-End keine Auswirkung</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="gabor_settings.ui" line="89"/>
         <source> °</source>
         <translation type="obsolete"> °</translation>
@@ -2669,12 +2670,12 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translatables-tmp.py" line="258"/>
         <source>Event type</source>
-        <translation type="unfinished"></translation>
+        <translation>Ereignistyp</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="259"/>
         <source>Flush pending key events</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösche ausstehende Tastenereignisse</translation>
     </message>
 </context>
 <context>
@@ -2938,17 +2939,17 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translatables-tmp.py" line="382"/>
         <source>Linked sketchpad</source>
-        <translation type="unfinished"></translation>
+        <translation>Verknüpfte Zeichenfläche</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="383"/>
         <source>Elements define regions of interest</source>
-        <translation type="unfinished"></translation>
+        <translation>Elemente definieren Interessengebiet</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="384"/>
         <source>Event type</source>
-        <translation type="unfinished"></translation>
+        <translation>Ereignistyp</translation>
     </message>
 </context>
 <context>
@@ -3182,17 +3183,17 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translatables-tmp.py" line="557"/>
         <source>Fill &quot;%s&quot; is unknown or variably defined, assuming filled</source>
-        <translation type="unfinished"></translation>
+        <translation>Füllung &quot;%s&quot; ist unbekannt oder variabel definiert. Benutze &quot;gefüllt&quot;</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="555"/>
         <source>Rotation &quot;%s&quot; is unknown or variably defined, using 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotation &quot;%s&quot; ist unbekannt oder variabel definiert. Benutze 0</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="577"/>
         <source>Specify polar coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Gib Polarkoordinaten an</translation>
     </message>
 </context>
 <context>
@@ -4941,7 +4942,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
         <translation type="obsolete">QProgEdit Einstellungen</translation>
     </message>
 </context>
-<context encoding="UTF-8">
+<context>
     <name>plugin_quest_staircase_init</name>
     <message>
         <location filename="../../translatables-tmp.py" line="286"/>
@@ -4980,18 +4981,18 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="289"/>
-        <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
-        <translation type="unfinished"></translation>
+        <source>Steepness of the Weibull psychometric function (Î²)</source>
+        <translation>Steilheit der Weibull-psychometrischen Funktion (Î²)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="290"/>
-        <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
-        <translation type="unfinished"></translation>
+        <source>Proportion of random responses at maximum stimulus intensity (Î´)</source>
+        <translation>Verhältnis der Zufallsantworten bei maximaler Stimulusintensität (Î´)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="291"/>
-        <source>Chance level (&#xce;&#xb3;)</source>
-        <translation type="unfinished"></translation>
+        <source>Chance level (Î³)</source>
+        <translation>Zufallslevel (Î³)</translation>
     </message>
 </context>
 <context>
@@ -5344,7 +5345,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translatables-tmp.py" line="480"/>
         <source>End after item (optional)</source>
-        <translation type="unfinished"></translation>
+        <translation>Beende nach Element (optionell)</translation>
     </message>
 </context>
 <context>
@@ -5586,7 +5587,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
         <translation type="obsolete">Editoreinstellungen (QProgEdit)</translation>
     </message>
 </context>
-<context encoding="UTF-8">
+<context>
     <name>quest_staircase_init</name>
     <message>
         <location filename="translatables.py" line="32"/>
@@ -5608,17 +5609,17 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
         <source>Desired proportion of correct responses</source>
         <translation type="obsolete">Angestrebter Anteil korrekter Reaktionen</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="translatables.py" line="32"/>
         <source>Steepness of the Weibull psychometric function (Î²)</source>
         <translation type="obsolete">Steilheit der Weibull-Verteilung (Î²)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="translatables.py" line="32"/>
         <source>Proportion of random responses at maximum stimulus intensity (Î´)</source>
         <translation type="obsolete">Anteil zufälliger Reaktionen bei höchster Stimulusdichte  (Î´)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="translatables.py" line="32"/>
         <source>Chance level (Î³)</source>
         <translation type="obsolete">Zufallsniveau (Î³)</translation>
@@ -7730,7 +7731,7 @@ Zahlreiche Einstellungen zur Kontrolle der Anzeige, des Tons und der Eingabeger�
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation>Ausrichtung&lt;br /&gt;&lt;i&gt;in Grad (0 .. 360)&lt;/i&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
         <source> °</source>
         <translation> °</translation>
@@ -7924,7 +7925,7 @@ Zahlreiche Einstellungen zur Kontrolle der Anzeige, des Tons und der Eingabeger�
         <source> px</source>
         <translation> px</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/general_properties.ui" line="183"/>
         <source>×</source>
         <translation>x</translation>
@@ -7947,12 +7948,12 @@ Zahlreiche Einstellungen zur Kontrolle der Anzeige, des Tons und der Eingabeger�
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="331"/>
         <source>Disable garbage collection</source>
-        <translation type="unfinished"></translation>
+        <translation>Deaktiviere Müllsammlung</translation>
     </message>
     <message>
         <location filename="../ui/widgets/general_properties.ui" line="110"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/backends/&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/backends/&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Warum ist das wichtig?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -8700,22 +8701,22 @@ Bearbeite Dein Experiment in Skriptform</translation>
         <source>One-tab mode</source>
         <translation>Ein-Tab-Modus</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="358"/>
         <source>Open…</source>
         <translation>Öffne…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="388"/>
         <source>Save as…</source>
         <translation>Speichern unter…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="411"/>
         <source>Run fullscreen…</source>
         <translation>Ausführen im Vollbildmodus…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
         <translation>Ausführen im Fenstermodus…</translation>
@@ -8874,67 +8875,67 @@ Bearbeite Dein Experiment in Skriptform</translation>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="14"/>
         <source>Polar coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Polarkoordinaten</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="35"/>
         <source>Polar coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Polarkoordinaten</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="42"/>
         <source>Pole (X)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pol (X)</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="89"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="62"/>
         <source>Pole (Y)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pol (Y)</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="82"/>
         <source>Radius (rho)</source>
-        <translation type="unfinished"></translation>
+        <translation>Radius (rho)</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="102"/>
         <source>Angle (phi)</source>
-        <translation type="unfinished"></translation>
+        <translation>Winkel (phi)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="109"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="122"/>
         <source>Cartesian coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kartesische Koordinaten</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="129"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="150"/>
         <source>TextLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>TextLabel</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="143"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="172"/>
         <source>This tool allows you to calculate cartesian (x, y) coordinates from polar coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieses Werkzeug erlaubt es dir kartesische Koordinaten (x,y) von Polarkoordinaten zu berechnen.</translation>
     </message>
 </context>
 <context>
@@ -9067,12 +9068,12 @@ Bearbeite Dein Experiment in Skriptform</translation>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="150"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprache</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="187"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;The &apos;runner&apos; determines how your OpenSesame experiment is executed. For more information, please visit &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;Der &apos;runner&apos; legt fest wie dein Opensesame Experiment ausgeführt wird. Besuche &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt; &lt;/a&gt; für mehr Informationen&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt; </translation>
     </message>
 </context>
 <context>
@@ -9325,25 +9326,25 @@ Bearbeite Dein Experiment in Skriptform</translation>
         <source>Check to display the grid and enable snap-to-grid</source>
         <translation>Ankreuzen um das Gitternetz zu zeigen und Objekte daran auszurichten</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/sketchpad.ui" line="472"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>°</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="475"/>
         <source>Rotate </source>
-        <translation type="unfinished"></translation>
+        <translation>Rotiere</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="630"/>
         <source>Name</source>
-        <translation type="unfinished">Name</translation>
+        <translation>Name</translation>
     </message>
     <message>
         <location filename="../ui/widgets/sketchpad.ui" line="643"/>
         <source>auto</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto</translation>
     </message>
 </context>
 <context>
@@ -9797,7 +9798,7 @@ Bearbeite Dein Experiment in Skriptform</translation>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="216"/>
         <source>&lt;small&gt;Live variable updating is not supported by the current runner. You can select a different runner under Preferences. For more information, visit &lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt;.&lt;/small&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;small&gt;Live aktualiseren von Variablen wird nicht unterstützt vom aktuellen Runner. Du kannst einen anderen Runner unter Einstellungen wählen. Besuche &lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt; für mehr Informationen.&lt;/small&gt; </translation>
     </message>
 </context>
 <context>
@@ -10184,14 +10185,14 @@ Einstellungen im Zusammenhang mit dem Bildschirm, Ton und Eingabegeräten</trans
         <source>&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Donate&lt;/a&gt;</source>
         <translation type="obsolete">&lt;a href=&quot;http://osdoc.cogsci.nl/donate/&quot;&gt;Spenden&lt;/a&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="credits_widget.ui" line="179"/>
         <source>OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</source>
         <translation type="obsolete">OpenSesame [version] [codename]
 Copyright Sebastiaan Mathôt (2010-2014)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="credits_widget.ui" line="146"/>
         <source>OpenSesame %(version)s %(codename)s
 Copyright Sebastiaan Mathôt (2010-2015)</source>
