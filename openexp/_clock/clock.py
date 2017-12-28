@@ -57,6 +57,7 @@ class Clock(object):
 				type:	experiment
 		"""
 
+		self._last_tick = None
 		self.experiment = experiment
 
 	def time(self):
@@ -142,6 +143,41 @@ class Clock(object):
 			yield dt
 			if throttle is not None:
 				self.sleep(throttle)
+
+	def once_in_a_while(self, ms=1000):
+
+		"""
+		desc: |
+			*New in v3.2.0*
+
+			Periodically returns `True`. This is mostly useful for executing
+			code (e.g. within a `for` loop) that should only be executed once
+			in a while.
+
+		keywords:
+			ms:
+				desc:	The minimum waiting period.
+				type:	[int, float]
+
+		returns:
+			desc: 	|
+					`True` after (at least) the minimum waiting period has
+					passed since the last call to `Clock.once_in_a_while()`, or
+					`False` otherwise.
+			type:	bool
+
+		example: |
+			for i in range(1000000):
+				if clock.once_in_a_while(ms=50):
+					# Execute this code only once every 50 ms
+					print(clock.time())
+		"""
+
+		now = self.time()
+		if self._last_tick is not None and now - self._last_tick < ms:
+			return False
+		self._last_tick = now
+		return True
 
 
 # Non PEP-8 alias for backwards compatibility
