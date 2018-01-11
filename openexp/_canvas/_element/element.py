@@ -19,8 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import copy
+from libopensesame.exceptions import osexception
 from functools import partial
 from openexp.color import color
+
+INF = float('inf')
+NUMERIC_PROPERTIES = u'x', u'y', u'w', u'h', u'r'
 
 
 class Element(object):
@@ -55,6 +59,11 @@ class Element(object):
 			properties[u'visible'] = True
 		if u'color' in properties:
 			properties[u'color'] = color(self.experiment, properties[u'color'])
+		self._assert_numeric(**{
+			prop : val
+			for prop, val in properties.items()
+			if prop in NUMERIC_PROPERTIES
+		})
 		self._properties = properties
 		for prop in self.property_names:
 			self._create_property(prop)
@@ -192,8 +201,10 @@ class Element(object):
 
 	@property
 	def property_names(self):
-		return set(self._properties.keys()) \
+		return (
+			set(self._properties.keys())
 			| set(self._canvas.configurables.keys())
+		)
 
 	@property
 	def rect(self):
@@ -312,6 +323,19 @@ class Element(object):
 		pass
 
 	@staticmethod
+	def _assert_numeric(**kwdict):
+
+		for name, v in kwdict.items():
+			try:
+				v = float(v)
+			except ValueError:
+				raise osexception(u'%s should be int or float, not %s' % (name, v))
+			if v != v:
+				raise osexception(u'%s should be int or float, not nan' % name)
+			if v == INF:
+				raise osexception(u'%s should be int or float, not inf' % name)
+
+	@staticmethod
 	def _rect(x, y, w, h):
 
 		"""
@@ -330,6 +354,7 @@ class Element(object):
 			desc:	An `(x, y, w, h)` tuple where the `w` and `h` >= 0.
 		"""
 
+		Element._assert_numeric(x=x, y=y, w=w, h=h)
 		if w < 0:
 			x += w
 			w = abs(w)
