@@ -147,6 +147,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.ui.action_run_in_window.triggered.connect(
 			self.run_experiment_in_window)
 		self.ui.action_run_quick.triggered.connect(self.run_quick)
+		self.ui.action_kill.triggered.connect(self.kill_experiment)
 		self.ui.action_enable_auto_response.triggered.connect(
 			self.set_auto_response)
 		self.ui.action_close_current_tab.triggered.connect(
@@ -940,6 +941,14 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 						redo = True
 						break
 
+	def kill_experiment(self):
+
+		"""Tries to kill a running experiment. This is not supported by all
+		runners.
+		"""
+
+		self._runner.kill()
+
 	def run_experiment(self, dummy=None, fullscreen=True, quick=False):
 
 		"""
@@ -958,8 +967,8 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.enable(False)
 		print(u'\n')
 		debug.msg(u'using %s runner' % cfg.runner)
-		_runner = self.runner_cls(self)
-		_runner.run(quick=quick, fullscreen=fullscreen,
+		self._runner = self.runner_cls(self)
+		self._runner.run(quick=quick, fullscreen=fullscreen,
 			auto_response=self.experiment.auto_response)
 		self.enable(True)
 
@@ -1013,7 +1022,14 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.block_close_event = not enabled
 		self.ui.dock_overview.setEnabled(enabled)
 		self.ui.centralwidget.setEnabled(enabled)
-		self.ui.toolbar_main.setEnabled(enabled)
+		for action in self.ui.toolbar_main.actions():
+			# The kill action should be enabled when the experiment is running
+			# and the runner supports killing
+			action.setEnabled(
+				not enabled and self.runner_cls.supports_kill
+				if action.objectName() == u'action_kill'
+				else enabled
+			)
 		self.ui.toolbar_items.setEnabled(enabled)
 		self.ui.menubar.setEnabled(enabled)
 		self.ui.dock_pool.setEnabled(enabled)

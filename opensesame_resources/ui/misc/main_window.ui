@@ -67,7 +67,7 @@
      <x>0</x>
      <y>0</y>
      <width>920</width>
-     <height>24</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">
@@ -153,7 +153,16 @@
      <property name="spacing">
       <number>0</number>
      </property>
-     <property name="margin">
+     <property name="leftMargin">
+      <number>6</number>
+     </property>
+     <property name="topMargin">
+      <number>6</number>
+     </property>
+     <property name="rightMargin">
+      <number>6</number>
+     </property>
+     <property name="bottomMargin">
       <number>6</number>
      </property>
      <item>
@@ -192,7 +201,16 @@
      <property name="spacing">
       <number>0</number>
      </property>
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
     </layout>
@@ -213,7 +231,16 @@
      <property name="spacing">
       <number>0</number>
      </property>
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <item>
@@ -222,7 +249,16 @@
         <property name="spacing">
          <number>12</number>
         </property>
-        <property name="margin">
+        <property name="leftMargin">
+         <number>6</number>
+        </property>
+        <property name="topMargin">
+         <number>6</number>
+        </property>
+        <property name="rightMargin">
+         <number>6</number>
+        </property>
+        <property name="bottomMargin">
          <number>6</number>
         </property>
         <item>
@@ -238,7 +274,16 @@
            <property name="spacing">
             <number>6</number>
            </property>
-           <property name="margin">
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
             <number>0</number>
            </property>
            <item>
@@ -327,6 +372,7 @@
    <addaction name="action_run"/>
    <addaction name="action_run_in_window"/>
    <addaction name="action_run_quick"/>
+   <addaction name="action_kill"/>
    <addaction name="separator"/>
    <addaction name="action_close_other_tabs"/>
    <addaction name="action_onetabmode"/>
@@ -556,6 +602,20 @@
    </property>
    <property name="shortcut">
     <string>Alt+T</string>
+   </property>
+  </action>
+  <action name="action_kill">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset theme="process-stop"/>
+   </property>
+   <property name="text">
+    <string>Kill experiment</string>
+   </property>
+   <property name="toolTip">
+    <string>Forcibly kill the experiment</string>
    </property>
   </action>
  </widget>

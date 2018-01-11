@@ -18,11 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-import platform, sys
+import platform
+import sys
+import os
+import signal
 
 if platform.system() == 'Darwin' and \
 	sys.version_info < (3,4):
-		# In OS X Python < 3.4 the multiprocessing module is horribly broken,  
+		# In OS X Python < 3.4 the multiprocessing module is horribly broken,
 		# but a fixed version has been released as the 'billiard' module
 		import billiard as multiprocessing
 else:
@@ -68,14 +71,14 @@ class OutputChannel:
 			self.orig.flush()
 		else:
 			pass
-			
+
 	def isatty(self):
-		
+
 		"""
 		desc:
 			Indicates that the output is not attached to a terminal.
 		"""
-		
+
 		return False
 
 
@@ -106,6 +109,7 @@ class ExperimentProcess(multiprocessing.Process):
 		self.fullscreen = exp.var.fullscreen == u'yes'
 		self.logfile = exp.logfile
 		self.auto_response = exp.auto_response
+		self.killed = False
 
 	def run(self):
 
@@ -168,3 +172,9 @@ class ExperimentProcess(multiprocessing.Process):
 			sys.exit(1)
 		# Exit with success
 		sys.exit(0)
+
+	def kill(self):
+
+		print(u'Killing experiment process')
+		os.kill(self.pid, signal.SIGKILL)
+		self.killed = True

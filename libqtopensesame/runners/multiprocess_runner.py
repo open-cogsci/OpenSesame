@@ -28,6 +28,8 @@ class multiprocess_runner(base_runner):
 
 	"""Runs an experiment in another process using multiprocessing."""
 
+	supports_kill = True
+
 	def execute(self):
 
 		"""See base_runner.execute()."""
@@ -52,6 +54,7 @@ class multiprocess_runner(base_runner):
 		except Exception as e:
 			return osexception(_(u'Failed to initialize experiment process'),
 				exception=e)
+		self.console.set_workspace_globals({u'process' : self.exp_process})
 		# Start process!
 		self.exp_process.start()
 		# Wait for experiment to finish.
@@ -86,6 +89,8 @@ class multiprocess_runner(base_runner):
 			# indicates whether the experiment should be paused or resumed.
 			if isinstance(msg, dict):
 				self._workspace_globals = msg
+				if u'__kill__' in msg:
+					self.exp_process.kill()
 				if u'__heartbeat__' in msg:
 					self.console.set_workspace_globals(msg)
 					self.main_window.extension_manager.fire(u'heartbeat')
@@ -103,9 +108,18 @@ class multiprocess_runner(base_runner):
 				u"Illegal message type received from child process: %s (%s)" \
 				% (msg, type(msg)))
 		if not finished:
-			return osexception(u'Python seems to have crashed. This should not '
-				u'happen. If Python crashes often, please report it on the '
-				u'OpenSesame forum.')
+			if self.exp_process.killed:
+				return osexception(u'The experiment process was killed.')
+			else:
+				return osexception(u'Python seems to have crashed. This should not '
+					u'happen. If Python crashes often, please report it on the '
+					u'OpenSesame forum.')
+
+	def kill(self):
+
+		"""See base_runner."""
+
+		self.exp_process.kill()
 
 	def workspace_globals(self):
 

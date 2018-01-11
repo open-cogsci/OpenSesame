@@ -37,6 +37,7 @@ class base_runner(object):
 
 	valid_logfile_extensions = u'.csv', u'.txt', u'.dat', u'.log'
 	default_logfile_extension = u'.csv'
+	supports_kill = False
 
 	def __init__(self, main_window):
 
@@ -263,6 +264,12 @@ class base_runner(object):
 		if ret_val is None:
 			self.main_window.extension_manager.fire(u'process_data_files',
 				data_files=self.data_files())
+
+	def kill(self):
+
+		"""Kills an experiment, if the runner supports it."""
+
+		pass
 
 	def workspace_globals(self):
 
