@@ -176,5 +176,8 @@ class ExperimentProcess(multiprocessing.Process):
 	def kill(self):
 
 		print(u'Killing experiment process')
-		os.kill(self.pid, signal.SIGKILL)
+		os.kill(
+			self.pid,
+			signal.SIGKILL if hasattr(signal, u'SIGKILL') else signal.SIGTERM
+		)
 		self.killed = True
