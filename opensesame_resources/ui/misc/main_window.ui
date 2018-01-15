@@ -608,9 +608,6 @@
    <property name="enabled">
     <bool>false</bool>
    </property>
-   <property name="icon">
-    <iconset theme="process-stop"/>
-   </property>
    <property name="text">
     <string>Kill experiment</string>
    </property>
