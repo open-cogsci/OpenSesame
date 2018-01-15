@@ -706,7 +706,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		t = QtRichText(
 			QtCanvas(self.sketchpad.experiment),
 			text,
-			center=center, max_width=max_width,
+			x=x, y=y, center=center, max_width=max_width,
 			**properties
 		)
 		im = t._to_pil()
