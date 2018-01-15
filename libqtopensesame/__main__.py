@@ -18,22 +18,41 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+import os
+import sys
+import platform
 
 
-def opensesame():
+def set_paths():
 
-	import os, sys, platform
+	from qtpy import QtCore
 	# Add the folder that contains the OpenSesame modules to the path. This is
 	# generally only necessary if OpenSesame is directly run from source,
 	# instead from an installation.
 	if os.path.exists(os.path.join(os.getcwd(), 'libopensesame')):
 		sys.path.insert(0, os.getcwd())
+	# Add the Qt plugin folders to the library path, if they exists. Where
+	# these folders are depends on the version of Qt4, but these are two
+	# possible locations.
+	qt_plugin_path = os.path.join(
+		os.path.dirname(sys.executable), 'Library', 'plugins')
+	if os.path.isdir(qt_plugin_path):
+		QtCore.QCoreApplication.addLibraryPath(qt_plugin_path)
+	qt_plugin_path = os.path.join(
+		os.path.dirname(sys.executable), 'Library', 'lib', 'qt4', 'plugins')
+	if os.path.isdir(qt_plugin_path):
+		QtCore.QCoreApplication.addLibraryPath(qt_plugin_path)
+
+
+def opensesame():
+
+	set_paths()
 	# Support for multiprocessing when packaged
 	# In OS X the multiprocessing module is horribly broken, but a fixed
 	# version has been released as the 'billiard' module
 	if platform.system() == 'Darwin':
 		# Use normal multiprocessing module from python 3.4 and on
-		if sys.version_info >= (3,4):
+		if sys.version_info >= (3, 4):
 			from multiprocessing import freeze_support, set_start_method
 			freeze_support()
 			set_start_method('spawn')
@@ -70,7 +89,7 @@ def opensesame():
 	opensesame.__script__ = __file__
 	app.processEvents()
 	# Install the translator. For some reason, the translator needs to be
-	# instantiated here and not in the set_locale() function, otherwise the	
+	# instantiated here and not in the set_locale() function, otherwise the
 	# locale is ignored.
 	from qtpy.QtCore import QTranslator
 	translator = QTranslator()
@@ -89,14 +108,7 @@ def opensesame():
 
 def opensesamerun():
 
-	# First, load a minimum number of modules and show an empty app window. This
-	# gives the user the feeling of a snappy response.
-	import os, sys
-	# Add the folder that contains the OpenSesame modules to the path. This is
-	# generally only necessary if OpenSesame is directly run from source,
-	# instead from an installation.
-	if os.path.exists(os.path.join(os.getcwd(), 'libopensesame')):
-		sys.path.insert(0, os.getcwd())
+	set_paths()
 	import libopensesame.misc
 	libopensesame.misc.parse_environment_file()
 	import libopensesame.experiment
@@ -116,8 +128,10 @@ def opensesamerun():
 			sip.setapi('QVariant', 2)
 			from qtpy import QtGui, QtCore, QtWidgets
 		except:
-			libopensesame.misc.messagebox(u"OpenSesame Run",
-				u"Incorrect or missing options.\n\nRun 'opensesame --help' from a terminal (or command prompt) to see a list of available options, or install Python Qt4 to enable the graphical user interface.")
+			libopensesame.misc.messagebox(u"OpenSesame Run", u"Incorrect or "
+				u"missing options.\n\nRun 'opensesame --help' from a terminal "
+				u"(or command prompt) to see a list of available options, or "
+				u"install Python Qt4 to enable the graphical user interface.")
 			sys.exit()
 		# Create the GUI and show it
 		import libqtopensesame.qtopensesamerun

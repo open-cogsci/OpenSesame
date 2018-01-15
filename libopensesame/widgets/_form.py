@@ -18,27 +18,28 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame import type_check
 from libopensesame.exceptions import osexception
 from openexp.canvas import canvas
 from openexp.mouse import mouse
+from openexp.keyboard import keyboard
+from libopensesame.widgets.widget_factory import WidgetFactory
 
-class form(object):
+
+class Form(object):
 
 	"""
 	desc: |
-		The `form` is a container for widgets, such as labels, etc. If you use the
-		FORM_BASE plug-in in combination with OpenSesame script, you do not need
-		to explicitly create a form. However, if you use Python inline code, you
-		do.
+		The `Form` is a container for widgets, such as labels, etc. If you use
+		the FORM_BASE plug-in in combination with OpenSesame script, you do not
+		need to explicitly create a `Form` object. However, if you use Python
+		inline code, you do.
 
 		__Example__:
 
 		~~~ .python
-		from libopensesame import widgets
-		form = widgets.form(exp)
-		label = widgets.label(form, text='label)
+		form = Form()
+		label = Label(text='label)
 		form.set_widget(label, (0,0))
 		form._exec()
 		~~~
@@ -48,11 +49,14 @@ class form(object):
 
 	def __init__(self, experiment, cols=2, rows=2, spacing=10,
 		margins=(100, 100, 100, 100), theme=u'gray', item=None, timeout=None,
-		clicks=False):
+		clicks=False, validator=None):
 
 		"""
-		desc:
-			Constructor.
+		desc: |
+			Constructor to create a new `Form` object. You do not generally
+			call this constructor directly, but use the `Form()` factory
+			function, which is described here: [/python/common/]().
+
 
 		arguments:
 			experiment:
@@ -92,25 +96,25 @@ class form(object):
 						interactions. This can help to make interactions feel
 						smoother if there is some visual lag.
 				type:	bool
+			validator:
+				desc:	A function that takes no arguments and returns True if
+						the form is successfully validated, and False if not.
+				type: 	[FunctionType, NoneType]
 		"""
 
 		# Normalize the column and row sizes so that they add up to 1
-		if type(cols) == int:
+		if isinstance(cols, int):
 			self.cols = [1./cols]*cols
 		else:
 			cols = type_check.float_list(cols, u'form columns', min_len=1)
 			self.cols = [float(c)/sum(cols) for c in cols]
-		if type(rows) == int:
+		if isinstance(rows, int):
 			self.rows = [1./rows]*rows
 		else:
 			rows = type_check.float_list(rows, u'form rows', min_len=1)
 			self.rows = [float(r)/sum(rows) for r in rows]
-
 		self.experiment = experiment
-		if item is not None:
-			self.item = item
-		else:
-			self.item = experiment
+		self.item = item if item is not None else experiment
 		self.timeout = timeout
 		self.width = experiment.var.width
 		self.height = experiment.var.height
@@ -120,10 +124,13 @@ class form(object):
 			min_len=4, max_len=4)
 		n_cells = len(self.cols)*len(self.rows)
 		self.widgets = [None]*n_cells
-		self.span = [(1,1)]*n_cells
-		self.canvas = canvas(self.experiment, auto_prepare=False,
+		self.span = [(1, 1)]*n_cells
+		self._validator = (lambda: True) if validator is None else validator
+		self.canvas = canvas(
+			self.experiment,
 			color=self.item.var.foreground,
-			background_color=self.item.var.background)
+			background_color=self.item.var.background
+		)
 		# Dynamically load the theme object
 		theme_mod = __import__(
 			u'libopensesame.widgets.themes.%s' % theme, fromlist=[u'dummy'])
@@ -166,36 +173,71 @@ class form(object):
 					timeout occurred, None will be returned.
 		"""
 
-		self.start_time = None
 		if len(self) == 0:
 			raise osexception(u'The form contains no widgets')
-		self.mouse = mouse(self.experiment, timeout=5)
-		self.mouse.show_cursor()
-		if focus_widget is not None:
-			self.render()
-			if self.timed_out():
-				self.experiment.var.form_response = None
-				return None
-			resp = focus_widget.on_mouse_click(None)
-			if resp is not None:
-				return
+		ms = mouse(self.experiment, timeout=0)
+		ms.show_cursor()
+		kb = keyboard(self.experiment, timeout=0)
+		kb.show_virtual_keyboard()
+		coroutines = {w: w.coroutine() for w in self.widgets if w is not None}
+		for coroutine in coroutines.values():
+			coroutine.send(None)
+		self.canvas.show()
+		self.start_time = None
+		mousedown = False
 		while True:
-			self.render()
 			if self.timed_out():
-				self.experiment.var.form_response = None
-				return None
-			button, xy, time = self.mouse.get_click(visible=True)
-			if xy is None:
+				resp = None
+				break
+			msg = None
+			# Handle mouse clicks, including waiting until the mouse is released
+			# after a mouse click.
+			if mousedown:
+				while any(ms.get_pressed()):
+					pass
+				mousedown = False
+			button, xy, timestamp = ms.get_click(visible=True)
+			if button is not None:
+				mousedown = True
+				# Switch the focus to the newly clicked widget (if any)
+				widget = self.xy_to_widget(xy)
+				if widget is None:
+					continue
+				if focus_widget is not None:
+					focus_widget.focus = False
+				widget.focus = True
+				focus_widget = widget
+				msg = {
+					u'type': u'click',
+					u'pos': xy,
+					u'button': button,
+					u'timestamp': timestamp
+				}
+			# Handle key presses clicks
+			elif focus_widget is not None:
+				key, timestamp = kb.get_key()
+				if key is not None:
+					msg = {
+						u'type': u'key',
+						u'key': key,
+						u'timestamp': timestamp
+					}
+			# Send message (if any)
+			if msg is None:
 				continue
-			pos = self.xy_to_index(xy)
-			if pos is not None:
-				w = self.widgets[pos]
-				if w is not None:
-					resp = self.widgets[pos].on_mouse_click(xy)
-					if resp is not None:
-						self.experiment.var.form_response = resp
-						return resp
-		self.mouse.hide_cursor()
+			resp = coroutines[focus_widget].send(msg)
+			self.canvas.show()
+			if resp is not None and self._validator():
+				break
+		kb.show_virtual_keyboard(False)
+		ms.show_cursor(False)
+		for coroutine in coroutines.values():
+			try:
+				coroutine.send({u'type' : u'stop'})
+			except StopIteration:
+				pass
+		self.experiment.var.form_response = resp
+		return resp
 
 	def timed_out(self):
 
@@ -259,11 +301,11 @@ class form(object):
 						continue
 					if len(self.widgets) <= index2:
 						raise osexception(
-							u'The widget at position (%d, %s) falls outside of your form' \
+							u'The widget at position (%d, %s) falls outside of your form'
 							% (l[0], l[1]))
 					if self.widgets[index2] is not None:
 						raise osexception(
-							u'The widget at position (%d, %d) overlaps with another widget' \
+							u'The widget at position (%d, %d) overlaps with another widget'
 							% (l[0], l[1]))
 
 	def get_cell(self, index):
@@ -308,28 +350,14 @@ class form(object):
 		w = x2-x1
 		h = y2-y1
 		if w <= 0 or h <= 0:
-			raise osexception(
-				u'There is not enough space to show some form widgets. Please modify the form geometry!')
+			raise osexception(u'There is not enough space to show some form '
+				u'widgets. Please modify the form geometry!')
 		x = x1+self.margins[3]
 		y = y1+self.margins[0]
 		if self.experiment.var.uniform_coordinates == u'yes':
 			x -= self.width/2
 			y -= self.height/2
 		return x, y, w, h
-
-	def render(self):
-
-		"""
-		desc:
-			Draws the form and all the widgets in it.
-		"""
-
-		self.validate_geometry()
-		self.canvas.clear()
-		for widget in self.widgets:
-			if widget is not None:
-				widget.render()
-		self.canvas.show()
 
 	def set_widget(self, widget, pos, colspan=1, rowspan=1):
 
@@ -357,16 +385,18 @@ class form(object):
 
 		index = self.cell_index(pos)
 		if index >= len(self.widgets):
-			raise osexception( \
+			raise osexception(
 				u'Widget position (%s, %s) is outside of the form' % pos)
-		if type(colspan) != int or colspan < 1 or colspan > len(self.cols):
-			raise osexception( \
-				u'Column span %s is invalid (i.e. too large, too small, or not a number)' \
+		if not isinstance(colspan, int) or colspan < 1 or colspan > len(self.cols):
+			raise osexception(
+				u'Column span %s is invalid (i.e. too large, too small, or not a number)'
 				% colspan)
-		if type(rowspan) != int or rowspan < 1 or rowspan > len(self.rows):
-			raise osexception( \
-				u'Row span %s is invalid (i.e. too large, too small, or not a number)' \
+		if not isinstance(rowspan, int) or rowspan < 1 or rowspan > len(self.rows):
+			raise osexception(
+				u'Row span %s is invalid (i.e. too large, too small, or not a number)'
 				% rowspan)
+		if isinstance(widget, WidgetFactory):
+			widget = widget.construct(self)
 		self.widgets[index] = widget
 		self.span[index] = colspan, rowspan
 		widget.set_rect(self.get_rect(index))
@@ -393,3 +423,13 @@ class form(object):
 			if x <= xy[0] and x+w >= xy[0] and y <= xy[1] and y+h >= xy[1]:
 				return index
 		return None
+
+	def xy_to_widget(self, xy):
+
+		index = self.xy_to_index(xy)
+		if index is None:
+			return None
+		return self.widgets[index]
+
+
+form = Form

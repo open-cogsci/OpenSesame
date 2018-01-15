@@ -18,26 +18,48 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp.backend import backend, configurable
+from openexp.backend import Backend, configurable
 from libopensesame.exceptions import osexception
 
-class sampler(backend):
+
+class Sampler(Backend):
 
 	"""
 	desc: |
-		The SAMPLER module provides functionality to play sound samples.
+		The `Sampler` class provides functionality to play sound samples. You
+		generally create a `Sampler` object with the `Sampler()` factory
+		function, as described in the section
+		[Creating a Sampler](#creating-a-sampler).
 
 		__Example:__
 
 		~~~ .python
 		src = pool['bark.ogg']
-		my_sampler = sampler(src, volume=.5)
+		my_sampler = Sampler(src, volume=.5)
 		my_sampler.play()
 		~~~
 
 		[TOC]
 
 		## Things to know
+
+		### Creating a Sampler
+
+		You generally create a `Sampler` with the `Sampler()` factory function,
+		which takes the full path to a sound file as the first argument.
+
+		~~~ .python
+		src = pool['bark.ogg']
+		my_sampler = Sampler(src)
+		~~~
+
+		Optionally, you can pass [Playback keywords](#playback-keywords) to
+		`Sampler()` to set the default behavior:
+
+		~~~ .python
+		src = pool['bark.ogg']
+		my_sampler = Sampler(src, volume=.5)
+		~~~
 
 		### Sampling rate
 
@@ -96,8 +118,8 @@ class sampler(backend):
 		  playback or not (`False`).
 
 		~~~ .python
-		src = exp.pool['bark.ogg']
-		my_sampler = sampler(src)
+		src = pool['bark.ogg']
+		my_sampler = Sampler(src)
 		my_sampler.play(volume=.5, pan='left')
 		~~~
 
@@ -106,8 +128,8 @@ class sampler(backend):
 		subsequent operations, set the playback properties directly:
 
 		~~~ .python
-		src = exp.pool['bark.ogg']
-		my_sampler = sampler(src)
+		src = pool['bark.ogg']
+		my_sampler = Sampler(src)
 		my_sampler.volume = .5
 		my_sampler.pan = 'left'
 		my_sampler.play()
@@ -117,8 +139,8 @@ class sampler(backend):
 		Or pass the playback keywords to [sampler.\_\_init\_\_][__init__]:
 
 		~~~ .python
-		src = exp.pool['bark.ogg']
-		my_sampler = sampler(src, volume=.5, pan='left')
+		src = pool['bark.ogg']
+		my_sampler = Sampler(src, volume=.5, pan='left')
 		my_sampler.play()
 		my_sampler.play()
 		~~~
@@ -127,9 +149,11 @@ class sampler(backend):
 	def __init__(self, experiment, src, **playback_args):
 
 		"""
+		visible: False
+
 		desc: |
 			Constructor to create a new SAMPLER object. You do not generally
-			call this constructor directly, but use the `sampler()` function,
+			call this constructor directly, but use the `Sampler()` function,
 			which is described here: [/python/sampler/]().
 
 		arguments:
@@ -146,12 +170,12 @@ class sampler(backend):
 				for this SAMPLER object.
 
 		example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src, volume=.5)
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src, volume=.5)
 		"""
 
 		self.experiment = experiment
-		backend.__init__(self, configurables={
+		Backend.__init__(self, configurables={
 			u'volume' : self.assert_numeric,
 			u'pan' : self.assert_pan,
 			u'pitch' : self.assert_numeric,
@@ -191,8 +215,8 @@ class sampler(backend):
 				[sampler.play]. This does not affect subsequent operations.
 
 		example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src)
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src)
 			my_sampler.play(pitch=.5, block=True)
 		"""
 
@@ -205,8 +229,8 @@ class sampler(backend):
 			Stops the currently playing sound (if any).
 
 		example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src)
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src)
 			my_sampler.play()
 			sleep(100)
 			my_sampler.stop()
@@ -221,8 +245,8 @@ class sampler(backend):
 			Pauses playback (if any).
 
 		example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src)
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src)
 			my_sampler.play()
 			sleep(100)
 			my_sampler.pause()
@@ -239,8 +263,8 @@ class sampler(backend):
 			Resumes playback (if any).
 
 		example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src)
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src)
 			my_sampler.play()
 			sleep(100)
 			my_sampler.pause()
@@ -260,9 +284,9 @@ class sampler(backend):
 			desc:	True if a sound is playing, False if not.
 			type:	bool
 
-		Example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src)
+		example: |
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src)
 			my_sampler.play()
 			sleep(100)
 			if my_sampler.is_playing():
@@ -279,8 +303,8 @@ class sampler(backend):
 			no sound is playing.
 
 		example: |
-			src = exp.pool[u'my_sound.ogg']
-			my_sampler = sampler(src)
+			src = pool[u'my_sound.ogg']
+			my_sampler = Sampler(src)
 			my_sampler.play()
 			my_sampler.wait()
 			print('The sampler is finished!')
@@ -305,6 +329,8 @@ class sampler(backend):
 	def init_sound(experiment):
 
 		"""
+		visible: False
+
 		desc:
 			Initializes the pygame mixer before the experiment begins.
 
@@ -320,6 +346,8 @@ class sampler(backend):
 	def close_sound(experiment):
 
 		"""
+		visible: False
+
 		desc:
 			Closes the mixer after the experiment is finished.
 
@@ -330,3 +358,7 @@ class sampler(backend):
 		"""
 
 		raise NotImplementedError()
+
+
+# Non PEP-8 alias for backwards compatibility
+sampler = Sampler

@@ -26,9 +26,10 @@ import subprocess
 import argparse
 
 EXCLUDE_FOLDERS = [u'build', u'dist', 'deb_dist', 'pgs4a-0.9.4']
+LUPDATE = u'pylupdate5'
+LRELEASE = u'/usr/lib/x86_64-linux-gnu/qt5/bin/lrelease'
 
-pro_tmpl = u'''CODECFORTR = UTF-8
-FORMS = %(ui_list)s
+pro_tmpl = u'''FORMS = %(ui_list)s
 SOURCES = translatables-tmp.py
 TRANSLATIONS = %(locales)s
 '''
@@ -146,14 +147,14 @@ def compile_ts(locales, t, ui_list, fname='translate.pro'):
 		}
 	with open(fname, u'w') as fd:
 		fd.write(pro)
-	cmd = [u'pylupdate4', fname]
+	cmd = [LUPDATE, fname]
 	subprocess.call(cmd)
 
 
 def compile_qm(locales):
 
 	for locale in locales:
-		cmd = [u'lrelease-qt4', u'opensesame_resources/ts/%s.ts' % locale,
+		cmd = [LRELEASE, u'opensesame_resources/ts/%s.ts' % locale,
 			u'-qm', u'opensesame_resources/locale/%s.qm' % locale]
 		subprocess.call(cmd)
 
@@ -173,10 +174,26 @@ def check_markdown_translations(dirname, locale):
 			print('- %s' % path)
 
 
+def add_message_encoding(locales):
+
+	for locale in locales:
+		path = u'opensesame_resources/ts/%s.ts' % locale
+		with open(path) as fd:
+			content = safe_decode(fd.read())
+			if u'<message>' not in content:
+				continue
+		with open(path, u'w') as fd:
+			content = content.replace(
+				u'<message>',
+				u'<message encoding="UTF-8">'
+			)
+			fd.write(safe_str(content))
+			print('Adding encoding to message tags for %s' % locale)
+
 if __name__ == u'__main__':
 
-	locales = u'fr_FR', u'de_DE', u'it_IT', u'zh_CN', u'ru_RU', u'es_ES', \
-		u'ja_JP', u'translatables'
+	locales = [u'fr_FR', u'de_DE', u'it_IT', u'zh_CN', u'ru_RU', u'es_ES',
+		u'ja_JP', u'tr_TR', u'translatables']
 	parser = argparse.ArgumentParser(
 		description=u'Update ts and qm files for OpenSesame-related projects')
 	parser.add_argument('--category', type=str, default=u'auto',
@@ -186,6 +203,7 @@ if __name__ == u'__main__':
 	t = Translatables()
 	ui_list = []
 	parse_folder(os.path.abspath(u'.'), t, ui_list, category=args.category)
+	add_message_encoding(locales)
 	compile_ts(locales, t, ui_list)
 	compile_qm(locales)
 	for locale in locales:

@@ -1,0 +1,182 @@
+---
+API: 2.1
+Description: Loosely based on Logan et al. (1984)
+Citation: 'Logan, G. D., Cowan, W. B., & Davis, K. A. (1984). On the ability to
+  inhibit simple and choice reaction time responses: a model and a method.
+  *Journal of Experimental Psychology: Human Perception and Performance*,
+  *10*(2), 276. <http://doi.org/10.1037/0096-1523.10.2.276>'
+OpenSesame: 3.2.0a18
+Platform: posix
+Title: Stop-Signal Task
+---
+set width 1024
+set uniform_coordinates yes
+set title "Stop-Signal Task"
+set subject_parity even
+set subject_nr 0
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set sampler_backend legacy
+set round_decimals 2
+set mouse_backend xpyriment
+set keyboard_backend legacy
+set height 768
+set fullscreen no
+set form_clicks no
+set foreground white
+set font_underline no
+set font_size 18
+set font_italic no
+set font_family mono
+set font_bold no
+set experiment_path "/home/sebastiaan/git/OpenSesame/opensesame_extensions/example_experiments/examples/stop_signal_task"
+set disable_garbage_collection yes
+set description "Loosely based on Logan (1984) Journal of Experimental Psychology: Human Perception and Performance"
+set coordinates uniform
+set compensation 0
+set color_backend legacy
+set clock_backend legacy
+set canvas_backend xpyriment
+set bidi no
+set background black
+
+define notepad about_this_example
+	__note__
+	This is an example of a stop-signal task. In this experiment, participants respond to a leftward- or rightward-pointing arrow by pressing the left or right key, respectively. On some trials, a red square is presented—this is the stop signal. Participants should withold their response when the stop-signal is presented.
+
+	This experiment is based on, but not identical to, the studies described by Gordon Logan in:
+
+	- Logan, G. D., Cowan, W. B., & Davis, K. A. (1984). On the ability to inhibit simple and choice reaction time responses: a model and a method. *Journal of Experimental Psychology: Human Perception and Performance*, 10(2), 276. <http://doi.org/10.1037/0096-1523.10.2.276>
+	__end__
+	set description "A simple notepad to document your experiment. This plug-in does nothing."
+
+define sketchpad blank
+	set duration 500
+	set description "Displays stimuli"
+
+define loop block_loop
+	set source_file ""
+	set source table
+	set skip 0
+	set repeat 1
+	set order random
+	set offset no
+	set item trial_sequence
+	set description "Repeatedly runs another item"
+	set cycles 12
+	set continuous no
+	set column_order "target;stop_after;correct_response"
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 correct_response None
+	setcycle 0 stop_after 50
+	setcycle 0 target left
+	setcycle 1 correct_response None
+	setcycle 1 stop_after 100
+	setcycle 1 target right
+	setcycle 2 correct_response None
+	setcycle 2 stop_after 150
+	setcycle 2 target left
+	setcycle 3 correct_response None
+	setcycle 3 stop_after 200
+	setcycle 3 target right
+	setcycle 4 correct_response left
+	setcycle 4 stop_after ""
+	setcycle 4 target left
+	setcycle 5 correct_response right
+	setcycle 5 stop_after ""
+	setcycle 5 target right
+	setcycle 6 correct_response left
+	setcycle 6 stop_after ""
+	setcycle 6 target left
+	setcycle 7 correct_response right
+	setcycle 7 stop_after ""
+	setcycle 7 target right
+	setcycle 8 correct_response left
+	setcycle 8 stop_after ""
+	setcycle 8 target left
+	setcycle 9 correct_response right
+	setcycle 9 stop_after ""
+	setcycle 9 target right
+	setcycle 10 correct_response left
+	setcycle 10 stop_after ""
+	setcycle 10 target left
+	setcycle 11 correct_response right
+	setcycle 11 stop_after ""
+	setcycle 11 target right
+	run trial_sequence
+
+define sketchpad error_feedback
+	set duration 1000
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Mistake!" x=0 y=0 z_index=0
+
+define sequence experiment
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run about_this_example always
+	run instructions always
+	run block_loop always
+	run finished always
+
+define sketchpad finished
+	set duration keypress
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="The experiment is finished!<br /><br />Press any key to exit." x=0 y=0 z_index=0
+
+define sketchpad fixdot
+	set duration 500
+	set description "Displays stimuli"
+	draw fixdot color=white show_if=always style=default x=0 y=0 z_index=0
+
+define sketchpad instructions
+	set start_response_interval no
+	set reset_variables no
+	set duration keypress
+	set description "Displays stimuli"
+	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text="<b>Instructions</b><br /><br />On each trial, you will see an arrow.<br />Press the left arrow key if the arrow points to the left.<br />Press the right arrow key if the arrow points to the right.<br /><br />Unless you see a red square,<br />in which case you should withhold your response.<br /><br />Press any key to begin!" x=0 y=0 z_index=0
+
+define keyboard_response kb_response
+	set timeout infinite
+	set flush yes
+	set event_type keypress
+	set duration keypress
+	set description "Collects keyboard responses"
+	set allowed_responses "left;right"
+
+define logger logger
+	set description "Logs experimental data"
+	set auto_log yes
+
+define sketchpad stop_signal
+	set duration keypress
+	set description "Displays stimuli"
+	draw rect color=red fill=1 h=64 penwidth=1 show_if=always w=64 x=-32 y=-32 z_index=0
+
+define coroutines stop_signal_coroutines
+	set function_name ""
+	set flush_keyboard yes
+	set end_after_item kb_response
+	set duration 2000
+	set description "Run items simultaneously"
+	run stop_signal end="[stop_after]" runif="[stop_after] != \"\"" start="[stop_after]"
+	run target end=0 runif=always start=0
+	run kb_response end=2000 runif=always start=0
+
+define sketchpad target
+	set duration keypress
+	set description "Displays stimuli"
+	draw arrow arrow_body_length=0.8 arrow_body_width=0.5 arrow_head_width=30 color=white fill=1 penwidth=1 show_if="[target] = right" x1=-64 x2=64 y1=0 y2=0 z_index=0
+	draw arrow arrow_body_length=0.8 arrow_body_width=0.5 arrow_head_width=30 color=white fill=1 penwidth=1 show_if="[target] = left" x1=64 x2=-64 y1=0 y2=0 z_index=0
+
+define sequence trial_sequence
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run fixdot always
+	run stop_signal_coroutines always
+	run error_feedback "[correct] = 0"
+	run blank always
+	run logger always

@@ -6,7 +6,7 @@ Das JOYSTICK Plug-in regelt Eingabe von Joystickgeräten, sowie Trackballs und C
 
 Das JOYSTICK Plug-in funktioniert analog zu dem KEYBOARD_RESPONSE Item. Für mehr Informationen, gehen Sie zur Hilfeseite vom KEYBOARD_RESPONSE Item oder besuchen Sie:
 
-- <http://osdoc.cogsci.nl/3.1/manual/response/keyboard/>
+- <http://osdoc.cogsci.nl/3.2/manual/response/keyboard/>
 
 ## Tastennamen
 
@@ -14,4 +14,4 @@ Abhängig vom Typ des Joysticks oder Gamepads, welches Sie gebrauchen, werden un
 
 Führ mehr Informationen, gehen Sie zu:
 
-- <http://osdoc.cogsci.nl/3.1/manual/response/joystick/>
+- <http://osdoc.cogsci.nl/3.2/manual/response/joystick/>

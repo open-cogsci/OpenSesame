@@ -18,11 +18,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libopensesame.widgets._form import form as _form
+from libopensesame.widgets._form import Form
 from libopensesame.exceptions import osexception
+from openexp.canvas_elements import Rect
 
-class widget(object):
+
+class Widget(object):
 
 	"""
 	desc:
@@ -43,15 +44,26 @@ class widget(object):
 
 		self.type = u'widget'
 		self.form = form
+		self.frame = False
 		self.rect = None
-		self.focus = False
+		self._focus = False
 		self.var = None
-
 		# Check if the form parameter is valid
-		if not isinstance(form, _form):
-			raise osexception( \
-				u'The first parameter passed to the constructor of a form widget should be a form, not "%s"' \
+		if not isinstance(form, Form):
+			raise osexception(
+				u'The first parameter passed to the constructor of a form widget should be a form, not "%s"'
 				% form)
+
+	@property
+	def focus(self):
+
+		return self._focus
+
+	@focus.setter
+	def focus(self, focus):
+
+		self._focus = focus
+		self._update()
 
 	@property
 	def box_size(self):
@@ -61,7 +73,26 @@ class widget(object):
 	def theme_engine(self):
 		return self.form.theme_engine
 
-	def draw_frame(self, rect=None, style=u'normal'):
+	@property
+	def canvas(self):
+		return self.form.canvas
+
+	def _inside(self, pos, rect):
+
+		x1, y1 = pos
+		x2, y2, w, h = rect
+		return not (x1 < x2 or y1 < y2 or x1 > x2+w or y1 > y2+h)
+
+	def _init_canvas_elements(self):
+
+		"""
+		desc:
+			Initializes all canvas elements.
+		"""
+
+		self._frame_elements = {}
+
+	def _update_frame(self, rect=None, style=u'normal'):
 
 		"""
 		desc:
@@ -73,38 +104,29 @@ class widget(object):
 						geometry or `None` to use the widget geometry.
 				type:	[tuple, NoneType]
 			style:
-				desc:	A visual style. Should be 'normal', 'active', or 'light'.
+				desc:	A visual style. Should be 'normal', 'active', or
+						'light'.
 				type:	[str, unicode]
 		"""
 
-		x, y, w, h = rect
-		self.form.theme_engine.frame(x, y, w, h, style=style)
+		if not self.frame:
+			return
+		if style not in self._frame_elements:
+			element = self.theme_engine.frame(*self.rect, style=style)
+			self._frame_elements[style] = element
+			self.canvas.add_element(element)
+			self.canvas.lower_to_bottom(element)
+		for element_style, element in self._frame_elements.items():
+			element.visible = element_style == style
 
-	def on_mouse_click(self, pos):
-
-		"""
-		desc:
-			Is called whenever the user clicks on the widget.
-
-		arguments:
-			pos:
-				desc:	An (x, y) coordinates tuple.
-				type:	tuple
-		"""
-
-		pass
-
-	def render(self):
+	def _update(self):
 
 		"""
 		desc:
 			Draws the widget.
 		"""
 
-		if self.focus:
-			self.draw_frame(self.rect, focus=True)
-		else:
-			self.draw_frame(self.rect)
+		self._update_frame(self.rect)
 
 	def set_rect(self, rect):
 
@@ -119,6 +141,8 @@ class widget(object):
 		"""
 
 		self.rect = rect
+		self._init_canvas_elements()
+		self._update()
 
 	def set_var(self, val, var=None):
 
@@ -141,3 +165,52 @@ class widget(object):
 		if var is None:
 			return
 		self.form.experiment.var.set(var, val)
+
+	def on_key_press(self, key):
+
+		"""
+		desc:
+			Is called whenever the widget is focused and the users enters a key.
+
+		arguments:
+			key:
+				desc:	A key
+				type:	str
+		"""
+
+		pass
+
+	def on_mouse_click(self, pos):
+
+		"""
+		desc:
+			Is called whenever the user clicks on the widget.
+
+		arguments:
+			pos:
+				desc:	An (x, y) coordinates tuple.
+				type:	tuple
+		"""
+
+		pass
+
+	def coroutine(self):
+
+		"""
+		desc:
+			Implements the interaction. This can be overridden to implement more
+			complicated keyboard/ mouse interactions.
+		"""
+
+		retval = None
+		while True:
+			d = yield retval
+			if d[u'type'] == u'click':
+				retval = self.on_mouse_click(d['pos'])
+			elif d[u'type'] == u'key':
+				retval = self.on_key_press(d[u'key'])
+			elif d[u'type'] == u'stop':
+				break
+
+
+widget = Widget

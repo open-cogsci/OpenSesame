@@ -22,6 +22,9 @@ import libopensesame.python_workspace_api as api
 from libopensesame import debug
 import types
 import warnings
+from openexp.canvas_elements import ElementFactory
+from libopensesame.widgets.widget_factory import WidgetFactory
+
 
 class python_workspace(object):
 
@@ -76,10 +79,19 @@ class python_workspace(object):
 			})
 		# All functions from the api modules are also loaded into the globals.
 		# This way they can be called directly by name.
-		for name, item in api.__dict__.items():
-			if isinstance(item, types.FunctionType):
-				debug.msg(u'api function detected: %s()' % name)
-				self._globals[name] = item
+		api.set_aliases()
+		for name, obj in api.__dict__.items():
+			if self._is_api_object(obj):
+				self._globals[name] = obj
+
+	def _is_api_object(self, obj):
+
+		if isinstance(obj, types.FunctionType):
+			return True
+		if isinstance(obj, type) and issubclass(
+			obj, (WidgetFactory, ElementFactory)):
+				return True
+		return False
 
 	def check_syntax(self, script):
 

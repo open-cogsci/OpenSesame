@@ -27,58 +27,94 @@ from libopensesame.exceptions import osexception
 import random
 import math
 import warnings
+# The classes below are unused, but imported so that they are available in the
+# workspace.
+from openexp.canvas_elements import (Rect, Line, Text, Ellipse, Circle,
+	FixDot, Gabor, NoisePatch, Image, Arrow, Polygon)
+from libopensesame.widgets.widget_factory import (Label, Button, ImageWidget,
+	ImageButton, TextInput, RatingScale, Checkbox)
+
 
 # Factory functions
 
-def canvas(auto_prepare=True, **style_args):
+
+def Form(*args, **kwargs):
 
 	"""
 	desc: |
-		A convenience function that creates a new `canvas` object. For a
+		A factory function that creates a new `Form` object. For a
+		description of possible keywords, see:
+
+		- %link:manual/forms/widgets%
+
+	returns:
+		desc:	A `Form` object.
+		type:	canvas
+
+	example: |
+		form = Form()
+		label = Label(text='label')
+		button = Button(text='Ok')
+		form.set_widget(label, (0,0))
+		form.set_widget(button, (0,1))
+		form._exec()
+	"""
+
+	from libopensesame.widgets import form
+	return form(experiment, **kwargs)
+
+
+def Canvas(auto_prepare=True, **style_args):
+
+	"""
+	desc: |
+		A factory function that creates a new `Canvas` object. For a
 		description of possible keywords, see:
 
 		- %link:manual/python/canvas%
 
 	returns:
-		desc:	A CANVAS object.
+		desc:	A `Canvas` object.
 		type:	canvas
 
 	example: |
-		my_canvas = canvas(color=u'red', penwidth=2)
+		my_canvas = Canvas(color=u'red', penwidth=2)
 		my_canvas.line(-10, -10, 10, 10)
 		my_canvas.line(-10, 10, 10, -10)
 		my_canvas.show()
 	"""
 
-	from openexp.canvas import canvas
-	return canvas(experiment, auto_prepare=auto_prepare, **style_args)
+	from openexp.canvas import Canvas
+	return Canvas(experiment, auto_prepare=auto_prepare, **style_args)
 
-def keyboard(**resp_args):
+
+def Keyboard(**resp_args):
 
 	"""
 	desc: |
-		A convenience function that creates a new `keyboard` object. For a
+		A factory function that creates a new `Keyboard` object. For a
 		description of possible keywords, see:
 
 		- %link:manual/python/keyboard%
 
 	returns:
-		desc:	A `keyboard` object.
+		desc:	A `Keyboard` object.
 		type:	keyboard
 
 	example: |
-		my_keyboard = keyboard(keylist=[u'a', u'b'], timeout=5000)
+		my_keyboard = Keyboard(keylist=[u'a', u'b'], timeout=5000)
 		key, time = my_keyboard.get_key()
 	"""
 
-	from openexp.keyboard import keyboard
-	return keyboard(experiment, **resp_args)
+	from openexp.keyboard import Keyboard
+	return Keyboard(experiment, **resp_args)
 
-def mouse(**resp_args):
+
+def Mouse(**resp_args):
 
 	"""
 	desc: |
-		A convenience function that creates a new `mouse` object. For a
+		A factory function that creates a new `Mouse` object. For a
 		description of possible keywords, see:
 
 		- %link:manual/python/mouse%
@@ -88,18 +124,19 @@ def mouse(**resp_args):
 		type:	mouse
 
 	example: |
-		my_mouse = mouse(keylist=[1,3], timeout=5000)
+		my_mouse = Mouse(keylist=[1,3], timeout=5000)
 		button, time = my_mouse.get_button()
 	"""
 
-	from openexp.mouse import mouse
-	return mouse(experiment, **resp_args)
+	from openexp.mouse import Mouse
+	return Mouse(experiment, **resp_args)
 
-def sampler(src, **playback_args):
+
+def Sampler(src, **playback_args):
 
 	"""
 	desc: |
-		A convenience function that creates a new `sampler` object. For a
+		A factory function that creates a new `Sampler` object. For a
 		description of possible keywords, see:
 
 		- %link:manual/python/sampler%
@@ -109,21 +146,24 @@ def sampler(src, **playback_args):
 		type:	sampler
 
 	example: |
-		src = exp.pool['bark.ogg']
-		my_sampler = sampler(src, volume=.5, pan='left')
+		src = pool['bark.ogg']
+		my_sampler = Sampler(src, volume=.5, pan='left')
 		my_sampler.play()
 	"""
 
-	from openexp.sampler import sampler
-	return sampler(experiment, src, **playback_args)
+	from openexp.sampler import Sampler
+	return Sampler(experiment, src, **playback_args)
+
 
 # Miscellaneous API	functions
 
-def synth(osc="sine", freq=440, length=100, attack=0, decay=5):
+
+def Synth(osc="sine", freq=440, length=100, attack=0, decay=5):
 
 	"""
 	desc:
-		Synthesizes a sound and returns it as a `sampler` object.
+		A factory function that synthesizes a sound and returns it as a
+		`Sampler` object.
 
 	keywords:
 		osc:
@@ -149,12 +189,13 @@ def synth(osc="sine", freq=440, length=100, attack=0, decay=5):
 		type:	sampler
 
 	example: |
-		my_sampler = synth(freq=u'b2', length=500)
+		my_sampler = Synth(freq=u'b2', length=500)
 	"""
 
-	from openexp.synth import synth
-	return synth(experiment, osc=osc, freq=freq, length=length, attack=attack,
+	from openexp.synth import Synth
+	return Synth(experiment, osc=osc, freq=freq, length=length, attack=attack,
 		decay=decay)
+
 
 def copy_sketchpad(name):
 
@@ -176,9 +217,10 @@ def copy_sketchpad(name):
 		my_canvas.show()
 	"""
 
-	c = canvas()
+	c = Canvas()
 	c.copy(experiment.items[name].canvas)
 	return c
+
 
 def reset_feedback():
 
@@ -191,6 +233,7 @@ def reset_feedback():
 	"""
 
 	experiment.reset_feedback()
+
 
 def set_response(response=None, response_time=None, correct=None):
 
@@ -226,6 +269,7 @@ def set_subject_nr(nr):
 
 	experiment.set_subject(nr)
 
+
 def sometimes(p=.5):
 
 	"""
@@ -254,6 +298,7 @@ def sometimes(p=.5):
 			u'p should be a numeric value between 0 and 1, not "%s"' % p)
 	return random.random() < p
 
+
 def pause():
 
 	"""
@@ -263,7 +308,31 @@ def pause():
 
 	experiment.pause()
 
-def xy_from_polar(rho, phi, pole=(0,0)):
+
+def register_cleanup_function(fnc):
+
+	"""
+	desc:
+		Registers a clean-up function, which is executed when the experiment
+		ends. Clean-up functions are executed at the very end, after the
+		display, sound device, and log file have been closed. Clean-up functions
+		are also executed when the experiment crashes.
+
+	argument:
+		fnc:
+			desc:	A function that doesn't require arguments.
+			type:	callable
+
+	example: |
+		def my_cleanup_function():
+			print(u'The experiment is finished!')
+		register_cleanup_function(my_cleanup_function)
+	"""
+
+	experiment.cleanup_functions.append(fnc)
+
+
+def xy_from_polar(rho, phi, pole=(0, 0)):
 
 	"""
 	desc:
@@ -275,8 +344,8 @@ def xy_from_polar(rho, phi, pole=(0,0)):
 			desc:	The radial coordinate, also distance or eccentricity.
 			type:	float
 		phi:
-			desc:	The angular coordinate. This reflects a counterclockwise
-					rotation in degrees (i.e. not radians), where 0 is straight
+			desc:	The angular coordinate. This reflects a clockwise rotation
+					in degrees (i.e. not radians), where 0 is straight
 					right.
 			type:	float
 
@@ -293,7 +362,7 @@ def xy_from_polar(rho, phi, pole=(0,0)):
 		# Draw a cross
 		x1, y1 = xy_from_polar(100, 45)
 		x2, y2 = xy_from_polar(100, -45)
-		c = canvas()
+		c = Canvas()
 		c.line(x1, y1, -x1, -y1)
 		c.line(x2, y2, -x2, -y2)
 		c.show()
@@ -313,7 +382,8 @@ def xy_from_polar(rho, phi, pole=(0,0)):
 	y = rho * math.sin(phi) + oy
 	return x, y
 
-def xy_to_polar(x, y, pole=(0,0)):
+
+def xy_to_polar(x, y, pole=(0, 0)):
 
 	"""
 	desc:
@@ -359,6 +429,7 @@ def xy_to_polar(x, y, pole=(0,0)):
 	phi = math.degrees(math.atan2(dy, dx))
 	return rho, phi
 
+
 def xy_distance(x1, y1, x2, y2):
 
 	"""
@@ -393,7 +464,8 @@ def xy_distance(x1, y1, x2, y2):
 		raise osexception(u'Coordinates should be numeric in xy_distance()')
 	return math.sqrt((x1-x2)**2+(y1-y2)**2)
 
-def xy_circle(n, rho, phi0=0, pole=(0,0)):
+
+def xy_circle(n, rho, phi0=0, pole=(0, 0)):
 
 	"""
 	desc:
@@ -425,7 +497,7 @@ def xy_circle(n, rho, phi0=0, pole=(0,0)):
 
 	example: |
 		# Draw 8 rectangles around a central fixation dot
-		c = canvas()
+		c = Canvas()
 		c.fixdot()
 		for x, y in xy_circle(8, 100):
 			c.rect(x-10, y-10, 20, 20)
@@ -444,7 +516,8 @@ def xy_circle(n, rho, phi0=0, pole=(0,0)):
 		phi0 += 360./n
 	return l
 
-def xy_grid(n, spacing, pole=(0,0)):
+
+def xy_grid(n, spacing, pole=(0, 0)):
 
 	"""
 	desc:
@@ -473,7 +546,7 @@ def xy_grid(n, spacing, pole=(0,0)):
 
 	example: |
 		# Draw a 4x4 grid of rectangles
-		c = canvas()
+		c = Canvas()
 		c.fixdot()
 		for x, y in xy_grid(4, 100):
 			c.rect(x-10, y-10, 20, 20)
@@ -513,6 +586,7 @@ def xy_grid(n, spacing, pole=(0,0)):
 			l.append((x, y))
 	return l
 
+
 def xy_random(n, width, height, min_dist=0, pole=(0,0)):
 
 	"""
@@ -548,7 +622,7 @@ def xy_random(n, width, height, min_dist=0, pole=(0,0)):
 
 	example: |
 		# Draw a 50 rectangles in a random grid
-		c = canvas()
+		c = Canvas()
 		c.fixdot()
 		for x, y in xy_random(50, 500, 500, min_dist=40):
 			c.rect(x-10, y-10, 20, 20)
@@ -595,7 +669,9 @@ def xy_random(n, width, height, min_dist=0, pole=(0,0)):
 	raise osexception(
 		u'Failed to generate random coordinates in xy_random()')
 
+
 # Helper functions that are not part of the public API
+
 
 def parse_pole(pole):
 
@@ -611,3 +687,18 @@ def parse_pole(pole):
 		raise osexception(u'pole should be a tuple (or similar) of length '
 			u'with two numeric values')
 	return ox, oy
+
+
+def set_aliases():
+
+	"""
+	visible: False
+	"""
+
+	# Non PEP-8 alias for backwards compatibility
+	global canvas, sampler, synth, keyboard, mouse
+	canvas = Canvas
+	sampler = Sampler
+	synth = Synth
+	keyboard = Keyboard
+	mouse = Mouse

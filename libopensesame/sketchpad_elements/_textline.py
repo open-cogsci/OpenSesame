@@ -61,12 +61,12 @@ class textline(base_element):
 		"""
 
 		properties = self.eval_properties()
-		self.canvas.set_font(style=properties[u'font_family'],
-			size=properties[u'font_size'],
-			italic=properties[u'font_italic'] == 'yes',
-			bold=properties[u'font_bold'] == 'yes')
 		return self.canvas.text(properties[u'text'],
 			center=properties[u'center']==1,
 			x=properties[u'x'], y=properties[u'y'],
 			color=properties[u'color'],
-			html=properties[u'html']==u'yes')
+			html=properties[u'html']==u'yes',
+			font_family=properties[u'font_family'],
+			font_size=properties[u'font_size'],
+			font_italic=properties[u'font_italic'] == 'yes',
+			font_bold=properties[u'font_bold'] == 'yes')

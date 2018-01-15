@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from oscoroutines._base_task import base_task
+from libopensesame.item_stack import item_stack_singleton
 
 
 class item_task(base_task):
@@ -29,7 +30,8 @@ class item_task(base_task):
 		A task controls the coroutine for one item.
 	"""
 
-	def __init__(self, coroutines, _item, start_time, end_time):
+	def __init__(self, coroutines, _item, start_time, end_time,
+		abort_on_end=False):
 
 		"""
 		desc:
@@ -45,14 +47,25 @@ class item_task(base_task):
 			raise osexception(
 				u'%s not supported by coroutines' % _item.item_type)
 		self._item = _item
-		base_task.__init__(self, coroutines, start_time, end_time)
+		base_task.__init__(self, coroutines, start_time, end_time, abort_on_end)
 		self.coroutines.event(u'initialize %s' % _item.coroutine)
+
+	def step(self):
+
+		"""See base_task."""
+
+		item_stack_singleton.push(self._item.name, u'coroutines_step')
+		retval = base_task.step(self)
+		item_stack_singleton.pop()
+		return retval
 
 	def launch(self):
 
 		"""See base_task."""
 
+		item_stack_singleton.push(self._item.name, u'coroutines_prepare')
 		self._item.prepare()
+		item_stack_singleton.pop()
 		# New-style coroutines take a coroutines keyword, which is used to
 		# communicate the coroutines item. Old-style coroutines do not.
 		try:
@@ -60,4 +73,6 @@ class item_task(base_task):
 		except TypeError:
 			self.coroutine = self._item.coroutine()
 		self.coroutines.event('launch %s' % self._item)
+		item_stack_singleton.push(self._item.name, u'coroutines_launch')
 		self.coroutine.send(None)
+		item_stack_singleton.pop()

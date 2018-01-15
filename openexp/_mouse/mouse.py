@@ -18,22 +18,25 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp.backend import backend, configurable
+from openexp.backend import Backend, configurable
 from libopensesame.exceptions import osexception
 import warnings
 
-class mouse(backend):
+
+class Mouse(Backend):
 
 	"""
 	desc: |
-		The `mouse` class is used to collect mouse input.
+		The `Mouse` class is used to collect mouse input. You generally create a
+		`Mouse` object with the `Mouse()` factory function, as described in the
+		section [Creating a Mouse](#creating-a-mouse).
 
 		__Example:__
 
 		~~~ .python
 		# Draw a 'fixation-dot mouse cursor' until a button is clicked
-		my_mouse = mouse()
-		my_canvas = canvas()
+		my_mouse = Mouse()
+		my_canvas = Canvas()
 		while True:
 			button, position, timestamp = my_mouse.get_click(timeout=20)
 			if button is not None:
@@ -47,6 +50,21 @@ class mouse(backend):
 		[TOC]
 
 		## Things to know
+
+		### Creating a Mouse
+
+		You generally create a `Mouse` with the `Mouse()` factory function:
+
+		~~~ .python
+		my_mouse = Mouse()
+		~~~
+
+		Optionally, you can pass [Response keywords](#response-keywords) to
+		`Keyboard()` to set the default behavior:
+
+		~~~ .python
+		my_mouse = Mouse(timeout=2000)
+		~~~
 
 		### Coordinates
 
@@ -87,7 +105,7 @@ class mouse(backend):
 
 		~~~ .python
 		# Get a left or right button press with a timeout of 3000 ms
-		my_mouse = mouse()
+		my_mouse = Mouse()
 		button, time = my_mouse.get_key(buttonlist=[1,3], timeout=3000)
 		~~~
 
@@ -97,7 +115,7 @@ class mouse(backend):
 
 		~~~ .python
 		# Get two key left or right presses with a 5000 ms timeout
-		my_mouse = mouse()
+		my_mouse = Mouse()
 		my_mouse.keylist = [1,3]
 		my_mouse.timeout = 5000
 		button1, time1 = my_mouse.get_button()
@@ -108,7 +126,7 @@ class mouse(backend):
 
 		~~~ .python
 		# Get two key left or right presses with a 5000 ms timeout
-		my_mouse = mouse(keylist=[1,3], timeout=5000)
+		my_mouse = Mouse(keylist=[1,3], timeout=5000)
 		button1, time1 = my_mouse.get_button()
 		button2, time2 = my_mouse.get_button()
 		~~~
@@ -117,9 +135,11 @@ class mouse(backend):
 	def __init__(self, experiment, **resp_args):
 
 		"""
+		visible: False
+
 		desc: |
-			Constructor to create a new `mouse` object. You do not generally
-			call this constructor directly, but use the `mouse()` function,
+			Constructor to create a new `Mouse` object. You do not generally
+			call this constructor directly, but use the `Mouse()` function,
 			which is described here: [/python/common/]().
 
 		arguments:
@@ -130,19 +150,20 @@ class mouse(backend):
 		keyword-dict:
 			resp_args:
 				Optional [response keywords] that will be used as the default
-				for this `mouse` object.
+				for this `Mouse` object.
 
 		example: |
-			my_mouse = mouse(buttonlist=[1, 2], timeout=2000)
+			my_mouse = Mouse(buttonlist=[1, 2], timeout=2000)
 		"""
 
 		self.experiment = experiment
 		self._cursor_shown = False
-		backend.__init__(self, configurables={
+		Backend.__init__(self, configurables={
 			u'timeout' : self.assert_numeric_or_None,
 			u'buttonlist' : self.assert_list_or_None,
 			u'visible' : self.assert_bool,
-			}, **resp_args)
+			}, **resp_args
+		)
 
 	def set_config(self, **cfg):
 
@@ -154,7 +175,7 @@ class mouse(backend):
 			except:
 				raise osexception(
 					u"buttonlist must be a list of numeric values, or None")
-		backend.set_config(self, **cfg)
+		Backend.set_config(self, **cfg)
 
 	def default_config(self):
 
@@ -198,7 +219,7 @@ class mouse(backend):
 				type:	tuple
 
 		example: |
-			my_mouse = mouse()
+			my_mouse = Mouse()
 			my_mouse.set_pos(pos=(0,0))
 		"""
 
@@ -223,8 +244,41 @@ class mouse(backend):
 			type:			tuple
 
 		example: |
-			my_mouse = mouse()
+			my_mouse = Mouse()
 			button, (x, y), timestamp = my_mouse.get_click(timeout=5000)
+			if button is None:
+				print('A timeout occurred!')
+		"""
+
+		raise NotImplementedError()
+
+	@configurable
+	def get_click_release(self, **resp_args):
+
+		"""
+		desc: |
+			*New in v3.2.0*
+
+			Collects a mouse-click release.
+
+			*Important:* This function is currently not implemented for the
+			*psycho* backend.
+
+		keyword-dict:
+			resp_args:
+				Optional [response keywords] that will be used for this call to
+				[mouse.get_click_release]. This does not affect subsequent
+				operations.
+
+		returns:
+			desc:			A (button, position, timestamp) tuple. The button
+							and position are `None` if a timeout occurs.
+							Position is an (x, y) tuple in screen coordinates.
+			type:			tuple
+
+		example: |
+			my_mouse = Mouse()
+			button, (x, y), timestamp = my_mouse.get_click_release(timeout=5000)
 			if button is None:
 				print('A timeout occurred!')
 		"""
@@ -242,7 +296,7 @@ class mouse(backend):
 			type:	tuple
 
 		example: |
-			my_mouse = mouse()
+			my_mouse = Mouse()
 			(x, y), timestamp = my_mouse.get_pos()
 			print('The cursor was at (%d, %d)' % (x, y))
 		"""
@@ -261,7 +315,7 @@ class mouse(backend):
 			type:	tuple.
 
 		example: |
-			my_mouse = mouse()
+			my_mouse = Mouse()
 			buttons = my_mouse.get_pressed()
 			b1, b2, b3 = buttons
 			print('Currently pressed mouse buttons: (%d,%d,%d)' % (b1,b2,b3))
@@ -281,7 +335,7 @@ class mouse(backend):
 			type:	bool
 
 		example: |
-			my_mouse = mouse()
+			my_mouse = Mouse()
 			my_mouse.flush()
 			button, position, timestamp = my_mouse.get_click()
 		"""
@@ -353,3 +407,7 @@ class mouse(backend):
 		warnings.warn(u'mouse.set_visible() has been deprecated. '
 			'Use mouse.visible instead.', DeprecationWarning)
 		self.visible = visible
+
+
+# Non PEP-8 alias for backwards compatibility
+mouse = Mouse

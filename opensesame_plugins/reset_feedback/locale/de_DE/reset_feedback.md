@@ -15,4 +15,4 @@ Dieses Plug-in wird folgende Variablen zurück auf 0 setzen:
 
 Für mehr Informationen, besuchen Sie:
 
-- <http://osdoc.cogsci.nl/3.1/manual/stimuli/visual/>
+- <http://osdoc.cogsci.nl/3.2/manual/stimuli/visual/>

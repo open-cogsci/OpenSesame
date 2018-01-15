@@ -19,13 +19,42 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import os
-import math
 from openexp._color.color import color
+from openexp._canvas._richtext.richtext import RichText
+from openexp._canvas.canvas import Canvas
+from openexp._coordinates.coordinates import Coordinates
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.config import cfg
 from qtpy import QtWidgets, QtGui, QtCore
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'sketchpad', category=u'item')
+
+
+class QtCanvas(Canvas, Coordinates):
+
+	"""
+	desc:
+		A dummy Canvas that can be passed to the RichText element.
+	"""
+
+	def __init__(self, experiment):
+
+		Canvas.__init__(self, experiment)
+		Coordinates.__init__(self)
+
+
+class QtRichText(RichText):
+
+	"""
+	desc:
+		Disables the pyqt initialization in the RichText element, becausee it is
+		not necessary in the context of the GUI.
+	"""
+
+	def _init_pyqt(self, exp):
+
+		pass
+
 
 class sketchpad_canvas(QtWidgets.QGraphicsScene):
 
@@ -392,11 +421,33 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 			An float scale.
 		"""
 
-		if type(scale) not in (int, float):
+		if not isinstance(scale, (int, float)):
 			self.notify(
-				_(u'Scale "%s" is unknown or variably defined, using 1') % scale)
+				_(u'Scale "%s" is unknown or variably defined, using 1')
+				% scale
+			)
 			return 1
 		return scale
+
+	def _rotation(self, rotation):
+
+		"""
+		desc:
+			Safely returns a rotation.
+
+		returns:
+			A rotation.
+		"""
+
+		if rotation is None:
+			return 0
+		if not isinstance(rotation, (int, float)):
+			self.notify(
+				_('Rotation "%s" is unknown or variably defined, using 0')
+				% rotation
+			)
+			return 0
+		return rotation
 
 	def _point(self, i, x, y, center, scale):
 
@@ -421,8 +472,8 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		scale = self._scale(scale)
 		if center:
 			r = i.boundingRect()
-			x -= r.width()*scale/2
-			y -= r.height()*scale/2
+			x -= r.width() *scale/2
+			y -= r.height() *scale/2
 		return QtCore.QPoint(x, y)
 
 	def _color(self, _color):
@@ -445,17 +496,17 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 				% _color)
 			return QtGui.QColor(self.placeholder_color)
 		return QtGui.QColor(hexcolor)
-		
+
 	def _fill(self, fill):
-		
+
 		"""
 		desc:
 			Safely returns a fill value.
 
 		returns:
 			A fill value (bool).
-		"""		
-		
+		"""
+
 		if isinstance(fill, str):
 			self.notify(
 				_(u'Fill "%s" is unknown or variably defined, assuming filled') \
@@ -560,22 +611,6 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 			return 100
 		return y
 
-	def _scale(self, scale):
-
-		"""
-		desc:
-			Safely returns a scale.
-
-		returns:
-			A scale.
-		"""
-
-		if type(scale) not in (int, float):
-			self.notify(_('Scale "%s" is unknown or variably defined, using 1.0') % scale)
-			return 1.0
-		return scale
-
-
 	def _font_size(self, font_size):
 
 		"""
@@ -655,6 +690,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
+		# Deprecated function
 		if bold:
 			weight = QtGui.QFont.Bold
 		else:
@@ -663,25 +699,33 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		self._font.setPixelSize(self._font_size(size))
 
 	def text(self, text, center=True, x=None, y=None, max_width=None,
-		color=None, bidi=None, html=True):
+		**properties):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		i = self.addText(str(text), self._font)
-		i.setDefaultTextColor(self._color(color))
-		if html:
-			i.setHtml(str(text))
+		t = QtRichText(
+			QtCanvas(self.sketchpad.experiment),
+			text,
+			x=x, y=y, center=center, max_width=max_width,
+			**properties
+		)
+		im = t._to_pil()
+		qim = QtGui.QImage(
+			im.tobytes('raw', 'BGRA'),
+			im.size[0], im.size[1],
+			QtGui.QImage.Format_ARGB32
+		)
+		pixmap = QtGui.QPixmap.fromImage(qim)
+		i = self.addPixmap(pixmap)
+		x = self._x(x)
+		y = self._x(y)
+		c = i.boundingRect().center()
+		dx = c.x()
+		dy = c.y()
 		if center:
-			# Source:
-			# http://www.cesarbs.org/blog/2011/05/30/aligning-text-in-\
-			# qgraphicstextitem/
-			i.setTextWidth(i.boundingRect().width())
-			fmt = QtGui.QTextBlockFormat()
-			fmt.setAlignment(QtCore.Qt.AlignCenter)
-			cursor = i.textCursor()
-			cursor.mergeBlockFormat(fmt)
-			i.setTextCursor(cursor)
-		i.setPos(self._point(i, x, y, center, scale=1))
+			x -= dx
+			y -= dy
+		i.setPos(x, y)
 		return i
 
 	def line(self, sx, sy, ex, ey, color=None, penwidth=None, add=True):
@@ -700,8 +744,9 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
-		from openexp._canvas.canvas import canvas
-		shape = canvas.arrow_shape(self._x(sx), self._y(sy), self._x(ex),
+		from openexp._canvas._arrow.arrow import Arrow
+
+		shape = Arrow._shape(self._x(sx), self._y(sy), self._x(ex),
 			self._y(ey), body_length=self._p(body_length),
 			body_width=self._p(body_width),
 			head_width=self._w(head_width))
@@ -768,15 +813,32 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 			penwidth=penwidth)
 		return i
 
-	def image(self, image, center=True, x=None, y=None, scale=None):
+	def image(self, image, center=True, x=None, y=None, scale=None,
+		rotation=None):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
 		if not isinstance(image, QtGui.QPixmap):
 			image = self._pixmap(image)
 		i = self.addPixmap(image)
-		i.setScale(self._scale(scale))
-		i.setPos(self._point(i, x, y, center, scale))
+		s = self._scale(scale)
+		x = self._x(x)
+		y = self._x(y)
+		r = self._rotation(rotation)
+		c = i.boundingRect().center()
+		dx = c.x()*s
+		dy = c.y()*s
+		i.setTransform(
+			QtGui.QTransform()
+			.translate(dx, dy)
+			.rotate(r)
+			.translate(-dx, -dy)
+			.scale(s, s)
+		)
+		if center:
+			x -= dx
+			y -= dy
+		i.setPos(x, y)
 		return i
 
 	def gabor(self, x, y, *arglist, **kwdict):

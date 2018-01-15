@@ -18,20 +18,24 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp.backend import backend, configurable
+from openexp.backend import Backend, configurable
 import warnings
 
-class keyboard(backend):
+
+class Keyboard(Backend):
 
 	"""
 	desc: |
-		The `keyboard` class is used to collect keyboard responses.
+		The `Keyboard` class is used to collect keyboard responses. You
+		generally create a `Keyboard` object with the `Keyboard()` factory
+		function, as described in the section
+		[Creating a Keyboard](#creating-a-keyboard).
 
 		__Example:__
 
 		~~~ .python
 		# Wait for a 'z' or 'x' key with a timeout of 3000 ms
-		my_keyboard = keyboard(keylist=['z', 'x'], timeout=3000)
+		my_keyboard = Keyboard(keylist=['z', 'x'], timeout=3000)
 		start_time = clock.time()
 		key, end_time = my_keyboard.get_key()
 		var.response = key
@@ -41,6 +45,21 @@ class keyboard(backend):
 		[TOC]
 
 		## Things to know
+
+		### Creating a Keyboard
+
+		You generally create a `Keyboard` with the `Keyboard()` factory function:
+
+		~~~ .python
+		my_keyboard = Keyboard()
+		~~~
+
+		Optionally, you can pass [Response keywords](#response-keywords) to
+		`Keyboard()` to set the default behavior:
+
+		~~~ .python
+		my_keyboard = Keyboard(timeout=2000)
+		~~~
 
 		### Key names
 
@@ -70,7 +89,7 @@ class keyboard(backend):
 
 		~~~ .python
 		# Get a left or right arrow press with a timeout of 3000 ms
-		my_keyboard = keyboard()
+		my_keyboard = Keyboard()
 		key, time = my_keyboard.get_key(keylist=[u'left', u'right'],
 			timeout=3000)
 		~~~
@@ -81,7 +100,7 @@ class keyboard(backend):
 
 		~~~ .python
 		# Get two key A or B presses with a 5000 ms timeout
-		my_keyboard = keyboard()
+		my_keyboard = Keyboard()
 		my_keyboard.keylist = [u'a', u'b']
 		my_keyboard.timeout = 5000
 		key1, time1 = my_keyboard.get_key()
@@ -92,7 +111,7 @@ class keyboard(backend):
 
 		~~~ .python
 		# Get two key A or B presses with a 5000 ms timeout
-		my_keyboard = keyboard(keylist=[u'a', u'b'], timeout=5000)
+		my_keyboard = Keyboard(keylist=[u'a', u'b'], timeout=5000)
 		key1, time1 = my_keyboard.get_key()
 		key2, time2 = my_keyboard.get_key()
 		~~~
@@ -101,9 +120,11 @@ class keyboard(backend):
 	def __init__(self, experiment, **resp_args):
 
 		"""
+		visible: False
+
 		desc: |
-			Constructor to create a new `keyboard` object. You do not generally
-			call this constructor directly, but use the `keyboard()` function,
+			Constructor to create a new `Keyboard` object. You do not generally
+			call this constructor directly, but use the `Keyboard()` function,
 			which is described here: [/python/common/]().
 
 		arguments:
@@ -114,14 +135,14 @@ class keyboard(backend):
 		keyword-dict:
 			resp_args:
 				Optional [response keywords] (`timeout` and `keylist`) that will
-				be used as the default for this `keyboard` object.
+				be used as the default for this `Keyboard` object.
 
 		example: |
-			my_keyboard = keyboard(keylist=['z', 'm'], timeout=2000)
+			my_keyboard = Keyboard(keylist=['z', 'm'], timeout=2000)
 		"""
 
 		self.experiment = experiment
-		backend.__init__(self, configurables={
+		Backend.__init__(self, configurables={
 			u'timeout' : self.assert_numeric_or_None,
 			u'keylist' : self.assert_list_or_None,
 			}, **resp_args)
@@ -135,7 +156,7 @@ class keyboard(backend):
 				keylist += [key for key in self.synonyms(key) \
 					if key not in keylist]
 			cfg[u'keylist'] = keylist
-		backend.set_config(self, **cfg)
+		Backend.set_config(self, **cfg)
 
 	def default_config(self):
 
@@ -154,7 +175,7 @@ class keyboard(backend):
 		keyword-dict:
 			resp_args:
 				Optional [response keywords] (`timeout` and `keylist`) that will
-				be used for this call to [keyboard.get_key] this does not
+				be used for this call to [keyboard.get_key]. This does not
 				affect subsequent operations.
 
 		returns:
@@ -163,8 +184,42 @@ class keyboard(backend):
 			type:		tuple
 
 		example: |
-			my_keyboard = keyboard()
+			my_keyboard = Keyboard()
 			response, timestamp = my_keyboard.get_key(timeout=5000)
+			if response is None:
+				print(u'A timeout occurred!')
+		"""
+
+		raise NotImplementedError()
+
+	@configurable
+	def get_key_release(self, **resp_args):
+
+		"""
+		desc: |
+			*New in v3.2.0*
+
+			Collects a single key release.
+
+			*Important:* This function currently assumes a QWERTY keyboard
+			layout (unlike `Keyboard.get_key()`). This means that the returned
+			`key` may be incorrect on non-QWERTY keyboard layouts. In addition,
+			this function is not implemented for the *psycho* backend.
+
+		keyword-dict:
+			resp_args:
+				Optional [response keywords] (`timeout` and `keylist`) that will
+				be used for this call to [keyboard.get_key_release]. This does
+				not affect subsequent operations.
+
+		returns:
+			desc:		A `(key, timestamp)` tuple. `key` is None if a timeout
+						occurs.
+			type:		tuple
+
+		example: |
+			my_keyboard = Keyboard()
+			response, timestamp = my_keyboard.get_key_release(timeout=5000)
 			if response is None:
 				print(u'A timeout occurred!')
 		"""
@@ -184,7 +239,7 @@ class keyboard(backend):
 			type:	list
 
 		example: |
-			my_keyboard = keyboard()
+			my_keyboard = Keyboard()
 			moderators = my_keyboard.get_mods()
 			if u'shift' in moderators:
 				print(u'The shift-key is down!')
@@ -239,7 +294,7 @@ class keyboard(backend):
 			type:	bool
 
 		Example: |
-			my_keyboard = keyboard()
+			my_keyboard = Keyboard()
 			my_keyboard.flush()
 			response, timestamp = my_keyboard.get_key()
 		"""
@@ -265,7 +320,7 @@ class keyboard(backend):
 				type:	bool
 
 		example: |
-			my_keyboard = keyboard()
+			my_keyboard = Keyboard()
 			my_keyboard.show_virtual_keyboard(True)
 			response1, timestamp2 = my_keyboard.get_key()
 			response2, timestamp2 = my_keyboard.get_key()
@@ -308,3 +363,7 @@ class keyboard(backend):
 		warnings.warn(u'keyboard.set_timeout() has been deprecated. '
 			'Use keyboard.timeout instead.', DeprecationWarning)
 		self.timeout = timeout
+
+
+# Non PEP-8 alias for backwards compatibility
+keyboard = Keyboard

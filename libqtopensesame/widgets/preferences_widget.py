@@ -97,9 +97,13 @@ class preferences_widget(base_widget):
 		# Set the locale combobox
 		self.ui.combobox_locale.addItem(u'[Default]')
 		self.ui.combobox_locale.setCurrentIndex(0)
-		locales = [locale[:-3] \
-			for locale in os.listdir(misc.resource(u'locale')) \
-			if locale != u'translatables']
+		locales = sorted(
+			[
+				locale[:-3]
+				for locale in os.listdir(misc.resource(u'locale'))
+				if locale != u'translatables.qm'
+			] + [u'en_US']
+		)
 		for i, locale in enumerate(locales):
 			self.ui.combobox_locale.addItem(locale)
 			if cfg.locale == locale:

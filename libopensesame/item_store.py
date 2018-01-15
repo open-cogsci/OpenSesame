@@ -32,6 +32,8 @@ class item_store(object):
 		The `items` object provides dict-like access to the items. It's mainly
 		useful for programatically executing items.
 
+		An `items` object is created automatically when the experiment starts.
+
 		In addition to the functions listed below, the following semantics are
 		supported:
 
@@ -85,6 +87,9 @@ class item_store(object):
 			name:
 				desc:	An item name.
 				type:	str
+
+		example: |
+			items.execute(u'target_sketchpad')
 		"""
 
 		self.prepare(name)
@@ -100,6 +105,10 @@ class item_store(object):
 			name:
 				desc:	An item name.
 				type:	str
+
+		example: |
+			items.prepare('target_sketchpad')
+			items.run('target_sketchpad')
 		"""
 
 		item_stack_singleton.push(name, u'run')
@@ -116,6 +125,10 @@ class item_store(object):
 			name:
 				desc:	An item name.
 				type:	str
+
+		example: |
+			items.prepare('target_sketchpad')
+			items.run('target_sketchpad')
 		"""
 
 		item_stack_singleton.push(name, u'prepare')
@@ -196,6 +209,9 @@ class item_store(object):
 		returns:
 			desc:	A unique name.
 			type:	unicode
+
+		example: |
+			valid_name = items.valid_name(u'sketchpad', u'an invalid name')
 		"""
 
 		if suggestion is None:
@@ -218,6 +234,23 @@ class item_store(object):
 		return cistr(_name)
 
 	def _type(self, name):
+
+		"""
+		desc:
+			Gets the type of an item.
+
+		arguments:
+			name:
+				desc:	The name of an item.
+				type:	unicode
+
+		returns:
+			desc:	The type of an item, or `None` if the item doesn't exist.
+			type:	[unicode, NoneType]
+
+		example: |
+			print(items._type('target_sketchpad'))
+		"""
 
 		if name not in self:
 			return None
@@ -243,38 +276,14 @@ class item_store(object):
 
 	@property
 	def items(self):
-
-		"""
-		name: items
-
-		desc:
-			Returns a list of (item name, item object) tuples.
-		"""
-
 		return self.__items__.items
 
 	@property
 	def keys(self):
-
-		"""
-		name: keys
-
-		desc:
-			Returns a list of item names.
-		"""
-
 		return self.__items__.keys
 
 	@property
 	def values(self):
-
-		"""
-		name: values
-
-		desc:
-			Returns a list of `item` objects.
-		"""
-
 		return self.__items__.values
 
 	@property

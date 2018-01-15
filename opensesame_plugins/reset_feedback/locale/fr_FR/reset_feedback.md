@@ -14,4 +14,4 @@ Ce plugin réinitialise les variables suivants (remise à 0) :
 
 Pour plus d'informations, rendez-vous sur :
 
-- <http://osdoc.cogsci.nl/3.1/manual/stimuli/visual/>
+- <http://osdoc.cogsci.nl/3.2/manual/stimuli/visual/>

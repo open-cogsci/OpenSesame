@@ -232,7 +232,7 @@ def docstring(key):
 		affect subsequent operations.
 	""" % {u'key' : key}
 
-class backend(object):
+class Backend(object):
 
 	"""
 	desc:
@@ -414,3 +414,7 @@ class backend(object):
 		"""
 
 		return {}
+
+
+# Non PEP-8 alias for backwards compatibility
+backend = Backend

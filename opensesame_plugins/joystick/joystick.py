@@ -1,9 +1,6 @@
 #-*- coding:utf-8 -*-
 
 """
-30-05-2012
-Author: Edwin Dalmaijer
-
 This file is part of OpenSesame.
 
 OpenSesame is free software: you can redistribute it and/or modify
@@ -52,7 +49,7 @@ class joystick(base_response_item):
 
 		try:
 			response = int(response)
-		except:
+		except ValueError:
 			return False
 		return response >= 0 or response <= 255
 
@@ -66,25 +63,57 @@ class joystick(base_response_item):
 		return self.experiment.joystick.get_joybutton(
 			joybuttonlist=self._allowed_responses,
 			timeout=self._timeout
-			)
+		)
 
 	def prepare_response_func(self):
 
 		"""See base_response_item."""
 
-		self._keyboard = keyboard(self.experiment,
-			keylist=self._allowed_responses, timeout=self._timeout)
+		self._keyboard = keyboard(
+			self.experiment,
+			keylist=(
+				self._allowed_responses if self._allowed_responses
+				else list(range(0,10)) # Only numeric keys
+			),
+			timeout=self._timeout
+		)
 		if self.var._dummy == u'yes':
 			return self._keyboard.get_key
 		# Dynamically load a joystick instance
 		if not hasattr(self.experiment, u'joystick'):
 			_joystick = plugins.load_mod(__file__, u'libjoystick')
 			self.experiment.joystick = _joystick.libjoystick(
-				self.experiment, device=self._device)
+				self.experiment,
+				device=self._device
+			)
 			self.python_workspace[u'joystick'] = self.experiment.joystick
 		if self._allowed_responses is not None:
 			self._allowed_responses = [int(r) for r in self._allowed_responses]
 		return self._get_button_press
+
+	def response_matches(self, test, ref):
+
+		"""See base_response_item."""
+
+		return safe_decode(test) in ref
+
+	def coroutine(self):
+
+		"""See coroutines plug-in."""
+
+		if self.var._dummy == u'yes':
+			self._keyboard.timeout = 0
+		else:
+			self.experiment.joystick.timeout = 0
+		alive = True
+		yield
+		self._t0 = self.set_item_onset()
+		while alive:
+			button, time = self._collect_response()
+			if button is not None:
+				break
+			alive = yield
+		self.process_response((button, time))
 
 
 class qtjoystick(joystick, qtautoplugin):

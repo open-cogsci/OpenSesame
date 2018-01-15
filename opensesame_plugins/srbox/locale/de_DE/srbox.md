@@ -22,4 +22,4 @@ Auf der Seite von Psychology Software Tools:
 
 Auf der OpenSesame Dokumentationsseite:
 
-- <http://osdoc.cogsci.nl/3.1/manual/response/srbox/>
+- <http://osdoc.cogsci.nl/3.2/manual/response/srbox/>

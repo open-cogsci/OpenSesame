@@ -18,10 +18,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp._color.color import color
+from openexp._color.color import Color
 
-class psycho(color):
+
+class Psycho(Color):
 
 	def to_backend_color(self, hexcolor):
 
 		return hexcolor
+
+
+# Non PEP-8 alias for backwards compatibility
+psycho = Psycho

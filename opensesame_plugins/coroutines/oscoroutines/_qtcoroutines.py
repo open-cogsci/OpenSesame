@@ -81,6 +81,8 @@ class qtcoroutines(coroutines, sequence):
 			A setter that maps an items list to a schedule list.
 		"""
 
+		self.schedule = self.schedule[:len(val)]
+		self._items = items_adapter(self.schedule)
 		for i, (item_name, cond) in enumerate(val):
 			start_time = self.schedule[i][1]
 			end_time = self.schedule[i][2]
@@ -102,10 +104,30 @@ class qtcoroutines(coroutines, sequence):
 		self.edit_vbox.addWidget(self.treewidget)
 		self.add_line_edit_control(u'duration', _(u'Duration'),
 			validator=duration_validator(self.main_window, default=u'5000'))
+		self._combobox_end_after_item = self.add_combobox_control(
+			u'end_after_item', _(u'End after item (optional)'),
+			options=[s[0] for s in self.schedule]
+		)
 		self.add_line_edit_control(u'function_name',
 			_(u'Generator function name (optional)'))
 		self.add_checkbox_control(u'flush_keyboard',
 			_(u'Flush pending key presses at coroutines start'))
+
+	def edit_widget(self):
+
+		"""See qtitem."""
+
+		sequence.edit_widget(self)
+		self._refresh()
+
+	def rename(self, from_name, to_name):
+
+		"""See qtitem."""
+
+		sequence.rename(self, from_name, to_name)
+		if self.var.end_after_item == from_name:
+			self.var.end_after_item = to_name
+			self._refresh()
 
 	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
 		extra_info=None):
@@ -131,8 +153,43 @@ class qtcoroutines(coroutines, sequence):
 
 	def insert_child_item(self, item_name, index=0):
 
+		"""See sequence."""
+
 		if not self.is_coroutine(item_name):
 			self.experiment.notify(
 				_(u'"%s" does not support coroutines.') % item_name)
 			return
 		sequence.insert_child_item(self, item_name, index=index)
+		self._refresh()
+
+	def remove_child_item(self, item_name, index=0):
+
+		"""See sequence."""
+
+		sequence.remove_child_item(self, item_name, index=index)
+		if item_name == self.var.end_after_item:
+			self.var.end_after_item = u''
+		self._refresh()
+
+	def _refresh(self):
+
+		"""
+		desc:
+			Refreshes the GUI, which currently means updating the combobox for
+			end_after_item.
+		"""
+
+		# No refresh necessary if the combobox hasn't been initialized yet
+		if not hasattr(self, u'_combobox_end_after_item'):
+			return
+		self._combobox_end_after_item.clear()
+		self._combobox_end_after_item.addItem(u'')
+		current_index = 0
+		for i, (item_name, st, et, cond) in enumerate(self.schedule):
+			if self.var.end_after_item == item_name:
+				current_index = i+1
+			self._combobox_end_after_item.addItem(
+				self.theme.qicon(self.experiment.items[item_name].item_icon()),
+				item_name
+			)
+		self._combobox_end_after_item.setCurrentIndex(current_index)

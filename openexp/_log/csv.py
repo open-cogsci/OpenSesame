@@ -18,10 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp._log.log import log
+from openexp._log.log import Log
 import os
 
-class csv(log):
+
+class Csv(Log):
 
 	"""
 	desc:
@@ -31,12 +32,13 @@ class csv(log):
 	def __init__(self, experiment, path):
 
 		self._log = None
-		log.__init__(self, experiment, path)
+		Log.__init__(self, experiment, path)
 		experiment.data_files.append(path)
 
 	def close(self):
 
-		self._log.close()
+		if self._log is not None:
+			self._log.close()
 
 	def open(self, path):
 
@@ -77,3 +79,7 @@ class csv(log):
 			val = safe_decode(val)
 			l.append(u'"%s"' % val.replace(u'"', u'\\"'))
 		self.write(u','.join(l))
+
+
+# Non PEP-8 alias for backwards compatibility
+csv = Csv

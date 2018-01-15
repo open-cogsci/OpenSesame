@@ -31,6 +31,8 @@ class var_store(object):
 		to using the square-bracket (`[my_variable]`) notation, and logged by
 		the LOGGER item.
 
+		A `var` object is created automatically when the experiment starts.
+
 		In addition to the functions listed below, the following semantics are
 		supported:
 
@@ -185,6 +187,9 @@ class var_store(object):
 			preserve:
 				desc:	A list of variable names that shouldn't be cleared.
 				type:	list
+
+		example: |
+			var.clear()
 		"""
 
 		for var in list(self.__vars__.keys()):
@@ -366,6 +371,10 @@ class var_store(object):
 		returns:
 			desc:	A list of variable names.
 			type:	list
+
+		example: |
+			for varname in var.vars():
+				print(varname)
 		"""
 
 		return sorted(list(self.__vars__.keys()))
@@ -380,6 +389,10 @@ class var_store(object):
 		returns:
 			desc:	A list of (variable_name, value) tuples.
 			type:	list
+
+		example: |
+			for varname, value in var.items():
+				print(varname, value)
 		"""
 
 		return list(self.__vars__.items())

@@ -19,12 +19,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import pygame
-from openexp._color.color import color
+from openexp._color.color import Color
 
-class legacy(color):
+
+class Legacy(Color):
 
 	def to_backend_color(self, hexcolor):
 
 		if py3:
 			return pygame.Color(hexcolor)
 		return pygame.Color(safe_encode(hexcolor))
+
+
+# Non PEP-8 alias for backwards compatibility
+legacy = Legacy

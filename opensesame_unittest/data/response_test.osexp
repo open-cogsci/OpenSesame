@@ -1,6 +1,6 @@
 ---
-API: 2
-OpenSesame: 3.1.0a20
+API: 2.1
+OpenSesame: 3.2.0a8
 Platform: posix
 ---
 set width 1024
@@ -9,21 +9,25 @@ set title "Basic response test"
 set subject_parity even
 set subject_nr 0
 set start experiment
-set sampler_backend legacy
-set mouse_backend legacy
-set keyboard_backend legacy
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set round_decimals 2
 set height 768
+set fullscreen no
+set form_clicks no
 set foreground white
+set font_underline no
 set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "/home/sebastiaan/git/opensesame-james/opensesame_unittest/data"
+set experiment_path "/home/sebastiaan/git/OpenSesame/opensesame_unittest/data"
+set disable_garbage_collection yes
 set description "Default description"
 set coordinates uniform
 set compensation 0
-set color_backend legacy
-set clock_backend legacy
 set canvas_backend legacy
 set bidi no
 set background black

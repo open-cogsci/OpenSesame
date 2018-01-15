@@ -24,6 +24,7 @@ from datamatrix import operations, DataMatrix
 from pseudorandom import Enforce, MaxRep, MinDist, InvalidConstraint
 import openexp.keyboard
 
+
 class loop(item.item):
 
 	"""A loop item runs a single other item multiple times"""
@@ -40,7 +41,7 @@ class loop(item.item):
 		u'reverse',
 		u'roll',
 		u'weight',
-		]
+	]
 
 	def reset(self):
 
@@ -51,7 +52,8 @@ class loop(item.item):
 		self.dm.sorted = False
 		self.live_dm = None
 		self.live_row = None
-		self.operations = []
+		self._operations = []
+		self._constraints = []
 		self._item = u''
 
 		self.var.repeat = 1
@@ -59,7 +61,7 @@ class loop(item.item):
 		self.var.order = u'random'
 		self.var.break_if = u'never'
 		self.var.break_if_on_first = u'yes'
-		self.var.source = u'table' # file or table
+		self.var.source = u'table'  # file or table
 		self.var.source_file = u''
 
 	def from_string(self, string):
@@ -80,7 +82,7 @@ class loop(item.item):
 				self._item = arglist[0]
 				continue
 			if cmd == u'setcycle':
-				if self.ef is not None or self.operations:
+				if self.ef is not None or self._operations:
 					raise osexception(
 						u'setcycle must come before constraints and operations')
 				if len(arglist) != 3 or kwdict:
@@ -93,34 +95,33 @@ class loop(item.item):
 				self.dm[row][var] = val
 				continue
 			if cmd == u'constrain':
-				if self.operations:
+				if self._operations:
 					raise osexception(
-						u'constraints must come before operations')
-				if self.ef is None:
-					self.ef = Enforce(self.dm)
+						u'constraints must come before operations'
+					)
 				if len(arglist) != 1:
 					raise osexception(u'Invalid constrain command: %s' % i)
 				colname = arglist[0]
-				try:
-					col = self.dm[colname]
-				except:
-					raise osexception(u'Invalid column name: %s' % colname)
 				for constraint, value in kwdict.items():
-					try:
-						if constraint == u'maxrep':
-							self.ef.add_constraint(MaxRep, cols=[col],
-								maxrep=value)
-							continue
-						if constraint == u'mindist':
-							self.ef.add_constraint(MinDist, cols=[col],
-								mindist=value)
-							continue
-					except InvalidConstraint as e:
-						raise osexception(e)
-					raise osexception(u'Invalid constrain command: %s' % i)
+					if constraint == u'maxrep':
+						constraint_cls = MaxRep
+						kwargs = {u'maxrep' : value}
+					elif constraint == u'mindist':
+						constraint_cls = MinDist
+						kwargs = {u'mindist' : value}
+					else:
+						raise osexception(
+							u'Unknown constraint: %s' % constraint
+						)
+					self._constraints.append((
+							constraint_cls,
+							colname,
+							kwargs
+					))
+					# raise osexception(u'Invalid constrain command: %s' % i)
 				continue
 			if cmd in self.commands:
-				self.operations.append( (cmd, arglist) )
+				self._operations.append((cmd, arglist))
 		if len(self.dm) == 0:
 			self.dm.length = 1
 		if len(self.dm.columns) == 0:
@@ -130,7 +131,7 @@ class loop(item.item):
 		# of cycles doesn't match the length of the datamatrix, we change the
 		# length of the datamatrix.
 		if u'cycles' in self.var and isinstance(self.var.cycles, int) \
-				and self.var.cycles != len(self.dm):
+			and self.var.cycles != len(self.dm):
 			self.dm.length = self.var.cycles
 
 	def to_string(self):
@@ -145,20 +146,11 @@ class loop(item.item):
 			for name, val in row:
 				s += u'\t%s\n' % \
 					self.syntax.create_cmd(u'setcycle', [i, name, val])
-		if self.ef is not None:
-			d = {}
-			for constraint in self.ef.constraints:
-				col = constraint.cols[0]
-				if col not in d:
-					d[col] = {}
-				if isinstance(constraint, MaxRep):
-					d[col][u'maxrep'] = constraint.maxrep
-				elif isinstance(constraint, MinDist):
-					d[col][u'mindist'] = constraint.mindist
-			for col, kwdict in d.items():
-				s += u'\t%s\n' % self.syntax.create_cmd(u'constrain', [col],
-					kwdict)
-		for cmd, arglist in self.operations:
+		for constraint_cls, colname, kwargs in self._constraints:
+			s += u'\t%s\n' % self.syntax.create_cmd(
+				u'constrain', [colname], kwargs
+			)
+		for cmd, arglist in self._operations:
 			s += u'\t%s\n' % self.syntax.create_cmd(cmd, arglist)
 		s += u'\t%s\n' % self.syntax.create_cmd(u'run', [self._item])
 		return s
@@ -194,35 +186,21 @@ class loop(item.item):
 			type:	DataMatrix
 		"""
 
-		if self.var.source == u'table':
-			src_dm = self.dm
-		else:
-			from datamatrix import io
-			src = self.experiment.pool[self.var.source_file]
-			if src.endswith(u'.xlsx'):
-				try:
-					src_dm = io.readxlsx(src)
-				except Exception as e:
-					raise osexception(u'Failed to read .xlsx file: %s' % src,
-						exception=e)
-			else:
-				try:
-					src_dm = io.readtxt(src)
-				except Exception as e:
-					raise osexception(u'Failed to read text file (perhaps it has the wrong format or it is not utf-8 encoded): %s' % src,
-						exception=e)
+		src_dm = self.dm if self.var.source == u'table' else self._read_file()
 		for column_name in src_dm.column_names:
 			if not self.syntax.valid_var_name(column_name):
 				raise osexception(
-					u'The loop table contains an invalid column name: 'u'\'%s\'' \
-					% column_name)
+					u'The loop table contains an invalid column name: 'u'\'%s\''
+					% column_name
+				)
 		# The number of repeats should be numeric. If not, then give an error.
 		# This can also occur when generating a preview of a loop table if
 		# repeat is variable.
 		if not isinstance(self.var.repeat, (int, float)):
 			raise osexception(
-				u'Don\'t know how to generate a DataMatrix for "%s" repeats' \
-				% self.var.repeat)
+				u'Don\'t know how to generate a DataMatrix for "%s" repeats'
+				% self.var.repeat
+			)
 		length = int(len(src_dm) * self.var.repeat)
 		dm = DataMatrix(length=0)
 		while len(dm) < length:
@@ -233,10 +211,16 @@ class loop(item.item):
 				dm <<= src_dm[:i]
 		if self.var.order == u'random':
 			dm = operations.shuffle(dm)
-		if self.ef is not None:
-			self.ef.dm = dm
+		# Constraints come before loop operations
+		if self._constraints:
+			self.ef = Enforce(dm)
+			for constraint_cls, colname, kwargs in self._constraints:
+				self.ef.add_constraint(
+					constraint_cls, cols=dm[colname], **kwargs
+				)
 			dm = self.ef.enforce()
-		for cmd, arglist in self.operations:
+		# Operations come last
+		for cmd, arglist in self._operations:
 			# The column name is always specified last, or not at all
 			if arglist:
 				try:
@@ -296,7 +280,9 @@ class loop(item.item):
 		if (u'skip' in self.var.__vars__ and self.var.skip != 0) \
 			or (u'offset' in self.var.__vars__ and self.var.offset != u'no'):
 			raise osexception(
-				u'The skip and offset options have been removed. Please refer to the documentation of the loop item for more information.')
+				u'The skip and offset options have been removed. Please refer '
+				u'to the documentation of the loop item for more information.'
+			)
 		# Compile break-if statement
 		break_if = self.var.get(u'break_if', _eval=False)
 		if break_if not in (u'never', u''):
@@ -308,8 +294,9 @@ class loop(item.item):
 		# Make sure the item to run exists
 		if self._item not in self.experiment.items:
 			raise osexception(
-				u"Could not find item '%s', which is called by loop item '%s'" \
-				% (self._item, self.name))
+				u"Could not find item '%s', which is called by loop item '%s'"
+				% (self._item, self.name)
+			)
 
 	def run(self):
 
@@ -350,9 +337,63 @@ class loop(item.item):
 			self.live_row = None
 			self.live_dm = None
 
+	def _read_file(self):
+
+		"""
+		desc:
+			Reads a source file and raises an osexception if this fails.
+
+		returns:
+			type:	DataMatrix
+		"""
+
+		from datamatrix import io
+		src = self.experiment.pool[self.var.source_file]
+		if src.endswith(u'.xlsx'):
+			try:
+				return io.readxlsx(src)
+			except Exception as e:
+				raise osexception(u'Failed to read .xlsx file: %s' % src,
+					exception=e)
+		try:
+			return io.readtxt(src)
+		except Exception as e:
+			raise osexception(
+				(u'Failed to read text file (perhaps it has the '
+				u'wrong format or it is not utf-8 encoded): %s') % src,
+				exception=e
+			)
+
+	def _var_info_table(self):
+
+		"""
+		returns:
+			A list of (var, value) tuples that have been defined in the loop
+			table.
+		"""
+
+		return [(colname, safe_decode(col)) for colname, col in self.dm.columns]
+
+	def _var_info_file(self):
+
+		"""
+		returns:
+			A list of (var, value) tuples that have been defined in a source
+			file.
+		"""
+
+		try:
+			dm = self._read_file()
+		except osexception:
+			return []
+		return [(colname, safe_decode(col)) for colname, col in dm.columns]
+
 	def var_info(self):
 
 		"""See item."""
 
-		return item.item.var_info(self) + [ (colname, safe_decode(col)) \
-			for colname, col in self.dm.columns]
+		return item.item.var_info(self) + (
+			self._var_info_table()
+			if self.var.source == u'table'
+			else self._var_info_file()
+		)

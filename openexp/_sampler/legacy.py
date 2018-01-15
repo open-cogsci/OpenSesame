@@ -20,10 +20,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from pygame.locals import *
 import pygame
-from openexp._sampler import sampler
+from openexp._sampler.sampler import Sampler
 from libopensesame.exceptions import osexception
 from libopensesame import misc
-from openexp.keyboard import keyboard
+from openexp.keyboard import Keyboard
 from openexp.backend import configurable
 import os.path
 try:
@@ -35,7 +35,7 @@ try:
 except ImportError:
 	import android.mixer as mixer
 
-class legacy(sampler.sampler):
+class Legacy(Sampler):
 
 	"""
 	desc:
@@ -88,8 +88,8 @@ class legacy(sampler.sampler):
 					import sys
 					src = src.encode(misc.filesystem_encoding())
 			self.sound = mixer.Sound(src)
-		sampler.sampler.__init__(self, experiment, src, **playback_args)
-		self.keyboard = keyboard(experiment)
+		Sampler.__init__(self, experiment, src, **playback_args)
+		self.keyboard = Keyboard(experiment)
 
 	def set_config(self, **cfg):
 
@@ -97,7 +97,7 @@ class legacy(sampler.sampler):
 			cfg[u'duration'] = 0
 		if u'fade_in' in cfg and cfg[u'fade_in'] is None:
 			cfg[u'fade_in'] = 0
-		sampler.sampler.set_config(self, **cfg)
+		Sampler.set_config(self, **cfg)
 		if u'volume' in cfg:
 			self.sound.set_volume(cfg[u'volume'])
 		if u'pitch' in cfg:
@@ -199,3 +199,7 @@ class legacy(sampler.sampler):
 	def close_sound(experiment):
 
 		mixer.quit()
+
+
+# Non PEP-8 alias for backwards compatibility
+legacy = Legacy

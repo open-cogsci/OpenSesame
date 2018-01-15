@@ -67,7 +67,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.lock_refresh = False
 		self.unsaved_changes = False
 		self._run_status = u'inactive'
-		self.block_close_event = False		
+		self.block_close_event = False
 		self.parse_command_line()
 		self.restore_config()
 
@@ -85,17 +85,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# icons by default.
 		QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_DontShowIconsInMenus,
 			False)
-		# Add the Qt plugin folders to the library path, if they exists. Where
-		# these folders are depends on the version of Qt4, but these are two
-		# possible locations.
-		qt_plugin_path = os.path.join(
-			os.path.dirname(sys.executable), 'Library', 'plugins')
-		if os.path.isdir(qt_plugin_path):
-			QtCore.QCoreApplication.addLibraryPath(qt_plugin_path)
-		qt_plugin_path = os.path.join(
-			os.path.dirname(sys.executable), 'Library', 'lib', 'qt4', 'plugins')
-		if os.path.isdir(qt_plugin_path):
-			QtCore.QCoreApplication.addLibraryPath(qt_plugin_path)
 		# Do a few things to customize QProgEdit behavior:
 		# - Register the bundled monospace font (Droid Sans Mono)
 		# - Make sure that QProgEdit doesn't complain about some standard names
@@ -115,7 +104,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 		# # Parse the command line
 		# self.parse_command_line()
-		# 
+		#
 		# # Restore the configuration
 		# self.restore_config()
 		self.set_style()
@@ -158,6 +147,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.ui.action_run_in_window.triggered.connect(
 			self.run_experiment_in_window)
 		self.ui.action_run_quick.triggered.connect(self.run_quick)
+		self.ui.action_kill.triggered.connect(self.kill_experiment)
 		self.ui.action_enable_auto_response.triggered.connect(
 			self.set_auto_response)
 		self.ui.action_close_current_tab.triggered.connect(
@@ -447,13 +437,13 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		else:
 			debug.msg(u"ignoring unknown style '%s'" % cfg.style)
 			cfg.style = u''
-			
+
 	def set_locale(self, translator):
-		
+
 		""""
 		desc:
 			Sets the application language.
-		
+
 		arguments:
 			translator:
 				desc:	For some reason, the QTranslator object needs to be
@@ -951,6 +941,14 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 						redo = True
 						break
 
+	def kill_experiment(self):
+
+		"""Tries to kill a running experiment. This is not supported by all
+		runners.
+		"""
+
+		self._runner.kill()
+
 	def run_experiment(self, dummy=None, fullscreen=True, quick=False):
 
 		"""
@@ -969,8 +967,8 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.enable(False)
 		print(u'\n')
 		debug.msg(u'using %s runner' % cfg.runner)
-		_runner = self.runner_cls(self)
-		_runner.run(quick=quick, fullscreen=fullscreen,
+		self._runner = self.runner_cls(self)
+		self._runner.run(quick=quick, fullscreen=fullscreen,
 			auto_response=self.experiment.auto_response)
 		self.enable(True)
 
@@ -1024,7 +1022,14 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.block_close_event = not enabled
 		self.ui.dock_overview.setEnabled(enabled)
 		self.ui.centralwidget.setEnabled(enabled)
-		self.ui.toolbar_main.setEnabled(enabled)
+		for action in self.ui.toolbar_main.actions():
+			# The kill action should be enabled when the experiment is running
+			# and the runner supports killing
+			action.setEnabled(
+				not enabled and self.runner_cls.supports_kill
+				if action.objectName() == u'action_kill'
+				else enabled
+			)
 		self.ui.toolbar_items.setEnabled(enabled)
 		self.ui.menubar.setEnabled(enabled)
 		self.ui.dock_pool.setEnabled(enabled)
@@ -1055,21 +1060,21 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 	@property
 	def read_only(self):
-		
+
 		"""
 		desc:
 			Getter property for toggling the save action when setting.
 		"""
-						
+
 		return self._read_only
-		
+
 	@read_only.setter
 	def read_only(self, read_only):
-		
+
 		"""
 		desc:
 			Setter property for toggling the save action.
-		"""		
-		
+		"""
+
 		self._read_only = read_only
 		self.ui.action_save.setEnabled(not read_only)

@@ -60,11 +60,13 @@ class sketchpad_widget(base_widget):
 		self.ui.button_pointer.clicked.connect(self.select_pointer_tool)
 		self.ui.spinbox_zoom.valueChanged.connect(self.zoom)
 		self.ui.spinbox_scale.valueChanged.connect(self.apply_scale)
+		self.ui.spinbox_rotation.valueChanged.connect(self.apply_rotation)
 		self.ui.spinbox_penwidth.valueChanged.connect(self.apply_penwidth)
 		self.ui.edit_color.textEdited.connect(self.apply_color)
 		self.ui.edit_show_if.editingFinished.connect(self.apply_show_if)
 		self.ui.edit_show_if.setValidator(cond_validator(self,
 			default=u'always'))
+		self.ui.edit_name.editingFinished.connect(self.apply_name)
 		self.ui.spinbox_arrow_head_width.valueChanged.connect(
 			self.apply_arrow_head_width)
 		self.ui.spinbox_arrow_body_width.valueChanged.connect(
@@ -163,11 +165,22 @@ class sketchpad_widget(base_widget):
 
 		"""
 		desc:
-			Applies toggling of the center checkbox.
+			Applies changes to the scale.
 		"""
 
 		for element in self.sketchpad.selected_elements():
 			element.set_property(u'scale', scale)
+		self.draw()
+
+	def apply_rotation(self, rotation):
+
+		"""
+		desc:
+			Applies changes to the rotation.
+		"""
+
+		for element in self.sketchpad.selected_elements():
+			element.set_property(u'rotation', rotation)
 		self.draw()
 
 	def apply_center(self, center):
@@ -204,6 +217,18 @@ class sketchpad_widget(base_widget):
 		for element in self.sketchpad.selected_elements():
 			element.set_property(u'show_if', show_if)
 			self.ui.edit_show_if.setText(show_if)
+		self.draw()
+
+	def apply_name(self):
+
+		"""
+		desc:
+			Applies changes to the name field.
+		"""
+
+		name = self.ui.edit_name.text()
+		for element in self.sketchpad.selected_elements():
+			element.set_property(u'name', name)
 		self.draw()
 
 	def apply_penwidth(self, penwidth):
@@ -268,7 +293,9 @@ class sketchpad_widget(base_widget):
 			(u'arrow_body_width', float),
 			(u'arrow_body_length', float),
 			(u'scale', float),
+			(u'rotation', int),
 			(u'show_if', str),
+			(u'name', str),
 			(u'color', str),
 			(u'center', bool),
 			(u'fill', bool),
@@ -443,9 +470,11 @@ class sketchpad_widget(base_widget):
 		self.ui.widget_settings_arrow_body_width.setVisible(False)
 		self.ui.widget_settings_arrow_body_length.setVisible(False)
 		self.ui.widget_settings_scale.setVisible(False)
+		self.ui.widget_settings_rotation.setVisible(False)
 		self.ui.widget_settings_fill.setVisible(False)
 		self.ui.widget_settings_center.setVisible(False)
 		self.ui.widget_settings_show_if.setVisible(False)
+		self.ui.widget_settings_name.setVisible(False)
 		self.ui.graphics_view.setCursor(self.arrow_cursor)
 
 	def select_element_tool(self, element):
@@ -493,9 +522,14 @@ class sketchpad_widget(base_widget):
 		self.ui.widget_settings_arrow_body_length.setVisible(
 			element.requires_arrow_body_length())
 		self.ui.widget_settings_scale.setVisible(element.requires_scale())
+		self.ui.widget_settings_rotation.setVisible(element.requires_rotation())
 		self.ui.widget_settings_fill.setVisible(element.requires_fill())
 		self.ui.widget_settings_center.setVisible(element.requires_center())
 		self.ui.widget_settings_show_if.setVisible(element.requires_show_if())
+		self.ui.widget_settings_name.setVisible(
+			element.requires_name() and
+			len(self.sketchpad.selected_elements()) < 2
+		)
 
 	def unselect_all_tools(self):
 
@@ -612,8 +646,17 @@ class sketchpad_widget(base_widget):
 			type:	float
 		"""
 
-
 		return self.ui.spinbox_scale.value()
+
+	def current_rotation(self):
+
+		"""
+		returns:
+			desc:	The current rotation.
+			type:	float
+		"""
+
+		return self.ui.spinbox_rotation.value()
 
 	def current_arrow_body_width(self):
 

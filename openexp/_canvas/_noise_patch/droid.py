@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# coding=utf-8
 
 """
 This file is part of OpenSesame.
@@ -18,11 +18,4 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-# For backwards compatibility, we should also define the old openexp exceptions
-from libopensesame.exceptions import osexception
-openexp_error = osexception
-canvas_error = osexception
-response_error = osexception
-sample_error = osexception
-synth_error = osexception
+from openexp._canvas._noise_patch.legacy import Legacy as Droid

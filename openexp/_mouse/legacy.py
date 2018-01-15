@@ -19,13 +19,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from pygame.locals import *
-from openexp._mouse import mouse
-from openexp._coordinates.legacy import legacy as legacy_coordinates
+from openexp._mouse.mouse import Mouse
+from openexp._coordinates.legacy import Legacy as LegacyCoordinates
 from libopensesame.exceptions import osexception
 from openexp.backend import configurable
 import pygame
 
-class legacy(mouse.mouse, legacy_coordinates):
+
+class Legacy(Mouse, LegacyCoordinates):
 
 	"""
 	desc:
@@ -44,8 +45,8 @@ class legacy(mouse.mouse, legacy_coordinates):
 
 	def __init__(self, experiment, **resp_args):
 
-		mouse.mouse.__init__(self, experiment, **resp_args)
-		legacy_coordinates.__init__(self)
+		Mouse.__init__(self, experiment, **resp_args)
+		LegacyCoordinates.__init__(self)
 
 	def set_pos(self, pos=(0,0)):
 
@@ -54,16 +55,27 @@ class legacy(mouse.mouse, legacy_coordinates):
 	def show_cursor(self, show=True):
 
 		pygame.mouse.set_visible(show)
-		mouse.mouse.show_cursor(self, show=show)
+		Mouse.show_cursor(self, show=show)
 
 	@configurable
 	def get_click(self):
 
+		return self._get_mouse_event(MOUSEBUTTONDOWN)
+
+	@configurable
+	def get_click_release(self):
+
+		return self._get_mouse_event(MOUSEBUTTONUP)
+
+	def _get_mouse_event(self, event_type):
+
 		buttonlist = self.buttonlist
 		timeout = self.timeout
-		visible = self.visible
-		enable_escape = self.experiment.var.get(u'enable_escape', u'no',
-			[u'yes', u'no']) == u'yes'
+		enable_escape = self.experiment.var.get(
+			u'enable_escape',
+			u'no',
+			[u'yes', u'no']
+		) == u'yes'
 		pygame.mouse.set_visible(self.visible)
 		start_time = pygame.time.get_ticks()
 		time = start_time
@@ -71,23 +83,30 @@ class legacy(mouse.mouse, legacy_coordinates):
 			time = pygame.time.get_ticks()
 			# Process the input
 			for event in pygame.event.get():
-				if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
-					self.experiment.pause()
-				if event.type == MOUSEBUTTONDOWN:
+				if event.type == KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						self.experiment.pause()
+						continue
+					pygame.event.post(event)
+				if event.type == event_type:
 					# Check escape sequence. If the top-left and top-right
 					# corner are clicked successively within 2000ms, the
 					# experiment is aborted
-					if enable_escape and event.pos[0] < 64 and event.pos[1] \
-						< 64:
+					if (
+						enable_escape and event.pos[0] < 64
+						and event.pos[1] < 64
+					):
 						_time = pygame.time.get_ticks()
 						while pygame.time.get_ticks() - _time < 2000:
 							for event in pygame.event.get():
-								if event.type == MOUSEBUTTONDOWN:
-									if event.pos[0] > \
-										self.experiment.var.width-64 and \
-										event.pos[1] < 64:
+								if event.type == event_type:
+									if (
+										event.pos[0] > self.experiment.var.width-64
+										and  event.pos[1] < 64
+									):
 										raise osexception(
-											u"The escape sequence was clicked/ tapped")
+											u"The escape sequence was clicked/ tapped"
+										)
 					if buttonlist is None or event.button in buttonlist:
 						pygame.mouse.set_visible(self._cursor_shown)
 						return event.button, self.from_xy(event.pos), time
@@ -103,6 +122,7 @@ class legacy(mouse.mouse, legacy_coordinates):
 
 	def get_pressed(self):
 
+		pygame.event.get()
 		return pygame.mouse.get_pressed()
 
 	def flush(self):
@@ -114,3 +134,7 @@ class legacy(mouse.mouse, legacy_coordinates):
 			if event.type == MOUSEBUTTONDOWN:
 				buttonclicked = True
 		return buttonclicked
+
+
+# Non PEP-8 alias for backwards compatibility
+legacy = Legacy

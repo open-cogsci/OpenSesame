@@ -19,13 +19,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libopensesame.widgets._button import button
+from libopensesame.widgets._button import Button
 
-class checkbox(button):
+
+class Checkbox(Button):
 
 	"""
 	desc: |
-		The checkbox widget is a checkable box accompanied by a string of text.
+		The `Checkbox` widget is a checkable box accompanied by a string of
+		text.
 
 		__Example (OpenSesame script):__
 
@@ -37,10 +39,9 @@ class checkbox(button):
 		__Example (Python):__
 
 		~~~ .python
-		from libopensesame import widgets
-		form = widgets.form(exp)
-		checkbox1 = widgets.checkbox(form, text='Option 1', group='group')
-		checkbox2 = widgets.checkbox(form, text='Option 2', group='group')
+		form = Form()
+		checkbox1 = Checkbox(text='Option 1', group='group')
+		checkbox2 = Checkbox(text='Option 2', group='group')
 		form.set_widget(checkbox1, (0,0))
 		form.set_widget(checkbox2, (0,1))
 		~~~
@@ -52,8 +53,10 @@ class checkbox(button):
 		checked=False, click_accepts=False, var=None):
 
 		"""
-		desc:
-			Constructor.
+		desc: |
+			Constructor to create a new `Checkbox` object. You do not generally
+			call this constructor directly, but use the `Checkbox()` factory
+			function, which is described here: [/python/common/]().
 
 		arguments:
 			form:
@@ -100,14 +103,14 @@ class checkbox(button):
 			checked = checked == u'yes'
 		if isinstance(click_accepts, basestring):
 			click_accepts = click_accepts == u'yes'
-		button.__init__(self, form, text, frame=frame, center=False)
+		Button.__init__(self, form, text, frame=frame, center=False)
 		self.type = u'checkbox'
 		self.group = group
 		self.box_pad = self.x_pad
 		self.x_pad += self.x_pad + self.box_size
 		self.var = var
 		self.click_accepts = click_accepts
-		self.set_checked(checked)
+		self.checked = checked
 
 	def on_mouse_click(self, pos):
 
@@ -122,7 +125,6 @@ class checkbox(button):
 				type:	tuple
 		"""
 
-		self.theme_engine.click()
 		if self.group is not None:
 			# If the checkbox is part of a group than checking it will uncheck
 			# all other checkboxes in the group, and check the current one
@@ -135,21 +137,20 @@ class checkbox(button):
 			# If the checkbox is not part of a group then checking it will
 			# toggle its check status
 			self.set_checked(not self.checked)
-
 		if self.click_accepts:
 			return self.text
 
-	def render(self):
-
-		"""
-		desc:
-			Draws the widget.
-		"""
+	def _init_canvas_elements(self):
 
 		x, y, w, h = self.rect
-		self.form.theme_engine.box(x+self.box_pad, y+self.y_pad, \
-			checked=self.checked)
-		self.draw_text(self.text)
+		self._checked_element = self.form.theme_engine.box(x+self.box_pad,
+			y+self.y_pad, checked=True)
+		self._unchecked_element = self.form.theme_engine.box(x+self.box_pad,
+			y+self.y_pad, checked=False)
+		self.canvas.add_element(self._checked_element)
+		self.canvas.add_element(self._unchecked_element)
+		Button._init_canvas_elements(self)
+		self.set_checked(self.checked)
 
 	def set_checked(self, checked=True):
 
@@ -163,6 +164,8 @@ class checkbox(button):
 				type:	bool
 		"""
 
+		self._checked_element.visible = checked
+		self._unchecked_element.visible = not checked
 		self.checked = checked
 		self.set_var(checked)
 
@@ -209,4 +212,7 @@ class checkbox(button):
 		val = u';'.join(l_val)
 		if val == u'':
 			val = u'no'
-		button.set_var(self, val, var=var)
+		Button.set_var(self, val, var=var)
+
+
+checkbox = Checkbox

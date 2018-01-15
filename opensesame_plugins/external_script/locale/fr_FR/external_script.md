@@ -13,7 +13,7 @@ L'item `external_script` est une manière alternative d'inclure du code Python d
 
 Le script est exécuté dans le même espace de travail Python que celui qui est utilisé pour l'item `inline_script`. Cela veut dire que vous pouvez accéder à tous les objets et fonctions habituels comme pour un item `inline_script`.
 
-Quand le plugin est initialisé pour la première fois(pendant la phase de préparation initiale), le script entier est exécuté. 
+Quand le plugin est initialisé pour la première fois(pendant la phase de préparation initiale), le script entier est exécuté.
 
 ## Exemple
 
@@ -26,7 +26,7 @@ def prepare():
 
     print('This will be shown during the prepare phase')
     global c
-    c = canvas()
+    c = Canvas()
     c.fixdot()
 
 def run():

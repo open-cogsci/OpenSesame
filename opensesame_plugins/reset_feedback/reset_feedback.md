@@ -16,4 +16,4 @@ This plug-in will reset the following variables to 0:
 
 For more information, see:
 
-- <http://osdoc.cogsci.nl/3.1/manual/stimuli/visual/>
+- <http://osdoc.cogsci.nl/3.2/manual/stimuli/visual/>

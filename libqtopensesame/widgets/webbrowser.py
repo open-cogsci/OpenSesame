@@ -18,16 +18,16 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+import os
 import platform
 from qtpy import QtCore
 from libqtopensesame.widgets.base_widget import base_widget
 from libopensesame import plugins, misc
 from libqtopensesame.misc.markdown_parser import markdown_parser
-import os.path
+from libqtopensesame.misc import display
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'webbrowser', category=u'core')
 
-import os
 if os.environ[u'QT_API'] == u'pyqt':
 	from PyQt4.QtWebKit import QWebView as WebView
 	from PyQt4.QtWebKit import QWebPage as WebPage
@@ -57,6 +57,7 @@ INTERNAL_URLS = [
 	u'https://docs.expyriment.org/',
 	]
 
+
 class small_webview(WebView):
 
 	"""
@@ -76,6 +77,7 @@ class small_webview(WebView):
 		"""
 
 		return QtCore.QSize(100,100)
+
 
 class small_webpage(WebPage):
 
@@ -148,6 +150,7 @@ class small_webpage(WebPage):
 			return False
 		return super(small_webpage, self).acceptNavigationRequest(*args)
 
+
 class webbrowser(base_widget):
 
 	"""
@@ -205,8 +208,10 @@ class webbrowser(base_widget):
 		if url.endswith(u'.md') and not url.startswith(u'http://') \
 			and not url.startswith(u'https://'):
 			self.ui.top_widget.hide()
-			self.load_markdown(safe_read(url), url=os.path.basename(url),
-				tmpl=tmpl)
+			self.load_markdown(
+				safe_read(url), url=os.path.basename(url),
+				tmpl=tmpl
+			)
 			return
 		self.ui.top_widget.show()
 		self._current_url = url
@@ -232,6 +237,7 @@ class webbrowser(base_widget):
 		if tmpl is not None:
 			html = tmpl % {u'body' : html}
 		self.ui.webview.setHtml(html, baseUrl=url)
+		self.ui.webview.setZoomFactor(display.display_scaling)
 
 	def init_cache(self):
 
@@ -286,6 +292,7 @@ class webbrowser(base_widget):
 			message=_(u'Displaying cached version of: %s. For a better viewing experience, connect to the internet.') \
 			% self._current_url, category=u'info')
 		self.ui.webview.setHtml(self._cache[self._current_url])
+		self.ui.webview.setZoomFactor(display.display_scaling)
 
 	def load_finished(self, ok):
 
@@ -297,6 +304,7 @@ class webbrowser(base_widget):
 		if not ok:
 			self.try_cache()
 		self.ui.label_load_progress.setText(_(u'Done'))
+		self.ui.webview.setZoomFactor(display.display_scaling)
 
 	def update_progressbar(self, progress):
 

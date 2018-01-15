@@ -25,7 +25,7 @@ def prepare():
 
     print('This will be shown during the prepare phase')
     global c
-    c = canvas()
+    c = Canvas()
     c.fixdot()
 
 def run():

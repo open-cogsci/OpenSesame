@@ -18,15 +18,16 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 import textwrap
-from libopensesame.widgets._widget import widget
+from libopensesame.widgets._widget import Widget
+from openexp.canvas_elements import RichText
 
-class label(widget):
+
+class Label(Widget):
 
 	"""
 	desc: |
-		The label widget is a non-interactive string of text.
+		The `Label` widget is a non-interactive string of text.
 
 		__Example (OpenSesame script):__
 
@@ -37,9 +38,8 @@ class label(widget):
 		__Example (Python):__
 
 		~~~ .python
-		from libopensesame import widgets
-		form = widgets.form(exp)
-		label = widgets.label(form, text='My text')
+		form = Form()
+		label = Label(text='My text')
 		form.set_widget(label, (0,0))
 		form._exec()
 		~~~
@@ -50,8 +50,10 @@ class label(widget):
 	def __init__(self, form, text=u'label', frame=False, center=True):
 
 		"""
-		desc:
-			Constructor.
+		desc: |
+			Constructor to create a new `Label` object. You do not generally
+			call this constructor directly, but use the `Label()` factory
+			function, which is described here: [/python/common/]().
 
 		arguments:
 			form:
@@ -71,21 +73,36 @@ class label(widget):
 				type:	bool
 		"""
 
-		if type(frame) != bool:
+		if isinstance(frame, basestring):
 			frame = frame == u'yes'
-		if type(center) != bool:
+		if isinstance(center, basestring):
 			center = center == u'yes'
-
-		widget.__init__(self, form)
+		Widget.__init__(self, form)
 		self.type = u'label'
 		self.text = text
 		self.frame = frame
+		self.html = True
 		self.center = center
 		self.x_pad = 8
 		self.y_pad = 8
 		self.tab_str = u'    ' # Replace tab characters by four spaces
 
-	def draw_text(self, text, html=True):
+	def _init_canvas_elements(self):
+
+		x, y, w, h = self.rect
+		if self.center:
+			x += w/2
+			y += h/2
+		else:
+			x += self.x_pad
+			y += self.y_pad
+		w -= 2*self.x_pad
+		self._text_element = RichText(self.text, center=self.center,
+			x=x, y=y, max_width=w, html=self.html).construct(self.canvas)
+		self.canvas.add_element(self._text_element)
+		Widget._init_canvas_elements(self)
+
+	def _update_text(self, text):
 
 		"""
 		desc:
@@ -95,27 +112,13 @@ class label(widget):
 			text:
 				desc:	The text to draw.
 				type:	[str, unicode]
-
-		keywords:
-			html:
-				desc:	Indicates whether HTML should be parsed.
-				type:	bool
 		"""
 
 		text = self.form.experiment.syntax.eval_text(text)
 		text = safe_decode(text).replace(u'\t', self.tab_str)
-		x, y, w, h = self.rect
-		if self.center:
-			x += w/2
-			y += h/2
-		else:
-			x += self.x_pad
-			y += self.y_pad
-		w -= 2*self.x_pad
-		self.form.canvas.text(text, center=self.center, x=x, y=y, max_width=w, \
-			html=html)
+		self._text_element.text = text
 
-	def render(self):
+	def _update(self):
 
 		"""
 		desc:
@@ -123,5 +126,8 @@ class label(widget):
 		"""
 
 		if self.frame:
-			self.draw_frame(self.rect)
-		self.draw_text(self.text)
+			self._update_frame(self.rect)
+		self._update_text(self.text)
+
+
+label = Label

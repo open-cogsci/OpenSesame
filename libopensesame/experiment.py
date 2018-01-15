@@ -192,7 +192,6 @@ class experiment(item.item):
 		# Set default variables
 		self.var.start = u'experiment'
 		self.var.title = self.default_title
-		self.var.bidi = u'no'
 		self.var.round_decimals = 2
 		self.var.form_clicks = u'no'
 		self.var.disable_garbage_collection = u'yes'
@@ -474,11 +473,9 @@ class experiment(item.item):
 		from openexp import sampler, canvas
 		self.running = False
 		try:
-			self._log.flush()
-			os.fsync(self._log)
 			self._log.close()
-		except:
-			pass
+		except AttributeError:
+			print('experiment.end(): missing or invalid log object')
 		sampler.close_sound(self)
 		canvas.close_display(self)
 		self.cleanup()
@@ -585,7 +582,7 @@ class experiment(item.item):
 
 		from libopensesame.osexpfile import osexpreader
 		f = osexpreader(self, src)
-		self.experiment_path = f.experiment_path		
+		self.experiment_path = f.experiment_path
 		return f.script
 
 	def reset_feedback(self):

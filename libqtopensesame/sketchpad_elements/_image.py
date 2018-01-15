@@ -39,11 +39,12 @@ class image(base_element, image_runtime):
 		if _file == u'':
 			return None
 		properties = {
-			u'x':		pos[0],
-			u'y':		pos[1],
-			u'file':	_file,
-			u'scale':	sketchpad.current_scale(),
-			u'center':	sketchpad.current_center(),
+			u'x': pos[0],
+			u'y': pos[1],
+			u'file': _file,
+			u'scale': sketchpad.current_scale(),
+			u'rotation': sketchpad.current_rotation(),
+			u'center': sketchpad.current_center(),
 			u'show_if': sketchpad.current_show_if()
 		}
 		e = image(sketchpad, properties=properties)
@@ -55,4 +56,8 @@ class image(base_element, image_runtime):
 
 	@staticmethod
 	def requires_scale():
+		return True
+
+	@staticmethod
+	def requires_rotation():
 		return True

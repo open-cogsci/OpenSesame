@@ -21,13 +21,13 @@ from libopensesame.py3compat import *
 from openexp._keyboard.legacy import *
 import pygame
 from openexp.backend import configurable
-
 try:
 	import android
 except ImportError:
 	android = None
 
-class droid(legacy):
+
+class Droid(Legacy):
 
 	"""
 	desc: |
@@ -38,8 +38,7 @@ class droid(legacy):
 		`openexp._keyboard.keyboard`.
 	"""
 
-	@configurable
-	def get_key(self):
+	def _get_key_event(self, event_type):
 
 		if not self.persistent_virtual_keyboard and android is not None:
 			android.show_keyboard()
@@ -49,9 +48,7 @@ class droid(legacy):
 		timeout = self.timeout
 		while True:
 			time = pygame.time.get_ticks()
-			for event in pygame.event.get():
-				if event.type != pygame.KEYDOWN:
-					continue
+			for event in pygame.event.get(event_type):
 				if event.key == pygame.K_ESCAPE:
 					self.experiment.pause()
 				# TODO The unicode mechanism that ensures compatibility between
@@ -60,8 +57,10 @@ class droid(legacy):
 				# virtual keyboards.
 				if android is not None:
 					key = pygame.key.name(event.key)
-					if len(key) == 1 and (event.mod & pygame.KMOD_LSHIFT or \
-						event.mod & pygame.KMOD_RSHIFT):
+					if len(key) == 1 and (
+						event.mod & pygame.KMOD_LSHIFT or
+						event.mod & pygame.KMOD_RSHIFT
+					):
 						key = key.upper()
 				else:
 					# If we're not on Android, simply use the same logic as the
@@ -92,3 +91,7 @@ class droid(legacy):
 			android.show_keyboard()
 		else:
 			android.hide_keyboard()
+
+
+# Non PEP-8 alias for backwards compatibility
+droid = Droid

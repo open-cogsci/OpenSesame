@@ -6,4 +6,4 @@ menu:
   index: 4
   separator_after: true
   submenu: view
-shortcut: Meta+O
+shortcut: Ctrl+Space

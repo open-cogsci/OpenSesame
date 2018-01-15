@@ -19,9 +19,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from openexp._coordinates.coordinates import coordinates
+from openexp._coordinates.coordinates import Coordinates
 
-class xpyriment(coordinates):
+
+class Xpyriment(Coordinates):
 
 	"""
 	desc:
@@ -31,7 +32,7 @@ class xpyriment(coordinates):
 
 	def __init__(self):
 
-		coordinates.__init__(self)
+		Coordinates.__init__(self)
 		self._xwcenter = self.experiment.expyriment.screen.window_size[0]/2
 		self._ywcenter = self.experiment.expyriment.screen.window_size[1]/2
 
@@ -64,3 +65,7 @@ class xpyriment(coordinates):
 			return x - self._xwcenter, y - self._ywcenter
 		return x - self._xwcenter + self._xcenter, \
 			y - self._ywcenter + self._ycenter
+
+
+# Non PEP-8 alias for backwards compatibility
+xpyriment = Xpyriment

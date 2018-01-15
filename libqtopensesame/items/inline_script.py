@@ -18,18 +18,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-import random
-import re
-import sys
-from libopensesame import debug, misc
+from libopensesame import debug
 from libopensesame.inline_script import inline_script as inline_script_runtime
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.tree_inline_script_item import \
 	tree_inline_script_item
-from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'inline_script', category=u'item')
+
 
 class inline_script(inline_script_runtime, qtplugin):
 
@@ -105,7 +102,8 @@ class inline_script(inline_script_runtime, qtplugin):
 		"""See qtitem."""
 
 		from QProgEdit import QTabManager
-		super(inline_script, self).init_edit_widget(stretch=False)
+
+		qtplugin.init_edit_widget(self, stretch=False)
 		self.qprogedit = QTabManager(cfg=cfg, runButton=True)
 		self.qprogedit.execute.connect(self.main_window.console.execute)
 		self.qprogedit.handlerButtonClicked.connect(self.apply_edit_changes)
@@ -125,7 +123,7 @@ class inline_script(inline_script_runtime, qtplugin):
 
 		"""See qtitem."""
 
-		super(inline_script, self).edit_widget()
+		qtplugin.edit_widget(self)
 		_prepare = safe_decode(self.var._prepare)
 		if _prepare != self.qprogedit.tab(0).text():
 			self.qprogedit.tab(0).setText(_prepare)
@@ -141,4 +139,4 @@ class inline_script(inline_script_runtime, qtplugin):
 			debug.msg(u'applying pending script changes')
 			self.apply_edit_changes()
 			return True
-		return super(inline_script, self).get_ready()
+		return qtplugin.get_ready(self)

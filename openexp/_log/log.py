@@ -20,11 +20,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import warnings
 
-class log(object):
+
+class Log(object):
 
 	"""
 	desc: |
-		The `log` provides data logging.
+		The `log` object provides data logging. A `log` object is created
+		automatically when the experiment starts.
 
 		__Example__:
 
@@ -41,6 +43,8 @@ class log(object):
 	def __init__(self, experiment, path):
 
 		"""
+		visible: False
+
 		desc:
 			Constructor to create a new `log` object. You do not generally
 			call this constructor directly, because a `log` object is created
@@ -93,7 +97,7 @@ class log(object):
 		"""
 		desc:
 			Opens the current log. If a log was already open, it is closed
-			automatically.
+			automatically, and re-opened.
 
 		arguments:
 			path:
@@ -153,3 +157,7 @@ class log(object):
 		"""
 
 		pass
+
+
+# Non PEP-8 alias for backwards compatibility
+log = Log

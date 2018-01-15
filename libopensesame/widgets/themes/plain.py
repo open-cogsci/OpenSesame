@@ -18,6 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from openexp.canvas_elements import Rect
+
 
 class plain:
 
@@ -32,9 +34,13 @@ class plain:
 				'widgets', 'interaction.ogg')),
 				duration=0, volume=.5)
 
+	@property
+	def canvas(self):
+		return self.form.canvas
+
 	def box(self, x, y, checked=False):
 
-		self.form.canvas.rect(x, y, 16, 16, fill=checked)
+		return Rect(x, y, 16, 16, fill=checked).construct(self.canvas)
 
 	def box_size(self):
 
@@ -42,7 +48,7 @@ class plain:
 
 	def frame(self, x, y, w, h, style='normal'):
 
-		self.form.canvas.rect(x, y, w, h)
+		return Rect(x, y, w, h).construct(self.canvas)
 
 	def click(self):
 

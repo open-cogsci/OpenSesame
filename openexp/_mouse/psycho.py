@@ -18,12 +18,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp._coordinates.psycho import psycho as psycho_coordinates
-from openexp._mouse import mouse
+from openexp._coordinates.psycho import Psycho as PsychoCoordinates
+from openexp._mouse.mouse import Mouse
 from psychopy import event
 from openexp.backend import configurable
 
-class psycho(mouse.mouse, psycho_coordinates):
+
+class Psycho(Mouse, PsychoCoordinates):
 
 	"""
 	desc:
@@ -34,8 +35,8 @@ class psycho(mouse.mouse, psycho_coordinates):
 
 	def __init__(self, experiment, **resp_args):
 
-		mouse.mouse.__init__(self, experiment, **resp_args)
-		psycho_coordinates.__init__(self)
+		Mouse.__init__(self, experiment, **resp_args)
+		PsychoCoordinates.__init__(self)
 		self.mouse = event.Mouse(visible=False, win=self.experiment.window)
 		event.mouseButtons = [0, 0, 0]
 
@@ -70,7 +71,7 @@ class psycho(mouse.mouse, psycho_coordinates):
 	def show_cursor(self, show=True):
 
 		self.mouse.setVisible(show)
-		mouse.mouse.show_cursor(self, show=show)
+		Mouse.show_cursor(self, show=show)
 
 	def get_pos(self):
 
@@ -79,7 +80,7 @@ class psycho(mouse.mouse, psycho_coordinates):
 	def set_pos(self, pos=(0,0)):
 
 		self.mouse.setPos(self.to_xy(pos))
-		
+
 	def get_pressed(self):
 
 		return tuple(self.mouse.getPressed(getTime=False))
@@ -89,3 +90,7 @@ class psycho(mouse.mouse, psycho_coordinates):
 		event.mouseButtons = [0,0,0]
 		event.clearEvents()
 		return False
+
+
+# Non PEP-8 alias for backwards compatibility
+psycho = Psycho

@@ -20,7 +20,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from openexp import backend
 
-def sampler(experiment, *arglist, **kwdict):
+
+def Sampler(experiment, *arglist, **kwdict):
 
 	"""
 	desc:
@@ -41,6 +42,7 @@ def sampler(experiment, *arglist, **kwdict):
 	cls = backend.get_backend_class(experiment, u'sampler')
 	return cls(experiment, *arglist, **kwdict)
 
+
 def init_sound(experiment):
 
 	"""
@@ -55,6 +57,7 @@ def init_sound(experiment):
 	cls = backend.get_backend_class(experiment, u'sampler')
 	cls.init_sound(experiment)
 
+
 def close_sound(experiment):
 
 	"""
@@ -68,3 +71,7 @@ def close_sound(experiment):
 
 	cls = backend.get_backend_class(experiment, u'sampler')
 	cls.close_sound(experiment)
+
+
+# Non PEP-8 alias for backwards compatibility
+sampler = Sampler

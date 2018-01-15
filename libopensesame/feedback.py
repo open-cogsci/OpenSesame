@@ -45,3 +45,11 @@ class feedback(sketchpad.sketchpad):
 		sketchpad.sketchpad.run(self)
 		if self.var.reset_variables == u'yes':
 			self.experiment.reset_feedback()
+
+	def coroutine(self):
+
+		"""See coroutines plug-in."""
+
+		sketchpad.sketchpad.prepare(self)
+		yield
+		self.set_item_onset(self.canvas.show())

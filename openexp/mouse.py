@@ -20,7 +20,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from openexp import backend
 
-def mouse(experiment, *arglist, **kwdict):
+
+def Mouse(experiment, *arglist, **kwdict):
 
 	"""
 	desc:
@@ -40,3 +41,7 @@ def mouse(experiment, *arglist, **kwdict):
 
 	cls = backend.get_backend_class(experiment, u'mouse')
 	return cls(experiment, *arglist, **kwdict)
+
+
+# Non PEP-8 alias for backwards compatibility
+mouse = Mouse
