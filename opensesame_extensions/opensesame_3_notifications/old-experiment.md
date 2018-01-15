@@ -7,7 +7,7 @@ Don't worry! This shouldn't cause any problems. But, just to be safe, I recommen
 What do you want to do?
 
 [Save experiment now](opensesame://action.save){: .important-button} <br />
-[See what's new in OpenSesame 3](new:html://osdoc.cogsci.nl/3.1/important-changes-3/){: .button} <br />
+[See what's new in OpenSesame 3](new:html://osdoc.cogsci.nl/3.2/important-changes-3/){: .button} <br />
 
 Or you can:
 

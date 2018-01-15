@@ -7,7 +7,7 @@ Endişelenmeyin! Bu durum sorunlara yol açmayacak. Ancak, deneyinizi güvende o
 Ne yapmak istersiniz?
 
 [Deneyi şimdi kaydet](opensesame://action.save){: .important-button} <br />
-[OpenSesame 3'teki yenilikler](new:html://osdoc.cogsci.nl/3.1/important-changes-3/){: .button} <br />
+[OpenSesame 3'teki yenilikler](new:html://osdoc.cogsci.nl/3.2/important-changes-3/){: .button} <br />
 
 ya da:
 

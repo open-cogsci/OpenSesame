@@ -6,7 +6,7 @@ Le plugin Joystick traite les entrées (inputs) qui proviennent des joysticks, i
 
 Le Plugin JOYSTICK fonctionnent de manière similaire à l'item KEYBOARD_RESPONSE. Pour plus d'informations, voir l'aide sur le KEYBOARD_RESPONSE ou rendez-vous sur :
 
-- <http://osdoc.cogsci.nl/3.1/manual/response/keyboard/>
+- <http://osdoc.cogsci.nl/3.2/manual/response/keyboard/>
 
 ## Nom des boutons
 
@@ -14,4 +14,4 @@ Un nombre différents de boutons, axes, trackballs et casques est disponible en 
 
 Pour plus d'informations, rendez-vous sur :
 
-- <http://osdoc.cogsci.nl/3.1/manual/response/joystick/>
+- <http://osdoc.cogsci.nl/3.2/manual/response/joystick/>

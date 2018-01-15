@@ -6,7 +6,7 @@ The JOYSTICK plug-in handles input from joystick devices, including trackballs a
 
 The JOYSTICK plug-in works analogously to the KEYBOARD_RESPONSE item. For more information, see the KEYBOARD_RESPONSE-item help or visit:
 
-- <http://osdoc.cogsci.nl/3.1/manual/response/keyboard/>
+- <http://osdoc.cogsci.nl/3.2/manual/response/keyboard/>
 
 ## Button names
 
@@ -14,4 +14,4 @@ Depending on the kind of joystick or gamepad you use, a different number of butt
 
 For more information, see:
 
-- <http://osdoc.cogsci.nl/3.1/manual/response/joystick/>
+- <http://osdoc.cogsci.nl/3.2/manual/response/joystick/>

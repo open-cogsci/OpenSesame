@@ -6,11 +6,11 @@ JOYSTICK eklentisi trackballs ya da vidyo-oyun joysticklerinin girdilerini işle
 
 JOYSTICK eklentisi KEYBOARD_RESPONSE ögesine benzer olarak çalışır. Daha fazla bilgi için KEYBOARD_RESPONSE-ögesinin yardım saysfasını ya da aşağıdaki linki ziyaret edin:
 
-- <http://osdoc.cogsci.nl/3.1/manual/response/keyboard/>
+- <http://osdoc.cogsci.nl/3.2/manual/response/keyboard/>
 
 ## Tuş işimleri
 
 Kullandığınız joysticke göre farklı sayıda tuş, analog eksenler bulunabilir. Lütfen hangi tuşun hangi işlevde olduğundan emin olunuz.
 Daha fazla bilgi için:
 
-- <http://osdoc.cogsci.nl/3.1/manual/response/joystick/>
+- <http://osdoc.cogsci.nl/3.2/manual/response/joystick/>

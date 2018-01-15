@@ -15,4 +15,4 @@ Bu eklenti aşağıdaki değişkenleri sıfırlar:
 
 Daha fazla bilgi için:
 
-- <http://osdoc.cogsci.nl/3.1/manual/stimuli/visual/>
+- <http://osdoc.cogsci.nl/3.2/manual/stimuli/visual/>
