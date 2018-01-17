@@ -120,6 +120,27 @@ class quick_switcher(base_dialog):
 				element.minimumSizeHint().height())
 		return self._element_size
 
+	def _is_visible(self, item, item_name):
+
+		"""
+		desc:
+			Checks whether an item is currently visible, which means that it's
+			the current item of the tab widget, or has been detached from the
+			tab area, for example by the tab_to_dockwidget extension.
+
+		arguments:
+			item:		A qtitem object
+			item_name:	The name of the item
+
+		returns:
+			True if the item is visible, False otherwise.
+		"""
+
+		return (
+			self.tabwidget.current_item() == item_name
+			or not isinstance(item.widget().parent(), QtWidgets.QStackedWidget)
+		)
+
 	def add_item(self, item_name):
 
 		"""
@@ -142,7 +163,7 @@ class quick_switcher(base_dialog):
 		# Call edit widget to make sure that QProgEdit has content and thus
 		# can extract symbols. But don't do this for the currently visible
 		# item, because that causes the cursor to jump to the top.
-		if self.tabwidget.current_item() != item_name:
+		if not self._is_visible(item, item_name):
 			item.edit_widget()
 		for i, tab in enumerate(item.qprogedit.tabs()):
 			for symbol in tab.symbols():
