@@ -45,6 +45,26 @@ class tab_to_dockwidget(base_extension):
 		self.tabwidget.remove = self._remove_tab(self.tabwidget.remove)
 		self.tabwidget.close_all = self._close_all_tabs(self.tabwidget.close_all)
 
+	def event_run_experiment(self, fullscreen):
+
+		"""
+		desc:
+			Disable all docked item controls when running the experiment.
+		"""
+
+		for docktab in self._docktabs.values():
+			docktab.setEnabled(False)
+
+	def event_end_experiment(self, ret_val):
+
+		"""
+		desc:
+			Re-enable all docked item controls when the experiment is done.
+		"""
+
+		for docktab in self._docktabs.values():
+			docktab.setEnabled(True)
+
 	def update_all(self):
 
 		"""
