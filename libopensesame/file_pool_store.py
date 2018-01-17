@@ -176,7 +176,7 @@ class file_pool_store(object):
 			raise osexception(u'Cannot get empty filename from file pool.')
 		for folder in self.folders(include_experiment_path=True):
 			_path = os.path.normpath(os.path.join(folder, path))
-			if os.path.exists(safe_str(_path, enc=misc.filesystem_encoding())):
+			if os.path.exists(_path):
 				return _path
 		return os.path.normpath(path)
 
