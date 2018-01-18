@@ -26,6 +26,7 @@ class Image(Element):
 	def __init__(self, canvas, fname, center=True, x=None, y=None, scale=None,
 		rotation=None):
 
+		x, y = canvas.none_to_center(x, y)
 		Element.__init__(self, canvas, fname=fname, center=center, x=x, y=y,
 			scale=scale, rotation=rotation)
 
