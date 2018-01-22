@@ -24,7 +24,7 @@ form_base = plugins.import_plugin(u'form_base')
 
 default_script = u"""
 set form_text 'Your message'
-set form_title '<span size=24>Title</span>'
+set form_title 'Title'
 set ok_text 'Ok'
 set rows 1;4;1
 set cols 1;1;1

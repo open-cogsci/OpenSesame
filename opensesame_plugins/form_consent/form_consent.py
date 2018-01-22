@@ -35,7 +35,7 @@ If you have any questions not addressed by this consent form, please do not hesi
 
 You can stop at any time during experiment if you feel uncomfortable.
 __end__
-set form_title '<span size=24>Consent form</span>'
+set form_title 'Consent form'
 set checkbox_text 'I have read and understood the information shown above'
 set accept_text 'Participate!'
 set decline_text 'Do not participate'
