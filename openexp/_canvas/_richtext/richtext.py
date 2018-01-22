@@ -122,8 +122,11 @@ class RichText(Element):
 		t = QGraphicsTextItem()
 		t.setDefaultTextColor(QColor(self.color.hexcolor))
 		if self.html:
-			t.setHtml(u'<div align="center">%s</div>' % self.text \
-				if self.center else self.text)
+			text = self.text.replace(u'\n', u'<br />')
+			t.setHtml(
+				u'<div align="center">%s</div>' % text
+				if self.center else text
+			)
 		else:
 			t.setPlainText(self.text)
 		mw = self.max_width
