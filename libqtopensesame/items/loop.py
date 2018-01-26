@@ -157,6 +157,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			self.dm.empty_column = u''
 			self.qdm.refresh()
 		self.update_script()
+		self._warn_empty_rows()
 
 	def _apply_source(self):
 
@@ -280,6 +281,23 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 				self._time_count_text(r_rare))
 		self._set_summary(s)
 
+	def _warn_empty_rows(self):
+
+		"""
+		desc:
+			Gives a notification when the loop table has more than 1 rows and
+			the last row is empty. This generally happens if the user has
+			forgotten to truncate the loop table when clearing rows at the end.
+		"""
+
+		if len(self.qdm.dm) > 1 and all(
+			cell == u'' for name, cell in self.qdm.dm[-1]
+		):
+			self.extension_manager.fire(
+				u'notify',
+				message=u'The loop table has empty rows at the end'
+			)
+
 	def edit_widget(self):
 
 		"""See qtitem."""
@@ -295,6 +313,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self._update_summary()
 		self._update_item()
 		self._update_source()
+		self._warn_empty_rows()
 
 	def update_script(self):
 
