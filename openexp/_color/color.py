@@ -79,9 +79,11 @@ class Color(object):
 			desc:	A hexadecimal color specification.
 			type:	unicode
 		"""
-		is_rgb = lambda c: hasattr(c, '__len__') \
-			and len(c) == 3 \
+		is_rgb = (
+			lambda c: hasattr(c, '__len__')
+			and len(c) == 3
 			and all(isinstance(i, numbers.Integral) and 0 <= i <= 255 for i in c)
+		)
 
 		if isinstance(colorspec, int):
 			return webcolors.rgb_to_hex((colorspec, colorspec, colorspec))
@@ -98,40 +100,53 @@ class Color(object):
 					return webcolors.rgb_to_hex(
 						webcolors.hex_to_rgb(colorspec))
 				except:
-					raise osexception(u'Invalid color specification: %s' \
-						% safe_decode(colorspec))
+					raise osexception(
+						u'Invalid color specification: %s'
+						% safe_decode(colorspec)
+					)
 			if colorspec.startswith(u'rgb'):
 				if u'%' in colorspec:
 					l = colorspec[4:-1].split(u',')
 					if len(l) != 3:
-						raise osexception(u'Invalid color specification: %s' \
-							% safe_decode(colorspec))
+						raise osexception(
+							u'Invalid color specification: %s'
+							% safe_decode(colorspec)
+						)
 					for v in l:
 						if u'%' not in v:
 							raise osexception(
-								u'Invalid color specification: %s' \
-								% safe_decode(colorspec))
+								u'Invalid color specification: %s'
+								% safe_decode(colorspec)
+							)
 					try:
 						l = tuple([v.strip() for v in l])
 					except:
-						raise osexception(u'Invalid color specification: %s' \
-							% safe_decode(colorspec))
+						raise osexception(
+							u'Invalid color specification: %s'
+							% safe_decode(colorspec)
+						)
 					return webcolors.rgb_percent_to_hex(l)
 				l = colorspec[4:-1].split(u',')
 				if len(l) != 3:
-					raise osexception(u'Invalid color specification: %s' \
-						% safe_decode(colorspec))
+					raise osexception(
+						u'Invalid color specification: %s'
+						% safe_decode(colorspec)
+					)
 				try:
 					l = tuple([int(v) for v in l])
 				except:
-					raise osexception(u'Invalid color specification: %s' \
-						% safe_decode(colorspec))
+					raise osexception(
+						u'Invalid color specification: %s'
+						% safe_decode(colorspec)
+					)
 				return webcolors.rgb_to_hex(l)
 			try:
 				return webcolors.name_to_hex(colorspec)
 			except:
-				raise osexception(u'Invalid color specification: %s' \
-					% safe_decode(colorspec))
+				raise osexception(
+					u'Invalid color specification: %s'
+					% safe_decode(colorspec)
+				)
 		raise osexception(
 			u'Invalid color specification: %s' % safe_decode(colorspec))
 
