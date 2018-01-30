@@ -55,7 +55,7 @@ class RichText(Element):
 		x, y = canvas.none_to_center(x, y)
 		properties = properties.copy()
 		properties.update({
-			'text' : text,
+			'text' : safe_decode(text),
 			'center' : center,
 			'x' : x,
 			'y' : y,
