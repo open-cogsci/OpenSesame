@@ -1017,8 +1017,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 				type:	bool
 		"""
 
-		if sys.platform == 'darwin':
-			return
 		self.block_close_event = not enabled
 		self.ui.dock_overview.setEnabled(enabled)
 		self.ui.centralwidget.setEnabled(enabled)

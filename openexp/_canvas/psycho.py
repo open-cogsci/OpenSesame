@@ -124,7 +124,8 @@ class Psycho(Canvas, PsychoCoordinates):
 			units=u'pix',
 			color=Color(experiment, experiment.var.background).backend_color,
 			winType=u'pyglet',
-			allowStencil=True
+			allowStencil=True,
+			useRetina=false
 		)
 		event.Mouse(visible=False, win=experiment.window)
 		experiment.window.winHandle.set_caption(
