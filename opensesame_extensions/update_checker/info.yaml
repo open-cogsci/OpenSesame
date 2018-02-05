@@ -7,3 +7,4 @@ menu:
 settings:
   auto_update_check: true
   remote_metadata_url: http://osdoc.cogsci.nl/metadata.yaml
+  check_delay: 10000

@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from qtpy import QtWidgets
+from qtpy import QtWidgets, QtCore
 from libopensesame import debug
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.config import cfg
@@ -33,7 +33,10 @@ class update_checker(base_extension):
 
 	def event_startup(self):
 
-		self.check_for_updates(always=False)
+		QtCore.QTimer.singleShot(
+			cfg.check_delay,
+			lambda: self.check_for_updates(always=False)
+		)
 
 	def check_for_updates(self, always=True):
 
