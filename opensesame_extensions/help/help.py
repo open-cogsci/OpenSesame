@@ -1,4 +1,4 @@
-	#-*- coding:utf-8 -*-
+#-*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -117,7 +117,8 @@ class help(base_extension):
 		self.menu = self.menubar.addMenu(_(u'Help'))
 		self._wait_action = QtWidgets.QAction(
 			self.theme.qicon(u'process-working'),
-			_(u'Please wait …')
+			_(u'Please wait …'),
+			self.menu
 		)
 		self._wait_action.setEnabled(False)
 		self.menu.addAction(self._wait_action)
