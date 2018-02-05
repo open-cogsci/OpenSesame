@@ -17,10 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from qtpy import QtWidgets
-from libopensesame import debug
+from qtpy import QtWidgets, QtCore
 from libopensesame import metadata
-from libopensesame import misc
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
@@ -33,7 +31,8 @@ import yaml
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'help', category=u'extension')
 
-class action_page(QtWidgets.QAction, base_subcomponent):
+
+class ActionPage(QtWidgets.QAction, base_subcomponent):
 
 	"""
 	desc:
@@ -53,8 +52,11 @@ class action_page(QtWidgets.QAction, base_subcomponent):
 			menu:			The menu for the action.
 		"""
 
-		QtWidgets.QAction.__init__(self, main_window.theme.qicon(
-			u'applications-internet'), title, menu)
+		QtWidgets.QAction.__init__(
+			self, main_window.theme.qicon(u'applications-internet'),
+			title,
+			menu
+		)
 		self.setup(main_window)
 		self.title = title
 		self.link = link
@@ -68,6 +70,34 @@ class action_page(QtWidgets.QAction, base_subcomponent):
 		"""
 
 		self.main_window.tabwidget.open_browser(self.link)
+
+
+class GetSitemapThread(QtCore.QThread):
+
+	"""
+	desc:
+		A thread that asynchronously retrieves the documentation sitemap.
+	"""
+
+	def __init__(self, help, sitemap_url, local_sitemap):
+
+		QtCore.QThread.__init__(self)
+		self._help = help
+		self._sitemap_url = sitemap_url
+		self._local_sitemap = local_sitemap
+		self.sitemap = None
+
+	def run(self):
+
+		try:
+			fd = urlopen(self._sitemap_url)
+			self.sitemap =  fd.read()
+		except:
+			if local_sitemap is None:
+				return
+			with safe_open(self.ext_resource(self._local_sitemap)) as fd:
+				self.sitemap = fd.read()
+
 
 class help(base_extension):
 
@@ -85,46 +115,48 @@ class help(base_extension):
 
 		self._urls = []
 		self.menu = self.menubar.addMenu(_(u'Help'))
-		menu = self.online_help_menu(
-			sitemap_url=cfg.online_help_sitemap.replace(u'[version]',
-				metadata.main_version),
-			base_url=cfg.online_help_base_url, label=_(u'Online help'),
-			local_sitemap=u'sitemap-osdoc.yaml')
+		self._wait_action = QtWidgets.QAction(
+			self.theme.qicon(u'process-working'),
+			_(u'Please wait …')
+		)
+		self._wait_action.setEnabled(False)
+		self.menu.addAction(self._wait_action)
+		# It can take some time to download the sitemap from cogsci. Therefore,
+		# we use threading.
+		self._get_sitemap_thread = GetSitemapThread(self,
+			sitemap_url=cfg.online_help_sitemap.replace(
+				u'[version]',
+				metadata.main_version
+			),
+			local_sitemap=u'sitemap-osdoc.yaml'
+		)
+		self._get_sitemap_thread.start()
+		self._get_sitemap_thread.finished.connect(self.populate_help_menu)
+
+	def populate_help_menu(self):
+
+		"""
+		desc:
+			Is collected when the sitemap is done loading, and populates the
+			menu.
+		"""
+
+		_dict = yaml.load(self._get_sitemap_thread.sitemap)
+		if not isinstance(_dict, dict):
+			return
+		self.menu.clear()
+		menu = self.build_menu(
+			self.menu,
+			cfg.online_help_base_url,
+			_(u'Online help'),
+			_dict
+		)
 		if menu is not None:
 			self.action_online_help = self.menu.addMenu(menu)
-		# menu = self.online_help_menu(
-		# 	sitemap_url=u'http://docs.expyriment.org/0.8.0/sitemap.yml',
-		# 	base_url=u'http://expyriment.org/', label=_(u'Expyriment API'),
-		# 	local_sitemap=u'sitemap-expyriment.yaml')
-		# if menu is not None:
-		# 	self.action_online_help = self.menu.addMenu(menu)
 		menu = self.psychopy_help_menu()
 		if menu is not None:
 			self.action_psychopy_help = self.menu.addMenu(menu)
 		self.menu.addSeparator()
-
-	def online_help_menu(self, sitemap_url, base_url, label,
-		local_sitemap=None):
-
-		"""
-		desc:
-			Build online help menu based on remote sitemap.
-		"""
-
-		try:
-			fd = urlopen(sitemap_url)
-			sitemap = fd.read()
-			_dict = yaml.load(sitemap)
-		except:
-			if local_sitemap is None:
-				return
-			with safe_open(self.ext_resource(local_sitemap)) as fd:
-				sitemap = fd.read()
-				_dict = yaml.load(sitemap)
-		if not isinstance(_dict, dict):
-			return
-		menu = self.build_menu(self.menu, base_url, label, _dict)
-		return menu
 
 	def build_menu(self, parent_menu, base_url, title, _dict):
 
@@ -143,19 +175,23 @@ class help(base_extension):
 			A QMenu.
 		"""
 
-		menu = parent_menu.addMenu(self.theme.qicon(u'applications-internet'),
-			title)
+		menu = parent_menu.addMenu(
+			self.theme.qicon(u'applications-internet'),
+			title
+		)
 		for name, link in _dict.items():
-			if isinstance(link, basestring):
-				if not link.startswith(u'http://') and \
-					not link.startswith(u'https://'):
-					link = base_url+link
-				self._urls.append(link)
-				action = menu.addAction(
-					action_page(self.main_window, safe_decode(name,
-						enc=u'utf-8'), link, menu))
-			else:
+			if not isinstance(link, basestring):
 				self.build_menu(menu, base_url, name, link)
+				return
+			if not self._is_url(link):
+				link = base_url+link
+			self._urls.append(link)
+			menu.addAction(
+				ActionPage(
+					self.main_window, safe_decode(name,
+					enc=u'utf-8'), link, menu
+				)
+			)
 		return menu
 
 	def psychopy_help_menu(self):
@@ -198,3 +234,12 @@ class help(base_extension):
 			print('cached %s' % url)
 		with open(u'help-cache.pkl', u'w') as fd:
 			pickle.dump(cache, fd, protocol=2)
+
+	def _is_url(self, link):
+
+		"""
+		desc:
+			Verifies whether a string corresponds to an http(s) url.
+		"""
+
+		return link.startswith(u'http://') or link.startswith(u'https://')
