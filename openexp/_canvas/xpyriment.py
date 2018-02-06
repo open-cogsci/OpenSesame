@@ -92,8 +92,12 @@ class Xpyriment(Canvas, XpyrimentCoordinates):
 		control.defaults.audiosystem_autostart = False
 		# Initialize. If Expyriment jumps into interactive mode, it reads from
 		# the stdin, and crashes. Thus we explicitly disable the interactive-
-		# mode detection.
-		control._experiment_control.is_interactive_mode = lambda: False
+		# mode detection. The is_interactive_mode() function is located
+		# differently in different versions of expyriment, and hence we monkey
+		# patch it twice.
+		control._experiment_control.misc.is_interactive_mode = \
+			control._experiment_control.is_interactive_mode = \
+			lambda: False
 		exp = control.initialize()
 		experiment.window = exp.screen._surface
 		experiment.expyriment = exp
