@@ -34,6 +34,13 @@ import warnings
 import gc
 
 
+# In Python 2, sending old-style classes across the pipeline causes trouble. We
+# need to define the classobj type here. This is only applicable to Python 2,
+# because Python 3 had only new-style classes.
+class OldStyle: pass
+classobj = type(OldStyle)
+
+
 class experiment(item.item):
 
 	"""
@@ -360,11 +367,33 @@ class experiment(item.item):
 		d = self.python_workspace._globals.copy()
 		d.update(extra)
 		for key, value in d.copy().items():
+			if self._is_oldstyle(value):
+				del d[key]
+				continue
 			try:
 				pickle.dumps(value)
 			except:
 				del d[key]
 		self.output_channel.put(d)
+
+	def _is_oldstyle(self, obj):
+
+		"""
+		desc:
+			Checks if an object is an old-style class or an instance of an
+			old-style class. This is important, because these objects cannot be
+			pickled properly, and the workspace transmission chokes on them.
+		"""
+
+		if py3:
+			return False
+		# old-style class
+		if type(obj) == classobj:
+			return True
+		# instance of old-style class
+		if hasattr(obj, u'__class__') and type(obj.__class__) == classobj:
+			return True
+		return False
 
 	def set_output_channel(self, output_channel):
 
