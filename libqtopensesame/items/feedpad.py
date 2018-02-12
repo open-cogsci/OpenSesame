@@ -236,7 +236,11 @@ class feedpad(object):
 			type:	int
 		"""
 
-		return min([element.z_index for element in self.elements])
+		return min([
+			element.z_index
+			for element in self.elements
+			if isinstance(element.z_index, (int, float))
+		])
 
 	def max_z_index(self):
 
@@ -249,7 +253,11 @@ class feedpad(object):
 			type:	int
 		"""
 
-		return max([element.z_index for element in self.elements])
+		return max([
+			element.z_index
+			for element in self.elements
+			if isinstance(element.z_index, (int, float))
+		])
 
 	@property
 	def current_color(self):

@@ -82,7 +82,12 @@ class sketchpad(base_response_item, keyboard_response_mixin,
 			element_class = getattr(self.element_module(), element_type)
 			element = element_class(self, line)
 			self.elements.append(element)
-		self.elements.sort(key=lambda element: -element.z_index)
+		self.elements.sort(
+			key=lambda element:
+				-element.z_index
+				if isinstance(element.z_index, int)
+				else 0
+		)
 
 	def process_response(self, response_args):
 
@@ -105,6 +110,24 @@ class sketchpad(base_response_item, keyboard_response_mixin,
 			return mouse_response_mixin.prepare_response_func(self)
 		raise osexception(u'Invalid duration: %s' % self.var.duration)
 
+	def _elements(self):
+
+		"""
+		desc:
+			Creates a list of sketchpad elements that are shown, sorted by
+			z-index.
+		"""
+
+		elements = [e for e in self.elements if e.is_shown]
+		try:
+			elements.sort(key=lambda e: -int(self.syntax.eval_text(e.z_index)))
+		except ValueError as e:
+			raise osexception(
+				u'Invalid z_index for sketchpad element',
+				exception=e
+			)
+		return elements
+
 	def prepare(self):
 
 		"""See item."""
@@ -116,13 +139,12 @@ class sketchpad(base_response_item, keyboard_response_mixin,
 			background_color=self.var.background
 		)
 		with self.canvas:
-			for element in self.elements:
-				if element.is_shown():
-					temp_name = element.draw()
-					if element.element_name is not None:
-						self.canvas.rename_element(
-							temp_name, element.element_name
-						)
+			for element in self._elements():
+				temp_name = element.draw()
+				if element.element_name is not None:
+					self.canvas.rename_element(
+						temp_name, element.element_name
+					)
 
 	def run(self):
 
