@@ -703,6 +703,12 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 
 		"""Mimicks canvas api. See openexp._canvas.canvas."""
 
+		if u'color' in properties:
+			properties[u'color'] = self._color(properties[u'color']).name()
+		if u'font_size' in properties:
+			properties[u'font_size'] = self._font_size(properties[u'font_size'])
+		x = self._x(x)
+		y = self._x(y)
 		t = QtRichText(
 			QtCanvas(self.sketchpad.experiment),
 			text,
@@ -717,8 +723,6 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 		)
 		pixmap = QtGui.QPixmap.fromImage(qim)
 		i = self.addPixmap(pixmap)
-		x = self._x(x)
-		y = self._x(y)
 		c = i.boundingRect().center()
 		dx = c.x()
 		dy = c.y()
