@@ -1045,7 +1045,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation type="obsolete">Aide hors-ligne</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="57"/>
+        <location filename="../../translatables-tmp.py" line="58"/>
         <source>Online help</source>
         <translation>Aide en ligne</translation>
     </message>
@@ -1060,9 +1060,19 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation>Ajoute un menu d&apos;aide.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="58"/>
+        <location filename="../../translatables-tmp.py" line="53"/>
         <source>Expyriment API</source>
         <translation>Expyriment API</translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="../../translatables-tmp.py" line="57"/>
+        <source>Please wait â¦</source>
+        <translation type="obsolete">Merci de patienter …</translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="57"/>
+        <source>Please wait &#xe2;&#x80;&#xa6;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2130,7 +2140,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
     <message>
         <location filename="../../translatables-tmp.py" line="654"/>
         <source>Event type</source>
-        <translation type="unfinished">Type d&apos;événement</translation>
+        <translation>Type d&apos;événement</translation>
     </message>
 </context>
 <context>
@@ -7063,6 +7073,16 @@ Edit your experiment in script form</source>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
         <translation>Exécuter en fenêtre…</translation>
+    </message>
+    <message>
+        <location filename="../ui/misc/main_window.ui" line="612"/>
+        <source>Kill experiment</source>
+        <translation>Tuer l&apos;expérience</translation>
+    </message>
+    <message>
+        <location filename="../ui/misc/main_window.ui" line="615"/>
+        <source>Forcibly kill the experiment</source>
+        <translation>Tuer l&apos;expérience</translation>
     </message>
 </context>
 <context>

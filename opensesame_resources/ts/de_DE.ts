@@ -1365,7 +1365,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
         <translation type="obsolete">Offline Hilfe</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="57"/>
+        <location filename="../../translatables-tmp.py" line="58"/>
         <source>Online help</source>
         <translation>Online-Hilfe</translation>
     </message>
@@ -1380,9 +1380,14 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
         <translation>Fügt ein Hilfe-Menü hinzu.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="58"/>
+        <location filename="../../translatables-tmp.py" line="53"/>
         <source>Expyriment API</source>
         <translation>Expyriment API</translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="57"/>
+        <source>Please wait &#xe2;&#x80;&#xa6;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4977,21 +4982,6 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
         <location filename="../../translatables-tmp.py" line="500"/>
         <source>Experimental variable for test value</source>
         <translation>Variable für Testwert</translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="289"/>
-        <source>Steepness of the Weibull psychometric function (Î²)</source>
-        <translation type="obsolete">Steilheit der Weibull-psychometrischen Funktion (Î²)</translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="290"/>
-        <source>Proportion of random responses at maximum stimulus intensity (Î´)</source>
-        <translation type="obsolete">Verhältnis der Zufallsantworten bei maximaler Stimulusintensität (Î´)</translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="291"/>
-        <source>Chance level (Î³)</source>
-        <translation type="obsolete">Zufallslevel (Î³)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="494"/>
@@ -8734,6 +8724,16 @@ Bearbeite Dein Experiment in Skriptform</translation>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
         <translation>Ausführen im Fenstermodus…</translation>
+    </message>
+    <message>
+        <location filename="../ui/misc/main_window.ui" line="612"/>
+        <source>Kill experiment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/misc/main_window.ui" line="615"/>
+        <source>Forcibly kill the experiment</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

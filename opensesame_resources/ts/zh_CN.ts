@@ -1022,7 +1022,7 @@ The experiment did not finish normally for the following reason:
         <translation type="obsolete">离线帮助</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="57"/>
+        <location filename="../../translatables-tmp.py" line="58"/>
         <source>Online help</source>
         <translation type="unfinished">在线帮助</translation>
     </message>
@@ -1037,8 +1037,13 @@ The experiment did not finish normally for the following reason:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="58"/>
+        <location filename="../../translatables-tmp.py" line="53"/>
         <source>Expyriment API</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="57"/>
+        <source>Please wait &#xe2;&#x80;&#xa6;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6497,6 +6502,16 @@ Edit your experiment in script form</source>
     <message encoding="UTF-8">
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/misc/main_window.ui" line="612"/>
+        <source>Kill experiment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/misc/main_window.ui" line="615"/>
+        <source>Forcibly kill the experiment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

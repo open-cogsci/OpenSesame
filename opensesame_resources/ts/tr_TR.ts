@@ -850,7 +850,7 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Yardım</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="57"/>
+        <location filename="../../translatables-tmp.py" line="58"/>
         <source>Online help</source>
         <translation>Çevirimiçi yardım</translation>
     </message>
@@ -865,9 +865,14 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Yardım menüsü ekler.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="58"/>
+        <location filename="../../translatables-tmp.py" line="53"/>
         <source>Expyriment API</source>
         <translation>Expyriment API</translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="57"/>
+        <source>Please wait &#xe2;&#x80;&#xa6;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2987,6 +2992,16 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
         <translation>Pencerede çalıştır…</translation>
+    </message>
+    <message>
+        <location filename="../ui/misc/main_window.ui" line="612"/>
+        <source>Kill experiment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../ui/misc/main_window.ui" line="615"/>
+        <source>Forcibly kill the experiment</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
