@@ -26,8 +26,8 @@ try:
 	import markdown
 	from distutils.version import LooseVersion
 	# TocExtension() doesn't support the title keyword in previous versions
-	# This seems to have been added in 2.6 as part of the depraction of the 
-	# HeaderID extension: 
+	# This seems to have been added in 2.6 as part of the depraction of the
+	# HeaderID extension:
 	# https://github.com/waylan/Python-Markdown/releases/tag/2.6-final
 	if LooseVersion(markdown.version) > LooseVersion(u'2.6'):
 		from markdown.extensions import attr_list, extra, toc
@@ -95,7 +95,7 @@ class markdown_parser(base_subcomponent):
 
 <div class="footer">
 OpenSesame %s %s —
-Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-2017
+Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-2018
 </div>
 ''' % (_(u'Dismiss this message'), metadata.__version__, metadata.codename)
 
