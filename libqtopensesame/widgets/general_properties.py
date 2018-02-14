@@ -45,6 +45,7 @@ class general_properties(base_widget):
 
 		super(general_properties, self).__init__(main_window,
 			ui=u'widgets.general_properties')
+		self.lock = False
 		# Set the header, with the icon, label and script button
 		self.header_widget = general_header_widget(self, self.main_window)
 		header_hbox = QtWidgets.QHBoxLayout()
