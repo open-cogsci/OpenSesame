@@ -25,6 +25,13 @@ from libopensesame.item_stack import item_stack_singleton
 from libopensesame.py3compat import *
 
 
+# A list of names that cannot be used, because they cause trouble for one reason
+# or another
+INVALID_NAMES = [
+	'response' # causes conflict with correct_response variable
+]
+
+
 class item_store(object):
 
 	"""
@@ -227,8 +234,9 @@ class item_store(object):
 			elif name[0].isnumeric():
 				name = u'_' + name
 		_name = name
+		invalid_names = list(self) + INVALID_NAMES
 		i = 1
-		while _name in self:
+		while _name in invalid_names:
 			_name = u'%s_%d' % (name, i)
 			i += 1
 		return cistr(_name)
