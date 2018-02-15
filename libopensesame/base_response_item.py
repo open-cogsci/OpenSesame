@@ -201,7 +201,10 @@ class base_response_item(item):
 			]
 		for r in responses:
 			if not self.validate_response(r):
-				raise osexception(u'Invalid value in allowed_responses: %s' % r)
+				raise osexception(
+					u'Invalid value in %s: %s'
+					% (var, r)
+				)
 		# If allowed responses are provided, the list should not be empty
 		if not responses:
 			raise osexception(u'%s should not be an empty list' % var)
