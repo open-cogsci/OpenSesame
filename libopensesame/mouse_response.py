@@ -85,7 +85,7 @@ class mouse_response_mixin(object):
 			self.experiment.var.cursor_y = u'NA'
 		else:
 			self.experiment.var.cursor_x, self.experiment.var.cursor_y = pos
-		if self.var.linked_sketchpad:
+		if self.var.linked_sketchpad and pos is not None:
 			if self.var.linked_sketchpad not in self.experiment.items:
 				raise osexception(
 					u'Item does not exist: %s'
@@ -176,12 +176,15 @@ class mouse_response(mouse_response_mixin, base_response_item):
 		self._t0 = self.set_item_onset()
 		if self._flush:
 			self._mouse.flush()
+		if self.var.show_cursor == u'yes':
+			self._mouse.visible = True
 		while alive:
 			button, pos, time = self._mouse.get_click()
 			if button is not None:
 				break
 			alive = yield
 		self.process_response((button, pos, time))
+		self._mouse.visible = False
 
 	def var_info(self):
 
