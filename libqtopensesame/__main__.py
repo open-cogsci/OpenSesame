@@ -26,6 +26,7 @@ import platform
 def set_paths():
 
 	from qtpy import QtCore
+	from libopensesame import misc
 	# Add the folder that contains the OpenSesame modules to the path. This is
 	# generally only necessary if OpenSesame is directly run from source,
 	# instead from an installation.
@@ -37,11 +38,15 @@ def set_paths():
 	qt_plugin_path = os.path.join(
 		os.path.dirname(sys.executable), 'Library', 'plugins')
 	if os.path.isdir(qt_plugin_path):
-		QtCore.QCoreApplication.addLibraryPath(qt_plugin_path)
+		QtCore.QCoreApplication.addLibraryPath(
+			safe_decode(qt_plugin_path, enc=misc.filesystem_encoding())
+		)
 	qt_plugin_path = os.path.join(
 		os.path.dirname(sys.executable), 'Library', 'lib', 'qt4', 'plugins')
 	if os.path.isdir(qt_plugin_path):
-		QtCore.QCoreApplication.addLibraryPath(qt_plugin_path)
+		QtCore.QCoreApplication.addLibraryPath(
+			safe_decode(qt_plugin_path, enc=misc.filesystem_encoding())
+		)
 
 
 def opensesame():
