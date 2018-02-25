@@ -26,6 +26,7 @@ from libqtopensesame._input.confirmation import confirmation
 from qtpy import QtCore, QtWidgets
 import os
 import os.path
+import shutil
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'pool_widget', category=u'core')
 
@@ -118,7 +119,7 @@ class pool_widget(base_widget):
 						continue
 			try:
 				self.pool.add(path, new_name=basename)
-			except IOError as e:
+			except (IOError, shutil.Error) as e:
 				self.notify(_(u'Failed to copy %s to file pool') % path)
 				self.console.write(safe_decode(e, errors=u'ignore'))
 		self.refresh()
