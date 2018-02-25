@@ -142,6 +142,8 @@ class help(base_extension):
 			menu.
 		"""
 
+		if self._get_sitemap_thread.sitemap is None:
+			return
 		_dict = yaml.load(self._get_sitemap_thread.sitemap)
 		if not isinstance(_dict, dict):
 			return
