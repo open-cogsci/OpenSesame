@@ -1099,7 +1099,7 @@ class Canvas(Backend):
 		"""
 
 		s = RichText(text, max_width=None).construct(self)
-		return s.size()
+		return s.size
 
 	def text(self, text, center=True, x=None, y=None, max_width=None,
 		**style_args):
