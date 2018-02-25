@@ -118,7 +118,7 @@ class sketchpad(base_response_item, keyboard_response_mixin,
 			z-index.
 		"""
 
-		elements = [e for e in self.elements if e.is_shown]
+		elements = [e for e in self.elements if e.is_shown()]
 		try:
 			elements.sort(key=lambda e: -int(self.syntax.eval_text(e.z_index)))
 		except ValueError as e:
