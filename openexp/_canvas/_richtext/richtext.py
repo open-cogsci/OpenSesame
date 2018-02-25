@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import sys
 from libopensesame.py3compat import *
+from libopensesame import misc
 import warnings
 from openexp._canvas._element.element import Element
 from qtpy.QtWidgets import (QGraphicsTextItem, QStyleOptionGraphicsItem,
@@ -73,11 +74,15 @@ class RichText(Element):
 		qt_plugin_path = os.path.join(
 			os.path.dirname(sys.executable), 'Library', 'plugins')
 		if os.path.isdir(qt_plugin_path):
-			QCoreApplication.addLibraryPath(qt_plugin_path)
+			QCoreApplication.addLibraryPath(
+				safe_decode(qt_plugin_path, enc=misc.filesystem_encoding())
+			)
 		qt_plugin_path = os.path.join(
 			os.path.dirname(sys.executable), 'Library', 'lib', 'qt4', 'plugins')
 		if os.path.isdir(qt_plugin_path):
-			QCoreApplication.addLibraryPath(qt_plugin_path)
+			QCoreApplication.addLibraryPath(
+				safe_decode(qt_plugin_path, enc=misc.filesystem_encoding())
+			)
 		# If no instance of QApplication exists, a segmentation fault seems to always
 		# occur. So we create one.
 		if QCoreApplication.instance() is None:
