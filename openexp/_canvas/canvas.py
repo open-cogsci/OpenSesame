@@ -256,6 +256,9 @@ class Canvas(Backend):
 				Optional [style keywords] that specify the style of the current
 				drawing operation. This does not affect subsequent drawing
 				operations.
+			arg_center: |
+				A bool indicating whether the coordinates reflect the center
+				(`True`) or top-left (`False`) of the text.
 		--%
 	"""
 
@@ -1069,7 +1072,7 @@ class Canvas(Backend):
 		self += Polygon(vertices, **style_args)
 		return 'stim%d' % self._stimnr
 
-	def text_size(self, text, max_width=None, **style_args):
+	def text_size(self, text, center=True, max_width=None, **style_args):
 
 		"""
 		desc:
@@ -1081,6 +1084,9 @@ class Canvas(Backend):
 				type:	[str, unicode]
 
 		keywords:
+			center:
+				desc:	"%arg_center"
+				type:	bool
 			max_width:
 				desc:	"%arg_max_width"
 				type:	[int, NoneType]
@@ -1098,8 +1104,15 @@ class Canvas(Backend):
 			w, h = my_canvas.text_size('Some text')
 		"""
 
-		s = RichText(text, max_width=None).construct(self)
-		return s.size
+		return RichText(
+			text,
+			center=center,
+			max_width=max_width,
+			font_size=self.font_size,
+			font_family=self.font_family,
+			font_bold=self.font_bold,
+			font_italic=self.font_italic
+		).construct(self.__class__(self.experiment)).size
 
 	def text(self, text, center=True, x=None, y=None, max_width=None,
 		**style_args):
@@ -1118,8 +1131,7 @@ class Canvas(Backend):
 
 		keywords:
 			center:
-				desc:	A bool indicating whether the coordinates reflect the
-						center (True) or top-left (False) of the text.
+				desc:	"%arg_center"
 				type:	bool
 			x:
 				desc:	The X coordinate, or None to draw horizontally centered
