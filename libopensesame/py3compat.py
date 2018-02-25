@@ -30,6 +30,7 @@ else:
 	str = unicode
 	py3 = False
 	universal_newline_mode = u'rU'
+	RecursionError = RuntimeError
 
 
 def safe_decode(s, enc='utf-8', errors='strict'):
@@ -60,7 +61,7 @@ def safe_encode(s, enc='utf-8', errors='strict'):
 		return s
 	return s.encode(enc, errors)
 
-	
+
 def safe_read(path):
 	with open(path, u'r') as fd:
 		return safe_decode(fd.read(), errors=u'ignore')
@@ -75,6 +76,6 @@ else:
 __all__ = ['py3', 'safe_decode', 'safe_encode', 'safe_str',
 	'universal_newline_mode', 'safe_read', 'safe_open']
 if not py3:
-	__all__ += ['str', 'bytes']
+	__all__ += ['str', 'bytes', 'RecursionError']
 else:
 	__all__ += ['basestring']

@@ -335,7 +335,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			and self._item in self.experiment.items:
 			self.experiment.items[self._item].build_item_tree(widget, items,
 				max_depth=max_depth-1)
-		return items
+		return widget
 
 	@qtstructure_item.cached_children
 	def children(self):

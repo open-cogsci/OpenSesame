@@ -489,13 +489,28 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		# item may occur multiple times in the experiment, so we need to check
 		# that this constraint holds for all linked copies of the target item.
 		if data.get(u'structure-item', False):
-			for linked_target_treeitem in self.findItems(target_treeitem.name,
-				QtCore.Qt.MatchFixedString|QtCore.Qt.MatchRecursive):
-				target_item_name, target_item_ancestry = \
+			for linked_target_treeitem in self.findItems(
+				target_treeitem.name,
+				QtCore.Qt.MatchFixedString|QtCore.Qt.MatchRecursive
+			):
+				target_item_name, target_item_ancestry = (
 					linked_target_treeitem.ancestry()
-				if target_item_ancestry.startswith(u'%s:' % item_name) or \
-					u'.%s:' % item_name  in target_item_ancestry:
+				)
+				if (
+					target_item_ancestry.startswith(u'%s:' % item_name)
+					or u'.%s:' % item_name  in target_item_ancestry
+				):
 					debug.msg(u'Drop ignored: recursion prevented')
+					if e is not None:
+						e.ignore()
+					return
+			# If the dropped item is in the unused items bin, then we need to
+			# check whether the target item is a child.
+			if item_name in self.unused_items():
+				if (
+					target_treeitem.name
+					in self.experiment.items[item_name].children()
+				):
 					if e is not None:
 						e.ignore()
 					return
@@ -515,19 +530,25 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		need_restore = False
 		if data[u'move']:
 			if parent_item_name not in self.experiment.items:
-				debug.msg(u'Don\'t know how to remove item from %s' \
-					% parent_item_name)
+				debug.msg(
+					u'Don\'t know how to remove item from %s'
+					% parent_item_name
+				)
 			else:
 				self.locked = True
 				need_restore = True
 				self.experiment.items[parent_item_name].remove_child_item(
-					item_name, index)
+					item_name,
+					index
+				)
 				self.locked = False
 		if self.drop_event_item_new(data, e, target_treeitem=target_treeitem):
 			return
 		if need_restore:
 			self.experiment.items[parent_item_name].insert_child_item(
-				item_name, index)
+				item_name,
+				index
+			)
 			self.experiment.build_item_tree()
 
 	def drop_get_item_snippet(self, data):
@@ -624,8 +645,10 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 				e.ignore()
 			self.main_window.set_busy(False)
 			return False
-		if data[u'type'] == u'item-existing' and \
-			data[u'item-name'] not in self.experiment.items:
+		if (
+			data[u'type'] == u'item-existing'
+			and data[u'item-name'] not in self.experiment.items
+		):
 			self.experiment.notify(_(u'Cannot create linked copy of "%s". Has '
 				u'the item been permanently deleted?') % data[u'item-name'])
 			if e is not None:
@@ -880,7 +903,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 			if e.key() == QtCore.Qt.Key_Minus:
 				self.currentItem().setText(1, u'never')
 			elif e.key() in [QtCore.Qt.Key_Plus, QtCore.Qt.Key_Equal]:
-				self.currentItem().setText(1, u'always')				
+				self.currentItem().setText(1, u'always')
 
 	def recursive_children(self, item):
 

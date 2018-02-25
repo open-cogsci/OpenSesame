@@ -51,7 +51,16 @@ class tree_general_item(tree_base_item):
 		self._draggable = False
 		self.name = u'__general__'
 		if self.experiment.var.start in self.experiment.items:
-			self.experiment.items[self.experiment.var.start].build_item_tree(self)
+			try:
+				self.experiment.items[self.experiment.var.start] \
+					.build_item_tree(self)
+			except RecursionError:
+				from libqtopensesame.widgets.tree_recursion_error_item import (
+					tree_recursion_error_item
+				)
+				self.addChild(
+					tree_recursion_error_item(self)
+				)
 			self.child(0).set_draggable(False)
 		self.expand()
 
