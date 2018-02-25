@@ -240,6 +240,17 @@ class loop(item.item):
 				if not arglist:
 					dm = operations.shuffle_horiz(dm)
 				else:
+					# There can be multiple column names, so we need to check
+					# if all of them exist, rather than only the last one as
+					# we did above.
+					for _colname in arglist:
+						try:
+							dm[_colname]
+						except:
+							raise osexception(
+								u'Column %s does not exist'
+								% _colname
+							)
 					dm = operations.shuffle_horiz(
 						*[dm[_colname] for _colname in arglist])
 			elif cmd == u'slice':
@@ -267,7 +278,12 @@ class loop(item.item):
 					dm[colname] = list(col[-steps:]) + list(col[:-steps])
 			elif cmd == u'weight':
 				self._require_arglist(cmd, arglist)
-				dm = operations.weight(col)
+				try:
+					dm = operations.weight(col)
+				except TypeError:
+					raise osexception(
+						u'weight values should be non-negative numeric values'
+					)
 		return dm
 
 	def prepare(self):
