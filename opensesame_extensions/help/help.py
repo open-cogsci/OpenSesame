@@ -144,7 +144,13 @@ class help(base_extension):
 
 		if self._get_sitemap_thread.sitemap is None:
 			return
-		_dict = yaml.load(self._get_sitemap_thread.sitemap)
+		try:
+			_dict = yaml.load(self._get_sitemap_thread.sitemap)
+		except yaml.scanner.ScannerError:
+			# If the sitemap was loaded but was not a valid yaml string. This
+			# can happen for example when a captive portal returns something
+			# invalid
+			return
 		if not isinstance(_dict, dict):
 			return
 		self.menu.clear()
