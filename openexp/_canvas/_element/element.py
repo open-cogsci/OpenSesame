@@ -300,6 +300,8 @@ class Element(object):
 				type:	Any
 		"""
 
+		if key in NUMERIC_PROPERTIES:
+			self._assert_numeric(**{key: val})
 		if key == u'color':
 			val = color(self.experiment, val)
 		self._properties[key] = val
