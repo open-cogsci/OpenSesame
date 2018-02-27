@@ -60,7 +60,7 @@ class Mouse(Backend):
 		~~~
 
 		Optionally, you can pass [Response keywords](#response-keywords) to
-		`Keyboard()` to set the default behavior:
+		`Mouse()` to set the default behavior:
 
 		~~~ .python
 		my_mouse = Mouse(timeout=2000)
@@ -98,7 +98,7 @@ class Mouse(Backend):
 		- `timeout` specifies a timeout value in milliseconds, or is set to
 		  `None` to disable the timeout.
 		- `buttonlist` specifies a list of buttons that are accepted, or is set
-		  to `None` accept all keys.
+		  to `None` accept all buttons.
 		- `visible` indicates whether the mouse cursor becomes visible when a
 		  click is collected (`True` or `False`). To immediately change cursor
 		  visibility, use [mouse.show_cursor].
@@ -106,7 +106,7 @@ class Mouse(Backend):
 		~~~ .python
 		# Get a left or right button press with a timeout of 3000 ms
 		my_mouse = Mouse()
-		button, time = my_mouse.get_key(buttonlist=[1,3], timeout=3000)
+		button, time = my_mouse.get_click(buttonlist=[1,3], timeout=3000)
 		~~~
 
 		Response keywords only affect the current operation (except when passed
@@ -114,21 +114,21 @@ class Mouse(Backend):
 		subsequent operations, set the response properties directly:
 
 		~~~ .python
-		# Get two key left or right presses with a 5000 ms timeout
+		# Get two left or right presses with a 5000 ms timeout
 		my_mouse = Mouse()
-		my_mouse.keylist = [1,3]
+		my_mouse.buttonlist = [1,3]
 		my_mouse.timeout = 5000
-		button1, time1 = my_mouse.get_button()
-		button2, time2 = my_mouse.get_button()
+		button1, time1 = my_mouse.get_click()
+		button2, time2 = my_mouse.get_click()
 		~~~
 
 		Or pass the response keywords to [mouse.\_\_init\_\_][__init__]:
 
 		~~~ .python
-		# Get two key left or right presses with a 5000 ms timeout
-		my_mouse = Mouse(keylist=[1,3], timeout=5000)
-		button1, time1 = my_mouse.get_button()
-		button2, time2 = my_mouse.get_button()
+		# Get two left or right presses with a 5000 ms timeout
+		my_mouse = Mouse(buttonlist=[1,3], timeout=5000)
+		button1, time1 = my_mouse.get_click()
+		button2, time2 = my_mouse.get_click()
 		~~~
 	"""
 
@@ -167,7 +167,7 @@ class Mouse(Backend):
 
 	def set_config(self, **cfg):
 
-		# Add synonyms to keylist
+		# Add synonyms to buttonlist
 		if u'buttonlist' in cfg and isinstance(cfg[u'buttonlist'], list):
 			try:
 				cfg[u'buttonlist'] = \
