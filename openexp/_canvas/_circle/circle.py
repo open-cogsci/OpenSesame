@@ -26,5 +26,41 @@ class Circle(Ellipse):
 	def __init__(self, canvas, x, y, r, **properties):
 
 		properties = properties.copy()
-		properties.update({ 'x' : x-r, 'y' : y-r, 'w' : 2*r, 'h' : 2*r })
+		properties.update({ 'x' : x, 'y' : y, 'w' : 2*r, 'h' : 2*r, u'r' : r })
+		self.prepare = self.circle_prepare(self.prepare)
 		Ellipse.__init__(self, canvas, **properties)
+
+	def circle_prepare(self, ellipse_prepare):
+
+		"""
+		desc:
+			A decorator that converts the center coordinates used by the circle
+			to the top-left coordinates used by the ellipse.
+		"""
+
+		def inner():
+
+			r = self._properties[u'w'] // 2
+			self._properties[u'x'] -= r
+			self._properties[u'y'] -= r
+			ellipse_prepare()
+			self._properties[u'x'] += r
+			self._properties[u'y'] += r
+
+		return inner
+
+	@staticmethod
+	def _getter(key, self):
+
+		if key == u'r':
+			return self._properties[u'w'] // 2
+		return Ellipse._getter(key, self)
+
+	@staticmethod
+	def _setter(key, self, val):
+
+		if key == u'r':
+			self._properties[u'w'] = val * 2
+			self._properties[u'h'] = val * 2
+			return
+		Ellipse._setter(key, self, val)
