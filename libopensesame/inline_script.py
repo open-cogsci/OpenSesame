@@ -22,7 +22,7 @@ import warnings
 import re
 from libopensesame import item
 from openexp import canvas
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import osexception, AbortCoroutines
 
 extract_old_style = re.compile(
 	r'(self.experiment.set|exp.set|var.set)\(u?[\'"]([_a-zA-Z]+[_a-zA-Z0-9]*)[\'"]')
@@ -95,21 +95,48 @@ class inline_script(item.item):
 		try:
 			self.experiment.python_workspace._exec(self.crun)
 		except Exception as e:
-			raise osexception(u'Error while executing inline script',
-				line_offset=-1, item=self.name, phase=u'run', exception=e)
+			raise osexception(
+				u'Error while executing inline script',
+				line_offset=-1, item=self.name, phase=u'run', exception=e
+			)
+
+	def coroutine(self, coroutines):
+
+		"""See coroutines plug-in"""
+
+		yield
+		self.set_item_onset()
+		while True:
+			self.experiment.python_workspace[u'self'] = self
+			try:
+				self.experiment.python_workspace._exec(self.crun)
+			except AbortCoroutines as e:
+				# If the inline_script is part of a coroutines, this signals
+				# that the coroutines should be aborted, so we don't wrap it
+				# into an osexception.
+				raise
+			except Exception as e:
+				raise osexception(
+					u'Error while executing inline script',
+					line_offset=-1, item=self.name, phase=u'run', exception=e
+				)
+			yield
 
 	def var_info(self):
 
 		"""
-		Gives a list of dictionaries with variable descriptions.
+		desc:
+			Gives a list of dictionaries with variable descriptions.
 
-		Returns:
-		A list of (variable, description) tuples.
+		returns:
+			A list of (variable, description) tuples.
 		"""
 
 		l = item.item.var_info(self)
-		script = self.var.get(u'_prepare', _eval=False, default=u'') + \
-			self.var.get(u'_run', _eval=False, default=u'')
+		script = (
+			self.var.get(u'_prepare', _eval=False, default=u'')
+			+ self.var.get(u'_run', _eval=False, default=u'')
+		)
 		for dummy, var in re.findall(extract_old_style, script):
 			l.append( (var, None) )
 		for var in re.findall(extract_new_style, script):
