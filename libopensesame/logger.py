@@ -28,7 +28,8 @@ class logger(item.item):
 		The logger item logs experimental data (i.e. variables).
 	"""
 
-	description = u'Logs experimental dataxxxx'
+	description = u'Logs experimental data'
+	is_oneshot_coroutine = True
 
 	def reset(self):
 
@@ -53,6 +54,13 @@ class logger(item.item):
 					self._logvars.append(var)
 			self._logvars.sort()
 		self.experiment.log.write_vars(self._logvars)
+
+	def coroutine(self, coroutines):
+
+		"""See coroutines plug-in."""
+
+		yield
+		self.run()
 
 	def from_string(self, string):
 
