@@ -93,9 +93,9 @@ class GetSitemapThread(QtCore.QThread):
 			fd = urlopen(self._sitemap_url)
 			self.sitemap =  fd.read()
 		except:
-			if local_sitemap is None:
+			if self._local_sitemap is None:
 				return
-			with safe_open(self.ext_resource(self._local_sitemap)) as fd:
+			with safe_open(self._help.ext_resource(self._local_sitemap)) as fd:
 				self.sitemap = fd.read()
 
 
