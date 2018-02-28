@@ -35,6 +35,18 @@ import traceback
 import time
 
 
+class AbortCoroutines(Exception):
+
+	"""
+	desc:
+		A messaging Exception to indicate that coroutines should be aborted.
+		That is, if a task raises an AbortCoroutines, then the currently running
+		coroutines should abort.
+	"""
+
+	pass
+
+
 class osexception(Exception):
 
 	"""
@@ -70,28 +82,28 @@ class osexception(Exception):
 		self.enc = u'utf-8'
 		self.user_triggered = info.get(u'user_triggered', False)
 		self.exception = exception
-		info = self._exception_info(msg, info)		
-		self._md, self._plaintext = self._exception_details(msg, info)		
+		info = self._exception_info(msg, info)
+		self._md, self._plaintext = self._exception_details(msg, info)
 		if self.exception is None:
 			return
 		tb_md, tb_plaintext = self._parse_traceback(info)
 		self._md += tb_md
 		self._plaintext += tb_plaintext
-			
+
 	def _traceback(self):
-		
+
 		"""
 		desc:
 			Returns the traceback as a formatted string.
 		"""
-		
+
 		if py3:
 			return traceback.format_exc()
 		return safe_decode( traceback.format_exc(self.exception), enc=self.enc,
 			errors=u'ignore')
-		
+
 	def _parse_traceback(self, info):
-		
+
 		"""
 		desc:
 			Processes the traceback by replacing generic <string> references to
@@ -99,7 +111,7 @@ class osexception(Exception):
 			added utf-8 encoding header, which increments the line number by
 			one.
 		"""
-		
+
 		tb = self._traceback()
 		md = u'## Traceback (also in debug window)\n\n'
 		plaintext = u'\nTraceback:\n'
@@ -119,14 +131,14 @@ class osexception(Exception):
 		plaintext += _tb
 		md += u'~~~ .traceback\n%s\n~~~\n' % _tb
 		return md, plaintext
-		
+
 	def _exception_details(self, msg, info):
-		
+
 		"""
 		desc:
 			Provides a markdown and plaintext overview of relevant information.
 		"""
-		
+
 		md = u'%s\n\n## Details\n\n' % msg
 		plaintext = u'\n%s\n\n' % msg
 		for key, val in info.items():
@@ -136,26 +148,26 @@ class osexception(Exception):
 			plaintext += u'%s: %s\n' % (key, val)
 		md += u'\n'
 		return md, plaintext
-		
+
 	def _exception_info(self, msg, info):
-		
+
 		"""
 		desc:
 			Updates the info dict based on the type of Exception and the
 			exception message.
 		"""
-		 
+
 		if isinstance(self.exception, SyntaxError):
 			return self._syntaxerror_info(msg, info)
 		return self._defaultexception_info(msg, info)
-		
+
 	def _syntaxerror_info(self, msg, info):
-		
+
 		"""
 		desc:
 			Updates the info dict specifically for SyntaxErrors
-		"""		
-				
+		"""
+
 		info = self._defaultexception_info(msg, info)
 		# Syntax errors are dealt with specially, because they provide
 		# introspective information.
@@ -171,14 +183,14 @@ class osexception(Exception):
 			info[u'code'] = safe_decode(self.exception.text, enc=self.enc,
 				errors=u'ignore')
 		return info
-		
+
 	def _defaultexception_info(self, msg, info):
-		
+
 		"""
 		desc:
 			Updates the info dict for all Exceptions.
-		"""				
-		
+		"""
+
 		info[u'item-stack'] = str(item_stack_singleton)
 		info[u'time'] = time.ctime()
 		if self.exception is None:

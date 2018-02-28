@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import libopensesame.python_workspace_api as api
-from libopensesame import debug
+from libopensesame.exceptions import AbortCoroutines
 import types
 import warnings
 from openexp.canvas_elements import ElementFactory
@@ -67,15 +67,16 @@ class python_workspace(object):
 		# By setting the __name__ global, the workspace will operate as a
 		# module, so that e.g. import statements don't suffer from locality.
 		self._globals.update({
-			u'__name__'		: u'python_workspace',
-			u'exp'			: self.experiment,
-			u'var'			: self.experiment.var,
-			u'pool'			: self.experiment.pool,
-			u'items'		: self.experiment.items,
-			u'clock'		: self.experiment._clock,
-			u'log'			: self.experiment._log,
-			u'responses'	: self.experiment._responses,
-			u'data_files'	: self.experiment.data_files,
+			u'__name__'			: u'python_workspace',
+			u'exp'				: self.experiment,
+			u'var'				: self.experiment.var,
+			u'pool'				: self.experiment.pool,
+			u'items'			: self.experiment.items,
+			u'clock'			: self.experiment._clock,
+			u'log'				: self.experiment._log,
+			u'responses'		: self.experiment._responses,
+			u'data_files'		: self.experiment.data_files,
+			u'AbortCoroutines'	: AbortCoroutines,
 			})
 		# All functions from the api modules are also loaded into the globals.
 		# This way they can be called directly by name.

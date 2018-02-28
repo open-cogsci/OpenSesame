@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import osexception, AbortCoroutines
 
 class base_task(object):
 
@@ -134,6 +134,8 @@ class base_task(object):
 		try:
 			if self.coroutine.send(True) is False:
 				return self.ABORT
+		except AbortCoroutines:
+			return self.ABORT
 		except StopIteration:
 			self.coroutines.event('died %s' % self.coroutine)
 			return self.ABORT if self._abort_on_end else self.DEAD
