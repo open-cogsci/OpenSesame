@@ -153,57 +153,56 @@ class Legacy(Canvas, LegacyCoordinates):
 	@staticmethod
 	def init_display(experiment):
 
-		# Intialize PyGame
-		pygame.init()
+		def p(msg):
 
-		# Set the window icon
+			print(u'openexp._canvas.legacy.init_display(): %s' % msg)
+
+		# Intialize PyGame and set the Window icon
+		pygame.init()
 		surf = pygame.Surface( (32, 32) )
 		surf.fill( (255, 255, 255) )
 		pygame.draw.circle(surf, (0, 0, 255), (16, 16), 10, 4)
 		pygame.display.set_icon(surf)
-
 		# Determine the video mode
 		mode = 0
-		if experiment.var.get(u"pygame_hwsurface", u"yes",
-			[u"yes", u"no"]) == u"yes":
+		if (
+			experiment.var.get(u"pygame_hwsurface", u"yes", [u"yes", u"no"])
+			== u"yes"
+		):
 			mode = mode | pygame.HWSURFACE
-			print(
-				u"openexp._canvas.legacy.init_display(): enabling hardware surface")
+			p(u'enabling hardware surface')
 		else:
-			print(
-				u"openexp._canvas.legacy.init_display(): not enabling hardware surface")
-
-		if experiment.var.get(u"pygame_doublebuf", u"yes",
-			[u"yes", u"no"]) == u"yes":
+			p(u'not enabling hardware surface')
+		if (
+			experiment.var.get(u"pygame_doublebuf", u"yes", [u"yes", u"no"])
+			== u"yes"
+		):
 			mode = mode | pygame.DOUBLEBUF
-			print(
-				u"openexp._canvas.legacy.init_display(): enabling double buffering")
+			p(u'enabling double buffering')
 		else:
-			print(
-				u"openexp._canvas.legacy.init_display(): not enabling double buffering")
-
+			p(u'not enabling double buffering')
 		if pygame.display.mode_ok(experiment.resolution(), mode):
-			print(u"openexp._canvas.legacy.init_display(): video mode ok")
+			p(u'video mode ok')
 		else:
-			print(
-				u"openexp._canvas.legacy.init_display(): warning: video mode not ok")
-
+			p(u'warning: video mode not ok')
 		if experiment.var.fullscreen == u'yes':
 			mode = mode | pygame.FULLSCREEN
-
-		if experiment.var.get(u'pygame_window_frame', u'yes', [u'yes', u'no']) \
-			== u'no':
+		if (
+			experiment.var.get(u'pygame_window_frame', u'yes', [u'yes', u'no'])
+			== u'no'
+		):
 			mode = mode | pygame.NOFRAME
-
 		if experiment.var.get(u'pygame_window_pos', u'auto') != u'auto':
 			os.environ[u'SDL_VIDEO_WINDOW_POS'] = experiment.var.get(
-				u'pygame_window_pos')
-
+				u'pygame_window_pos'
+			)
 		# Create the window and the surface
 		experiment.window = pygame.display.set_mode(experiment.resolution(), mode)
 		pygame.display.set_caption(u'OpenSesame (legacy backend)')
 		pygame.mouse.set_visible(False)
 		experiment.surface = pygame.display.get_surface()
+		# Disable mouse-motion events because they fill up the cue
+		pygame.event.set_blocked(pygame.MOUSEMOTION)
 
 	@staticmethod
 	def close_display(experiment):
