@@ -85,7 +85,7 @@ class mouse_response_mixin(object):
 			self.experiment.var.cursor_y = u'NA'
 		else:
 			self.experiment.var.cursor_x, self.experiment.var.cursor_y = pos
-		if self.var.linked_sketchpad and pos is not None:
+		if self.var.get(u'linked_sketchpad', default=u'') and pos is not None:
 			if self.var.linked_sketchpad not in self.experiment.items:
 				raise osexception(
 					u'Item does not exist: %s'
