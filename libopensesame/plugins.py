@@ -125,7 +125,7 @@ def plugin_disabled(plugin, _type=u'plugins'):
 	"""
 
 	from libqtopensesame.misc.config import cfg
-	
+
 	if plugin_property(plugin, u'disabled', _type=_type):
 		return True
 	# Check if disabled_plugins is not empty in which case it is a
@@ -182,8 +182,8 @@ def plugin_properties(plugin, _type=u'plugins'):
 	if os.path.exists(info_yaml):
 		# Read the yaml file and replace all tabs by spaces. This is necessary,
 		# because yaml doesn't accept tab-based indentation, whereas json does.
-		with open(info_yaml) as fd:
-			s = safe_decode(fd.read(), enc=u'utf-8')
+		with safe_open(info_yaml) as fd:
+			s = fd.read()
 		s = s.replace(u'\t', u'    ')
 		try:
 			_properties[plugin] = yaml.load(s)
@@ -193,7 +193,7 @@ def plugin_properties(plugin, _type=u'plugins'):
 	# Old-style plug-ins, using info.txt
 	elif os.path.exists(info_txt):
 		_properties[plugin] = {}
-		with open(info_txt, u'r') as fd:
+		with safe_open(info_txt) as fd:
 			for l in fd:
 				a = l.split(":")
 				if len(a) == 2:
