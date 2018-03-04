@@ -161,6 +161,10 @@ def opensesamerun():
 		logfile = safe_decode(logfile,
 			enc=libopensesame.misc.filesystem_encoding(), errors=u'ignore')
 
+	experiment_path = safe_decode(
+		os.path.abspath(options.experiment),
+		enc=libopensesame.misc.filesystem_encoding()
+	)
 	if options.debug:
 		# In debug mode, don't try to catch any exceptions
 		exp = libopensesame.experiment.experiment(u"Experiment",
@@ -172,8 +176,6 @@ def opensesamerun():
 		exp.end()
 	else:
 		# Try to parse the experiment from a file
-		experiment_path = safe_decode(os.path.abspath(options.experiment),
-			enc=libopensesame.misc.filesystem_encoding())
 		try:
 			exp = libopensesame.experiment.experiment(u"Experiment",
 				experiment, experiment_path=experiment_path)
