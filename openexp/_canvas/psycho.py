@@ -99,6 +99,17 @@ class Psycho(Canvas, PsychoCoordinates):
 		self.experiment.window.flip(clearBuffer=True)
 		return self.experiment.clock.time()
 
+	def __iter__(self):
+
+		for name, stim in self._elements.items():
+			if name == u'__background__':
+				continue
+			yield name, stim
+
+	def __len__(self):
+
+		return len(self._elements)-1
+
 	@staticmethod
 	def init_display(experiment):
 

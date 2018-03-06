@@ -494,7 +494,7 @@ class Canvas(Backend):
 		"""
 
 		elements = []
-		for name, element in self._elements.items():
+		for name, element in self:
 			try:
 				if (x, y) in element:
 					elements.append(name)
