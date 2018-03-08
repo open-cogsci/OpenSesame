@@ -18,8 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-import numpy as np
-from openexp._canvas import canvas
+import copy
 
 
 class XpyrimentElement(object):
@@ -40,6 +39,13 @@ class XpyrimentElement(object):
 
 		if self.visible:
 			self._stim.present(**kwargs)
+
+	def copy(self, canvas):
+
+		e = copy.copy(self)
+		e._stim = self._stim.copy()
+		e._canvas = canvas
+		return e
 
 	def _on_attribute_change(self, **kwargs):
 

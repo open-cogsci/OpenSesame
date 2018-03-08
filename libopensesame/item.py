@@ -29,6 +29,7 @@ class item(object):
 	"""Abstract class that serves as the basis for all OpenSesame items."""
 
 	encoding = u'utf-8'
+	__deepcopy__ = None
 
 	def __init__(self, name, experiment, string=None):
 
