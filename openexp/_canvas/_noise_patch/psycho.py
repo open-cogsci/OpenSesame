@@ -18,14 +18,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp._canvas import canvas
 from openexp._canvas._noise_patch.noise_patch import NoisePatch
-from openexp._canvas._element.psycho import GratingElement
+from openexp._canvas._element.psycho import RotatingElement, PsychoElement
 from psychopy import visual
 import numpy as np
 
 
-class Psycho(GratingElement, NoisePatch):
+class Psycho(RotatingElement, PsychoElement, NoisePatch):
 
 	def prepare(self):
 
