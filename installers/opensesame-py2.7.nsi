@@ -30,7 +30,7 @@ SetCompressor /SOLID /FINAL lzma
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "OpenSesame"
-!define PRODUCT_VERSION "3.2.1-py2.7-win32-1"
+!define PRODUCT_VERSION "3.2.1-py2.7-win32-2"
 !define EXEC_SUBFOLDER "Scripts\"
 !define PRODUCT_PUBLISHER "Sebastiaan Mathot"
 !define PRODUCT_WEB_SITE "http://osdoc.cogsci.nl"
@@ -87,8 +87,8 @@ SectionEnd
 Section -AdditionalIcons
   WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
   CreateDirectory "$SMPROGRAMS\OpenSesame"
-  CreateShortCut "$SMPROGRAMS\OpenSesame\OpenSesame.lnk" "$INSTDIR\pythonw.exe" "${EXEC_SUBFOLDER}opensesame" "$INSTDIR\Lib\site-packages\share\opensesame_resources\opensesame.ico"
-  CreateShortCut "$SMPROGRAMS\OpenSesame\OpenSesame (runtime).lnk" "$INSTDIR\pythonw.exe" "${EXEC_SUBFOLDER}opensesamerun" "$INSTDIR\Lib\site-packages\share\opensesame_resources\opensesamerun.ico"
+  CreateShortCut "$SMPROGRAMS\OpenSesame\OpenSesame.lnk" "$INSTDIR\pythonw.exe" "${EXEC_SUBFOLDER}safelaunch-opensesame.py" "$INSTDIR\Lib\site-packages\share\opensesame_resources\opensesame.ico"
+  CreateShortCut "$SMPROGRAMS\OpenSesame\OpenSesame (runtime).lnk" "$INSTDIR\pythonw.exe" "${EXEC_SUBFOLDER}safelaunch-opensesamerun.py" "$INSTDIR\Lib\site-packages\share\opensesame_resources\opensesamerun.ico"
   CreateShortCut "$SMPROGRAMS\OpenSesame\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
   CreateShortCut "$SMPROGRAMS\OpenSesame\Uninstall.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
