@@ -1373,7 +1373,7 @@ class Canvas(Backend):
 		desc:		deprecated
 		"""
 
-		self.bgcolor = self.color
+		self.bgcolor = color
 
 	def set_font(self, style=None, size=None, italic=None, bold=None,
 		underline=None):
