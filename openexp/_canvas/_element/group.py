@@ -54,7 +54,7 @@ class Group(Element):
 
 	def __add__(self, element):
 
-		return Group(self.canvas, self._elements + [element])
+		return Group(self._canvas, self._elements + [element])
 
 	@staticmethod
 	def _setter(key, self, val):
