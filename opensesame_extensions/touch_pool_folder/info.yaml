@@ -1,0 +1,3 @@
+description: Touches the pool folder every once in a while so that Windows doesn't clear it up
+settings:
+  touch_interval: 600000
