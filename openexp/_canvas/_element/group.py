@@ -43,6 +43,10 @@ class Group(Element):
 		for element in self._elements:
 			element.show(**kwargs)
 
+	def __contains__(self, xy):
+
+		return any(xy in element for element in self._elements)
+
 	def __iter__(self):
 
 		for e in self._elements:
