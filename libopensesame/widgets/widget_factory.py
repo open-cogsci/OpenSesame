@@ -27,13 +27,19 @@ class WidgetFactory(object):
 
 		self._args = args
 		self._kwargs = kwargs
+		self._instance = None
 
 	def construct(self, form):
 
-		mod = __import__('libopensesame.widgets._%s' % self.mod,
-			fromlist=['dummy'])
+		if self._instance is not None:
+			return self._instance
+		mod = __import__(
+			'libopensesame.widgets._%s' % self.mod,
+			fromlist=['dummy']
+		)
 		cls = getattr(mod, self.__class__.__name__)
-		return cls(form, *self._args, **self._kwargs)
+		self._instance = cls(form, *self._args, **self._kwargs)
+		return self._instance
 
 
 class Label(WidgetFactory): mod = 'label'

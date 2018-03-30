@@ -173,6 +173,8 @@ class Form(object):
 					timeout occurred, None will be returned.
 		"""
 
+		if isinstance(focus_widget, WidgetFactory):
+			focus_widget = focus_widget.construct(self)
 		if len(self) == 0:
 			raise osexception(u'The form contains no widgets')
 		ms = mouse(self.experiment, timeout=0)
