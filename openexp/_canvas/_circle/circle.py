@@ -30,6 +30,14 @@ class Circle(Ellipse):
 		self.prepare = self.circle_prepare(self.prepare)
 		Ellipse.__init__(self, canvas, **properties)
 
+	@property
+	def rect(self):
+		return self.x-self.r, self.y-self.r, self.r*2, self.r*2
+
+	def __contains__(self, xy):
+
+		return ((xy[0]-self.x)**2+(xy[1]-self.y)**2)**0.5 <= self.r
+
 	def circle_prepare(self, ellipse_prepare):
 
 		"""
