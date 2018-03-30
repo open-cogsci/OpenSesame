@@ -20,7 +20,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import warnings
 import random
-import pygame
 import math
 from libopensesame.exceptions import osexception
 from openexp.backend import Backend, configurable
@@ -1480,6 +1479,8 @@ def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0,
 		see [canvas.gabor].
 	"""
 
+	import pygame
+
 	env = _match_env(env)
 	# Generating a Gabor patch takes quite some time, so keep
 	# a cache of previously generated Gabor patches to speed up
@@ -1555,6 +1556,8 @@ def _noise_patch(env=u"gaussian", size=96, stdev=12, col1=u"white",
 		Returns a pygame surface containing a noise patch. For arguments,
 		see [canvas.noise_patch].
 	"""
+
+	import pygame
 
 	env = _match_env(env)
 	# Generating a noise patch takes quite some time, so keep
