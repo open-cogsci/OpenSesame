@@ -54,9 +54,13 @@ class Xpyriment(Canvas, XpyrimentCoordinates):
 	def clear(self):
 
 		self._elements = OrderedDict()
-		self._background = stimuli.BlankScreen(
-			colour=self.background_color.backend_color)
-		self._background.preload()
+		self._set_background()
+
+	def set_config(self, **cfg):
+
+		Canvas.set_config(self, **cfg)
+		if u'background_color' in cfg:
+			self._set_background()
 
 	def show(self):
 
@@ -69,6 +73,13 @@ class Xpyriment(Canvas, XpyrimentCoordinates):
 			e = elements.pop(0)
 			e.show(clear=False, update=not elements)
 		return self.experiment.clock.time()
+
+	def _set_background(self):
+
+		self._background = stimuli.BlankScreen(
+			colour=self.background_color.backend_color
+		)
+		self._background.preload()		
 
 	@staticmethod
 	def init_display(experiment):

@@ -82,10 +82,13 @@ class Psycho(Canvas, PsychoCoordinates):
 	def clear(self):
 
 		self._elements = OrderedDict()
-		self['__background__'] = Rect(
-			self.left, self.top, self.width, self.height,
-			color=self.background_color.colorspec, fill=True
-		)
+		self._set_background()
+
+	def set_config(self, **cfg):
+
+		Canvas.set_config(self, **cfg)
+		if u'background_color' in cfg and hasattr(self, u'_elements'):
+			self._set_background()
 
 	def lower_to_bottom(self, element):
 
@@ -98,6 +101,16 @@ class Psycho(Canvas, PsychoCoordinates):
 			e.show()
 		self.experiment.window.flip(clearBuffer=True)
 		return self.experiment.clock.time()
+
+	def _set_background(self):
+
+		if u'__background__' in self:
+			del self['__background__']
+		self['__background__'] = Rect(
+			self.left, self.top, self.width, self.height,
+			color=self.background_color.colorspec, fill=True
+		)
+		Canvas.lower_to_bottom(self, u'__background__')
 
 	def __iter__(self):
 

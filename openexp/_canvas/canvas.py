@@ -404,6 +404,17 @@ class Canvas(Backend):
 
 		return len(self._elements)
 
+	def __contains__(self, key):
+
+		"""
+		visible: False
+
+		desc:
+			Checks whether a named element is in the Canvas.
+		"""
+
+		return key in self._elements
+
 	def __iter__(self):
 
 		"""
@@ -1372,7 +1383,7 @@ class Canvas(Backend):
 		desc:		deprecated
 		"""
 
-		self.bgcolor = self.color
+		self.background_color = color
 
 	def set_font(self, style=None, size=None, italic=None, bold=None,
 		underline=None):
