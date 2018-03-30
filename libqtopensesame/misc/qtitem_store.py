@@ -85,24 +85,36 @@ class qtitem_store(item_store):
 			self[_name].remove_child_item(name, index=-1)
 		self.extension_manager.fire(u'delete_item', name=name)
 
-	def new(self, _type, name=None, script=None, catch_exceptions=True):
+	def new(
+		self, _type, name=None, script=None, catch_exceptions=True,
+		allow_rename=True
+	):
 
 		"""See item_store."""
 
 		import warnings
+
 		with warnings.catch_warnings(record=True) as warning_list:
 			if catch_exceptions:
 				try:
-					item = super(qtitem_store, self).new(_type, name=name,
-						script=script)
+					item = super(qtitem_store, self).new(
+						_type=_type,
+						name=name,
+						script=script,
+						allow_rename=allow_rename
+					)
 				except Exception as e:
 					if not isinstance(e, osexception):
 						e = osexception(e)
 					self.error_log.append(e)
 					return
 			else:
-				item = super(qtitem_store, self).new(_type, name=name,
-					script=script)
+				item = super(qtitem_store, self).new(
+					_type=_type,
+					name=name,
+					script=script,
+					allow_rename=allow_rename
+				)
 		if warning_list:
 			import yaml
 			import os
@@ -227,12 +239,12 @@ class qtitem_store(item_store):
 		return False
 
 	def clear_cache(self):
-		
+
 		"""
 		desc:
 			Clears the cache, currently only the cache with children for each
 			item.
 		"""
-		
+
 		for item in self.values():
 			item._children = None

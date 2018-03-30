@@ -333,20 +333,30 @@ class experiment(item.item):
 			try:
 				l = self.syntax.split(line)
 			except ValueError as e:
-				raise osexception(u'Failed to parse script. Maybe it contains '
-					u'illegal characters or unclosed quotes?', exception=e)
+				raise osexception(
+					u'Failed to parse script. Maybe it contains '
+					u'illegal characters or unclosed quotes?',
+					exception=e
+				)
 			if l:
 				self.parse_variable(line)
 				# Parse definitions
 				if l[0] == u"define":
 					if len(l) != 3:
-						raise osexception(u'Failed to parse definition',
-							line=line)
+						raise osexception(
+							u'Failed to parse definition',
+							line=line
+						)
 					item_type = l[1]
 					item_name = self.syntax.sanitize(l[2])
 					line, def_str = self.read_definition(s)
 					get_next = False
-					self.items.new(item_type, item_name, def_str)
+					self.items.new(
+						_type=item_type,
+						name=item_name,
+						script=def_str,
+						allow_rename=False
+					)
 			# Advance to next line
 			if get_next:
 				line = next(s, None)

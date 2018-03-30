@@ -142,7 +142,7 @@ class item_store(object):
 		self[name].prepare()
 		item_stack_singleton.pop()
 
-	def new(self, _type, name=None, script=None):
+	def new(self, _type, name=None, script=None, allow_rename=True):
 
 		"""
 		desc:
@@ -161,6 +161,11 @@ class item_store(object):
 			script:
 				desc:	A definition script, or None to start with a blank item.
 				type:	[unicode, NoneType]
+			allow_rename:
+				desc:	Indicates whether OpenSesame can use a different name
+						from the one that is provided as `name` to avoid
+						duplicate names etc.
+				type:	bool
 
 		returns:
 			desc:	The newly generated item.
@@ -173,23 +178,36 @@ class item_store(object):
 		"""
 
 		debug.msg(u'creating %s' % _type)
-		name = self.valid_name(_type, suggestion=name)
+		if allow_rename:
+			name = self.valid_name(_type, suggestion=name)
 		if plugins.is_plugin(_type):
 			# Load a plug-in
 			try:
-				item = plugins.load_plugin(_type, name,
-					self.experiment, script, self.experiment.item_prefix())
+				item = plugins.load_plugin(
+					_type, name, self.experiment, script,
+					self.experiment.item_prefix()
+				)
 			except Exception as e:
 				raise osexception(
-					u"Failed to load plugin '%s'" % _type, exception=e)
+					u"Failed to load plugin '%s'" % _type,
+					exception=e
+				)
 			self.__items__[name] = item
 		else:
 			# Load one of the core items
-			debug.msg(u"loading core item '%s' from '%s'" % (_type,
-				self.experiment.module_container()))
-			item_module = __import__(u'%s.%s' % (
-				self.experiment.module_container(), _type),
-				fromlist=[u'dummy'])
+			debug.msg(
+				u"loading core item '%s' from '%s'" % (
+					_type,
+					self.experiment.module_container()
+				)
+			)
+			item_module = __import__(
+				u'%s.%s' % (
+					self.experiment.module_container(),
+					_type
+				),
+				fromlist=[u'dummy']
+			)
 			item_class = getattr(item_module, _type)
 			item = item_class(name, self.experiment, script)
 			self.__items__[name] = item
