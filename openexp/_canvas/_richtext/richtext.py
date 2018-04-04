@@ -172,3 +172,10 @@ class RichText(Element):
 		x1, y1, x2, y2 = (0, 0, 1, 1) if bbox is None else bbox
 		y1 = min(y2-self.font_size, y1)
 		return im.crop((x1, y1, x2, y2))
+
+	@staticmethod
+	def _setter(key, self, val):
+
+		if key == u'text':
+			val = safe_decode(val)
+		super(RichText, self)._setter(key, self, val)
