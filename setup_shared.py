@@ -66,7 +66,6 @@ included_extensions = [
 	'after_experiment',
 	'system_information',
 	'system_check',
-	'touch_pool_folder',
 	'notifications',
 	'tab_to_dockwidget'
 	]
