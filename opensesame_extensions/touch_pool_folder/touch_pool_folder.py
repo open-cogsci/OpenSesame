@@ -39,6 +39,7 @@ class touch_pool_folder(base_extension):
 
 	def _start_timer(self):
 
+		print('Touching %s' % self.experiment.pool_folder)
 		os.utime(self.experiment.pool_folder, None)
 		self._timer = QtCore.QTimer()
 		self._timer.setInterval(cfg.touch_interval)
