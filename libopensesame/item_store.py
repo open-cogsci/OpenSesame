@@ -180,6 +180,8 @@ class item_store(object):
 		debug.msg(u'creating %s' % _type)
 		if allow_rename:
 			name = self.valid_name(_type, suggestion=name)
+		else:
+			name = cistr(name)
 		if plugins.is_plugin(_type):
 			# Load a plug-in
 			try:
