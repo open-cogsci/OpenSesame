@@ -1,3 +1,3 @@
-# Quest staircase init :階段法の初期化
+# Quest staircase init: Quest階段法の初期化
 
-新しいクエスト階段法を初期化します。
+新しいQuest階段法を初期化します。
