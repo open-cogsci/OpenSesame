@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import sys
 import yaml
+import time
 from libopensesame import debug, misc
 from libopensesame.exceptions import osexception
 from libopensesame.py3compat import *
@@ -34,6 +35,7 @@ _properties = {}
 # compile everything to bytecode.
 src_templates = [u'%s.py']
 bytecode_templates = [u'%s.pyo', u'%s.pyc']
+
 
 def plugin_folders(only_existing=True, _type=u'plugins'):
 
@@ -56,13 +58,11 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
 	"""
 
 	l = []
-
 	# Build a list of default plugin/ extension folders
 	for folder in misc.base_folders:
 		path = os.path.join(folder, u'opensesame_%s' % _type)
 		if os.path.exists(path):
 			l.append(path)
-
 	# Get the environment variables
 	if _type == u'plugins':
 		key = u'OPENSESAME_PLUGIN_PATH'
@@ -73,7 +73,6 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
 			path = safe_decode(path, enc=misc.filesystem_encoding())
 			if os.path.exists(path):
 				l.insert(0, path)
-
 	if os.name == u'posix' and u'HOME' in os.environ:
 		# Regular Linux distributions. TODO: How well does this apply to Mac OS?
 		path = os.path.join(os.environ[u'HOME'], u'.opensesame', _type)
@@ -82,7 +81,6 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
 		path = u'/usr/share/opensesame/%s' % _type
 		if not only_existing or os.path.exists(path):
 			l.append(path)
-
 	elif os.name == u'posix' and u'HOME' not in os.environ:
 		# Android can be recognized by the fact that the HOME variable is not
 		# available. We can simply use the relative path `plugins`, which will
@@ -90,38 +88,43 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
 		path = _type
 		if not only_existing or os.path.exists(path):
 			l.append(path)
-
 	elif os.name == u'nt':
 		# Windows
 		path = os.path.join(safe_decode(os.environ[u'APPDATA'],
 			enc=misc.filesystem_encoding()), u'.opensesame', _type)
 		if not only_existing or os.path.exists(path):
 			l.append(path)
-
 	return l
+
 
 def is_plugin(item_type, _type=u'plugins'):
 
 	"""
-	Checks if a given item type corresponds to a plugin.
+	desc:
+		Checks if a given item type corresponds to a plugin.
 
-	Returns:
-	True if the item_type is a plugin, False otherwise.
+	returns:
+		True if the item_type is a plugin, False otherwise.
 	"""
 
 	return plugin_folder(item_type, _type=_type) is not None
 
+
 def plugin_disabled(plugin, _type=u'plugins'):
 
 	"""
-	Checks if a plugin has been disabled. If the config module cannot be loaded
-	the return value is False.
+	desc:
+		Checks if a plugin has been disabled. If the config module cannot be
+		loaded the return value is False.
 
-	Arguments:
-	plugin	--	The plugin to check.
+	arguments:
+		plugin:		The plugin to check.
 
-	Returns:
-	True if the plugin has been disabled, False otherwise.
+	keywords:
+		_type:		plugins/ extensions
+
+	returns:
+		True if the plugin has been disabled, False otherwise.
 	"""
 
 	from libqtopensesame.misc.config import cfg
@@ -135,23 +138,42 @@ def plugin_disabled(plugin, _type=u'plugins'):
 		return True
 	return False
 
+
 def plugin_property(plugin, _property, default=0, _type=u'plugins'):
 
 	"""
-	Returns a property of a plug-in.
+	desc:
+		Returns a property of a plug-in.
 
-	Arguments:
-	plugin		--	The name of the plugin.
-	_property	--	The name of the property.
+	arguments:
+		plugin:		The name of the plugin.
+		_property:	The name of the property.
 
-	Keywords arguments:
-	default		--	A default property value. (default=0)
+	keywords:
+		default:	A default property value.
 
-	Returns:
-	The property value.
+	returns:
+		The property value.
 	"""
 
 	return plugin_properties(plugin, _type=_type).get(_property, default)
+
+
+def set_plugin_property(plugin, property, value):
+
+	"""
+	desc:
+		Sets a property in the info dictionary for a plugin.
+
+	arguments:
+		plugin:		The plugin name.
+		property:	The property name.
+		value:		The property value.
+	"""
+
+	plugin_properties(plugin)
+	_properties[plugin][property] = value
+
 
 def plugin_properties(plugin, _type=u'plugins'):
 
@@ -206,32 +228,53 @@ def plugin_properties(plugin, _type=u'plugins'):
 					_properties[plugin][var] = val
 	else:
 		_properties[plugin] = {}
-		debug.msg( \
-			u'Failed to read plug-in information (%s) from info.[txt|json]' \
-			% plugin, reason=u'warning')
+		debug.msg(
+			u'Failed to read plug-in information (%s) from info.[txt|json]'
+				% plugin,
+			reason=u'warning'
+		)
 	_properties[plugin][u'plugin_folder'] = folder
 	_properties[plugin][u'type'] = _type
 	return _properties[plugin]
 
+
 def plugin_category(plugin, _type=u'plugins'):
 
 	"""
-	Returns the category of a plugin.
+	desc:
+		Returns the category of a plugin.
 
-	Returns:
-	A category.
+	arguments:
+		plugin: 	The plugin name.
+
+	keywords:
+		_type:		plugins/ extensions
+
+	returns:
+		A category
 	"""
 
-	return plugin_property(plugin, u'category', default=u'Miscellaneous',
-		_type=_type)
+	return plugin_property(
+		plugin,
+		u'category',
+		default=u'Miscellaneous',
+		_type=_type
+	)
+
 
 def list_plugins(filter_disabled=True, _type=u'plugins'):
 
 	"""
-	Returns a list of plugins.
+	desc:
+		Returns a list of plugins.
 
-	Returns:
-	A list of plugins (item_types).
+	keywords:
+		filter_disabled:	Indicates whether disabled plugins should be
+							included in the list.
+		_type:				plugins/ extensions
+
+	returns:
+		A list of plugins (item_types).
 	"""
 
 	global _plugin_dict
@@ -252,16 +295,18 @@ def list_plugins(filter_disabled=True, _type=u'plugins'):
 	return [plugin for plugin in _plugin_dict[_type] \
 		if not (filter_disabled and plugin_disabled(plugin, _type=_type))]
 
+
 def plugin_folder(plugin, _type=u'plugins'):
 
 	"""
-	Returns the folder of a plugin
+	desc:
+		Returns the folder of a plugin
 
-	Arguments:
-	plugin -- the name of the plugin
+	arguments:
+		plugin:		The name of the plugin
 
-	Returns:
-	The folder of the plugin
+	returns:
+		The folder of the plugin.
 	"""
 
 	global _folders
@@ -277,16 +322,21 @@ def plugin_folder(plugin, _type=u'plugins'):
 				return f
 	return None
 
+
 def plugin_icon_large(plugin, _type=u'plugins'):
 
 	"""
-	Return the large icon for a plugin
+	desc:
+		Return the large icon for a plugin
 
-	Arguments:
-	plugin -- the name of the plugin
+	arguments:
+		plugin:		The name of the plugin
 
-	Returns:
-	The full path to an icon
+	keywords:
+		_type:		plugins/ extensions
+
+	returns:
+		The full path to an icon
 	"""
 
 	icon = plugin_property(plugin, u'icon', default=None)
@@ -295,16 +345,21 @@ def plugin_icon_large(plugin, _type=u'plugins'):
 	return os.path.join(plugin_folder(plugin, _type=_type),
 		u'%s_large.png' % plugin)
 
+
 def plugin_icon_small(plugin, _type=u'plugins'):
 
 	"""
-	Return the small icon for a plugin
+	desc:
+		Return the small icon for a plugin
 
-	Arguments:
-	plugin -- the name of the plugin
+	arguments:
+		plugin:		The name of the plugin.
 
-	Returns:
-	The full path to an icon
+	keywords:
+		_type:		plugins/ extensions
+
+	returns:
+		The full path to an icon
 	"""
 
 	icon = plugin_property(plugin, u'icon', default=None)
@@ -312,13 +367,21 @@ def plugin_icon_small(plugin, _type=u'plugins'):
 		return icon
 	return os.path.join(plugin_folder(plugin, _type=_type), u'%s.png' % plugin)
 
+
 def import_plugin(plugin, _type=u'plugins'):
 
 	"""
-	Imports plugin module
+	desc:
+		Imports plugin module.
 
-	Arguments:
-	plugin -- the name of the plugin
+	arguments:
+		plugin:		The name of the plugin.
+
+	keywords:
+		_type:		plugins/ extensions
+
+	returns:
+		The imported module.
 	"""
 
 	import imp
@@ -337,31 +400,37 @@ def import_plugin(plugin, _type=u'plugins'):
 				path = safe_encode(path, enc=misc.filesystem_encoding())
 			return imp.load_compiled(plugin, path)
 
-def load_plugin(plugin, item_name, experiment, string, prefix=u'',
-	_type=u'plugins'):
+
+def load_plugin(
+	plugin, item_name, experiment, string, prefix=u'', _type=u'plugins'
+):
 
 	"""
-	Returns an instance of the plugin.
+	desc:
+		Returns an instance of the plugin.
 
-	Arguments:
-	plugin		--	The name of the plugin.
-	item_name	--	Yhe name of the item (plugin instance).
-	experiment	--	The experiment object.
-	string		--	A definition string.
+	arguments:
+		plugin:		The name of the plugin.
+		item_name:	The name of the item (plugin instance).
+		experiment:	The experiment object.
+		string:		A definition string.
 
-	Keywords arguments:
-	prefix		--	A class prefix to allow switching between [plugin] and
-					qt[plugin]. (default=u'')
+	keywords:
+		prefix:		A class prefix to allow switching between [plugin] and
+					qt[plugin].
 
-	Returns:
-	An item (plugin instance).
+	returns:
+		An item (plugin instance).
 	"""
 
+	t0 = time.time()
 	sys.path.append(plugin_folder(plugin, _type=_type))
 	item_module = import_plugin(plugin, _type=_type)
 	item_class = getattr(item_module, prefix+plugin)
 	item = item_class(item_name, experiment, string)
+	set_plugin_property(plugin, u'startup_time', time.time() - t0)
 	return item
+
 
 def load_extension(ext_name, main_window):
 
@@ -377,49 +446,58 @@ def load_extension(ext_name, main_window):
 		An extension object.
 	"""
 
+	t0 = time.time()
 	sys.path.append(plugin_folder(ext_name, _type=u'extensions'))
 	mod = import_plugin(ext_name, _type=u'extensions')
 	cls = getattr(mod, ext_name)
-	ext = cls(main_window, info=plugin_properties(ext_name,
-		_type=u'extensions'))
+	ext = cls(
+		main_window,
+		info=plugin_properties(ext_name, _type=u'extensions')
+	)
+	set_plugin_property(ext_name, u'startup_time', time.time() - t0)
 	return ext
+
 
 def load_cls(path, cls, mod, pkg=None):
 
 	"""
-	Dynamically loads a module from a path and return a class from the module
+	desc:
+		Dynamically loads a module from a path and return a class from the
+		module.
 
-	Arguments:
-	path		--	A folder or file name. If a filename is specified, the
-					file's directory will be used as path.
-	cls			--	The class name.
-	mod			--	The name of a module, which corresponds to the name of the
-					source file without the `.py` extension.
-	pkg			--	The module's package. This is effectively a subfolder that
-					is added to the path. (default=None)
+	arguments:
+		path:	A folder or file name. If a filename is specified, the file's
+				directory will be used as path.
+		cls:	The class name.
+		mod:	The name of a module, which corresponds to the name of the
+				source file without the `.py` extension.
+		pkg:	The module's package. This is effectively a subfolder that
+				is added to the path.
 
-	Returns:
-	A Python class.
+	returns:
+		A class.
 	"""
 
 	mod = load_mod(path, mod, pkg)
 	return getattr(mod, cls)
 
+
 def load_mod(path, mod, pkg=None):
 
 	"""
-	Dynamically loads a module from a path.
+	desc:
+		Dynamically loads a module from a path.
 
-	Arguments:
-	path		--	A folder or file name. If a filename is specified, the
-					file's directory will be used as path.
-	mod			--	The name of a module, which corresponds to the name of the
-					source file without the `.py` extension.
-	pkg			--	The module's package. This is effectively a subfolder that
-					is added to the path. (default=None)
+	arguments:
+		path:	A folder or file name. If a filename is specified, the
+				file's directory will be used as path.
+		mod:	The name of a module, which corresponds to the name of the
+				source file without the `.py` extension.
+		pkg:	The module's package. This is effectively a subfolder that
+				is added to the path.
 
-	Returns:
-	A Python module.
+	returns:
+		A module.
 	"""
 
 	import imp

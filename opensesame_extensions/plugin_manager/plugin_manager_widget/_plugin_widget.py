@@ -59,6 +59,10 @@ class plugin_widget(base_widget):
 			self.ui.label_version.setText(safe_decode(self.info[u'version']))
 		if u'url' in self.info:
 			self.ui.label_url.setText(safe_decode(self.info[u'url']))
+		if u'startup_time' in self.info:
+			self.ui.label_startup_time.setText(
+				u'%.4f s' % self.info[u'startup_time']
+			)
 		self.ui.checkbox_enable.setChecked(self.is_enabled())
 		self.ui.checkbox_enable.clicked.connect(self.toggle)
 
