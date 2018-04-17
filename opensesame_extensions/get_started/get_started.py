@@ -78,21 +78,21 @@ class get_started(base_extension):
 			}
 		self.tabwidget.open_markdown(md, title=_(u'Get started!'),
 			icon=u'document-new')
-			
+
 	def _unambiguous_path(self, path):
-		
+
 		"""
 		desc:
 			If the path basename is unique among the resent experiments, this is
 			used. Otherwise, the full path is used.
-			
+
 		arguments:
 			path:	The path to shorten unambiguously.
-			
+
 		returns:
 			The unambiguously shortened path.
 		"""
-		
+
 		basename = os.path.basename(path)
 		basenames = \
 			[os.path.basename(_path) for _path in self.main_window.recent_files]
@@ -109,6 +109,7 @@ class get_started(base_extension):
 	def event_open_recent_4(self):
 		self.main_window.open_file(path=self.main_window.recent_files[4])
 
+	@base_extension.as_thread(wait=500)
 	def event_startup(self):
 
 		"""
