@@ -19,7 +19,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import os
-from qtpy import QtWidgets
+import functools
+from qtpy import QtWidgets, QtCore
 from libopensesame import debug
 from libopensesame.exceptions import osexception
 from libqtopensesame.misc.config import cfg
@@ -54,6 +55,28 @@ class base_extension(base_subcomponent):
 		self.register_ui_files()
 		self.create_action()
 		self.register_config()
+
+	@staticmethod
+	def as_thread(wait):
+
+		"""
+		desc:
+			A decorator to execute events in a separate thread, optionally
+			after a delay.
+		"""
+
+		def inner(fnc):
+
+			def innermost(self, *args, **kwargs):
+
+				QtCore.QTimer.singleShot(
+					wait,
+					functools.partial(fnc, self, *args, **kwargs)
+				)
+
+			return innermost
+
+		return inner
 
 	@property
 	def console(self):
