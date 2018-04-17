@@ -21,7 +21,6 @@ from libopensesame.var_store import var_store
 from libopensesame.item_store import item_store
 from libopensesame.response_store import response_store
 from libopensesame.file_pool_store import file_pool_store
-from libopensesame.python_workspace import python_workspace
 from libopensesame.syntax import syntax
 from libopensesame.exceptions import osexception
 from libopensesame import misc, item, debug, metadata
@@ -115,6 +114,7 @@ class experiment(item.item):
 		if not hasattr(self, u'items'):
 			self.items = item_store(self)
 		if workspace is None:
+			from libopensesame.python_workspace import python_workspace
 			self._python_workspace = python_workspace(self)
 		else:
 			self._python_workspace = workspace
