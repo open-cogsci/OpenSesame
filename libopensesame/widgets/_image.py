@@ -107,7 +107,6 @@ class ImageWidget(Widget):
 		x, y, w, h = self.rect
 		x += w/2
 		y += h/2
-		print(_path)
 		self.canvas.add_element(
 			ImageElement(_path, x=x, y=y, scale=self.scale, center=True)
 				.construct(self.canvas)
