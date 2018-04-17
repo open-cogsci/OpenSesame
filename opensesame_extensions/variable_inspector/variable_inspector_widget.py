@@ -71,7 +71,11 @@ class variable_inspector_widget(base_widget):
 			type:	tuple
 		"""
 
-		d = self.main_window.console.get_workspace_globals()
+		try:
+			d = self.main_window.console.get_workspace_globals()
+		except AttributeError:
+			# If the console hasn't been started yet
+			return self.experiment.var, False
 		if u'var' in d and hasattr(d[u'var'], u'inspect'):
 			return d[u'var'], True
 		return self.experiment.var, False

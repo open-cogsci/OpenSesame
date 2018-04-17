@@ -26,32 +26,20 @@ import platform
 # - <https://github.com/smathot/OpenSesame/issues/363>
 import sys
 import os
+import functools
 if (sys.stderr is None or \
 	(hasattr(sys.stderr, u'fileno') and sys.stderr.fileno() == -2)):
 	sys.stdout = sys.stderr = open(os.devnull, u'w')
 	sys.stdin = open(os.devnull, u'r')
 
-from qtpy import QtWidgets, QtGui
-try:
-	# New-style Jupyter imports
-	
-	# When packaged on a mac, a check that qtconsole does to see if pyqt4 is available fails
-	# Since PyQt4 is packaged with OpenSesame, we may assume it will be available and 
-	# override the check to return True 
-	if platform.system() == "Darwin" and hasattr(sys,"frozen"):
-		import qtconsole.qt_loaders
-		qtconsole.qt_loaders.has_binding = lambda api: api == u'pyqt'
-
-	from qtconsole.rich_jupyter_widget import RichJupyterWidget \
-		as RichIPythonWidget
-	from qtconsole.inprocess import QtInProcessKernelManager
-except:
-	# Old-style IPython imports
-	from IPython.qt.console.rich_ipython_widget import RichIPythonWidget
-	from IPython.qt.inprocess import QtInProcessKernelManager
+from qtpy import QtWidgets, QtGui, QtCore
 from libqtopensesame.console._base_console import base_console
 from libqtopensesame.misc.config import cfg
 from libopensesame import debug
+
+
+deferred_function_calls = []
+
 
 def _style(cs, token):
 
@@ -76,6 +64,7 @@ def _style(cs, token):
 	if isinstance(color, tuple):
 		return color[0]
 	return color
+
 
 def pygments_style_factory(cs):
 
@@ -106,6 +95,28 @@ def pygments_style_factory(cs):
 		}
 	return my_style
 
+
+def deferred(fnc):
+
+	"""
+	desc:
+		A decorator that postpones execution of a function until the console
+		has been started. This allows OpenSesame to start and become usable
+		before IPython is imported, which takes quite some time.
+	"""
+
+	def inner(self, *args, **kwargs):
+
+		if self._started:
+			return fnc(self, *args, **kwargs)
+		deferred_function_calls.append(
+			functools.partial(fnc, self, *args, **kwargs)
+		)
+
+	inner._original = fnc
+	return inner
+
+
 class ipython_console(base_console, QtWidgets.QWidget):
 
 	"""
@@ -124,6 +135,36 @@ class ipython_console(base_console, QtWidgets.QWidget):
 		"""
 
 		super(ipython_console, self).__init__(main_window)
+		self._started = False
+		self.main_window = main_window
+
+	def start(self):
+
+		"""
+		desc:
+			Starts the console, and does all the things that take time.
+		"""
+
+		try:
+			# New-style Jupyter imports
+			#
+			# When packaged on a mac, a check that qtconsole does to see if
+			# pyqt4 is available fails. Since PyQt4 is packaged with OpenSesame,
+			# we may assume it will be available and override the check to
+			# return True.
+			if platform.system() == "Darwin" and hasattr(sys,"frozen"):
+				import qtconsole.qt_loaders
+				qtconsole.qt_loaders.has_binding = lambda api: api == u'pyqt'
+
+			from qtconsole.rich_jupyter_widget import RichJupyterWidget \
+				as RichIPythonWidget
+			from qtconsole.inprocess import QtInProcessKernelManager
+		except:
+			# Old-style IPython imports
+			from IPython.qt.console.rich_ipython_widget import RichIPythonWidget
+			from IPython.qt.inprocess import QtInProcessKernelManager
+
+		self._started = True
 		kernel_manager = QtInProcessKernelManager()
 		kernel_manager.start_kernel()
 		self.kernel = kernel_manager.kernel
@@ -139,20 +180,25 @@ class ipython_console(base_console, QtWidgets.QWidget):
 		self.verticalLayout.setContentsMargins(0,0,0,0)
 		self.setLayout(self.verticalLayout)
 		self.verticalLayout.addWidget(self.control)
+		while deferred_function_calls:
+			deferred_function_calls.pop(0)()
 
-	def clear(self):
+	@deferred
+	def clear(self, *args):
 
 		"""See base_console."""
 
 		self.control.reset(clear=True)
 
+	@deferred
 	def focus(self):
 
 		"""See base_console."""
 
 		self.control._control.setFocus()
 
-	def reset(self):
+	@deferred
+	def reset(self, *args):
 
 		"""See base_console."""
 
@@ -161,6 +207,7 @@ class ipython_console(base_console, QtWidgets.QWidget):
 		self.clear()
 		super(ipython_console, self).reset()
 
+	@deferred
 	def show_prompt(self):
 
 		"""See base_console."""
@@ -173,6 +220,7 @@ class ipython_console(base_console, QtWidgets.QWidget):
 
 		return self.kernel.shell.user_global_ns.copy()
 
+	@deferred
 	def set_workspace_globals(self, _globals={}):
 
 		"""See base_console."""
@@ -219,8 +267,11 @@ class ipython_console(base_console, QtWidgets.QWidget):
 		if not self.validTheme(cs):
 			debug.msg(u'Invalid debug-output colorscheme')
 			return u''
+		# We need to process events first, otherwise the style changes don't
+		# take for an unclear reason.
+		QtWidgets.QApplication.processEvents()
 		self.control._highlighter.set_style(pygments_style_factory(cs))
-		qss = u'''QPlainTextEdit, QTextEdit {
+		self.qss = u'''QPlainTextEdit, QTextEdit {
 				background-color: %(Background)s;
 				color: %(Default)s;
 			}
@@ -229,10 +280,16 @@ class ipython_console(base_console, QtWidgets.QWidget):
 			.out-prompt { color: %(Prompt out)s; }
 			.out-prompt-number { font-weight: bold; }
 			''' % cs
-		self.control.style_sheet = qss
-		self.control._control.setFont(QtGui.QFont(cfg.qProgEditFontFamily,
-			cfg.qProgEditFontSize))
+		self.control.style_sheet = self.qss
+		self.control._control.setFont(
+			QtGui.QFont(
+				cfg.qProgEditFontFamily,
+				cfg.qProgEditFontSize
+			)
+		)
+		self.update()
 
+	@deferred
 	def setup(self, main_window):
 
 		"""See base_subcomponent."""
@@ -240,6 +297,7 @@ class ipython_console(base_console, QtWidgets.QWidget):
 		super(ipython_console, self).setup(main_window)
 		self.kernel.shell.push(self.default_globals())
 
+	@deferred
 	def write(self, s):
 
 		"""See base_console."""
@@ -247,6 +305,7 @@ class ipython_console(base_console, QtWidgets.QWidget):
 		self.control._append_plain_text(safe_decode(s, errors=u'ignore'))
 		self.control._control.ensureCursorVisible()
 
+	@deferred
 	def execute(self, s):
 
 		"""See base_console."""
@@ -254,6 +313,7 @@ class ipython_console(base_console, QtWidgets.QWidget):
 		self.main_window.ui.dock_stdout.setVisible(True)
 		self.control.execute(s)
 
+	@deferred
 	def focusInEvent(self, e):
 
 		self.control.setFocus()

@@ -42,16 +42,16 @@ class base_console(base_subcomponent):
 		self.vault = StringIO()
 		self.orig_stdout = sys.stdout
 		self.orig_stderr = sys.stderr
-		
+
 	def isatty(self):
-		
+
 		"""
 		desc:
 			Indicates that the output is not attached to a terminal.
 		"""
-		
-		return False		
-		
+
+		return False
+
 	def clear(self):
 
 		"""
@@ -70,9 +70,9 @@ class base_console(base_subcomponent):
 
 		sys.stdout = self
 		sys.stderr = self
-		
+
 	def _modules(self):
-		
+
 		self.extension_manager[u'system_information'].activate()
 		print(u'Activated system_information extension')
 
@@ -91,6 +91,15 @@ class base_console(base_subcomponent):
 			'modules' : self._modules,
 			'__spec__' : None, # Required by multiprocessing
 			}
+
+	def start(self):
+
+		"""
+		desc:
+			Can implement a deferred start.
+		"""
+
+		pass
 
 	def flush(self):
 
