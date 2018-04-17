@@ -18,16 +18,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-import libopensesame.experiment
+import os
+from libopensesame.experiment import experiment as experiment_runtime
 import libopensesame.plugins
 from libqtopensesame.misc.qtitem_store import qtitem_store
 from libqtopensesame.misc.qtsyntax import qtsyntax
 from qtpy import QtCore, QtWidgets, QtGui
-import os
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'experiment', category=u'item')
 
-class experiment(libopensesame.experiment.experiment):
+
+class experiment(experiment_runtime):
 
 	"""Contains various GUI controls for the experiment"""
 
@@ -76,9 +77,9 @@ class experiment(libopensesame.experiment.experiment):
 			u"logger", u"inline_script"]
 		self.items = qtitem_store(self)
 		self._syntax = qtsyntax(self)
-		libopensesame.experiment.experiment.__init__(self, name, string,
+		experiment_runtime.__init__(self, name, string,
 			pool_folder, experiment_path=experiment_path, resources=resources,
-			fullscreen=None)
+			fullscreen=None, workspace=0)
 
 	@property
 	def overview_area(self):
