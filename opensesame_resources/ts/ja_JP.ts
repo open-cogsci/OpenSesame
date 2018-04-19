@@ -1050,17 +1050,17 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="244"/>
         <source>Tab to dockwidget</source>
-        <translation type="unfinished">タブを独立ウィンドウに</translation>
+        <translation>タブを独立ウィンドウに</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="245"/>
         <source>Turns a tab into a dockwidget</source>
-        <translation type="unfinished">タブを独立ウィンドウに移す</translation>
+        <translation>タブを独立ウィンドウに移す</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="246"/>
         <source>Turn tab into dockwidget</source>
-        <translation type="unfinished">タブを独立ウィンドウに移す</translation>
+        <translation>タブを独立ウィンドウに移す</translation>
     </message>
 </context>
 <context>
@@ -2193,7 +2193,7 @@ The experiment did not finish normally for the following reason:
     <message>
         <location filename="../../translatables-tmp.py" line="478"/>
         <source>ms</source>
-        <translation> ミリ秒</translation>
+        <translation>ミリ秒</translation>
     </message>
 </context>
 <context>
@@ -2408,12 +2408,12 @@ Various settings related to the control of the display, sound, and input devices
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/gabor_settings.ui" line="110"/>
         <source>Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</source>
-        <translation type="unfinished">Size&lt;br /&gt;&lt;i&gt;in pixels&lt;/i&gt;</translation>
+        <translation>サイズ&lt;br /&gt;&lt;i&gt;px単位&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/gabor_settings.ui" line="177"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/gabor_settings.ui" line="136"/>
@@ -3345,7 +3345,7 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/preferences_widget.ui" line="187"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;The &apos;runner&apos; determines how your OpenSesame experiment is executed. For more information, please visit &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt; &apos;runner&apos; (ランナー) ではあなたのOpenSesameの実験がどのように実行されるか決められています。詳しくは &lt;/span&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; font-size:8pt; font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-size:8pt; font-style:italic;&quot;&gt;をご覧ください。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -3670,7 +3670,7 @@ Edit your experiment in script form</source>
     <message>
         <location filename="../../opensesame_extensions/variable_inspector/variable_inspector.ui" line="216"/>
         <source>&lt;small&gt;Live variable updating is not supported by the current runner. You can select a different runner under Preferences. For more information, visit &lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt;.&lt;/small&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;small&gt;現在のランナーでは編集のライブプレビューは対応していません。設定から他のランナーを選択することができます。詳しくは&lt;a href=&quot;http://osdoc.cogsci.nl/manual/runners/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;http://osdoc.cogsci.nl/manual/runners/&lt;/span&gt;&lt;/a&gt;をご覧ください。&lt;/small&gt;</translation>
     </message>
 </context>
 </TS>
