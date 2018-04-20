@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import os
 from libopensesame.experiment import experiment as experiment_runtime
+from libopensesame.base_python_workspace import base_python_workspace
 import libopensesame.plugins
 from libqtopensesame.misc.qtitem_store import qtitem_store
 from libqtopensesame.misc.qtsyntax import qtsyntax
@@ -72,14 +73,20 @@ class experiment(experiment_runtime):
 		self.main_window = main_window
 		self.ui = self.main_window.ui
 		self.unused_items = []
-		self.core_items = [u"loop", u"sequence", u"sketchpad", u"feedback",
-			u"sampler", u"synth", u"keyboard_response", u"mouse_response",
-			u"logger", u"inline_script"]
+		self.core_items = [
+			u"loop", u"sequence", u"sketchpad", u"feedback", u"sampler",
+			u"synth", u"keyboard_response", u"mouse_response", u"logger",
+			u"inline_script"
+		]
 		self.items = qtitem_store(self)
 		self._syntax = qtsyntax(self)
-		experiment_runtime.__init__(self, name, string,
-			pool_folder, experiment_path=experiment_path, resources=resources,
-			fullscreen=None, workspace=0)
+		experiment_runtime.__init__(
+			self, name, string, pool_folder,
+			experiment_path=experiment_path,
+			resources=resources,
+			fullscreen=None,
+			workspace=base_python_workspace(self)
+		)
 
 	@property
 	def overview_area(self):
