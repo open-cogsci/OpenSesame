@@ -59,11 +59,20 @@ class notifications(base_extension):
 		# self.expiration_time, don't show it again.
 		if not always_show:
 			if (message, category, timeout, buttontext) in self.old_notifications:
-				prev_time = self.old_notifications[(message, category, timeout, 
+				prev_time = self.old_notifications[(message, category, timeout,
 					buttontext)]
 				if current_time - prev_time < self.expiration_time:
 					return
 			# Add notification to old notifications list.
-			self.old_notifications[(message, category, timeout, 
+			self.old_notifications[(message, category, timeout,
 				buttontext)] = current_time
-		self.notification_area.display(message, category, timeout, buttontext)
+		try:
+			self.notification_area.display(
+				message, category, timeout, timeout != 0, buttontext
+			)
+		except TypeError:
+			# Older versions of QNotifications did not support the autohide
+			# option
+			self.notification_area.display(
+				message, category, timeout, buttontext
+			)
