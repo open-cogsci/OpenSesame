@@ -6,8 +6,7 @@ OpenSesame 3 を初めて利用するようですね。
 
 [チュートリアル](new:http://osdoc.cogsci.nl/3.2/tutorials/beginner){: .important-button}
 
-もし以前に OpenSesame 2 を利用したことがある場合はこのバージョン(バージョン3.2)の変更点をご覧になることをおすすめします。
-心配しないでください: 古いバージョンで作成した実験は今まで通り動作し、さらに簡単に便利になりました。
+もし以前に OpenSesame 2 を利用したことがある場合はこのバージョン(バージョン3.2)の変更点をご覧になることをおすすめします。心配しないでください: 古いバージョンで作成した実験は今まで通り動作し、さらに簡単に便利になりました。
 
 [OpenSesame 3 での変更点](new:http://osdoc.cogsci.nl/3.2/important-changes-3){: .button}
 
