@@ -1268,7 +1268,7 @@ The experiment did not finish normally for the following reason:
         <location filename="../../translatables-tmp.py" line="737"/>
         <source>Which variable do you wish to log?</source>
         <translatorcomment>ログに記録したい変数はなんですか?</translatorcomment>
-        <translation>ログに記録したい変数一覧</translation>
+        <translation>どの変数をログに記録しますか?</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="738"/>
@@ -2122,7 +2122,8 @@ The experiment did not finish normally for the following reason:
         <location filename="../../translatables-tmp.py" line="536"/>
         <source>&lt;small&gt;&lt;b&gt;Note:&lt;/b&gt; If there are multiple srbox items in the experiment, the first srbox item determines the device name and whether dummy mode is enabled&lt;/small&gt;
 </source>
-        <translation>&lt;small&gt;&lt;b&gt;注意:&lt;/b&gt; 実験に複数のsrboxアイテムがある場合、最初のsrboxアイテムでデバイス名とダミーモードが有効かどうかを判断します&lt;/small&gt;</translation>
+        <translation>&lt;small&gt;&lt;b&gt;注意:&lt;/b&gt; 実験に複数のsrboxアイテムがある場合、最初のsrboxアイテムでデバイス名とダミーモードが有効かどうかを判断します&lt;/small&gt;
+</translation>
     </message>
 </context>
 <context>
