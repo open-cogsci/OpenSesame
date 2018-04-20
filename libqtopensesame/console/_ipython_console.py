@@ -27,13 +27,15 @@ import platform
 import sys
 import os
 import functools
-if (sys.stderr is None or \
-	(hasattr(sys.stderr, u'fileno') and sys.stderr.fileno() == -2)):
+if (
+	sys.stderr is None
+	or (hasattr(sys.stderr, u'fileno') and sys.stderr.fileno() == -2)
+):
 	sys.stdout = sys.stderr = open(os.devnull, u'w')
 	sys.stdin = open(os.devnull, u'r')
 
 from qtpy import QtWidgets, QtGui, QtCore
-from libqtopensesame.console._base_console import base_console
+from libqtopensesame.console._base_console import BaseConsole
 from libqtopensesame.misc.config import cfg
 from libopensesame import debug
 
@@ -41,7 +43,7 @@ from libopensesame import debug
 deferred_function_calls = []
 
 
-def _style(cs, token):
+def get_style(cs, token):
 
 	"""
 	desc:
@@ -66,36 +68,6 @@ def _style(cs, token):
 	return color
 
 
-def pygments_style_factory(cs):
-
-	"""
-	arguments:
-		cs:
-			desc:	A QProgEdit colorscheme.
-			type:	dict
-
-	returns:
-		desc:	A Pygments Style class that emulates the QProgEdit colorscheme.
-		type:	Style
-	"""
-
-	from pygments.style import Style
-	from pygments import token
-	class my_style(Style):
-		default_style = u''
-		styles = {
-			token.Comment 	: _style(cs, 'Comment'),
-			token.Keyword	: _style(cs, 'Keyword'),
-			token.Name		: _style(cs, 'Identifier'),
-			token.String	: _style(cs, 'Double-quoted string'),
-			token.Error		: _style(cs, 'Invalid'),
-			token.Number	: _style(cs, 'Number'),
-			token.Operator	: _style(cs, 'Operator'),
-			token.Generic	: _style(cs, 'Default'),
-		}
-	return my_style
-
-
 def deferred(fnc):
 
 	"""
@@ -117,7 +89,69 @@ def deferred(fnc):
 	return inner
 
 
-class ipython_console(base_console, QtWidgets.QWidget):
+def PygmentsStyleFactory(cs):
+
+	"""
+	arguments:
+		cs:
+			desc:	A QProgEdit colorscheme.
+			type:	dict
+
+	returns:
+		desc:	A Pygments Style class that emulates the QProgEdit colorscheme.
+		type:	Style
+	"""
+
+	from pygments.style import Style
+	from pygments import token
+	class my_style(Style):
+		default_style = u''
+		styles = {
+			token.Comment 	: get_style(cs, 'Comment'),
+			token.Keyword	: get_style(cs, 'Keyword'),
+			token.Name		: get_style(cs, 'Identifier'),
+			token.String	: get_style(cs, 'Double-quoted string'),
+			token.Error		: get_style(cs, 'Invalid'),
+			token.Number	: get_style(cs, 'Number'),
+			token.Operator	: get_style(cs, 'Operator'),
+			token.Generic	: get_style(cs, 'Default'),
+		}
+	return my_style
+
+
+class IPythonImporter(QtCore.QThread):
+
+	"""
+	desc:
+		Importing IPython takes a long time. Therefore we do this in a separate
+		thread. Starting IPython needs to be done in the main thread.
+	"""
+
+	def run(self):
+
+		try:
+			# New-style Jupyter imports
+			#
+			# When packaged on a mac, a check that qtconsole does to see if
+			# pyqt4 is available fails. Since PyQt4 is packaged with OpenSesame,
+			# we may assume it will be available and override the check to
+			# return True.
+			if platform.system() == "Darwin" and hasattr(sys,"frozen"):
+				import qtconsole.qt_loaders
+				qtconsole.qt_loaders.has_binding = lambda api: api == u'pyqt'
+			from qtconsole.rich_jupyter_widget import (
+				RichJupyterWidget as RichIPythonWidget
+			)
+			from qtconsole.inprocess import QtInProcessKernelManager
+		except:
+			# Old-style IPython imports
+			from IPython.qt.console.rich_ipython_widget import RichIPythonWidget
+			from IPython.qt.inprocess import QtInProcessKernelManager
+		self.RichIPythonWidget = RichIPythonWidget
+		self.QtInProcessKernelManager = QtInProcessKernelManager
+
+
+class IPythonConsole(BaseConsole, QtWidgets.QWidget):
 
 	"""
 	desc:
@@ -142,46 +176,41 @@ class ipython_console(base_console, QtWidgets.QWidget):
 
 		"""
 		desc:
-			Starts the console, and does all the things that take time.
+			Starts the initialization of IPython. First the required libraries
+			are imported in a separate thread. Next, IPython is started in the
+			main thread.
 		"""
 
-		try:
-			# New-style Jupyter imports
-			#
-			# When packaged on a mac, a check that qtconsole does to see if
-			# pyqt4 is available fails. Since PyQt4 is packaged with OpenSesame,
-			# we may assume it will be available and override the check to
-			# return True.
-			if platform.system() == "Darwin" and hasattr(sys,"frozen"):
-				import qtconsole.qt_loaders
-				qtconsole.qt_loaders.has_binding = lambda api: api == u'pyqt'
+		self._ipython_importer = IPythonImporter()
+		self._ipython_importer.finished.connect(self._on_ipython_imported)
+		self._ipython_importer.start()
 
-			from qtconsole.rich_jupyter_widget import RichJupyterWidget \
-				as RichIPythonWidget
-			from qtconsole.inprocess import QtInProcessKernelManager
-		except:
-			# Old-style IPython imports
-			from IPython.qt.console.rich_ipython_widget import RichIPythonWidget
-			from IPython.qt.inprocess import QtInProcessKernelManager
+	def _on_ipython_imported(self):
 
-		self._started = True
-		kernel_manager = QtInProcessKernelManager()
+		"""
+		desc:
+			Implements the actual starting of IPython, once the required
+			libraries have been imported.
+		"""
+
+		kernel_manager = self._ipython_importer.QtInProcessKernelManager()
 		kernel_manager.start_kernel()
 		self.kernel = kernel_manager.kernel
 		self.kernel.gui = 'qt4'
 		self.kernel.shell.banner1 = ''
 		kernel_client = kernel_manager.client()
 		kernel_client.start_channels()
-		self.control = RichIPythonWidget()
+		self.control = self._ipython_importer.RichIPythonWidget()
 		self.control.banner = self.banner()
 		self.control.kernel_manager = kernel_manager
 		self.control.kernel_client = kernel_client
 		self.verticalLayout = QtWidgets.QVBoxLayout(self)
-		self.verticalLayout.setContentsMargins(0,0,0,0)
+		self.verticalLayout.setContentsMargins(0, 0, 0, 0)
 		self.setLayout(self.verticalLayout)
 		self.verticalLayout.addWidget(self.control)
 		while deferred_function_calls:
 			deferred_function_calls.pop(0)()
+		self.main_window.ui.label_starting_ipython.hide()
 
 	@deferred
 	def clear(self, *args):
@@ -270,7 +299,7 @@ class ipython_console(base_console, QtWidgets.QWidget):
 		# We need to process events first, otherwise the style changes don't
 		# take for an unclear reason.
 		QtWidgets.QApplication.processEvents()
-		self.control._highlighter.set_style(pygments_style_factory(cs))
+		self.control._highlighter.set_style(PygmentsStyleFactory(cs))
 		self.qss = u'''QPlainTextEdit, QTextEdit {
 				background-color: %(Background)s;
 				color: %(Default)s;
@@ -318,3 +347,6 @@ class ipython_console(base_console, QtWidgets.QWidget):
 
 		self.control.setFocus()
 		e.accept()
+
+
+ipython_console = IPythonConsole

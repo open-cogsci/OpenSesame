@@ -29,7 +29,7 @@ else:
 	from StringIO import StringIO
 
 
-class base_console(base_subcomponent):
+class BaseConsole(base_subcomponent):
 
 	"""
 	desc:
@@ -38,7 +38,7 @@ class base_console(base_subcomponent):
 
 	def __init__(self, main_window):
 
-		super(base_console, self).__init__(main_window)
+		super(BaseConsole, self).__init__(main_window)
 		self.vault = StringIO()
 		self.orig_stdout = sys.stdout
 		self.orig_stderr = sys.stderr
@@ -131,7 +131,7 @@ class base_console(base_subcomponent):
 		"""
 
 		self.setTheme()
-		super(base_console, self).focusInEvent(e)
+		super(BaseConsole, self).focusInEvent(e)
 
 	def release_stdout(self):
 
@@ -215,7 +215,7 @@ class base_console(base_subcomponent):
 
 		"""See base_subcomponent."""
 
-		super(base_console, self).setup(main_window)
+		super(BaseConsole, self).setup(main_window)
 		self.setTheme()
 
 	def suppress_stdout(self):
@@ -242,3 +242,6 @@ class base_console(base_subcomponent):
 * Inspect inline_script variables when an experiment is finished.
 ''' % metadata.python_version
 		return s
+
+
+base_console = BaseConsole

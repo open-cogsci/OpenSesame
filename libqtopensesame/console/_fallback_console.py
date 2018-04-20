@@ -258,3 +258,4 @@ class fallback_console(base_console, QtWidgets.QPlainTextEdit):
 
 		super(fallback_console, self).setup(main_window)
 		self.set_workspace_globals()
+		self.main_window.ui.label_starting_ipython.hide()

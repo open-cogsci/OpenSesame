@@ -216,22 +216,9 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.update_recent_files()
 		self.set_unsaved(False)
 		self.init_custom_fonts()
-		# Initialize extensions
 		self.extension_manager = extension_manager(self)
 		self.extension_manager.fire(u'startup')
-		# Deferred console start
-		QtCore.QTimer.singleShot(1000, self._start_console)
-
-	def _start_console(self):
-
-		"""
-		desc:
-			Starts the console as a separate thread so that this doesn't slow
-			down the application start.
-		"""
-
 		self.ui.console.start()
-		self.ui.label_starting_ipython.hide()
 
 	def focus_debug_window(self):
 
