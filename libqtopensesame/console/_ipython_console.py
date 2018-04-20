@@ -211,6 +211,7 @@ class IPythonConsole(BaseConsole, QtWidgets.QWidget):
 		while deferred_function_calls:
 			deferred_function_calls.pop(0)()
 		self.main_window.ui.label_starting_ipython.hide()
+		self._started = True
 
 	@deferred
 	def clear(self, *args):
