@@ -27,9 +27,8 @@ else:
 from qtpy import QtCore, QtWidgets
 from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
-from libqtopensesame.misc.base_qtobject import base_qtobject
 
-class base_component(base_qtobject):
+class base_component(object):
 
 	"""
 	desc:

@@ -27,7 +27,6 @@ from libqtopensesame.widgets.qtitem_splitter import qtitem_splitter
 from libqtopensesame.widgets import header_widget
 from libqtopensesame._input.pool_select import pool_select
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.misc.base_qtobject import base_qtobject
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'qtitem', category=u'core')
 
@@ -49,7 +48,7 @@ def requires_init(fnc):
 	return inner
 
 
-class qtitem(base_qtobject):
+class qtitem(object):
 
 	"""Base class for the GUI controls of other items"""
 
