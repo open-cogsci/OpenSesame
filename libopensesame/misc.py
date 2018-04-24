@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 import os
 import os.path
 import platform
@@ -26,8 +27,9 @@ try:
 except IOError:
 	# On Android, the site package cannot be imported
 	site = None
-from libopensesame import debug, metadata
-from libopensesame.py3compat import *
+from libopensesame import metadata
+from libopensesame.oslogging import oslogger
+
 
 def parse_environment_file():
 
@@ -73,9 +75,8 @@ def change_working_dir():
 			os.chdir(s)
 			if s not in sys.path:
 				sys.path.append(s)
-			debug.msg(s)
 		except Exception as e:
-			debug.msg(u'failed to change working directory: %s' % e)
+			oslogger.debug(u'failed to change working directory: %s' % e)
 
 def opensesamerun_options():
 
@@ -298,7 +299,7 @@ def open_url(url):
 	url -- a url
 	"""
 
-	debug.msg(url)
+	oslogger.info(u'opening %s' % url)
 	if url.startswith(u'http://') or url.startswith(u'https://'):
 		import webbrowser
 		webbrowser.open(url)
@@ -313,9 +314,9 @@ def open_url(url):
 		try:
 			os.startfile(url)
 		except:
-			debug.msg(u"Failed to open '%s'" % url, reason=u"warning")
+			oslogger.error(u"Failed to open '%s'" % url)
 	else:
-		debug.msg(u"Failed to open '%s'" % url, reason=u"warning")
+		oslogger.error(u"Failed to open '%s'" % url)
 
 def filesystem_encoding():
 

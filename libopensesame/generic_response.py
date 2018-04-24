@@ -21,8 +21,9 @@ from libopensesame.py3compat import *
 import random
 import openexp.keyboard
 import openexp.mouse
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
+
 
 class generic_response:
 
@@ -72,7 +73,7 @@ class generic_response:
 		else:
 			resp = random.choice(self._allowed_responses)
 
-		debug.msg(u"generic_response.auto_responder(): responding '%s'" % resp)
+		oslogger.debug(u"generic_response.auto_responder(): responding '%s'" % resp)
 		if dev == u'mouse':
 			pos = random.randint(0, self.var.width), random.randint(0,
 				self.var.height)
@@ -151,7 +152,7 @@ class generic_response:
 		# such as keyboard_response items, because otherwise we might confound
 		# the feedback
 		if self.process_feedback:
-			debug.msg(u"processing feedback for '%s'" % self.name)
+			oslogger.debug(u"processing feedback for '%s'" % self.name)
 			if u"correct_response" in self.var:
 				# If a correct_response has been defined, we use it to determine
 				# accuracy etc.

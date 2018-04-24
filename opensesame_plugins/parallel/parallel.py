@@ -21,10 +21,9 @@ by the coroutines plugin.
 """
 
 from libopensesame.py3compat import *
-
-import os.path
 import threading
-from libopensesame import sequence, debug
+from libopensesame import sequence
+from libopensesame.oslogging import oslogger
 from libqtopensesame.items import sequence as qtsequence
 from libqtopensesame.items import qtplugin
 try:
@@ -32,6 +31,7 @@ try:
 	_ = translation_context(u'parallel', category=u'plugin')
 except ImportError:
 	pass
+
 
 class parallel_process(threading.Thread):
 
@@ -121,9 +121,9 @@ class parallel(sequence.sequence):
 				break
 
 		# Debug output to verify timing
-		debug.msg('main item was launched at %s' % self.launch_time)
+		oslogger.debug('main item was launched at %s' % self.launch_time)
 		for t in tl:
-			debug.msg('thread was launched at %s' % t.launch_time)
+			oslogger.debug('thread was launched at %s' % t.launch_time)
 
 		return True
 

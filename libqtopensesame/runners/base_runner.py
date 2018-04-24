@@ -20,12 +20,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import os
 from qtpy import QtWidgets
 from libqtopensesame.misc.config import cfg
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 from libopensesame.experiment import experiment
 from libopensesame.py3compat import *
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'base_runner', category=u'core')
+
 
 class base_runner(object):
 
@@ -99,12 +100,12 @@ class base_runner(object):
 			except:
 				import tempfile
 				from libopensesame import misc
-				debug.msg(u'Failed to open %s' % logfile)
+				oslogger.warning(u'failed to open %s' % logfile)
 				logfile = os.path.join(safe_decode(tempfile.gettempdir(),
 					enc=misc.filesystem_encoding()), safe_decode(
 					tempfile.gettempprefix(),
 					enc=misc.filesystem_encoding())+u'quickrun.csv')
-				debug.msg(u'Using temporary file %s' % logfile)
+				oslogger.warning(u'Using temporary file %s' % logfile)
 				remember_logfile = False
 		else:
 			# Suggested filename

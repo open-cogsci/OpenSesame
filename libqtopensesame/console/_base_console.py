@@ -21,7 +21,6 @@ from libopensesame.py3compat import *
 import sys
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
-from libopensesame import misc
 from libopensesame import metadata
 if py3:
 	from io import StringIO

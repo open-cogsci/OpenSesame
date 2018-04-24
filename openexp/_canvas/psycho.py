@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from collections import OrderedDict
+from libopensesame.oslogging import oslogger
 from openexp.backend import configurable
 from openexp._canvas.canvas import Canvas
 from openexp._coordinates.psycho import Psycho as PsychoCoordinates
@@ -179,8 +180,9 @@ class Psycho(Canvas, PsychoCoordinates):
 		try:
 			experiment.window.close()
 		except:
-			debug.msg(u'An error occurred while closing the PsychoPy window.',
-				reason=u'warning')
+			oslogger.error(
+				u'An error occurred while closing the PsychoPy window.',
+			)
 
 
 def _psychopy_clean_quit():

@@ -18,11 +18,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame import misc, debug
+from libopensesame import misc
+from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 import tempfile
 import os
 import shutil
+
 
 class file_pool_store(object):
 
@@ -100,11 +102,11 @@ class file_pool_store(object):
 			self.__folder__ = tempfile.mkdtemp(suffix=u'.opensesame_pool',
 				dir=safe_decode(tempfile.gettempdir(),
 				enc=misc.filesystem_encoding()))
-			debug.msg(u'creating new pool folder')
+			oslogger.debug(u'creating new pool folder')
 		else:
-			debug.msg(u'reusing existing pool folder')
+			oslogger.debug(u'reusing existing pool folder')
 			self.__folder__ = folder
-		debug.msg(u'pool folder is \'%s\'' % self.__folder__)
+		oslogger.debug(u'pool folder is \'%s\'' % self.__folder__)
 
 	def clean_up(self):
 
@@ -118,7 +120,7 @@ class file_pool_store(object):
 		try:
 			shutil.rmtree(self.__folder__)
 		except:
-			debug.msg(u'Failed to remove %s' % self.__folder__)
+			oslogger.error(u'Failed to remove %s' % self.__folder__)
 
 	def __contains__(self, path):
 

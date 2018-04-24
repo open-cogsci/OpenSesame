@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 import code
 import time
 from qtpy import QtGui, QtWidgets, QtCore
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.console._base_console import base_console
 from libqtopensesame.misc.translate import translation_context
@@ -102,7 +102,7 @@ class fallback_console(base_console, QtWidgets.QPlainTextEdit):
 			cfg.qProgEditFontSize))
 		from QProgEdit import QColorScheme
 		if not hasattr(QColorScheme, cfg.qProgEditColorScheme):
-			debug.msg(u'Failed to set debug-output colorscheme')
+			oslogger.error(u'Failed to set debug-output colorscheme')
 			return
 		cs = getattr(QColorScheme, cfg.qProgEditColorScheme)
 		if u'Background' not in cs:

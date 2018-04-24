@@ -22,6 +22,7 @@ from libopensesame.py3compat import *
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 import re
 import os
+from libopensesame.oslogging import oslogger
 try:
 	import markdown
 	from distutils.version import LooseVersion
@@ -32,12 +33,14 @@ try:
 	if LooseVersion(markdown.version) > LooseVersion(u'2.6'):
 		from markdown.extensions import attr_list, extra, toc
 	else:
-		from libopensesame import debug
-		debug.msg(u'Markdown disabled for markdown version: {}'.format(markdown.version))
+		oslogger.warning(
+			u'Markdown disabled for markdown version: {}'.format(
+				markdown.version
+			)
+		)
 		markdown = None
 except:
-	from libopensesame import debug
-	debug.msg(u'Unable to import markdown, proceeding without markdown')
+	oslogger.error(u'Unable to import markdown, proceeding without markdown')
 	markdown = None
 try:
 	from pygments import highlight

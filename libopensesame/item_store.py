@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 from libopensesame import plugins
 from libopensesame.cistr import cistr
-from libopensesame.misc import debug
+from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 from libopensesame.item_stack import item_stack_singleton
-from libopensesame.py3compat import *
 
 
 # A list of names that cannot be used, because they cause trouble for one reason
@@ -177,7 +177,7 @@ class item_store(object):
 			items[u'my_sketchpad'].run()
 		"""
 
-		debug.msg(u'creating %s' % _type)
+		oslogger.debug(u'creating %s' % _type)
 		if allow_rename:
 			name = self.valid_name(_type, suggestion=name)
 		else:
@@ -197,7 +197,7 @@ class item_store(object):
 			self.__items__[name] = item
 		else:
 			# Load one of the core items
-			debug.msg(
+			oslogger.debug(
 				u"loading core item '%s' from '%s'" % (
 					_type,
 					self.experiment.module_container()

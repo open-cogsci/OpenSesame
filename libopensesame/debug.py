@@ -92,5 +92,3 @@ else:
 	# Replace the message function with a dummy function to turn off debugging
 	# output
 	msg = lambda msg=None, reason=None: None
-if enabled:
-	_msg(u'debug mode enabled')

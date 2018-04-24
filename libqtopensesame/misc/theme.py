@@ -20,11 +20,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import os.path
 import imp
-from libopensesame import debug, misc
+from libopensesame import misc
+from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
 from qtpy import QtGui, QtWidgets, QtCore
 
 available_themes = [u'default']
+
 
 class theme:
 
@@ -49,14 +51,15 @@ class theme:
 			u"fallback.png"))
 		self.theme = cfg.theme if theme is None else theme
 		self.theme_folder = misc.resource(os.path.join(u"theme", self.theme))
-		debug.msg(u"theme = '%s' (%s)" % (self.theme, self.theme_folder))
+		oslogger.debug(u"theme = '%s' (%s)" % (self.theme, self.theme_folder))
 		# The theme folder must exist, and contain a file called __theme__.py,
 		# if not, we fall back to the default theme, which is assumed to always
 		# exist.
 		if self.theme_folder is None or not os.path.exists(
 			os.path.join(self.theme_folder, u'__theme__.py')):
-			debug.msg(u"theme '%s' does not exist, using 'default'" % theme,
-				reason=u"warning")
+			oslogger.warning(
+				u"theme '%s' does not exist, using 'default'" % theme,
+			)
 			self.theme = u"default"
 			self.theme_folder = misc.resource(
 				os.path.join(u"theme", self.theme))
@@ -162,7 +165,7 @@ class theme:
 			name = icon
 		icon = QtGui.QIcon.fromTheme(name, self.fallback_icon)
 		if icon.name() != name:
-			debug.msg(u'missing icon %s' % name, reason=u'warning')
+			oslogger.warning(u'missing icon %s' % name)
 		return icon
 
 	def qpixmap(self, icon, size=None):
@@ -221,16 +224,14 @@ class theme:
 
 		self.original_theme = QtGui.QIcon.themeName()
 		if os.path.exists(os.path.join(self.theme_folder, self._icon_theme)):
-			debug.msg(u"using custom icon theme")
+			oslogger.debug(u"using custom icon theme")
 			QtGui.QIcon.setThemeSearchPaths(QtGui.QIcon.themeSearchPaths() \
 				+ [self.theme_folder])
 			QtGui.QIcon.setThemeName(self._icon_theme)
 		else:
-			debug.msg(u"using default icon theme, icons may be missing", \
-				reason=u"warning")
+			oslogger.warning(u"using default icon theme, icons may be missing")
 		self.icon_map = {}
 		path = os.path.join(self.theme_folder, self._icon_map)
-		debug.msg(path)
 		with safe_open(path) as fd:
 			for l in fd:
 				l = l.split(u',')
@@ -242,7 +243,7 @@ class theme:
 					alias = l[0].strip()
 					name = l[1].strip()
 					if alias in self.icon_map:
-						debug.msg(u"alias '%s' already in icon map, overwriting" % \
+						oslogger.debug(u"alias '%s' already in icon map, overwriting" % \
 							alias, reason=u"warning")
 					self.icon_map[alias] = name, size
 

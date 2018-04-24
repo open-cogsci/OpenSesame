@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 from qtpy import QtWidgets
 from libqtopensesame.widgets.general_header_widget import general_header_widget
 from libqtopensesame.widgets.base_widget import base_widget
@@ -26,6 +26,7 @@ from openexp._color.color import color
 from openexp import backend
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'general_properties', category=u'core')
+
 
 class general_properties(base_widget):
 
@@ -135,8 +136,9 @@ class general_properties(base_widget):
 			self.experiment.var.clock_backend = _backend[u"clock"]
 			self.experiment.var.color_backend = _backend[u"color"]
 		else:
-			debug.msg(
-				u'not setting back-end, because a custom backend is selected')
+			oslogger.debug(
+				u'not setting back-end, because a custom backend is selected'
+			)
 		# Set the display width
 		width = self.ui.spinbox_width.value()
 		height = self.ui.spinbox_height.value()

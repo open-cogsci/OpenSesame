@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 from libopensesame.base_response_item import base_response_item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 from openexp.keyboard import keyboard
@@ -101,7 +101,7 @@ class srbox(base_response_item):
 			else:
 				s += "0"
 		self._lights = chr(int(s, 2))
-		debug.msg(u"lights string set to %s (%s)" % (s, self.var.lights))
+		oslogger.debug(u"lights string set to %s (%s)" % (s, self.var.lights))
 		if self._allowed_responses is not None:
 			self._allowed_responses = [int(r) for r in self._allowed_responses]
 		self._require_state_change = self.var.require_state_change == u'yes'
@@ -125,18 +125,18 @@ class srbox(base_response_item):
 
 		if not hasattr(self.experiment, "srbox") or \
 			self.experiment.srbox is None:
-				debug.msg("no active srbox")
+				oslogger.debug("no active srbox")
 				return
 		try:
 			self.experiment.srbox.close()
 			self.experiment.srbox = None
-			debug.msg("srbox closed")
+			oslogger.debug("srbox closed")
 		except:
-			debug.msg("failed to close srbox")
+			oslogger.error("failed to close srbox")
 
 
 class qtsrbox(srbox, qtautoplugin):
-	
+
 	help_url = u'manual/response/srbox'
 
 	def __init__(self, name, experiment, script=None):

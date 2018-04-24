@@ -28,7 +28,7 @@ example: |
 """
 
 import re
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 from libopensesame.item_stack import item_stack_singleton
 from libopensesame.py3compat import *
 import traceback
@@ -126,7 +126,9 @@ class osexception(Exception):
 								int(g.group(u'linenr')) + info[u'line_offset'])
 							)
 					except:
-						debug.msg(u'Failed to correct inline_script exception')
+						oslogger.error(
+							u'failed to correct inline_script exception'
+						)
 			_tb += l + u'\n'
 		plaintext += _tb
 		md += u'~~~ .traceback\n%s\n~~~\n' % _tb

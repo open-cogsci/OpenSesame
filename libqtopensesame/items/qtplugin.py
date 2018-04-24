@@ -23,10 +23,12 @@ from libopensesame import plugins
 from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.items import qtitem
 from libqtopensesame.widgets import color_edit
-from libopensesame import debug, misc
+from libopensesame import misc
+from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'qtplugin', category=u'core')
+
 
 class qtplugin(qtitem.qtitem):
 
@@ -50,7 +52,7 @@ class qtplugin(qtitem.qtitem):
 			# These lines makes sure that the icons and help file are recognized
 			# by OpenSesame.
 			self.plugin_folder = os.path.dirname(plugin_file)
-			for ext in [u'.html', u'.md']:			
+			for ext in [u'.html', u'.md']:
 				basename = self.item_type + ext
 				path = os.path.join(self.plugin_folder, basename)
 				if os.path.exists(path):
@@ -498,7 +500,7 @@ class qtplugin(qtitem.qtitem):
 
 		for var, qprogedit in self.auto_editor.items():
 			if qprogedit.isAnyModified():
-				debug.msg(u'applying pending editor changes')
+				oslogger.debug(u'applying pending editor changes')
 				self.apply_edit_changes()
 				return True
 		return qtitem.qtitem.get_ready(self)

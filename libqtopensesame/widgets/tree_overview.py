@@ -27,11 +27,12 @@ from libqtopensesame.misc.base_draggable import base_draggable
 from libqtopensesame.widgets.tree_append_button import tree_append_button
 from libqtopensesame._input.popup_menu import popup_menu
 from libqtopensesame.items.qtstructure_item import qtstructure_item
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 from libopensesame.sequence import sequence
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_overview', category=u'core')
+
 
 class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 
@@ -465,21 +466,21 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 			return
 		# Only accept existing-item drops from this application
 		if data[u'application-id'] != self.main_window._id():
-			debug.msg(u'Drop ignored: from different instance')
+			oslogger.debug(u'Drop ignored: from different instance')
 			if e is not None:
 				e.ignore()
 			return
 		if target_treeitem is None:
 			target_treeitem = self.itemAt(e.pos())
 		if not self.droppable(target_treeitem, data):
-			debug.msg(u'Drop ignored: target not droppable')
+			oslogger.debug(u'Drop ignored: target not droppable')
 			if e is not None:
 				e.ignore()
 			return
 		# Don't drop on the same item that was the source (if any)
 		if u'QTreeWidgetItem' in data and \
 			data[u'QTreeWidgetItem'] == str(target_treeitem):
-			debug.msg(u'Drop ignored: dropping on self')
+			oslogger.debug(u'Drop ignored: dropping on self')
 			if e is not None:
 				e.ignore()
 			return
@@ -500,7 +501,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 					target_item_ancestry.startswith(u'%s:' % item_name)
 					or u'.%s:' % item_name  in target_item_ancestry
 				):
-					debug.msg(u'Drop ignored: recursion prevented')
+					oslogger.debug(u'Drop ignored: recursion prevented')
 					if e is not None:
 						e.ignore()
 					return
@@ -517,7 +518,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		# Don't drop on undroppable parents
 		parent_item_name, index = self.parent_from_ancestry(data[u'ancestry'])
 		if parent_item_name is None:
-			debug.msg(u'Drop ignored: no parent')
+			oslogger.debug(u'Drop ignored: no parent')
 			if e is not None:
 				e.ignore()
 			return
@@ -530,7 +531,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		need_restore = False
 		if data[u'move']:
 			if parent_item_name not in self.experiment.items:
-				debug.msg(
+				oslogger.debug(
 					u'Don\'t know how to remove item from %s'
 					% parent_item_name
 				)
@@ -676,7 +677,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		# item on it.
 		target_item_name = target_treeitem.text(0)
 		if target_item_name not in self.experiment.items:
-			debug.msg(u'Don\'t know how to drop on %s' % target_item_name)
+			oslogger.debug(u'Don\'t know how to drop on %s' % target_item_name)
 			if e is not None:
 				e.ignore()
 			self.structure_change.emit()

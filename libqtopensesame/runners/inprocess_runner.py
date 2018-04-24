@@ -18,10 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 from libqtopensesame.runners import base_runner
+
 
 class inprocess_runner(base_runner):
 
@@ -46,7 +46,7 @@ class inprocess_runner(base_runner):
 		try:
 			self.experiment.end()
 		except Exception as _e:
-			debug.msg(u'Exception during experiment.end(): %s' % _e)
+			oslogger.error(u'exception during experiment.end(): %s' % _e)
 		return retval
 
 	def workspace_globals(self):

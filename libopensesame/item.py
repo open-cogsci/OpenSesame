@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame.var_store import var_store
 import warnings
 from libopensesame.exceptions import osexception
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 
 
 class item(object):
@@ -50,7 +50,7 @@ class item(object):
 			self.var = var_store(self, parent=experiment.var)
 		self.name = name
 		self.experiment = experiment
-		self.debug = debug.enabled
+		self.debug = oslogger.debug_mode
 		self.count = 0
 		self._get_lock = None
 		# Deduce item_type from class name
@@ -166,9 +166,10 @@ class item(object):
 				# the full line, both quoted and unquoted.
 				q = u'"%s"' % i
 				if line.count(q) == 1 and line.count(i) == 1:
-					debug.msg( \
-						u'"%s" does not appear to be a keyword-value pair in string "%s"' \
-						% (i, line))
+					oslogger.warning(
+						u'"%s" does not appear to be a keyword-value pair in string "%s"'
+						% (i, line)
+					)
 				else:
 					var = str(i[:j])
 					val = self.auto_type(i[j+1:])
@@ -277,7 +278,6 @@ class item(object):
 				type:	[str, NoneType]
 		"""
 
-		debug.msg()
 		textblock_var = None
 		self.var.clear()
 		self.reset()

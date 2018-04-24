@@ -22,7 +22,7 @@ import os
 import subprocess
 import tempfile
 from libopensesame.exceptions import osexception
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.runners import base_runner
 from qtpy import QtWidgets
@@ -47,7 +47,7 @@ class external_runner(base_runner):
 		self.path = os.path.join(self.experiment.experiment_path,
 			'.opensesamerun-tmp.osexp')
 		self.experiment.save(self.path, True)
-		debug.msg(u"experiment saved as '%s'" % self.path)
+		oslogger.debug(u"experiment saved as '%s'" % self.path)
 		# Determine the name of the executable. The executable depends on the
 		# platform, package, and Python version.
 		if cfg.opensesamerun_exec == u'':
@@ -74,7 +74,7 @@ class external_runner(base_runner):
 			self.cmd.append(u"--debug")
 		if self.experiment.var.fullscreen == u'yes':
 			self.cmd.append(u"--fullscreen")
-		debug.msg(u"spawning opensesamerun as a separate process")
+		oslogger.debug(u"spawning opensesamerun as a separate process")
 		# Call opensesamerun and wait for the process to complete
 		try:
 			p = subprocess.Popen(self.cmd, stdout=open(self.stdout, u"w"))
@@ -93,7 +93,7 @@ class external_runner(base_runner):
 			retcode = p.poll()
 			QtWidgets.QApplication.processEvents()
 			time.sleep(1)
-		debug.msg(u"opensesamerun returned %d" % retcode)
+		oslogger.debug(u"opensesamerun returned %d" % retcode)
 		print()
 		print(open(self.stdout, u"r").read())
 		print()

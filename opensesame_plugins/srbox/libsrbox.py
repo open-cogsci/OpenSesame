@@ -19,9 +19,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 import serial
 import os
+
 
 class libsrbox(object):
 
@@ -136,7 +137,7 @@ class libsrbox(object):
 		if self._srbox is None:
 			raise osexception(
 				"libsrbox failed to auto-detect an SR Box. Please specify a device.")
-		debug.msg("using device %s" % dev)
+		oslogger.debug("using device %s" % dev)
 		# Turn off all lights
 		if self._srbox is not None:
 			self._srbox.write(b'\x60')

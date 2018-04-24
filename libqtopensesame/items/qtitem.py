@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libopensesame.exceptions import osexception
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 from libqtopensesame.widgets.item_view_button import item_view_button
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.widgets.qtitem_splitter import qtitem_splitter
@@ -33,19 +33,19 @@ _ = translation_context(u'qtitem', category=u'core')
 
 
 def requires_init(fnc):
-	
+
 	"""
 	desc:
 		A decorator that makes sure that an item's controls are initialized
 		before a function is called.
 	"""
-	
+
 	def inner(self, *args, **kwargs):
-		
+
 		if self.container_widget is None:
 			self.init_edit_widget()
 		return fnc(self, *args, **kwargs)
-		
+
 	return inner
 
 
@@ -81,7 +81,7 @@ class qtitem(base_qtobject):
 		self.lock = False
 		self.maximized = False
 		self.set_validator()
-		debug.msg(u'created %s' % self.name)
+		oslogger.debug(u'created %s' % self.name)
 
 	@property
 	def main_window(self):
@@ -110,7 +110,7 @@ class qtitem(base_qtobject):
 	@property
 	def default_description(self):
 		return _(u'Default description')
-		
+
 	def open_tab(self, select_in_tree=True):
 
 		"""
@@ -298,8 +298,7 @@ class qtitem(base_qtobject):
 		elif self.initial_view == u'split':
 			self.set_view_split()
 		else:
-			debug.msg(u'Invalid initial_view: %s' % self.initial_view,
-				reason=u'warning')
+			oslogger.warning(u'Invalid initial_view: %s' % self.initial_view)
 			self.set_view_controls()
 		self.splitter.splitterMoved.connect(self.splitter_moved)
 		self.container_vbox = QtWidgets.QVBoxLayout()
@@ -497,7 +496,7 @@ class qtitem(base_qtobject):
 		for cls in inspect.getmro(self.__class__):
 			if meth.__name__ in cls.__dict__:
 				break
-		debug.msg(u'validator: %s' % cls)
+		oslogger.debug(u'validator: %s' % cls)
 		self.validator = cls
 
 	@requires_init
@@ -819,7 +818,7 @@ class qtitem(base_qtobject):
 			var = id(widget)
 		if apply_func is None:
 			apply_func = self.apply_edit_changes
-		debug.msg(var)
+		oslogger.debug(var)
 		self.set_focus_widget(widget)
 		if isinstance(widget, QtWidgets.QSpinBox) or isinstance(widget,
 			QtWidgets.QDoubleSpinBox):
@@ -841,7 +840,7 @@ class qtitem(base_qtobject):
 			self.auto_checkbox[var] = widget
 		else:
 			raise Exception(u"Cannot auto-add widget of type %s" % widget)
-			
+
 	def children(self):
 
 		"""

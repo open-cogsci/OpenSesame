@@ -19,10 +19,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets, QtGui
-from libopensesame import debug
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'color_edit', category=u'core')
+
 
 class color_edit(base_widget):
 
@@ -132,7 +132,6 @@ class color_edit(base_widget):
 			parent:	A parent QWidget.
 		"""
 
-		debug.msg(u'color = %s' % color)
 		if parent is not None:
 			self._parent = parent
 		else:

@@ -18,7 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame import debug, misc
+from libopensesame import misc
+from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame._input.popup_menu import popup_menu
@@ -29,6 +30,7 @@ import os.path
 import shutil
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'pool_widget', category=u'core')
+
 
 class pool_widget(base_widget):
 
@@ -179,7 +181,7 @@ class pool_widget(base_widget):
 		filt = self.ui.edit_pool_filter.text().lower()
 		self.ui.list_pool.clear()
 		for path in path_iterator:
-			debug.msg(path)
+			oslogger.debug(path)
 			fname = os.path.basename(path)
 			if filt in fname.lower():
 				icon = self.theme.qfileicon(self.pool[path])
@@ -193,7 +195,7 @@ class pool_widget(base_widget):
 			size = self.pool.size()
 		except:
 			size = -1
-		debug.msg(u'pool is %d bytes' % size)
+		oslogger.debug(u'pool is %d bytes' % size)
 		if size > cfg.file_pool_size_warning:
 			self.ui.label_size_warning.setText(_('Your file pool is larger '
 				'than usual (%d MB). This increases loading and saving time. '
@@ -290,9 +292,9 @@ class pool_widget(base_widget):
 		try:
 			for f in dL:
 				del self.pool[f]
-			debug.msg(u"removed '%s'" % f)
+			oslogger.debug(u"removed '%s'" % f)
 		except:
-			debug.msg(u"failed to remove '%s'" % f)
+			oslogger.error(u"failed to remove '%s'" % f)
 		self.refresh()
 		self.main_window.set_unsaved()
 

@@ -25,6 +25,7 @@ from libopensesame.syntax import syntax
 from libopensesame.exceptions import osexception
 from libopensesame import misc, item, debug, metadata
 from libopensesame.item_stack import item_stack_singleton
+from libopensesame.oslogging import oslogger
 from libopensesame.py3compat import *
 import os
 import pickle
@@ -318,7 +319,7 @@ class experiment(item.item):
 		self.var.clear(preserve=[u'experiment_path', u'experiment_file'])
 		self.reset()
 		self.comments = []
-		debug.msg(u"building experiment")
+		oslogger.debug(u"building experiment")
 		if string is None:
 			return
 		self.front_matter, string = self._syntax.parse_front_matter(string)
@@ -426,8 +427,11 @@ class experiment(item.item):
 		"""Runs the experiment."""
 
 		# Save the date and time, and the version of OpenSesame
-		self.var.datetime = safe_decode(time.strftime(u'%c'), enc=self.encoding,
-			errors=u'ignore')
+		self.var.datetime = safe_decode(
+			time.strftime(u'%c'),
+			enc=self.encoding,
+			errors=u'ignore'
+		)
 		self.var.opensesame_version = metadata.__version__
 		self.var.opensesame_codename = metadata.codename
 		self.running = True
@@ -439,21 +443,19 @@ class experiment(item.item):
 		self.python_workspace.init_globals()
 		self.reset_feedback()
 		self.init_heartbeat()
-		print(u"experiment.run(): experiment started at %s" % time.ctime())
-
+		oslogger.info(u"experiment started")
 		if self.var.start in self.items:
 			item_stack_singleton.clear()
 			if self.var.disable_garbage_collection == u'yes':
-				print('experiment.run(): disabling garbage collection')
+				oslogger.info('disabling garbage collection')
 				gc.disable()
 			self.items.execute(self.var.start)
 		else:
-			raise osexception( \
-				"Could not find item '%s', which is the entry point of the experiment" \
-				% self.var.start)
-
-		print(u"experiment.run(): experiment finished at %s" % time.ctime())
-
+			raise osexception(
+				"Could not find item '%s', which is the entry point of the experiment"
+				% self.var.start
+			)
+		oslogger.info(u"experiment finished")
 		self.end()
 
 	def pause(self):
@@ -502,7 +504,7 @@ class experiment(item.item):
 
 		while len(self.cleanup_functions) > 0:
 			func = self.cleanup_functions.pop()
-			debug.msg(u"calling cleanup function")
+			oslogger.debug(u"calling cleanup function")
 			func()
 
 	def end(self):
@@ -514,12 +516,12 @@ class experiment(item.item):
 		try:
 			self._log.close()
 		except AttributeError:
-			print('experiment.end(): missing or invalid log object')
+			oslogger.error('missing or invalid log object')
 		sampler.close_sound(self)
 		canvas.close_display(self)
 		self.cleanup()
 		if not gc.isenabled():
-			print('experiment.end(): enabling garbage collection')
+			oslogger.info('enabling garbage collection')
 			gc.enable()
 		self.transmit_workspace(__finished__=True)
 

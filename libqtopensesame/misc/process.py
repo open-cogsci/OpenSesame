@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.oslogging import oslogger
 import platform
 import sys
 import os
@@ -132,21 +133,24 @@ class ExperimentProcess(multiprocessing.Process):
 		# Reroute output to OpenSesame main process, so everything will be
 		# printed in the Debug window there.
 		pipeToMainProcess = OutputChannel(self.output)
-		sys.stdout = pipeToMainProcess
-		sys.stderr = pipeToMainProcess
+		sys.stderr = sys.stdout = pipeToMainProcess
+		oslogger.name = u'runtime'
+		oslogger.add_handler(oslogger.StreamHandler(pipeToMainProcess))
 		# First initialize the experiment and catch any resulting Exceptions
 		try:
-			exp = experiment(string=self.script, pool_folder= self.pool_folder,
+			exp = experiment(
+				string=self.script, pool_folder=self.pool_folder,
 				experiment_path=self.experiment_path,
 				fullscreen=self.fullscreen, auto_response=self.auto_response,
-				subject_nr=self.subject_nr, logfile=self.logfile)
+				subject_nr=self.subject_nr, logfile=self.logfile
+			)
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e = osexception(u'Unexpected error', exception=e)
 			# Communicate the exception and exit with error
 			self.output.put(e)
 			sys.exit(1)
-		print(u'Starting experiment as %s' % self.name)
+		oslogger.info(u'Starting experiment as %s' % self.name)
 		# Run the experiment and catch any Exceptions.
 		e_run = None
 		exp.set_output_channel(self.output)
@@ -165,7 +169,7 @@ class ExperimentProcess(multiprocessing.Process):
 		try:
 			exp.end()
 		except Exception as e_exp:
-			print(u'An Exception occurred during exp.end(): %s' % e_exp)
+			oslogger.error(u'An Exception occurred during exp.end(): %s' % e_exp)
 		# Communicate the exception and exit with error
 		if e_run is not None:
 			self.output.put(e_run)

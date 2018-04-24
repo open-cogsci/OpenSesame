@@ -18,15 +18,16 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from qtpy import QtCore, QtGui, QtWidgets
+from qtpy import QtCore, QtWidgets
 from collections import OrderedDict
-from libopensesame import debug, plugins
+from libopensesame import plugins
+from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.toolbar_items_label import toolbar_items_label
 from libqtopensesame.widgets.toolbar_items_item import toolbar_items_item
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'toolbar_items', category=u'core')
+
 
 class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
 
@@ -119,18 +120,17 @@ class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
 				self.addWidget(toolbar_items_label(self, cat))
 			content = []
 			for plugin in cat_plugins:
-				debug.msg(u"adding plugin '%s'" % plugin)
+				oslogger.debug(u"adding plugin '%s'" % plugin)
 				pixmap = self.theme.qpixmap(plugins.plugin_icon_large(plugin))
 				content.append(toolbar_items_item(self, plugin, pixmap))
 			self.add_content(content)
 
 	def collapse(self):
-		
+
 		"""
 		desc:
 			Collapses the item toolbar if is was expanded.
 		"""
-		
+
 		if self._expand_button.isChecked():
 			self._expand_button.click()
-			

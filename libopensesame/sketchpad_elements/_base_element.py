@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from libopensesame import debug
-from libopensesame.exceptions import osexception
 from libopensesame.py3compat import *
+from libopensesame.exceptions import osexception
+
 
 class base_element(object):
 
@@ -53,7 +53,6 @@ class base_element(object):
 		# coordinates should be translated to top-left = 0,0.
 		self.only_keywords = False
 		self.fix_coordinates = sketchpad.var.uniform_coordinates!=u'yes'
-		debug.msg(self._type)
 		self.defaults = defaults + [
 			(u'z_index', 0),
 			(u'show_if', u'always'),

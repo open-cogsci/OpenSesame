@@ -50,14 +50,16 @@ desc:
 """
 
 import json
-from qtpy import QtCore, QtGui, QtWidgets
-from libopensesame import debug
+from qtpy import QtCore, QtGui
+from libopensesame.oslogging import oslogger
 from libopensesame.py3compat import *
+
 
 # For unknown mimetypes
 invalid_data = {
-	u'type':	u'invalid'
-	}
+	u'type' : u'invalid'
+}
+
 
 def matches(data, types):
 
@@ -108,7 +110,7 @@ def receive(drop_event):
 	mimedata = drop_event.mimeData()
 	# Reject unknown mimedata
 	if not mimedata.hasText() and not mimedata.hasUrls():
-		debug.msg(u'No text data')
+		oslogger.warning(u'No text data')
 		return invalid_data
 	# Process url mimedata
 	if mimedata.hasUrls():
@@ -129,7 +131,7 @@ def receive(drop_event):
 	try:
 		data = json.loads(text)
 	except:
-		debug.msg(u'Failed to load json mime data')
+		oslogger.warning(u'Failed to load json mime data')
 		return invalid_data
 	if u'type' not in data:
 		return invalid_data

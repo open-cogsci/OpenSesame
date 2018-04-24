@@ -32,7 +32,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from qtpy import QtCore
 import libopensesame.misc
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 import platform
 import sys
 
@@ -170,7 +170,7 @@ class config(object):
 			setting: 	The setting to set
 			value:		The value to set
 		"""
-		
+
 		if setting not in self.config:
 			raise osexception(u'The setting "%s" does not exist' \
 				% setting)
@@ -258,9 +258,9 @@ class config(object):
 				# Apply the argument
 				try:
 					self.__setattr__(a[0], val)
-					debug.msg(u"%s = %s" % (a[0], val))
+					oslogger.debug(u"%s = %s" % (a[0], val))
 				except:
-					debug.msg(u"Failed to parse argument: %s" % arg)
+					oslogger.error(u"Failed to parse argument: %s" % arg)
 
 	def type_qvariant(self, value, default):
 
@@ -360,14 +360,14 @@ class config(object):
 		"""
 
 		return self.cfg_ver
-		
+
 	def reset(self):
-		
+
 		"""
 		desc:
 			Resets the configution back to default.
 		"""
-				
+
 		object.__setattr__(self, u'config', {})
 		self.config.update(DEFAULT_CONFIG)
 		if platform.system() == u"Windows":
@@ -375,18 +375,18 @@ class config(object):
 		elif platform.system() == u"Darwin":
 			self.config.update(DEFAULT_CONFIG_MAC)
 		elif platform.system() == u"Linux":
-			self.config.update(DEFAULT_CONFIG_LINUX)			
-		
+			self.config.update(DEFAULT_CONFIG_LINUX)
+
 	def nuke(self):
-		
+
 		"""
 		desc:
 			Clears the config.
 		"""
-		
+
 		self.reset()
 		self.clear()
-		self.save()		
+		self.save()
 
 
 # Create a singleton config instance

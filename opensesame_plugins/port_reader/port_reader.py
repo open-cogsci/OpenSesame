@@ -19,14 +19,16 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libopensesame import item, generic_response, debug
+from libopensesame import item, generic_response
+from libopensesame.oslogging import oslogger
 from libqtopensesame import qtplugin
-from qtpy import QtWidgets, QtCore
 try:
 	from ctypes import windll
 except:
-	debug.msg("failed to load ctypes.windll mode (only dummy mode will be available)", \
-		reason="warning")
+	oslogger.warning(
+		"failed to load ctypes.windll mode (only dummy mode will be available)"
+	)
+
 
 class port_reader(item.item, generic_response.generic_response):
 

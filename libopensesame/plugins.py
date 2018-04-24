@@ -21,7 +21,8 @@ import os
 import sys
 import yaml
 import time
-from libopensesame import debug, misc
+from libopensesame import misc
+from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 from libopensesame.py3compat import *
 
@@ -210,7 +211,7 @@ def plugin_properties(plugin, _type=u'plugins'):
 		try:
 			_properties[plugin] = yaml.load(s)
 		except:
-			debug.msg(u'Failed to parse %s' % info_yaml)
+			oslogger.error(u'Failed to parse %s' % info_yaml)
 			_properties[plugin] = {}
 	# Old-style plug-ins, using info.txt
 	elif os.path.exists(info_txt):
@@ -228,10 +229,9 @@ def plugin_properties(plugin, _type=u'plugins'):
 					_properties[plugin][var] = val
 	else:
 		_properties[plugin] = {}
-		debug.msg(
+		oslogger.error(
 			u'Failed to read plug-in information (%s) from info.[txt|json]'
-				% plugin,
-			reason=u'warning'
+			% plugin
 		)
 	_properties[plugin][u'plugin_folder'] = folder
 	_properties[plugin][u'type'] = _type
@@ -509,7 +509,7 @@ def load_mod(path, mod, pkg=None):
 	path = os.path.join(path, mod+u'.py')
 	if not os.path.exists(path):
 		raise osexception(u'%s does not exist' % path)
-	debug.msg(u'loading module from %s' % path)
+	oslogger.debug(u'loading module from %s' % path)
 	if not py3:
 		mod = safe_encode(mod, enc=sys.getfilesystemencoding())
 		path = safe_encode(path, enc=sys.getfilesystemencoding())

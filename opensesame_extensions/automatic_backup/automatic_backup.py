@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 import os
 import time
-from qtpy import QtWidgets, QtCore
-from libopensesame import debug, misc
+from qtpy import QtCore
+from libopensesame import misc
+from libopensesame.oslogging import oslogger
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.translate import translation_context
@@ -69,11 +69,11 @@ class automatic_backup(base_extension):
 			t = os.path.getctime(_path)
 			age = (time.time() - t)/(60*60*24)
 			if age > cfg.autosave_max_age:
-				debug.msg(u"removing '%s'" % path)
+				oslogger.debug(u"removing '%s'" % path)
 				try:
 					os.remove(_path)
 				except:
-					debug.msg(u"failed to remove '%s'" % path)
+					oslogger.error(u"failed to remove '%s'" % path)
 
 		self.start_autosave_timer()
 
@@ -85,7 +85,7 @@ class automatic_backup(base_extension):
 		"""
 
 		if self.autosave_timer is not None:
-			debug.msg(u"stopping autosave timer")
+			oslogger.debug(u"stopping autosave timer")
 			self.autosave_timer.stop()
 
 	def event_end_experiment(self, ret_val):
@@ -96,7 +96,7 @@ class automatic_backup(base_extension):
 		"""
 
 		if self.autosave_timer is not None:
-			debug.msg(u"resuming autosave timer")
+			oslogger.debug(u"resuming autosave timer")
 			self.autosave_timer.start()
 
 	def start_autosave_timer(self):
@@ -107,14 +107,14 @@ class automatic_backup(base_extension):
 		"""
 
 		if cfg.autosave_interval > 0:
-			debug.msg(u"autosave interval = %d ms" % cfg.autosave_interval)
+			oslogger.debug(u"autosave interval = %d ms" % cfg.autosave_interval)
 			self.autosave_timer = QtCore.QTimer()
 			self.autosave_timer.setInterval(cfg.autosave_interval)
 			self.autosave_timer.setSingleShot(True)
 			self.autosave_timer.timeout.connect(self.autosave)
 			self.autosave_timer.start()
 		else:
-			debug.msg(u"autosave disabled")
+			oslogger.debug(u"autosave disabled")
 			self.autosave_timer = None
 
 	def autosave(self):
@@ -131,7 +131,7 @@ class automatic_backup(base_extension):
 			try:
 				self.main_window.get_ready()
 				self.experiment.save(path, overwrite=True, update_path=False)
-				debug.msg(u"saving backup as %s" % path)
+				oslogger.debug(u"saving backup as %s" % path)
 			except:
 				pass
 		self.start_autosave_timer()

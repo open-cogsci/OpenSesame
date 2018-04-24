@@ -37,7 +37,7 @@ if (
 from qtpy import QtWidgets, QtGui, QtCore
 from libqtopensesame.console._base_console import BaseConsole
 from libqtopensesame.misc.config import cfg
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 
 
 deferred_function_calls = []
@@ -181,6 +181,7 @@ class IPythonConsole(BaseConsole, QtWidgets.QWidget):
 			main thread.
 		"""
 
+		oslogger.info(u'launching IPythonImporter')
 		self._ipython_importer = IPythonImporter()
 		self._ipython_importer.finished.connect(self._on_ipython_imported)
 		self._ipython_importer.start()
@@ -212,6 +213,7 @@ class IPythonConsole(BaseConsole, QtWidgets.QWidget):
 			deferred_function_calls.pop(0)()
 		self.main_window.ui.label_starting_ipython.hide()
 		self._started = True
+		oslogger.info(u'ipython debug window started')
 
 	@deferred
 	def clear(self, *args):
@@ -291,11 +293,11 @@ class IPythonConsole(BaseConsole, QtWidgets.QWidget):
 
 		from QProgEdit import QColorScheme
 		if not hasattr(QColorScheme, cfg.qProgEditColorScheme):
-			debug.msg(u'Failed to set debug-output colorscheme')
+			oslogger.error(u'failed to set debug-output colorscheme')
 			return u''
 		cs = getattr(QColorScheme, cfg.qProgEditColorScheme)
 		if not self.validTheme(cs):
-			debug.msg(u'Invalid debug-output colorscheme')
+			oslogger.error(u'invalid debug-output colorscheme')
 			return u''
 		# We need to process events first, otherwise the style changes don't
 		# take for an unclear reason.

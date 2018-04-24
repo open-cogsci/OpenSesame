@@ -25,7 +25,7 @@ if os.environ[u'QT_API'] == u'pyqt5':
 else:
 	from PyQt4 import uic
 from qtpy import QtCore, QtWidgets
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 from libqtopensesame.misc.base_qtobject import base_qtobject
 
@@ -87,7 +87,7 @@ class base_component(base_qtobject):
 					# ... otherwise use the static resources function.
 					from libopensesame import misc
 					ui_path = misc.resource(os.path.join(*path_list)+u'.ui')
-			debug.msg(u'dynamically loading ui: %s' % ui_path)
+			oslogger.debug(u'dynamically loading ui: %s' % ui_path)
 			if py3:
 				with safe_open(ui_path) as fd:
 					self.ui = uic.loadUi(fd, self)

@@ -19,9 +19,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libopensesame import item, debug
+from libopensesame import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 import random
+
 
 class advanced_delay(item.item):
 
@@ -65,7 +66,6 @@ class advanced_delay(item.item):
 			self._duration = 0
 		self._duration = int(self._duration)
 		self.experiment.var.set(u'delay_%s' % self.name, self._duration)
-		debug.msg(u"delay for %s ms" % self._duration)
 
 	def run(self):
 

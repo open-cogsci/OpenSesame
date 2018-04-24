@@ -24,6 +24,7 @@ from libqtopensesame.misc.config import cfg
 from libqtopensesame.items import experiment
 from libopensesame import debug, metadata
 from libopensesame.exceptions import osexception
+from libopensesame.oslogging import oslogger
 import libopensesame.experiment
 import libopensesame.plugins
 import libopensesame.misc
@@ -32,6 +33,7 @@ import sys
 import warnings
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'qtopensesame', category=u'core')
+oslogger.name = u'gui'
 
 class qtopensesame(QtWidgets.QMainWindow, base_component):
 
@@ -100,7 +102,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		random.seed()
 
 		# Check the filesystem encoding for debugging purposes
-		debug.msg(u'filesystem encoding: %s' % misc.filesystem_encoding())
+		oslogger.debug(u'filesystem encoding: %s' % misc.filesystem_encoding())
 
 		# # Parse the command line
 		# self.parse_command_line()
@@ -267,9 +269,9 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			try:
 				ttf = self.experiment.resource(u'%s.ttf' % font)
 			except:
-				debug.msg(u'failed to find %s' % font)
+				oslogger.error(u'failed to find %s' % font)
 			else:
-				debug.msg(u'registering %s (%s)' % (font, ttf))
+				oslogger.debug(u'registering %s (%s)' % (font, ttf))
 				id = QtGui.QFontDatabase.addApplicationFont(ttf)
 				families = QtGui.QFontDatabase.applicationFontFamilies(id)
 				if families:
@@ -347,7 +349,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		cfg.parse_cmdline_args(self.options._config)
 		self.recent_files = []
 		if self.options.start_clean:
-			debug.msg(u'Not restoring state')
+			oslogger.info(u'Not restoring state')
 			self.theme.set_toolbar_size(cfg.toolbar_size)
 			return
 		self.resize(cfg.size)
@@ -366,10 +368,10 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		if hasattr(recent_files, u"split"):
 			for path in recent_files.split(u";;"):
 				if os.path.exists(path):
-					debug.msg(u"adding recent file '%s'" % path)
+					oslogger.debug(u"adding recent file '%s'" % path)
 					self.recent_files.append(path)
 				else:
-					debug.msg(u"missing recent file '%s'" % path)
+					oslogger.debug(u"missing recent file '%s'" % path)
 		self.ui.action_enable_auto_response.setChecked(
 			self.experiment.auto_response)
 		self.ui.action_onetabmode.setChecked(cfg.onetabmode)
@@ -390,7 +392,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		"""
 
 		if self.options.start_clean:
-			debug.msg(u'Not restoring window state')
+			oslogger.info(u'Not restoring window state')
 			return
 		self.restoreState(cfg._initial_window_state)
 		self.restoreGeometry(cfg._initial_window_geometry)
@@ -431,9 +433,9 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 		if cfg.style in QtWidgets.QStyleFactory.keys():
 			self.setStyle(QtWidgets.QStyleFactory.create(cfg.style))
-			debug.msg(u"using style '%s'" % cfg.style)
+			oslogger.debug(u"using style '%s'" % cfg.style)
 		else:
-			debug.msg(u"ignoring unknown style '%s'" % cfg.style)
+			oslogger.warning(u"ignoring unknown style '%s'" % cfg.style)
 			cfg.style = u''
 
 	def set_locale(self, translator):
@@ -888,7 +890,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			height:		The display height in pixels.
 		"""
 
-		debug.msg(u"changing resolution to %d x %d" % (width, height))
+		oslogger.debug(u"changing resolution to %d x %d" % (width, height))
 		try:
 			script = self.experiment.to_string()
 		except Exception as e:
@@ -935,7 +937,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 				if item not in done:
 					done.append(item)
 					if self.experiment.items[item].get_ready():
-						debug.msg(u"'%s' did something" % item)
+						oslogger.debug(u"'%s' did something" % item)
 						redo = True
 						break
 
@@ -964,7 +966,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 		self.enable(False)
 		print(u'\n')
-		debug.msg(u'using %s runner' % cfg.runner)
+		oslogger.debug(u'using %s runner' % cfg.runner)
 		self._runner = self.runner_cls(self)
 		self._runner.run(quick=quick, fullscreen=fullscreen,
 			auto_response=self.experiment.auto_response)
@@ -1039,7 +1041,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			but has been deprecated.
 		"""
 
-		debug.msg(reason=u'deprecated')
+		oslogger.warning(u'qtopensesame.refresh() is deprecated')
 
 	def _id(self):
 

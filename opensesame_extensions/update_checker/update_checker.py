@@ -18,12 +18,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from qtpy import QtWidgets, QtCore
-from libopensesame import debug
+from qtpy import QtCore
+from libopensesame.oslogging import oslogger
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'update_checker', category=u'extension')
+
 
 class update_checker(base_extension):
 
@@ -49,44 +50,44 @@ class update_checker(base_extension):
 		import yaml
 
 		if not always and not cfg.auto_update_check:
-			debug.msg(u"skipping update check")
+			oslogger.debug(u"skipping update check")
 			return
-		debug.msg(u"opening %s" % cfg.remote_metadata_url)
+		oslogger.debug(u"opening %s" % cfg.remote_metadata_url)
 		success = True
 		try:
 			fd = urlopen(cfg.remote_metadata_url)
 			s = fd.read()
 			fd.close()
 		except:
-			debug.msg(u"failed to load remote metadata.yaml")
+			oslogger.error(u"failed to load remote metadata.yaml")
 			success = False
 		if success:
 			try:
 				remote_metadata = yaml.load(s)
 			except:
-				debug.msg(u"failed to load parse metadata.yaml")
+				oslogger.error(u"failed to load parse metadata.yaml")
 				success = False
 		if success:
 			if u'stable_version' not in remote_metadata:
-				debug.msg(u"no stable_version in metadata")
+				oslogger.error(u"no stable_version in metadata")
 				success = False
 			else:
 				try:
 					remote_strict_version = StrictVersion(
 						remote_metadata[u'stable_version'])
 				except:
-					debug.msg(u"stable_version is not strict")
+					oslogger.error(u"stable_version is not strict")
 					success = False
 		if not success:
 			self.tabwidget.open_markdown(self.ext_resource(u'failed.md'))
 			return
 		if remote_strict_version > metadata.strict_version:
-			debug.msg(u"new version available")
+			oslogger.debug(u"new version available")
 			s = safe_read(self.ext_resource(u'update-available.md'))
 			self.tabwidget.open_markdown(s % remote_metadata,
 				title=u'Update available!')
 		else:
-			debug.msg(u"up to date")
+			oslogger.debug(u"up to date")
 			if always:
 				self.tabwidget.open_markdown(
 					self.ext_resource(u'up-to-date.md'),

@@ -18,30 +18,30 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame.exceptions import osexception
-from libopensesame import plugins, debug
+from libopensesame import plugins
+from libopensesame.oslogging import oslogger
 from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 
 Quest = None
 try:
 	import Quest
-	debug.msg(u'Loading Quest module directly')
+	oslogger.debug(u'Loading Quest module directly')
 except:
-	debug.msg(u'Failed to load Quest module directly')
+	oslogger.debug(u'Failed to load Quest module directly')
 if Quest is None:
 	try:
 		from psychopy.contrib import quest as Quest
-		debug.msg(u'Loading Quest module from PsychoPy')
+		oslogger.debug(u'Loading Quest module from PsychoPy')
 	except:
-		debug.msg(u'Failed to load Quest module from PsychoPy')
+		oslogger.debug(u'Failed to load Quest module from PsychoPy')
 if Quest is None:
 	try:
 		Quest = plugins.load_mod(__file__, u'Quest')
-		debug.msg(u'Loading Quest module from plug-in folder')
+		oslogger.debug(u'Loading Quest module from plug-in folder')
 	except:
-		debug.msg(u'Failed to load Quest module from plug-in folder')
+		oslogger.debug(u'Failed to load Quest module from plug-in folder')
 if Quest is None:
 		raise osexception(u'Failed to load Quest module.')
 
@@ -91,7 +91,7 @@ class quest_staircase_init(item):
 				% self.var.test_value_method)
 		test_value = max(self.var.min_test_value, min(
 			self.var.max_test_value, self.experiment.quest_test_value()))
-		debug.msg(u'quest_test_value = %s' % test_value)
+		oslogger.debug(u'quest_test_value = %s' % test_value)
 		self.experiment.var.quest_test_value = test_value
 		self.experiment.var.set(self.var.var_test_value, test_value)
 

@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 from libopensesame.inline_script import inline_script as inline_script_runtime
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.misc.config import cfg
@@ -136,7 +136,7 @@ class inline_script(inline_script_runtime, qtplugin):
 		"""See qtitem."""
 
 		if self.qprogedit.isAnyModified():
-			debug.msg(u'applying pending script changes')
+			oslogger.debug(u'applying pending script changes')
 			self.apply_edit_changes()
 			return True
 		return qtplugin.get_ready(self)

@@ -21,11 +21,12 @@ from libopensesame.py3compat import *
 import os
 import functools
 from qtpy import QtWidgets, QtCore
-from libopensesame import debug
+from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.translate import translation_context
+
 
 class base_extension(base_subcomponent):
 
@@ -48,7 +49,7 @@ class base_extension(base_subcomponent):
 							been read from info.[json|txt].
 		"""
 
-		debug.msg(u'creating %s' % self.name())
+		oslogger.debug(u'creating %s' % self.name())
 		self._ = translation_context(self.name(), category=u'extension')
 		self.info = info
 		self.setup(main_window)
@@ -405,7 +406,7 @@ class base_extension(base_subcomponent):
 		"""
 
 		if hasattr(self, u'event_%s' % event):
-			debug.msg(u'extensions %s received event_%s' % (self.name(), event))
+			oslogger.debug(u'extensions %s received event_%s' % (self.name(), event))
 			getattr(self, u'event_%s' % event)(**kwdict)
 
 	def name(self):
@@ -524,7 +525,9 @@ class base_extension(base_subcomponent):
 		for event in dir(self):
 			if event.startswith(u'event_'):
 				events.append(event[6:])
-				debug.msg(u'extension %s supports %s' % (self.name(), event))
+				oslogger.debug(
+					u'extension %s supports %s' % (self.name(), event)
+				)
 		return events
 
 	def register_config(self):
