@@ -31,6 +31,7 @@ else:
 	py3 = False
 	universal_newline_mode = u'rU'
 	RecursionError = RuntimeError
+	PermissionError = IOError
 
 
 def safe_decode(s, enc='utf-8', errors='strict'):
@@ -76,6 +77,6 @@ else:
 __all__ = ['py3', 'safe_decode', 'safe_encode', 'safe_str',
 	'universal_newline_mode', 'safe_read', 'safe_open']
 if not py3:
-	__all__ += ['str', 'bytes', 'RecursionError']
+	__all__ += ['str', 'bytes', 'RecursionError', 'PermissionError']
 else:
 	__all__ += ['basestring']
