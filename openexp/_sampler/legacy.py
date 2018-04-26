@@ -22,6 +22,7 @@ from pygame.locals import *
 import pygame
 from openexp._sampler.sampler import Sampler
 from libopensesame.exceptions import osexception
+from libopensesame.oslogging import oslogger
 from libopensesame import misc
 from openexp.keyboard import Keyboard
 from openexp.backend import configurable
@@ -179,21 +180,23 @@ class Legacy(Sampler):
 	@staticmethod
 	def init_sound(experiment):
 
-		print(
-			u"openexp.sampler._legacy.init_sound(): sampling freq = %d, buffer size = %d" \
-			% (experiment.var.sound_freq, experiment.var.sound_buf_size))
+		oslogger.info(
+			u"sampling freq = %d, buffer size = %d"
+			% (experiment.var.sound_freq, experiment.var.sound_buf_size)
+		)
 		if hasattr(mixer, u'get_init') and mixer.get_init():
-			print(
-				u'openexp.sampler._legacy.init_sound(): mixer already initialized, closing')
+			oslogger.warning(u'mixer already initialized, closing')
 			pygame.mixer.quit()
-		mixer.pre_init(experiment.var.sound_freq,
+		mixer.pre_init(
+			experiment.var.sound_freq,
 			experiment.var.sound_sample_size,
 			experiment.var.sound_channels,
-			experiment.var.sound_buf_size)
+			experiment.var.sound_buf_size
+		)
 		try:
 			mixer.init()
 		except pygame.error:
-			print(u'openexp.sampler._legacy.init_sound(): failed to initialize mixer')
+			oslogger.error(u'failed to initialize mixer')
 
 	@staticmethod
 	def close_sound(experiment):

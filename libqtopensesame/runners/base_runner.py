@@ -251,7 +251,6 @@ class base_runner(object):
 		self.main_window.extension_manager.fire(u'run_experiment',
 			fullscreen=fullscreen)
 		self.console.capture_stdout()
-		self.console.write(u'\n')
 		if not self.init_experiment(quick=quick, fullscreen=fullscreen,
 			auto_response=auto_response):
 			return

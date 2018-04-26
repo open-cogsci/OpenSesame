@@ -33,7 +33,7 @@ import sys
 import warnings
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'qtopensesame', category=u'core')
-oslogger.name = u'gui'
+oslogger.start(u'gui')
 
 class qtopensesame(QtWidgets.QMainWindow, base_component):
 

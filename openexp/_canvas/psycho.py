@@ -135,10 +135,9 @@ class Psycho(Canvas, PsychoCoordinates):
 			[u'yes', u'no']) == u'yes'
 		screen = experiment.var.get(u'psychopy_screen', 0)
 		# Print some information to the debug window
-		print(u'openexp._canvas.psycho.init_display(): waitblanking = %s' %
-			waitblanking)
-		print(u'openexp._canvas.psycho.init_display(): monitor = %s' % monitor)
-		print(u'openexp._canvas.psycho.init_display(): screen = %s' % screen)
+		oslogger.info(u'waitblanking = %s' % waitblanking)
+		oslogger.info(u'monitor = %s' % monitor)
+		oslogger.info(u'screen = %s' % screen)
 		# Initialize the PsychoPy window and set various functions
 		experiment.window = visual.Window(
 			experiment.resolution(),

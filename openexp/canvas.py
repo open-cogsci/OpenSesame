@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from openexp import backend
+from libopensesame.oslogging import oslogger
 import tempfile
 try:
 	import pygame
@@ -96,16 +97,15 @@ def clean_up(verbose=False):
 
 	global temp_files
 	if verbose:
-		print(u"canvas.clean_up()")
+		oslogger.debug(u"cleaning up temporary pool folders")
 	for path in temp_files:
 		if verbose:
-			print(u"canvas.clean_up(): removing '%s'" % path)
+			oslogger.debug(u"removing '%s'" % path)
 		try:
 			os.remove(path)
 		except Exception as e:
 			if verbose:
-				print(u"canvas.clean_up(): failed to remove '%s': %s" \
-					% (path, e))
+				oslogger.error(u"failed to remove '%s': %s" % (path, e))
 
 
 def gabor_file(*arglist, **kwdict):

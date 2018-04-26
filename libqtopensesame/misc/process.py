@@ -134,8 +134,7 @@ class ExperimentProcess(multiprocessing.Process):
 		# printed in the Debug window there.
 		pipeToMainProcess = OutputChannel(self.output)
 		sys.stderr = sys.stdout = pipeToMainProcess
-		oslogger.name = u'runtime'
-		oslogger.add_handler(oslogger.StreamHandler(pipeToMainProcess))
+		oslogger.start(u'runtime')
 		# First initialize the experiment and catch any resulting Exceptions
 		try:
 			exp = experiment(
@@ -156,7 +155,7 @@ class ExperimentProcess(multiprocessing.Process):
 		exp.set_output_channel(self.output)
 		try:
 			exp.run()
-			print('done!')
+			oslogger.info('experiment finished!')
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e_run = osexception(u'Unexpected error', exception=e)
@@ -179,7 +178,7 @@ class ExperimentProcess(multiprocessing.Process):
 
 	def kill(self):
 
-		print(u'Killing experiment process')
+		oslogger.info(u'killing experiment process')
 		os.kill(
 			self.pid,
 			signal.SIGKILL if hasattr(signal, u'SIGKILL') else signal.SIGTERM

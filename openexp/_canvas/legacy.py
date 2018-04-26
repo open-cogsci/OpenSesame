@@ -25,6 +25,7 @@ import platform
 from openexp.backend import configurable
 from openexp._canvas.canvas import Canvas
 from openexp._coordinates.legacy import Legacy as LegacyCoordinates
+from libopensesame.oslogging import oslogger
 
 # PyGame 1.9.2 suffers from character encoding issues. To get around those, we
 # pass file objects directly to PyGame, instead of paths. These file objects
@@ -153,10 +154,6 @@ class Legacy(Canvas, LegacyCoordinates):
 	@staticmethod
 	def init_display(experiment):
 
-		def p(msg):
-
-			print(u'openexp._canvas.legacy.init_display(): %s' % msg)
-
 		# Intialize PyGame and set the Window icon
 		pygame.init()
 		surf = pygame.Surface( (32, 32) )
@@ -170,21 +167,21 @@ class Legacy(Canvas, LegacyCoordinates):
 			== u"yes"
 		):
 			mode = mode | pygame.HWSURFACE
-			p(u'enabling hardware surface')
+			oslogger.info(u'enabling hardware surface')
 		else:
-			p(u'not enabling hardware surface')
+			oslogger.info(u'not enabling hardware surface')
 		if (
 			experiment.var.get(u"pygame_doublebuf", u"yes", [u"yes", u"no"])
 			== u"yes"
 		):
 			mode = mode | pygame.DOUBLEBUF
-			p(u'enabling double buffering')
+			oslogger.info(u'enabling double buffering')
 		else:
-			p(u'not enabling double buffering')
+			oslogger.info(u'not enabling double buffering')
 		if pygame.display.mode_ok(experiment.resolution(), mode):
-			p(u'video mode ok')
+			oslogger.info(u'video mode ok')
 		else:
-			p(u'warning: video mode not ok')
+			oslogger.warning(u'warning: video mode not ok')
 		if experiment.var.fullscreen == u'yes':
 			mode = mode | pygame.FULLSCREEN
 		if (

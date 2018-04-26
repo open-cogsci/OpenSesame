@@ -289,19 +289,19 @@ class config(object):
 			try:
 				return bool(value)
 			except:
-				print('Failed to convert %s' % value)
+				oslogger.error('Failed to convert %s' % value)
 				return default
 		if isinstance(default, int):
 			try:
 				return int(value)
 			except:
-				print('Failed to convert %s' % value)
+				oslogger.error('Failed to convert %s' % value)
 				return default
 		if isinstance(default, float):
 			try:
 				return float(value)
 			except:
-				print('Failed to convert %s' % value)
+				oslogger.error('Failed to convert %s' % value)
 				return default
 		return value
 
