@@ -40,7 +40,7 @@ def safe_decode(s, enc='utf-8', errors='strict'):
 	if isinstance(s, bytes):
 		return s.decode(enc, errors)
 	# Numeric values are encoded right away
-	if isinstance(s, int) or isinstance(s, float):
+	if isinstance(s, (int, float)):
 		return str(s)
 	# Some types need to be converted to unicode, but require the encoding
 	# and errors parameters. Notable examples are Exceptions, which have
@@ -54,13 +54,25 @@ def safe_decode(s, enc='utf-8', errors='strict'):
 		pass
 	# For other types, the unicode representation doesn't require a specific
 	# encoding. This mostly applies to non-stringy things, such as integers.
-	return str(s)
+	try:
+		return str(s)
+	except Exception as e:
+		from libopensesame.oslogging import oslogger
+		oslogger.error(u'%s occurred, returning empty string' % type(e))
+		return u''
 
 
 def safe_encode(s, enc='utf-8', errors='strict'):
 	if isinstance(s, bytes):
 		return s
-	return s.encode(enc, errors)
+	if isinstance(s, str):
+		return s.encode(enc, errors)
+	try:
+		return bytes(s)
+	except Exception as e:
+		from libopensesame.oslogging import oslogger
+		oslogger.error(u'%s occurred, returning empty string' % type(e))
+		return b''
 
 
 def safe_read(path):
