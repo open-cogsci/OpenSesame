@@ -123,6 +123,16 @@ class Legacy(Canvas, LegacyCoordinates):
 		self.surface.fill(self.background_color.backend_color)
 		Canvas.prepare(self)
 
+	def lower_to_bottom(self, element):
+
+		Canvas.lower_to_bottom(self, element)
+		self.redraw()
+
+	def raise_to_top(self, element):
+
+		Canvas.raise_to_top(self, element)
+		self.redraw()
+
 	def redraw(self):
 
 		if not self.auto_prepare:
