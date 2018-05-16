@@ -111,6 +111,7 @@ class ImageWidget(Widget):
 			ImageElement(_path, x=x, y=y, scale=self.scale, center=True)
 				.construct(self.canvas)
 		)
+		Widget._init_canvas_elements(self)
 		if self.frame:
 			self._update_frame(self.rect)
 
