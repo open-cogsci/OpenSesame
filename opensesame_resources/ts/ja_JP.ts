@@ -890,11 +890,6 @@ The experiment did not finish normally for the following reason:
         <source>Expyriment API</source>
         <translation>Expyriment API</translation>
     </message>
-    <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="57"/>
-        <source>Please wait â¦</source>
-        <translation type="obsolete">お待ちください â¦</translation>
-    </message>
     <message>
         <location filename="../../translatables-tmp.py" line="57"/>
         <source>Please wait &#xe2;&#x80;&#xa6;</source>
@@ -2069,21 +2064,6 @@ The experiment did not finish normally for the following reason:
         <location filename="../../translatables-tmp.py" line="503"/>
         <source>Experimental variable for test value</source>
         <translation>変動値の変数名</translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="494"/>
-        <source>Steepness of the Weibull psychometric function (Î²)</source>
-        <translation type="obsolete">ワイブル分布の傾き (Î²)</translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="495"/>
-        <source>Proportion of random responses at maximum stimulus intensity (Î´)</source>
-        <translation type="obsolete">最大刺激強度でのランダム応答の割合 (Î´)</translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="496"/>
-        <source>Chance level (Î³)</source>
-        <translation type="obsolete">チャンスレベル (Î³)</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="497"/>
