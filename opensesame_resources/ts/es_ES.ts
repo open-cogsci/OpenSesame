@@ -323,7 +323,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="381"/>
         <source>Invalid variable name (%s) specified in %s plugin info</source>
-        <translation>Nombre de variable no válido (%s) especificado en información del plugin %s </translation>
+        <translation>Nombre de variable no válido (%s) especificado en información del plugin %s</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="382"/>
@@ -422,7 +422,7 @@
     <message encoding="UTF-8">
         <location filename="../../translatables-tmp.py" line="346"/>
         <source>Save as…</source>
-        <translation>Guardar como...</translation>
+        <translation>Guardar como…</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="342"/>
@@ -441,7 +441,7 @@
     <message>
         <location filename="../../translatables-tmp.py" line="337"/>
         <source> [read only]</source>
-        <translation>[solo lectura]</translation>
+        <translation> [solo lectura]</translation>
     </message>
 </context>
 <context>
@@ -664,7 +664,7 @@ Descripción: %s</translation>
     <message>
         <location filename="../../translatables-tmp.py" line="11"/>
         <source>Failed to load page: </source>
-        <translation>Fallo al cargar la página:</translation>
+        <translation>Fallo al cargar la página: </translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="12"/>
@@ -679,7 +679,7 @@ Descripción: %s</translation>
     <message encoding="UTF-8">
         <location filename="../../translatables-tmp.py" line="14"/>
         <source>Loading …</source>
-        <translation>Cargando ...</translation>
+        <translation>Cargando …</translation>
     </message>
 </context>
 <context>
@@ -840,7 +840,7 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message encoding="UTF-8">
         <location filename="../../translatables-tmp.py" line="763"/>
         <source>New…</source>
-        <translation>Nuevo...</translation>
+        <translation>Nuevo…</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="764"/>
@@ -1292,7 +1292,7 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="742"/>
         <source>You have multiple unlinked loggers. This can lead to messy log files.</source>
-        <translation>Tiene múltiples registradores sin enlazar. Esto puede provocar a archivos de registro desordenados. </translation>
+        <translation>Tiene múltiples registradores sin enlazar. Esto puede provocar a archivos de registro desordenados.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="743"/>
@@ -1375,7 +1375,7 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="317"/>
         <source>Summary: &lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; order.</source>
-        <translation>Resumen: &lt;b&gt;%s&lt;/b&gt; será llamado &lt;b&gt;%s&lt;/b&gt; en &lt;b&gt; % &lt;/b&gt; orden.</translation>
+        <translation>Resumen: &lt;b&gt;%s&lt;/b&gt; será llamado &lt;b&gt;%s&lt;/b&gt; en &lt;b&gt;%s&lt;/b&gt; orden.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="318"/>
@@ -1496,7 +1496,7 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="933"/>
         <source> ms</source>
-        <translation>ms</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="932"/>
@@ -1715,7 +1715,7 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="597"/>
         <source> ms</source>
-        <translation>ms</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="590"/>
@@ -1778,7 +1778,7 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="112"/>
         <source> ms</source>
-        <translation>ms</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="111"/>
@@ -2007,7 +2007,7 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="284"/>
         <source>Device nr.</source>
-        <translation>Nº de dispositivo</translation>
+        <translation>Nº de dispositivo.</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="285"/>
@@ -2299,7 +2299,7 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../opensesame_extensions/quick_switcher/quick_switcher.ui" line="17"/>
         <source>Quick open item</source>
-        <translation>Abrir rápido objeto </translation>
+        <translation>Abrir rápido objeto</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/quick_switcher/quick_switcher.ui" line="34"/>
@@ -2679,7 +2679,7 @@ Edite su experimento en forma de script</translation>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/loop_widget.ui" line="215"/>
         <source>each cycle </source>
-        <translation>cada ciclo</translation>
+        <translation>cada ciclo </translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/loop_widget.ui" line="71"/>
@@ -3017,22 +3017,22 @@ Edite su experimento en forma de script</translation>
     <message encoding="UTF-8">
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/misc/main_window.ui" line="358"/>
         <source>Open…</source>
-        <translation>Abrir...</translation>
+        <translation>Abrir…</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/misc/main_window.ui" line="388"/>
         <source>Save as…</source>
-        <translation>Guardar como...</translation>
+        <translation>Guardar como…</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/misc/main_window.ui" line="411"/>
         <source>Run fullscreen…</source>
-        <translation>Correr en pantalla completa...</translation>
+        <translation>Correr en pantalla completa…</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
-        <translation>Correr en ventana...</translation>
+        <translation>Correr en ventana…</translation>
     </message>
     <message encoding="UTF-8">
         <location filename="../ui/misc/main_window.ui" line="278"/>
@@ -3306,7 +3306,7 @@ Edite su experimento en forma de script</translation>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/pool_widget.ui" line="64"/>
         <source>Search filter</source>
-        <translation>Filtrar por...</translation>
+        <translation>Filtrar por</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/pool_widget.ui" line="155"/>
@@ -3429,7 +3429,7 @@ Edite su experimento en forma de script</translation>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/sketchpad.ui" line="213"/>
         <source>Penwidth </source>
-        <translation>Ancho de bolígrafo</translation>
+        <translation>Ancho de bolígrafo </translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/sketchpad.ui" line="254"/>
@@ -3454,7 +3454,7 @@ Edite su experimento en forma de script</translation>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/sketchpad.ui" line="313"/>
         <source>Body width </source>
-        <translation>Ancho del cuerpo</translation>
+        <translation>Ancho del cuerpo </translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/sketchpad.ui" line="366"/>
@@ -3464,7 +3464,7 @@ Edite su experimento en forma de script</translation>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/sketchpad.ui" line="372"/>
         <source>Head width </source>
-        <translation>Ancho de la punta</translation>
+        <translation>Ancho de la punta </translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/sketchpad.ui" line="416"/>
