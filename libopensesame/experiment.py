@@ -105,6 +105,10 @@ class experiment(item.item):
 				type:	[int, float]
 		"""
 
+		# Make sure the logger is started
+		if not oslogger.started:
+			oslogger.start()
+			oslogger.debug('starting logger in experiment init')
 		self.var = var_store(self)
 		self.pool = file_pool_store(self, folder=pool_folder)
 		self._responses = response_store(self)

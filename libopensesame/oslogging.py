@@ -1,4 +1,4 @@
-# coding-utf-8
+# coding=utf-8
 
 """
 This file is part of OpenSesame.
@@ -168,6 +168,11 @@ class OSLogger(object):
     def name(self, name):
 
         self._logger.name = name
+
+    @property
+    def started(self):
+
+        return hasattr(self, u'_logger')
 
 
 # A singleton instance
