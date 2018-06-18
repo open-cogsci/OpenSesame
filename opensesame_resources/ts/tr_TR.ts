@@ -3,17 +3,17 @@
 <context>
     <name>core_backend_settings</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="848"/>
+        <location filename="../../translatables-tmp.py" line="855"/>
         <source>Failed to load backend</source>
         <translation>Sunucu uygulama yükleme hatası</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="849"/>
+        <location filename="../../translatables-tmp.py" line="856"/>
         <source>No settings for %s</source>
         <translation>%s için ayar bulunamadı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="850"/>
+        <location filename="../../translatables-tmp.py" line="857"/>
         <source>Settings for %s:</source>
         <translation></translation>
     </message>
@@ -21,22 +21,22 @@
 <context>
     <name>core_base_runner</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="747"/>
+        <location filename="../../translatables-tmp.py" line="754"/>
         <source>Subject number</source>
         <translation>Katılımcı numarası</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="748"/>
+        <location filename="../../translatables-tmp.py" line="755"/>
         <source>Please enter the subject number</source>
         <translation>Lütfen katılımcı numaranızı giriniz</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="745"/>
+        <location filename="../../translatables-tmp.py" line="752"/>
         <source>Choose location for logfile (press &apos;escape&apos; for default location)</source>
         <translation>Kayıt dosyasının konumu seçiniz (varsayılan konum için &quot;esc&quot;ye basınız)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="746"/>
+        <location filename="../../translatables-tmp.py" line="753"/>
         <source>The logfile &apos;%s&apos; is not writable. Please choose another location for the logfile.</source>
         <translation>Kayıt dosyası &apos;%s&apos; belirtilen konumda oluşturulamadı. Lütfen kayıt dosyası için farklı bir konum seçiniz.</translation>
     </message>
@@ -44,7 +44,7 @@
 <context>
     <name>core_color_edit</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="466"/>
+        <location filename="../../translatables-tmp.py" line="469"/>
         <source>Pick a color</source>
         <translation>Bir renk seçiniz</translation>
     </message>
@@ -60,7 +60,7 @@
 <context>
     <name>core_console</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="896"/>
+        <location filename="../../translatables-tmp.py" line="903"/>
         <source>Error: Command contains invalid characters</source>
         <translation>Hata: Komut geçersiz karakterler içermektedir</translation>
     </message>
@@ -68,7 +68,7 @@
 <context>
     <name>core_general_properties</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="198"/>
+        <location filename="../../translatables-tmp.py" line="201"/>
         <source>Failed to parse the resolution. Expecting positive numeric values.</source>
         <translation>Netlik çözümlenemedi. Pozitif sayısal değerleri kullanınız.</translation>
     </message>
@@ -76,12 +76,12 @@
 <context>
     <name>core_general_script_editor</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="933"/>
+        <location filename="../../translatables-tmp.py" line="940"/>
         <source>Apply?</source>
         <translation>Uygulamak istediğinize emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="934"/>
+        <location filename="../../translatables-tmp.py" line="941"/>
         <source>Are you sure you want to apply the changes to the general script?</source>
         <translation>Değişiklikleri genel komut dizisine uygulamak istediğinize emin misiniz?</translation>
     </message>
@@ -89,7 +89,7 @@
 <context>
     <name>core_header_widget</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="704"/>
+        <location filename="../../translatables-tmp.py" line="711"/>
         <source>Click to edit</source>
         <translation>Düzenlemek için tıklayınız</translation>
     </message>
@@ -97,37 +97,37 @@
 <context>
     <name>core_item_category</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="804"/>
+        <location filename="../../translatables-tmp.py" line="811"/>
         <source>Form</source>
         <translation>Oluştur</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="800"/>
+        <location filename="../../translatables-tmp.py" line="807"/>
         <source>Miscellaneous</source>
         <translation>Diğer</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="802"/>
+        <location filename="../../translatables-tmp.py" line="809"/>
         <source>Staircase</source>
         <translation>Merdiven yöntemi</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="803"/>
+        <location filename="../../translatables-tmp.py" line="810"/>
         <source>Visual stimuli</source>
         <translation>Görsel uyarıcı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="799"/>
+        <location filename="../../translatables-tmp.py" line="806"/>
         <source>Response collection</source>
         <translation>Yanıt toplama</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="798"/>
+        <location filename="../../translatables-tmp.py" line="805"/>
         <source>miscellaneous</source>
         <translation>diğer</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="796"/>
+        <location filename="../../translatables-tmp.py" line="803"/>
         <source>Flow control</source>
         <translation>Akış kontrolü</translation>
     </message>
@@ -135,7 +135,7 @@
 <context>
     <name>core_item_combobox</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="700"/>
+        <location filename="../../translatables-tmp.py" line="707"/>
         <source>No item selected</source>
         <translation>Hiç öge seçilmedi</translation>
     </message>
@@ -143,52 +143,52 @@
 <context>
     <name>core_item_context_menu</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="669"/>
+        <location filename="../../translatables-tmp.py" line="672"/>
         <source>Open</source>
         <translation>Aç</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="670"/>
+        <location filename="../../translatables-tmp.py" line="673"/>
         <source>Rename</source>
         <translation>Yeniden adlandır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="671"/>
+        <location filename="../../translatables-tmp.py" line="674"/>
         <source>Edit run-if statement</source>
         <translation>Run-if komutlarını düzenle</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="672"/>
+        <location filename="../../translatables-tmp.py" line="675"/>
         <source>Copy (unlinked)</source>
         <translation>Kopyala (bağlantısız)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="673"/>
+        <location filename="../../translatables-tmp.py" line="676"/>
         <source>Copy (linked)</source>
         <translation>Kopyala (bağlantılı)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="674"/>
+        <location filename="../../translatables-tmp.py" line="677"/>
         <source>Paste</source>
         <translation>Yapıştır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="675"/>
+        <location filename="../../translatables-tmp.py" line="678"/>
         <source>Delete</source>
         <translation>Sil</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="676"/>
+        <location filename="../../translatables-tmp.py" line="679"/>
         <source>Permanently delete all linked copies</source>
         <translation>Bağlantılı kopyaları kalıcı olarak sil</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="677"/>
+        <location filename="../../translatables-tmp.py" line="680"/>
         <source>Permanently delete</source>
         <translation>Kalıcı olarak sil</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="678"/>
+        <location filename="../../translatables-tmp.py" line="681"/>
         <source>Help</source>
         <translation>Yardım</translation>
     </message>
@@ -196,22 +196,22 @@
 <context>
     <name>core_item_view_button</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="547"/>
+        <location filename="../../translatables-tmp.py" line="550"/>
         <source>View controls</source>
         <translation>Kontrolleri görüntüle</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="548"/>
+        <location filename="../../translatables-tmp.py" line="551"/>
         <source>View script</source>
         <translation>Komutları gör</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="549"/>
+        <location filename="../../translatables-tmp.py" line="552"/>
         <source>Split view</source>
         <translation>Geçerli görünümü ikiye böl</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="550"/>
+        <location filename="../../translatables-tmp.py" line="553"/>
         <source>Select view</source>
         <translation>Geçerli görünümü seç</translation>
     </message>
@@ -219,7 +219,7 @@
 <context>
     <name>core_markdown</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="126"/>
+        <location filename="../../translatables-tmp.py" line="129"/>
         <source>Dismiss this message</source>
         <translation>Bu mesaji gösterme</translation>
     </message>
@@ -227,7 +227,7 @@
 <context>
     <name>core_pool_select</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="696"/>
+        <location filename="../../translatables-tmp.py" line="703"/>
         <source>Browse</source>
         <translation>Gözat</translation>
     </message>
@@ -303,7 +303,7 @@
 <context>
     <name>core_popup_menu</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="540"/>
+        <location filename="../../translatables-tmp.py" line="543"/>
         <source>Cancel</source>
         <translation>Iptal et</translation>
     </message>
@@ -311,27 +311,27 @@
 <context>
     <name>core_qtautoplugin</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="376"/>
+        <location filename="../../translatables-tmp.py" line="379"/>
         <source>You must specify &quot;type&quot; for %s controls in info.yaml</source>
         <translation>%s kontrolleri için info.yaml ın içine &quot;tür&quot;ü belirtmeniz gereklidir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="377"/>
+        <location filename="../../translatables-tmp.py" line="380"/>
         <source>You must specify &quot;%s&quot; for %s controls in info.yaml</source>
         <translation>%s kontrolleri için info.yaml ın içine &quot;%s&quot; ü belirtmeniz gereklidir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="378"/>
+        <location filename="../../translatables-tmp.py" line="381"/>
         <source>Invalid variable name (%s) specified in %s plugin info</source>
         <translation>Geçersiz değişken ismi (%s) %s eklenti bilgisinin içine belirtilmiştir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="379"/>
+        <location filename="../../translatables-tmp.py" line="382"/>
         <source>&quot;%s&quot; is not a valid qtautoplugin control</source>
         <translation>&quot;%s&quot; geçerli bir qtautoplugin kontrolü değildir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="380"/>
+        <location filename="../../translatables-tmp.py" line="383"/>
         <source>Name &quot;%s&quot; is already taken in qtautoplugin control</source>
         <translation>&quot;%s&quot; ismi zaten qtautoplugin kontrolü olarak kullanılmaktadır</translation>
     </message>
@@ -339,27 +339,27 @@
 <context>
     <name>core_qtitem</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="163"/>
+        <location filename="../../translatables-tmp.py" line="166"/>
         <source>Toggle pop-out</source>
         <translation>Açılır pencereyi değiştir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="164"/>
+        <location filename="../../translatables-tmp.py" line="167"/>
         <source>Tell me more about the %s item</source>
         <translation>%s ögesi hakkında bana daha fazla bilgi ver</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="165"/>
+        <location filename="../../translatables-tmp.py" line="168"/>
         <source>Apply and close</source>
         <translation>Uygula ve kapat</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="166"/>
+        <location filename="../../translatables-tmp.py" line="169"/>
         <source>Failed to set control &apos;%s&apos;: %s</source>
         <translation>Kontrol ayarlanamadı &apos;%s&apos;:%s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="162"/>
+        <location filename="../../translatables-tmp.py" line="165"/>
         <source>Default description</source>
         <translation>Varsayılan tanım</translation>
     </message>
@@ -367,12 +367,12 @@
 <context>
     <name>core_qtitem_store</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="263"/>
+        <location filename="../../translatables-tmp.py" line="266"/>
         <source>An item with that name already exists.</source>
         <translation>Bu isimde bir öge zaten mevcut.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="264"/>
+        <location filename="../../translatables-tmp.py" line="267"/>
         <source>An item name cannot be empty.</source>
         <translation>Bir öge ismi boş olamaz.</translation>
     </message>
@@ -380,52 +380,52 @@
 <context>
     <name>core_qtopensesame</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="333"/>
+        <location filename="../../translatables-tmp.py" line="336"/>
         <source>New experiment</source>
         <translation>Yeni deney</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="335"/>
+        <location filename="../../translatables-tmp.py" line="338"/>
         <source>Your experiment contains unsaved changes. Do you want to save your experiment?</source>
         <translation>Deneyiniz kaydedilmemiş değişikler içeriyor. Bu değişiklikleri kaydetmek ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="336"/>
+        <location filename="../../translatables-tmp.py" line="339"/>
         <source>Save changes?</source>
         <translation>Değişiklikleri kaydet?</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="337"/>
+        <location filename="../../translatables-tmp.py" line="340"/>
         <source>(No recent files)</source>
         <translation>(Son kullanılan dosya yok)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="338"/>
+        <location filename="../../translatables-tmp.py" line="341"/>
         <source>Open file</source>
         <translation>Dosya aç</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="341"/>
+        <location filename="../../translatables-tmp.py" line="344"/>
         <source>The following error occured while trying to save:&lt;br/&gt;%s</source>
         <translation>Kaydetmeye çalışırken hata oluştu:&lt;br/&gt;%s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="342"/>
+        <location filename="../../translatables-tmp.py" line="345"/>
         <source>Failed to save file. Error: %s</source>
         <translation>Dosya kaydedilirken hata oluştu. Hata: %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="344"/>
+        <location filename="../../translatables-tmp.py" line="347"/>
         <source>Could not parse script: %s</source>
         <translation>Komut dosyası yürütülemedi: %s</translation>
     </message>
     <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="343"/>
+        <location filename="../../translatables-tmp.py" line="346"/>
         <source>Save as…</source>
         <translation>Farklı kaydet…</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="339"/>
+        <location filename="../../translatables-tmp.py" line="342"/>
         <source>Errors occurred while opening the file:
 
 </source>
@@ -434,12 +434,12 @@
 </translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="340"/>
+        <location filename="../../translatables-tmp.py" line="343"/>
         <source>Error</source>
         <translation>Hata</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="334"/>
+        <location filename="../../translatables-tmp.py" line="337"/>
         <source> [read only]</source>
         <translation> [salt okunur]</translation>
     </message>
@@ -447,32 +447,32 @@
 <context>
     <name>core_tab_widget</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="389"/>
+        <location filename="../../translatables-tmp.py" line="392"/>
         <source>Help</source>
         <translation>Yardım</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="390"/>
+        <location filename="../../translatables-tmp.py" line="393"/>
         <source>Back-end settings</source>
         <translation>Sunucu uygulama ayarları</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="391"/>
+        <location filename="../../translatables-tmp.py" line="394"/>
         <source>General properties</source>
         <translation>Genel özellikler</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="392"/>
+        <location filename="../../translatables-tmp.py" line="395"/>
         <source>General script editor</source>
         <translation>Genel komut düzenleyici</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="393"/>
+        <location filename="../../translatables-tmp.py" line="396"/>
         <source>Unused items</source>
         <translation>Kullanılmayan ögeler</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="394"/>
+        <location filename="../../translatables-tmp.py" line="397"/>
         <source>Preferences</source>
         <translation>Tercihler</translation>
     </message>
@@ -480,27 +480,27 @@
 <context>
     <name>core_template</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="410"/>
+        <location filename="../../translatables-tmp.py" line="413"/>
         <source>Default template</source>
         <translation>Varsayılan şablon</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="411"/>
+        <location filename="../../translatables-tmp.py" line="414"/>
         <source>Extended template</source>
         <translation>Genişletilmiş şablon</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="412"/>
+        <location filename="../../translatables-tmp.py" line="415"/>
         <source>Questionnaire template</source>
         <translation>Anket şablonu</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="413"/>
+        <location filename="../../translatables-tmp.py" line="416"/>
         <source>Android template</source>
         <translation>Android şablonu</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="414"/>
+        <location filename="../../translatables-tmp.py" line="417"/>
         <source>Eye-tracking template</source>
         <translation>Göz izleme şablonu</translation>
     </message>
@@ -508,7 +508,7 @@
 <context>
     <name>core_toolbar_items</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="854"/>
+        <location filename="../../translatables-tmp.py" line="861"/>
         <source>Commonly used</source>
         <translation>Yaygın olarak kullanılan</translation>
     </message>
@@ -516,7 +516,7 @@
 <context>
     <name>core_toolbar_items_item</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="562"/>
+        <location filename="../../translatables-tmp.py" line="565"/>
         <source>Drag this &lt;b&gt;%s&lt;/b&gt; item to the intended location in the overview area or into the item list of a sequence tab</source>
         <translation>&lt;b&gt;%s&lt;/b&gt; ögesini genel bakış bölümünde istenilen konuma ya da dizi sekmesinin içerisindeki öge listesine sürükle</translation>
     </message>
@@ -524,12 +524,12 @@
 <context>
     <name>core_tree_append_menu</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="153"/>
+        <location filename="../../translatables-tmp.py" line="156"/>
         <source>Append new item</source>
         <translation>Sonuna yeni öge ekle</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="154"/>
+        <location filename="../../translatables-tmp.py" line="157"/>
         <source>Append existing item (linked)</source>
         <translation>Sonuna mevcut öge ekle (bağlantılı)</translation>
     </message>
@@ -537,7 +537,7 @@
 <context>
     <name>core_tree_general_item</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="450"/>
+        <location filename="../../translatables-tmp.py" line="453"/>
         <source>General options</source>
         <translation>Genel seçenekler</translation>
     </message>
@@ -545,34 +545,34 @@
 <context>
     <name>core_tree_item_item</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="605"/>
+        <location filename="../../translatables-tmp.py" line="608"/>
         <source>Type: %s
 Description: %s</source>
         <translation>Tür: %s
 Tanım: %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="606"/>
+        <location filename="../../translatables-tmp.py" line="609"/>
         <source>Set as item to run for %s</source>
         <translation>%s&apos;u bir öge olarak çalıştır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="607"/>
+        <location filename="../../translatables-tmp.py" line="610"/>
         <source>Insert into %s</source>
         <translation>%s&apos;in içine yerleştir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="608"/>
+        <location filename="../../translatables-tmp.py" line="611"/>
         <source>Drop below %s</source>
         <translation>%s &apos;nin aşağısına bırak</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="609"/>
+        <location filename="../../translatables-tmp.py" line="612"/>
         <source>Permanently delete item</source>
         <translation>Ögeyi kalıcı olarak sil</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="610"/>
+        <location filename="../../translatables-tmp.py" line="613"/>
         <source>Are you sure you want to permanently delete &lt;b&gt;%s&lt;/b&gt;? All linked copies of &lt;b&gt;%s&lt;/b&gt; will be deleted. You will not be able to undo this.</source>
         <translation>&lt;b&gt;%s&lt;/b&gt; ögesini kalıcı olarak silmek istediğinize emin misiniz? &lt;b&gt;%s&lt;/b&gt; ögesine bağlı bütün kopyalar silinecektir. Bu işlemi geri alamazsınız.</translation>
     </message>
@@ -580,40 +580,48 @@ Tanım: %s</translation>
 <context>
     <name>core_tree_overview</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="254"/>
+        <location filename="../../translatables-tmp.py" line="257"/>
         <source>Item name</source>
         <translation>Öge ismi</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="255"/>
+        <location filename="../../translatables-tmp.py" line="258"/>
         <source>Run if</source>
         <translation>yürüt eğer</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="256"/>
+        <location filename="../../translatables-tmp.py" line="259"/>
         <source>Unknown item type: %s</source>
         <translation>Bilinmeyen öge türü: %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="257"/>
+        <location filename="../../translatables-tmp.py" line="260"/>
         <source>Insert into %s</source>
         <translation>%s nin içine yerleştir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="258"/>
+        <location filename="../../translatables-tmp.py" line="261"/>
         <source>Insert after %s</source>
         <translation>%s&apos;den sonra yerleştir</translation>
     </message>
 </context>
 <context>
+    <name>core_tree_recursion_error_item</name>
+    <message>
+        <location filename="../../translatables-tmp.py" line="101"/>
+        <source>Recursion detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>core_tree_unused_items_item</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="891"/>
+        <location filename="../../translatables-tmp.py" line="898"/>
         <source>Unused items</source>
         <translation>Kullanılmayan ögeler</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="892"/>
+        <location filename="../../translatables-tmp.py" line="899"/>
         <source>Move to unused items</source>
         <translation>Kullanılmayan ögelere taşı</translation>
     </message>
@@ -621,22 +629,22 @@ Tanım: %s</translation>
 <context>
     <name>core_unused_widget</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="191"/>
+        <location filename="../../translatables-tmp.py" line="194"/>
         <source>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Unused&lt;/font&gt;&lt;/b&gt;</source>
         <translation>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Kullanılmayan&lt;/font&gt;&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="192"/>
+        <location filename="../../translatables-tmp.py" line="195"/>
         <source>Permanently delete unused items</source>
         <translation>Kullanılmayan ögeleri kalıcı olarak sil</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="193"/>
+        <location filename="../../translatables-tmp.py" line="196"/>
         <source>Permanently delete items?</source>
         <translation>Ögeleri kalıcı olarak silmek istediğinize emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="194"/>
+        <location filename="../../translatables-tmp.py" line="197"/>
         <source>Are you sure you want to permanently delete all unused items? This action cannot be undone.</source>
         <translation>Kullanılmayan ögelerin tamamını kalıcı olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz.</translation>
     </message>
@@ -677,17 +685,17 @@ Tanım: %s</translation>
 <context>
     <name>extension_after_experiment</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="228"/>
+        <location filename="../../translatables-tmp.py" line="231"/>
         <source>Finished</source>
         <translation>Bitti</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="229"/>
+        <location filename="../../translatables-tmp.py" line="232"/>
         <source>Aborted</source>
         <translation>İşlem durduruldu</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="230"/>
+        <location filename="../../translatables-tmp.py" line="233"/>
         <source># Aborted
 
 - </source>
@@ -696,17 +704,17 @@ Tanım: %s</translation>
 - </translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="231"/>
+        <location filename="../../translatables-tmp.py" line="234"/>
         <source>Stopped</source>
         <translation>İşlem durdu</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="226"/>
+        <location filename="../../translatables-tmp.py" line="229"/>
         <source>Handles the end of an experimental run</source>
         <translation>Bir deneyin sonunu idare eder</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="232"/>
+        <location filename="../../translatables-tmp.py" line="235"/>
         <source># Stopped
 
 The experiment did not finish normally for the following reason:
@@ -719,7 +727,7 @@ Deney takip eden hatadan dolayı bitmedi:
 - </translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="227"/>
+        <location filename="../../translatables-tmp.py" line="230"/>
         <source>The following extra data files where created:</source>
         <translation>Takip edem ekstra veri dosyları kaydedildi:</translation>
     </message>
@@ -727,17 +735,17 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_analytics</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="882"/>
+        <location filename="../../translatables-tmp.py" line="889"/>
         <source>Sends a ping to Google Analytics when OpenSesame is started</source>
         <translation>OpenSesame açıldığında Google Analytics&apos;e bildirim gönderir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="883"/>
+        <location filename="../../translatables-tmp.py" line="890"/>
         <source>Anonymous usage data is collected. You can disable this by disabling the &lt;i&gt;analytics&lt;/i&gt; extension.</source>
         <translation>OpenSesame kullanım verileriniz anonim olarak toplandı. Bu özelliği &lt;i&gt;analytics&lt;/i&gt; eklentisini devre dışı bırakarak kaldırabilirsiniz.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="884"/>
+        <location filename="../../translatables-tmp.py" line="891"/>
         <source>Got it!</source>
         <translation>Anladım!</translation>
     </message>
@@ -758,45 +766,58 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_bug_report</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="213"/>
+        <location filename="../../translatables-tmp.py" line="216"/>
         <source>Bug report not sent</source>
         <translation>Gönderilmemiş bug raporu</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="212"/>
+        <location filename="../../translatables-tmp.py" line="215"/>
         <source>Bug report sent</source>
         <translation>Gönderilmiş bug raporu</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="214"/>
+        <location filename="../../translatables-tmp.py" line="217"/>
         <source>Oops ...</source>
         <translation>Haydaaaa ...</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="215"/>
+        <location filename="../../translatables-tmp.py" line="218"/>
         <source>Bug report</source>
         <translation>Bug raporu</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="216"/>
+        <location filename="../../translatables-tmp.py" line="219"/>
         <source>Sends a bug report when an exception occurs</source>
         <translation>İstisnai bir durum olduğunda bug raporu gönder</translation>
     </message>
 </context>
 <context>
+    <name>extension_check_file_pool</name>
+    <message>
+        <location filename="../../translatables-tmp.py" line="684"/>
+        <source>Checks whether file-pool folder still exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../translatables-tmp.py" line="685"/>
+        <source>File pool missing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>extension_example</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="874"/>
+        <location filename="../../translatables-tmp.py" line="881"/>
         <source>Example extension</source>
         <translation>Örnek eklenti</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="875"/>
+        <location filename="../../translatables-tmp.py" line="882"/>
         <source>An example extenstion</source>
         <translation>Bir örnek eklenti</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="876"/>
+        <location filename="../../translatables-tmp.py" line="883"/>
         <source>Some tooltip</source>
         <translation>Birkaç ipucu</translation>
     </message>
@@ -804,12 +825,12 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_example_experiments</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="710"/>
+        <location filename="../../translatables-tmp.py" line="717"/>
         <source>Example experiments</source>
         <translation>Örnek deneyler</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="712"/>
+        <location filename="../../translatables-tmp.py" line="719"/>
         <source>Shows a list of example experiments</source>
         <translation>Bütün örnek deneyleri listele</translation>
     </message>
@@ -817,27 +838,27 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_get_started</name>
     <message encoding="UTF-8">
-        <location filename="../../translatables-tmp.py" line="756"/>
+        <location filename="../../translatables-tmp.py" line="763"/>
         <source>New…</source>
         <translation>Yeni…</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="757"/>
+        <location filename="../../translatables-tmp.py" line="764"/>
         <source>A starting point</source>
         <translation>Bir başlangıç noktası</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="758"/>
+        <location filename="../../translatables-tmp.py" line="765"/>
         <source>Start a new experiment</source>
         <translation>Yeni bir deney başlat</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="759"/>
+        <location filename="../../translatables-tmp.py" line="766"/>
         <source>Continue with a recent experiment:</source>
         <translation>Son deney ile devam et:</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="760"/>
+        <location filename="../../translatables-tmp.py" line="767"/>
         <source>Get started!</source>
         <translation>Başla!</translation>
     </message>
@@ -878,12 +899,12 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_notifications</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="237"/>
+        <location filename="../../translatables-tmp.py" line="240"/>
         <source>Notifications</source>
         <translation>Bldirimler</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="238"/>
+        <location filename="../../translatables-tmp.py" line="241"/>
         <source>Pretty notifications for OpenSesame</source>
         <translation>OpenSesame için güzel bildirimler</translation>
     </message>
@@ -904,17 +925,17 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_plugin_manager</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="860"/>
+        <location filename="../../translatables-tmp.py" line="867"/>
         <source>Plug-in and extension manager</source>
         <translation>Eklenti ve uzantı yöneticisi</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="861"/>
+        <location filename="../../translatables-tmp.py" line="868"/>
         <source>Enable or disable plug-ins and extensions.</source>
         <translation>Eklenti ya da uzantlarıı etkinleştir ya da devre dışı bırak.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="862"/>
+        <location filename="../../translatables-tmp.py" line="869"/>
         <source>Manage plug-ins and extensions</source>
         <translation>Eklenti ya da uzantıları yönet</translation>
     </message>
@@ -924,52 +945,52 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Form</translation>
     </message>
     <message>
-        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="67"/>
+        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="85"/>
         <source>Author(s):</source>
         <translation>Yazar(lar):</translation>
     </message>
     <message>
-        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="74"/>
+        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="92"/>
         <source>No author specified</source>
         <translation>Yazar belirtilmedi</translation>
     </message>
     <message>
-        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="81"/>
+        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="99"/>
         <source>Version:</source>
         <translation>Versiyon:</translation>
     </message>
     <message>
-        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="88"/>
+        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="106"/>
         <source>No version specified</source>
         <translation>Versiyon belirtilmedi</translation>
     </message>
     <message>
-        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="102"/>
+        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="120"/>
         <source>Extension manager</source>
         <translation>Uzantı yöneticisi</translation>
     </message>
     <message>
-        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="114"/>
+        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="132"/>
         <source>No description specified</source>
         <translation>Tanım belirtilmedi</translation>
     </message>
     <message>
-        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="121"/>
+        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="139"/>
         <source>No link specified</source>
         <translation>Bağlantı belirtilmedi</translation>
     </message>
     <message>
-        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="128"/>
+        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="146"/>
         <source>Link</source>
         <translation>Bağlantı</translation>
     </message>
     <message>
-        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="135"/>
+        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="153"/>
         <source>/path/to/extension</source>
         <translation>/path/to/extension</translation>
     </message>
     <message>
-        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="142"/>
+        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="160"/>
         <source>Folder:</source>
         <translation>Klasör:</translation>
     </message>
@@ -978,21 +999,31 @@ Deney takip eden hatadan dolayı bitmedi:
         <source>Changes take effect after restart</source>
         <translation>Değişiklikler yeniden başlatıldıktan sonra devreye girecek</translation>
     </message>
+    <message>
+        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="167"/>
+        <source>Startup time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="174"/>
+        <source>Not started</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>extension_psychopy_monitor_center</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="516"/>
+        <location filename="../../translatables-tmp.py" line="519"/>
         <source>PsychoPy monitor center</source>
         <translation>PsychoPy görüntüleme merkezi</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="517"/>
+        <location filename="../../translatables-tmp.py" line="520"/>
         <source>Launches the PsychoPy monitor center</source>
         <translation>PsychoPy görüntüleme merkezini çalıştırır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="518"/>
+        <location filename="../../translatables-tmp.py" line="521"/>
         <source>Launch the PsychoPy monitor center</source>
         <translation>PsychoPy görüntüleme merkezini çalıştır</translation>
     </message>
@@ -1000,12 +1031,12 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_qprogedit_preferences</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="181"/>
+        <location filename="../../translatables-tmp.py" line="184"/>
         <source>Editor preferences (QProgEdit)</source>
         <translation>Editör seçenekleri(QProgEdit)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="182"/>
+        <location filename="../../translatables-tmp.py" line="185"/>
         <source>QProgEdit preferences</source>
         <translation>QProgEdit seçenekleri</translation>
     </message>
@@ -1026,7 +1057,7 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_system_check</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="202"/>
+        <location filename="../../translatables-tmp.py" line="205"/>
         <source>Checks the system and provides warnings if necessary</source>
         <translation>Sistemi kontrol eder ve gerekli olduğunda uyarı gönderir</translation>
     </message>
@@ -1034,12 +1065,12 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_system_information</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="272"/>
+        <location filename="../../translatables-tmp.py" line="275"/>
         <source>System information</source>
         <translation>Sistem bilgisi</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="271"/>
+        <location filename="../../translatables-tmp.py" line="274"/>
         <source>Provides system information and module versions</source>
         <translation>Sistem bilgisini ve modül versiton bilgisini sağlar</translation>
     </message>
@@ -1047,17 +1078,17 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_tab_to_dockwidget</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="244"/>
+        <location filename="../../translatables-tmp.py" line="247"/>
         <source>Tab to dockwidget</source>
         <translation>Dockwidget sekmesi</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="245"/>
+        <location filename="../../translatables-tmp.py" line="248"/>
         <source>Turns a tab into a dockwidget</source>
         <translation>Bir sekmeyi dockwidgeta dönüştürür</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="246"/>
+        <location filename="../../translatables-tmp.py" line="249"/>
         <source>Turn tab into dockwidget</source>
         <translation>Bir sekmeyi dockwidgeta dönüştür</translation>
     </message>
@@ -1065,22 +1096,22 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_toolbar_menu</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="173"/>
+        <location filename="../../translatables-tmp.py" line="176"/>
         <source>Menu</source>
         <translation>Menü</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="174"/>
+        <location filename="../../translatables-tmp.py" line="177"/>
         <source>Integrate menu and toolbar</source>
         <translation>Menü ve araç çubuğunu birleştir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="175"/>
+        <location filename="../../translatables-tmp.py" line="178"/>
         <source>Integrates the menu into the toolbar.</source>
         <translation>.Menüyü araç çubuğunun içerisine birleştirir.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="176"/>
+        <location filename="../../translatables-tmp.py" line="179"/>
         <source>Integrates the menu into the toolbar</source>
         <translation>Menüyü araç çubuğunun içerisine birleştirir</translation>
     </message>
@@ -1088,27 +1119,27 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_undo_manager</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="355"/>
+        <location filename="../../translatables-tmp.py" line="358"/>
         <source>Undo</source>
         <translation>Geri al</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="356"/>
+        <location filename="../../translatables-tmp.py" line="359"/>
         <source>Undo most recent action</source>
         <translation>En son yapılan eylemi geri al</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="352"/>
+        <location filename="../../translatables-tmp.py" line="355"/>
         <source>Redo</source>
         <translation>İşlemi yinele</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="353"/>
+        <location filename="../../translatables-tmp.py" line="356"/>
         <source>Implements undo/ redo</source>
         <translation>Geri al/yineleyi uygular</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="354"/>
+        <location filename="../../translatables-tmp.py" line="357"/>
         <source>Redo most recently undone action</source>
         <translation>En son yapılan geri al eylemini yinele</translation>
     </message>
@@ -1116,17 +1147,17 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_update_checker</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="557"/>
+        <location filename="../../translatables-tmp.py" line="560"/>
         <source>Check for updates</source>
         <translation>Güncellemeleri denetle</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="558"/>
+        <location filename="../../translatables-tmp.py" line="561"/>
         <source>Checks whether a new version of OpenSesame is available.</source>
         <translation>OpenSesame&apos;nin yeni bir sürümü olup olmadığını denetler.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="556"/>
+        <location filename="../../translatables-tmp.py" line="559"/>
         <source>Up to date!</source>
         <translation>Uygulama güncel!</translation>
     </message>
@@ -1134,22 +1165,22 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_variable_inspector</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="118"/>
+        <location filename="../../translatables-tmp.py" line="121"/>
         <source>Variable inspector</source>
         <translation>Değişken denetleyicisi</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="122"/>
+        <location filename="../../translatables-tmp.py" line="125"/>
         <source>Experiment status: &lt;b&gt;%s&lt;/b&gt;</source>
         <translation>Deney durumu: &lt;b&gt;%s&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="121"/>
+        <location filename="../../translatables-tmp.py" line="124"/>
         <source>Show variable inspector</source>
         <translation>Değişken denetleyicisini göster</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="120"/>
+        <location filename="../../translatables-tmp.py" line="123"/>
         <source>Graphical variable inspector</source>
         <translation>Çizgesel değişken denetleyicisi</translation>
     </message>
@@ -1157,12 +1188,12 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_experiment</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="867"/>
+        <location filename="../../translatables-tmp.py" line="874"/>
         <source>New experiment</source>
         <translation>Yeni deney</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="868"/>
+        <location filename="../../translatables-tmp.py" line="875"/>
         <source>Default description</source>
         <translation>Varsayılan tanımlama</translation>
     </message>
@@ -1170,7 +1201,7 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_feeback</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="692"/>
+        <location filename="../../translatables-tmp.py" line="699"/>
         <source>Provides feedback to the participant</source>
         <translation>Katılımcıya geribildirim sağlar</translation>
     </message>
@@ -1191,22 +1222,22 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_keyboard_response</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="434"/>
+        <location filename="../../translatables-tmp.py" line="437"/>
         <source>Collects keyboard responses</source>
         <translation>Klavye yanıtlarını toplar</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="435"/>
+        <location filename="../../translatables-tmp.py" line="438"/>
         <source>Correct response</source>
         <translation>Doğru yanıt</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="437"/>
+        <location filename="../../translatables-tmp.py" line="440"/>
         <source>Allowed responses</source>
         <translation>İzin verilen değerler</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="439"/>
+        <location filename="../../translatables-tmp.py" line="442"/>
         <source>Timeout</source>
         <translation>Süre aşımı</translation>
     </message>
@@ -1216,42 +1247,42 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation type="obsolete">Beklemede olan basılmış tuşları iptal et</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="443"/>
+        <location filename="../../translatables-tmp.py" line="446"/>
         <source>List available keys</source>
         <translation>Uygun tuşları listele</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="436"/>
+        <location filename="../../translatables-tmp.py" line="439"/>
         <source>Leave empty to use &quot;correct_response&quot;</source>
         <translation>&quot;correct_response&quot;u kullanmak için boş bırak</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="438"/>
+        <location filename="../../translatables-tmp.py" line="441"/>
         <source>Separated by semicolons, e.g. &quot;z;/&quot;</source>
         <translation>Noktalı virgül ile ayrılır, örneğin &quot;z;/&quot;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="440"/>
+        <location filename="../../translatables-tmp.py" line="443"/>
         <source>In milliseconds or &quot;infinite&quot;</source>
         <translation>Milisaniye olarak ya da &quot;infinite&quot; (sonsuz)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="446"/>
+        <location filename="../../translatables-tmp.py" line="449"/>
         <source>Key names</source>
         <translation>Tuş isimleri</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="445"/>
+        <location filename="../../translatables-tmp.py" line="448"/>
         <source>The following key names are valid:</source>
         <translation>Geçerli tuş isimleri:</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="441"/>
+        <location filename="../../translatables-tmp.py" line="444"/>
         <source>Event type</source>
         <translation>Olay türü</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="442"/>
+        <location filename="../../translatables-tmp.py" line="445"/>
         <source>Flush pending key events</source>
         <translation>Beklemede olan tuş olaylarını iptal et</translation>
     </message>
@@ -1259,27 +1290,27 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_logger</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="735"/>
+        <location filename="../../translatables-tmp.py" line="742"/>
         <source>You have multiple unlinked loggers. This can lead to messy log files.</source>
         <translation>Birden fazla ilişkilendirilmemiş kaydediciniz var. Bu durum karışık kayıt dosyalarına neden olabilir.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="736"/>
+        <location filename="../../translatables-tmp.py" line="743"/>
         <source>Add custom variable</source>
         <translation>Özel değişken ekle</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="737"/>
+        <location filename="../../translatables-tmp.py" line="744"/>
         <source>Which variable do you wish to log?</source>
         <translation>Hangi değişkenleri kaydetmek istersiniz?</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="738"/>
+        <location filename="../../translatables-tmp.py" line="745"/>
         <source>custom</source>
         <translation>özel</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="734"/>
+        <location filename="../../translatables-tmp.py" line="741"/>
         <source>Logs experimental data</source>
         <translation>Deneysel veriyi kaydeder</translation>
     </message>
@@ -1287,77 +1318,77 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_loop</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="303"/>
+        <location filename="../../translatables-tmp.py" line="306"/>
         <source>Repeatedly runs another item</source>
         <translation>Başka bir ögeyi tekrarlanan bir şekilde çalıştırır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="304"/>
+        <location filename="../../translatables-tmp.py" line="307"/>
         <source># Preview of loop table</source>
         <translation># Döngü tablosunu önizleme</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="305"/>
+        <location filename="../../translatables-tmp.py" line="308"/>
         <source>Failed to generate preview.</source>
         <translation>Önizleme hazırlanamadı.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="306"/>
+        <location filename="../../translatables-tmp.py" line="309"/>
         <source>one row occurs</source>
         <translation>bır satır oldu</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="307"/>
+        <location filename="../../translatables-tmp.py" line="310"/>
         <source>two rows occur</source>
         <translation>iki satır oldu</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="308"/>
+        <location filename="../../translatables-tmp.py" line="311"/>
         <source>never</source>
         <translation>hiçbir zaman</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="309"/>
+        <location filename="../../translatables-tmp.py" line="312"/>
         <source>once</source>
         <translation>yalnızca biir kere</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="310"/>
+        <location filename="../../translatables-tmp.py" line="313"/>
         <source>twice</source>
         <translation>iki kere</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="311"/>
+        <location filename="../../translatables-tmp.py" line="314"/>
         <source>Warning: No item to run has been specified</source>
         <translation>Uyarı: çalıştırılmayacak ögeler belirlendi</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="312"/>
+        <location filename="../../translatables-tmp.py" line="315"/>
         <source>Note: Order or repeat is unknown or variably defined</source>
         <translation>Not: Sıra ya da tekrar bilinmiyor ya da değişken bir biçimde tanımlanmış</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="313"/>
+        <location filename="../../translatables-tmp.py" line="316"/>
         <source>Note: Loop data will be read from file</source>
         <translation>Not: Döngü verileri dosyadan okunacak</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="314"/>
+        <location filename="../../translatables-tmp.py" line="317"/>
         <source>Summary: &lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; order.</source>
         <translation>Summary: &lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; order.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="315"/>
+        <location filename="../../translatables-tmp.py" line="318"/>
         <source>The number of rows is %s.</source>
         <translation>Satır sayısı %s&apos;dır.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="317"/>
+        <location filename="../../translatables-tmp.py" line="320"/>
         <source>All rows occur %s.</source>
         <translation>Bütün satırlar %s gerçekleşti.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="318"/>
+        <location filename="../../translatables-tmp.py" line="321"/>
         <source>This means that %s %s and %s %s.</source>
         <translation>Bu %s %s ve %s %s anlamına gelir.</translation>
     </message>
@@ -1365,62 +1396,62 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_mouse_response</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="645"/>
+        <location filename="../../translatables-tmp.py" line="648"/>
         <source>Collects mouse responses</source>
         <translation>Fare yanıtlarını toplar</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="646"/>
+        <location filename="../../translatables-tmp.py" line="649"/>
         <source>Correct response</source>
         <translation>Doğru yanıt</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="648"/>
+        <location filename="../../translatables-tmp.py" line="651"/>
         <source>Allowed responses</source>
         <translation>İzin verilen yanıtlar</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="650"/>
+        <location filename="../../translatables-tmp.py" line="653"/>
         <source>Timeout</source>
         <translation>Süre aşımı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="655"/>
+        <location filename="../../translatables-tmp.py" line="658"/>
         <source>Visible mouse cursor</source>
         <translation>Görünür fare imleci</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="656"/>
+        <location filename="../../translatables-tmp.py" line="659"/>
         <source>Flush pending mouse clicks</source>
         <translation>Beklemede olan fare tıklarını iptal et</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="647"/>
+        <location filename="../../translatables-tmp.py" line="650"/>
         <source>Leave empty to use &quot;correct_response&quot;</source>
         <translation>&quot;correct_response&quot;u kullanmak için boş bırak</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="649"/>
+        <location filename="../../translatables-tmp.py" line="652"/>
         <source>Separated by semicolons, e.g. &quot;left_button;right_button&quot;</source>
         <translation>Noktalı virgül ile ayrılır, örneğin &quot;sol_tuşu;sağ_tuşu&quot;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="651"/>
+        <location filename="../../translatables-tmp.py" line="654"/>
         <source>In milliseconds or &quot;infinite&quot;</source>
         <translation>Milisaniye olarak ya da &quot;infinite&quot; (sonsuz)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="652"/>
+        <location filename="../../translatables-tmp.py" line="655"/>
         <source>Linked sketchpad</source>
         <translation>Bağlantılı sketchpad</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="653"/>
+        <location filename="../../translatables-tmp.py" line="656"/>
         <source>Elements define regions of interest</source>
         <translation>İlgilenilen alanları tanımlayan elementler</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="654"/>
+        <location filename="../../translatables-tmp.py" line="657"/>
         <source>Event type</source>
         <translation type="unfinished">Olay türü</translation>
     </message>
@@ -1428,67 +1459,67 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_sampler</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="914"/>
+        <location filename="../../translatables-tmp.py" line="921"/>
         <source>Plays a sound file in .wav or .ogg format</source>
         <translation>.wav ya da .ogg formatında ses dosyası oynatır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="915"/>
+        <location filename="../../translatables-tmp.py" line="922"/>
         <source>Sound file</source>
         <translation>Ses dosyası</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="917"/>
+        <location filename="../../translatables-tmp.py" line="924"/>
         <source>Volume</source>
         <translation>Ses</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="922"/>
+        <location filename="../../translatables-tmp.py" line="929"/>
         <source> x original</source>
         <translation> x orjinal</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="919"/>
+        <location filename="../../translatables-tmp.py" line="926"/>
         <source>Panning</source>
         <translation>Gezdirme</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="921"/>
+        <location filename="../../translatables-tmp.py" line="928"/>
         <source>Pitch</source>
         <translation>Ses perdesi (akord)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="923"/>
+        <location filename="../../translatables-tmp.py" line="930"/>
         <source>Stop after</source>
         <translation>Bitince dur</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="926"/>
+        <location filename="../../translatables-tmp.py" line="933"/>
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="925"/>
+        <location filename="../../translatables-tmp.py" line="932"/>
         <source>Fade in</source>
         <translation>Güçlenme (ses)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="927"/>
+        <location filename="../../translatables-tmp.py" line="934"/>
         <source>Duration</source>
         <translation>Süre</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="916"/>
+        <location filename="../../translatables-tmp.py" line="923"/>
         <source>In .ogg or .wav format</source>
         <translation>.wav ya da .ogg formatında</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="920"/>
+        <location filename="../../translatables-tmp.py" line="927"/>
         <source>Positive values toward the right; &quot;left&quot; or &quot;right&quot; for full panning</source>
         <translation>Pozitif değerler sağa doğru; tam bir gezdirme için ise &quot;sol&quot; ya da &quot;sağ&quot;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="928"/>
+        <location filename="../../translatables-tmp.py" line="935"/>
         <source>In milliseconds, &quot;sound&quot;, &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
         <translation>Milisaniye olarak &quot;sound&quot;(ses), &quot;keypress&quot; (tuşa basılması), ya da &quot;mouseclic&quot;(fare tıklaması)</translation>
     </message>
@@ -1496,22 +1527,22 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_sequence</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="462"/>
+        <location filename="../../translatables-tmp.py" line="465"/>
         <source>Sequence contains non-existing item: %s</source>
         <translation>Dizge olmayan ögeleri içermektedir: %s</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="458"/>
+        <location filename="../../translatables-tmp.py" line="461"/>
         <source>Runs a number of items in sequence</source>
         <translation>Dizgedeki ögeleri belirtilen sayı kadar çalıştırır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="460"/>
+        <location filename="../../translatables-tmp.py" line="463"/>
         <source>Flush pending key presses at sequence start</source>
         <translation>Dizge başladığında beklemede olan basılı tuşları iptal et</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="461"/>
+        <location filename="../../translatables-tmp.py" line="464"/>
         <source>&lt;b&gt;Important&lt;/b&gt;: A sequence has &lt;a href=&quot;http://osdoc.cogsci.nl/usage/prepare-run&quot;&gt;a variable preparation time&lt;/a&gt;.</source>
         <translation>&lt;b&gt;Önemli&lt;/b&gt;: Dizgede değişken hazırlama süresini içerir &lt;a href=&quot;http://osdoc.cogsci.nl/usage/prepare-run&quot;&gt;&lt;/a&gt;.</translation>
     </message>
@@ -1519,52 +1550,52 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_sketchpad</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="965"/>
+        <location filename="../../translatables-tmp.py" line="972"/>
         <source>Image name &quot;%s&quot; is unknown or variably defined, using fallback image</source>
         <translation>&quot;%s&quot; resim ismi bilinmiyor ya da değişken bir biçimde tanımlanmış,yedek resim kullanılıyor</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="966"/>
+        <location filename="../../translatables-tmp.py" line="973"/>
         <source>Penwidth &quot;%s&quot; is unknown or variably defined, using 1</source>
         <translation>Kalem kalınlığı &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,kalem kalınlığı 1 olarak kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="967"/>
+        <location filename="../../translatables-tmp.py" line="974"/>
         <source>Scale &quot;%s&quot; is unknown or variably defined, using 1</source>
         <translation>Ölçeklendirme &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,ölçeklendirme 1 olarak kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="969"/>
+        <location filename="../../translatables-tmp.py" line="976"/>
         <source>Color &quot;%s&quot; is unknown or variably defined, using placeholder color</source>
         <translation>Renk &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,varsayılan renk kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="971"/>
+        <location filename="../../translatables-tmp.py" line="978"/>
         <source>X coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
         <translation>X koordinatı &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, koordinat merkez olarak kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="972"/>
+        <location filename="../../translatables-tmp.py" line="979"/>
         <source>Y coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
         <translation>Y koordinatı &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, koordinat merkez olarak kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="973"/>
+        <location filename="../../translatables-tmp.py" line="980"/>
         <source>Radius &quot;%s&quot; is unknown or variably defined, using 50</source>
         <translation>Yarıçap &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, yarıçap 50 olarak belirlenmiştir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="974"/>
+        <location filename="../../translatables-tmp.py" line="981"/>
         <source>Proportion &quot;%s&quot; is unknown or variably defined, using .5</source>
         <translation>Oran &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,oran 5 olarak kullanılmıştır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="975"/>
+        <location filename="../../translatables-tmp.py" line="982"/>
         <source>Width &quot;%s&quot; is unknown or variably defined, using 100</source>
         <translation>Genişlik &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, genişlik 100 olarak kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="976"/>
+        <location filename="../../translatables-tmp.py" line="983"/>
         <source>Height &quot;%s&quot; is unknown or variably defined, using 100</source>
         <translation>Yükseklik &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,yükseklik 100 olarak kullanılacaktır</translation>
     </message>
@@ -1574,92 +1605,92 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation type="obsolete">Ölçek &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,ölçek 1.0 olarak kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="977"/>
+        <location filename="../../translatables-tmp.py" line="984"/>
         <source>Font size &quot;%s&quot; is invalid or variably defined, using 18</source>
         <translation>Yazı boyutu &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,18 punto kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="978"/>
+        <location filename="../../translatables-tmp.py" line="985"/>
         <source>Some properties of a Gabor patch are unknown or variably defined, using fallback image</source>
         <translation>Gabor parçasının bazı özellikleri bilinmiyor ya da değişken bir biçimde tanımlanmış, son çare resmi kullanılıyor</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="979"/>
+        <location filename="../../translatables-tmp.py" line="986"/>
         <source>Some properties of a noise patch are unknown or variably defined, using fallback image</source>
         <translation>Gürültü parçasının (noise patch) bazı özellikleri bilinmiyor ya da değişken bir biçimde tanımlanmış, son çare resmi kullanılıyor</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="980"/>
+        <location filename="../../translatables-tmp.py" line="987"/>
         <source>Fixdot style &quot;%s&quot; is unknown or variably defined</source>
         <translation>Odaklanma noktası (fıxdot) stili &quot;%s&quot; bilinmiyor ya da değişken bir şekilde tanımlanmış</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="982"/>
+        <location filename="../../translatables-tmp.py" line="989"/>
         <source>Edit text</source>
         <translation>Metni düzenle</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="983"/>
+        <location filename="../../translatables-tmp.py" line="990"/>
         <source>Please enter a text for the textline</source>
         <translation>Lütfen metin satırına bir metin giriniz</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="984"/>
+        <location filename="../../translatables-tmp.py" line="991"/>
         <source>New textline</source>
         <translation>Yeni metin satırı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="986"/>
+        <location filename="../../translatables-tmp.py" line="993"/>
         <source>Element script</source>
         <translation>Element komut dizisi</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="987"/>
+        <location filename="../../translatables-tmp.py" line="994"/>
         <source>Edit script</source>
         <translation>Komut dizisini düzenle</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="988"/>
+        <location filename="../../translatables-tmp.py" line="995"/>
         <source>Raise to front</source>
         <translation>Ön tarafı yükselt</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="989"/>
+        <location filename="../../translatables-tmp.py" line="996"/>
         <source>Lower to bottom</source>
         <translation>Altı aşağı indir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="991"/>
+        <location filename="../../translatables-tmp.py" line="998"/>
         <source>Delete</source>
         <translation>Sil</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="981"/>
+        <location filename="../../translatables-tmp.py" line="988"/>
         <source>Displays stimuli</source>
         <translation>Uyarıcıyı görüntüle</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="992"/>
+        <location filename="../../translatables-tmp.py" line="999"/>
         <source>Draw %s element</source>
         <translation>%s elementini çiz</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="985"/>
+        <location filename="../../translatables-tmp.py" line="992"/>
         <source>Enter text</source>
         <translation>Metin gir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="970"/>
+        <location filename="../../translatables-tmp.py" line="977"/>
         <source>Fill &quot;%s&quot; is unknown or variably defined, assuming filled</source>
         <translation>Doldurma rengi &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, doldurulmuş farzedilecek</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="968"/>
+        <location filename="../../translatables-tmp.py" line="975"/>
         <source>Rotation &quot;%s&quot; is unknown or variably defined, using 0</source>
         <translation>Dönüştürme değeri &quot;%s&quot; bilinmiyor ya da da 0 olarak değişken bir biçimde tanımlanmış</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="990"/>
+        <location filename="../../translatables-tmp.py" line="997"/>
         <source>Specify polar coordinates</source>
         <translation>Kutup koordinatlarını belirle</translation>
     </message>
@@ -1667,72 +1698,72 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_synth</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="581"/>
+        <location filename="../../translatables-tmp.py" line="584"/>
         <source>A basic sound synthesizer</source>
         <translation>Basit bir ses birleştirici</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="582"/>
+        <location filename="../../translatables-tmp.py" line="585"/>
         <source>Waveform</source>
         <translation>Dalga biçimi</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="585"/>
+        <location filename="../../translatables-tmp.py" line="588"/>
         <source>Attack</source>
         <translation>Atak</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="594"/>
+        <location filename="../../translatables-tmp.py" line="597"/>
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="587"/>
+        <location filename="../../translatables-tmp.py" line="590"/>
         <source>Decay</source>
         <translation>Bozulma</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="589"/>
+        <location filename="../../translatables-tmp.py" line="592"/>
         <source>Volume</source>
         <translation>Ses</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="590"/>
+        <location filename="../../translatables-tmp.py" line="593"/>
         <source> x maximum</source>
         <translation> x maksimum</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="591"/>
+        <location filename="../../translatables-tmp.py" line="594"/>
         <source>Panning</source>
         <translation>Gezdirme</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="593"/>
+        <location filename="../../translatables-tmp.py" line="596"/>
         <source>Length</source>
         <translation>Uzunluk</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="595"/>
+        <location filename="../../translatables-tmp.py" line="598"/>
         <source>Duration</source>
         <translation>Süre</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="583"/>
+        <location filename="../../translatables-tmp.py" line="586"/>
         <source>Frequency</source>
         <translation>Frekans</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="584"/>
+        <location filename="../../translatables-tmp.py" line="587"/>
         <source>In Hertz or as note, e.g. &quot;A1&quot;</source>
         <translation>Hertz ya da nota olarak, örneğin &quot;A1&quot;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="592"/>
+        <location filename="../../translatables-tmp.py" line="595"/>
         <source>Positive values toward the right; &quot;left&quot; or &quot;right&quot; for full panning</source>
         <translation>Pozitif değerler sağa doğru; tam bir gezdirme için ise &quot;sol&quot; ya da &quot;sağ&quot;</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="596"/>
+        <location filename="../../translatables-tmp.py" line="599"/>
         <source>In milliseconds, &quot;sound&quot;, &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
         <translation>Milisaniye olarak &quot;sound&quot;(ses),&quot;keypress&quot; (tuşa basılması), ya da &quot;mouseclic&quot;(fare tıklaması)</translation>
     </message>
@@ -1740,22 +1771,22 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_advanced_delay</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="106"/>
+        <location filename="../../translatables-tmp.py" line="109"/>
         <source>Duration</source>
         <translation>Süre</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="109"/>
+        <location filename="../../translatables-tmp.py" line="112"/>
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="108"/>
+        <location filename="../../translatables-tmp.py" line="111"/>
         <source>Jitter</source>
         <translation>Sapma</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="110"/>
+        <location filename="../../translatables-tmp.py" line="113"/>
         <source>Jitter mode</source>
         <translation>Sapma modu</translation>
     </message>
@@ -1763,22 +1794,22 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_external_script</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="617"/>
+        <location filename="../../translatables-tmp.py" line="620"/>
         <source>Runs Python code from a file</source>
         <translation>Python kodunu bir dosyadan çalıştırır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="618"/>
+        <location filename="../../translatables-tmp.py" line="621"/>
         <source>Script file</source>
         <translation>Komut dizisi dosyası</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="619"/>
+        <location filename="../../translatables-tmp.py" line="622"/>
         <source>Prepare function in script</source>
         <translation>Komut dizisinin içerisinde fonksiyon hazırla</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="620"/>
+        <location filename="../../translatables-tmp.py" line="623"/>
         <source>Run function in script</source>
         <translation>Komut dizisinin içerisinde fonksiyon çalıştır</translation>
     </message>
@@ -1786,42 +1817,42 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_fixation_dot</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="137"/>
+        <location filename="../../translatables-tmp.py" line="140"/>
         <source>Style</source>
         <translation>Stil</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="138"/>
+        <location filename="../../translatables-tmp.py" line="141"/>
         <source>Pen width</source>
         <translation>Kalem kalınlığı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="139"/>
+        <location filename="../../translatables-tmp.py" line="142"/>
         <source>px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="140"/>
+        <location filename="../../translatables-tmp.py" line="143"/>
         <source>Duration</source>
         <translation>Süre</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="141"/>
+        <location filename="../../translatables-tmp.py" line="144"/>
         <source>Foreground color</source>
         <translation>Ön plan rengi</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="142"/>
+        <location filename="../../translatables-tmp.py" line="145"/>
         <source>Background color</source>
         <translation>Arkaplan rengi</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="143"/>
+        <location filename="../../translatables-tmp.py" line="146"/>
         <source>X coordinate</source>
         <translation>X koordinatı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="144"/>
+        <location filename="../../translatables-tmp.py" line="147"/>
         <source>Y coordinate</source>
         <translation>Y koordinatı</translation>
     </message>
@@ -1829,22 +1860,22 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_form_base</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="685"/>
+        <location filename="../../translatables-tmp.py" line="692"/>
         <source>cols, rows, and margins should be numeric values separated by a semi-colon</source>
         <translation>sütunlar, satırlar ve kenar boşlukları noktalı virgül ile ayrılmış sayısal değerler olmalıdır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="686"/>
+        <location filename="../../translatables-tmp.py" line="693"/>
         <source>In a form widget col, row, colspan, and rowspan should be integer</source>
         <translation>Bir form aracında sütun, satır, sütun genişliği ve satır genişliği bir tamsayı olmalıdır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="687"/>
+        <location filename="../../translatables-tmp.py" line="694"/>
         <source>You can only specify one focus widget</source>
         <translation>Sadece bir adet odaklanma aracı seçebilirsiniz</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="688"/>
+        <location filename="../../translatables-tmp.py" line="695"/>
         <source>Edit the script to modify the form</source>
         <translation>Formu değiştirmek için komut dizisini düzenle</translation>
     </message>
@@ -1852,32 +1883,32 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_form_consent</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="721"/>
+        <location filename="../../translatables-tmp.py" line="728"/>
         <source>Form title</source>
         <translation>Form başlığı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="722"/>
+        <location filename="../../translatables-tmp.py" line="729"/>
         <source>Checkbox text</source>
         <translation>İşaret kutusu metni</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="723"/>
+        <location filename="../../translatables-tmp.py" line="730"/>
         <source>Accept-button text</source>
         <translation>Kabul et-butonu metni</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="724"/>
+        <location filename="../../translatables-tmp.py" line="731"/>
         <source>Decline-button text</source>
         <translation>Reddet-butonu metni</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="725"/>
+        <location filename="../../translatables-tmp.py" line="732"/>
         <source>Message on decline</source>
         <translation>Reddetme üzerine mesaj</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="726"/>
+        <location filename="../../translatables-tmp.py" line="733"/>
         <source>Consent form text</source>
         <translation>Onam formu metni</translation>
     </message>
@@ -1885,42 +1916,42 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_form_multiple_choice</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="835"/>
+        <location filename="../../translatables-tmp.py" line="842"/>
         <source>Form title</source>
         <translation>Form başlığı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="836"/>
+        <location filename="../../translatables-tmp.py" line="843"/>
         <source>Response variable</source>
         <translation>Yanıt değişkeni</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="837"/>
+        <location filename="../../translatables-tmp.py" line="844"/>
         <source>Allow multiple options to be selected</source>
         <translation>Çoklu seçenekleri seçmeye izin ver</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="838"/>
+        <location filename="../../translatables-tmp.py" line="845"/>
         <source>Advance immediately to the next item once a selection has been made</source>
         <translation>Bir öge seçildikten sonra beklemeden diğer ögeye  geç</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="839"/>
+        <location filename="../../translatables-tmp.py" line="846"/>
         <source>Button text</source>
         <translation>Buton metni</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="840"/>
+        <location filename="../../translatables-tmp.py" line="847"/>
         <source>Timeout</source>
         <translation>Zaman aşımı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="841"/>
+        <location filename="../../translatables-tmp.py" line="848"/>
         <source>Your question</source>
         <translation>Soru</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="842"/>
+        <location filename="../../translatables-tmp.py" line="849"/>
         <source>Response options (different options on different lines)</source>
         <translation>Yanıtlar (farklı seçenekler için farklı satırlar kullanın)</translation>
     </message>
@@ -1928,17 +1959,17 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_form_text_display</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="362"/>
+        <location filename="../../translatables-tmp.py" line="365"/>
         <source>Form title</source>
         <translation>Form başlığı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="363"/>
+        <location filename="../../translatables-tmp.py" line="366"/>
         <source>Ok-button text</source>
         <translation>Tamam-butonu metni</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="364"/>
+        <location filename="../../translatables-tmp.py" line="367"/>
         <source>Main form text</source>
         <translation>Ana form metni</translation>
     </message>
@@ -1946,22 +1977,22 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_form_text_input</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="507"/>
+        <location filename="../../translatables-tmp.py" line="510"/>
         <source>Form title</source>
         <translation>Form başlığı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="508"/>
+        <location filename="../../translatables-tmp.py" line="511"/>
         <source>Response variable</source>
         <translation>Yanıt değişkeni</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="509"/>
+        <location filename="../../translatables-tmp.py" line="512"/>
         <source>Timeout</source>
         <translation>Süre aşımı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="510"/>
+        <location filename="../../translatables-tmp.py" line="513"/>
         <source>Your question</source>
         <translation>Sorunuz</translation>
     </message>
@@ -1969,27 +2000,27 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_joystick</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="280"/>
+        <location filename="../../translatables-tmp.py" line="283"/>
         <source>Dummy mode (use keyboard instead of joystick)</source>
         <translation>Sahte mod (joystik yerine klavye kullan)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="281"/>
+        <location filename="../../translatables-tmp.py" line="284"/>
         <source>Device nr.</source>
         <translation>Alet no.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="282"/>
+        <location filename="../../translatables-tmp.py" line="285"/>
         <source>Correct response</source>
         <translation>Doğru yanıt</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="283"/>
+        <location filename="../../translatables-tmp.py" line="286"/>
         <source>Allowed responses</source>
         <translation>İzin verilen yanıtlar</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="284"/>
+        <location filename="../../translatables-tmp.py" line="287"/>
         <source>Timeout</source>
         <translation>Zaman aşımı</translation>
     </message>
@@ -1997,7 +2028,7 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_notepad</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="148"/>
+        <location filename="../../translatables-tmp.py" line="151"/>
         <source>Note</source>
         <translation>Not</translation>
     </message>
@@ -2005,52 +2036,52 @@ Deney takip eden hatadan dolayı bitmedi:
 <context encoding="UTF-8">
     <name>plugin_quest_staircase_init</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="491"/>
+        <location filename="../../translatables-tmp.py" line="494"/>
         <source>Estimated threshold (used for starting test value)</source>
         <translation>Tahmini eşik (başlangıç test değişkeni için kullanılır)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="492"/>
+        <location filename="../../translatables-tmp.py" line="495"/>
         <source>Std. dev. of estimated threshold</source>
         <translation>Tahmini eşik değerinin standart sapması</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="493"/>
+        <location filename="../../translatables-tmp.py" line="496"/>
         <source>Desired proportion of correct responses</source>
         <translation>Doğru yanıtların istenen oranı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="497"/>
+        <location filename="../../translatables-tmp.py" line="500"/>
         <source>Method to determine optimal test value</source>
         <translation>Optımum test değerini berlirlemek için metod</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="498"/>
+        <location filename="../../translatables-tmp.py" line="501"/>
         <source>Minimum test value</source>
         <translation>Minimum test değeri</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="499"/>
+        <location filename="../../translatables-tmp.py" line="502"/>
         <source>Maximum test value</source>
         <translation>Maksimum test değeri</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="500"/>
+        <location filename="../../translatables-tmp.py" line="503"/>
         <source>Experimental variable for test value</source>
         <translation>Test değeri için deneysel değişken</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="494"/>
+        <location filename="../../translatables-tmp.py" line="497"/>
         <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="495"/>
+        <location filename="../../translatables-tmp.py" line="498"/>
         <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="496"/>
+        <location filename="../../translatables-tmp.py" line="499"/>
         <source>Chance level (&#xce;&#xb3;)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2058,7 +2089,7 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_quest_staircase_next</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="630"/>
+        <location filename="../../translatables-tmp.py" line="633"/>
         <source>Response variable (0 or 1)</source>
         <translation>Yanıt değişkeni (0 ya da 1)</translation>
     </message>
@@ -2066,12 +2097,12 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_repeat_cycle</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="625"/>
+        <location filename="../../translatables-tmp.py" line="628"/>
         <source>Marks the current loop cycle so that it is repeated</source>
         <translation>Geçerli döngüyü işaretler, döngü tekrar edilir</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="626"/>
+        <location filename="../../translatables-tmp.py" line="629"/>
         <source>Repeat if</source>
         <translation>Repeat if</translation>
     </message>
@@ -2087,42 +2118,42 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_srbox</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="529"/>
+        <location filename="../../translatables-tmp.py" line="532"/>
         <source>Dummy mode (use keyboard instead)</source>
         <translation>Sahte mod (klavye kullanılır)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="530"/>
+        <location filename="../../translatables-tmp.py" line="533"/>
         <source>Ignore buttons that are already pressed</source>
         <translation>Basılmış olan tuşları yoksay</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="531"/>
+        <location filename="../../translatables-tmp.py" line="534"/>
         <source>Device name</source>
         <translation>Cihazın adı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="532"/>
+        <location filename="../../translatables-tmp.py" line="535"/>
         <source>Correct response</source>
         <translation>Doğru yanıt</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="533"/>
+        <location filename="../../translatables-tmp.py" line="536"/>
         <source>Allowed responses</source>
         <translation>İzin verilen yanıtlar</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="534"/>
+        <location filename="../../translatables-tmp.py" line="537"/>
         <source>Timeout</source>
         <translation>Süre aşımı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="535"/>
+        <location filename="../../translatables-tmp.py" line="538"/>
         <source>Turn on lights</source>
         <translation>Işıkları aç</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="536"/>
+        <location filename="../../translatables-tmp.py" line="539"/>
         <source>&lt;small&gt;&lt;b&gt;Note:&lt;/b&gt; If there are multiple srbox items in the experiment, the first srbox item determines the device name and whether dummy mode is enabled&lt;/small&gt;
 </source>
         <translation>&lt;small&gt;&lt;b&gt;Not:&lt;/b&gt; Eğer deneyde birden fazla srbox ögesi bulunursa ilk srbox ögesi cihaz ismini belirler ve sahte modun etkinleştirlip etkinleştirilmediğine karar verir&lt;/small&gt;
@@ -2132,7 +2163,7 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_text_display</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="418"/>
+        <location filename="../../translatables-tmp.py" line="421"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The text_display plug-in has been removed. Please use a different way to present text, as described on &lt;a href=&quot;http://osdoc.cogsci.nl/usage/text&quot;&gt;http://osdoc.cogsci.nl/usage/text&lt;/a&gt;.
 </source>
         <translation>&lt;b&gt;Uyarı:&lt;/b&gt; Metin gösterme eklentisi kaldırıldı. Metin göstermek için&lt;a href=&quot;http://osdoc.cogsci.nl/usage/text&quot;&gt;http://osdoc.cogsci.nl/usage/text&lt;/a&gt; adresinde açıklanan yöntemlerden başka bir yöntemi seçiniz.
@@ -2142,7 +2173,7 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_text_input</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="368"/>
+        <location filename="../../translatables-tmp.py" line="371"/>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The text_input plug-in has been removed. To collect text input, please use a form, as described on &lt;a href=&quot;http://osdoc.cogsci.nl/forms&quot;&gt;http://osdoc.cogsci.nl/forms/&lt;/a&gt;.
 </source>
         <translation>&lt;b&gt;Uyarı:&lt;/b&gt; Metin girdi eklentisi kaldırıldı. Metin girdisi toplamak için&lt;a href=&quot;http://osdoc.cogsci.nl/forms&quot;&gt;http://osdoc.cogsci.nl/forms/&lt;/a&gt; adresinde açıklanan yöntemlerden başka bir tanesini seçiniz.
@@ -2180,22 +2211,22 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_video_player</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="474"/>
+        <location filename="../../translatables-tmp.py" line="477"/>
         <source>Video file</source>
         <translation>Vidyo dosyası</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="475"/>
+        <location filename="../../translatables-tmp.py" line="478"/>
         <source>Resize to fit screen</source>
         <translation>Ekrana sığdırmak için yeniden boyutlandır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="477"/>
+        <location filename="../../translatables-tmp.py" line="480"/>
         <source>Duration</source>
         <translation>Not</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="478"/>
+        <location filename="../../translatables-tmp.py" line="481"/>
         <source>ms</source>
         <translation>ms</translation>
     </message>
@@ -2203,47 +2234,47 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugins_coroutines</name>
     <message>
-        <location filename="../../translatables-tmp.py" line="816"/>
+        <location filename="../../translatables-tmp.py" line="823"/>
         <source>Run items simultaneously</source>
         <translation>Ögeleri eş zamanlı olarak çalıştır</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="817"/>
+        <location filename="../../translatables-tmp.py" line="824"/>
         <source>Item name</source>
         <translation>Öge ismi</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="818"/>
+        <location filename="../../translatables-tmp.py" line="825"/>
         <source>Start time</source>
         <translation>Başlangıç zamanı</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="819"/>
+        <location filename="../../translatables-tmp.py" line="826"/>
         <source>End time (if applicable)</source>
         <translation>Bitirme zamanı (eğer uygulanabilirse)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="820"/>
+        <location filename="../../translatables-tmp.py" line="827"/>
         <source>Duration</source>
         <translation>Süre</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="822"/>
+        <location filename="../../translatables-tmp.py" line="829"/>
         <source>Generator function name (optional)</source>
         <translation>Üretici fonksiyonu ismi (isteğe bağlı)</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="823"/>
+        <location filename="../../translatables-tmp.py" line="830"/>
         <source>Flush pending key presses at coroutines start</source>
         <translation>coroutines başladığında beklemede olan basılan tuşların görevlerini iptal et</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="824"/>
+        <location filename="../../translatables-tmp.py" line="831"/>
         <source>&quot;%s&quot; does not support coroutines.</source>
         <translation>&quot;%s&quot; coroutinesi desteklememektedir.</translation>
     </message>
     <message>
-        <location filename="../../translatables-tmp.py" line="821"/>
+        <location filename="../../translatables-tmp.py" line="828"/>
         <source>End after item (optional)</source>
         <translation>Ögeden sonra bitir (isteğe bağlı)</translation>
     </message>
@@ -2994,13 +3025,18 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
         <translation>Pencerede çalıştır…</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="612"/>
+        <location filename="../ui/misc/main_window.ui" line="633"/>
         <source>Kill experiment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="615"/>
+        <location filename="../ui/misc/main_window.ui" line="636"/>
         <source>Forcibly kill the experiment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="../ui/misc/main_window.ui" line="278"/>
+        <source>Initializing debug window …</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
