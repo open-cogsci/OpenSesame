@@ -181,7 +181,7 @@ class IPythonConsole(BaseConsole, QtWidgets.QWidget):
 			main thread.
 		"""
 
-		oslogger.info(u'launching IPythonImporter')
+		oslogger.debug(u'launching IPythonImporter')
 		self._ipython_importer = IPythonImporter()
 		self._ipython_importer.finished.connect(self._on_ipython_imported)
 		self._ipython_importer.start()
@@ -213,7 +213,7 @@ class IPythonConsole(BaseConsole, QtWidgets.QWidget):
 			deferred_function_calls.pop(0)()
 		self.main_window.ui.label_starting_ipython.hide()
 		self._started = True
-		oslogger.info(u'ipython debug window started')
+		oslogger.debug(u'ipython debug window started')
 
 	@deferred
 	def clear(self, *args):

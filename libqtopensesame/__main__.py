@@ -103,7 +103,6 @@ def opensesame():
 	# GUI initialization.
 	opensesame.resume_init()
 	opensesame.restore_window_state()
-	opensesame.refresh()
 	opensesame.show()
 	# Added for OS X, otherwise Window will not appear
 	opensesame.raise_()

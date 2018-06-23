@@ -437,7 +437,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			self.setStyle(QtWidgets.QStyleFactory.create(cfg.style))
 			oslogger.debug(u"using style '%s'" % cfg.style)
 		else:
-			oslogger.warning(u"ignoring unknown style '%s'" % cfg.style)
 			cfg.style = u''
 
 	def set_locale(self, translator):
