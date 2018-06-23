@@ -232,39 +232,62 @@ class var_store(object):
 		self._check_var_name(var)
 		if self.__lock__ == var:
 			raise osexception(
-				u"Recursion detected! Is variable '%s' defined in terms of itself (e.g., 'var = [var]') in item '%s'" \
-				% (var, self.name))
+				(
+					u"Recursion detected! Is variable '%s' defined in terms of "
+					u"itself (e.g., 'var = [var]') in item '%s'"
+				) % (var, self.name)
+			)
 		if var in self.__vars__:
 			val = self.__vars__[var]
 		elif hasattr(self.__item__, var):
-			warnings.warn(u'var %s is stored as attribute of item %s' \
-				% (var, self.__item__.name))
+			warnings.warn(
+				u'var %s is stored as attribute of item %s'
+				% (var, self.__item__.name)
+			)
 			val = getattr(self.__item__, var)
 		elif self.__parent__ is not None:
-			val = self.__parent__.get(var, default=default, _eval=_eval,
-				valid=valid)
+			val = self.__parent__.get(
+				var,
+				default=default,
+				_eval=_eval,
+				valid=valid
+			)
 		elif default is not None:
 			val = default
 		else:
-			raise osexception((u'The variable \'%s\' does not exist. Tip: Use '
-				u'the variable inspector (Ctrl+I) to see all variables.') % var)
+			raise osexception(
+				(
+					u'The variable \'%s\' does not exist. Tip: Use '
+					u'the variable inspector (Ctrl+I) to see all variables.'
+				) % var
+			)
 		if valid is not None and val not in valid:
-			raise osexception(u'Variable %s should be in %s, not %s' \
-				% (var, valid, val))
+			raise osexception(
+				u'Variable %s should be in %s, not %s'
+				% (var, valid, val)
+			)
 		if _eval:
 			object.__setattr__(self, u'__lock__', var)
 			val = self.__item__.syntax.eval_text(val)
 			object.__setattr__(self, u'__lock__', None)
 		if isinstance(val, bool):
-			if val:
-				return u'yes'
-			return u'no'
+			return u'yes' if val else u'no'
+		# The logic here is that we first try to convert to float, and if this
+		# is not successful, return the orignal type. If this is succesful we
+		# turn the float into an int if this doesn't result in data loss, and
+		# otherwise return the float.
 		try:
 			val = float(val)
-		except:
+		except (TypeError, ValueError):
 			return val
-		if int(val) == val:
-			return int(val)
+		try:
+			if int(val) == val:
+				return int(val)
+		except (ValueError, ArithmeticError):
+			# A float can always be converted to an int, except nan values,
+			# which result in ValueError, or inf values, which result in an
+			# OverFlowError (which is a subclass of ArithmeticError).
+			pass
 		return val
 
 	def has(self, var):
