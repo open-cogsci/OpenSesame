@@ -261,14 +261,16 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		"""
 
 		from libqtopensesame.widgets.font_widget import font_widget
-		for font in font_widget.font_list + [
-				u'RobotoCondensed-Regular',
-				u'RobotoSlab-Regular',
-				u'RobotoMono-Regular',
-				u'Roboto-Regular']:
+		# The last element of font_list is the "other" entry
+		for font in font_widget.font_list[:-1] + [
+			u'RobotoCondensed-Regular',
+			u'RobotoSlab-Regular',
+			u'RobotoMono-Regular',
+			u'Roboto-Regular'
+		]:
 			try:
 				ttf = self.experiment.resource(u'%s.ttf' % font)
-			except:
+			except FileNotFoundError:
 				oslogger.error(u'failed to find %s' % font)
 			else:
 				oslogger.debug(u'registering %s (%s)' % (font, ttf))

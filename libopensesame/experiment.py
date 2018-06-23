@@ -567,9 +567,10 @@ class experiment(item.item):
 				return self.pool[name]
 		path = misc.resource(name)
 		if path is None:
-			raise Exception( \
-				u"The resource '%s' could not be found in libopensesame.experiment.resource()" \
-				% name)
+			raise FileNotFoundError(
+				u"The resource '%s' could not be found in libopensesame.experiment.resource()"
+				% name
+			)
 		return path
 
 	def save(self, path, overwrite=False, update_path=True):

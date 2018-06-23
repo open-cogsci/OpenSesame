@@ -23,14 +23,17 @@ from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'font_widget', category=u'core')
 
+
 class font_widget_base(base_widget):
 
 	"""A font selection widget"""
 
 	max_size = 64
-	font_list = [u'mono', u'sans', u'serif', u'arabic',
-		u'chinese-japanese-korean', u'hebrew', u'hindi', _(u'other ...',
-		context=u'font_widget')]
+	font_list = [
+		u'mono', u'sans', u'serif', u'arabic',
+		u'chinese-japanese-korean', u'hebrew', u'hindi',
+		_(u'other ...', context=u'font_widget')
+	]
 
 	font_changed = QtCore.Signal(['QString', int, bool, bool])
 
@@ -43,8 +46,12 @@ class font_widget_base(base_widget):
 		self.italic = self.ui.checkbox_italic.isChecked()
 		self.bold = self.ui.checkbox_bold.isChecked()
 		self.ui.label_example.setFont(self.get_font())
-		self.font_changed.emit(self.family, self.size, self.italic,
-			self.bold)
+		self.font_changed.emit(
+			self.family,
+			self.size,
+			self.italic,
+			self.bold
+		)
 
 	def apply_family(self):
 
@@ -53,16 +60,21 @@ class font_widget_base(base_widget):
 		dialog if the user has selected 'other ...'
 		"""
 
-		if self.ui.combobox_family.currentText() == _(u'other ...',
-			context=u'font_widget'):
-			print(self._parent)
-			font, ok = QtWidgets.QFontDialog.getFont(self.get_font(),
-				parent=self._parent)
+		if self.ui.combobox_family.currentText() == _(
+			u'other ...',
+			context=u'font_widget'
+		):
+			font, ok = QtWidgets.QFontDialog.getFont(
+				self.get_font(),
+				parent=self._parent
+			)
 			if ok:
 				self.family = str(font.family())
 			else:
-				self.family = self.experiment.var.get(u'font_family',
-					_eval=False)
+				self.family = self.experiment.var.get(
+					u'font_family',
+					_eval=False
+				)
 			self.update_family_combobox()
 		self._apply()
 
@@ -73,8 +85,11 @@ class font_widget_base(base_widget):
 			type: QFont
 		"""
 
-		font = QtGui.QFont(self.family, italic=self.italic,
-			weight=QtGui.QFont.Bold if self.bold else QtGui.QFont.Normal)
+		font = QtGui.QFont(
+			self.family,
+			italic=self.italic,
+			weight=QtGui.QFont.Bold if self.bold else QtGui.QFont.Normal
+		)
 		font.setPixelSize(min(self.max_size, self.size))
 		return font
 
@@ -90,11 +105,23 @@ class font_widget_base(base_widget):
 		self.ui.checkbox_italic.clicked.disconnect()
 		self.ui.checkbox_bold.clicked.disconnect()
 		self.ui.spinbox_size.editingFinished.disconnect()
-		self.initialize(family=family, italic=italic, bold=bold,
-			size=size, parent=self._parent)
+		self.initialize(
+			family=family,
+			italic=italic,
+			bold=bold,
+			size=size,
+			parent=self._parent
+		)
 
-	def initialize(self, experiment=None, family=None, italic=None,
-		bold=None, size=None, parent=None):
+	def initialize(
+		self,
+		experiment=None,
+		family=None,
+		italic=None,
+		bold=None,
+		size=None,
+		parent=None
+	):
 
 		"""
 		desc:
@@ -112,7 +139,6 @@ class font_widget_base(base_widget):
 			parent:	A parent QWidget.
 		"""
 
-		
 		self._parent = parent if parent is not None else self.main_window
 		if experiment is None:
 			experiment = self.experiment
@@ -153,6 +179,7 @@ class font_widget_base(base_widget):
 			self.ui.combobox_family.findText(self.family))
 		self.ui.combobox_family.activated.connect(self.apply_family)
 
+
 class font_widget_horizontal(font_widget_base):
 
 	def __init__(self, main_window):
@@ -167,8 +194,11 @@ class font_widget_horizontal(font_widget_base):
 		parent		--	The parent QWidget. (default=None)
 		"""
 
-		super(font_widget_horizontal, self).__init__(main_window,
-			ui=u'widgets.font_widget_horizontal')
+		super(font_widget_horizontal, self).__init__(
+			main_window,
+			ui=u'widgets.font_widget_horizontal'
+		)
+
 
 class font_widget(font_widget_base):
 
@@ -184,5 +214,7 @@ class font_widget(font_widget_base):
 		parent		--	The parent QWidget. (default=None)
 		"""
 
-		super(font_widget, self).__init__(main_window,
-			ui=u'widgets.font_widget')
+		super(font_widget, self).__init__(
+			main_window,
+			ui=u'widgets.font_widget'
+		)
