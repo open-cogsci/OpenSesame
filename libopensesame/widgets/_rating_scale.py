@@ -169,20 +169,20 @@ class RatingScale(Widget):
 		for i, node in enumerate(self.nodes):
 			text_width, text_height = RichText(node).construct(self.canvas).size
 			if self.orientation == 'horizontal':
-				node_x = x+bs+i*dx
+				node_x = x + bs + i * dx
 				node_y = cy
-				text_x = node_x + self.box_size/2
-				text_y = cy-1.5*bs
+				text_x = node_x + self.box_size / 2
+				text_y = cy - bs - .5 * text_height
 				center = True
 			elif self.orientation == 'vertical':
 				node_x = cx
-				node_y = y+bs+i*dy
-				text_x = cx+2*bs
-				text_y = node_y
+				node_y = y + bs + i * dy
+				text_x = cx + 2 * bs
+				text_y = node_y - .5 * text_height + .5 * bs
 				center = False
 			self.pos_list.append((node_x, node_y))
 			self.canvas.add_element(
-				RichText(node, center=center, x=text_x, y=text_y, html=False)
+				RichText(node, center=center, x=text_x, y=text_y)
 			)
 			cb = self.form.theme_engine.box(node_x, node_y, checked=True)
 			ub = self.form.theme_engine.box(node_x, node_y, checked=False)
