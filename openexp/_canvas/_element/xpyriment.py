@@ -38,6 +38,8 @@ class XpyrimentElement(object):
 	def show(self, **kwargs):
 
 		if self.visible:
+			if not hasattr(self, u'_stim'):
+				self.prepare()
 			self._stim.present(**kwargs)
 
 	def copy(self, canvas):
