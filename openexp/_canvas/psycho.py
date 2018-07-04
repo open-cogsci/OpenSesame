@@ -98,10 +98,14 @@ class Psycho(Canvas, PsychoCoordinates):
 
 	def show(self):
 
+		t0 = self.experiment.clock.time()
 		for e in self._elements.values():
 			e.show()
 		self.experiment.window.flip(clearBuffer=True)
-		return self.experiment.clock.time()
+		t1 = self.experiment.clock.time()
+		if t1 - t0 > self.MAX_SHOW_DT:
+			oslogger.warning('Canvas.show() took {0} ms'.format(t1 - t0))
+		return t1
 
 	def _set_background(self):
 

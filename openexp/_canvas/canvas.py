@@ -261,6 +261,11 @@ class Canvas(Backend):
 		--%
 	"""
 
+	# The maximum duration that Canvas.show() should take, which is set to one
+	# frame duration on a 60 Hz monitor. If Canvas.show() takes longer, a
+	# warning given.
+	MAX_SHOW_DT = 16
+
 	def __init__(self, experiment, auto_prepare=True, **style_args):
 
 		"""

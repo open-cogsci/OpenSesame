@@ -24,6 +24,7 @@ from openexp._canvas.canvas import Canvas
 from libopensesame.exceptions import osexception
 from openexp.backend import configurable
 from expyriment import io, control, stimuli
+from libopensesame.oslogging import oslogger
 from openexp._coordinates.xpyriment import Xpyriment as XpyrimentCoordinates
 
 
@@ -67,19 +68,23 @@ class Xpyriment(Canvas, XpyrimentCoordinates):
 		# First create a flat list of all elements, including elements that are
 		# part of a group. Then we show them, clearing the display on the first,
 		# and updating the display on the last.
+		t0 = self.experiment.clock.time()
 		elements = [e for g in self._elements.values() if g.visible for e in g]
 		self._background.present(clear=True, update=not elements)
 		while elements:
 			e = elements.pop(0)
 			e.show(clear=False, update=not elements)
-		return self.experiment.clock.time()
+		t1 = self.experiment.clock.time()
+		if t1 - t0 > self.MAX_SHOW_DT:
+			oslogger.warning('Canvas.show() took {0} ms'.format(t1 - t0))
+		return t1
 
 	def _set_background(self):
 
 		self._background = stimuli.BlankScreen(
 			colour=self.background_color.backend_color
 		)
-		self._background.preload()		
+		self._background.preload()
 
 	@staticmethod
 	def init_display(experiment):

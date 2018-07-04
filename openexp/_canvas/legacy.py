@@ -88,10 +88,14 @@ class Legacy(Canvas, LegacyCoordinates):
 
 	def show(self):
 
+		t0 = pygame.time.get_ticks()
 		self.experiment.surface.blit(self.surface, (0, 0))
 		self.experiment.last_shown_canvas = self.surface
 		pygame.display.flip()
-		return pygame.time.get_ticks()
+		t1 = pygame.time.get_ticks()
+		if t1 - t0 > self.MAX_SHOW_DT:
+			oslogger.warning('Canvas.show() took {0} ms'.format(t1 - t0))
+		return t1
 
 	def _show_macos(self):
 
