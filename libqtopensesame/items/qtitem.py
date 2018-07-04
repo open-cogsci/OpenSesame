@@ -77,6 +77,7 @@ class qtitem(object):
 			self.container_widget = None
 		else:
 			self.init_edit_widget()
+		self._dirty = False
 		self.lock = False
 		self.maximized = False
 		self.set_validator()
@@ -419,6 +420,7 @@ class qtitem(object):
 
 		self.auto_apply_edit_changes()
 		self.update_script()
+		self.set_clean()
 		return True
 
 	def apply_script_changes(self, *deprecated, **_deprecated):
@@ -642,6 +644,9 @@ class qtitem(object):
 			type:	bool
 		"""
 
+		if self._dirty:
+			self.apply_edit_changes()
+			return True
 		return False
 
 	def auto_edit_widget(self):
@@ -735,22 +740,19 @@ class qtitem(object):
 				if val != qprogedit.text():
 					qprogedit.setText(val)
 
-	def auto_apply_edit_changes(self, rebuild=True):
+	def auto_apply_edit_changes(self):
 
 		"""
 		desc:
 			Applies the auto-widget controls.
-
-		keywords:
-			rebuild:	Deprecated (does nothing).
 		"""
 
 		for var, edit in self.auto_line_edit.items():
 			if isinstance(var, int):
 				continue
 			if edit.isEnabled() and isinstance(var, basestring):
-				val = str(edit.text()).strip()
-				if val != u'':
+				val = edit.text().strip()
+				if val:
 					self.var.set(var, val)
 					continue
 				# If no text was entered, we use a default if available ...
@@ -764,7 +766,7 @@ class qtitem(object):
 			if isinstance(var, int):
 				continue
 			if combobox.isEnabled() and isinstance(var, basestring):
-				self.var.set(var, str(combobox.currentText()))
+				self.var.set(var, combobox.currentText())
 
 		for var, spinbox in self.auto_spinbox.items():
 			if isinstance(var, int):
@@ -782,10 +784,7 @@ class qtitem(object):
 			if isinstance(var, int):
 				continue
 			if checkbox.isEnabled() and isinstance(var, basestring):
-				if checkbox.isChecked():
-					val = u"yes"
-				else:
-					val = u"no"
+				val = u'yes' if checkbox.isChecked() else u'no'
 				self.var.set(var, val)
 
 		for var, qprogedit in self.auto_editor.items():
@@ -817,28 +816,55 @@ class qtitem(object):
 			var = id(widget)
 		if apply_func is None:
 			apply_func = self.apply_edit_changes
-		oslogger.debug(var)
 		self.set_focus_widget(widget)
-		if isinstance(widget, QtWidgets.QSpinBox) or isinstance(widget,
-			QtWidgets.QDoubleSpinBox):
+		if (
+			isinstance(widget, QtWidgets.QSpinBox) or
+			isinstance(widget, QtWidgets.QDoubleSpinBox)
+		):
 			widget.editingFinished.connect(apply_func)
+			widget.valueChanged.connect(self.set_dirty)
 			self.auto_spinbox[var] = widget
 		elif isinstance(widget, QtWidgets.QComboBox):
 			widget.activated.connect(apply_func)
 			self.auto_combobox[var] = widget
-		elif isinstance(widget, QtWidgets.QSlider) \
-			or isinstance(widget, QtWidgets.QDial):
+		elif (
+			isinstance(widget, QtWidgets.QSlider) or
+			isinstance(widget, QtWidgets.QDial)
+		):
 			widget.valueChanged.connect(apply_func)
 			self.auto_slider[var] = widget
-		elif isinstance(widget, QtWidgets.QLineEdit) or isinstance(widget,
-			pool_select):
+		elif (
+			isinstance(widget, QtWidgets.QLineEdit) or
+			isinstance(widget, pool_select)
+		):
 			widget.editingFinished.connect(apply_func)
+			widget.textEdited.connect(self.set_dirty)
 			self.auto_line_edit[var] = widget
 		elif isinstance(widget, QtWidgets.QCheckBox):
 			widget.clicked.connect(apply_func)
 			self.auto_checkbox[var] = widget
 		else:
-			raise Exception(u"Cannot auto-add widget of type %s" % widget)
+			raise TypeError(u"Cannot auto-add widget of type %s" % widget)
+
+	def set_dirty(self):
+
+		"""
+		desc:
+			Indicates that the item's controls have changed since being last
+			applied.
+		"""
+
+		print('set dirty ' + self.name)
+		self._dirty = True
+
+	def set_clean(self):
+
+		"""
+		desc:
+			Indicates that the item's controls have all been applied.
+		"""
+
+		self._dirty = False
 
 	def children(self):
 

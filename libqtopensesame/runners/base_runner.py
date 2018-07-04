@@ -187,7 +187,6 @@ class base_runner(object):
 		# First tell the experiment to get ready, to apply any pending changes,
 		# and then initialize the script. This can trigger errors.
 		try:
-			self.main_window.get_ready()
 			script = self.main_window.experiment.to_string()
 		except Exception as e:
 			if not isinstance(e, osexception):

@@ -110,16 +110,6 @@ class qtplugin(qtitem.qtitem):
 		qtitem.qtitem.edit_widget(self)
 		self.auto_edit_widget()
 
-	def apply_edit_changes(self, *deprecated, **_deprecated):
-
-		"""
-		desc:
-			Applies the controls.
-		"""
-
-		return qtitem.qtitem.apply_edit_changes(self) and \
-			self.auto_apply_edit_changes()
-
 	def add_control(self, label, widget, tooltip=None, min_width=200,
 		info=None):
 
@@ -185,6 +175,7 @@ class qtplugin(qtitem.qtitem):
 
 		edit = QtWidgets.QLineEdit()
 		edit.editingFinished.connect(self.apply_edit_changes)
+		edit.textEdited.connect(self.set_dirty)
 		edit.setMinimumWidth(200)
 		if validator is not None:
 			edit.setValidator(validator)
@@ -319,6 +310,7 @@ class qtplugin(qtitem.qtitem):
 		spinbox.setMinimum(min_val)
 		spinbox.setMaximum(max_val)
 		spinbox.editingFinished.connect(self.apply_edit_changes)
+		spinbox.valueChanged.connect(self.set_dirty)
 		spinbox.setMinimumWidth(200)
 		if prefix != u'':
 			spinbox.setPrefix(prefix)

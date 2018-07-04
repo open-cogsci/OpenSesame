@@ -965,6 +965,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 						testing the experiment. (default=False)
 		"""
 
+		self.get_ready()
 		self.enable(False)
 		print(u'\n')
 		oslogger.debug(u'using %s runner' % cfg.runner)
