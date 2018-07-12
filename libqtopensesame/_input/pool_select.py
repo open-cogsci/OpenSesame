@@ -24,6 +24,7 @@ from libqtopensesame.widgets import pool_widget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'pool_select', category=u'core')
 
+
 class pool_select(QtWidgets.QWidget, base_subcomponent):
 
 	"""
@@ -33,6 +34,7 @@ class pool_select(QtWidgets.QWidget, base_subcomponent):
 	"""
 
 	editingFinished = QtCore.Signal()
+	textEdited = QtCore.Signal()
 
 	def __init__(self, main_window):
 
@@ -40,15 +42,18 @@ class pool_select(QtWidgets.QWidget, base_subcomponent):
 		self.setup(main_window)
 		self.edit = QtWidgets.QLineEdit()
 		self.edit.editingFinished.connect(self.editingFinished.emit)
+		self.edit.textEdited.connect(self.textEdited.emit)
 		self.edit.setMinimumWidth(200)
-		self.button = QtWidgets.QPushButton(self.theme.qicon(u'browse'),
-			_(u'Browse'))
+		self.button = QtWidgets.QPushButton(
+			self.theme.qicon(u'browse'),
+			_(u'Browse')
+		)
 		self.button.setIconSize(QtCore.QSize(16, 16))
 		self.button.clicked.connect(self.browse)
 		self.hbox = QtWidgets.QHBoxLayout(self)
 		self.hbox.addWidget(self.edit)
 		self.hbox.addWidget(self.button)
-		self.hbox.setContentsMargins(0,0,0,0)
+		self.hbox.setContentsMargins(0, 0, 0, 0)
 		self.hbox.setSpacing(6)
 		self.setLayout(self.hbox)
 
