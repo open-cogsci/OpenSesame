@@ -22,7 +22,9 @@ from libopensesame.exceptions import osexception
 from libopensesame.item_store import item_store
 from libopensesame import plugins
 from libqtopensesame.misc.translate import translation_context
+from libopensesame.oslogging import oslogger
 _ = translation_context(u'qtitem_store', category=u'core')
+
 
 class qtitem_store(item_store):
 
@@ -125,7 +127,9 @@ class qtitem_store(item_store):
 				# In case the experiment object doesn't exist yet, which causes
 				# the help page to fail.
 				pass
+			oslogger.warning(yaml.dump(warning_list))
 			self.console.write(yaml.dump(warning_list))
+
 		self.main_window.set_unsaved(True)
 		return item
 
