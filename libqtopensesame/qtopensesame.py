@@ -691,7 +691,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		keywords:
 			dummy:		Dummy argument passed by event handler.
 			path:
-			 	desc:	The path to the file. If None, a file dialog is
+				desc:	The path to the file. If None, a file dialog is
 						presented.
 				type:	[str, NoneType]
 			add_to_recent:
@@ -700,34 +700,42 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 				type:	bool
 		"""
 
+		from libopensesame.osexpfile import osexpreader
+
 		if not self.save_unsaved_changes():
 			self.ui.tabwidget.open_general()
 			return
 		if path is None:
-			path = QtWidgets.QFileDialog.getOpenFileName(self.ui.centralwidget,
-				_(u"Open file"), filter=self.open_file_filter,
-				directory=cfg.file_dialog_path)
+			path = QtWidgets.QFileDialog.getOpenFileName(
+				self.ui.centralwidget,
+				_(u"Open file"),
+				filter=self.open_file_filter,
+				directory=cfg.file_dialog_path
+			)
 		# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of
 		# a string, of which the first position contains the path. check for that
 		# here.
-		if isinstance(path,tuple):
+		if isinstance(path, tuple):
 			path = path[0]
-		if path is None or path == u'' or ( \
-			not path.lower().endswith(u'.opensesame') and \
-			not  path.lower().endswith(u'.opensesame.tar.gz') and \
-			not path.lower().endswith(u'.osexp')):
+		if path is None or not osexpreader.valid_extension(path):
 			return
 		self.set_busy()
 		self.ui.tabwidget.close_all(avoid_empty=False)
 		cfg.file_dialog_path = os.path.dirname(path)
 		try:
-			exp = experiment.experiment(self, u"Experiment", path,
-				experiment_path=os.path.dirname(path))
+			exp = experiment.experiment(
+				self,
+				u"Experiment",
+				path,
+				experiment_path=os.path.dirname(path)
+			)
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e = osexception(msg=u'Failed to open file', exception=e)
-			md = _(u'# Failed to open\n\nFailed to open the file for the '
-				u'following reason:\n\n- ') + e.markdown()
+			md = _(
+				u'# Failed to open\n\nFailed to open the file for the '
+				u'following reason:\n\n- '
+			) + e.markdown()
 			self.tabwidget.open_markdown(md)
 			self.ui.console.write(e)
 			self.set_busy(False)
@@ -755,9 +763,13 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# Process non-fatal errors
 		if exp.items.error_log:
 			self.tabwidget.open_markdown(
-				_(u'Errors occurred while opening the file:\n\n') + \
-				u'\n---\n'.join([exc.markdown() for exc in exp.items.error_log]),
-				title=_(u'Error'), icon=u'dialog-error')
+				_(u'Errors occurred while opening the file:\n\n') +
+				u'\n---\n'.join(
+					[exc.markdown() for exc in exp.items.error_log]
+				),
+				title=_(u'Error'),
+				icon=u'dialog-error'
+			)
 			self.window_message(u"New experiment")
 			self.current_path = None
 
