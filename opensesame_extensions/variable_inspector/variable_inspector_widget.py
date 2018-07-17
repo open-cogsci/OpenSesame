@@ -125,12 +125,16 @@ class variable_inspector_widget(base_widget):
 			self.ui.widget_reset_message.hide()
 		# Filter the variables if necessary
 		if len(filt) > 1:
-			d = {}
-			for var, info in var_store.inspect().items():
-				if filt in var or (info[u'value'] is not None and \
-					filt in safe_decode(info[u'value'], errors=u'ignore')) or \
-					filt in u' '.join(info[u'source']):
-					d[var] = info
+			d = {
+				var: info
+				for var, info in var_store.inspect().items()
+				if any(
+					q.strip() in var or
+					q.strip() in safe_decode(info[u'value'], errors=u'ignore') or
+					q.strip() in u' '.join(info[u'source'])
+					for q in filt.split(u'|')
+				)
+			}
 		else:
 			d = var_store.inspect()
 		# Populate the table
