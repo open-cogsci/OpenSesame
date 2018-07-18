@@ -49,7 +49,6 @@ included_plugins = [
 
 # List of included extensions
 included_extensions = [
-	'check_file_pool',
 	'analytics',
 	'automatic_backup',
 	'get_started',
