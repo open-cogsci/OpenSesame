@@ -99,9 +99,13 @@ class file_pool_store(object):
 			# This is resolved by passing the dir explicitly as a Unicode
 			# string. This fix has been adapted from:
 			# - <http://bugs.python.org/issue1681974>
-			self.__folder__ = tempfile.mkdtemp(suffix=u'.opensesame_pool',
-				dir=safe_decode(tempfile.gettempdir(),
-				enc=misc.filesystem_encoding()))
+			self.__folder__ = tempfile.mkdtemp(
+				suffix=u'.opensesame_pool',
+				dir=safe_decode(
+					tempfile.gettempdir(),
+					enc=misc.filesystem_encoding()
+				)
+			)
 			oslogger.debug(u'creating new pool folder')
 		else:
 			oslogger.debug(u'reusing existing pool folder')
@@ -241,7 +245,7 @@ class file_pool_store(object):
 
 		if new_name is None:
 			new_name = os.path.basename(path)
-		shutil.copyfile(path, os.path.join(self.__folder__, new_name))
+		shutil.copyfile(path, os.path.join(self.folder(), new_name))
 
 	def files(self):
 
@@ -306,6 +310,9 @@ class file_pool_store(object):
 			print(u'The pool folder is here: ' % pool.folder())
 		"""
 
+		if not os.path.exists(self.__folder__):
+			oslogger.warning(u'recreating missing file-pool folder')
+			os.mkdir(self.__folder__)
 		return self.__folder__
 
 	def in_folder(self, path):
@@ -328,7 +335,7 @@ class file_pool_store(object):
 			print(pool.in_folder('cue.png'))
 		"""
 
-		return os.path.exists(os.path.join(self.__folder__, path))
+		return os.path.exists(os.path.join(self.folder(), path))
 
 	def folders(self, include_fallback_folder=True,
 		include_experiment_path=False):
@@ -363,7 +370,7 @@ class file_pool_store(object):
 				print(folder)
 		"""
 
-		_folders = [self.__folder__]
+		_folders = [self.folder()]
 		if self.experiment.experiment_path is None or \
 			not os.path.exists(self.experiment.experiment_path):
 				return _folders
