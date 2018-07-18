@@ -103,10 +103,13 @@ class sketchpad(base_response_item, keyboard_response_mixin,
 		"""See base_response_item."""
 
 		if isinstance(self.var.duration, (int, float)):
+			self._flush = lambda: None
 			return self._prepare_sleep_func(self.var.duration)
 		if self.var.duration == u'keypress':
+			self._flush = lambda: self._keyboard.flush()
 			return keyboard_response_mixin.prepare_response_func(self)
 		if self.var.duration == u'mouseclick':
+			self._flush = lambda: self._mouse.flush()
 			return mouse_response_mixin.prepare_response_func(self)
 		raise osexception(u'Invalid duration: %s' % self.var.duration)
 
@@ -151,6 +154,7 @@ class sketchpad(base_response_item, keyboard_response_mixin,
 		"""See item."""
 
 		self._t0 = self.set_item_onset(self.canvas.show())
+		self._flush()
 		base_response_item.run(self)
 
 	def coroutine(self):
