@@ -154,6 +154,7 @@ class Legacy(Keyboard):
 				keypressed = True
 				if event.key == pygame.K_ESCAPE:
 					self.experiment.pause()
+		pygame.event.pump()
 		return keypressed
 
 	def key_name(self, key):

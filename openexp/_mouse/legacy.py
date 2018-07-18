@@ -133,6 +133,7 @@ class Legacy(Mouse, LegacyCoordinates):
 				self.experiment.pause()
 			if event.type == MOUSEBUTTONDOWN:
 				buttonclicked = True
+		pygame.event.pump()
 		return buttonclicked
 
 
