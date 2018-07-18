@@ -854,7 +854,6 @@ class qtitem(object):
 			applied.
 		"""
 
-		print('set dirty ' + self.name)
 		self._dirty = True
 
 	def set_clean(self):
