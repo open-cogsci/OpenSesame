@@ -39,8 +39,8 @@ class Ellipse(Element):
 
 		# Source: https://math.stackexchange.com/questions/76457/
 		# check-if-a-point-is-within-an-ellipse
-		rx = self.w / 2
-		ry = self.h / 2
+		rx = 1. * self.w / 2
+		ry = 1. * self.h / 2
 		h = self.x + rx
 		k = self.y + ry
 		x, y = xy
