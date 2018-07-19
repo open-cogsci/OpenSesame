@@ -27,6 +27,7 @@ class Polygon(Element):
 
 		properties = properties.copy()
 		properties.update({ 'vertices' : vertices })
+		self._shapely_polygon = None
 		Element.__init__(self, canvas, **properties)
 
 	@property
@@ -37,3 +38,23 @@ class Polygon(Element):
 		top = min(y for x,y in self.vertices)
 		bottom = max(y for x,y in self.vertices)
 		return left, top, right-left, bottom-top
+
+	def __contains__(self, xy):
+
+		# Shapely is used to determine whether a point falls exactly within the
+		# polygon. If shapely isn't available, we fall back to a simple bounding
+		# box. The shapely polygon is stored for performance.
+		try:
+			from shapely.geometry import Polygon as ShapelyPolygon, Point
+		except ImportError:
+			return Element.__contains__(self, xy)
+		if self._shapely_polygon is None:
+			self._shapely_polygon = ShapelyPolygon(self.vertices)
+		return self._shapely_polygon.contains(Point(*xy))
+
+	def _on_attribute_change(self, **kwargs):
+
+		# When a change occurs the shapely polygon (if any) needs to be
+		# redetermined in __contains__
+		self._shapely_polygon = None
+		Element._on_attribute_change(self, **kwargs)
