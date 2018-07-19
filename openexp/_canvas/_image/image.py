@@ -27,8 +27,28 @@ class Image(Element):
 		rotation=None):
 
 		x, y = canvas.none_to_center(x, y)
-		Element.__init__(self, canvas, fname=fname, center=center, x=x, y=y,
-			scale=scale, rotation=rotation)
+		self._image_size = None
+		self._shapely_polygon = None
+		Element.__init__(
+			self, canvas,
+			fname=fname,
+			center=center,
+			x=x,
+			y=y,
+			scale=scale,
+			rotation=rotation
+		)
+
+	def _size(self):
+
+		if self._image_size is None:
+			from PIL import Image
+			w, h = Image.open(self.fname).size
+			if self.scale is not None:
+				w *= self.scale
+				h *= self.scale
+			self._image_size = w, h
+		return self._image_size
 
 	@property
 	def rect(self):
@@ -52,3 +72,34 @@ class Image(Element):
 		if self.center:
 			return x-w2//2, y-h2//2, w2, h2
 		return x-dx, y-dy, w2, h2
+
+	def __contains__(self, xy):
+
+		# Shapely is used to determine whether a point falls exactly within the
+		# polygon. If shapely isn't available, we fall back to a simple bounding
+		# box. The shapely polygon is stored for performance.
+		try:
+			from shapely.geometry import box, Point
+			from shapely import affinity
+		except ImportError:
+			return Element.__contains__(self, xy)
+		if self._shapely_polygon is None:
+			w, h = self._size()
+			x, y = self.none_to_center(self.x, self.y)
+			if self.center:
+				x -= w / 2
+				y -= h / 2
+			self._shapely_polygon = box(x, y, x + w, y + h)
+			if self.rotation:
+				self._shapely_polygon = affinity.rotate(
+					self._shapely_polygon,
+					self.rotation
+				)
+		return self._shapely_polygon.contains(Point(*xy))
+
+	def _on_attribute_change(self, **kwargs):
+
+		# When a change occurs the shapely line (if any) needs to be
+		# redetermined in __contains__
+		self._shapely_polygon = None
+		Element._on_attribute_change(self, **kwargs)
