@@ -64,9 +64,9 @@ class item_combobox(QtWidgets.QComboBox, base_subcomponent):
 
 	def findText(self, item):
 
-		if item == u'':
+		if not item:
 			return 0
-		return QtWidgets.QComboBox.findText(self, item)
+		return QtWidgets.QComboBox.findText(self, safe_decode(item))
 
 	@property
 	def items(self):
