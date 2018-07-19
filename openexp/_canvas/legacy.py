@@ -22,6 +22,7 @@ from pygame.locals import *
 import os
 import pygame
 import platform
+from collections import OrderedDict
 from openexp.backend import configurable
 from openexp._canvas.canvas import Canvas
 from openexp._coordinates.legacy import Legacy as LegacyCoordinates
@@ -158,7 +159,7 @@ class Legacy(Canvas, LegacyCoordinates):
 	def clear(self):
 
 		self.surface.fill(self.background_color.backend_color)
-		self._elements = {}
+		self._elements = OrderedDict()
 
 
 	def _text_size(self, text):
