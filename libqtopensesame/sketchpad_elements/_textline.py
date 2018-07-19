@@ -43,10 +43,15 @@ class textline(base_element, textline_runtime):
 			full element script.
 		"""
 
-		text = self.experiment.text_input(_(u'Edit text'),
+		text = self.experiment.text_input(
+			_(u'Edit text'),
 			message=_(u'Please enter a text for the textline'),
-			content=self.properties[u'text'].replace(u'<br />', u'\n'),
-			parent=self.sketchpad._edit_widget)
+			content=safe_decode(self.properties[u'text']).replace(
+				u'<br />',
+				u'\n'
+			),
+			parent=self.sketchpad._edit_widget
+		)
 		if text is None:
 			return
 		self.properties[u'text'] = self.clean_text(text)
