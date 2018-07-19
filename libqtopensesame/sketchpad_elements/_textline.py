@@ -63,7 +63,7 @@ class textline(base_element, textline_runtime):
 		properties = {
 				u'x':			pos[0],
 				u'y':			pos[1],
-				u'text':		cls.clean_text(text),
+				u'text':		cls.clean_text(text, escape=True),
 				u'color': 		sketchpad.current_color(),
 				u'center': 		sketchpad.current_center(),
 				u'font_family': sketchpad.current_font_family(),
@@ -76,7 +76,7 @@ class textline(base_element, textline_runtime):
 		return textline(sketchpad, properties=properties)
 
 	@staticmethod
-	def clean_text(text):
+	def clean_text(text, escape=False):
 
 		"""
 		desc:
@@ -87,6 +87,10 @@ class textline(base_element, textline_runtime):
 			text:	The text to clean.
 			type:	[str, unicode, QString]
 
+		keywords:
+			escape:	Indicates whether slashes should be escaped.
+			type:	bool
+
 		returns:
 			desc:	Clean text.
 			type:	unicode
@@ -96,6 +100,8 @@ class textline(base_element, textline_runtime):
 		text = text.replace(os.linesep, u'<br />')
 		text = text.replace(u'\n', u'<br />')
 		text = text.replace(u'"', u'')
+		if escape:
+			text = text.replace(u'\\', u'\\\\')
 		return text
 
 	@staticmethod
