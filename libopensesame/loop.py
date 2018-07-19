@@ -215,8 +215,14 @@ class loop(item.item):
 		if self._constraints:
 			self.ef = Enforce(dm)
 			for constraint_cls, colname, kwargs in self._constraints:
+				try:
+					cols = dm[colname]
+				except:
+					raise osexception(
+						u'Column %s does not exist' % colname
+					)
 				self.ef.add_constraint(
-					constraint_cls, cols=dm[colname], **kwargs
+					constraint_cls, cols=cols, **kwargs
 				)
 			dm = self.ef.enforce()
 		# Operations come last
