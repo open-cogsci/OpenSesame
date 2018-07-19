@@ -32,4 +32,17 @@ class Ellipse(Element):
 
 	@property
 	def rect(self):
+
 		return self.x, self.y, self.w, self.h
+
+	def __contains__(self, xy):
+
+		# Source: https://math.stackexchange.com/questions/76457/
+		# check-if-a-point-is-within-an-ellipse
+		rx = self.w / 2
+		ry = self.h / 2
+		h = self.x + rx
+		k = self.y + ry
+		x, y = xy
+		d = (x - h)**2 / rx**2 + (y - k)**2 / ry**2
+		return d <= 1
