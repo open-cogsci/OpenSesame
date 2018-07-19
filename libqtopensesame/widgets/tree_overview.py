@@ -319,6 +319,12 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 			return
 		# Get the target item
 		target_item_name, target_item_ancestry = target_treeitem.ancestry()
+		# Automated bug reports suggest that target_item_name can sometimes be
+		# an empty string. How this is possible is unclear, but this should
+		# avoid these mysterious crashes.
+		if not target_item_name:
+			e.ignore()
+			return
 		target_item = self.experiment.items[target_item_name]
 		data = 	{
 				u'type'				: u'item-existing',
