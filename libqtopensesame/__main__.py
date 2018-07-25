@@ -113,6 +113,8 @@ def opensesame():
 def opensesamerun():
 
 	set_paths()
+	from libopensesame.oslogging import oslogger
+	oslogger.start(u'gui')
 	import libopensesame.misc
 	libopensesame.misc.parse_environment_file()
 	import libopensesame.experiment
