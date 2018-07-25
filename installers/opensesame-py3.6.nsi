@@ -88,7 +88,7 @@ Section -AdditionalIcons
   WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
   CreateDirectory "$SMPROGRAMS\OpenSesame"
   CreateShortCut "$SMPROGRAMS\OpenSesame\OpenSesame.lnk" "$INSTDIR\pythonw.exe" "${EXEC_SUBFOLDER}opensesame" "$INSTDIR\share\opensesame_resources\opensesame.ico"
-  CreateShortCut "$SMPROGRAMS\OpenSesame\OpenSesame (runtime).lnk" "$INSTDIR\pythonw.exe" "${EXEC_SUBFOLDER}opensesamerun" "$INSTDIR\share\opensesame_resources\opensesamerun.ico"
+  CreateShortCut "$SMPROGRAMS\OpenSesame\OpenSesame (runtime).lnk" "$INSTDIR\python.exe" "${EXEC_SUBFOLDER}opensesamerun" "$INSTDIR\share\opensesame_resources\opensesamerun.ico"
   CreateShortCut "$SMPROGRAMS\OpenSesame\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
   CreateShortCut "$SMPROGRAMS\OpenSesame\Uninstall.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
