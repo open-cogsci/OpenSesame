@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="es">
 <context>
     <name>core_backend_settings</name>
     <message>
@@ -419,7 +420,7 @@
         <source>Could not parse script: %s</source>
         <translation>No se pudo leer el script: %s</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="346"/>
         <source>Save as…</source>
         <translation>Guardar como…</translation>
@@ -610,7 +611,7 @@ Descripción: %s</translation>
     <message>
         <location filename="../../translatables-tmp.py" line="101"/>
         <source>Recursion detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Recursión detectada</translation>
     </message>
 </context>
 <context>
@@ -676,7 +677,7 @@ Descripción: %s</translation>
         <source>Done</source>
         <translation>Hecho</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="14"/>
         <source>Loading …</source>
         <translation>Cargando …</translation>
@@ -796,12 +797,12 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="684"/>
         <source>Checks whether file-pool folder still exists</source>
-        <translation type="unfinished"></translation>
+        <translation>Comprueba si la carpeta del grupo de archivos aún existe</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="685"/>
         <source>File pool missing</source>
-        <translation type="unfinished"></translation>
+        <translation>Grupo de archivos no encontrado</translation>
     </message>
 </context>
 <context>
@@ -837,7 +838,7 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
 </context>
 <context>
     <name>extension_get_started</name>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../translatables-tmp.py" line="763"/>
         <source>New…</source>
         <translation>Nuevo…</translation>
@@ -892,8 +893,8 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="57"/>
-        <source>Please wait &#xe2;&#x80;&#xa6;</source>
-        <translation type="unfinished"></translation>
+        <source>Please wait â¦</source>
+        <translation>Por favor espere</translation>
     </message>
 </context>
 <context>
@@ -1002,12 +1003,12 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="167"/>
         <source>Startup time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Tiempo de inicio</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="174"/>
         <source>Not started</source>
-        <translation type="unfinished"></translation>
+        <translation>No empezado</translation>
     </message>
 </context>
 <context>
@@ -1059,7 +1060,7 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="205"/>
         <source>Checks the system and provides warnings if necessary</source>
-        <translation type="unfinished"></translation>
+        <translation>Comprueba el sistem y dara avisos si es necesario</translation>
     </message>
 </context>
 <context>
@@ -1080,17 +1081,18 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="247"/>
         <source>Tab to dockwidget</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>No translation for dockwidget</translatorcomment>
+        <translation>Pestaña a dockwidget</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="248"/>
         <source>Turns a tab into a dockwidget</source>
-        <translation type="unfinished"></translation>
+        <translation>Convierte una pestaña en un dockwidget</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="249"/>
         <source>Turn tab into dockwidget</source>
-        <translation type="unfinished"></translation>
+        <translation>Convertir pestaña en dockwidget</translation>
     </message>
 </context>
 <context>
@@ -1279,12 +1281,12 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="444"/>
         <source>Event type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de evento</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="445"/>
         <source>Flush pending key events</source>
-        <translation type="unfinished"></translation>
+        <translation>Purgar eventos de teclado pendientes</translation>
     </message>
 </context>
 <context>
@@ -1443,17 +1445,17 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="655"/>
         <source>Linked sketchpad</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloc de dibujo enlazado</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="656"/>
         <source>Elements define regions of interest</source>
-        <translation type="unfinished"></translation>
+        <translation>Los elementos definen las áreas de interes</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="657"/>
         <source>Event type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo de evento</translation>
     </message>
 </context>
 <context>
@@ -1687,12 +1689,12 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="975"/>
         <source>Rotation &quot;%s&quot; is unknown or variably defined, using 0</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotación &quot;%s&quot; es desconocido o definido mediante variable, usando 0</translation>
     </message>
     <message>
         <location filename="../../translatables-tmp.py" line="997"/>
         <source>Specify polar coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Especificar coordinadas polares</translation>
     </message>
 </context>
 <context>
@@ -1788,7 +1790,7 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="113"/>
         <source>Jitter mode</source>
-        <translation type="unfinished">Modo de Jitter</translation>
+        <translation>Modo de Jitter</translation>
     </message>
 </context>
 <context>
@@ -2033,7 +2035,7 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
         <translation>Nota</translation>
     </message>
 </context>
-<context encoding="UTF-8">
+<context>
     <name>plugin_quest_staircase_init</name>
     <message>
         <location filename="../../translatables-tmp.py" line="494"/>
@@ -2050,17 +2052,17 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
         <source>Desired proportion of correct responses</source>
         <translation>Proporción deseada de respuestas correctas</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="both">
         <location filename="../../translatables-tmp.py" line="279"/>
         <source>Steepness of the Weibull psychometric function (Î²)</source>
         <translation type="obsolete">Pendiente de la función psicométrica Weibull (Î²)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="both">
         <location filename="../../translatables-tmp.py" line="280"/>
         <source>Proportion of random responses at maximum stimulus intensity (Î´)</source>
         <translation type="obsolete">Proporción de respuestas aleatorias al máximo de intensidad de estímulo (Î´)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="both">
         <location filename="../../translatables-tmp.py" line="281"/>
         <source>Chance level (Î³)</source>
         <translation type="obsolete">Nivel de probabilidad (I³)</translation>
@@ -2084,21 +2086,6 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
         <location filename="../../translatables-tmp.py" line="503"/>
         <source>Experimental variable for test value</source>
         <translation>Variable experimental para el valor de prueba</translation>
-    </message>
-    <message>
-        <location filename="../../translatables-tmp.py" line="497"/>
-        <source>Steepness of the Weibull psychometric function (&#xce;&#xb2;)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../translatables-tmp.py" line="498"/>
-        <source>Proportion of random responses at maximum stimulus intensity (&#xce;&#xb4;)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../translatables-tmp.py" line="499"/>
-        <source>Chance level (&#xce;&#xb3;)</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2291,7 +2278,7 @@ El experimento no pudo terminar de forma normal por la siguiente razón:
     <message>
         <location filename="../../translatables-tmp.py" line="828"/>
         <source>End after item (optional)</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminar después de objeto (opcional)</translation>
     </message>
 </context>
 <context>
@@ -2450,7 +2437,7 @@ Varios ajustes relacionados con el control del monitor, sonido y dispositivos de
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation>Orientación &lt;br /&gt;&lt;i&gt; en graods (0 ... 360)&lt;/&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/gabor_settings.ui" line="100"/>
         <source> °</source>
         <translation> º</translation>
@@ -2575,7 +2562,7 @@ Varios ajustes relacionados con el control del monitor, sonido y dispositivos de
         <source> px</source>
         <translation> px</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/general_properties.ui" line="183"/>
         <source>×</source>
         <translation>x</translation>
@@ -3014,40 +3001,40 @@ Edite su experimento en forma de script</translation>
         <source>One-tab mode</source>
         <translation>Modo pestaña única</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/misc/main_window.ui" line="358"/>
         <source>Open…</source>
         <translation>Abrir…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/misc/main_window.ui" line="388"/>
         <source>Save as…</source>
         <translation>Guardar como…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/misc/main_window.ui" line="411"/>
         <source>Run fullscreen…</source>
         <translation>Correr en pantalla completa…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/misc/main_window.ui" line="449"/>
         <source>Run in window…</source>
         <translation>Correr en ventana…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../ui/misc/main_window.ui" line="278"/>
         <source>Initializing debug window …</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciando ventana de depuración ...</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="633"/>
         <source>Kill experiment</source>
-        <translation type="unfinished"></translation>
+        <translation>Matar experimento</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="636"/>
         <source>Forcibly kill the experiment</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuerza terminar el experimento</translation>
     </message>
 </context>
 <context>
@@ -3198,67 +3185,68 @@ Edite su experimento en forma de script</translation>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/polar_coordinates.ui" line="14"/>
         <source>Polar coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Coordenadas polares</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/polar_coordinates.ui" line="35"/>
         <source>Polar coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Coordenadas polares:</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/polar_coordinates.ui" line="42"/>
         <source>Pole (X)</source>
-        <translation type="unfinished"></translation>
+        <translation>Polo (X)</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/polar_coordinates.ui" line="89"/>
         <source> px</source>
-        <translation type="unfinished"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/polar_coordinates.ui" line="62"/>
         <source>Pole (Y)</source>
-        <translation type="unfinished"></translation>
+        <translation>Polo (Y)</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/polar_coordinates.ui" line="82"/>
         <source>Radius (rho)</source>
-        <translation type="unfinished"></translation>
+        <translation>Radio (ro)</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/polar_coordinates.ui" line="102"/>
         <source>Angle (phi)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ángulo (fi)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/polar_coordinates.ui" line="109"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>º</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/polar_coordinates.ui" line="122"/>
         <source>Cartesian coordinates:</source>
-        <translation type="unfinished"></translation>
+        <translation>Coordenadas cartesianas:</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/polar_coordinates.ui" line="129"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/polar_coordinates.ui" line="150"/>
         <source>TextLabel</source>
-        <translation type="unfinished">TextLabel</translation>
+        <translatorcomment>Maybe should leave untranslated</translatorcomment>
+        <translation>EtiquetaTexto</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/polar_coordinates.ui" line="143"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/dialogs/polar_coordinates.ui" line="172"/>
         <source>This tool allows you to calculate cartesian (x, y) coordinates from polar coordinates.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esta herramienta le permite calcular coordenadas cartesianas (x, y) a partir de coordenadas polares</translation>
     </message>
 </context>
 <context>
@@ -3556,25 +3544,25 @@ Edite su experimento en forma de script</translation>
         <source>Select and move elements</source>
         <translation>Seleccionar y mover elementos</translation>
     </message>
-    <message encoding="UTF-8">
+    <message utf8="true">
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/sketchpad.ui" line="472"/>
         <source>°</source>
-        <translation type="unfinished"></translation>
+        <translation>º</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/sketchpad.ui" line="475"/>
         <source>Rotate </source>
-        <translation type="unfinished"></translation>
+        <translation>Rotar</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/sketchpad.ui" line="630"/>
         <source>Name</source>
-        <translation type="unfinished">Nombre</translation>
+        <translation>Nombre</translation>
     </message>
     <message>
         <location filename="../../python-opensesame-3.2.0+a20/opensesame_resources/ui/widgets/sketchpad.ui" line="643"/>
         <source>auto</source>
-        <translation type="unfinished"></translation>
+        <translation>auto</translation>
     </message>
 </context>
 <context>
