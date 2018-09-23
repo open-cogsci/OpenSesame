@@ -44,7 +44,7 @@ class tree_general_item(tree_base_item):
 
 		super(tree_general_item, self).__init__()
 		self.setup(main_window)
-		self.setText(0, self.experiment.var.title)
+		self.setText(0, safe_decode(self.experiment.var.title))
 		self.setIcon(0, self.theme.qicon(u'os-experiment'))
 		self.setToolTip(0, _(u'General options'))
 		self._droppable = False

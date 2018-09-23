@@ -100,9 +100,9 @@ class header_widget(base_widget):
 			type:	unicode
 		"""
 
-		self.label_name.setText(name)
+		self.label_name.setText(safe_decode(name))
 		self.label_type.setText(u' — ' + self.item.item_type.replace(u"_", u" "))
-		self.edit_name.setText(name)
+		self.edit_name.setText(safe_decode(name))
 
 	def set_desc(self, desc):
 
@@ -115,8 +115,8 @@ class header_widget(base_widget):
 			type:	unicode
 		"""
 
-		self.edit_desc.setText(desc)
-		self.label_desc.setText(desc)
+		self.edit_desc.setText(safe_decode(desc))
+		self.label_desc.setText(safe_decode(desc))
 
 	def apply_name(self):
 
