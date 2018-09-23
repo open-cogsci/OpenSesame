@@ -70,7 +70,7 @@ class external_runner(base_runner):
 			u"--logfile=%s" % self.experiment.logfile,
 			u"--subject=%s" % self.experiment.var.subject_nr
 		]
-		if debug.enabled:
+		if oslogger.debug_mode:
 			self.cmd.append(u"--debug")
 		if self.experiment.var.fullscreen == u'yes':
 			self.cmd.append(u"--fullscreen")
