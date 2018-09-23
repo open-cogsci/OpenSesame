@@ -152,6 +152,15 @@ class Form(object):
 
 		return sum([w is not None for w in self.widgets])
 
+	def render(self):
+
+		"""
+		desc:
+			Shows the form canvas without any user interaction.
+		"""
+
+		self.canvas.show()
+
 	def _exec(self, focus_widget=None):
 
 		"""
