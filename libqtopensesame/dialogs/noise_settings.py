@@ -17,9 +17,10 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-from qtpy import QtCore, QtWidgets
+from qtpy import QtWidgets
 from libqtopensesame.dialogs.patch_settings import patch_settings
 from libopensesame.py3compat import *
+
 
 class noise_settings(patch_settings):
 
@@ -51,16 +52,13 @@ class noise_settings(patch_settings):
 
 		if self.exec_() != QtWidgets.QDialog.Accepted:
 			return None
-		properties = {
-			u'env'		: self.env_map[
-				str(self.ui.combobox_env.currentText())],
-			u'size'		: self.ui.spinbox_size.value(),
-			u'stdev'	: self.ui.spinbox_stdev.value(),
-			u'color1'	: str(self.ui.edit_color1.text()),
-			u'color2'	: str(self.ui.edit_color2.text()),
-			u'bgmode'	: self.bgmode_map[
-				str(self.ui.combobox_bgmode.currentText())]
-			}
+		properties = self._spinbox_properties(u'size', u'stdev')
+		properties.update(self._combobox_properties(
+			(u'env', self.env_map),
+			(u'bgmode', self.bgmode_map)
+		))
+		properties[u'color1'] = self.ui.edit_color1.text()
+		properties[u'color2'] = self.ui.edit_color2.text()
 		return properties
 
 	def set_properties(self, properties):
@@ -75,19 +73,19 @@ class noise_settings(patch_settings):
 				type:	dict
 		"""
 
-		self.ui.spinbox_size.setValue(properties[u'size'])
-		self.ui.spinbox_stdev.setValue(properties[u'stdev'])
+		self._set_spinbox(self.ui.spinbox_size, u'size', properties)
+		self._set_spinbox(self.ui.spinbox_stdev, u'stdev', properties)
 		self.ui.edit_color1.setText(properties[u'color1'])
 		self.ui.edit_color2.setText(properties[u'color2'])
-		# To set the comboxes we have to reverse-lookup the correct text, find
-		# the corresponding index, and then set the index.
-		for key, val in self.env_map.items():
-			if val == properties[u'env']:
-				i = self.ui.combobox_env.findText(key)
-				break
-		self.ui.combobox_env.setCurrentIndex(i)
-		for key, val in self.bgmode_map.items():
-			if val == properties[u'bgmode']:
-				i = self.ui.combobox_bgmode.findText(key)
-				break
-		self.ui.combobox_bgmode.setCurrentIndex(i)
+		self._set_combobox(
+			self.env_map,
+			self.ui.combobox_env,
+			u'env',
+			properties
+		)
+		self._set_combobox(
+			self.bgmode_map,
+			self.ui.combobox_bgmode,
+			u'bgmode',
+			properties
+		)
