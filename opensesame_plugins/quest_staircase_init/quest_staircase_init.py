@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+
 from libopensesame.exceptions import osexception
 from libopensesame import plugins
 from libopensesame.oslogging import oslogger
@@ -54,6 +55,7 @@ class quest_staircase_init(item):
 
 	description = u'Initializes a new Quest staircase procedure'
 
+
 	def reset(self):
 
 		"""
@@ -61,6 +63,7 @@ class quest_staircase_init(item):
 			Initialize default variables.
 		"""
 
+		self.var.name = u'quest_staircase'
 		self.var.t_guess = .5
 		self.var.t_guess_sd = .25
 		self.var.p_threshold = .75
@@ -72,28 +75,34 @@ class quest_staircase_init(item):
 		self.var.max_test_value = 1
 		self.var.var_test_value = u'quest_test_value'
 
-	def quest_set_next_test_value(self):
+
+	def quest_set_next_test_value(self, quest_name):
 
 		"""
 		desc:
 			Sets the next test value for the Quest procedure.
 		"""
 
-		if self.var.test_value_method == u'quantile':
-			self.experiment.quest_test_value = self.experiment.quest.quantile
-		elif self.var.test_value_method == u'mean':
-			self.experiment.quest_test_value = self.experiment.quest.mean
-		elif self.var.test_value_method == u'mode':
-			self.experiment.quest_test_value = self.experiment.quest.mode
-		else:
-			raise osexception(
-				u'Unknown test_value_method \'%s\' in quest_staircase_init' \
-				% self.var.test_value_method)
-		test_value = max(self.var.min_test_value, min(
-			self.var.max_test_value, self.experiment.quest_test_value()))
-		oslogger.debug(u'quest_test_value = %s' % test_value)
-		self.experiment.var.quest_test_value = test_value
-		self.experiment.var.set(self.var.var_test_value, test_value)
+		# Dict for each quest's current value (test_values)
+		if not hasattr(self.experiment, 'test_values'):
+			self.experiment.test_values = {}
+
+		min_value = self.experiment.quest_vars[quest_name][7]
+		max_value = self.experiment.quest_vars[quest_name][8]
+
+		self.experiment.test_values[quest_name] = \
+		max(
+			min_value,
+			min(max_value, self.experiment.quest_test_value[quest_name]())
+		)
+
+		oslogger.debug(u'quest_test_value = %s' % self.experiment.test_values[quest_name])
+
+
+		self.experiment.var.quest_test_value = self.experiment.test_values[quest_name]
+		self.experiment.var.set(self.experiment.quest_vars[quest_name][9],
+								self.experiment.var.quest_test_value)
+
 
 	def prepare(self):
 
@@ -101,13 +110,43 @@ class quest_staircase_init(item):
 		desc:
 			Prepares the plug-in.
 		"""
+		# Dict for each quest's variables (quest_vars)
+		if not hasattr(self.experiment, 'quest_vars'):
+			self.experiment.quest_vars = {}
 
-		self.experiment.quest = Quest.QuestObject(self.var.t_guess,
-			self.var.t_guess_sd, self.var.p_threshold, self.var.beta,
-			self.var.delta, self.var.gamma)
+		self.experiment.quest_vars[self.var.name] = (self.var.t_guess,
+		self.var.t_guess_sd, self.var.p_threshold, self.var.beta,
+		self.var.delta, self.var.gamma, self.var.test_value_method,
+		self.var.min_test_value, self.var.max_test_value, self.var.var_test_value)
+
+		# Dict for each quest object (quest)
+		if not hasattr(self.experiment, 'quest'):
+			self.experiment.quest = {}
+
+		self.experiment.quest[self.var.name] = Quest.QuestObject(self.var.t_guess,
+			self.var.t_guess_sd, self.var.p_threshold,
+			self.var.beta, self.var.delta, self.var.gamma)
+
+
+		# Dict for each quest's value generator, with own test value method
+		# (quest_test_value)
+		if not hasattr(self.experiment, 'quest_test_value'):
+			self.experiment.quest_test_value = {}
+
+		if self.var.test_value_method == u'quantile':
+			self.experiment.quest_test_value[self.var.name] = self.experiment.quest[self.var.name].quantile
+		elif self.var.test_value_method == u'mean':
+			self.experiment.quest_test_value[self.var.name] = self.experiment.quest[self.var.name].mean
+		elif self.var.test_value_method == u'mode':
+			self.experiment.quest_test_value[self.var.name] = self.experiment.quest[self.var.name].mode
+		else:
+			raise osexception(
+				u'Unknown test_value_method \'%s\' in quest_staircase_init' \
+				% self.var.test_value_method)
+
 		self.experiment.quest_set_next_test_value = \
 			self.quest_set_next_test_value
-		self.experiment.quest_set_next_test_value()
+		self.experiment.quest_set_next_test_value(quest_name = self.var.name)
 
 	def var_info(self):
 

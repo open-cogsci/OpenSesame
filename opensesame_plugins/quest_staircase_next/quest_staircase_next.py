@@ -31,13 +31,14 @@ class quest_staircase_next(item):
 
 	description = u'Updates the Quest test value based on a response'
 
+
 	def reset(self):
 
 		"""
 		desc:
 			Initialize default variables.
 		"""
-
+		self.var.linked_quest = u'quest_staircase'
 		self.var.response_var = u'correct'
 
 	def run(self):
@@ -46,15 +47,19 @@ class quest_staircase_next(item):
 		desc:
 			Run phase for plug-in.
 		"""
-
 		resp = self.var.get(self.var.response_var)
 		try:
 			resp = int(resp)
 		except:
 			# Don't process non-float responses
 			return
-		self.experiment.quest.update(self.var.quest_test_value, resp)
-		self.experiment.quest_set_next_test_value()
+
+		self.experiment.quest[self.var.linked_quest].update(
+			self.experiment.test_values[self.var.linked_quest],
+			resp
+			)
+
+		self.experiment.quest_set_next_test_value(self.var.linked_quest)
 
 class qtquest_staircase_next(quest_staircase_next, qtautoplugin):
 

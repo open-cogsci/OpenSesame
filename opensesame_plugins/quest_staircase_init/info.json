@@ -3,6 +3,12 @@
 	"controls" : [
 		{
 			"type"		: "line_edit",
+			"var"		: "name",
+			"label"		: "Name",
+			"tooltip"	: "Name of this staircase procedure"
+		},
+		{
+			"type"		: "line_edit",
 			"var"		: "t_guess",
 			"label"		: "Estimated threshold (used for starting test value)",
 			"tooltip"	: "Estimated threshold (used for starting test value)"

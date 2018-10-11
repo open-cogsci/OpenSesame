@@ -3,6 +3,12 @@
 	"controls" : [
 		{
 			"type"		: "line_edit",
+			"var"		: "linked_quest",
+			"label"		: "Linked quest (name):",
+			"tooltip"	: "Quest staircase that this item is linked to."
+		},
+		{
+			"type"		: "line_edit",
 			"var"		: "response_var",
 			"label"		: "Response variable (0 or 1)",
 			"tooltip"	: "Response variable (0 or 1)"
