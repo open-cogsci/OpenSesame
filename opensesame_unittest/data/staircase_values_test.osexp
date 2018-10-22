@@ -5,7 +5,7 @@ Platform: nt
 ---
 set width 1024
 set uniform_coordinates yes
-set title "New experiment"
+set title Staircase_values_test
 set subject_parity even
 set subject_nr 0
 set start experiment
@@ -13,7 +13,10 @@ set sound_sample_size -16
 set sound_freq 48000
 set sound_channels 2
 set sound_buf_size 1024
+set sampler_backend legacy
 set round_decimals 2
+set mouse_backend xpyriment
+set keyboard_backend legacy
 set height 768
 set fullscreen no
 set form_clicks no
@@ -23,11 +26,13 @@ set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "x:\\My Documents\\OpenSesame\\3.2.5\\opensesame_3.2.5-py2.7-win32-1\\share\\opensesame_resources\\templates"
+set experiment_path "C:/Users/s2491907/Desktop"
 set disable_garbage_collection yes
 set description "The main experiment item"
 set coordinates uniform
 set compensation 0
+set color_backend legacy
+set clock_backend legacy
 set canvas_backend xpyriment
 set background black
 
@@ -48,13 +53,13 @@ define inline_script autoresponse
 define inline_script check_convergence
 	set description "Executes Python code"
 	___run__
-	if var.green_test_value < .70 or var.green_test_value > .80:
+	if var.one_test_value < .70 or var.one_test_value > .80:
 		raise Exception('Staircase didn\'t converge')
 		
-	if var.yellow_test_value < .85 or var.yellow_test_value > .95:
+	if var.two_test_value < .85 or var.two_test_value > .95:
 		raise Exception('Staircase didn\'t converge')
 		
-	if var.red_test_value < .55 or var.red_test_value > .65:
+	if var.three_test_value < .55 or var.three_test_value > .65:
 		raise Exception('Staircase didn\'t converge')
 	__end__
 	set _prepare ""
@@ -63,68 +68,27 @@ define sequence experiment
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
 	run autoresponse always
-	run greenstair always
-	run yellowstair always
-	run redstair always
-	run vars always
-	run new_loop always
+	run staircase_1_init always
+	run staircase_2_init always
+	run staircase_3_init always
+	run loop always
 	run check_convergence always
 
-define notepad getting_started
-	__note__
-	Welcome to OpenSesame 3.2 "Kafkaesque Koffka"!
-	If you are new to OpenSesame, it is a good idea to follow one of the tutorials,
-	which can be found on the documentation site:
-	- <http://osdoc.cogsci.nl/>
-	You can also check out the examples. These can be opened via:
-	- Menu -> Tools -> Example experiments.
-	And feel free to ask for help on the forum:
-	- <http://forum.cogsci.nl/>
-	Have fun with OpenSesame!
-	__end__
-	set description "A simple notepad to document your experiment. This plug-in does nothing."
-
-define quest_staircase_next green_staircase_next
-	set response_var correct
-	set linked_quest green_staircase
-	set description "Updates the Quest test value based on a response"
-
-define quest_staircase_init greenstair
-	set var_test_value green_test_value
-	set test_value_method quantile
-	set t_guess_sd 0.25
-	set t_guess 0.5
-	set p_threshold 0.75
-	set name green_staircase
-	set min_test_value 0
-	set max_test_value 1
-	set gamma 0.5
-	set description "Initializes a new Quest staircase procedure"
-	set delta 0.01
-	set beta 3.5
-
-define inline_script new_inline_script
+define inline_script generate_response
 	set description "Executes Python code"
 	___run__
 	if var.target == 'green':
-		
-		var.green_value = int((var.green_test_value*100))
+		var.correct = autoresponse(var.one_test_value)
 		
 	elif var.target == 'yellow':
-		
-		var.yellow_value = int((var.yellow_test_value*100))
+		var.correct = autoresponse(var.two_test_value)
 		
 	else:
-		
-		var.red_value = int((var.red_test_value*100))
+		var.correct = autoresponse(var.three_test_value)
 	__end__
 	set _prepare ""
 
-define logger new_logger
-	set description "Logs experimental data"
-	set auto_log yes
-
-define loop new_loop
+define loop loop
 	set source table
 	set repeat 200
 	set order random
@@ -136,37 +100,28 @@ define loop new_loop
 	setcycle 0 target green
 	setcycle 1 target yellow
 	setcycle 2 target red
-	run new_sequence
+	run sequence
 
-define sequence new_sequence
+define logger new_logger
+	set description "Logs experimental data"
+	set auto_log yes
+
+define sequence sequence
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run new_inline_script always
-	run response_1 always
-	run green_staircase_next "[target] == 'green'"
-	run yellow_staircase_next "[target] == 'yellow'"
-	run red_staircase_next "[target] == 'red'"
+	run generate_response always
+	run staircase_1_next "[target] == 'green'"
+	run staircase_2_next "[target] == 'yellow'"
+	run staircase_3_next "[target] == 'red'"
 	run new_logger always
 
-define sketchpad new_sketchpad
-	set duration 0
-	set description "Displays stimuli"
-	draw circle color=yellow fill=1 penwidth=1 r="[yellow_value]" show_if=always x=0 y=0 z_index=0
-	draw circle color=green fill=1 penwidth=1 r="[green_value]" show_if=always x=-288 y=0 z_index=0
-	draw circle color=red fill=1 penwidth=1 r="[red_value]" show_if=always x=288 y=0 z_index=0
-
-define quest_staircase_next red_staircase_next
-	set response_var correct
-	set linked_quest red_staircase
-	set description "Updates the Quest test value based on a response"
-
-define quest_staircase_init redstair
-	set var_test_value red_test_value
+define quest_staircase_init staircase_1_init
+	set var_test_value one_test_value
 	set test_value_method quantile
 	set t_guess_sd 0.25
 	set t_guess 0.5
-	set p_threshold 0.6
-	set name red_staircase
+	set p_threshold 0.75
+	set name staircase_one
 	set min_test_value 0
 	set max_test_value 1
 	set gamma 0.5
@@ -174,52 +129,46 @@ define quest_staircase_init redstair
 	set delta 0.01
 	set beta 3.5
 
-define inline_script response_1
-	set description "Executes Python code"
-	___run__
-	if var.target == 'green':
-		var.correct = autoresponse(var.green_test_value)
-		
-	elif var.target == 'yellow':
-		var.correct = autoresponse(var.yellow_test_value)
-		
-	else:
-		var.correct = autoresponse(var.red_test_value)
-	__end__
-	set _prepare ""
-
-define inline_script vars
-	set description "Executes Python code"
-	___run__
-	var.green_value = int((var.green_test_value*100))
-	var.yellow_value = int((var.yellow_test_value*100))
-	var.red_value = int((var.red_test_value*100))
-	__end__
-	set _prepare ""
-
-define sketchpad welcome
-	set start_response_interval no
-	set reset_variables no
-	set duration keypress
-	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text="OpenSesame 3.2 <i>Kafkaesque Koffka</i>" x=0 y=0 z_index=0
-
-define quest_staircase_next yellow_staircase_next
+define quest_staircase_next staircase_1_next
 	set response_var correct
-	set linked_quest yellow_staircase
+	set linked_quest staircase_one
 	set description "Updates the Quest test value based on a response"
 
-define quest_staircase_init yellowstair
-	set var_test_value yellow_test_value
+define quest_staircase_init staircase_2_init
+	set var_test_value two_test_value
 	set test_value_method quantile
 	set t_guess_sd 0.25
 	set t_guess 0.5
 	set p_threshold 0.9
-	set name yellow_staircase
+	set name staircase_two
 	set min_test_value 0
 	set max_test_value 1
 	set gamma 0.5
 	set description "Initializes a new Quest staircase procedure"
 	set delta 0.01
 	set beta 3.5
+
+define quest_staircase_next staircase_2_next
+	set response_var correct
+	set linked_quest staircase_two
+	set description "Updates the Quest test value based on a response"
+
+define quest_staircase_init staircase_3_init
+	set var_test_value three_test_value
+	set test_value_method quantile
+	set t_guess_sd 0.25
+	set t_guess 0.5
+	set p_threshold 0.6
+	set name staircase_three
+	set min_test_value 0
+	set max_test_value 1
+	set gamma 0.5
+	set description "Initializes a new Quest staircase procedure"
+	set delta 0.01
+	set beta 3.5
+
+define quest_staircase_next staircase_3_next
+	set response_var correct
+	set linked_quest staircase_three
+	set description "Updates the Quest test value based on a response"
 

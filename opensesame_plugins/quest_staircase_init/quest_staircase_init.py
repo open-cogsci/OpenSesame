@@ -159,8 +159,10 @@ class quest_staircase_init(item):
 			type:	list
 		"""
 
-		return item.var_info(self) + [(u'quest_test_value',
-			u'(Determined by Quest procedure)')]
+		return item.var_info(self) + [
+			(u'quest_test_value', u'(Determined by Quest procedure)'),
+			(self.var.var_test_value, u'(Determined by Quest procedure)')
+		]
 
 class qtquest_staircase_init(quest_staircase_init, qtautoplugin):
 
