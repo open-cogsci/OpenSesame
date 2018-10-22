@@ -43,7 +43,8 @@ class check_headless(unittest.TestCase):
 		for experiment_file in [
 				u'sketchpad_test.osexp',
 				u'response_test.osexp',
-				u'loop_test.osexp'
+				u'loop_test.osexp',
+				u'staircase_values_test.osexp'
 			]:
 			print(u'Testing %s' % experiment_file)
 			for backend in (u'legacy',):
