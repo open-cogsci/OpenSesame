@@ -236,7 +236,10 @@ class loop(item.item):
 					raise osexception(
 						u'Column %s does not exist' % arglist[-1])
 			if cmd == u'fullfactorial':
-				dm = operations.fullfactorial(dm)
+				try:
+					dm = operations.fullfactorial(dm)
+				except MemoryError:
+					raise osexception(u'DataMatrix too large for fullfact')
 			elif cmd == u'shuffle':
 				if not arglist:
 					dm = operations.shuffle(dm)
