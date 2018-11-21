@@ -51,58 +51,77 @@ class form_multiple_choice(item.item):
 		"""Run the item"""
 
 		# Parse the option list
-		option_list = self.var.options.split(u'\n') # split by return
+		option_list = self.var.options.split(u'\n')  # split by return
 		# Filter out empty options
 		option_list = list(filter(lambda option: option != u'', option_list))
-		# option_list.pop(len(option_list)-1) # remove last (empty) option
-		if len(option_list) == 0:
+		if not option_list:
 			raise osexception(
-				u'You must specify at least one response option in form_multiple_choice item "%s"' \
-				% self.name)
-
+				(
+					u'You must specify at least one response option in'
+					u'form_multiple_choice item "%s"'
+				)
+				% self.name
+			)
 		# Determine whether a button is shown and determine the number of rows
 		rows = len(option_list) + 2
-		if self.var.advance_immediately == u'no' \
-			or self.var.allow_multiple == u'yes':
+		if (
+			self.var.advance_immediately == u'no' or
+			self.var.allow_multiple == u'yes'
+		):
 			show_button = True
 			click_accepts = False
 			rows += 1
 		else:
 			show_button = False
 			click_accepts = True
-
 		# Determine the group for the checkboxes
 		if self.var.allow_multiple == u'no':
 			group = u'response_group'
 		else:
 			group = None
-
 		# The variable in which the response is stored
 		var = self.var.form_var
-
 		# Build the form
 		try:
-			margins = [float(i) for i in str(self.var.margins).split(u';')]
-		except:
+			margins = [
+				float(i) for i in safe_decode(self.var.margins).split(u';')
+			]
+		except (ValueError, TypeError):
 			raise osexception(
-				_(u'margins should be numeric values separated by a semi-colon'))
+				_(u'margins should be numeric values separated by a semi-colon')
+			)
 		if self.var.timeout == u'infinite':
 			timeout = None
 		else:
 			timeout = self.var.timeout
-		form = widgets.form(self.experiment, cols=1, rows=rows,
-			spacing=self.var.spacing, margins=margins, theme=self.var._theme,
-			item=self, timeout=timeout, clicks=self.var.form_clicks==u'yes')
-		form.set_widget(widgets.label(form, self.var.form_title), (0,0))
-		form.set_widget(widgets.label(form, self.var.question), (0,1))
+		form = widgets.form(
+			self.experiment,
+			cols=1,
+			rows=rows,
+			spacing=self.var.spacing,
+			margins=margins,
+			theme=self.var._theme,
+			item=self,
+			timeout=timeout,
+			clicks=self.var.form_clicks == u'yes'
+		)
+		form.set_widget(widgets.label(form, self.var.form_title), (0, 0))
+		form.set_widget(widgets.label(form, self.var.question), (0, 1))
 		i = 2
 		for option in option_list:
-			form.set_widget(widgets.checkbox(form, option,
-				group=group, click_accepts=click_accepts, var=var), (0,i))
+			form.set_widget(
+				widgets.checkbox(
+					form,
+					option,
+					group=group,
+					click_accepts=click_accepts,
+					var=var
+				),
+				(0, i)
+			)
 			i += 1
 		if show_button:
-			form.set_widget(widgets.button(form, self.var.button_text), (0,i))
-
+			form.set_widget(widgets.button(form, self.var.button_text), (0, i))
 		# Go!
 		form._exec()
 
@@ -115,8 +134,11 @@ class form_multiple_choice(item.item):
 		A list of (name, description) tuples
 		"""
 
-		return item.item.var_info(self) + \
-			[(u'form_var', u'[Depends on response]')]
+		return (
+			item.item.var_info(self) +
+			[(self.var.form_var, u'[Depends on response]')]
+		)
+
 
 class qtform_multiple_choice(form_multiple_choice, qtautoplugin):
 
@@ -155,7 +177,10 @@ class qtform_multiple_choice(form_multiple_choice, qtautoplugin):
 		be selected.
 		"""
 
-		self.checkbox_advance_immediately.setEnabled(self.var.get( \
-			u'allow_multiple') == u'no')
-		self.line_edit_button_text.setEnabled(self.var.get(u'allow_multiple') == \
-			u'yes' or self.var.get(u'advance_immediately') == u'no')
+		self.checkbox_advance_immediately.setEnabled(
+			self.var.get(u'allow_multiple') == u'no'
+		)
+		self.line_edit_button_text.setEnabled(
+			self.var.get(u'allow_multiple') == u'yes' or
+			self.var.get(u'advance_immediately') == u'no'
+		)
