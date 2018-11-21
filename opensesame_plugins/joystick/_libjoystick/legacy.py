@@ -25,12 +25,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import pygame
 from pygame.locals import *
-from pygame.joystick import Joystick
-from libopensesame.exceptions import osexception
 from libopensesame import plugins
 
-basejoystick = plugins.load_cls(__file__, cls=u'basejoystick',
-	mod=u'basejoystick')
+
+basejoystick = plugins.load_cls(
+	__file__,
+	cls=u'basejoystick',
+	mod=u'basejoystick'
+)
+
 
 class legacy(basejoystick):
 
@@ -63,8 +66,10 @@ class legacy(basejoystick):
 					if event.key == pygame.K_ESCAPE:
 						self.experiment.pause()
 				if event.type == JOYBUTTONDOWN:
-					if joybuttonlist is None or event.button + 1 in \
-						joybuttonlist:
+					if (
+						joybuttonlist is None or
+						event.button + 1 in joybuttonlist
+					):
 						bpress = event.button + 1
 						return bpress, time
 
@@ -165,8 +170,10 @@ class legacy(basejoystick):
 					if event.key == pygame.K_ESCAPE:
 						self.experiment.pause()
 				if event.type == JOYBUTTONDOWN:
-					if joybuttonlist is None or event.button + 1 in \
-						joybuttonlist:
+					if (
+						joybuttonlist is None or
+						event.button + 1 in joybuttonlist
+					):
 						eventtype = u'joybuttonpress'
 						bpress = event.button + 1
 						return eventtype, bpress, time
@@ -192,8 +199,12 @@ class legacy(basejoystick):
 
 		"""See _libjoystick.basejoystick"""
 
-		ninputs = [self.js.get_numbuttons(), self.js.get_numaxes(),
-			self.js.get_numballs(), self.js.get_numhats()]
+		ninputs = [
+			self.js.get_numbuttons(),
+			self.js.get_numaxes(),
+			self.js.get_numballs(),
+			self.js.get_numhats()
+		]
 		return ninputs
 
 	def flush(self):
@@ -204,7 +215,11 @@ class legacy(basejoystick):
 		for event in pygame.event.get():
 			if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
 				self.experiment.pause()
-			if event.type == JOYBUTTONDOWN or event.type == JOYAXISMOTION or \
-				event.type == JOYBALLMOTION or event.type == JOYHATMOTION:
+			if event.type in (
+				JOYBUTTONDOWN,
+				JOYAXISMOTION,
+				JOYBALLMOTION,
+				JOYHATMOTION
+			):
 				joyinput = True
 		return joyinput
