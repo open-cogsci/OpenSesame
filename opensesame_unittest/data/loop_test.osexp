@@ -1,6 +1,6 @@
 ---
 API: 2.1
-OpenSesame: 3.2.0a8
+OpenSesame: 3.2.6a3
 Platform: posix
 ---
 set width 100
@@ -307,18 +307,23 @@ define logger logger
 	log category
 	log prime
 
-define inline_script new_inline_script
+define inline_script set_constrain_vars
 	set description "Executes Python code"
 	___run__
-	print(var.live_row)
+	var.varcategory = 'category'
+	var.valcategory = 1
+	var.varword = 'word'
+	var.valword = 4
 	__end__
 	set _prepare ""
 
-define sequence new_sequence
-	set flush_keyboard yes
-	set description "Runs a number of items in sequence"
-	run logger always
-	run new_inline_script always
+define inline_script set_roll_vars
+	set description "Executes Python code"
+	___run__
+	var.roll_var = 'word'
+	var.roll_val = -1
+	__end__
+	set _prepare ""
 
 define loop test_constrain
 	set source_file "test.xlsx"
@@ -351,10 +356,44 @@ define loop test_constrain
 	constrain word mindist=4
 	run logger
 
+define loop test_constrain_var
+	set source_file "test.xlsx"
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 8
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word cat
+	setcycle 0 category w
+	setcycle 1 word cat
+	setcycle 1 category w
+	setcycle 2 word dog
+	setcycle 2 category w
+	setcycle 3 word dog
+	setcycle 3 category w
+	setcycle 4 word cit
+	setcycle 4 category p
+	setcycle 5 word cit
+	setcycle 5 category p
+	setcycle 6 word deg
+	setcycle 6 category p
+	setcycle 7 word deg
+	setcycle 7 category p
+	constrain "[varcategory]" maxrep="[valcategory]"
+	constrain "[varword]" mindist="[valword]"
+	run logger
+
 define sequence test_constraints
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
 	run test_constrain always
+	run check_constrain always
+	run set_constrain_vars always
+	run test_constrain_var always
 	run check_constrain always
 
 define loop test_from_csv
@@ -438,6 +477,9 @@ define sequence test_operations
 	run test_roll_all always
 	run check_roll_all always
 	run test_roll_column always
+	run check_roll_column always
+	run set_roll_vars always
+	run test_roll_column_var always
 	run check_roll_column always
 	run test_weight always
 	run check_weight always
@@ -575,6 +617,28 @@ define loop test_roll_column
 	setcycle 3 word cit
 	setcycle 3 category p
 	roll -1 word
+	run logger
+
+define loop test_roll_column_var
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 4
+	set continuous no
+	set checkbox_break_if_on_first no
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 word dog
+	setcycle 0 category w
+	setcycle 1 word deg
+	setcycle 1 category p
+	setcycle 2 word cat
+	setcycle 2 category w
+	setcycle 3 word cit
+	setcycle 3 category p
+	roll "[roll_val]" "[roll_var]"
 	run logger
 
 define loop test_shuffle_all

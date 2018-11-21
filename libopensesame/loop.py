@@ -89,7 +89,7 @@ class loop(item.item):
 					raise osexception(u'Invalid setcycle command: %s' % i)
 				row, var, val = tuple(arglist)
 				if row >= len(self.dm):
-					self.dm.length = row+1
+					self.dm.length = row + 1
 				if var not in self.dm:
 					self.dm[var] = u''
 				self.dm[row][var] = val
@@ -105,18 +105,18 @@ class loop(item.item):
 				for constraint, value in kwdict.items():
 					if constraint == u'maxrep':
 						constraint_cls = MaxRep
-						kwargs = {u'maxrep' : value}
+						kwargs = {u'maxrep': value}
 					elif constraint == u'mindist':
 						constraint_cls = MinDist
-						kwargs = {u'mindist' : value}
+						kwargs = {u'mindist': value}
 					else:
 						raise osexception(
 							u'Unknown constraint: %s' % constraint
 						)
 					self._constraints.append((
-							constraint_cls,
-							colname,
-							kwargs
+						constraint_cls,
+						colname,
+						kwargs
 					))
 					# raise osexception(u'Invalid constrain command: %s' % i)
 				continue
@@ -215,6 +215,11 @@ class loop(item.item):
 		if self._constraints:
 			self.ef = Enforce(dm)
 			for constraint_cls, colname, kwargs in self._constraints:
+				colname = self.syntax.auto_type(self.syntax.eval_text(colname))
+				kwargs = {
+					key: self.syntax.auto_type(self.syntax.eval_text(val))
+					for key, val in kwargs.items()
+				}
 				try:
 					cols = dm[colname]
 				except:
@@ -227,6 +232,10 @@ class loop(item.item):
 			dm = self.ef.enforce()
 		# Operations come last
 		for cmd, arglist in self._operations:
+			arglist = [
+				self.syntax.auto_type(self.syntax.eval_text(arg))
+				for arg in arglist
+			]
 			# The column name is always specified last, or not at all
 			if arglist:
 				try:
