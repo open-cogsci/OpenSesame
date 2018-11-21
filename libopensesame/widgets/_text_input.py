@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.widgets._label import Label
-from openexp.keyboard import keyboard
 
 
 class TextInput(Label):
@@ -48,8 +47,17 @@ class TextInput(Label):
 		[TOC]
 	"""
 
-	def __init__(self, form, text=u'', frame=True, center=False,
-		stub=u'Type here ...', return_accepts=False, var=None, key_filter=None):
+	def __init__(
+		self,
+		form,
+		text=u'',
+		frame=True,
+		center=False,
+		stub=u'Type here ...',
+		return_accepts=False,
+		var=None,
+		key_filter=None
+	):
 
 		"""
 		desc: |
@@ -122,10 +130,22 @@ class TextInput(Label):
 		if self.text == '' and not self.focus:
 			self._update_text(self.stub)
 		elif self.focus:
-			self._update_text(self.text[:self.caret_pos] + self.prompt +
-							self.text[self.caret_pos:])
+			self._update_text(
+				self.text[:self.caret_pos] +
+				self.prompt +
+				self.text[self.caret_pos:]
+			)
 		else:
 			self._update_text(self.text)
+
+	def _insert(self, txt):
+
+		self.text = (
+			self.text[:self.caret_pos] +
+			txt +
+			self.text[self.caret_pos:]
+		)
+		self.caret_pos += len(txt)
 
 	def coroutine(self):
 
@@ -147,30 +167,33 @@ class TextInput(Label):
 			if not self._key_filter(key):
 				continue
 			if key == u'space':
-				self.text = self.text[:self.caret_pos] + u' ' \
-					+ self.text[self.caret_pos:]
-				self.caret_pos +=1
+				self._insert(u' ')
 			elif key == u'backspace':
-				self.text = self.text[:self.caret_pos-1]  \
-					+ self.text[self.caret_pos:]
-				self.caret_pos = max(0, self.caret_pos-1)
+				self.text = (
+					self.text[:self.caret_pos - 1] +
+					self.text[self.caret_pos:]
+				)
+				self.caret_pos = max(0, self.caret_pos - 1)
 			elif key == u'delete':
-				self.text = self.text[:self.caret_pos] \
-					+ self.text[self.caret_pos+1:]
-			elif key in (u'return', u'enter') and self.return_accepts:
-				retval = self.text
+				self.text = (
+					self.text[:self.caret_pos] +
+					self.text[self.caret_pos + 1:]
+				)
+			elif key in (u'return', u'enter'):
+				if self.return_accepts:
+					retval = self.text
+				else:
+					self._insert(u'\n')
 			elif key in (u'home', u'page up'):
 				self.caret_pos = 0
 			elif key in (u'end', u'page down'):
 				self.caret_pos = len(self.text)
 			elif key == u'left':
-				self.caret_pos = max(0, self.caret_pos-1)
+				self.caret_pos = max(0, self.caret_pos - 1)
 			elif key == u'right':
-				self.caret_pos = min(len(self.text), self.caret_pos+1)
+				self.caret_pos = min(len(self.text), self.caret_pos + 1)
 			elif len(key) == 1:
-				self.text = self.text[:self.caret_pos] + key \
-					+ self.text[self.caret_pos:]
-				self.caret_pos +=1
+				self._insert(key)
 			self._update()
 			self.set_var(self.text)
 
