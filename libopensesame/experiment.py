@@ -474,17 +474,23 @@ class experiment(item.item):
 		if self.paused:
 			return
 
-		from openexp.canvas import canvas
-		from openexp.keyboard import keyboard
+		from openexp.canvas import Canvas
+		from openexp.canvas_elements import Text
+		from openexp.keyboard import Keyboard
 
 		self.paused = True
 		self.transmit_workspace(__pause__=True)
-		pause_canvas = canvas(self)
-		pause_canvas.text(
+		pause_canvas = Canvas(self)
+		pause_canvas['msg'] = Text(
 			u'The experiment has been paused<br /><br />'
 			u'Press spacebar to resume<br />'
-			u'Press Q to quit')
-		pause_keyboard = keyboard(self, keylist=[u'space', u'q', u'Q'], timeout=0)
+			u'Press Q to quit'
+		).construct(pause_canvas)
+		pause_keyboard = Keyboard(
+			self,
+			keylist=[u'space', u'q', u'Q'],
+			timeout=0
+		)
 		pause_keyboard.show_virtual_keyboard()
 		pause_canvas.show()
 		try:
@@ -492,8 +498,10 @@ class experiment(item.item):
 				key, _time = pause_keyboard.get_key()
 				if key == u'q' or key == u'Q':
 					pause_keyboard.show_virtual_keyboard(False)
-					raise osexception(u'The experiment was aborted',
-						user_triggered=True)
+					raise osexception(
+						u'The experiment was aborted',
+						user_triggered=True
+					)
 				if key == u'space':
 					break
 				time.sleep(.25)
@@ -501,6 +509,8 @@ class experiment(item.item):
 			self.paused = False
 			self.transmit_workspace(__pause__=False)
 		pause_keyboard.show_virtual_keyboard(False)
+		pause_canvas['msg'].text = u'Resuming ...'
+		pause_canvas.show()
 
 	def cleanup(self):
 
