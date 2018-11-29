@@ -24,7 +24,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import pygame
-from pygame.locals import *
 from libopensesame import plugins
 
 
@@ -46,6 +45,9 @@ class legacy(basejoystick):
 		self.experiment = experiment
 		self.set_joybuttonlist(joybuttonlist)
 		self.set_timeout(timeout)
+		pygame.event.set_blocked(pygame.JOYAXISMOTION)
+		pygame.event.set_blocked(pygame.JOYHATMOTION)
+		pygame.event.set_blocked(pygame.JOYBALLMOTION)
 
 	def get_joybutton(self, joybuttonlist=None, timeout=None):
 
@@ -55,144 +57,156 @@ class legacy(basejoystick):
 			joybuttonlist = self._joybuttonlist
 		if timeout is None:
 			timeout = self.timeout
-
 		start_time = pygame.time.get_ticks()
 		time = start_time
-
 		while timeout is None or time - start_time <= timeout:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():
-				if event.type == KEYDOWN:
+				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						self.experiment.pause()
-				if event.type == JOYBUTTONDOWN:
+				if event.type == pygame.JOYBUTTONDOWN:
 					if (
 						joybuttonlist is None or
 						event.button + 1 in joybuttonlist
 					):
 						bpress = event.button + 1
 						return bpress, time
-
 		return None, time
 
 	def get_joyaxes(self, timeout=None):
 
 		"""See _libjoystick.basejoystick"""
 
+		pygame.event.set_allowed(pygame.JOYAXISMOTION)
 		if timeout is None:
 			timeout = self.timeout
-
 		pos = []
 		start_time = pygame.time.get_ticks()
 		time = start_time
-
 		while timeout is None or time - start_time < timeout:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():
-				if event.type == KEYDOWN:
+				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						self.experiment.pause()
-				if event.type == JOYAXISMOTION:
+				if event.type == pygame.JOYAXISMOTION:
 					for axis in range(self.js.get_numaxes()):
 						pos.append(self.js.get_axis(axis))
+					pygame.event.set_blocked(pygame.JOYAXISMOTION)
 					return pos, time
-
+		pygame.event.set_blocked(pygame.JOYAXISMOTION)
 		return None, time
 
 	def get_joyballs(self, timeout=None):
 
 		"""See _libjoystick.basejoystick"""
 
+		pygame.event.set_allowed(pygame.JOYBALLMOTION)
 		if timeout is None:
 			timeout = self.timeout
-
 		ballpos = []
 		start_time = pygame.time.get_ticks()
 		time = start_time
-
 		while timeout is None or time - start_time < timeout:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():
-				if event.type == KEYDOWN:
+				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						self.experiment.pause()
-				if event.type == JOYBALLMOTION:
+				if event.type == pygame.JOYBALLMOTION:
 					for ball in range(self.js.get_numballs()):
 						ballpos.append(self.js.get_ball(ball))
+					pygame.event.set_blocked(pygame.JOYBALLMOTION)
 					return ballpos, time
-
+		pygame.event.set_blocked(pygame.JOYBALLMOTION)
 		return None, time
 
 	def get_joyhats(self, timeout=None):
 
 		"""See _libjoystick.basejoystick"""
 
+		pygame.event.set_allowed(pygame.JOYHATMOTION)
 		if timeout is None:
 			timeout = self.timeout
-
 		hatpos = []
 		start_time = pygame.time.get_ticks()
 		time = start_time
-
 		while timeout is None or time - start_time < timeout:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():
-				if event.type == KEYDOWN:
+				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						self.experiment.pause()
-				if event.type == JOYHATMOTION:
+				if event.type == pygame.JOYHATMOTION:
 					for hat in range(self.js.get_numhats()):
 						hatpos.append(self.js.get_hat(hat))
+					pygame.event.set_blocked(pygame.JOYHATMOTION)
 					return hatpos, time
-
+		pygame.event.set_blocked(pygame.JOYHATMOTION)
 		return None, time
 
 	def get_joyinput(self, joybuttonlist=None, timeout=None):
 
 		"""See _libjoystick.basejoystick"""
 
+		pygame.event.set_allowed(pygame.JOYHATMOTION)
+		pygame.event.set_allowed(pygame.JOYAXISMOTION)
+		pygame.event.set_allowed(pygame.JOYBALLMOTION)
 		if joybuttonlist is None or joybuttonlist == []:
 			joybuttonlist = self._joybuttonlist
 		if timeout is None:
 			timeout = self.timeout
-
 		pos = []
 		ballpos = []
 		hatpos = []
 		eventtype = None
 		start_time = pygame.time.get_ticks()
 		time = start_time
-
 		while timeout is None or time - start_time <= timeout:
 			time = pygame.time.get_ticks()
 			for event in pygame.event.get():
-				if event.type == KEYDOWN:
+				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						self.experiment.pause()
-				if event.type == JOYBUTTONDOWN:
+				if event.type == pygame.JOYBUTTONDOWN:
 					if (
 						joybuttonlist is None or
 						event.button + 1 in joybuttonlist
 					):
 						eventtype = u'joybuttonpress'
 						bpress = event.button + 1
+						pygame.event.set_blocked(pygame.JOYHATMOTION)
+						pygame.event.set_blocked(pygame.JOYAXISMOTION)
+						pygame.event.set_blocked(pygame.JOYBALLMOTION)
 						return eventtype, bpress, time
-				if event.type == JOYAXISMOTION:
+				if event.type == pygame.JOYAXISMOTION:
 					eventtype = u'joyaxismotion'
 					for axis in range(self.js.get_numaxes()):
 						pos.append(self.js.get_axis(axis))
+					pygame.event.set_blocked(pygame.JOYHATMOTION)
+					pygame.event.set_blocked(pygame.JOYAXISMOTION)
+					pygame.event.set_blocked(pygame.JOYBALLMOTION)
 					return eventtype, pos, time
-				if event.type == JOYBALLMOTION:
+				if event.type == pygame.JOYBALLMOTION:
 					eventtype = u'joyballmotion'
 					for ball in range(self.js.get_numballs()):
 						ballpos.append(self.js.get_ball(ball))
+					pygame.event.set_blocked(pygame.JOYHATMOTION)
+					pygame.event.set_blocked(pygame.JOYAXISMOTION)
+					pygame.event.set_blocked(pygame.JOYBALLMOTION)
 					return eventtype, ballpos, time
-				if event.type == JOYHATMOTION:
+				if event.type == pygame.JOYHATMOTION:
 					eventtype = u'joyhatmotion'
 					for hat in range(self.js.get_numhats()):
 						hatpos.append(self.js.get_hat(hat))
+					pygame.event.set_blocked(pygame.JOYHATMOTION)
+					pygame.event.set_blocked(pygame.JOYAXISMOTION)
+					pygame.event.set_blocked(pygame.JOYBALLMOTION)
 					return eventtype, hatpos, time
-
+		pygame.event.set_blocked(pygame.JOYHATMOTION)
+		pygame.event.set_blocked(pygame.JOYAXISMOTION)
+		pygame.event.set_blocked(pygame.JOYBALLMOTION)
 		return eventtype, None, time
 
 	def input_options(self):
@@ -213,13 +227,13 @@ class legacy(basejoystick):
 
 		joyinput = False
 		for event in pygame.event.get():
-			if event.type == KEYDOWN and event.key == pygame.K_ESCAPE:
+			if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
 				self.experiment.pause()
 			if event.type in (
-				JOYBUTTONDOWN,
-				JOYAXISMOTION,
-				JOYBALLMOTION,
-				JOYHATMOTION
+				pygame.JOYBUTTONDOWN,
+				pygame.JOYAXISMOTION,
+				pygame.JOYBALLMOTION,
+				pygame.JOYHATMOTION
 			):
 				joyinput = True
 		return joyinput
