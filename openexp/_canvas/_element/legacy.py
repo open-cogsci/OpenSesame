@@ -35,3 +35,13 @@ class LegacyElement(object):
 	def _on_attribute_change(self, **kwargs):
 
 		self._canvas.redraw()
+
+	def copy(self, canvas):
+
+		# We reinstantiate the Element from scratch, to avoid having to
+		# deep-copy anything
+		properties = {
+			key: val.colorspec if hasattr(val, u'colorspec') else val
+			for key, val in self._properties.items()
+		}
+		return self.__class__(canvas, **properties)
