@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from pygame.locals import *
 import os
 import pygame
 import platform
@@ -30,10 +29,10 @@ from libopensesame.oslogging import oslogger
 
 # PyGame 1.9.2 suffers from character encoding issues. To get around those, we
 # pass file objects directly to PyGame, instead of paths. These file objects
-# need to remain open in the case of fonts, otherwise the associated font object
-# won't work anymore. So here we keep a list of all open file objects, which are
-# closed when the display is closed. In addition, we keep track of font objects
-# so that we don't repeatedly initialize the same font.
+# need to remain open in the case of fonts, otherwise the associated font
+# object won't work anymore. So here we keep a list of all open file objects,
+# which are closed when the display is closed. In addition, we keep track of
+# font objects so that we don't repeatedly initialize the same font.
 #
 # A bug report regarding character encoding is here:
 # - https://bitbucket.org/pygame/pygame/issues/196/\
@@ -54,32 +53,35 @@ class Legacy(Canvas, LegacyCoordinates):
 	# The settings variable is used by the GUI to provide a list of back-end
 	# settings
 	settings = {
-		u"pygame_hwsurface" : {
-			u"name" : u"Hardware surface",
-			u"description" : u"Create a hardware surface",
-			u"default" : u"yes"
-			},
-		u"pygame_doublebuf" : {
-			u"name" : u"Double buffering",
-			u"description" : u"Use double buffering",
-			u"default" : u"yes"
-			},
-		u"pygame_window_frame" : {
-			u"name" : u"Draw window frame",
-			u"description" : u"Draw a frame in window mode",
-			u"default" : u"yes",
-			},
-		u"pygame_window_pos" : {
-			u"name" : u"Window position",
-			u"description" : u"Window position in window mode (format: 'x,y' or 'auto')",
-			u"default" : u"auto",
-			}
+		u"pygame_hwsurface": {
+			u"name": u"Hardware surface",
+			u"description": u"Create a hardware surface",
+			u"default": u"yes"
+		},
+		u"pygame_doublebuf": {
+			u"name": u"Double buffering",
+			u"description": u"Use double buffering",
+			u"default": u"yes"
+		},
+		u"pygame_window_frame": {
+			u"name": u"Draw window frame",
+			u"description": u"Draw a frame in window mode",
+			u"default": u"yes",
+		},
+		u"pygame_window_pos": {
+			u"name": u"Window position",
+			u"description": u"Window position in window mode (format: 'x,y' or 'auto')",
+			u"default": u"auto",
 		}
+	}
 
 	def __init__(self, experiment, auto_prepare=True, **style_args):
 
-		Canvas.__init__(self, experiment, auto_prepare=auto_prepare,
-			**style_args)
+		Canvas.__init__(
+			self, experiment,
+			auto_prepare=auto_prepare,
+			**style_args
+		)
 		LegacyCoordinates.__init__(self)
 		self.antialias = True
 		self.surface = self.experiment.surface.copy()
@@ -161,7 +163,6 @@ class Legacy(Canvas, LegacyCoordinates):
 		self.surface.fill(self.background_color.backend_color)
 		self._elements = OrderedDict()
 
-
 	def _text_size(self, text):
 
 		return self._font.size(text)
@@ -171,24 +172,26 @@ class Legacy(Canvas, LegacyCoordinates):
 
 		# Intialize PyGame and set the Window icon
 		pygame.init()
-		surf = pygame.Surface( (32, 32) )
-		surf.fill( (255, 255, 255) )
+		surf = pygame.Surface((32, 32))
+		surf.fill((255, 255, 255))
 		pygame.draw.circle(surf, (0, 0, 255), (16, 16), 10, 4)
 		pygame.display.set_icon(surf)
 		# Determine the video mode
 		mode = 0
-		if (
-			experiment.var.get(u"pygame_hwsurface", u"yes", [u"yes", u"no"])
-			== u"yes"
-		):
+		if experiment.var.get(
+			u"pygame_hwsurface",
+			u"yes",
+			[u"yes", u"no"]
+		) == u"yes":
 			mode = mode | pygame.HWSURFACE
 			oslogger.info(u'enabling hardware surface')
 		else:
 			oslogger.info(u'not enabling hardware surface')
-		if (
-			experiment.var.get(u"pygame_doublebuf", u"yes", [u"yes", u"no"])
-			== u"yes"
-		):
+		if experiment.var.get(
+			u"pygame_doublebuf",
+			u"yes",
+			[u"yes", u"no"]
+		) == u"yes":
 			mode = mode | pygame.DOUBLEBUF
 			oslogger.info(u'enabling double buffering')
 		else:
@@ -199,17 +202,21 @@ class Legacy(Canvas, LegacyCoordinates):
 			oslogger.warning(u'warning: video mode not ok')
 		if experiment.var.fullscreen == u'yes':
 			mode = mode | pygame.FULLSCREEN
-		if (
-			experiment.var.get(u'pygame_window_frame', u'yes', [u'yes', u'no'])
-			== u'no'
-		):
+		if experiment.var.get(
+			u'pygame_window_frame',
+			u'yes',
+			[u'yes', u'no']
+		) == u'no':
 			mode = mode | pygame.NOFRAME
 		if experiment.var.get(u'pygame_window_pos', u'auto') != u'auto':
 			os.environ[u'SDL_VIDEO_WINDOW_POS'] = experiment.var.get(
 				u'pygame_window_pos'
 			)
 		# Create the window and the surface
-		experiment.window = pygame.display.set_mode(experiment.resolution(), mode)
+		experiment.window = pygame.display.set_mode(
+			experiment.resolution(),
+			mode
+		)
 		pygame.display.set_caption(u'OpenSesame (legacy backend)')
 		pygame.mouse.set_visible(False)
 		experiment.surface = pygame.display.get_surface()
