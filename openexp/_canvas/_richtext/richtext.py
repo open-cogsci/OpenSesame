@@ -62,6 +62,7 @@ class RichText(Element):
 			'y' : y,
 			'max_width' : max_width
 		})
+		self._cached_size = None
 		Element.__init__(self, canvas, **properties)
 
 	def _init_pyqt(self, exp):
@@ -109,10 +110,13 @@ class RichText(Element):
 	@property
 	def size(self):
 
+		if self._cached_size:
+			return self._cached_size
 		bbox = Image.fromqimage(self._to_qimage()).getbbox()
 		x1, y1, x2, y2 = (0, 0, 1, 1) if bbox is None else bbox
-		y2 = max(y1+self.font_size, y2)
-		return x2-x1, y2-y1
+		y2 = max(y1 + self.font_size, y2)
+		self._cached_size = x2 - x1, y2 - y1
+		return self._cached_size
 
 	@property
 	def rect(self):
@@ -179,3 +183,8 @@ class RichText(Element):
 		if key == u'text':
 			val = safe_decode(val)
 		super(RichText, self)._setter(key, self, val)
+
+	def _on_attribute_change(self, **kwargs):
+
+		self._cached_size = None
+		super(RichText, self)._on_attribute_change(key, self, val)
