@@ -56,7 +56,7 @@ class Xpyriment(XpyrimentCoordinates, Legacy):
 		while True:
 			time = pygame.time.get_ticks()
 			# Process the input
-			for event in pygame.event.get([MOUSEBUTTONDOWN, KEYDOWN]):
+			for event in pygame.event.get():
 				if event.type == KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						self.experiment.pause()
@@ -66,7 +66,7 @@ class Xpyriment(XpyrimentCoordinates, Legacy):
 					if buttonlist is None or event.button in buttonlist:
 						pygame.mouse.set_visible(self._cursor_shown)
 						return event.button, self.from_xy(event.pos), time
-			if timeout is not None and time-start_time >= timeout:
+			if timeout is not None and time - start_time >= timeout:
 				break
 		pygame.mouse.set_visible(self._cursor_shown)
 		return None, None, time
