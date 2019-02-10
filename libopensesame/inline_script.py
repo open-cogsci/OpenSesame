@@ -45,6 +45,11 @@ class inline_script(item.item):
 		self.var._run = u''
 		self._var_info = None
 
+	@property
+	def workspace(self):
+
+		return self.experiment.python_workspace
+
 	def prepare(self):
 
 		"""
@@ -57,27 +62,42 @@ class inline_script(item.item):
 		item.item.prepare(self)
 		# 'self' must always be registered, otherwise we get confusions between
 		# the various inline_script items.
-		self.experiment.python_workspace[u'self'] = self
+		self.workspace[u'self'] = self
 		# Compile prepare script
 		try:
-			self.cprepare = self.experiment.python_workspace._compile(
+			self.cprepare = self.workspace._compile(
 				self.var.get(u'_prepare', _eval=False))
 		except Exception as e:
-			raise osexception(u'Failed to compile inline script',
-				line_offset=-1, item=self.name, phase=u'prepare', exception=e)
+			raise osexception(
+				u'Failed to compile inline script',
+				line_offset=-1,
+				item=self.name,
+				phase=u'prepare',
+				exception=e
+			)
 		# Compile run script
 		try:
-			self.crun = self.experiment.python_workspace._compile(
+			self.crun = self.workspace._compile(
 				self.var.get(u'_run', _eval=False))
 		except Exception as e:
-			raise osexception(u'Failed to compile inline script',
-				line_offset=-1, item=self.name, phase=u'run', exception=e)
+			raise osexception(
+				u'Failed to compile inline script',
+				line_offset=-1,
+				item=self.name,
+				phase=u'run',
+				exception=e
+			)
 		# Run prepare script
 		try:
-			self.experiment.python_workspace._exec(self.cprepare)
+			self.workspace._exec(self.cprepare)
 		except Exception as e:
-			raise osexception(u'Error while executing inline script',
-				line_offset=-1, item=self.name, phase=u'prepare', exception=e)
+			raise osexception(
+				u'Error while executing inline script',
+				line_offset=-1,
+				item=self.name,
+				phase=u'prepare',
+				exception=e
+			)
 
 	def run(self):
 
@@ -91,13 +111,16 @@ class inline_script(item.item):
 		self.set_item_onset()
 		# 'self' must always be registered, otherwise we get confusions between
 		# the various inline_script items.
-		self.experiment.python_workspace[u'self'] = self
+		self.workspace[u'self'] = self
 		try:
-			self.experiment.python_workspace._exec(self.crun)
+			self.workspace._exec(self.crun)
 		except Exception as e:
 			raise osexception(
 				u'Error while executing inline script',
-				line_offset=-1, item=self.name, phase=u'run', exception=e
+				line_offset=-1,
+				item=self.name,
+				phase=u'run',
+				exception=e
 			)
 
 	def coroutine(self, coroutines):
@@ -107,9 +130,9 @@ class inline_script(item.item):
 		yield
 		self.set_item_onset()
 		while True:
-			self.experiment.python_workspace[u'self'] = self
+			self.workspace[u'self'] = self
 			try:
-				self.experiment.python_workspace._exec(self.crun)
+				self.workspace._exec(self.crun)
 			except AbortCoroutines as e:
 				# If the inline_script is part of a coroutines, this signals
 				# that the coroutines should be aborted, so we don't wrap it
@@ -118,7 +141,10 @@ class inline_script(item.item):
 			except Exception as e:
 				raise osexception(
 					u'Error while executing inline script',
-					line_offset=-1, item=self.name, phase=u'run', exception=e
+					line_offset=-1,
+					item=self.name,
+					phase=u'run',
+					exception=e
 				)
 			yield
 
