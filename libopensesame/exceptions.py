@@ -89,6 +89,11 @@ class osexception(Exception):
 		tb_md, tb_plaintext = self._parse_traceback(info)
 		self._md += tb_md
 		self._plaintext += tb_plaintext
+		# In some cases, the Exception is not pickleable, in which case it gets
+		# lost when sending it through the pipe to the GUI (in multiprocess), in
+		# turn resulting in a message that the experiment finished successfully.
+		# Therefore we delete the exception, just in case.
+		del self.exception
 
 	def _traceback(self):
 
