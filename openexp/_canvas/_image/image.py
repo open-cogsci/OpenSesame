@@ -24,7 +24,7 @@ from openexp._canvas._element.element import Element
 class Image(Element):
 
 	def __init__(self, canvas, fname, center=True, x=None, y=None, scale=None,
-		rotation=None):
+		rotation=None, **properties):
 
 		x, y = canvas.none_to_center(x, y)
 		self._image_size = None
@@ -36,7 +36,8 @@ class Image(Element):
 			x=x,
 			y=y,
 			scale=scale,
-			rotation=rotation
+			rotation=rotation,
+			**properties
 		)
 
 	def _size(self):
