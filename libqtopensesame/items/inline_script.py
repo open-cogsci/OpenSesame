@@ -22,8 +22,9 @@ from libopensesame.oslogging import oslogger
 from libopensesame.inline_script import inline_script as inline_script_runtime
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.widgets.tree_inline_script_item import \
+from libqtopensesame.widgets.tree_inline_script_item import (
 	tree_inline_script_item
+)
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'inline_script', category=u'item')
 
@@ -32,8 +33,9 @@ class inline_script(inline_script_runtime, qtplugin):
 
 	"""The inline_script GUI controls"""
 
-	description = _(u'Executes Python code'	)
+	description = _(u'Executes Python code')
 	help_url = u'manual/python/about'
+	language = u'Python'
 
 	def __init__(self, name, experiment, string=None):
 
@@ -85,13 +87,21 @@ class inline_script(inline_script_runtime, qtplugin):
 			return u'os-inline_script-syntax-warning'
 		return u'os-inline_script'
 
-	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
-		extra_info=None):
+	def build_item_tree(
+		self,
+		toplevel=None,
+		items=[],
+		max_depth=-1,
+		extra_info=None
+	):
 
 		"""See qtitem."""
 
-		widget = tree_inline_script_item(self, extra_info=extra_info,
-			symbols=(max_depth < 0 or max_depth > 1))
+		widget = tree_inline_script_item(
+			self,
+			extra_info=extra_info,
+			symbols=(max_depth < 0 or max_depth > 1)
+		)
 		items.append(self.name)
 		if toplevel is not None:
 			toplevel.addChild(widget)
@@ -109,8 +119,8 @@ class inline_script(inline_script_runtime, qtplugin):
 		self.qprogedit.handlerButtonClicked.connect(self.apply_edit_changes)
 		self.qprogedit.focusLost.connect(self.apply_edit_changes)
 		self.qprogedit.cursorRowChanged.connect(self.apply_edit_changes)
-		self.qprogedit.addTab(_(u'Prepare')).setLang(u'Python')
-		self.qprogedit.addTab(_(u'Run')).setLang(u'Python')
+		self.qprogedit.addTab(_(u'Prepare')).setLang(self.language)
+		self.qprogedit.addTab(_(u'Run')).setLang(self.language)
 		# Switch to the run phase, unless there is only content for the prepare
 		# phase.
 		if self.var._run == u'' and self.var._prepare != u'':
