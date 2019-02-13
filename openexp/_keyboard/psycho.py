@@ -64,6 +64,11 @@ class Psycho(Keyboard):
 		'_' : 'underscore'
 		}
 
+	def __init__(self, experiment, **resp_args):
+
+		Keyboard.__init__(self, experiment, **resp_args)
+		self._latest_modifiers = {}
+
 	def valid_keys(self):
 
 		l = []
@@ -81,24 +86,29 @@ class Psycho(Keyboard):
 		timeout = self.timeout
 		start_time = self.experiment.clock.time()
 		while True:
-			time = self.experiment.clock.time()
 			# Don't use the timeStamped keyword, because it bugs on older
 			# versions of PsychoPy (at least 1.79.01 under Ubuntu 14.04).
 			# See https://github.com/smathot/OpenSesame/issues/381
-			keys = event.getKeys(keylist)
-			for key in keys:
-				if key == u"escape":
+			time = self.experiment.clock.time()
+			keys = event.getKeys(keylist, modifiers=True)
+			for key, modifiers in keys:
+				if key == u'escape':
 					self.experiment.pause()
 				if keylist is None or key in keylist:
+					self._latest_modifiers = modifiers
 					return key, time
-			if timeout is not None and time-start_time >= timeout:
+			if timeout is not None and time - start_time >= timeout:
 				break
+		self._latest_modifiers = {}
 		return None, time
 
 	def get_mods(self):
 
-		# TODO: Accept moderator keys
-		return []
+		return [
+			m
+			for m in (u'shift', u'ctrl', u'alt')
+			if self._latest_modifiers.get(m, False)
+		]
 
 	def synonyms(self, key):
 
@@ -148,6 +158,10 @@ class Psycho(Keyboard):
 				self.experiment.pause()
 			keypressed = True
 		return keypressed
+
+	def _keycode_to_str(self, keycode):
+
+		return pyglet.window.key.symbol_string(keycode).lower()
 
 
 # Non PEP-8 alias for backwards compatibility

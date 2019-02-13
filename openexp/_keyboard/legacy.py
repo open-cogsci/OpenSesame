@@ -162,6 +162,11 @@ class Legacy(Keyboard):
 		return str(pygame.key.name(key)).replace(u'[', u'').replace(u']',
 			u'')
 
+	def _keycode_to_str(self, keycode):
+
+		return safedecode(pygame.key.name(keycode)) \
+			.replace(u'[', u'').replace(u']', u'').lower()
+
 
 # Non PEP-8 alias for backwards compatibility
 legacy = Legacy

@@ -23,6 +23,7 @@ from libopensesame.exceptions import osexception
 from openexp.canvas import canvas
 from openexp.mouse import mouse
 from openexp.keyboard import keyboard
+from openexp._keyboard.keybabel import KeyBabel
 from libopensesame.widgets.widget_factory import WidgetFactory
 
 
@@ -184,12 +185,15 @@ class Form(object):
 
 		if isinstance(focus_widget, WidgetFactory):
 			focus_widget = focus_widget.construct(self)
+		if focus_widget is not None:
+			focus_widget.focus = True
 		if len(self) == 0:
 			raise osexception(u'The form contains no widgets')
 		ms = mouse(self.experiment, timeout=0)
 		ms.show_cursor()
 		kb = keyboard(self.experiment, timeout=0)
 		kb.show_virtual_keyboard()
+		babel = KeyBabel(kb)
 		coroutines = {w: w.coroutine() for w in self.widgets if w is not None}
 		for coroutine in coroutines.values():
 			coroutine.send(None)
@@ -227,10 +231,14 @@ class Form(object):
 			# Handle key presses clicks
 			elif focus_widget is not None:
 				key, timestamp = kb.get_key()
+				modifiers = kb.get_mods()
 				if key is not None:
 					msg = {
 						u'type': u'key',
-						u'key': key,
+						u'key': babel.standard_name(
+							key,
+							shift=u'shift' in modifiers
+						),
 						u'timestamp': timestamp
 					}
 			# Send message (if any)

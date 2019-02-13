@@ -329,6 +329,12 @@ class Keyboard(Backend):
 
 		pass
 
+	def _keycode_to_str(self, keycode):
+
+		"""visible:	False"""
+
+		raise NotImplementedError()
+
 	# Deprecated functions
 
 	def to_chr(self, key):
