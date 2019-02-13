@@ -179,8 +179,11 @@ class ExperimentProcess(multiprocessing.Process):
 	def kill(self):
 
 		oslogger.info(u'killing experiment process')
-		os.kill(
-			self.pid,
-			signal.SIGKILL if hasattr(signal, u'SIGKILL') else signal.SIGTERM
-		)
+		try:
+			os.kill(
+				self.pid,
+				signal.SIGKILL if hasattr(signal, u'SIGKILL') else signal.SIGTERM
+			)
+		except OSError:
+			oslogger.warning(u'failed to kill experiment process')
 		self.killed = True

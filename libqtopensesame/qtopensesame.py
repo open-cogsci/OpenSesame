@@ -961,6 +961,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		"""
 
 		self._runner.kill()
+		self.ui.action_kill.setDisabled(True)
 
 	def run_experiment(self, dummy=None, fullscreen=True, quick=False):
 
