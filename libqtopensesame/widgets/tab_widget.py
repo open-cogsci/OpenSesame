@@ -21,9 +21,14 @@ from libopensesame.py3compat import *
 from libopensesame import debug, metadata
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
-from qtpy import QtGui, QtWidgets, QtCore
+from qtpy import QtGui, QtWidgets
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tab_widget', category=u'core')
+
+# Determines how many tabs are kept active and automatically switched back to
+# when the current tab is closed.
+MAX_TAB_STACK = 3
+
 
 class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 
@@ -32,10 +37,11 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 	def __init__(self, parent=None):
 
 		"""
-		Constructor
+		desc:
+			Constructor
 
-		Keywords arguments:
-		parent -- the parent QWidget
+		keywords:
+			parent: The parent QWidget
 		"""
 
 		QtWidgets.QTabWidget.__init__(self, parent)
@@ -46,14 +52,23 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 			# Catch what appears to be a bug in earlier versions of qtpy.
 			self.tabCloseRequested.connect(self._removeTab)
 		self.currentChanged.connect(self.index_changed)
-		self.setSizePolicy(QtWidgets.QSizePolicy.MinimumExpanding,
-			QtWidgets.QSizePolicy.MinimumExpanding)
+		self.setSizePolicy(
+			QtWidgets.QSizePolicy.MinimumExpanding,
+			QtWidgets.QSizePolicy.MinimumExpanding
+		)
 		self.shortcut_switch_left = QtWidgets.QShortcut(
-			QtGui.QKeySequence.PreviousChild, self.main_window,
-			self.switch_prev, self.switch_prev)
+			QtGui.QKeySequence.PreviousChild,
+			self.main_window,
+			self.switch_prev,
+			self.switch_prev
+		)
 		self.shortcut_switch_right = QtWidgets.QShortcut(
-			QtGui.QKeySequence.NextChild, self.main_window,
-			self.switch_next, self.switch_next)
+			QtGui.QKeySequence.NextChild,
+			self.main_window,
+			self.switch_next,
+			self.switch_next
+		)
+		self._tab_stack = []
 
 	def switch_prev(self):
 
@@ -64,7 +79,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 
 		i = self.currentIndex() - 1
 		if i < 0:
-			i = self.count()-1
+			i = self.count() - 1
 		self.setCurrentIndex(i)
 
 	def switch_next(self):
@@ -109,10 +124,24 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 				type:	bool
 		"""
 
+		# If a widget is currently open, then we push it to the stack so that
+		# we can go back to it later when the newly added widget is closed.
+		current_index = self.currentIndex()
+		current_widget = self.widget(current_index)
+		if current_widget is not None:
+			self._tab_stack.append((
+				current_widget,
+				self.tabIcon(current_index),
+				self.tabText(current_index))
+			)
+			self._tab_stack = self._tab_stack[-MAX_TAB_STACK:]
 		index = self.indexOf(widget)
 		if index < 0:
-			index = self.addTab(widget, self.main_window.theme.qicon(icon),
-				name)
+			index = self.addTab(
+				widget,
+				self.main_window.theme.qicon(icon),
+				name
+			)
 		if switch:
 			self.setCurrentIndex(index)
 
@@ -183,8 +212,11 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		"""
 
 		self.removeTab(self.currentIndex())
-		if avoid_empty and self.count() == 0:
-			self.open_general()
+		if avoid_empty and not self.count():
+			if self._tab_stack:
+				self.add(*self._tab_stack.pop())
+			else:
+				self.open_general()
 
 	def close_other(self):
 

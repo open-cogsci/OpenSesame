@@ -122,7 +122,10 @@ class qtitem(object):
 		self.tabwidget.add(self.widget(), self.item_icon(), self.name)
 		self.main_window.set_unsaved(unsaved)
 		if select_in_tree:
-			self.experiment.main_window.ui.itemtree.select_item(self.name)
+			self.experiment.main_window.ui.itemtree.select_item(
+				self.name,
+				open_tab=False
+			)
 
 	def close_tab(self):
 
