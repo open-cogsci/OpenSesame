@@ -822,7 +822,10 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			self.set_busy(False)
 		except Exception as e:
 			self.ui.console.write(e)
-			self.experiment.notify(_(u"Failed to save file. Error: %s") % e)
+			self.experiment.notify(
+				_(u"Failed to save file. Error: %s")
+				% safe_decode(e)
+			)
 			self.set_busy(False)
 			return
 		self.update_recent_files()
