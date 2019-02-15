@@ -148,10 +148,10 @@ class coroutines(item):
 
 		"""See item."""
 
-		self._schedule.sort(key=lambda task: task.start_time)
 		# Launch all coroutines
 		for task in self._schedule:
 			task.launch()
+		self._schedule.sort(key=lambda task: task.start_time)
 		dt = 0
 		active = []
 		t0 = self.clock.time()
