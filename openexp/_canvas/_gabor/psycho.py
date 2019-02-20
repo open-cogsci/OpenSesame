@@ -18,11 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from openexp._canvas import canvas
 from openexp._canvas._gabor.gabor import Gabor
 from openexp._canvas._element.psycho import RotatingElement, PsychoElement
 from psychopy import visual
-import numpy as np
 
 
 class Psycho(RotatingElement, PsychoElement, Gabor):

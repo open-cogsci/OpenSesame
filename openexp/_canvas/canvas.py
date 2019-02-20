@@ -1245,7 +1245,15 @@ class Canvas(Backend):
 				desc:	The center Y coordinate.
 				type:	int
 			orient:
-				desc:	Orientation in degrees [0 .. 360].
+				desc:	|
+						Orientation in degrees [0 .. 360]. This refers to a
+						clockwise rotation from a vertical.
+
+						__Version note:__ In version 3.2.6 and earlier, the
+						orientation was *counterclockwise* for the *legacy* and
+						*xpyriment* backends, and clockwise for the *psycho*
+						backends. As of 3.2.7, the orientation is *clockwise*
+						for all backends.
 				type:	[float, int]
 			freq:
 				desc:	Frequency in cycles/px of the sinusoid.
@@ -1440,30 +1448,27 @@ class Canvas(Backend):
 
 
 # Translation mapping from envelope names
-env_synonyms = {}
-env_synonyms[u"c"] = u"c"
-env_synonyms[u"circular"] = u"c"
-env_synonyms[u"round"] = u"c"
-
-env_synonyms[u"g"] = u"g"
-env_synonyms[u"gaussian"] = u"g"
-env_synonyms[u"gauss"] = u"g"
-env_synonyms[u"normal"] = u"g"
-
-env_synonyms[u"r"] = u"r"
-env_synonyms[u"rectangular"] = u"r"
-env_synonyms[u"rectangle"] = u"r"
-
-env_synonyms[u"g"] = u"g"
-env_synonyms[u"rect"] = u"g"
-env_synonyms[u"square"] = u"g"
-env_synonyms[None] = u"g"
-
-env_synonyms[u"l"] = u"l"
-env_synonyms[u"linear"] = u"l"
-env_synonyms[u"lin"] = u"l"
-env_synonyms[u"ln"] = u"l"
-env_synonyms[u"l"] = u"l"
+ENV_SYNONYMS = {
+	u"c": u"c",
+	u"circular": u"c",
+	u"round": u"c",
+	u"g": u"g",
+	u"gaussian": u"g",
+	u"gauss": u"g",
+	u"normal": u"g",
+	u"r": u"r",
+	u"rectangular": u"r",
+	u"rectangle": u"r",
+	u"g": u"g",
+	u"rect": u"g",
+	u"square": u"g",
+	None: u"g",
+	u"l": u"l",
+	u"linear": u"l",
+	u"lin": u"l",
+	u"ln": u"l",
+	u"l": u"l"
+}
 
 canvas_cache = {}
 
@@ -1486,8 +1491,32 @@ def _color(col):
 	return Legacy(None, col).backend_color
 
 
-def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0,
-	col1=u"white", col2=u"black", bgmode=u"avg"):
+def _xyr(x, y, size, orient=0):
+
+	"""
+	desc:
+		Gets the coordinates relative to the center and compensating for the
+		rotation.
+	"""
+
+	dx = x - 0.5 * size
+	dy = y - 0.5 * size
+	t = math.atan2(dy, dx) + orient
+	r = math.sqrt(dx ** 2 + dy ** 2)
+	return r * math.cos(t), r * math.sin(t), r
+
+
+def _gabor(
+	orient,
+	freq,
+	env=u"gaussian",
+	size=96,
+	stdev=12,
+	phase=0,
+	col1=u"white",
+	col2=u"black",
+	bgmode=u"avg"
+):
 
 	"""
 	desc:
@@ -1495,6 +1524,7 @@ def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0,
 		see [canvas.gabor].
 	"""
 
+	import itertools
 	import pygame
 
 	env = _match_env(env)
@@ -1502,70 +1532,78 @@ def _gabor(orient, freq, env=u"gaussian", size=96, stdev=12, phase=0,
 	# a cache of previously generated Gabor patches to speed up
 	# the process.
 	global canvas_cache
-	key = u"gabor_%s_%s_%s_%s_%s_%s_%s_%s_%s" % (orient, freq, env, size,
-		stdev, phase, col1, col2, bgmode)
+	key = u"gabor_%s_%s_%s_%s_%s_%s_%s_%s_%s" % (
+		orient,
+		freq,
+		env,
+		size,
+		stdev,
+		phase,
+		col1,
+		col2,
+		bgmode
+	)
 	if key in canvas_cache:
 		return canvas_cache[key]
 	# Create a surface
-	surface = pygame.Surface( (size, size) )
+	surface = pygame.Surface((size, size))
 	try:
 		px = pygame.PixelArray(surface)
 	except:
 		px = None
 	# Conver the orientation to radians
-	orient = math.radians(orient)
+	orient = math.radians(-orient)
 	col1 = _color(col1)
 	col2 = _color(col2)
 	# rx and ry reflect the real coordinates in the
 	# target image
-	for rx in range(size):
-		for ry in range(size):
-			# Distance from the center
-			dx = rx - 0.5 * size
-			dy = ry - 0.5 * size
-			# Get the coordinates (x, y) in the unrotated
-			# Gabor patch
-			t = math.atan2(dy, dx) + orient
-			r = math.sqrt(dx ** 2 + dy ** 2)
-			ux = r * math.cos(t)
-			uy = r * math.sin(t)
-			# Get the amplitude without the envelope (0 .. 1)
-			amp = 0.5 + 0.5 * math.cos(2.0 * math.pi * (ux * freq + phase))
-			# The envelope adjustment
-			if env == "g":
-				f = math.exp(-0.5 * (ux / stdev) ** 2 - 0.5 * (uy / stdev) ** 2)
-			elif env == "l":
-				f = max(0, (0.5 * size - r) / (0.5 * size))
-			elif env == "c":
-				if (r > 0.5 * size):
-					f = 0.0
-				else:
-					f = 1.0
+	for rx, ry in itertools.product(range(size), range(size)):
+		ux, uy, r = _xyr(rx, ry, size, orient)
+		# Get the amplitude without the envelope (0 .. 1)
+		amp = 0.5 + 0.5 * math.cos(2.0 * math.pi * (ux * freq + phase))
+		# The envelope adjustment
+		if env == "g":
+			f = math.exp(-0.5 * (ux / stdev) ** 2 - 0.5 * (uy / stdev) ** 2)
+		elif env == "l":
+			f = max(0, (0.5 * size - r) / (0.5 * size))
+		elif env == "c":
+			if (r > 0.5 * size):
+				f = 0.0
 			else:
 				f = 1.0
-			# Apply the envelope
-			if bgmode == u"avg":
-				amp = amp * f + 0.5 * (1.0 - f)
-			elif bgmode == u"col2":
-				amp = amp * f
-			else:
-				raise osexception(u"Invalid argument for bgmode: %s "
-								  u"(should be one of 'avg','col2')" % bgmode)
-
-			r = col1.r * amp + col2.r * (1.0 - amp)
-			g = col1.g * amp + col2.g * (1.0 - amp)
-			b = col1.b * amp + col2.b * (1.0 - amp)
-			if px is None:
-				surface.set_at((rx, ry), (round(r), round(g), round(b)))
-			else:
-				px[rx][ry] = round(r), round(g), round(b)
+		else:
+			f = 1.0
+		# Apply the envelope
+		if bgmode == u"avg":
+			amp = amp * f + 0.5 * (1.0 - f)
+		elif bgmode == u"col2":
+			amp = amp * f
+		else:
+			raise osexception(
+				u"Invalid argument for bgmode: %s "
+				u"(should be one of 'avg','col2')"
+				% bgmode
+			)
+		r = col1.r * amp + col2.r * (1.0 - amp)
+		g = col1.g * amp + col2.g * (1.0 - amp)
+		b = col1.b * amp + col2.b * (1.0 - amp)
+		if px is None:
+			surface.set_at((rx, ry), (round(r), round(g), round(b)))
+		else:
+			px[rx][ry] = round(r), round(g), round(b)
 	canvas_cache[key] = surface
 	del px
 	return surface
 
 
-def _noise_patch(env=u"gaussian", size=96, stdev=12, col1=u"white",
-	col2=u"black", bgmode=u"avg"):
+def _noise_patch(
+	env=u"gaussian",
+	size=96,
+	stdev=12,
+	col1=u"white",
+	col2=u"black",
+	bgmode=u"avg"
+):
 
 	"""
 	desc:
@@ -1573,6 +1611,7 @@ def _noise_patch(env=u"gaussian", size=96, stdev=12, col1=u"white",
 		see [canvas.noise_patch].
 	"""
 
+	import itertools
 	import pygame
 
 	env = _match_env(env)
@@ -1593,42 +1632,40 @@ def _noise_patch(env=u"gaussian", size=96, stdev=12, col1=u"white",
 	col2 = _color(col2)
 	# rx and ry reflect the real coordinates in the
 	# target image
-	for rx in range(size):
-		for ry in range(size):
-			# Distance from the center
-			ux = rx - 0.5 * size
-			uy = ry - 0.5 * size
-			r = math.sqrt(ux ** 2 + uy ** 2)
-			# Get the amplitude without the envelope (0 .. 1)
-			amp = random.random()
-			# The envelope adjustment
-			if env == u"g":
-				f = math.exp(-0.5 * (ux / stdev) ** 2 - 0.5 * (uy / stdev) ** 2)
-			elif env == u"l":
-				f = max(0, (0.5 * size - r) / (0.5 * size))
-			elif env == u"c":
-				if (r > 0.5 * size):
-					f = 0.0
-				else:
-					f = 1.0
+	for rx, ry in itertools.product(range(size), range(size)):
+		ux, uy, r = _xyr(rx, ry, size)
+		# Get the amplitude without the envelope (0 .. 1)
+		amp = random.random()
+		# The envelope adjustment
+		if env == u"g":
+			f = math.exp(-0.5 * (ux / stdev) ** 2 - 0.5 * (uy / stdev) ** 2)
+		elif env == u"l":
+			f = max(0, (0.5 * size - r) / (0.5 * size))
+		elif env == u"c":
+			if (r > 0.5 * size):
+				f = 0.0
 			else:
 				f = 1.0
-			# Apply the envelope
-			if bgmode == u"avg":
-				amp = amp * f + 0.5 * (1.0 - f)
-			elif bgmode == u"col2":
-				amp = amp * f
-			else:
-				raise osexception(u"Invalid argument for bgmode: %s "
-								  u"(should be one of 'avg','col2')" % bgmode)
-
-			r = col1.r * amp + col2.r * (1.0 - amp)
-			g = col1.g * amp + col2.g * (1.0 - amp)
-			b = col1.b * amp + col2.b * (1.0 - amp)
-			if px is None:
-				surface.set_at((rx, ry), (round(r), round(g), round(b)))
-			else:
-				px[rx][ry] = round(r), round(g), round(b)
+		else:
+			f = 1.0
+		# Apply the envelope
+		if bgmode == u"avg":
+			amp = amp * f + 0.5 * (1.0 - f)
+		elif bgmode == u"col2":
+			amp = amp * f
+		else:
+			raise osexception(
+				u"Invalid argument for bgmode: %s "
+				u"(should be one of 'avg','col2')"
+				% bgmode
+			)
+		r = col1.r * amp + col2.r * (1.0 - amp)
+		g = col1.g * amp + col2.g * (1.0 - amp)
+		b = col1.b * amp + col2.b * (1.0 - amp)
+		if px is None:
+			surface.set_at((rx, ry), (round(r), round(g), round(b)))
+		else:
+			px[rx][ry] = round(r), round(g), round(b)
 	canvas_cache[key] = surface
 	del px
 	return surface
@@ -1650,10 +1687,9 @@ def _match_env(env):
 		type: unicode
 	"""
 
-	global env_synonyms
-	if env not in env_synonyms:
+	if env not in ENV_SYNONYMS:
 		raise osexception(u"'%s' is not a valid envelope" % env)
-	return env_synonyms[env]
+	return ENV_SYNONYMS[env]
 
 
 # Non PEP-8 alias for backwards compatibility
