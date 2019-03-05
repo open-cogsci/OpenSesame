@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
 from openexp._canvas._image.image import Image
 from openexp._canvas._element.xpyriment import XpyrimentElement
 from expyriment.stimuli import Picture
@@ -47,3 +46,4 @@ class Xpyriment(XpyrimentElement, Image):
 			x += w//2-dx
 			y -= h//2-dy
 		self._stim.reposition((x, y))
+		self._stim.preload()
