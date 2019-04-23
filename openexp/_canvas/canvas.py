@@ -476,7 +476,7 @@ class Canvas(Backend):
 
 		"""
 		desc:
-			Determines the full path to save a screenshot to, and creates the necessary subfolders if necessary
+			Determines the full path to save a screenshot to, and creates subfolders if they do not exist.
 
 		arguments:
 			path:
@@ -484,10 +484,11 @@ class Canvas(Backend):
 				type: str
 
 		returns:
-			desc: The full path where the screenshot is to be stored.
+			desc: The full path where the screenshot will be stored.
 			type: str
 		"""
 
+		path = safe_decode(path)
 		# Check if supplied filename has a valid image extension
 		if not os.path.splitext(path)[1] in [u'.jpg', u'.jpeg', u'.png', u'.bmp', u'.tga']:
 			raise osexception(u"The filename does not have a valid image extension. Use .jpg, .jpeg, \
@@ -502,7 +503,6 @@ class Canvas(Backend):
 		if not os.path.isdir(file_dir):
 			os.makedirs(file_dir)
 		return path
-
 
 	def elements_at(self, x, y):
 
