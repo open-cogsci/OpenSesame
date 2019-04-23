@@ -107,6 +107,15 @@ class Psycho(Canvas, PsychoCoordinates):
 			oslogger.warning('Canvas.show() took {0} ms'.format(t1 - t0))
 		return t1
 
+	def screenshot(self, path):
+
+		path = self._screenshot_path(path)
+		for e in self._elements.values():
+			e.show()
+		self.experiment.window.getMovieFrame('back')
+		self.experiment.window.saveMovieFrames(path)
+		return path
+
 	def _set_background(self):
 
 		if u'__background__' in self:

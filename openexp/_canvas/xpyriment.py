@@ -79,6 +79,12 @@ class Xpyriment(Canvas, XpyrimentCoordinates):
 			oslogger.warning('Canvas.show() took {0} ms'.format(t1 - t0))
 		return t1
 
+	def screenshot(self, path):
+
+		path = self._screenshot_path(path)
+		self.experiment.expyriment.screen.save(path)
+		return path
+
 	def _set_background(self):
 
 		self._background = stimuli.BlankScreen(

@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+import os
 import warnings
 import random
 import math
@@ -471,6 +472,38 @@ class Canvas(Backend):
 				return name, element
 		raise ValueError('"%s" not found in canvas"' % element)
 
+	def _screenshot_path(self, path):
+
+		"""
+		desc:
+			Determines the full path to save a screenshot to, and creates the necessary subfolders if necessary
+
+		arguments:
+			path:
+				desc: The relative or absolute path to the screnshot.
+				type: str
+
+		returns:
+			desc: The full path where the screenshot is to be stored.
+			type: str
+		"""
+
+		# Check if supplied filename has a valid image extension
+		if not os.path.splitext(path)[1] in [u'.jpg', u'.jpeg', u'.png', u'.bmp', u'.tga']:
+			raise osexception(u"The filename does not have a valid image extension. Use .jpg, .jpeg, \
+				png, .bmp or .tga")
+
+		# Check if image file path is absolute, if not, find relative path to current experiment file
+		if not os.path.isabs(path):
+			path = os.path.abspath(os.path.join(self.experiment.experiment_path, path))
+
+		# Create any subfolders if necessary
+		file_dir = os.path.dirname(path)
+		if not os.path.isdir(file_dir):
+			os.makedirs(file_dir)
+		return path
+
+
 	def elements_at(self, x, y):
 
 		"""
@@ -799,6 +832,29 @@ class Canvas(Backend):
 		"""
 
 		raise NotImplementedError()
+
+	def screenshot(self, path):
+
+		"""
+		desc:
+			Saves a screenshot of the canvas to a file
+
+		arguments:
+			path:
+				desc: The location and filename to save the image to. If an absolute path is
+					provided, the file will be saved there. If a relative path is provided,
+					the file will be saved to that folder relative to the location of the
+					experiment file.
+				type: str
+
+		returns:
+			desc:
+				The absolute path to the file that has just been saved
+			type:
+				str
+		"""
+		raise NotImplementedError()
+
 
 	@configurable
 	def clear(self, **style_args):

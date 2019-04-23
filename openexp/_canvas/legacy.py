@@ -100,6 +100,12 @@ class Legacy(Canvas, LegacyCoordinates):
 			oslogger.warning('Canvas.show() took {0} ms'.format(t1 - t0))
 		return t1
 
+	def screenshot(self, path):
+
+		path = self._screenshot_path(path)
+		pygame.image.save(self.surface, path)
+		return path
+
 	def _show_macos(self):
 
 		"""
