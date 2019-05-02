@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 import os
 import sys
 import platform
-
+os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
 
 def set_paths():
 
@@ -86,9 +86,12 @@ def opensesame():
 	except ImportError:
 		pass
 	app = QApplication(sys.argv)
-	# Enable High DPI display with PyQt5
+	# Enable High DPI pixmaps with PyQt5
 	if hasattr(qtpy.QtCore.Qt, 'AA_UseHighDpiPixmaps'):
 		app.setAttribute(qtpy.QtCore.Qt.AA_UseHighDpiPixmaps)
+	# Enable scaling for High DPI displays with PyQt5
+	if hasattr(qtpy.QtCore.Qt, 'AA_EnableHighDpiScaling'):
+		app.setAttribute(qtpy.QtCore.Qt.AA_EnableHighDpiScaling)
 	from libqtopensesame.qtopensesame import qtopensesame
 	opensesame = qtopensesame(app)
 	opensesame.__script__ = __file__
