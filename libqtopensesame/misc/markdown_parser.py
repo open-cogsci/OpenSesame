@@ -98,7 +98,7 @@ class markdown_parser(base_subcomponent):
 
 <div class="footer">
 OpenSesame %s %s —
-Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-2018
+Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-2019
 </div>
 ''' % (_(u'Dismiss this message'), metadata.__version__, metadata.codename)
 
