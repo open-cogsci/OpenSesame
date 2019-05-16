@@ -50,9 +50,9 @@ class srbox(base_response_item):
 
 		try:
 			response = int(response)
-		except:
+		except (ValueError, TypeError):
 			return False
-		return response >= 0 or response <= 255
+		return 0 <= response <= 255
 
 	def process_response(self, response_args):
 
@@ -61,7 +61,7 @@ class srbox(base_response_item):
 		response, t1 = response_args
 		if isinstance(response, list):
 			response = response[0]
-		base_response_item.process_response(self, (response, t1) )
+		base_response_item.process_response(self, (response, t1))
 
 	def _get_button_press(self):
 
@@ -74,14 +74,17 @@ class srbox(base_response_item):
 			allowed_buttons=self._allowed_responses,
 			timeout=self._timeout,
 			require_state_change=self._require_state_change
-			)
+		)
 
 	def prepare_response_func(self):
 
 		"""See base_response_item."""
 
-		self._keyboard = keyboard(self.experiment,
-			keylist=self._allowed_responses, timeout=self._timeout)
+		self._keyboard = keyboard(
+			self.experiment,
+			keylist=self._allowed_responses,
+			timeout=self._timeout
+		)
 		if self.var._dummy == u'yes':
 			return self._keyboard.get_key
 		# Prepare the device string
@@ -94,7 +97,7 @@ class srbox(base_response_item):
 			self.experiment.cleanup_functions.append(self.close)
 			self.python_workspace[u'srbox'] = self.experiment.srbox
 		# Prepare the light byte
-		s = "010" # Control string
+		s = "010"  # Control string
 		for i in range(5):
 			if str(5 - i) in str(self.var.lights):
 				s += "1"
@@ -112,9 +115,11 @@ class srbox(base_response_item):
 		"""See item."""
 
 		self._keyboard.flush()
-		self.experiment.srbox.start()
+		if self.var._dummy != u'yes':
+			self.experiment.srbox.start()
 		base_response_item.run(self)
-		self.experiment.srbox.stop()
+		if self.var._dummy != u'yes':
+			self.experiment.srbox.stop()
 
 	def close(self):
 
@@ -123,15 +128,17 @@ class srbox(base_response_item):
 			Neatly close the connection to the srbox.
 		"""
 
-		if not hasattr(self.experiment, "srbox") or \
-			self.experiment.srbox is None:
-				oslogger.debug("no active srbox")
-				return
+		if (
+			not hasattr(self.experiment, "srbox") or
+			self.experiment.srbox is None
+		):
+			oslogger.debug("no active srbox")
+			return
 		try:
 			self.experiment.srbox.close()
 			self.experiment.srbox = None
 			oslogger.debug("srbox closed")
-		except:
+		except Exception as e:
 			oslogger.error("failed to close srbox")
 
 
