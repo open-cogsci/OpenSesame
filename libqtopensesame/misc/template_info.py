@@ -27,14 +27,12 @@ if py3:
 		(u'templates/extended_template-py3.osexp', _(u'Extended template')),
 		(u'templates/form_template.osexp',
 			_(u'Questionnaire template')),
-		(u'templates/android_template.osexp', _(u'Android template')),
-		]
+	]
 else:
 	templates = [
 		(u'templates/default.osexp', _(u'Default template')),
 		(u'templates/extended_template.osexp', _(u'Extended template')),
 		(u'templates/form_template.osexp',
 			_(u'Questionnaire template')),
-		(u'templates/android_template.osexp', _(u'Android template')),
 		(u'templates/pygaze_template.osexp', _(u'Eye-tracking template')),
-		]
+	]
