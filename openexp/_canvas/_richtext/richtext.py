@@ -21,10 +21,14 @@ import os
 import sys
 from libopensesame.py3compat import *
 from libopensesame import misc
+from libopensesame.oslogging import oslogger
 import warnings
 from openexp._canvas._element.element import Element
-from qtpy.QtWidgets import (QGraphicsTextItem, QStyleOptionGraphicsItem,
-	QApplication)
+from qtpy.QtWidgets import (
+	QGraphicsTextItem,
+	QStyleOptionGraphicsItem,
+	QApplication
+)
 from qtpy.QtGui import QPixmap, QPainter, QColor, QFont, QFontDatabase
 from qtpy.QtCore import Qt, QCoreApplication
 from PIL import Image
@@ -45,8 +49,16 @@ pyqt_initialized = False
 
 class RichText(Element):
 
-	def __init__(self, canvas, text, center=True, x=None, y=None,
-		max_width=None, **properties):
+	def __init__(
+		self,
+		canvas,
+		text,
+		center=True,
+		x=None,
+		y=None,
+		max_width=None,
+		**properties
+	):
 
 		global pyqt_initialized
 
@@ -56,11 +68,11 @@ class RichText(Element):
 		x, y = canvas.none_to_center(x, y)
 		properties = properties.copy()
 		properties.update({
-			'text' : safe_decode(text),
-			'center' : center,
-			'x' : x,
-			'y' : y,
-			'max_width' : max_width
+			'text': safe_decode(text),
+			'center': center,
+			'x': x,
+			'y': y,
+			'max_width': max_width
 		})
 		self._cached_size = None
 		Element.__init__(self, canvas, **properties)
@@ -84,28 +96,47 @@ class RichText(Element):
 			QCoreApplication.addLibraryPath(
 				safe_decode(qt_plugin_path, enc=misc.filesystem_encoding())
 			)
-		# If no instance of QApplication exists, a segmentation fault seems to always
-		# occur. So we create one.
+		# If no instance of QApplication exists, a segmentation fault seems to
+		# always occur. So we create one.
 		if QCoreApplication.instance() is None:
 			app = QApplication([])
 		# Register the fonts bundled with OpenSesame
 		if font_database is None:
-			font_database= QFontDatabase()
+			font_database = QFontDatabase()
 			for font in FONTS:
-				try:
-					path = exp.resource(font + u'.ttf')
-				except:
-					warnings.warn(u'Font %s not found' % font)
-					continue
-				font_id = font_database.addApplicationFont(path)
-				if font_id < 0:
-					warnings.warn(u'Failed to load font %s' % font)
-					continue
-				font_families = font_database.applicationFontFamilies(font_id)
-				if not font_families:
-					warnings.warn(u'Font %s contains no families' % font)
-					continue
-				font_substitutions.append((font_families[0], font))
+				self._register_font(exp, font)
+
+	def _register_font(self, exp, font, fd=None):
+
+		global pyqt_initialized
+		if not pyqt_initialized:
+			self._init_pyqt(exp)
+			pyqt_initialized = True
+		oslogger.debug(u'Registering font {}'.format(font))
+		try:
+			path = exp.resource(font + u'.ttf')
+		except Exception:
+			warnings.warn(u'Font %s not found' % font)
+		else:
+			if fd is None:
+				fd = font_database
+			font_id = fd.addApplicationFont(path)
+			if font_id < 0:
+				warnings.warn(u'Failed to load font %s' % font)
+				return
+			font_families = fd.applicationFontFamilies(font_id)
+			if not font_families:
+				warnings.warn(u'Font %s contains no families' % font)
+				return
+			font_substitutions.append((font_families[0], font))
+
+	def _register_custom_font(self, font):
+
+		if font + u'.ttf' not in self.experiment.pool:
+			return
+		if font in (font for font_family, font in font_substitutions):
+			return
+		self._register_font(self.experiment, font)
 
 	@property
 	def size(self):
@@ -123,7 +154,7 @@ class RichText(Element):
 
 		w, h = self.size
 		if self.center:
-			return self.x-w//2, self.y-h//2, w, h
+			return self.x - w // 2, self.y - h // 2, w, h
 		return self.x, self.y, w, h
 
 	def _to_qgraphicstextitem(self):
@@ -141,15 +172,19 @@ class RichText(Element):
 		mw = self.max_width
 		if mw is None:
 			if self.uniform_coordinates:
-				mw = self._canvas.width//2 - self.x
+				mw = self._canvas.width // 2 - self.x
 			else:
 				mw = self._canvas.width - self.x
 		if self.center:
 			mw *= 2
 		t.setTextWidth(mw)
-		f = QFont(self.font_family,
+		# Register custom fonts that are placed in the file pool
+		self._register_custom_font(self.font_family)
+		f = QFont(
+			self.font_family,
 			weight=QFont.Bold if self.font_bold else QFont.Normal,
-			italic=self.font_italic)
+			italic=self.font_italic
+		)
 		for family, substitute in font_substitutions:
 			f.insertSubstitution(substitute, family)
 		f.setPixelSize(self.font_size)
@@ -174,7 +209,7 @@ class RichText(Element):
 		im = Image.fromqimage(self._to_qimage())
 		bbox = im.getbbox()
 		x1, y1, x2, y2 = (0, 0, 1, 1) if bbox is None else bbox
-		y1 = min(y2-self.font_size, y1)
+		y1 = min(y2 - self.font_size, y1)
 		return im.crop((x1, y1, x2, y2))
 
 	@staticmethod

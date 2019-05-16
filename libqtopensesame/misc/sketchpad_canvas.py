@@ -55,6 +55,10 @@ class QtRichText(RichText):
 
 		pass
 
+	def _register_font(self, exp, font, fd=None):
+
+		RichText._register_font(self, exp, font, QtGui.QFontDatabase())
+
 
 class sketchpad_canvas(QtWidgets.QGraphicsScene):
 
