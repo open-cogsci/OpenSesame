@@ -468,7 +468,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		if qm is None:
 			l = locale.split(u'_')
 			if l:
-				_locale = l[0] +  u'_' + l[0].upper()
+				_locale = l[0] + u'_' + l[0].upper()
 				qm = libopensesame.misc.resource(
 					os.path.join(u'locale', _locale + u'.qm'))
 				if qm is not None:
@@ -493,7 +493,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 		keywords:
 			unsaved_changes:
-			 	desc:	Indicates if there are unsaved changes.
+				desc:	Indicates if there are unsaved changes.
 				type:	bool
 		"""
 
@@ -625,7 +625,8 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		resp = confirmation(self,
 			msg=_(u'Your experiment contains unsaved changes. Do you want to save your experiment?'),
 			title=_(u'Save changes?'), allow_cancel=True,
-			default=u'cancel').show()
+			default=u'cancel'
+		).show()
 		if resp is None:
 			return False
 		if resp:
@@ -672,15 +673,21 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# Build the menu
 		self.ui.menu_recent_files.clear()
 		if len(self.recent_files) == 0:
-			a = QtWidgets.QAction(_(u"(No recent files)"), \
-				self.ui.menu_recent_files)
+			a = QtWidgets.QAction(
+				_(u"(No recent files)"),
+				self.ui.menu_recent_files
+			)
 			a.setDisabled(True)
 			self.ui.menu_recent_files.addAction(a)
 		else:
 			for path in self.recent_files:
-				self.ui.menu_recent_files.addAction( \
-					recent_action.recent_action(path, self, \
-					self.ui.menu_recent_files))
+				self.ui.menu_recent_files.addAction(
+					recent_action.recent_action(
+						path,
+						self,
+						self.ui.menu_recent_files
+					)
+				)
 
 	def open_file(self, dummy=None, path=None, add_to_recent=True):
 
@@ -842,19 +849,27 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 		# Choose a default file name based on the experiment title
 		if self.current_path is None:
-			cfg.file_dialog_path = os.path.join(self.home_folder,
-				self.experiment.syntax.sanitize(self.experiment.var.title,
-				strict=True, allow_vars=False))
+			cfg.file_dialog_path = os.path.join(
+				os.path.dirname(cfg.file_dialog_path),
+				self.experiment.syntax.sanitize(
+					self.experiment.var.title,
+					strict=True,
+					allow_vars=False
+				)
+			)
 		else:
 			cfg.file_dialog_path = self.current_path
-		path = QtWidgets.QFileDialog.getSaveFileName(self.ui.centralwidget,
-			_(u'Save as…'), directory=cfg.file_dialog_path,
-			filter=self.save_file_filter)
+		path = QtWidgets.QFileDialog.getSaveFileName(
+			self.ui.centralwidget,
+			_(u'Save as…'),
+			directory=cfg.file_dialog_path,
+			filter=self.save_file_filter
+		)
 		# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of
 		# a string, of which the first position contains the path.
-		if isinstance(path,tuple):
+		if isinstance(path, tuple):
 			path = path[0]
-		if path is None or path == u"":
+		if not path:
 			return
 		if not path.lower().endswith(u'.osexp'):
 			path += u'.osexp'
