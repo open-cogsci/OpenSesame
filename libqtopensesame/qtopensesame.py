@@ -35,6 +35,7 @@ from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'qtopensesame', category=u'core')
 oslogger.start(u'gui')
 
+
 class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 	"""The main class of the OpenSesame GUI"""
@@ -57,8 +58,11 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			# Workaround for Qt issue on OS X that causes QMainWindow to
 			# hide when adding QToolBar, see
 			# https://bugreports.qt-project.org/browse/QTBUG-4300
-			QtWidgets.QMainWindow.__init__(self, parent, \
-				QtCore.Qt.MacWindowToolBarButtonHint)
+			QtWidgets.QMainWindow.__init__(
+				self,
+				parent,
+				QtCore.Qt.MacWindowToolBarButtonHint
+			)
 		else:
 			QtWidgets.QMainWindow.__init__(self, parent)
 		self.app = app
@@ -85,8 +89,10 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# Make sure that icons are shown in context menu, regardless of the
 		# system settings. This is necessary, because Ubuntu doesn't show menu
 		# icons by default.
-		QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_DontShowIconsInMenus,
-			False)
+		QtWidgets.QApplication.setAttribute(
+			QtCore.Qt.AA_DontShowIconsInMenus,
+			False
+		)
 		# Do a few things to customize QProgEdit behavior:
 		# - Register the bundled monospace font (Droid Sans Mono)
 		# - Make sure that QProgEdit doesn't complain about some standard names
@@ -128,7 +134,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			os.mkdir(os.path.join(self.home_folder, u".opensesame"))
 
 		# Set the filter-string for opening and saving files
-		self.save_file_filter =u'OpenSesame files (*.osexp)'
+		self.save_file_filter = u'OpenSesame files (*.osexp)'
 		self.open_file_filter = \
 			u'OpenSesame files (*.osexp *.opensesame.tar.gz *.opensesame)'
 
@@ -185,22 +191,15 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			self.ui.action_show_pool.setChecked)
 		self.ui.pool_widget = pool_widget(self)
 		self.ui.dock_pool.setWidget(self.ui.pool_widget)
-
 		# Uncheck the debug window button on debug window close
 		self.ui.dock_stdout.hide()
 		self.ui.dock_stdout.visibilityChanged.connect(
 			self.ui.action_show_stdout.setChecked)
-
 		# Initialize keyboard shortcuts
-		self.ui.shortcut_itemtree = QtWidgets.QShortcut(QtGui.QKeySequence(), self,
-			self.focus_overview_area)
-		self.ui.shortcut_tabwidget = QtWidgets.QShortcut(
-			QtGui.QKeySequence(), self, self.ui.tabwidget.focus)
-		self.ui.shortcut_stdout = QtWidgets.QShortcut(QtGui.QKeySequence(), self,
-			self.focus_debug_window)
-		self.ui.shortcut_pool = QtWidgets.QShortcut(QtGui.QKeySequence(), self,
-			self.focus_file_pool)
-
+		self.ui.shortcut_itemtree = self._kb_shortcut(self.focus_overview_area)
+		self.ui.shortcut_tabwidget = self._kb_shortcut(self.ui.tabwidget.focus)
+		self.ui.shortcut_stdout = self._kb_shortcut(self.focus_debug_window)
+		self.ui.shortcut_pool = self._kb_shortcut(self.focus_file_pool)
 		# Create the initial experiment, which is the default template. Because
 		# not all backends are supported under Python 3, we use a different
 		# backend for each.
@@ -209,8 +208,11 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		else:
 			tmpl = u'default.osexp'
 		with safe_open(misc.resource(os.path.join(u'templates', tmpl)), u'r') as fd:
-			self.experiment = experiment.experiment(self, u'New experiment',
-				fd.read())
+			self.experiment = experiment.experiment(
+				self,
+				u'New experiment',
+				fd.read()
+			)
 		self.experiment.build_item_tree()
 		self.ui.itemtree.default_fold_state()
 		# Miscellaneous initialization
@@ -221,6 +223,19 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.extension_manager = extension_manager(self)
 		self.extension_manager.fire(u'startup')
 		self.ui.console.start()
+
+	def _kb_shortcut(self, target):
+
+		"""
+		desc:
+			Builds a simple keybaord shortcut. The key sequence is specified
+			later, while restoring the settings.
+
+		arguments:
+			target:	The target function.
+		"""
+
+		return QtWidgets.QShortcut(QtGui.QKeySequence(), self, target)
 
 	def focus_debug_window(self):
 
@@ -279,7 +294,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 				if families:
 					QtGui.QFont.insertSubstitution(font, families[0])
 
-
 	def parse_command_line(self):
 
 		"""Parse command line options"""
@@ -291,28 +305,62 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			version=u"%s '%s'" % (self.version, self.codename))
 		parser.set_defaults(debug=False)
 		group = optparse.OptionGroup(parser, u"Miscellaneous options")
-		group.add_option(u"-c", u"--config", action=u"store", dest=u"_config",
-			help=\
-			u"Set a configuration option, e.g, '--config auto_update_check="
-			u"False;scintilla_font_size=10'. For a complete list of "
-			u"configuration options, please refer to the source of config.py.")
-		group.add_option(u"-t", u"--theme", action=u"store", dest=u"_theme",
-			help=u"Specify a GUI theme")
-		group.add_option(u"-d", u"--debug", action=u"store_true",
-			dest=u"debug", help= \
-			u"Print lots of debugging messages to the standard output")
-		group.add_option(u"--start-clean", action=u"store_true",
-			dest=u"start_clean", help=\
-			u"Do not load configuration and do not restore window geometry")
-		group.add_option(u"--locale", action=u"store_true", dest=u"locale",
-			help=u"Specify localization")
-		group.add_option(u"--catch-translatables", action=u"store_true",
-			dest=u"catch_translatables", help=u"Log all translatable text")
-		group.add_option(u"--no-global-resources", action=u"store_true",
+		group.add_option(
+			u"-c",
+			u"--config",
+			action=u"store",
+			dest=u"_config",
+			help=(
+				u"Set a configuration option, e.g, '--config auto_update_check="
+				u"False;scintilla_font_size=10'. For a complete list of "
+				u"configuration options, please refer to the source of config.py."
+			)
+		)
+		group.add_option(
+			u"-t",
+			u"--theme",
+			action=u"store",
+			dest=u"_theme",
+			help=u"Specify a GUI theme"
+		)
+		group.add_option(
+			u"-d",
+			u"--debug",
+			action=u"store_true",
+			dest=u"debug",
+			help=u"Print lots of debugging messages to the standard output"
+		)
+		group.add_option(
+			u"--start-clean",
+			action=u"store_true",
+			dest=u"start_clean",
+			help=u"Do not load configuration and do not restore window geometry"
+		)
+		group.add_option(
+			u"--locale",
+			action=u"store_true",
+			dest=u"locale",
+			help=u"Specify localization"
+		)
+		group.add_option(
+			u"--catch-translatables",
+			action=u"store_true",
+			dest=u"catch_translatables",
+			help=u"Log all translatable text (for developers)"
+		)
+		group.add_option(
+			u"--no-global-resources",
+			action=u"store_true",
 			dest=u"no_global_resources",
-			help=u"Do not use global resources on *nix")
-		group.add_option(u'-w', u"--warnings", action=u"store_true",
-			dest=u"warnings", help=u"Show elaborate warnings")
+			help=u"Do not use global resources on *nix"
+		)
+		group.add_option(
+			u'-w',
+			u"--warnings",
+			action=u"store_true",
+			dest=u"warnings",
+			help=u"Show elaborate warnings"
+		)
 		parser.add_option_group(group)
 		self.options, args = parser.parse_args(sys.argv)
 
@@ -327,13 +375,21 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			return
 		warnings.simplefilter(u'always')
 		import traceback
+
 		def warn_with_traceback(message, category, filename, lineno, line=None):
 			print(u'***startwarning***')
 			traceback.print_stack()
-			print
-			print(warnings.formatwarning(message, category, filename, lineno,
-				line))
+			print(
+				warnings.formatwarning(
+					message,
+					category,
+					filename,
+					lineno,
+					line
+				)
+			)
 			print(u'***endwarning***')
+
 		warnings.showwarning = warn_with_traceback
 
 	def restore_config(self):
@@ -410,7 +466,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		cfg.auto_response = self.experiment.auto_response
 		cfg.toolbar_text = self.ui.toolbar_main.toolButtonStyle() == \
 			QtCore.Qt.ToolButtonTextUnderIcon
-		cfg.recent_files =  u";;".join(self.recent_files)
+		cfg.recent_files = u";;".join(self.recent_files)
 		cfg.save()
 
 	def set_busy(self, state=True):
@@ -460,17 +516,18 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# If a locale has been specified on the command line, it overrides.
 		for i, argv in enumerate(sys.argv[:-1]):
 			if argv == '--locale':
-				locale = safe_decode(sys.argv[i+1])
+				locale = safe_decode(sys.argv[i + 1])
 		qm = libopensesame.misc.resource(
 			os.path.join(u'locale', locale) + u'.qm')
 		# Say that we're trying to load de_AT, and it is not found, then we'll
 		# try de_DE as fallback.
 		if qm is None:
-			l = locale.split(u'_')
-			if l:
-				_locale = l[0] + u'_' + l[0].upper()
+			loctuple = locale.split(u'_')
+			if loctuple:
+				_locale = loctuple[0] + u'_' + loctuple[0].upper()
 				qm = libopensesame.misc.resource(
-					os.path.join(u'locale', _locale + u'.qm'))
+					os.path.join(u'locale', _locale + u'.qm')
+				)
 				if qm is not None:
 					locale = _locale
 		self._locale = locale
@@ -622,8 +679,12 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		from libqtopensesame._input.confirmation import confirmation
 		if not self.unsaved_changes:
 			return True
-		resp = confirmation(self,
-			msg=_(u'Your experiment contains unsaved changes. Do you want to save your experiment?'),
+		resp = confirmation(
+			self,
+			msg=_(
+				u'Your experiment contains unsaved changes. '
+				u'Do you want to save your experiment?'
+			),
 			title=_(u'Save changes?'), allow_cancel=True,
 			default=u'cancel'
 		).show()
@@ -801,8 +862,8 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 						list of recent files.
 				type:	bool
 			catch:
-			 	desc:	Indicates whether exceptions should be caught and
-				 		displayed in a notification.
+				desc:	Indicates whether exceptions should be caught and
+						displayed in a notification.
 				type:	bool
 		"""
 
@@ -819,8 +880,9 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		except osexception as e:
 			self.ui.console.write(e)
 			self.experiment.notify(
-				_(u"The following error occured while trying to save:<br/>%s") \
-				% e)
+				_(u"The following error occured while trying to save:<br/>%s")
+				% e
+			)
 			self.set_busy(False)
 			return
 		# Try to save the experiment if it doesn't exist already
@@ -892,13 +954,19 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		"""
 
 		try:
-			exp = experiment.experiment(self, name=self.experiment.var.title,
-				string=script, pool_folder=self.experiment.pool.folder(),
+			exp = experiment.experiment(
+				self,
+				name=self.experiment.var.title,
+				string=script,
+				pool_folder=self.experiment.pool.folder(),
 				experiment_path=self.experiment.experiment_path,
-				resources=self.experiment.resources)
+				resources=self.experiment.resources
+			)
 		except osexception as e:
-			md = _(u'# Parsing error\n\nFailed to parse the script for the '
-				u'following reason:\n\n- ') + e.markdown()
+			md = _(
+				u'# Parsing error\n\nFailed to parse the script for the '
+				u'following reason:\n\n- '
+			) + e.markdown()
 			self.tabwidget.open_markdown(md)
 			self.console.write(e)
 			return
@@ -926,10 +994,14 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			script = self.experiment.to_string()
 		except Exception as e:
 			if not isinstance(e, osexception):
-				e = osexception(u'Failed to change the display resolution',
-					exception=e)
-			md = _(u'# Error\n\nFailed to change display resolution for the '
-				u'following reason:\n\n- ') + e.markdown()
+				e = osexception(
+					u'Failed to change the display resolution',
+					exception=e
+				)
+			md = _(
+				u'# Error\n\nFailed to change display resolution for the '
+				u'following reason:\n\n- '
+			) + e.markdown()
 			self.tabwidget.open_markdown(md)
 			return
 		old_cmd = self.experiment.syntax.create_cmd(
@@ -941,10 +1013,14 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		new_cmd = self.experiment.syntax.create_cmd(u'set', [u'width', width])
 		script = script.replace(old_cmd, new_cmd)
 		try:
-			tmp = experiment.experiment(self, name=self.experiment.var.title,
-				string=script, pool_folder=self.experiment.pool.folder(),
+			tmp = experiment.experiment(
+				self,
+				name=self.experiment.var.title,
+				string=script,
+				pool_folder=self.experiment.pool.folder(),
 				experiment_path=self.experiment.experiment_path,
-				resources=self.experiment.resources)
+				resources=self.experiment.resources
+			)
 		except osexception as error:
 			self.experiment.notify(_(u"Could not parse script: %s") % error)
 			self.edit_script.edit.setText(self.experiment.to_string())
@@ -1001,8 +1077,11 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		print(u'\n')
 		oslogger.debug(u'using %s runner' % cfg.runner)
 		self._runner = self.runner_cls(self)
-		self._runner.run(quick=quick, fullscreen=fullscreen,
-			auto_response=self.experiment.auto_response)
+		self._runner.run(
+			quick=quick,
+			fullscreen=fullscreen,
+			auto_response=self.experiment.auto_response
+		)
 		self.enable(True)
 
 	@property
@@ -1018,11 +1097,17 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# under OSX. For now just display a warning message and do nothing
 		# For the same reason, inOSX the default runner is set to inprocess
 		# for now in misc.config
-		if cfg.runner == u'multiprocess' and sys.platform == "darwin" \
-			and getattr(sys, 'frozen', None) and sys.version_info < (3,4):
-			self.experiment.notify(u'Multiprocessing does not work in the '
+		if (
+			cfg.runner == u'multiprocess' and
+			sys.platform == "darwin" and
+			getattr(sys, 'frozen', None) and
+			sys.version_info < (3, 4)
+		):
+			self.experiment.notify(
+				u'Multiprocessing does not work in the '
 				u'OSX app version yet. Please change the runner to '
-				u'\'inprocess\' in the preferences panel')
+				u'\'inprocess\' in the preferences panel'
+			)
 		from libqtopensesame import runners
 		return getattr(runners, u'%s_runner' % cfg.runner)
 
