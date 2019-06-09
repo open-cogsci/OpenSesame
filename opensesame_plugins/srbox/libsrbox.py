@@ -69,8 +69,16 @@ class libsrbox(object):
 	BUTTON6 = int('11011111', 2)
 	BUTTON7 = int('10111111', 2)
 	BUTTON8 = int('01111111', 2)
-	BYTEMASKS = [BUTTON1, BUTTON2, BUTTON3, BUTTON4, BUTTON5, BUTTON6, BUTTON7,
-		BUTTON8]
+	BYTEMASKS = [
+		BUTTON1,
+		BUTTON2,
+		BUTTON3,
+		BUTTON4,
+		BUTTON5,
+		BUTTON6,
+		BUTTON7,
+		BUTTON8
+	]
 
 	def __init__(self, experiment, dev=None):
 
@@ -101,8 +109,9 @@ class libsrbox(object):
 				self._srbox = serial.Serial(dev, timeout=0, baudrate=19200)
 			except Exception as e:
 				raise osexception(
-					"Failed to open device port '%s' in libsrbox: '%s'" \
-					% (dev, e))
+					"Failed to open device port '%s' in libsrbox: '%s'"
+					% (dev, e)
+				)
 
 		else:
 			# Else determine the common name of the serial devices on the
@@ -112,31 +121,39 @@ class libsrbox(object):
 				for i in range(1, 256):
 					try:
 						dev = "COM%d" % i
-						self._srbox = serial.Serial(dev, timeout=0,
-							baudrate=19200)
+						self._srbox = serial.Serial(
+							dev,
+							timeout=0,
+							baudrate=19200
+						)
 						break
 					except Exception as e:
 						self._srbox = None
 						pass
-
 			elif os.name == "posix":
 				for path in os.listdir("/dev"):
 					if path[:3] == "tty":
 						try:
 							dev = "/dev/%s" % path
-							self._srbox = serial.Serial(dev, timeout=0,
-								baudrate=19200)
+							self._srbox = serial.Serial(
+								dev,
+								timeout=0,
+								baudrate=19200
+							)
 							break
 						except Exception as e:
 							self._srbox = None
 							pass
 			else:
 				raise osexception(
-					"libsrbox does not know how to auto-detect the SR Box on your platform. Please specify a device.")
-
+					u"libsrbox does not know how to auto-detect the SR Box on "
+					u"your platform. Please specify a device."
+				)
 		if self._srbox is None:
 			raise osexception(
-				"libsrbox failed to auto-detect an SR Box. Please specify a device.")
+				u"libsrbox failed to auto-detect an SR Box. Please specify a "
+				u"device."
+			)
 		oslogger.debug("using device %s" % dev)
 		# Turn off all lights
 		if self._srbox is not None:
@@ -147,7 +164,8 @@ class libsrbox(object):
 		"""
 		desc:
 			Sends a single character to the SR Box.
-			Send '\x60' to turn off all lights, '\x61' for light 1 on, '\x62' for light 2 on,'\x63' for lights 1 and 2 on etc.
+			Send '\x60' to turn off all lights, '\x61' for light 1 on, '\x62'
+			for light 2 on,'\x63' for lights 1 and 2 on etc.
 
 		arguments:
 			ch:
@@ -189,8 +207,12 @@ class libsrbox(object):
 		self._srbox.write(b'\x20')
 		self._started = False
 
-	def get_button_press(self, allowed_buttons=None, timeout=None,
-		require_state_change=False):
+	def get_button_press(
+		self,
+		allowed_buttons=None,
+		timeout=None,
+		require_state_change=False
+	):
 
 		"""
 		desc: |
@@ -223,8 +245,8 @@ class libsrbox(object):
 		# Create a list of buttonr, bytemask tuples.
 		bytemasks = []
 		for buttonnr, bytemask in enumerate(self.BYTEMASKS):
-			if allowed_buttons is None or buttonnr+1 in allowed_buttons:
-				bytemasks.append((buttonnr+1, bytemask))
+			if allowed_buttons is None or buttonnr + 1 in allowed_buttons:
+				bytemasks.append((buttonnr + 1, bytemask))
 		inputbyte0 = None
 		while True:
 			# Get a valid character and convert it to a byte
@@ -250,8 +272,10 @@ class libsrbox(object):
 				# but not before. Because there is only one state change at a
 				# time, we can return right away.
 				for buttonnr, bytemask in bytemasks:
-					if inputbyte1 | bytemask == 255 and \
-						inputbyte0 | bytemask != 255:
+					if (
+						inputbyte1 | bytemask == 255 and
+						inputbyte0 | bytemask != 255
+					):
 						return [buttonnr], t1
 			else:
 				# If no state change is required, only consider the last input

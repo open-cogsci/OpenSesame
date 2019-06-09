@@ -61,7 +61,7 @@ class srbox(base_response_item):
 		response, t1 = response_args
 		if isinstance(response, list):
 			response = response[0]
-		base_response_item.process_response(self, (response, t1))
+		base_response_item.process_response(self, (safe_decode(response), t1))
 
 	def _get_button_press(self):
 
