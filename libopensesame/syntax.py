@@ -121,7 +121,7 @@ class syntax(object):
 
 		m = self.re_front_matter.match(s)
 		try:
-			d = yaml.load(m.group(u'info'))
+			d = yaml.load(m.group(u'info'), Loader=yaml.FullLoader)
 			s = s[len(m.group(0)):]
 		except:
 			d = {}
@@ -282,10 +282,10 @@ class syntax(object):
 		returns:
 			The evaluated string, or the input value for non-string input.
 		"""
-		
+
 		def get_escape_sequence(m):
 			return u'' if m.group(1) is None \
-				else m.group(1)[:len(m.group(1))//2]			
+				else m.group(1)[:len(m.group(1))//2]
 
 		if not isinstance(txt, basestring):
 			return txt

@@ -209,7 +209,7 @@ def plugin_properties(plugin, _type=u'plugins'):
 			s = fd.read()
 		s = s.replace(u'\t', u'    ')
 		try:
-			_properties[plugin] = yaml.load(s)
+			_properties[plugin] = yaml.load(s, Loader=yaml.FullLoader)
 		except:
 			oslogger.error(u'Failed to parse %s' % info_yaml)
 			_properties[plugin] = {}

@@ -102,7 +102,7 @@ def parse_yaml(path, t, category):
 	print(u'\tcontext: %s' % context)
 	with open(path) as fd:
 		s = fd.read().replace('\t', '    ')
-		d = yaml.load(s)
+		d = yaml.load(s, Loader=yaml.FullLoader)
 		for field in [u'label', u'description', u'tooltip']:
 			if field not in d:
 				continue

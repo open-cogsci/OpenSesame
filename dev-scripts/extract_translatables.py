@@ -96,7 +96,7 @@ def detect_translatables_yaml(path, context):
 
 	global translatables
 	s = open(path).read().replace('\t', '    ').decode('utf-8')
-	d = yaml.load(s)
+	d = yaml.load(s, Loader=yaml.FullLoader)
 	for field in [u'label', u'description', u'tooltip', u'category']:
 		if field in d:
 			if context not in translatables:

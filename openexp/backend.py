@@ -51,7 +51,7 @@ def backend_info(experiment):
 	if _backend_info is not None:
 		return _backend_info
 	with safe_open(experiment.resource(u'backend_info.yaml')) as fd:
-		d = yaml.load(fd)
+		d = yaml.load(fd, Loader=yaml.FullLoader)
 	l = []
 	for name, info in d.items():
 		if (py3 and not info[u'py3']) or (not py3 and not info[u'py2']):
