@@ -1,0 +1,20 @@
+{
+ "description": "A starting point",
+ "icon": "document-new",
+ "label": "New\u2026",
+ "priority": -1,
+ "shortcut": "Ctrl+N",
+ "menu": {
+  "index": 0,
+  "separator_after": false,
+  "separator_before": false,
+  "submenu": "File"
+ },
+ "toolbar": {
+  "index": 0,
+  "separator_after": false,
+  "separator_before": false
+ },
+ "tooltip": "Start a new experiment",
+ "type": "extensions"
+}

@@ -1,0 +1,13 @@
+{
+ "description": "Enable or disable plug-ins and extensions.",
+ "icon": "applications-system",
+ "label": "Plug-in and extension manager",
+ "menu": {
+  "index": -1,
+  "separator_after": false,
+  "separator_before": true,
+  "submenu": "Tools"
+ },
+ "tooltip": "Manage plug-ins and extensions",
+ "type": "extensions"
+}

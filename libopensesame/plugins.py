@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 import sys
+import json
 import yaml
 import time
 from libopensesame import misc
@@ -190,19 +191,24 @@ def plugin_properties(plugin, _type=u'plugins'):
 		An info dictionary.
 	"""
 
-	global _properties
 	if plugin in _properties:
 		return _properties[plugin]
 	folder = plugin_folder(plugin, _type=_type)
 	info_txt = os.path.join(folder, u'info.txt')
+	info_json = os.path.join(folder, u'info.json')
 	info_yaml = os.path.join(folder, u'info.yaml')
-	# For backwards compatibility, also look for a .json file. These can be
-	# processed just like a .yaml file, because json is a yaml subset, with the
-	# exception of allow tab-based indentation (see below).
-	if not os.path.exists(info_yaml):
-		info_yaml = os.path.join(folder, u'info.json')
+	# First try to read json. This is used by the plugins bundled with
+	# OpenSesame because it is faster (even if it's less readable)
+	if os.path.exists(info_json):
+		with safe_open(info_json) as fd:
+			s = fd.read()
+		try:
+			_properties[plugin] = json.loads(s)
+		except:
+			oslogger.error(u'Failed to parse %s' % info_json)
+			_properties[plugin] = {}
 	# New-style plug-ins, using info.yaml
-	if os.path.exists(info_yaml):
+	elif os.path.exists(info_yaml):
 		# Read the yaml file and replace all tabs by spaces. This is necessary,
 		# because yaml doesn't accept tab-based indentation, whereas json does.
 		with safe_open(info_yaml) as fd:
@@ -230,7 +236,7 @@ def plugin_properties(plugin, _type=u'plugins'):
 	else:
 		_properties[plugin] = {}
 		oslogger.error(
-			u'Failed to read plug-in information (%s) from info.[txt|json]'
+			u'Failed to read plug-in information (%s) from info.[txt|yaml|json]'
 			% plugin
 		)
 	_properties[plugin][u'plugin_folder'] = folder
@@ -424,9 +430,10 @@ def load_plugin(
 	"""
 
 	t0 = time.time()
-	sys.path.append(plugin_folder(plugin, _type=_type))
+	if plugin_folder(plugin, _type=_type) not in sys.path:
+		sys.path.append(plugin_folder(plugin, _type=_type))
 	item_module = import_plugin(plugin, _type=_type)
-	item_class = getattr(item_module, prefix+plugin)
+	item_class = getattr(item_module, prefix + plugin)
 	item = item_class(item_name, experiment, string)
 	set_plugin_property(plugin, u'startup_time', time.time() - t0)
 	return item

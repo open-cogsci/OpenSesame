@@ -1,8 +1,0 @@
-description: Provides system information and module versions
-icon: applications-system
-label: System information
-menu:
-  index: -1
-  separator_after: false
-  separator_before: false
-  submenu: Tools

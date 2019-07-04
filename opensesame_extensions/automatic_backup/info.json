@@ -1,0 +1,15 @@
+{
+ "description": "Periodically saves your experiment to a back-up folder.",
+ "icon": "folder-open",
+ "label": "Open backup folder",
+ "menu": {
+  "index": 1,
+  "separator_after": true,
+  "submenu": "Tools"
+ },
+ "settings": {
+  "autosave_interval": 600000,
+  "autosave_max_age": 7
+ },
+ "type": "extensions"
+}

@@ -1,0 +1,13 @@
+{
+ "description": "Quickly open items and scripts.",
+ "icon": "edit-find",
+ "label": "Quick switcher",
+ "priority": -999999,
+ "menu": {
+  "index": 4,
+  "separator_after": true,
+  "submenu": "view"
+ },
+ "shortcut": "Ctrl+Space",
+ "type": "extensions"
+}

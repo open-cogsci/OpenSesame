@@ -1,16 +1,24 @@
 {
-	"author"	: "Sebastiaan Mathôt",
-	"url"		: "http://osdoc.cogsci.nl",
-	"category"	: "Miscellaneous",
-	"comment"	: "Simple notepad plug-in",
-	"icon"		: "notes",
-	"controls" : [
-		{
-			"type"		: "editor",
-			"var"		: "note",
-			"label"		: "Note",
-			"name"		: "note_widget",
-			"tooltip"	: "Type your note here"
-		}
-	]
+ "author": "Sebastiaan Math\u00f4t",
+ "url": "http://osdoc.cogsci.nl",
+ "category": "Miscellaneous",
+ "comment": "Simple notepad plug-in",
+ "icon": "notes",
+ "controls": [
+  {
+   "type": "editor",
+   "var": "note",
+   "label": "Note",
+   "name": "note_widget",
+   "tooltip": "Type your note here",
+   "info": null,
+   "min_width": null,
+   "prefix": "",
+   "suffix": "",
+   "left_label": "min.",
+   "right_label": "max.",
+   "syntax": false
+  }
+ ],
+ "type": "plugins"
 }

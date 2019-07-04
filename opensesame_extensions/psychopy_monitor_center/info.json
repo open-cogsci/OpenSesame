@@ -1,0 +1,12 @@
+{
+ "description": "Launches the PsychoPy monitor center",
+ "icon": "video-display",
+ "label": "PsychoPy monitor center",
+ "menu": {
+  "index": -2,
+  "separator_after": true,
+  "submenu": "Tools"
+ },
+ "tooltip": "Launch the PsychoPy monitor center",
+ "type": "extensions"
+}
