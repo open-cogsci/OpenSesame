@@ -23,6 +23,7 @@ import sys
 import platform
 os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
 
+
 def set_paths():
 
 	from qtpy import QtCore
@@ -156,23 +157,31 @@ def opensesamerun():
 			sys.exit()
 	# Decode the experiment path and logfile
 	experiment = os.path.abspath(options.experiment)
-	if isinstance(experiment, str):
-		experiment = safe_decode(experiment,
-			enc=libopensesame.misc.filesystem_encoding(), errors=u'ignore')
+	if isinstance(experiment, bytes):
+		experiment = safe_decode(
+			experiment,
+			enc=libopensesame.misc.filesystem_encoding(),
+			errors=u'ignore'
+		)
 	# experiment_path = os.path.dirname(experiment)
 	logfile = options.logfile
-	if isinstance(logfile, str):
-		logfile = safe_decode(logfile,
-			enc=libopensesame.misc.filesystem_encoding(), errors=u'ignore')
-
+	if isinstance(logfile, bytes):
+		logfile = safe_decode(
+			logfile,
+			enc=libopensesame.misc.filesystem_encoding(),
+			errors=u'ignore'
+		)
 	experiment_path = safe_decode(
 		os.path.abspath(options.experiment),
 		enc=libopensesame.misc.filesystem_encoding()
 	)
 	if options.debug:
 		# In debug mode, don't try to catch any exceptions
-		exp = libopensesame.experiment.experiment(u"Experiment",
-			experiment, experiment_path=experiment_path)
+		exp = libopensesame.experiment.experiment(
+			u"Experiment",
+			experiment,
+			experiment_path=experiment_path
+		)
 		exp.set_subject(options.subject)
 		exp.var.fullscreen = options.fullscreen
 		exp.logfile = logfile
@@ -181,11 +190,16 @@ def opensesamerun():
 	else:
 		# Try to parse the experiment from a file
 		try:
-			exp = libopensesame.experiment.experiment(u"Experiment",
-				experiment, experiment_path=experiment_path)
+			exp = libopensesame.experiment.experiment(
+				u"Experiment",
+				experiment,
+				experiment_path=experiment_path
+			)
 		except Exception as e:
-			libopensesame.misc.messagebox(u"OpenSesame Run",
-				libopensesame.misc.strip_tags(e))
+			libopensesame.misc.messagebox(
+				u"OpenSesame Run",
+				libopensesame.misc.strip_tags(e)
+			)
 			sys.exit()
 		# Set some options
 		exp.set_subject(options.subject)
@@ -203,8 +217,12 @@ def opensesamerun():
 			try:
 				exp.end()
 			except Exception as f:
-				libopensesame.misc.messagebox(u"OpenSesame Run",
-					libopensesame.misc.strip_tags(f))
-			libopensesame.misc.messagebox(u"OpenSesame Run",
-				libopensesame.misc.strip_tags(e))
+				libopensesame.misc.messagebox(
+					u"OpenSesame Run",
+					libopensesame.misc.strip_tags(f)
+				)
+			libopensesame.misc.messagebox(
+				u"OpenSesame Run",
+				libopensesame.misc.strip_tags(e)
+			)
 	libopensesame.experiment.clean_up(exp.debug)
