@@ -21,7 +21,10 @@ from libopensesame.py3compat import *
 import os
 import sys
 import platform
-os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+
+# On Linux this appears to be buggy
+if platform.system() != 'Linux':
+	os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
 
 
 def set_paths():
