@@ -200,6 +200,13 @@ class RichText(Element):
 		pixmap = QPixmap(width, height)
 		pixmap.fill(Qt.transparent)
 		painter = QPainter(pixmap)
+		painter.setPen(Qt.red)
+		if self.center and self.html:
+			painter.drawPoint(width // 2, 0)
+			painter.drawPoint(width // 2, height - 1)
+		else:
+			painter.drawPoint(0, 0)
+			painter.drawPoint(0, height - 1)
 		t.paint(painter, QStyleOptionGraphicsItem(), None)
 		painter.end()
 		return pixmap.toImage()
@@ -210,7 +217,7 @@ class RichText(Element):
 		bbox = im.getbbox()
 		x1, y1, x2, y2 = (0, 0, 1, 1) if bbox is None else bbox
 		y1 = min(y2 - self.font_size, y1)
-		return im.crop((x1, y1, x2, y2))
+		return im.crop((x1, y1 + 1, x2, y2 - 1))
 
 	@staticmethod
 	def _setter(key, self, val):
