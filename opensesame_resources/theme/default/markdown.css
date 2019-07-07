@@ -38,7 +38,6 @@ h1 {
 	font-size: 2em;
 	display: block;
 	height: 48px;
-	background: url("file://%(background_image)s") no-repeat top right;
 	border-bottom: solid 1px #ff5722;
 }
 
