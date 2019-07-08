@@ -21,13 +21,9 @@ from libopensesame.py3compat import *
 from openexp import backend
 from libopensesame.oslogging import oslogger
 import tempfile
-try:
-	import pygame
-except ImportError:
-	pass
 import os
 
- # A list of temporary files that should be cleaned up.
+# A list of temporary files that should be cleaned up.
 temp_files = []
 
 
@@ -125,10 +121,10 @@ def gabor_file(*arglist, **kwdict):
 	"""
 
 	from openexp._canvas import canvas as _canvas
-	surface = _canvas._gabor(*arglist, **kwdict)
 	fd, fname = tempfile.mkstemp(suffix=u'.png')
-	pygame.image.save(surface, fname)
 	temp_files.append(fname)
+	im = _canvas._gabor(*arglist, **kwdict)
+	im.save(fname)
 	os.close(fd)
 	return fname
 
@@ -150,10 +146,10 @@ def noise_file(*arglist, **kwdict):
 	"""
 
 	from openexp._canvas import canvas as _canvas
-	surface = _canvas._noise_patch(*arglist, **kwdict)
 	fd, fname = tempfile.mkstemp(suffix=u'.png')
-	pygame.image.save(surface, fname)
 	temp_files.append(fname)
+	im = _canvas._noise_patch(*arglist, **kwdict)
+	im.save(fname)
 	os.close(fd)
 	return fname
 

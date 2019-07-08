@@ -20,13 +20,27 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import warnings
 import random
+import itertools
 import math
 from libopensesame.exceptions import osexception
 from openexp.backend import Backend, configurable
 from openexp.color import Color
+from PIL import Image as PILImage
 from collections import OrderedDict
-from openexp.canvas_elements import (Line, Rect, Polygon, Ellipse, Image,
-	Gabor, NoisePatch, Circle, FixDot, ElementFactory, RichText, Arrow)
+from openexp.canvas_elements import (
+	Line,
+	Rect,
+	Polygon,
+	Ellipse,
+	Image,
+	Gabor,
+	NoisePatch,
+	Circle,
+	FixDot,
+	ElementFactory,
+	RichText,
+	Arrow
+)
 from openexp._canvas._element.element import Element
 from openexp._canvas._element.group import Group
 
@@ -1524,9 +1538,6 @@ def _gabor(
 		see [canvas.gabor].
 	"""
 
-	import itertools
-	import pygame
-
 	env = _match_env(env)
 	# Generating a Gabor patch takes quite some time, so keep
 	# a cache of previously generated Gabor patches to speed up
@@ -1545,12 +1556,8 @@ def _gabor(
 	)
 	if key in canvas_cache:
 		return canvas_cache[key]
-	# Create a surface
-	surface = pygame.Surface((size, size))
-	try:
-		px = pygame.PixelArray(surface)
-	except:
-		px = None
+	im = PILImage.new(u'RGB', (size, size))
+	px = im.load()
 	# Conver the orientation to radians
 	orient = math.radians(-orient)
 	col1 = _color(col1)
@@ -1587,13 +1594,9 @@ def _gabor(
 		r = col1.r * amp + col2.r * (1.0 - amp)
 		g = col1.g * amp + col2.g * (1.0 - amp)
 		b = col1.b * amp + col2.b * (1.0 - amp)
-		if px is None:
-			surface.set_at((rx, ry), (round(r), round(g), round(b)))
-		else:
-			px[rx][ry] = round(r), round(g), round(b)
-	canvas_cache[key] = surface
-	del px
-	return surface
+		px[rx, ry] = int(r), int(g), int(b)
+	canvas_cache[key] = im
+	return im
 
 
 def _noise_patch(
@@ -1611,9 +1614,6 @@ def _noise_patch(
 		see [canvas.noise_patch].
 	"""
 
-	import itertools
-	import pygame
-
 	env = _match_env(env)
 	# Generating a noise patch takes quite some time, so keep
 	# a cache of previously generated noise patches to speed up
@@ -1623,11 +1623,8 @@ def _noise_patch(
 	if key in canvas_cache:
 		return canvas_cache[key]
 	# Create a surface
-	surface = pygame.Surface( (size, size) )
-	try:
-		px = pygame.PixelArray(surface)
-	except:
-		px = None
+	im = PILImage.new(u'RGB', (size, size))
+	px = im.load()
 	col1 = _color(col1)
 	col2 = _color(col2)
 	# rx and ry reflect the real coordinates in the
@@ -1662,13 +1659,9 @@ def _noise_patch(
 		r = col1.r * amp + col2.r * (1.0 - amp)
 		g = col1.g * amp + col2.g * (1.0 - amp)
 		b = col1.b * amp + col2.b * (1.0 - amp)
-		if px is None:
-			surface.set_at((rx, ry), (round(r), round(g), round(b)))
-		else:
-			px[rx][ry] = round(r), round(g), round(b)
-	canvas_cache[key] = surface
-	del px
-	return surface
+		px[rx, ry] = int(r), int(g), int(b)
+	canvas_cache[key] = im
+	return im
 
 
 def _match_env(env):
