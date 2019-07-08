@@ -39,6 +39,9 @@ class QtCanvas(Canvas, Coordinates):
 
 	def __init__(self, experiment):
 
+		# This avoids the legacy color backend from being loaded, which
+		# unnecessarily imports pygame
+		experiment.var.color_backend = 'color'
 		Canvas.__init__(self, experiment)
 		Coordinates.__init__(self)
 
