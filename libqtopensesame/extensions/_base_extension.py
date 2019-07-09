@@ -406,7 +406,6 @@ class base_extension(base_subcomponent):
 		"""
 
 		if hasattr(self, u'event_%s' % event):
-			oslogger.debug(u'extensions %s received event_%s' % (self.name(), event))
 			getattr(self, u'event_%s' % event)(**kwdict)
 
 	def name(self):
