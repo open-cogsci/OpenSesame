@@ -22,7 +22,6 @@ from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.dialogs.base_dialog import base_dialog
 from quick_switcher_dialog.item import quick_open_element_item
-from quick_switcher_dialog.symbol import quick_open_element_symbol
 from quick_switcher_dialog.action import quick_open_element_action
 from quick_switcher_dialog.sortable_list_widget import sortable_list_widget
 
@@ -36,7 +35,7 @@ NAVIGATION_KEYS = [
 	QtCore.Qt.Key_Return,
 	QtCore.Qt.Key_Enter,
 	QtCore.Qt.Key_PageDown
-	]
+]
 
 NUMBER_KEYS = range(QtCore.Qt.Key_1, QtCore.Qt.Key_9)
 
@@ -158,24 +157,6 @@ class quick_switcher(base_dialog):
 		list_widget_item.setSizeHint(self.element_size(element))
 		self.ui.items_list_widget.addItem(list_widget_item)
 		self.ui.items_list_widget.setItemWidget(list_widget_item, element)
-		if item.item_type != u'inline_script':
-			return
-		# Call edit widget to make sure that QProgEdit has content and thus
-		# can extract symbols. But don't do this for the currently visible
-		# item, because that causes the cursor to jump to the top.
-		if not self._is_visible(item, item_name):
-			item.edit_widget()
-		for i, tab in enumerate(item.qprogedit.tabs()):
-			for symbol in tab.symbols():
-				list_widget_item = sortable_list_widget(self.sortkey)
-				self._item_elements[item_name].append(list_widget_item)
-				element = quick_open_element_symbol(
-					item, item.qprogedit.tabText(i), symbol
-				)
-				list_widget_item.setSizeHint(self.element_size(element))
-				self.ui.items_list_widget.addItem(list_widget_item)
-				self.ui.items_list_widget.setItemWidget(
-					list_widget_item, element)
 
 	def delete_item(self, item_name):
 

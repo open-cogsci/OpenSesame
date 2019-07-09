@@ -39,7 +39,6 @@ from libqtopensesame.console._base_console import BaseConsole
 from libqtopensesame.misc.config import cfg
 from libopensesame.oslogging import oslogger
 
-
 deferred_function_calls = []
 
 
@@ -87,36 +86,6 @@ def deferred(fnc):
 
 	inner._original = fnc
 	return inner
-
-
-def PygmentsStyleFactory(cs):
-
-	"""
-	arguments:
-		cs:
-			desc:	A QProgEdit colorscheme.
-			type:	dict
-
-	returns:
-		desc:	A Pygments Style class that emulates the QProgEdit colorscheme.
-		type:	Style
-	"""
-
-	from pygments.style import Style
-	from pygments import token
-	class my_style(Style):
-		default_style = u''
-		styles = {
-			token.Comment 	: get_style(cs, 'Comment'),
-			token.Keyword	: get_style(cs, 'Keyword'),
-			token.Name		: get_style(cs, 'Identifier'),
-			token.String	: get_style(cs, 'Double-quoted string'),
-			token.Error		: get_style(cs, 'Invalid'),
-			token.Number	: get_style(cs, 'Number'),
-			token.Operator	: get_style(cs, 'Operator'),
-			token.Generic	: get_style(cs, 'Default'),
-		}
-	return my_style
 
 
 class IPythonImporter(QtCore.QThread):
@@ -201,6 +170,7 @@ class IPythonConsole(BaseConsole, QtWidgets.QWidget):
 		self.kernel.shell.banner1 = ''
 		kernel_client = kernel_manager.client()
 		kernel_client.start_channels()
+		QtWidgets.QApplication.processEvents()
 		self.control = self._ipython_importer.RichIPythonWidget()
 		self.control.banner = self.banner()
 		self.control.kernel_manager = kernel_manager
@@ -259,31 +229,6 @@ class IPythonConsole(BaseConsole, QtWidgets.QWidget):
 
 		self.kernel.shell.push(_globals)
 
-	def validTheme(self, cs):
-
-		"""
-		returns:
-			desc:	True if the colorscheme is valid, False otherwise.
-			type:	bool
-		"""
-
-		for key in [
-			u'Background',
-			u'Default',
-			u'Prompt in',
-			u'Prompt out',
-			u'Comment',
-			u'Keyword',
-			u'Identifier',
-			u'Double-quoted string',
-			u'Invalid',
-			u'Number',
-			u'Operator',
-			]:
-			if key not in cs:
-				return False
-		return True
-
 	def setTheme(self):
 
 		"""
@@ -291,35 +236,22 @@ class IPythonConsole(BaseConsole, QtWidgets.QWidget):
 			Sets the theme, based on the QProgEdit settings.
 		"""
 
-		from QProgEdit import QColorScheme
-		if not hasattr(QColorScheme, cfg.qProgEditColorScheme):
-			oslogger.error(u'failed to set debug-output colorscheme')
-			return u''
-		cs = getattr(QColorScheme, cfg.qProgEditColorScheme)
-		if not self.validTheme(cs):
-			oslogger.error(u'invalid debug-output colorscheme')
-			return u''
-		# We need to process events first, otherwise the style changes don't
-		# take for an unclear reason.
+		from qtconsole import styles
+
 		QtWidgets.QApplication.processEvents()
-		self.control._highlighter.set_style(PygmentsStyleFactory(cs))
-		self.qss = u'''QPlainTextEdit, QTextEdit {
-				background-color: %(Background)s;
-				color: %(Default)s;
-			}
-			.in-prompt { color: %(Prompt in)s; }
-			.in-prompt-number { font-weight: bold; }
-			.out-prompt { color: %(Prompt out)s; }
-			.out-prompt-number { font-weight: bold; }
-			''' % cs
-		self.control.style_sheet = self.qss
 		self.control._control.setFont(
 			QtGui.QFont(
-				cfg.qProgEditFontFamily,
-				cfg.qProgEditFontSize
+				cfg.pyqode_font_name,
+				cfg.pyqode_font_size
 			)
 		)
-		self.update()
+		self.control.style_sheet = styles.sheet_from_template(
+			cfg.pyqode_color_scheme,
+			u'linux' if styles.dark_style(cfg.pyqode_color_scheme) else 'lightbg'
+		)
+		self.control.syntax_style = cfg.pyqode_color_scheme
+		self.control._syntax_style_changed()
+		self.control._style_sheet_changed()
 
 	@deferred
 	def setup(self, main_window):

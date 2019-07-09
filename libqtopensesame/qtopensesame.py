@@ -93,20 +93,8 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			QtCore.Qt.AA_DontShowIconsInMenus,
 			False
 		)
-		# Do a few things to customize QProgEdit behavior:
-		# - Register the bundled monospace font (Droid Sans Mono)
-		# - Make sure that QProgEdit doesn't complain about some standard names
-		# - Ignore undefined name warnings, which don't play well with
-		#   OpenSesame's single workspace
-		QtGui.QFontDatabase.addApplicationFont(misc.resource(u'mono.ttf'))
-		from QProgEdit import validate
-		validate.addPythonBuiltins([u'exp', u'win', u'self'])
-		if hasattr(validate, u'setPyFlakesFilter'):
-			validate.setPyFlakesFilter(
-				lambda msg: msg.message == u'undefined name %r')
 		# Initialize random number generator
 		random.seed()
-
 		# Check the filesystem encoding for debugging purposes
 		oslogger.debug(u'filesystem encoding: %s' % misc.filesystem_encoding())
 
@@ -953,6 +941,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 				type:	str
 		"""
 
+		self.extension_manager.fire(u'prepare_regenerate')
 		try:
 			exp = experiment.experiment(
 				self,
@@ -970,7 +959,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			self.tabwidget.open_markdown(md)
 			self.console.write(e)
 			return
-		self.extension_manager.fire(u'prepare_regenerate')
 		self.experiment = exp
 		self.tabwidget.close_all()
 		self.experiment.build_item_tree()

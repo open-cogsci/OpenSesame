@@ -1,0 +1,18 @@
+{
+	"description": "Manages PyQode, the code-editor component",
+	"label": "PyQode manager",
+	"settings": {
+		"pyqode_font_size": 14,
+		"pyqode_font_name": "Roboto Mono",
+		"pyqode_color_scheme": "monokai",
+		"pyqode_pyflakes_validation": true,
+		"pyqode_pep8_validation": true,
+		"pyqode_right_margin": false,
+		"pyqode_highlight_caret_line": false,
+		"pyqode_code_completion": true,
+		"pyqode_smart_editing": true,
+		"pyqode_use_spaces_instead_of_tabs": false,
+		"pyqode_show_whitespaces": false,
+		"pyqode_tab_length": 4
+	}
+}

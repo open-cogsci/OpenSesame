@@ -69,7 +69,7 @@ try:
 	shutil.rmtree("qt_menu.nib")
 except:
 	pass
-shutil.copytree(os.path.join(anaconda_path, 
+shutil.copytree(os.path.join(anaconda_path,
 	"python.app/Contents/Resources/qt_menu.nib"), "qt_menu.nib")
 
 # Py2app doesn't like extensionless Python scripts
@@ -85,11 +85,11 @@ shutil.copyfile("opensesamerun", "opensesamerun.py")
 setup(
     app = ['opensesame.py'],
     data_files = ['opensesame.py'],
-    options = {'py2app' : 
+    options = {'py2app' :
 		{
-			'argv_emulation': True, 
+			'argv_emulation': True,
 			'includes' : [
-				'PyQt4.QtNetwork', 'serial', 'opensesamerun', 'sip', 
+				'PyQt4.QtNetwork', 'serial', 'opensesamerun', 'sip',
 				'billiard', 'QNotifications', 'arrow', 'humanize',
 				'requests_oauthlib','pyaudio','imageio','sounddevice',
 			],
@@ -100,10 +100,11 @@ setup(
 			],
 			'resources' : ['qt_menu.nib','opensesame_resources'],
 			'packages' : [
-				'openexp','expyriment','psychopy','QProgEdit','libqtopensesame',
-				'libopensesame', 'IPython', 'ipykernel', 'jupyter_client', 
+				'openexp','expyriment','psychopy','libqtopensesame',
+				'libopensesame', 'IPython', 'ipykernel', 'jupyter_client',
 				'qtconsole', 'pygments', 'OpenGL_accelerate', 'markdown',
-				'QOpenScienceFramework', 'moviepy', 'qtawesome',
+				'QOpenScienceFramework', 'moviepy', 'qtawesome','pyqcode.core',
+				'pyqode.python'
 			],
 			'iconfile' : 'opensesame_resources/opensesame.icns',
 			'plist': {
@@ -112,8 +113,8 @@ setup(
 				'CFBundleVersion': ' '.join([version, codename]),
 				'CFBundleIdentifier':'nl.cogsci.osdoc',
 				'NSHumanReadableCopyright': 'Sebastiaan Mathot (2010-2016)',
-				'CFBundleDevelopmentRegion': 'English', 	
-				'CFBundleDocumentTypes': [ 
+				'CFBundleDevelopmentRegion': 'English',
+				'CFBundleDocumentTypes': [
 					{
                     	'CFBundleTypeExtensions' : ['osexp'],
                     	'CFBundleTypeIconFile' : 'opensesame_resources/opensesame.icns',
@@ -136,12 +137,12 @@ if 'psychopy_monitor_center' in included_extensions:
 
 # Copy extensions into app
 for extension in included_extensions:
-	shutil.copytree(os.path.join("opensesame_extensions",extension), 
+	shutil.copytree(os.path.join("opensesame_extensions",extension),
 		os.path.join("dist/OpenSesame.app/Contents/Resources/opensesame_extensions/",extension))
 
 # Open Science Framework extension
 try:
-	osf_path = os.path.abspath(os.path.join(anaconda_path, 
+	osf_path = os.path.abspath(os.path.join(anaconda_path,
 		'share/opensesame_extensions/OpenScienceFramework'))
 	shutil.copytree(osf_path,
 		"dist/opensesame.app/Contents/Resources/opensesame_extensions/OpenScienceFramework")
@@ -150,12 +151,12 @@ except Exception as e:
 
 # Copy plugins into app
 for plugin in included_plugins:
-	shutil.copytree(os.path.join("opensesame_plugins",plugin), 
+	shutil.copytree(os.path.join("opensesame_plugins",plugin),
 		os.path.join("dist/OpenSesame.app/Contents/Resources/opensesame_plugins/",plugin))
 
 # Copy media_player_mpy plugin
 try:
-	mp_path = os.path.abspath(os.path.join(anaconda_path, 
+	mp_path = os.path.abspath(os.path.join(anaconda_path,
 		'share/opensesame_plugins/media_player_mpy'))
 	shutil.copytree(mp_path,
 		"dist/opensesame.app/Contents/Resources/opensesame_plugins/media_player_mpy")
@@ -166,14 +167,14 @@ except Exception as e:
 try:
 	import imageio
 	appdata_dir = imageio.core.appdata_dir('imageio')
-	ffmpeg_path = os.path.abspath(os.path.join(appdata_dir, 
+	ffmpeg_path = os.path.abspath(os.path.join(appdata_dir,
 		'ffmpeg/ffmpeg.osx'))
 	shutil.copy(ffmpeg_path,
 		"dist/opensesame.app/Contents/Resources/ffmpeg.osx")
 except Exception as e:
 	print("Could not copy media_player_mpy plugin: {}".format(e))
 
-# Anaconda libpng version is too old for pygame (min required version is 36). 
+# Anaconda libpng version is too old for pygame (min required version is 36).
 # Copy homebrew version instead
 try:
 	shutil.copy('/usr/local/opt/libpng/lib/libpng16.16.dylib',

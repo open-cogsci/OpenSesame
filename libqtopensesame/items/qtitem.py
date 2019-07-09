@@ -26,7 +26,6 @@ from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.widgets.qtitem_splitter import qtitem_splitter
 from libqtopensesame.widgets import header_widget
 from libqtopensesame._input.pool_select import pool_select
-from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'qtitem', category=u'core')
 
@@ -55,7 +54,7 @@ class qtitem(object):
 	initial_view = u'controls'
 	label_align = u'right'
 	help_url = None
-	lazy_init = False
+	lazy_init = True
 
 	def __init__(self):
 
@@ -282,15 +281,13 @@ class qtitem(object):
 		self._edit_widget.setLayout(self.edit_vbox)
 
 		# The _script_widget contains the script editor
-		from QProgEdit import QTabManager
-		self._script_widget = QTabManager(
-			handlerButtonText=_(u'Apply and close'), cfg=cfg)
-		self._script_widget.focusLost.connect(self.apply_script_changes)
-		self._script_widget.cursorRowChanged.connect(self.apply_script_changes)
-		self._script_widget.handlerButtonClicked.connect(
-			self.apply_script_changes_and_switch_view)
-		self._script_widget.addTab(u'Script').setLang(u'OpenSesame')
-
+		from pyqode.core.api import CodeEdit
+		self._script_widget = CodeEdit()
+		self._script_widget.focusOutEvent = self._script_focus_out
+		self.extension_manager.fire(
+			u'register_editor',
+			editor=self._script_widget
+		)
 		# The container_widget is the top-level widget that is actually inserted
 		# into the tab widget.
 		self.splitter = qtitem_splitter(self)
@@ -313,6 +310,10 @@ class qtitem(object):
 		self.container_widget.setLayout(self.container_vbox)
 		self.container_widget.on_activate = self.show_tab
 		self.container_widget.__item__ = self.name
+
+	def _script_focus_out(self, event):
+
+		self.apply_script_changes()
 
 	def splitter_moved(self, pos, index):
 
@@ -399,9 +400,13 @@ class qtitem(object):
 		script = self.to_string()
 		script = script[script.find(u'\t'):]
 		script = textwrap.dedent(script)
-		if self._script_widget.text() != script:
+		if self._script_widget.toPlainText() != script:
 			self.main_window.set_unsaved()
-			self._script_widget.setText(script)
+			self._script_widget.setPlainText(
+				script,
+				u'text/opensesame',
+				u'utf-8'
+			)
 			self.extension_manager.fire(u'change_item', name=self.name)
 
 	def edit_widget(self, *deprecated, **_deprecated):
@@ -435,7 +440,7 @@ class qtitem(object):
 
 		if not self.validate_script():
 			return
-		new_script = self._script_widget.text()
+		new_script = self._script_widget.toPlainText()
 		old_script = self.to_string()
 		self.from_string(new_script)
 		if old_script != new_script:
@@ -464,7 +469,7 @@ class qtitem(object):
 			type:	bool
 		"""
 
-		script = self._script_widget.text()
+		script = self._script_widget.toPlainText()
 		# First create a dummy item to see if the string can be parsed.
 		try:
 			self.validator(self.name, self.experiment, script)
@@ -735,13 +740,12 @@ class qtitem(object):
 						u'edited through the script.') % var,
 						category=u'info')
 
-		for var, qprogedit in self.auto_editor.items():
+		for var, editor in self.auto_editor.items():
 			if isinstance(var, int):
 				continue
-			if var in self.var:
-				val = safe_decode(self.var.get(var, _eval=False))
-				if val != qprogedit.text():
-					qprogedit.setText(val)
+			val = safe_decode(self.var.get(var, _eval=False, default=u''))
+			if val != editor.toPlainText():
+				editor.setPlainText(val)
 
 	def auto_apply_edit_changes(self):
 
@@ -790,12 +794,11 @@ class qtitem(object):
 				val = u'yes' if checkbox.isChecked() else u'no'
 				self.var.set(var, val)
 
-		for var, qprogedit in self.auto_editor.items():
+		for var, editor in self.auto_editor.items():
 			if isinstance(var, int):
 				continue
 			if isinstance(var, basestring):
-				self.var.set(var, qprogedit.text())
-
+				self.var.set(var, editor.toPlainText())
 		return True
 
 	def auto_add_widget(self, widget, var=None, apply_func=None):

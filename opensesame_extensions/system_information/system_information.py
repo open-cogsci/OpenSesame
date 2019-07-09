@@ -37,7 +37,6 @@ class system_information(base_extension):
 		for name, module, attr in [
 			(u'OpenSesame', u'libopensesame.metadata', u'__version__'),
 			(u'Python', u'sys', u'version'),
-			(u'QProgEdit', u'QProgEdit', u'__version__'),
 			(u'datamatrix', u'datamatrix', u'__version__'),
 			(u'qdatamatrix', u'qdatamatrix', u'__version__'),
 			(u'pseudorandom', u'pseudorandom', u'__version__'),

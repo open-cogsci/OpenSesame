@@ -57,7 +57,7 @@ included_extensions = [
 	'quick_switcher',
 	'toolbar_menu',
 	'update_checker',
-	'qprogedit_preferences',
+	'pyqode_manager',
 	'opensesame_3_notifications',
 	'example_experiments',
 	'undo_manager',

@@ -25,7 +25,6 @@ from libqtopensesame.items import qtitem
 from libqtopensesame.widgets import color_edit
 from libopensesame import misc
 from libopensesame.oslogging import oslogger
-from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'qtplugin', category=u'core')
 
@@ -404,7 +403,7 @@ class qtplugin(qtitem.qtitem):
 	def add_editor_control(self, var, label, syntax=False):
 
 		"""
-		Adds a QProgEdit that is linked to a variable.
+		Adds an editor that is linked to a variable.
 
 		arguments:
 			var:		The associated variable.
@@ -415,23 +414,33 @@ class qtplugin(qtitem.qtitem):
 						should be activated.
 
 		returns:
-			A QProgEdit widget.
+			An editor widget.
 		"""
 
-		from QProgEdit import QTabManager
 		if syntax:
-			lang = u'python'
+			from pyqode.python.widgets import PyCodeEdit as CodeEdit
 		else:
-			lang = u'text'
-		qprogedit = QTabManager(cfg=cfg)
-		qprogedit.focusLost.connect(self.apply_edit_changes)
-		qprogedit.handlerButtonClicked.connect(self.apply_edit_changes)
-		qprogedit.addTab(label).setLang(lang)
+			from pyqode.core.api import CodeEdit
+		editor = CodeEdit()
+		if not syntax:
+			# If this is a regular CodeEdit, then decorate setPlainText() with
+			# a default mimetype and encoding
+			def _(fnc):
+				def inner(txt):
+					return fnc(txt, u'text/plain', u'utf-8')
+				return inner
+			editor.setPlainText = _(editor.setPlainText)
+		editor.focusOutEvent = self._editor_focus_out
 		if var is not None:
-			self.auto_editor[var] = qprogedit
-		self.edit_vbox.addWidget(qprogedit)
-		self.set_focus_widget(qprogedit)
-		return qprogedit
+			self.auto_editor[var] = editor
+		self.edit_vbox.addWidget(editor)
+		self.set_focus_widget(editor)
+		self.extension_manager.fire(u'register_editor', editor=editor)
+		return editor
+
+	def _editor_focus_out(self, event):
+
+		self.apply_edit_changes()
 
 	def add_text(self, msg):
 
@@ -490,8 +499,8 @@ class qtplugin(qtitem.qtitem):
 			True if changes have been made, False otherwise.
 		"""
 
-		for var, qprogedit in self.auto_editor.items():
-			if qprogedit.isAnyModified():
+		for var, editor in self.auto_editor.items():
+			if editor.isModified():
 				oslogger.debug(u'applying pending editor changes')
 				self.apply_edit_changes()
 				return True

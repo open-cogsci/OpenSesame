@@ -18,13 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from qtpy import QtCore, QtWidgets
-from libopensesame.exceptions import osexception
-from libqtopensesame.items.experiment import experiment
+from qtpy import QtWidgets
 from libqtopensesame.widgets.base_widget import base_widget
-from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'general_script_editor', category=u'core')
+
 
 class general_script_editor(base_widget):
 
@@ -43,13 +41,19 @@ class general_script_editor(base_widget):
 			main_window:	A qtopensesame object.
 		"""
 
-		from QProgEdit import QTabManager
-		super(general_script_editor, self).__init__(main_window,
-			ui=u'widgets.general_script_editor')
-		self.ui.qprogedit = QTabManager(handlerButtonText=u'Apply', cfg=cfg)
-		self.ui.qprogedit.handlerButtonClicked.connect(self._apply)
-		self.ui.qprogedit.addTab(u'General script').setLang(u'OpenSesame')
-		self.ui.layout_vbox.addWidget(self.ui.qprogedit)
+		from pyqode.core.api import CodeEdit
+		super(general_script_editor, self).__init__(
+			main_window,
+			ui=u'widgets.general_script_editor'
+		)
+		self.ui.editor = CodeEdit()
+		self.extension_manager.fire(
+			u'register_editor',
+			editor=self.ui.editor,
+			mime_type='text/opensesame'
+		)
+		self.ui.layout_vbox.addWidget(self.ui.editor)
+		self.ui.button_apply.clicked.connect(self._apply)
 		self.tab_name = u'__general_script__'
 
 	def _apply(self):
@@ -59,12 +63,16 @@ class general_script_editor(base_widget):
 			Confirms and applies the script changes.
 		"""
 
-		resp = QtWidgets.QMessageBox.question(self.main_window, _(u'Apply?'),
+		resp = QtWidgets.QMessageBox.question(
+			self.main_window,
+			_(u'Apply?'),
 			_(u'Are you sure you want to apply the changes to the general script?'),
-			QtWidgets.QMessageBox.Yes, QtWidgets.QMessageBox.No)
+			QtWidgets.QMessageBox.Yes,
+			QtWidgets.QMessageBox.No
+		)
 		if resp == QtWidgets.QMessageBox.No:
 			return
-		self.main_window.regenerate(self.ui.qprogedit.text())
+		self.main_window.regenerate(self.ui.editor.toPlainText())
 
 	def on_activate(self):
 
@@ -82,4 +90,8 @@ class general_script_editor(base_widget):
 			Refreshes the contents of the general script.
 		"""
 
-		self.ui.qprogedit.setText(self.main_window.experiment.to_string())
+		self.ui.editor.setPlainText(
+			self.main_window.experiment.to_string(),
+			u'text/opensesame',
+			u'utf-8'
+		)
