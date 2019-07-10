@@ -26,10 +26,10 @@ from pyqode.core import api
 from pyqode.core import modes
 from pyqode.core import panels
 from pyqode.python import modes as pymodes
-from pyqode.python import panels as pypanels
 from pyqode.python.backend.workers import defined_names
 from pyqode.python.folding import PythonFoldDetector
 from pyqode.python.widgets.code_edit import PyCodeEditBase
+from convert_indentation_mode import ConvertIndentationMode
 
 
 class PythonCodeEdit(PyCodeEditBase):
@@ -58,6 +58,7 @@ class PythonCodeEdit(PyCodeEditBase):
 		)
 		self.setLineWrapMode(self.NoWrap)
 		self.modes.append(modes.OutlineMode(defined_names))
+		self.modes.append(ConvertIndentationMode())
 		self.panels.append(
 			panels.SearchAndReplacePanel(),
 			panels.SearchAndReplacePanel.Position.BOTTOM
