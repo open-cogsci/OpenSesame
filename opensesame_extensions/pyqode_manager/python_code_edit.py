@@ -75,7 +75,6 @@ class PythonCodeEdit(PyCodeEditBase):
 		self.modes.append(modes.FileWatcherMode())
 		self.modes.append(modes.ZoomMode())
 		self.modes.append(modes.SymbolMatcherMode())
-		self.modes.append(modes.OccurrencesHighlighterMode())
 		self.modes.append(pymodes.CommentsMode())
 		if cfg.pyqode_highlight_caret_line:
 			self.modes.append(modes.CaretLineHighlighterMode())
