@@ -234,7 +234,6 @@ class qtitem(object):
 		self.header_hbox.addWidget(self.header)
 		self.header_hbox.setContentsMargins(0, 0, 0, 0)
 		self.header_hbox.setSpacing(12)
-
 		# Maximize button
 		self.button_toggle_maximize = QtWidgets.QPushButton(
 			self.theme.qicon(u'view-fullscreen'), u'')
@@ -252,10 +251,8 @@ class qtitem(object):
 		self.button_help.setIconSize(QtCore.QSize(16, 16))
 		self.button_help.clicked.connect(self.open_help_tab)
 		self.header_hbox.addWidget(self.button_help)
-
 		self.header_widget = QtWidgets.QWidget()
 		self.header_widget.setLayout(self.header_hbox)
-
 		# The edit_grid is the layout that contains the actual controls for the
 		# items.
 		self.edit_grid = QtWidgets.QFormLayout()
@@ -268,7 +265,6 @@ class qtitem(object):
 		self.edit_grid.setHorizontalSpacing(12)
 		self.edit_grid_widget = QtWidgets.QWidget()
 		self.edit_grid_widget.setLayout(self.edit_grid)
-
 		# The edit_vbox contains the edit_grid and the header widget
 		self.edit_vbox = QtWidgets.QVBoxLayout()
 		self.edit_vbox.addWidget(self.edit_grid_widget)
@@ -279,15 +275,35 @@ class qtitem(object):
 		self._edit_widget = QtWidgets.QWidget()
 		self._edit_widget.setWindowIcon(self.theme.qicon(self.item_type))
 		self._edit_widget.setLayout(self.edit_vbox)
-
-		# The _script_widget contains the script editor
-		from pyqode.core.api import CodeEdit
-		self._script_widget = CodeEdit()
+		# The _script_widget contains the script editor and an apply button
+		from pyqode.core.widgets import TextCodeEdit
+		self._script_widget = TextCodeEdit(self.main_window)
 		self._script_widget.focusOutEvent = self._script_focus_out
 		self.extension_manager.fire(
 			u'register_editor',
 			editor=self._script_widget
 		)
+		self._script_button = QtWidgets.QPushButton(
+			self.theme.qicon(u'dialog-apply'),
+			_(u'Apply')
+		)
+		self._script_button.clicked.connect(
+			self.apply_script_changes_and_switch_view
+		)
+		self._script_button_layout = QtWidgets.QHBoxLayout()
+		self._script_button_layout.setContentsMargins(0, 0, 0, 0)
+		self._script_button_layout.addStretch()
+		self._script_button_layout.addWidget(self._script_button)
+		self._script_button_widget = QtWidgets.QWidget()
+		self._script_button_widget.setLayout(self._script_button_layout)
+		self._script_layout = QtWidgets.QVBoxLayout()
+		self._script_layout.addWidget(self._script_button_widget)
+		self._script_layout.addWidget(self._script_widget)
+		self._script_layout.setAlignment(QtCore.Qt.AlignRight)
+		self._script_layout.setContentsMargins(0, 12, 0, 0)
+		self._script_layout.setSpacing(12)
+		self._script_frame = QtWidgets.QWidget()
+		self._script_frame.setLayout(self._script_layout)
 		# The container_widget is the top-level widget that is actually inserted
 		# into the tab widget.
 		self.splitter = qtitem_splitter(self)
@@ -439,6 +455,7 @@ class qtitem(object):
 		"""
 
 		if not self.validate_script():
+			self.set_view_script()
 			return
 		new_script = self._script_widget.toPlainText()
 		old_script = self.to_string()
@@ -455,8 +472,10 @@ class qtitem(object):
 			controls view.
 		"""
 
-		if self.validate_script():
-			self.set_view_controls()
+		if not self.validate_script():
+			self.set_view_script()
+			return
+		self.set_view_controls()
 
 	def validate_script(self):
 
@@ -485,10 +504,19 @@ class qtitem(object):
 				except Exception as e_:
 					if not isinstance(e_, osexception):
 						e_ = osexception(e_)
-					if hasattr(self._script_widget, u'setInvalid'):
-						self._script_widget.setInvalid(line_nr, e_.markdown())
+					from pyqode.core.api.utils import TextHelper
+					TextHelper(self._script_widget).select_lines(
+						line_nr - 1,
+						line_nr - 1
+					)
 					break
 			self.console.write(e)
+			self.extension_manager.fire(
+				u'notify',
+				message=_(u'Failed to parse script. See debug window for details'),
+				category=u'warning',
+				always_show=True
+			)
 			return False
 
 	def set_validator(self):

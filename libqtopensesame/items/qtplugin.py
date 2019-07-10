@@ -420,7 +420,7 @@ class qtplugin(qtitem.qtitem):
 		if syntax:
 			from python_code_edit import PythonCodeEdit as CodeEdit
 		else:
-			from pyqode.core.api import CodeEdit
+			from pyqode.core.widgets import TextCodeEdit as CodeEdit
 		editor = CodeEdit(self.main_window)
 		if not syntax:
 			# If this is a regular CodeEdit, then decorate setPlainText() with

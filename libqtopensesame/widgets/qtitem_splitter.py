@@ -47,7 +47,7 @@ class qtitem_splitter(base_subcomponent, QtWidgets.QSplitter):
 		self.item = item
 		self.setup(item.main_window)
 		self.addWidget(self.item._edit_widget)
-		self.addWidget(self.item._script_widget)
+		self.addWidget(self.item._script_frame)
 
 	def minimumSizeHint(self):
 
