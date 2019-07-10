@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy.QtWidgets import QSizePolicy
+from qtpy.QtCore import Qt
 from libopensesame.inline_script import inline_script as inline_script_runtime
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.misc.translate import translation_context
@@ -73,13 +74,18 @@ class inline_script(inline_script_runtime, qtplugin):
 			QSizePolicy.Expanding,
 			QSizePolicy.Expanding
 		)
-		self._pyqode_tab_widget.main_tab_widget.setTabsClosable(False)
+		tab_bar = self._pyqode_tab_widget.main_tab_widget.tabBar()
+		tab_bar.setTabsClosable(False)
+		tab_bar.setContextMenuPolicy(Qt.NoContextMenu)
+		self._pyqode_tab_widget.main_tab_widget.setMovable(False)
 		self._pyqode_prepare_editor = \
 			self._pyqode_tab_widget.create_new_document('Prepare', '.py')
 		self._pyqode_run_editor = \
 			self._pyqode_tab_widget.create_new_document('Run', '.py')
 		self._pyqode_run_editor.focusOutEvent = self._editor_focus_out
 		self._pyqode_prepare_editor.focusOutEvent = self._editor_focus_out
+		tab_bar.setTabText(0, _(u'Prepare'))
+		tab_bar.setTabText(1, _(u'Run'))
 		self.extension_manager.fire(
 			u'register_editor',
 			editor=self._pyqode_run_editor

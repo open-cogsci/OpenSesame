@@ -236,6 +236,13 @@ class IPythonConsole(BaseConsole, QtWidgets.QWidget):
 			Sets the theme, based on the QProgEdit settings.
 		"""
 
+		try:
+			cfg.pyqode_font_name
+		except:
+			# This happens when the pyqode_manager is not initialized
+			oslogger.error('failed to set debug window theme')
+			return
+
 		from qtconsole import styles
 
 		QtWidgets.QApplication.processEvents()

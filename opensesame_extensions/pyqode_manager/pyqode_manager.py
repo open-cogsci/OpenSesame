@@ -23,6 +23,7 @@ from libopensesame.oslogging import oslogger
 from libqtopensesame.extensions import base_extension
 from pyqode.core.widgets import SplittableCodeEditTabWidget, TextCodeEdit
 from pyqode.python.widgets import PyCodeEdit
+from python_code_edit import PythonCodeEdit
 from pyqode.core.api import ColorScheme
 from pyqode.core.modes import PygmentsSH, IndenterMode
 from qtpy.QtGui import QFontMetrics
@@ -38,7 +39,7 @@ class pyqode_manager(base_extension):
 
 	def event_startup(self):
 
-		SplittableCodeEditTabWidget().register_code_edit(PyCodeEdit)
+		SplittableCodeEditTabWidget().register_code_edit(PythonCodeEdit)
 		SplittableCodeEditTabWidget().register_code_edit(TextCodeEdit)
 		self._editors = []
 
@@ -76,24 +77,7 @@ class pyqode_manager(base_extension):
 
 		self._editors.append(editor)
 		if u'PythonSH' in editor.modes.keys():
-			editor.modes.get(u'PythonSH').color_scheme = cfg.pyqode_color_scheme
-			if not cfg.pyqode_pyflakes_validation:
-				editor.modes.remove(u'PyFlakesChecker')
-			if not cfg.pyqode_pep8_validation:
-				editor.modes.remove(u'PEP8CheckerMode')
-			if not cfg.pyqode_right_margin:
-				editor.modes.remove(u'RightMarginMode')
-			if not cfg.pyqode_highlight_caret_line:
-				editor.modes.remove(u'CaretLineHighlighterMode')
-			if not cfg.pyqode_code_completion:
-				editor.modes.remove(u'CodeCompletionMode')
-				editor.modes.remove(u'PyAutoCompleteMode')
-				editor.modes.remove(u'CalltipsMode')
-			if not cfg.pyqode_smart_editing:
-				editor.modes.remove(u'PyAutoIndentMode')
-				editor.modes.remove(u'PyIndenterMode')
-				editor.modes.remove(u'SmartBackSpaceMode')
-				editor.modes.append(IndenterMode())
+			pass
 		elif u'TextSH' in editor.modes.keys():
 			editor.modes.get(u'TextSH').color_scheme = cfg.pyqode_color_scheme
 		else:
