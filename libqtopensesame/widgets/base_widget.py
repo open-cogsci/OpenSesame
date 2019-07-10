@@ -21,6 +21,7 @@ from libopensesame.py3compat import *
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from qtpy import QtWidgets
 
+
 class base_widget(QtWidgets.QWidget, base_subcomponent):
 
 	"""
@@ -51,3 +52,7 @@ class base_widget(QtWidgets.QWidget, base_subcomponent):
 
 		super(base_widget, self).__init__(main_window, *arglist, **kwdict)
 		self.setup(main_window, ui=ui)
+
+
+# PEP8 alias
+BaseWidget = base_widget
