@@ -47,11 +47,28 @@ class inline_script(inline_script_runtime, qtplugin):
 
 		sp = self._pyqode_prepare_editor.toPlainText()
 		sr = self._pyqode_run_editor.toPlainText()
-		self._pyqode_prepare_editor.document().setModified(False)
-		self._pyqode_run_editor.document().setModified(False)
+		self._set_modified()
 		self.var._prepare = sp
 		self.var._run = sr
 		qtplugin.apply_edit_changes(self)
+
+	def _set_modified(self, prepare=False, run=False):
+
+		"""
+		desc:
+			Sets the modified status of the editors.
+		"""
+
+		self._pyqode_prepare_editor.document().setModified(prepare)
+		self._pyqode_run_editor.document().setModified(run)
+		self._pyqode_tab_bar.setTabText(
+			0,
+			(u'* ' if prepare else u'') + _(u'Prepare')
+		)
+		self._pyqode_tab_bar.setTabText(
+			1,
+			(u'* ' if prepare else u'') + _(u'Run')
+		)
 
 	def set_focus(self):
 
@@ -74,9 +91,10 @@ class inline_script(inline_script_runtime, qtplugin):
 			QSizePolicy.Expanding,
 			QSizePolicy.Expanding
 		)
-		tab_bar = self._pyqode_tab_widget.main_tab_widget.tabBar()
-		tab_bar.setTabsClosable(False)
-		tab_bar.setContextMenuPolicy(Qt.NoContextMenu)
+		self._pyqode_tab_widget.main_tab_widget.setCornerWidget(None)
+		self._pyqode_tab_bar = self._pyqode_tab_widget.main_tab_widget.tabBar()
+		self._pyqode_tab_bar.setTabsClosable(False)
+		self._pyqode_tab_bar.setContextMenuPolicy(Qt.NoContextMenu)
 		self._pyqode_tab_widget.main_tab_widget.setMovable(False)
 		self._pyqode_prepare_editor = \
 			self._pyqode_tab_widget.create_new_document('Prepare', '.py')
@@ -84,8 +102,7 @@ class inline_script(inline_script_runtime, qtplugin):
 			self._pyqode_tab_widget.create_new_document('Run', '.py')
 		self._pyqode_run_editor.focusOutEvent = self._editor_focus_out
 		self._pyqode_prepare_editor.focusOutEvent = self._editor_focus_out
-		tab_bar.setTabText(0, _(u'Prepare'))
-		tab_bar.setTabText(1, _(u'Run'))
+		self._set_modified()
 		self.extension_manager.fire(
 			u'register_editor',
 			editor=self._pyqode_run_editor
