@@ -47,10 +47,7 @@ class PythonCodeEdit(PyCodeEditBase):
 
 	def __init__(self, parent):
 
-		super(PythonCodeEdit, self).__init__(
-			parent=parent,
-			create_default_actions=True
-		)
+		super(PythonCodeEdit, self).__init__(parent=parent)
 		self.backend.start(
 			server.__file__,
 			sys.executable,
@@ -105,14 +102,9 @@ class PythonCodeEdit(PyCodeEditBase):
 
 	def clone(self):
 
-		clone = self.__class__(
-			parent=self.parent(),
-			server_script=self.backend.server_script,
-			interpreter=self.backend.interpreter,
-			args=self.backend.args,
-			color_scheme=self.syntax_highlighter.color_scheme.name
-		)
+		clone = self.__class__(parent=self.parent())
 		return clone
 
 	def __repr__(self):
+
 		return 'PythonCodeEdit(path=%r)' % self.file.path
