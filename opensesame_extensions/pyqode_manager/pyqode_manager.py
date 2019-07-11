@@ -23,6 +23,7 @@ from libopensesame.oslogging import oslogger
 from libqtopensesame.extensions import base_extension
 from pyqode.core.widgets import SplittableCodeEditTabWidget, TextCodeEdit
 from python_code_edit import PythonCodeEdit
+from fallback_code_edit import FallbackCodeEdit
 from pyqode.core.api import ColorScheme
 from pyqode.core.modes import PygmentsSH
 from qtpy.QtGui import QFontMetrics
@@ -39,6 +40,7 @@ class pyqode_manager(base_extension):
 	def event_startup(self):
 
 		SplittableCodeEditTabWidget().register_code_edit(PythonCodeEdit)
+		SplittableCodeEditTabWidget().register_code_edit(FallbackCodeEdit)
 		SplittableCodeEditTabWidget().register_code_edit(TextCodeEdit)
 		self._editors = []
 
@@ -79,6 +81,8 @@ class pyqode_manager(base_extension):
 			pass
 		elif u'TextSH' in editor.modes.keys():
 			editor.modes.get(u'TextSH').color_scheme = cfg.pyqode_color_scheme
+		elif u'PygmentsSH' in editor.modes.keys():
+			editor.modes.get(u'PygmentsSH').color_scheme = cfg.pyqode_color_scheme
 		else:
 			sh = PygmentsSH(
 				editor.document(),
