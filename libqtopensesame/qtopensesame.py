@@ -349,6 +349,12 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			dest=u"warnings",
 			help=u"Show elaborate warnings"
 		)
+		group.add_option(
+			u"--ide",
+			action=u"store_true",
+			dest=u"ide",
+			help=u"Run OpenSesame in IDE mode"
+		)
 		parser.add_option_group(group)
 		self.options, args = parser.parse_args(sys.argv)
 
