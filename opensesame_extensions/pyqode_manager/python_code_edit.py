@@ -100,6 +100,11 @@ class PythonCodeEdit(PyCodeEditBase):
 		self.panels.append(panels.EncodingPanel(), api.Panel.Position.TOP)
 		self.panels.append(panels.ReadOnlyPanel(), api.Panel.Position.TOP)
 
+	def _init_actions(self, create_standard_actions):
+
+		super(PythonCodeEdit, self)._init_actions(create_standard_actions)
+		self.action_duplicate_line.setShortcut(u'Ctrl+Shift+D')
+
 	def clone(self):
 
 		clone = self.__class__(parent=self.parent())
