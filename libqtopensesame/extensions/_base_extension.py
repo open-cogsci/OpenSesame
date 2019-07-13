@@ -35,6 +35,8 @@ class base_extension(base_subcomponent):
 		A base class for GUI extensions.
 	"""
 
+	extension_filter = None
+
 	def __init__(self, main_window, info={}):
 
 		"""
@@ -42,10 +44,10 @@ class base_extension(base_subcomponent):
 			Constructor.
 
 		arguments:
-			main_window:	The main-window object.
+			main_window:    The main-window object.
 
 		keywords:
-			info:			A dictionary with extension properties that have
+			info:            A dictionary with extension properties that have
 							been read from info.[json|txt].
 		"""
 
@@ -89,8 +91,8 @@ class base_extension(base_subcomponent):
 
 		"""
 		returns:
-			desc:	Gives the menubar.
-			type:	QMenuBar
+			desc:    Gives the menubar.
+			type:    QMenuBar
 		"""
 
 		return self.main_window.menuBar()
@@ -100,8 +102,8 @@ class base_extension(base_subcomponent):
 
 		"""
 		returns:
-			desc:	Gives the main toolbar.
-			type:	QToolBar
+			desc:    Gives the main toolbar.
+			type:    QToolBar
 		"""
 
 		return self.main_window.ui.toolbar_main
@@ -111,8 +113,8 @@ class base_extension(base_subcomponent):
 
 		"""
 		returns:
-			desc:	Gives the tab widget.
-			type:	QTabWidget
+			desc:    Gives the tab widget.
+			type:    QTabWidget
 		"""
 
 		return self.main_window.ui.tabwidget
@@ -122,8 +124,8 @@ class base_extension(base_subcomponent):
 
 		"""
 		returns:
-			desc:	Gives the statusbar.
-			type:	QStatusBar
+			desc:    Gives the statusbar.
+			type:    QStatusBar
 		"""
 
 		return self.main_window.statusBar()
@@ -133,7 +135,7 @@ class base_extension(base_subcomponent):
 
 		"""
 		returns:
-			desc:	A shortcut to `qtopensesame.set_busy`.
+			desc:    A shortcut to `qtopensesame.set_busy`.
 		"""
 
 		return self.main_window.set_busy
@@ -147,8 +149,8 @@ class base_extension(base_subcomponent):
 			function to implement custom logic.
 
 		returns:
-			desc:	A label text or None.
-			type:	[unicode, NoneType]
+			desc:    A label text or None.
+			type:    [unicode, NoneType]
 		"""
 
 		label = self.info.get(u'label', None)
@@ -165,8 +167,8 @@ class base_extension(base_subcomponent):
 			function to implement custom logic.
 
 		returns:
-			desc:	A tooltip text.
-			type:	[unicode, NoneType]
+			desc:    A tooltip text.
+			type:    [unicode, NoneType]
 		"""
 
 		tooltip = self.info.get(u'tooltip', None)
@@ -184,7 +186,7 @@ class base_extension(base_subcomponent):
 			function to implement custom logic.
 
 		returns:
-			type:	bool
+			type:    bool
 		"""
 
 		return self.info.get(u'checkable', False)
@@ -198,8 +200,8 @@ class base_extension(base_subcomponent):
 
 		arguments:
 			checked:
-				desc:	The checked status.
-				type:	bool
+				desc:    The checked status.
+				type:    bool
 		"""
 
 		if self.action is None or not self.checkable():
@@ -215,8 +217,8 @@ class base_extension(base_subcomponent):
 
 		arguments:
 			enabled:
-				desc:	The enabled status.
-				type:	bool
+				desc:    The enabled status.
+				type:    bool
 		"""
 
 		if self.action is None:
@@ -232,8 +234,8 @@ class base_extension(base_subcomponent):
 			override this function to implement custom logic.
 
 		returns:
-			desc:	The name of an icon.
-			type:	unicode
+			desc:    The name of an icon.
+			type:    unicode
 		"""
 
 		return self.info.get(u'icon', u'applications-utilities')
@@ -248,8 +250,8 @@ class base_extension(base_subcomponent):
 			extension has either a toolbar ot menu entry.
 
 		returns:
-			desc:	The keyboard shortcut.
-			type:	unicode
+			desc:    The keyboard shortcut.
+			type:    unicode
 		"""
 
 		return self.info.get(u'shortcut', None)
@@ -263,9 +265,9 @@ class base_extension(base_subcomponent):
 			function to implement custom logic.
 
 		returns:
-			desc:	A (submenu, menuindex, separator_before, separator_after)
+			desc:    A (submenu, menuindex, separator_before, separator_after)
 					tuple, or None if the extension has no menu entry.
-			type:	[tuple, NoneType]
+			type:    [tuple, NoneType]
 		"""
 
 		menu_pos = self.info.get(u'menu', None)
@@ -285,9 +287,9 @@ class base_extension(base_subcomponent):
 			function to implement custom logic.
 
 		returns:
-			desc:	An (index, separator_before, separator_after)
+			desc:    An (index, separator_before, separator_after)
 					tuple, or None if the extension has no toolbar entry.
-			type:	[tuple, NoneType]
+			type:    [tuple, NoneType]
 		"""
 
 		toolbar_pos = self.info.get(u'toolbar', None)
@@ -337,12 +339,12 @@ class base_extension(base_subcomponent):
 			a QToolBar).
 
 		arguments:
-			widget:				The widget to add the action to.
-			action:				The action to add.
-			index:				The index of the action.
-			separator_before:	Indicates whether a separator should be added
+			widget:                The widget to add the action to.
+			action:                The action to add.
+			index:                The index of the action.
+			separator_before:    Indicates whether a separator should be added
 								before the action.
-			separator_action:	Indicates whether a separator should be added
+			separator_action:    Indicates whether a separator should be added
 								before the action.
 		"""
 
@@ -374,11 +376,11 @@ class base_extension(base_subcomponent):
 			a new submenu is created.
 
 		arguments:
-			menu_text:	The menu text. This should match an object in
+			menu_text:    The menu text. This should match an object in
 						main_window.ui.menu_[menu_text].
 
 		returns:
-			type:	QMenu
+			type:    QMenu
 		"""
 
 		menu_name = u'menu_%s' % menu_text.lower()
@@ -397,12 +399,12 @@ class base_extension(base_subcomponent):
 
 		arguments:
 			event:
-				desc:	The event name, which is handled by a function called
+				desc:    The event name, which is handled by a function called
 						`event_[event name]`.
-				type:	[str, unicode]
+				type:    [str, unicode]
 
 		keyword-dict:
-			kwdict:		A keyword dictionary with event-specific keywords.
+			kwdict:        A keyword dictionary with event-specific keywords.
 		"""
 
 		if hasattr(self, u'event_%s' % event):
@@ -412,8 +414,8 @@ class base_extension(base_subcomponent):
 
 		"""
 		returns:
-			desc:	The name of the extension, i.e. the extension class name.
-			type:	unicode
+			desc:    The name of the extension, i.e. the extension class name.
+			type:    unicode
 		"""
 
 		return safe_decode(self.__class__.__name__, enc=u'utf-8')
@@ -422,8 +424,8 @@ class base_extension(base_subcomponent):
 
 		"""
 		returns:
-			desc:	The folder of the extension.
-			type:	unicode
+			desc:    The folder of the extension.
+			type:    unicode
 		"""
 
 		return self.info[u'plugin_folder']
@@ -448,25 +450,25 @@ class base_extension(base_subcomponent):
 		"""
 		arguments:
 			icon:
-				desc:	An icon name.
-				type:	str
+				desc:    An icon name.
+				type:    str
 			label:
-				desc:	A label
-				type:	str
+				desc:    A label
+				type:    str
 			target:
-				desc:	A function to be called when the action is triggered.
-				type:	FunctionType
+				desc:    A function to be called when the action is triggered.
+				type:    FunctionType
 
 		keywords:
 			checkable:
-				desc:	The checkable status of the action.
-				type:	bool
+				desc:    The checkable status of the action.
+				type:    bool
 			tooltip:
-				desc:	A tooltip, or None for no tooltip.
-				type:	[str, Nonetype]
+				desc:    A tooltip, or None for no tooltip.
+				type:    [str, Nonetype]
 			shortcut:
-				desc:	A keyboard shortcut, or None for no shortcut.
-				type:	[str, NoneType]
+				desc:    A keyboard shortcut, or None for no shortcut.
+				type:    [str, NoneType]
 
 		returns:
 			type: QAction
@@ -516,8 +518,8 @@ class base_extension(base_subcomponent):
 			by introspecting which `event_[event name]` functions exist.
 
 		returns:
-			desc:	A list of supported events.
-			type:	list
+			desc:    A list of supported events.
+			type:    list
 		"""
 
 		events = []
@@ -618,12 +620,12 @@ class base_extension(base_subcomponent):
 
 		arguments:
 			resource:
-				desc:	The name of a resource.
-				type:	[str, unicode]
+				desc:    The name of a resource.
+				type:    [str, unicode]
 
 		returns:
-			desc:	The full path to the resource.
-			type:	unicode
+			desc:    The full path to the resource.
+			type:    unicode
 		"""
 
 		path = os.path.join(self.info[u'plugin_folder'], u'locale', self.locale,

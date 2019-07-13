@@ -22,6 +22,7 @@ import sys
 from qtpy import QtWidgets, QtCore
 from libopensesame import plugins
 from libopensesame.exceptions import osexception
+from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'extension_manager', category=u'core')
@@ -58,7 +59,7 @@ class extension_manager(base_subcomponent):
 			Constructor.
 
 		arguments:
-			main_window:	The main-window object.
+			main_window:    The main-window object.
 		"""
 
 		self.setup(main_window)
@@ -68,7 +69,11 @@ class extension_manager(base_subcomponent):
 		self.events = {}
 		self._suspended = False
 		self._suspended_until = None
+		extension_filter = lambda ext_name: False
 		for ext_name in plugins.list_plugins(_type=u'extensions'):
+			if extension_filter(ext_name):
+				oslogger.debug(u'filtering extension {}'.format(ext_name))
+				continue
 			try:
 				ext = plugins.load_extension(ext_name, self.main_window)
 			except Exception as e:
@@ -78,12 +83,15 @@ class extension_manager(base_subcomponent):
 					u'Failed to load extension %s (see debug window for stack trace)' \
 					% ext_name)
 				self.console.write(e)
-				continue
-			self._extensions.append(ext)
-			for event in ext.supported_events():
-				if event not in self.events:
-					self.events[event] = []
-				self.events[event].append(ext)
+			else:
+				oslogger.debug(u'installing extension {}'.format(ext_name))
+				self._extensions.append(ext)
+				for event in ext.supported_events():
+					if event not in self.events:
+						self.events[event] = []
+					self.events[event].append(ext)
+				if ext.extension_filter is not None:
+					extension_filter = ext.extension_filter
 		self.main_window.set_busy(False)
 
 	def __getitem__(self, extension_name):
@@ -94,11 +102,11 @@ class extension_manager(base_subcomponent):
 
 		arguments:
 			extension_name:
-				desc:	The extension name.
-				type:	str
+				desc:    The extension name.
+				type:    str
 
 		returns:
-			type:	base_extension
+			type:    base_extension
 		"""
 
 		for ext in self._extensions:
@@ -113,10 +121,10 @@ class extension_manager(base_subcomponent):
 			Fires an event to all extensions that support the event.
 
 		arguments:
-			event:		The event name.
+			event:        The event name.
 
 		keyword-dict:
-		kwdict:		A dictionary with keywords that are applicable to a
+		kwdict:        A dictionary with keywords that are applicable to a
 					particular event.
 		"""
 
@@ -157,8 +165,8 @@ class extension_manager(base_subcomponent):
 			starting and ending event.
 
 		argument:
-			desc:	The unlocking event.
-			type:	str
+			desc:    The unlocking event.
+			type:    str
 		"""
 
 		self._suspended = True
