@@ -77,16 +77,20 @@ class pyqode_manager(base_extension):
 	def event_register_editor(self, editor, mime_type=u'text/plain'):
 
 		self._editors.append(editor)
-		if u'PythonSH' in editor.modes.keys():
+		if 'PythonSH' in editor.modes.keys():
 			pass
-		elif u'TextSH' in editor.modes.keys():
-			editor.modes.get(u'TextSH').color_scheme = cfg.pyqode_color_scheme
-		elif u'PygmentsSH' in editor.modes.keys():
-			editor.modes.get(u'PygmentsSH').color_scheme = cfg.pyqode_color_scheme
+		elif 'TextSH' in editor.modes.keys():
+			editor.modes.get('TextSH').color_scheme = safe_str(
+				cfg.pyqode_color_scheme
+			)
+		elif 'PygmentsSH' in editor.modes.keys():
+			editor.modes.get('PygmentsSH').color_scheme = safe_str(
+				cfg.pyqode_color_scheme
+			)
 		else:
 			sh = PygmentsSH(
 				editor.document(),
-				color_scheme=ColorScheme(u'monokai')
+				color_scheme=ColorScheme('monokai')
 			)
 			sh.set_mime_type(mime_type)
 			editor.modes.append(sh)
