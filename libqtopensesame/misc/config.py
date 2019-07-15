@@ -191,7 +191,7 @@ class config(object):
 						already exist.
 		"""
 
-		qsettings = QtCore.QSettings(u"cogscinl", u"opensesame")
+		qsettings = QtCore.QSettings(u"cogscinl", self.mode)
 		qsettings.beginGroup(u"MainWindow")
 		if '--start-clean' in sys.argv:
 			self.config[setting] = default
@@ -288,8 +288,8 @@ class config(object):
 		"""
 
 		self.mode = mode
-		qsettings = QtCore.QSettings(u"cogscinl", u"opensesame")
-		qsettings.beginGroup(mode)
+		qsettings = QtCore.QSettings(u"cogscinl", mode)
+		qsettings.beginGroup(u'MainWindow')
 		for setting, default in self.config.items():
 			try:
 				value = qsettings.value(setting, default)
@@ -306,8 +306,8 @@ class config(object):
 			Save settings to a QSettings.
 		"""
 
-		qsettings = QtCore.QSettings(u"cogscinl", u"opensesame")
-		qsettings.beginGroup(self.mode)
+		qsettings = QtCore.QSettings(u"cogscinl", self.mode)
+		qsettings.beginGroup(u'MainWindow')
 		for setting, value in self.config.items():
 			if setting != u"cfg_ver":
 				qsettings.setValue(setting, value)
@@ -320,8 +320,8 @@ class config(object):
 			Clears all settings.
 		"""
 
-		qsettings = QtCore.QSettings(u"cogscinl", u"opensesame")
-		qsettings.beginGroup(u"MainWindow")
+		qsettings = QtCore.QSettings(u"cogscinl", self.mode)
+		qsettings.beginGroup(u'MainWindow')
 		qsettings.clear()
 		qsettings.endGroup()
 
