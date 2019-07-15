@@ -22,8 +22,7 @@ from libqtopensesame.misc.config import cfg
 from libopensesame.oslogging import oslogger
 from libqtopensesame.extensions import base_extension
 from pyqode.core.widgets import SplittableCodeEditTabWidget, TextCodeEdit
-from python_code_edit import PythonCodeEdit
-from fallback_code_edit import FallbackCodeEdit
+from pyqode_extras.widgets import PythonCodeEdit, FallbackCodeEdit
 from pyqode.core.api import ColorScheme
 from pyqode.core.modes import PygmentsSH
 from qtpy.QtGui import QFontMetrics
@@ -103,7 +102,6 @@ class pyqode_manager(base_extension):
 				editor.font()
 			).averageCharWidth() * cfg.pyqode_tab_length
 		)
-		editor.use_spaces_instead_of_tabs = cfg.pyqode_use_spaces_instead_of_tabs
 		editor.action_duplicate_line.setShortcut(u'Ctrl+Shift+D')
 		oslogger.debug(u'registering {}'.format(editor))
 

@@ -12,8 +12,10 @@
         "pyqode_highlight_caret_line": false,
         "pyqode_code_completion": true,
         "pyqode_smart_editing": true,
-        "pyqode_use_spaces_instead_of_tabs": true,
+        "pyqode_indentation": "auto",
         "pyqode_show_whitespaces": false,
+        "pyqode_pep8_ignore": "W191",
+        "pyqode_pyflakes_ignore": "",
         "pyqode_tab_length": 4
     }
 }

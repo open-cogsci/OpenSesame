@@ -29,7 +29,10 @@ from pyqode.python import modes as pymodes
 from pyqode.python.backend.workers import defined_names
 from pyqode.python.folding import PythonFoldDetector
 from pyqode.python.widgets.code_edit import PyCodeEditBase
-from convert_indentation_mode import ConvertIndentationMode
+from pyqode_extras.modes import (
+    ConvertIndentationMode,
+    AutodetectIndentationMode
+)
 
 
 class PythonCodeEdit(PyCodeEditBase):
@@ -82,16 +85,31 @@ class PythonCodeEdit(PyCodeEditBase):
 			self.modes.append(modes.CodeCompletionMode())
 			self.modes.append(pymodes.PyAutoCompleteMode())
 			self.modes.append(pymodes.CalltipsMode())
-		if cfg.pyqode_smart_editing:
-			self.modes.append(pymodes.PyAutoIndentMode())
-			self.modes.append(pymodes.PyIndenterMode())
-			self.modes.append(modes.SmartBackSpaceMode())
-		else:
-			self.modes.append(modes.IndenterMode())
+		self.modes.append(modes.SmartBackSpaceMode())
+		self._py_auto_indent_mode = pymodes.PyAutoIndentMode()
+		self._py_indenter_mode = pymodes.PyIndenterMode()
+		self._indenter_mode = modes.IndenterMode()
+		self.space_indentation_modes = [
+			self._py_auto_indent_mode,
+			self._py_indenter_mode
+		]
+		self.modes.append(self._py_auto_indent_mode)
+		self.modes.append(self._py_indenter_mode)
+		self.modes.append(self._indenter_mode)
+		self.tab_indentation_modes = [self._indenter_mode]
+		self.modes.append(AutodetectIndentationMode())
 		if cfg.pyqode_pyflakes_validation:
-			self.modes.append(pymodes.PyFlakesChecker())
+			flakes = pymodes.PyFlakesChecker()
+			flakes.set_ignore_rules([
+				i.strip() for i in cfg.pyqode_pyflakes_ignore.split(u';')
+			])
+			self.modes.append(flakes)
 		if cfg.pyqode_pep8_validation:
-			self.modes.append(pymodes.PEP8CheckerMode())
+			pep8 = pymodes.PEP8CheckerMode()
+			pep8.set_ignore_rules([
+				i.strip() for i in cfg.pyqode_pep8_ignore.split(u';')
+			])
+			self.modes.append(pep8)
 		self.modes.append(pymodes.PythonSH(
 			self.document(),
 			color_scheme=ColorScheme(cfg.pyqode_color_scheme))

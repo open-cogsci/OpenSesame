@@ -27,7 +27,7 @@ _ = translation_context(u'pyqode_manager', category=u'extension')
 
 class ConvertIndentationMode(api.Mode):
 
-	""" Comments/uncomments a set of lines using Ctrl+/.
+	"""Comments/uncomments a set of lines using Ctrl+/.
 	"""
 
 	def __init__(self):
