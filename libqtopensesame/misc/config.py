@@ -85,14 +85,7 @@ DEFAULT_CONFIG = {
 	u'sketchpad_grid_opacity' : 32,
 	u'sketchpad_preview_color' : u'#00FF00',
 	u'sketchpad_preview_penwidth' : 2,
-	u'qProgEditSwitchLeftShortcut' : u'Alt+Left',
-	u'qProgEditSwitchRightShortcut' : u'Alt+Right',
-	u'qProgEditShowFindShortcut' : u'Ctrl+F',
-	u'qProgEditHideFindShortcut' : u'Escape',
-	u'qProgEditTogglePrefsShortcut' : u'Ctrl+Shift+P',
-	u'qProgEditRunSelectedShortcut' : u'Alt+R',
-	u'qProgEditRunAllShortcut' : u'Shift+Alt+R',
-	u'qProgEditSymbolTreeWidgetItemIcon' : u'text-x-script',
+	u'mode': u'default',
 	u'locale' : u'',
 	}
 DEFAULT_CONFIG_LINUX = {
@@ -287,15 +280,16 @@ class config(object):
 				return default
 		return value
 
-	def restore(self):
+	def restore(self, mode):
 
 		"""
 		desc:
 			Restore settings from a QSettings.
 		"""
 
+		self.mode = mode
 		qsettings = QtCore.QSettings(u"cogscinl", u"opensesame")
-		qsettings.beginGroup(u"MainWindow")
+		qsettings.beginGroup(mode)
 		for setting, default in self.config.items():
 			try:
 				value = qsettings.value(setting, default)
@@ -313,7 +307,7 @@ class config(object):
 		"""
 
 		qsettings = QtCore.QSettings(u"cogscinl", u"opensesame")
-		qsettings.beginGroup(u"MainWindow")
+		qsettings.beginGroup(self.mode)
 		for setting, value in self.config.items():
 			if setting != u"cfg_ver":
 				qsettings.setValue(setting, value)

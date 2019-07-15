@@ -97,18 +97,12 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		random.seed()
 		# Check the filesystem encoding for debugging purposes
 		oslogger.debug(u'filesystem encoding: %s' % misc.filesystem_encoding())
-
-		# # Parse the command line
-		# self.parse_command_line()
-		#
-		# # Restore the configuration
 		# self.restore_config()
 		self.set_style()
 		self.set_warnings()
-		# self.set_locale()
-
 		# Setup the UI
 		self.load_ui(u'misc.main_window')
+		self.mode = self.options.mode
 		self.theme = theme.theme(self, self.options._theme)
 		self.ui.itemtree.setup(self)
 		self.ui.console.setup(self)
@@ -350,10 +344,10 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			help=u"Show elaborate warnings"
 		)
 		group.add_option(
-			u"--ide",
-			action=u"store_true",
-			dest=u"ide",
-			help=u"Run OpenSesame in IDE mode"
+			u"--mode",
+			action=u"store",
+			dest=u"mode",
+			help=u"Specify the application mode (default or ide)"
 		)
 		parser.add_option_group(group)
 		self.options, args = parser.parse_args(sys.argv)
@@ -391,7 +385,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		"""Restores the configuration settings, but doesn't apply anything"""
 
 		if not self.options.start_clean:
-			cfg.restore()
+			cfg.restore(self.options.mode)
 
 	def restore_state(self):
 
