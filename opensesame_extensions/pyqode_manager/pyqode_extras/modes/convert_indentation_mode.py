@@ -90,6 +90,7 @@ class ConvertIndentationMode(api.Mode):
 			space_indent = u'\t' * (len(match.group()) // cfg.pyqode_tab_length)
 			code = code[:match.start()] + space_indent + code[match.end():]
 		self.editor.setPlainText(code)
+		self.editor.document().setModified(True)
 
 	def _tabs_to_spaces(self):
 
@@ -103,3 +104,4 @@ class ConvertIndentationMode(api.Mode):
 			space_indent = u' ' * len(match.group()) * cfg.pyqode_tab_length
 			code = code[:match.start()] + space_indent + code[match.end():]
 		self.editor.setPlainText(code)
+		self.editor.document().setModified(True)
