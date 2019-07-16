@@ -62,7 +62,7 @@ class base_subcomponent(base_component):
 	@property
 	def extension_manager(self):
 		return self.main_window.extension_manager
-		
+
 	@property
 	def overview_area(self):
 		return self.main_window.ui.itemtree
@@ -78,7 +78,7 @@ class base_subcomponent(base_component):
 	@property
 	def locale(self):
 		return self.main_window._locale
-		
+
 	@property
 	def item_toolbar(self):
 		return self.main_window.ui.toolbar_items
@@ -86,3 +86,7 @@ class base_subcomponent(base_component):
 	@property
 	def main_toolbar(self):
 		return self.main_window.ui.toolbar_main
+
+
+# PEP8 alias
+BaseSubcomponent = base_subcomponent
