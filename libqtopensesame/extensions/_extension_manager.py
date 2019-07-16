@@ -147,6 +147,14 @@ class extension_manager(base_subcomponent):
 					% (ext.name(), event))
 				self.console.write(e)
 
+	def activate(self, ext_name):
+
+		try:
+			ext = self[ext_name]
+		except Exception:
+			return
+		ext.activate()
+
 	def suspend(self):
 
 		"""
