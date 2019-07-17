@@ -48,7 +48,6 @@ class undo_manager(base_extension):
 				continue
 			w.insertAction(self.action, self.undo_action)
 		self.initialize()
-		self.console.set_workspace_globals({u'undo_manager' : self})
 
 	def event_open_experiment(self, path):
 
@@ -67,15 +66,15 @@ class undo_manager(base_extension):
 		"""
 
 		self.remember_item_state(name)
-		
+
 	def event_new_item(self, name, _type):
-		
+
 		"""
 		desc:
 			Remember addition of a new item.
 		"""
-		
-		self.remember_new_item(name)		
+
+		self.remember_new_item(name)
 
 	def activate(self):
 
@@ -162,9 +161,9 @@ class undo_manager(base_extension):
 		self.stack.add(u'__experiment__', script)
 		self.set_enabled(self.stack.can_redo())
 		self.undo_action.setEnabled(self.stack.can_undo())
-		
+
 	def remember_new_item(self, name):
-		
+
 		self.stack.add(u'__newitem__', name)
 		self.set_enabled(self.stack.can_redo())
 		self.undo_action.setEnabled(self.stack.can_undo())
@@ -230,7 +229,7 @@ class undo_manager(base_extension):
 		self.experiment.items[item].open_tab()
 		if isinstance(self.experiment.items[item], qtstructure_item):
 			self.experiment.items.clear_cache()
-			self.experiment.build_item_tree()		
+			self.experiment.build_item_tree()
 		self.set_enabled(self.stack.can_redo())
 		self.undo_action.setEnabled(self.stack.can_undo())
 
