@@ -24,6 +24,7 @@ from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'variable_inspector', category=u'extension')
 
+
 class variable_inspector_widget(base_widget):
 
 	"""
@@ -43,13 +44,16 @@ class variable_inspector_widget(base_widget):
 			ext:			The variable_inspector-extension object.
 		"""
 
-		super(variable_inspector_widget, self).__init__(main_window,
-			ui=u'extensions.variable_inspector.variable_inspector')
+		super(variable_inspector_widget, self).__init__(
+			main_window,
+			ui=u'extensions.variable_inspector.variable_inspector'
+		)
 		self.ext = ext
 		self.ui.edit_variable_filter.textChanged.connect(self.refresh)
 		self.ui.button_help_variables.clicked.connect(self.ext.open_help)
-		self.ui.button_reset.clicked.connect(self.ext.reset)
+		self.ui.button_reset.clicked.connect(self._reset)
 		self.ui.table_variables.mousePressEvent = self.start_drag
+		self._workspace_globals = {}
 		self.refresh()
 
 	def focus(self):
@@ -61,6 +65,16 @@ class variable_inspector_widget(base_widget):
 
 		self.ui.edit_variable_filter.setFocus()
 
+	def _reset(self):
+
+		"""
+		desc:
+			Resets the console, to reset the workspace.
+		"""
+
+		self.set_workspace_globals({})
+		self.refresh()
+
 	def var(self):
 
 		"""
@@ -71,14 +85,24 @@ class variable_inspector_widget(base_widget):
 			type:	tuple
 		"""
 
-		try:
-			d = self.main_window.console.get_workspace_globals()
-		except AttributeError:
-			# If the console hasn't been started yet
-			return self.experiment.var, False
-		if u'var' in d and hasattr(d[u'var'], u'inspect'):
-			return d[u'var'], True
+		if (
+			u'var' in self._workspace_globals and
+			hasattr(self._workspace_globals[u'var'], u'inspect')
+		):
+			return self._workspace_globals[u'var'], True
 		return self.experiment.var, False
+
+	def set_workspace_globals(self, global_dict):
+
+		"""
+		desc:
+			Sets the workspace global dict.
+
+		arguments:
+			global_dict:		The workspace global dict
+		"""
+
+		self._workspace_globals = global_dict
 
 	def start_drag(self, e):
 
@@ -96,11 +120,13 @@ class variable_inspector_widget(base_widget):
 			return
 		row = self.ui.table_variables.row(item)
 		var = self.ui.table_variables.item(row, 0).text()
-		drag_and_drop.send(self.ui.table_variables,
+		drag_and_drop.send(
+			self.ui.table_variables,
 			{
-			u'type' : u'variable',
-			u'variable' : var}
-			)
+				u'type': u'variable',
+				u'variable': var
+			}
+		)
 
 	def refresh(self):
 
@@ -118,7 +144,8 @@ class variable_inspector_widget(base_widget):
 		self.ui.label_no_heartbeat.setVisible(
 			not self.main_window.runner_cls.has_heartbeat())
 		self.ui.label_status.setText(
-			_(u'Experiment status: <b>%s</b>') % self.main_window.run_status())
+			_(u'Experiment status: <b>%s</b>') % self.main_window.run_status()
+		)
 		if alive and self.main_window.run_status() == u'finished':
 			self.ui.widget_reset_message.show()
 		else:
@@ -141,12 +168,21 @@ class variable_inspector_widget(base_widget):
 		self.ui.table_variables.setRowCount(len(d))
 		for i, var in enumerate(sorted(d.keys())):
 			info = d[var]
-			self.ui.table_variables.setItem(i, 0,
-				variable_inspector_cell(var, info))
-			self.ui.table_variables.setItem(i, 1,
-				variable_inspector_cell(info['value'], info))
-			self.ui.table_variables.setItem(i, 2,
-				variable_inspector_cell(info['source'], info))
+			self.ui.table_variables.setItem(
+				i,
+				0,
+				variable_inspector_cell(var, info)
+			)
+			self.ui.table_variables.setItem(
+				i,
+				1,
+				variable_inspector_cell(info['value'], info)
+			)
+			self.ui.table_variables.setItem(
+				i,
+				2,
+				variable_inspector_cell(info['source'], info)
+			)
 		# Restore the view position
 		self.ui.table_variables.setCurrentCell(row, col)
 		self.ui.table_variables.verticalScrollBar().setSliderPosition(scrollpos)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>920</width>
-    <height>773</height>
+    <width>1042</width>
+    <height>843</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,7 +66,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>920</width>
+     <width>1042</width>
      <height>27</height>
     </rect>
    </property>
@@ -113,7 +113,6 @@
     <addaction name="separator"/>
     <addaction name="action_show_overview"/>
     <addaction name="action_show_pool"/>
-    <addaction name="action_show_stdout"/>
    </widget>
    <widget class="QMenu" name="menu_tools">
     <property name="title">
@@ -216,155 +215,6 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QDockWidget" name="dock_stdout">
-   <property name="features">
-    <set>QDockWidget::AllDockWidgetFeatures</set>
-   </property>
-   <property name="windowTitle">
-    <string>Debug window</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>8</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_3">
-    <layout class="QVBoxLayout" name="verticalLayout_4">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QWidget" name="widget_5" native="true">
-       <layout class="QHBoxLayout" name="horizontalLayout_6">
-        <property name="spacing">
-         <number>12</number>
-        </property>
-        <property name="leftMargin">
-         <number>6</number>
-        </property>
-        <property name="topMargin">
-         <number>6</number>
-        </property>
-        <property name="rightMargin">
-         <number>6</number>
-        </property>
-        <property name="bottomMargin">
-         <number>6</number>
-        </property>
-        <item>
-         <widget class="QLabel" name="label_starting_ipython">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>18</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Initializing debug window …</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="console" name="console">
-          <property name="readOnly">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QWidget" name="widget_3" native="true">
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <property name="spacing">
-            <number>6</number>
-           </property>
-           <property name="leftMargin">
-            <number>0</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QPushButton" name="button_help_console">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="toolTip">
-              <string>Help</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="button_clear_console">
-             <property name="toolTip">
-              <string>Clear debug window</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="button_reset_console">
-             <property name="toolTip">
-              <string>Reset workspace</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-  </widget>
   <widget class="QToolBar" name="toolbar_main">
    <property name="windowTitle">
     <string>Main toolbar</string>
@@ -400,7 +250,6 @@
    <addaction name="separator"/>
    <addaction name="action_show_overview"/>
    <addaction name="action_show_pool"/>
-   <addaction name="action_show_stdout"/>
   </widget>
   <widget class="toolbar_items" name="toolbar_items">
    <property name="windowTitle">
@@ -534,24 +383,6 @@
     <string>Ctrl+P</string>
    </property>
   </action>
-  <action name="action_show_stdout">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="icon">
-    <iconset theme="os-debug">
-     <normaloff>:/icons/stdout_large.png</normaloff>:/icons/stdout_large.png</iconset>
-   </property>
-   <property name="text">
-    <string>Show debug window</string>
-   </property>
-   <property name="toolTip">
-    <string>Show debug window</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+D</string>
-   </property>
-  </action>
   <action name="action_enable_auto_response">
    <property name="checkable">
     <bool>true</bool>
@@ -649,11 +480,6 @@
    <header>libqtopensesame.widgets.toolbar_items.h</header>
   </customwidget>
   <customwidget>
-   <class>console</class>
-   <extends>QPlainTextEdit</extends>
-   <header>libqtopensesame.console.h</header>
-  </customwidget>
-  <customwidget>
    <class>tab_widget</class>
    <extends>QTabWidget</extends>
    <header>libqtopensesame.widgets.tab_widget.h</header>
@@ -661,22 +487,5 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>button_clear_console</sender>
-   <signal>clicked()</signal>
-   <receiver>console</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>990</x>
-     <y>557</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>499</x>
-     <y>594</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

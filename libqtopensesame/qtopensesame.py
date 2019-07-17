@@ -22,7 +22,7 @@ from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.misc.base_component import base_component
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.items import experiment
-from libopensesame import debug, metadata
+from libopensesame import metadata
 from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
 import libopensesame.experiment
@@ -83,6 +83,8 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 		from libopensesame import misc
 		from libqtopensesame.misc import theme
+		from libqtopensesame.misc.console_bridge import ConsoleBridge
+		from libqtopensesame.widgets.pool_widget import pool_widget
 		from libqtopensesame.extensions import extension_manager
 		import random
 
@@ -105,7 +107,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.mode = self.options.mode
 		self.theme = theme.theme(self, self.options._theme)
 		self.ui.itemtree.setup(self)
-		self.ui.console.setup(self)
 		self.ui.tabwidget.main_window = self
 
 		# Determine the home folder
@@ -151,15 +152,8 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.ui.action_show_overview.triggered.connect(self.toggle_overview)
 		self.ui.action_show_pool.triggered.connect(
 			self.toggle_pool)
-		self.ui.action_show_stdout.triggered.connect(self.refresh_stdout)
 		self.ui.action_preferences.triggered.connect(
 			self.ui.tabwidget.open_preferences)
-
-		# Setup console
-		self.ui.button_help_console.clicked.connect(
-			self.ui.tabwidget.open_stdout_help)
-		self.ui.button_reset_console.clicked.connect(
-			self.ui.console.reset)
 
 		# Setup the overview area
 		self.ui.dock_overview.show()
@@ -167,20 +161,14 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			self.ui.action_show_overview.setChecked)
 
 		# Setup the file pool
-		from libqtopensesame.widgets.pool_widget import pool_widget
 		self.ui.dock_pool.hide()
 		self.ui.dock_pool.visibilityChanged.connect(
 			self.ui.action_show_pool.setChecked)
 		self.ui.pool_widget = pool_widget(self)
 		self.ui.dock_pool.setWidget(self.ui.pool_widget)
-		# Uncheck the debug window button on debug window close
-		self.ui.dock_stdout.hide()
-		self.ui.dock_stdout.visibilityChanged.connect(
-			self.ui.action_show_stdout.setChecked)
 		# Initialize keyboard shortcuts
 		self.ui.shortcut_itemtree = self._kb_shortcut(self.focus_overview_area)
 		self.ui.shortcut_tabwidget = self._kb_shortcut(self.ui.tabwidget.focus)
-		self.ui.shortcut_stdout = self._kb_shortcut(self.focus_debug_window)
 		self.ui.shortcut_pool = self._kb_shortcut(self.focus_file_pool)
 		# Create the initial experiment, which is the default template. Because
 		# not all backends are supported under Python 3, we use a different
@@ -202,9 +190,9 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.update_recent_files()
 		self.set_unsaved(False)
 		self.init_custom_fonts()
+		self.console = ConsoleBridge(self)
 		self.extension_manager = extension_manager(self)
 		self.extension_manager.fire(u'startup')
-		self.ui.console.start()
 
 	def _kb_shortcut(self, target):
 
@@ -218,16 +206,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		"""
 
 		return QtWidgets.QShortcut(QtGui.QKeySequence(), self, target)
-
-	def focus_debug_window(self):
-
-		"""
-		desc:
-			Shows and focuses the debug window.
-		"""
-
-		self.ui.console.focus()
-		self.ui.dock_stdout.setVisible(True)
 
 	def focus_overview_area(self):
 
@@ -406,7 +384,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			cfg.shortcut_itemtree))
 		self.ui.shortcut_tabwidget.setKey(QtGui.QKeySequence(
 			cfg.shortcut_tabwidget))
-		self.ui.shortcut_stdout.setKey(QtGui.QKeySequence(cfg.shortcut_stdout))
 		self.ui.shortcut_pool.setKey(QtGui.QKeySequence(cfg.shortcut_pool))
 
 		# Unpack the string with recent files and only remember those that exist
@@ -617,22 +594,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			return
 		self.ui.dock_overview.setVisible(True)
 
-	def refresh_stdout(self, dummy=None):
-
-		"""
-		Set the visibility of the debug window (stdout) based on
-		the menu action status
-
-		Keyword arguments:
-		dummy -- a dummy argument passed by the signal handler (default=None)
-		"""
-
-		if not self.ui.action_show_stdout.isChecked():
-			self.ui.dock_stdout.setVisible(False)
-			return
-		self.ui.console.focus()
-		self.ui.dock_stdout.setVisible(True)
-
 	def toggle_pool(self, make_visible):
 
 		"""
@@ -793,7 +754,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 				u'following reason:\n\n- '
 			) + e.markdown()
 			self.tabwidget.open_markdown(md)
-			self.ui.console.write(e)
+			self.console.write(e)
 			self.set_busy(False)
 			return
 		self.experiment.pool.clean_up()
@@ -813,7 +774,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.set_auto_response()
 		self.set_unsaved(False)
 		self.ui.pool_widget.refresh()
-		self.ui.console.reset()
 		self.extension_manager.fire(u'open_experiment', path=path)
 		self.set_busy(False)
 		# Process non-fatal errors
@@ -866,7 +826,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		try:
 			self.get_ready()
 		except osexception as e:
-			self.ui.console.write(e)
+			self.console.write(e)
 			self.experiment.notify(
 				_(u"The following error occured while trying to save:<br/>%s")
 				% e
@@ -878,7 +838,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			self.experiment.save(self.current_path, overwrite=True)
 			self.set_busy(False)
 		except Exception as e:
-			self.ui.console.write(e)
+			self.console.write(e)
 			self.experiment.notify(
 				_(u"Failed to save file. Error: %s")
 				% safe_decode(e)

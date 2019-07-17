@@ -42,8 +42,10 @@ class variable_inspector(base_extension):
 		self.need_refresh = False
 		self.dock_widget = variable_inspector_dockwidget(self.main_window, self)
 		self.dock_widget.visibilityChanged.connect(self.set_visible)
-		self.main_window.addDockWidget(QtCore.Qt.RightDockWidgetArea,
-			self.dock_widget)
+		self.main_window.addDockWidget(
+			QtCore.Qt.RightDockWidgetArea,
+			self.dock_widget
+		)
 		self.set_visible(cfg.variable_inspector_visible)
 		self.shortcut_focus = QtWidgets.QShortcut(QtGui.QKeySequence(
 			cfg.variable_inspector_focus_shortcut), self.main_window,
@@ -112,15 +114,6 @@ class variable_inspector(base_extension):
 		else:
 			self.need_refresh = True
 
-	def reset(self):
-
-		"""
-		desc:
-			Resets the console, to reset the workspace.
-		"""
-
-		self.main_window.console.reset()
-
 	# The following events all refresh the variable inspector
 
 	def event_heartbeat(self):
@@ -132,14 +125,10 @@ class variable_inspector(base_extension):
 	def event_pause_experiment(self):
 		self.refresh()
 
-	def event_run_experiment(self, fullscreen):
-		self.refresh()
-
-	def event_end_experiment(self, ret_val):
-		self.refresh()
-
-	def event_reset_console(self):
+	def event_set_workspace_globals(self, global_dict):
+		self.dock_widget.widget().set_workspace_globals(global_dict)
 		self.refresh()
 
 	def event_open_experiment(self, path):
+		self.dock_widget.widget().set_workspace_globals({})
 		self.refresh()

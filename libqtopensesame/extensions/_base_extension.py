@@ -84,7 +84,7 @@ class base_extension(base_subcomponent):
 	@property
 	def console(self):
 
-		return self.main_window.ui.console
+		return self.main_window.console
 
 	@property
 	def menubar(self):

@@ -55,7 +55,7 @@ class base_runner(object):
 
 	@property
 	def console(self):
-		return self.main_window.ui.console
+		return self.main_window.console
 
 	@property
 	def tabwidget(self):
@@ -244,25 +244,32 @@ class base_runner(object):
 							enabled. (default=False)
 		"""
 
-		if cfg.reset_console_on_experiment_start:
-			self.console.reset()
 		self.main_window.set_run_status(u'running')
-		self.main_window.extension_manager.fire(u'run_experiment',
-			fullscreen=fullscreen)
-		self.console.capture_stdout()
-		if not self.init_experiment(quick=quick, fullscreen=fullscreen,
-			auto_response=auto_response):
+		self.main_window.extension_manager.fire(
+			u'run_experiment',
+			fullscreen=fullscreen
+		)
+		if not self.init_experiment(
+			quick=quick,
+			fullscreen=fullscreen,
+			auto_response=auto_response
+		):
 			return
 		ret_val = self.execute()
-		self.console.release_stdout()
-		self.console.set_workspace_globals(self.workspace_globals())
-		self.console.show_prompt()
 		self.main_window.set_run_status(u'finished')
-		self.main_window.extension_manager.fire(u'end_experiment',
-			ret_val=ret_val)
+		self.main_window.extension_manager.fire(
+			u'set_workspace_globals',
+			global_dict=self.workspace_globals()
+		)
+		self.main_window.extension_manager.fire(
+			u'end_experiment',
+			ret_val=ret_val
+		)
 		if ret_val is None:
-			self.main_window.extension_manager.fire(u'process_data_files',
-				data_files=self.data_files())
+			self.main_window.extension_manager.fire(
+				u'process_data_files',
+				data_files=self.data_files()
+			)
 
 	def kill(self):
 

@@ -68,17 +68,12 @@ class multiprocess_runner(base_runner):
 				for i in range(25):
 					time.sleep(.01)
 					QtWidgets.QApplication.processEvents()
-			# Make sure None is not printed. Ugly hack for a bug in the Queue
-			# class?
-			self.console.suppress_stdout()
 			# Wait for messages. Will throw Exception if no message is received
 			# before timeout.
 			try:
 				msg = self.channel.get(True, 0.05)
 			except:
 				continue
-			# Restore connection to stdout
-			self.console.capture_stdout()
 			if isinstance(msg, basestring):
 				sys.stdout.write(safe_decode(msg, errors=u'ignore'))
 				continue
