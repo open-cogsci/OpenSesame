@@ -39,11 +39,22 @@ class QtCanvas(Canvas, Coordinates):
 
 	def __init__(self, experiment):
 
-		# This avoids the legacy color backend from being loaded, which
-		# unnecessarily imports pygame
+		# We set the color backend to a dummy value. This avoids PyGame from
+		# being unnecessarily loaded in the legacy color backend. Then we
+		# restore the backend, also catching the case in which no color backend
+		# was set.
+		color_backend = (
+			experiment.var.color_backend
+			if u'color_backend' in experiment.var
+			else None
+		)
 		experiment.var.color_backend = 'color'
 		Canvas.__init__(self, experiment)
 		Coordinates.__init__(self)
+		if color_backend is None:
+			del experiment.var.color_backend
+		else:
+			experiment.var.color_backend = color_backend
 
 
 class QtRichText(RichText):
