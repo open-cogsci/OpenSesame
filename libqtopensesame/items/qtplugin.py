@@ -500,7 +500,7 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		for var, editor in self.auto_editor.items():
-			if editor.isModified():
+			if editor.dirty:
 				oslogger.debug(u'applying pending editor changes')
 				self.apply_edit_changes()
 				return True

@@ -420,7 +420,7 @@ class qtitem(object):
 			self.main_window.set_unsaved()
 			self._script_widget.setPlainText(
 				script,
-				u'text/opensesame',
+				u'text/generic',
 				u'utf-8'
 			)
 			self.extension_manager.fire(u'change_item', name=self.name)

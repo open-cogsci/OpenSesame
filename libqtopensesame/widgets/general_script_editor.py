@@ -92,6 +92,6 @@ class general_script_editor(base_widget):
 
 		self.ui.editor.setPlainText(
 			self.main_window.experiment.to_string(),
-			u'text/opensesame',
+			u'text/generic',
 			u'utf-8'
 		)
