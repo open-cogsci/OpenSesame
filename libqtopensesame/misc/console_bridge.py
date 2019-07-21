@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 
 
@@ -33,10 +34,17 @@ class ConsoleBridge(BaseSubcomponent):
 		super(ConsoleBridge, self).__init__()
 		self.setup(main_window)
 		self._jupyter_console = None
+		self._writing = False
 
 	def write(self, s):
 
+		if self._writing:
+			oslogger.warning(u'recursive write() call')
+			print(safe_decode(s, errors=u'ignore'))
+			return
+		self._writing = True
 		self.extension_manager.fire(u'jupyter_write', msg=s)
+		self._writing = False
 
 	def reset(self):
 
