@@ -410,6 +410,28 @@ class base_extension(base_subcomponent):
 		if hasattr(self, u'event_%s' % event):
 			getattr(self, u'event_%s' % event)(**kwdict)
 
+	def provide(self, provide, **kwdict):
+
+		"""
+		desc:
+			Executing a providing function, if it exists.
+
+		arguments:
+			provide:
+				desc:    The provide name, which is handled by a function called
+						`provide_[event name]`.
+				type:    [str, unicode]
+
+		keyword-dict:
+			kwdict:        A keyword dictionary with provide-specific keywords.
+
+		returns:
+			The return value of the providing function.
+		"""
+
+		if hasattr(self, u'provide_%s' % provide):
+			return getattr(self, u'provide_%s' % provide)(**kwdict)
+
 	def name(self):
 
 		"""
@@ -530,6 +552,28 @@ class base_extension(base_subcomponent):
 					u'extension %s supports %s' % (self.name(), event)
 				)
 		return events
+
+	def supported_provides(self):
+
+		"""
+		desc:
+			Gives the provides that are supported by the extension. This is
+			done by introspecting which `provide_[provide name]` functions
+			exist.
+
+		returns:
+			desc:    A list of supported provides.
+			type:    list
+		"""
+
+		provides = []
+		for provide in dir(self):
+			if provide.startswith(u'provide_'):
+				provides.append(provide[8:])
+				oslogger.debug(
+					u'extension %s provides %s' % (self.name(), provide)
+				)
+		return provides
 
 	def register_config(self):
 

@@ -67,6 +67,7 @@ class extension_manager(base_subcomponent):
 		QtWidgets.QApplication.processEvents()
 		self._extensions = []
 		self.events = {}
+		self.provides = {}
 		self._suspended = False
 		self._suspended_until = None
 		extension_filter = lambda ext_name: False
@@ -90,6 +91,13 @@ class extension_manager(base_subcomponent):
 					if event not in self.events:
 						self.events[event] = []
 					self.events[event].append(ext)
+				for provide in ext.supported_provides():
+					if provide in self.provides:
+						oslogger.warning(
+							u'multiple extensions provide {}'.format(provide)
+						)
+						continue
+					self.provides[provide] = ext
 				if ext.extension_filter is not None:
 					extension_filter = ext.extension_filter
 		self.main_window.set_busy(False)
@@ -113,6 +121,20 @@ class extension_manager(base_subcomponent):
 			if ext.name() == extension_name:
 				return ext
 		raise osexception(u'Extension %s does not exist' % extension_name)
+
+	def __contains__(self, extension_name):
+
+		"""
+		arguments:
+			extension_name:
+				desc:    The extension name.
+				type:    str
+
+		returns:
+			True if the extension exists, False otherwise.
+		"""
+
+		return any(ext.name() == extension_name for ext in self._extensions)
 
 	def fire(self, event, **kwdict):
 
@@ -146,6 +168,21 @@ class extension_manager(base_subcomponent):
 					u'Extension %s misbehaved on event %s (see debug window for stack trace)' \
 					% (ext.name(), event))
 				self.console.write(e)
+
+	def provide(self, provide, **kwdict):
+
+		if provide not in self.provides:
+			return None
+		ext = self.provides[provide]
+		try:
+			return ext.provide(provide, **kwdict)
+		except Exception as e:
+			if not isinstance(e, osexception):
+				e = osexception(msg=u'Extension error', exception=e)
+			self.notify(
+				u'Extension %s misbehaved on providing %s (see debug window for stack trace)' \
+				% (ext.name(), provide))
+			self.console.write(e)
 
 	def activate(self, ext_name):
 
