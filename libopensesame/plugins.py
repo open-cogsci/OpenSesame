@@ -268,7 +268,7 @@ def plugin_category(plugin, _type=u'plugins'):
 	)
 
 
-def list_plugins(filter_disabled=True, _type=u'plugins'):
+def list_plugins(filter_disabled=True, _type=u'plugins', mode=u'default'):
 
 	"""
 	desc:
@@ -278,6 +278,7 @@ def list_plugins(filter_disabled=True, _type=u'plugins'):
 		filter_disabled:	Indicates whether disabled plugins should be
 							included in the list.
 		_type:				plugins/ extensions
+		mode:				A mode as specified on the command line
 
 	returns:
 		A list of plugins (item_types).
@@ -291,8 +292,20 @@ def list_plugins(filter_disabled=True, _type=u'plugins'):
 	for folder in plugin_folders(_type=_type):
 		for plugin in os.listdir(folder):
 			if is_plugin(plugin, _type=_type):
-				_plugin = plugin, plugin_property(plugin, u'priority',
-					_type=_type)
+				if mode not in plugin_property(
+					plugin,
+					u'modes',
+					default=[u'default'],
+					_type=_type
+				):
+					oslogger.debug(
+						'{} does not support mode {}'.format(plugin, mode)
+					)
+					continue
+				_plugin = plugin, plugin_property(
+					plugin, u'priority',
+					_type=_type
+				)
 				if _plugin not in plugins:
 					plugins.append(_plugin)
 	# Sort (inversely) by priority

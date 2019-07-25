@@ -25,7 +25,6 @@ from pyqode.core.backend import server
 from pyqode.core.api import (
 	CodeEdit,
 	Panel,
-	SyntaxHighlighter,
 	CharBasedFoldDetector,
 	IndentFoldDetector,
 	ColorScheme

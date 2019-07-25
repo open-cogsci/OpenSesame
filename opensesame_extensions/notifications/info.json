@@ -3,5 +3,6 @@
  "author": "Daniel Schreij",
  "description": "Pretty notifications for OpenSesame",
  "priority": 999999,
- "type": "extensions"
+ "type": "extensions",
+ "modes": ["default", "ide"]
 }

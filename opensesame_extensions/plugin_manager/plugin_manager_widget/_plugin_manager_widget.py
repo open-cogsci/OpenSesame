@@ -43,8 +43,14 @@ class plugin_manager_widget(base_widget):
 		super(plugin_manager_widget, self).__init__(main_window,
 			ui=u'extensions.plugin_manager.plugin_manager')
 		self.plugin_list = plugins.list_plugins(
-			filter_disabled=False, _type=u'plugins') \
-			+ plugins.list_plugins(filter_disabled=False, _type=u'extensions')
+			filter_disabled=False,
+			mode=main_window.mode,
+			_type=u'plugins'
+		) + plugins.list_plugins(
+			mode=main_window.mode,
+			filter_disabled=False,
+			_type=u'extensions'
+		)
 		for plugin in sorted(self.plugin_list):
 			w = plugin_widget(plugin, main_window)
 			self.ui.layout_container.addWidget(w)

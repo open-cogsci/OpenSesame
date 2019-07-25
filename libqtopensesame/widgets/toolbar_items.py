@@ -108,7 +108,7 @@ class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
 		# Create a dictionary of plugins by category. We also maintain a list
 		# to preserve the order of the categories.
 		cat_dict = OrderedDict()
-		for plugin in plugins.list_plugins():
+		for plugin in plugins.list_plugins(mode=self.main_window.mode):
 			cat = plugins.plugin_category(plugin)
 			if cat not in cat_dict:
 				cat_dict[cat] = []

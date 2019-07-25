@@ -71,7 +71,10 @@ class extension_manager(base_subcomponent):
 		self._suspended = False
 		self._suspended_until = None
 		extension_filter = lambda ext_name: False
-		for ext_name in plugins.list_plugins(_type=u'extensions'):
+		for ext_name in plugins.list_plugins(
+			_type=u'extensions',
+			mode=self.main_window.mode
+		):
 			if extension_filter(ext_name):
 				oslogger.debug(u'filtering extension {}'.format(ext_name))
 				continue

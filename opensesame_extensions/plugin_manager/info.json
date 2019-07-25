@@ -9,5 +9,5 @@
   "submenu": "Tools"
  },
  "tooltip": "Manage plug-ins and extensions",
- "type": "extensions"
+ "modes": ["default", "ide"]
 }

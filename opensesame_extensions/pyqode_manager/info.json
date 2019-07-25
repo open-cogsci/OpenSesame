@@ -17,5 +17,6 @@
         "pyqode_pep8_ignore": "W191",
         "pyqode_pyflakes_ignore": "",
         "pyqode_tab_length": 4
-    }
+    },
+     "modes": ["default", "ide"]
 }

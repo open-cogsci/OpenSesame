@@ -104,7 +104,8 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.set_warnings()
 		# Setup the UI
 		self.load_ui(u'misc.main_window')
-		self.mode = self.options.mode
+		self.mode = \
+			self.options.mode if self.options.mode is not None else u'default'
 		self.theme = theme.theme(self, self.options._theme)
 		self.ui.itemtree.setup(self)
 		self.ui.tabwidget.main_window = self

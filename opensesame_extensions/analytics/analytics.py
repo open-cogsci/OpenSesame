@@ -55,8 +55,14 @@ class analytics(base_extension):
 	def event_startup(self):
 
 		wv = WebView(self.main_window)
-		wv.setHtml(HTML, QtCore.QUrl(
-			u'http://opensesame.app.cogsci.nl/%s' % metadata.__version__))
+		wv.setHtml(
+			HTML,
+			QtCore.QUrl(
+				u'http://opensesame.app.cogsci.nl/{}/{}'.format(
+					self.main_window.mode,
+					metadata.__version__)
+				)
+		)
 		wv.hide()
 		if not QtNetwork.QNetworkConfigurationManager().isOnline() or \
 			not cfg.analytics_show_notification:
