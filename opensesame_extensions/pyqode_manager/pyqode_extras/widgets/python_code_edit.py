@@ -86,17 +86,8 @@ class PythonCodeEdit(PyCodeEditBase):
 			self.modes.append(pymodes.PyAutoCompleteMode())
 			self.modes.append(pymodes.CalltipsMode())
 		self.modes.append(modes.SmartBackSpaceMode())
-		self._py_auto_indent_mode = pymodes.PyAutoIndentMode()
-		self._py_indenter_mode = pymodes.PyIndenterMode()
-		self._indenter_mode = modes.IndenterMode()
-		self.space_indentation_modes = [
-			self._py_auto_indent_mode,
-			self._py_indenter_mode
-		]
-		self.modes.append(self._py_auto_indent_mode)
-		self.modes.append(self._py_indenter_mode)
-		self.modes.append(self._indenter_mode)
-		self.tab_indentation_modes = [self._indenter_mode]
+		self.modes.append(pymodes.PyIndenterMode())
+		self.modes.append(pymodes.PyAutoIndentMode())
 		self.modes.append(AutodetectIndentationMode())
 		if cfg.pyqode_pyflakes_validation:
 			flakes = pymodes.PyFlakesChecker()

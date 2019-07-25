@@ -59,20 +59,8 @@ class AutodetectIndentationMode(api.Mode):
 
 	def _set_tab_indentation(self):
 
-		if hasattr(self.editor, u'space_indentation_modes'):
-			for mode in self.editor.space_indentation_modes:
-				mode.enabled = False
-		if hasattr(self.editor, u'tab_indentation_modes'):
-			for mode in self.editor.tab_indentation_modes:
-				mode.enabled = True
 		self.editor.use_spaces_instead_of_tabs = False
 
 	def _set_space_indentation(self):
 
-		if hasattr(self.editor, u'space_indentation_modes'):
-			for mode in self.editor.space_indentation_modes:
-				mode.enabled = True
-		if hasattr(self.editor, u'tab_indentation_modes'):
-			for mode in self.editor.tab_indentation_modes:
-				mode.enabled = False
 		self.editor.use_spaces_instead_of_tabs = True
