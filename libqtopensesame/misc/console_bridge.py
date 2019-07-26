@@ -38,6 +38,7 @@ class ConsoleBridge(BaseSubcomponent):
 
 	def write(self, s):
 
+		oslogger.debug(s)
 		if self._writing:
 			oslogger.warning(u'recursive write() call')
 			print(safe_decode(s, errors=u'ignore'))
