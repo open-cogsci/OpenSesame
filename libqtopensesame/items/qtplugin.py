@@ -418,18 +418,10 @@ class qtplugin(qtitem.qtitem):
 		"""
 
 		if syntax:
-			from python_code_edit import PythonCodeEdit as CodeEdit
+			from pyqode_extras.widgets import PythonCodeEdit as CodeEdit
 		else:
-			from pyqode.core.widgets import TextCodeEdit as CodeEdit
+			from pyqode_extras.widgets import TextCodeEdit as CodeEdit
 		editor = CodeEdit(self.main_window)
-		if not syntax:
-			# If this is a regular CodeEdit, then decorate setPlainText() with
-			# a default mimetype and encoding
-			def _(fnc):
-				def inner(txt):
-					return fnc(txt, u'text/plain', u'utf-8')
-				return inner
-			editor.setPlainText = _(editor.setPlainText)
 		editor.focusOutEvent = self._editor_focus_out
 		if var is not None:
 			self.auto_editor[var] = editor

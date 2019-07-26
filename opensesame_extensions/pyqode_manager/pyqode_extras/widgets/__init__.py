@@ -19,3 +19,5 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from pyqode_extras.widgets.fallback_code_edit import FallbackCodeEdit
 from pyqode_extras.widgets.python_code_edit import PythonCodeEdit
+from pyqode_extras.widgets.text_code_edit import TextCodeEdit
+OpenSesameCodeEdit = TextCodeEdit

@@ -276,8 +276,8 @@ class qtitem(object):
 		self._edit_widget.setWindowIcon(self.theme.qicon(self.item_type))
 		self._edit_widget.setLayout(self.edit_vbox)
 		# The _script_widget contains the script editor and an apply button
-		from pyqode.core.widgets import TextCodeEdit
-		self._script_widget = TextCodeEdit(self.main_window)
+		from pyqode_extras.widgets import OpenSesameCodeEdit
+		self._script_widget = OpenSesameCodeEdit(self.main_window)
 		self._script_widget.focusOutEvent = self._script_focus_out
 		self.extension_manager.fire(
 			u'register_editor',
