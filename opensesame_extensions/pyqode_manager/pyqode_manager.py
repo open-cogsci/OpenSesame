@@ -102,7 +102,15 @@ class pyqode_manager(base_extension):
 				editor.font()
 			).averageCharWidth() * cfg.pyqode_tab_length
 		)
-		editor.action_duplicate_line.setShortcut(u'Ctrl+Shift+D')
+		editor.action_duplicate_line.setShortcut(
+			cfg.pyqode_shortcut_duplicate_line
+		)
+		editor.action_swap_line_up.setShortcut(
+			cfg.pyqode_shortcut_swap_line_up
+		)
+		editor.action_swap_line_down.setShortcut(
+			cfg.pyqode_shortcut_swap_line_down
+		)
 		oslogger.debug(u'registering {}'.format(editor))
 
 	def event_unregister_editor(self, editor):
