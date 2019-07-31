@@ -187,7 +187,6 @@ setup(name=u"python-opensesame",
 		"libqtopensesame.validators",
 		"libqtopensesame.sketchpad_elements",
 		"libqtopensesame._input",
-		"libqtopensesame.console",
 		],
 	data_files=data_files(),
 	install_requires=[
