@@ -380,6 +380,7 @@ def escape_html(s):
 #
 # - The working directory (cwd)
 # - The folder that contains libopensesame (parent_folder)
+# - The share folder within an Anaconda/ Miniconda environment
 # - The userbase folder:
 #		- ~/.local (on Ubuntu 16.04)
 # - The user site-packages folder:
@@ -390,32 +391,41 @@ def escape_html(s):
 #		- /usr/lib/python3.5/dist-packages
 # - /usr/local/share
 # - /usr/share
-# - The share folder within an Anaconda/ Miniconda environment
 
-base_folders = []
 if py3:
 	cwd = os.getcwd()
 else:
 	cwd = os.getcwdu()
-parent_folder = safe_decode(os.path.dirname(os.path.dirname(__file__)),
-	enc=filesystem_encoding())
+parent_folder = safe_decode(
+	os.path.dirname(os.path.dirname(__file__)),
+	enc=filesystem_encoding()
+)
 base_folders = [cwd, parent_folder]
-if hasattr(site, u'getuserbase'):
-	base_folders.append(os.path.join(
-		safe_decode(site.getuserbase(), enc=filesystem_encoding()), u'share'))
-if hasattr(site, u'getusersitepackages'):
-	base_folders.append(os.path.join(
-		safe_decode(site.getusersitepackages(), enc=filesystem_encoding()),
-		u'share'))
-if hasattr(site, u'getsitepackages'):
-	base_folders += \
-		[os.path.join(safe_decode(folder, enc=filesystem_encoding()), u'share') \
-		for folder in site.getsitepackages()]
-base_folders += [u'/usr/local/share', u'/usr/share']
 # Locate Anaconda/Miniconda share
 base_folders.append(os.path.join(
 	safe_decode(
 		os.path.dirname(os.path.dirname(sys.executable)),
-		enc=filesystem_encoding()),
-	u"share"))
+		enc=filesystem_encoding()
+	),
+	u"share"
+))
+if hasattr(site, u'getuserbase'):
+	base_folders.append(os.path.join(
+		safe_decode(site.getuserbase(), enc=filesystem_encoding()),
+		u'share'
+	))
+if hasattr(site, u'getusersitepackages'):
+	base_folders.append(os.path.join(
+		safe_decode(site.getusersitepackages(), enc=filesystem_encoding()),
+		u'share'
+	))
+if hasattr(site, u'getsitepackages'):
+	base_folders += [
+		os.path.join(
+			safe_decode(folder, enc=filesystem_encoding()),
+			u'share'
+		)
+		for folder in site.getsitepackages()
+	]
+base_folders += [u'/usr/local/share', u'/usr/share']
 base_folders = list(filter(os.path.exists, base_folders))
