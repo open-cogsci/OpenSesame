@@ -41,12 +41,12 @@ class general_script_editor(base_widget):
 			main_window:	A qtopensesame object.
 		"""
 
-		from pyqode.core.api import CodeEdit
+		from pyqode_extras.widgets import OpenSesameCodeEdit
 		super(general_script_editor, self).__init__(
 			main_window,
 			ui=u'widgets.general_script_editor'
 		)
-		self.ui.editor = CodeEdit()
+		self.ui.editor = OpenSesameCodeEdit()
 		self.extension_manager.fire(
 			u'register_editor',
 			editor=self.ui.editor,
