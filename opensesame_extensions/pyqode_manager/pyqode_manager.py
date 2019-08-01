@@ -21,8 +21,12 @@ from libopensesame.py3compat import *
 from libqtopensesame.misc.config import cfg
 from libopensesame.oslogging import oslogger
 from libqtopensesame.extensions import base_extension
-from pyqode.core.widgets import SplittableCodeEditTabWidget, TextCodeEdit
-from pyqode_extras.widgets import PythonCodeEdit, FallbackCodeEdit
+from pyqode.core.widgets import SplittableCodeEditTabWidget
+from pyqode_extras.widgets import (
+	PythonCodeEdit,
+	FallbackCodeEdit,
+	TextCodeEdit
+)
 from pyqode.core.api import ColorScheme
 from pyqode.core.modes import PygmentsSH
 from qtpy.QtGui import QFontMetrics
@@ -38,9 +42,9 @@ class pyqode_manager(base_extension):
 
 	def event_startup(self):
 
-		SplittableCodeEditTabWidget().register_code_edit(PythonCodeEdit)
-		SplittableCodeEditTabWidget().register_code_edit(FallbackCodeEdit)
-		SplittableCodeEditTabWidget().register_code_edit(TextCodeEdit)
+		SplittableCodeEditTabWidget.register_code_edit(PythonCodeEdit)
+		SplittableCodeEditTabWidget.register_code_edit(FallbackCodeEdit)
+		SplittableCodeEditTabWidget.register_code_edit(TextCodeEdit)
 		self._editors = []
 
 	def event_close(self):
