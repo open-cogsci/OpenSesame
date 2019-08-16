@@ -17,6 +17,7 @@
         "pyqode_pep8_ignore": "W191",
         "pyqode_pyflakes_ignore": "",
         "pyqode_tab_length": 4,
+        "pyqode_line_wrap": true,
         "pyqode_shortcut_duplicate_line": "Ctrl+Shift+D",
         "pyqode_shortcut_swap_line_up": "Ctrl+Up",
         "pyqode_shortcut_swap_line_down": "Ctrl+Down"

@@ -30,6 +30,7 @@ from pyqode_extras.widgets import (
 from pyqode.core.api import ColorScheme
 from pyqode.core.modes import PygmentsSH
 from qtpy.QtGui import QFontMetrics
+from qtpy.QtWidgets import QPlainTextEdit
 
 
 class pyqode_manager(base_extension):
@@ -101,6 +102,11 @@ class pyqode_manager(base_extension):
 		editor.font_name = cfg.pyqode_font_name
 		editor.show_whitespaces = cfg.pyqode_show_whitespaces
 		editor.tab_length = cfg.pyqode_tab_length
+		editor.setLineWrapMode(
+			QPlainTextEdit.WidgetWidth
+			if cfg.pyqode_line_wrap
+			else QPlainTextEdit.NoWrap
+		)
 		editor.setTabStopWidth(
 			QFontMetrics(
 				editor.font()
