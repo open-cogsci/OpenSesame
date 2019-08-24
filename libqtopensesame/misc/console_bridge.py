@@ -44,7 +44,10 @@ class ConsoleBridge(BaseSubcomponent):
 			print(safe_decode(s, errors=u'ignore'))
 			return
 		self._writing = True
-		self.extension_manager.fire(u'jupyter_write', msg=s)
+		if hasattr(self, u'extension_manager'):
+			self.extension_manager.fire(u'jupyter_write', msg=s)
+		else:
+			oslogger.info(s)
 		self._writing = False
 
 	def reset(self):
