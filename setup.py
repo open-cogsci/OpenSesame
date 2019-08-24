@@ -18,16 +18,17 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 import os
 import shutil
 from setuptools import setup
 from libopensesame import metadata
-from setup_shared  import included_plugins, included_extensions
+from setup_shared import included_plugins, included_extensions
 import fnmatch
 
 # Fix a bug in the packaging of stdeb
 try:
-	from stdeb import util
+	from stdeb3 import util
 except ImportError:
 	pass
 else:
@@ -132,22 +133,33 @@ def plugins(included, _type=u'plugins'):
 
 def data_files():
 
-	return [(u"share/icons/hicolor/scalable/apps", [u"mime/opensesame.svg"])] + \
-		plugins(included=included_plugins, _type=u'plugins') + \
-		plugins(included=included_extensions, _type=u'extensions') + \
+	return (
+		[
+			(u"share/icons/hicolor/scalable/apps", [u"mime/opensesame.svg"]),
+			(u"share/applications", [u"mime/opensesame.desktop"]),
+		] +
+		plugins(included=included_plugins, _type=u'plugins') +
+		plugins(included=included_extensions, _type=u'extensions') +
 		resources()
+	)
 
 
 # Temporarily create README.txt
 shutil.copy(u'readme.md', u'README.txt')
 
-setup(name=u"python-opensesame",
+setup(name=u"opensesame",
 	version=version,
 	description=u"A graphical experiment builder for the social sciences",
 	author=u"Sebastiaan Mathot",
 	author_email=u"s.mathot@cogsci.nl",
 	url=u"http://osdoc.cogsci.nl/",
-	scripts=['opensesame', 'opensesamerun'],
+	entry_points={
+		'gui_scripts': [
+			'opensesame = libqtopensesame.__main__:opensesame',
+			'opensesamerun = libqtopensesame.__main__:opensesamerun',
+		]
+	},
+	# scripts=['opensesame', 'opensesamerun'],
 	include_package_data=False,
 	packages=[
 		"openexp",
