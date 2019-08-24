@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-import yaml
 from libopensesame.exceptions import osexception
 from functools import partial
 import inspect
@@ -51,7 +50,7 @@ def backend_info(experiment):
 	if _backend_info is not None:
 		return _backend_info
 	with safe_open(experiment.resource(u'backend_info.yaml')) as fd:
-		d = yaml.load(fd, Loader=yaml.FullLoader)
+		d = safe_yaml_load(fd.read())
 	l = []
 	for name, info in d.items():
 		if (py3 and not info[u'py3']) or (not py3 and not info[u'py2']):

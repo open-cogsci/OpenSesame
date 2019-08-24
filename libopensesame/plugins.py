@@ -20,7 +20,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import os
 import sys
 import json
-import yaml
 import time
 from libopensesame import misc
 from libopensesame.oslogging import oslogger
@@ -215,7 +214,7 @@ def plugin_properties(plugin, _type=u'plugins'):
 			s = fd.read()
 		s = s.replace(u'\t', u'    ')
 		try:
-			_properties[plugin] = yaml.load(s, Loader=yaml.FullLoader)
+			_properties[plugin] = safe_yaml_load(s)
 		except:
 			oslogger.error(u'Failed to parse %s' % info_yaml)
 			_properties[plugin] = {}

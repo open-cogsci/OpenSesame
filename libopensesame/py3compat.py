@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import functools
 import sys
 import io
+import yaml
 
 if sys.version_info >= (3,0,0):
 	py3 = True
@@ -80,6 +81,16 @@ def safe_read(path):
 	with open(path, u'r') as fd:
 		return safe_decode(fd.read(), errors=u'ignore')
 
+
+# Depending on the version of yaml, we should pass the Loader keyword or not
+if hasattr(yaml, u'FullLoader'):
+	def safe_yaml_load(s):
+		return yaml.load(s, Loader=yaml.FullLoader)
+else:
+	def safe_yaml_load(s):
+		return yaml.load(s)
+
+
 safe_open = functools.partial(io.open, encoding=u'utf-8')
 
 if py3:
@@ -94,7 +105,8 @@ __all__ = [
 	'safe_str',
 	'universal_newline_mode',
 	'safe_read',
-	'safe_open'
+	'safe_open',
+	'safe_yaml_load'
 ]
 if not py3:
 	__all__ += [

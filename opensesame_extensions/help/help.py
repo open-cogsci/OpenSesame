@@ -27,7 +27,6 @@ if py3:
 	from urllib.request import urlopen
 else:
 	from urllib2 import urlopen
-import yaml
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'help', category=u'extension')
 
@@ -145,10 +144,7 @@ class help(base_extension):
 		if self._get_sitemap_thread.sitemap is None:
 			return
 		try:
-			_dict = yaml.load(
-				self._get_sitemap_thread.sitemap,
-				Loader=yaml.FullLoader
-			)
+			_dict = safe_yaml_load(self._get_sitemap_thread.sitemap)
 		except yaml.scanner.ScannerError:
 			# If the sitemap was loaded but was not a valid yaml string. This
 			# can happen for example when a captive portal returns something
@@ -219,7 +215,7 @@ class help(base_extension):
 		import yaml
 		with safe_open(self.ext_resource(u'psychopy_sitemap.yaml')) as fd:
 			sitemap = fd.read()
-		_dict = yaml.load(sitemap, Loader=yaml.FullLoader)
+		_dict = safe_yaml_load(sitemap)
 		menu = self.build_menu(self.menu, None, _(u'PsychoPy API'), _dict)
 		return menu
 

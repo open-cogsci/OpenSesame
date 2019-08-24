@@ -63,7 +63,7 @@ class update_checker(base_extension):
 			success = False
 		if success:
 			try:
-				remote_metadata = yaml.load(s, Loader=yaml.FullLoader)
+				remote_metadata = safe_yaml_load(s)
 			except:
 				oslogger.error(u"failed to load parse metadata.yaml")
 				success = False

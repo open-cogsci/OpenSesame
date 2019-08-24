@@ -40,9 +40,8 @@ def parse_environment_file():
 
 	if not os.path.exists(u'environment.yaml'):
 		return
-	import yaml
 	with safe_open(u'environment.yaml') as fd:
-		d = yaml.load(fd.read(), Loader=yaml.FullLoader)
+		d = safe_yaml_load(fd.read())
 	# Convert all values from UTF8 to the filesystem encoding
 	for key, val in d.items():
 		d[key] = safe_str(safe_decode(val), enc=filesystem_encoding())

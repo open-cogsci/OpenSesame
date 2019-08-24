@@ -121,7 +121,7 @@ class syntax(object):
 
 		m = self.re_front_matter.match(s)
 		try:
-			d = yaml.load(m.group(u'info'), Loader=yaml.FullLoader)
+			d = safe_yaml_load(m.group(u'info'))
 			s = s[len(m.group(0)):]
 		except:
 			d = {}

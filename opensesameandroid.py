@@ -87,7 +87,7 @@ def main():
 		path = os.path.join(folder, 'opensesame-autorun.yml')
 		print(path)
 		if os.path.exists(path):
-			d = yaml.load(open(path), Loader=yaml.FullLoader)
+			d = yaml.load(open(path))
 			experiment_path = d['experiment']
 			subject_nr = d['subject_nr']
 			logfile = d['logfile']
