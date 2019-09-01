@@ -26,6 +26,7 @@ from libqtopensesame.items.qtautoplugin import qtautoplugin
 class form_multiple_choice(item.item):
 
 	description = u'A simple multiple choice item'
+	lazy_init = False
 
 	def reset(self):
 
