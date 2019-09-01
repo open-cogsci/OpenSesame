@@ -1,5 +1,5 @@
 {
- "description": "Quickly open items and scripts.",
+ "description": "Quickly open items",
  "icon": "edit-find",
  "label": "Quick switcher",
  "priority": -999999,

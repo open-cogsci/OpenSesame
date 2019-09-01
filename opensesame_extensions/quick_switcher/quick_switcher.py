@@ -19,72 +19,28 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'quick_switcher', category=u'extension')
 
 
 class quick_switcher(base_extension):
 
 	"""
 	desc:
-		The quick-switcher allows you to quickly navigate to items and
-		functions, and to quickly activate menu actions.
+		The quick-switcher allows you to quickly navigate to items.
 	"""
-
-	# We need to update or fully refresh the dialog after several structural
-	# changes.
-
-	def event_startup(self):
-		self.d = None
-
-	def event_open_experiment(self, path):
-		self.d = None
-
-	def event_rename_item(self, from_name, to_name):
-		if self.d is not None:
-			self.d.rename_item(from_name, to_name)
-
-	def event_new_item(self, name, _type):
-		if self.d is not None:
-			self.d.add_item(name)
-
-	def event_delete_item(self, name):
-		if self.d is not None:
-			self.d.delete_item(name)
-
-	def event_purge_unused_items(self):
-		self.d = None
-
-	def event_regenerate(self):
-		self.d = None
-
-	def event_change_item(self, name):
-		if self.d is not None:
-			if self.experiment.items._type(name) == u'inline_script':
-				self.d.refresh_item(name)
-				
-	def event_open_item(self, name):
-		if self.d is not None:
-			self.d.bump_item(name)
-
-	def init_dialog(self):
-
-		"""
-		desc:
-			Re-init the dialog.
-		"""
-
-		self.set_busy()
-		from quick_switcher_dialog.dialog import quick_switcher
-		self.d = quick_switcher(self.main_window)
-		self.set_busy(False)
 
 	def activate(self):
 
-		"""
-		desc:
-			Pops up the quick-switcher dialog.
-		"""
-
-		if not hasattr(self, u'd') or self.d is None:
-			self.init_dialog()
-		self.d.items_list_widget.sortItems()
-		self.d.exec_()
+		haystack = []
+		for item in self.experiment.items.values():
+			haystack.append((
+				u'{} ({})'.format(item.name, item.item_type),
+				item,
+				item.open_tab
+			))
+		self.extension_manager.fire(
+			u'quick_select',
+			haystack=haystack,
+			placeholder_text=_(u'Search items …')
+		)
