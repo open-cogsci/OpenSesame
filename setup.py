@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import os
+import sys
 import shutil
 from setuptools import setup
 from libopensesame import metadata
@@ -147,7 +148,9 @@ def data_files():
 # Temporarily create README.txt
 shutil.copy(u'readme.md', u'README.txt')
 
-setup(name=u"opensesame",
+setup(
+	# The PyPi name is python-opensesame
+	name=u'python-opensesame' if 'upload' in sys.argv else u"opensesame",
 	version=version,
 	description=u"A graphical experiment builder for the social sciences",
 	author=u"Sebastiaan Mathot",
