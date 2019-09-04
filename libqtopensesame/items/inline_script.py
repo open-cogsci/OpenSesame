@@ -128,3 +128,9 @@ class inline_script(inline_script_runtime, qtplugin):
 		_run = safe_decode(self.var._run)
 		if _run != self._pyqode_run_editor.toPlainText():
 			self._pyqode_run_editor.setPlainText(_run)
+
+	def get_ready(self):
+
+		if self.container_widget is None:
+			return
+		self.apply_edit_changes()
