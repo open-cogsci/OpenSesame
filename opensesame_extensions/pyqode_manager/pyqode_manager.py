@@ -57,6 +57,8 @@ class pyqode_manager(base_extension):
 	def event_prepare_delete_item(self, name):
 
 		item = self.item_store[name]
+		if item.container_widget is None:
+			return
 		if item.item_type == u'inline_script':
 			self.event_unregister_editor(item._pyqode_run_editor)
 			self.event_unregister_editor(item._pyqode_prepare_editor)
@@ -126,5 +128,6 @@ class pyqode_manager(base_extension):
 	def event_unregister_editor(self, editor):
 
 		editor.close()
-		self._editors.remove(editor)
+		if editor in self._editors:
+			self._editors.remove(editor)
 		oslogger.debug(u'unregistering ({})'.format(len(self._editors)))
