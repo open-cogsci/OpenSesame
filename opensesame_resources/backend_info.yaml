@@ -21,7 +21,7 @@ psycho:
   log: csv
   icon: os-psychopy
   py2: true
-  py3: false
+  py3: true
 xpyriment:
   description: uses Expyriment
   canvas: xpyriment
