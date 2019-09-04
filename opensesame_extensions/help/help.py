@@ -17,17 +17,18 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from libopensesame.py3compat import *
 from qtpy import QtWidgets, QtCore
+import yaml
 from libopensesame import metadata
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
-from libopensesame.py3compat import *
+from libqtopensesame.misc.translate import translation_context
 if py3:
 	from urllib.request import urlopen
 else:
 	from urllib2 import urlopen
-from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'help', category=u'extension')
 
 
@@ -90,8 +91,8 @@ class GetSitemapThread(QtCore.QThread):
 
 		try:
 			fd = urlopen(self._sitemap_url)
-			self.sitemap =  fd.read()
-		except:
+			self.sitemap = fd.read()
+		except Exception:
 			if self._local_sitemap is None:
 				return
 			with safe_open(self._help.ext_resource(self._local_sitemap)) as fd:
@@ -123,7 +124,8 @@ class help(base_extension):
 		self.menu.addAction(self._wait_action)
 		# It can take some time to download the sitemap from cogsci. Therefore,
 		# we use threading.
-		self._get_sitemap_thread = GetSitemapThread(self,
+		self._get_sitemap_thread = GetSitemapThread(
+			self,
 			sitemap_url=cfg.online_help_sitemap.replace(
 				u'[version]',
 				metadata.main_version
@@ -196,8 +198,10 @@ class help(base_extension):
 			self._urls.append(link)
 			menu.addAction(
 				ActionPage(
-					self.main_window, safe_decode(name,
-					enc=u'utf-8'), link, menu
+					self.main_window,
+					safe_decode(name, enc=u'utf-8'),
+					link,
+					menu
 				)
 			)
 		return menu
@@ -235,7 +239,7 @@ class help(base_extension):
 			try:
 				fd = urlopen(url)
 				page = fd.read()
-			except:
+			except Exception:
 				print('failed to cache %s' % url)
 				continue
 			cache[url] = page
