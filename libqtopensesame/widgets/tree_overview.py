@@ -778,6 +778,11 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 				type:	QDragLeaveEvent
 		"""
 
+		# The focusOutEvent arrives too late, so here we explictly give the
+		# currently opened item the opportunity to get ready
+		item_name = self.tabwidget.current_item()
+		if item_name is not None:
+			self.item_store[item_name].get_ready()
 		data = drag_and_drop.receive(e)
 		if data[u'type'] == u'item-snippet':
 			self.drop_event_item_new(data, e)
