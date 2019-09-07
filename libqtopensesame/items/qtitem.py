@@ -536,7 +536,6 @@ class qtitem(object):
 		oslogger.debug(u'validator: %s' % cls)
 		self.validator = cls
 
-	@requires_init
 	def rename(self, from_name, to_name):
 
 		"""
@@ -555,6 +554,8 @@ class qtitem(object):
 		if self.name != from_name:
 			return
 		self.name = to_name
+		if self.container_widget is None:
+			return
 		self.container_widget.__item__ = self.name
 		self.header.set_name(to_name)
 		index = self.tabwidget.indexOf(self.widget())
