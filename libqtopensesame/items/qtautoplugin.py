@@ -155,7 +155,6 @@ class qtautoplugin(qtplugin):
 				setattr(self, c[u'name'], widget)
 		if need_stretch:
 			self.add_stretch()
-		self.lock = True
 
 	def apply_edit_changes(self):
 
