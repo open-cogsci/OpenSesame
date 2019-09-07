@@ -25,6 +25,7 @@ from pyqode.python.backend import server
 from pyqode.core import api
 from pyqode.core import modes
 from pyqode.core import panels
+from pyqode.core.managers import BackendManager
 from pyqode.python import modes as pymodes
 from pyqode.python.backend.workers import defined_names
 from pyqode.python.folding import PythonFoldDetector
@@ -51,10 +52,12 @@ class PythonCodeEdit(PyCodeEditBase):
 	def __init__(self, parent):
 
 		super(PythonCodeEdit, self).__init__(parent=parent)
+		self._backend = BackendManager(self)
 		self.backend.start(
 			server.__file__,
 			sys.executable,
-			reuse=False
+			reuse=True,
+			share_id='python'
 		)
 		self.setLineWrapMode(self.NoWrap)
 		self.modes.append(modes.OutlineMode(defined_names))

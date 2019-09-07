@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import sys
 from libqtopensesame.misc.config import cfg
+from pyqode.core.managers import BackendManager
 from pyqode.core.backend import server
 from pyqode.core import panels, modes
 from pyqode.core.api import (
@@ -44,10 +45,12 @@ class TextCodeEdit(CodeEdit):
 	def __init__(self, parent=None):
 
 		super(TextCodeEdit, self).__init__(parent)
+		self._backend = BackendManager(self)
 		self.backend.start(
 			server.__file__,
 			sys.executable,
-			reuse=False
+			reuse=True,
+			share_id='text'
 		)
 		# append panels
 		self.panels.append(

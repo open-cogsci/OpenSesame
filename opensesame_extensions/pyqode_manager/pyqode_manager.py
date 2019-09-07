@@ -50,7 +50,7 @@ class pyqode_manager(base_extension):
 
 	def event_close(self):
 
-		oslogger.debug(u'closing ({})'.format(len(self._editors)))
+		oslogger.info(u'closing ({})'.format(len(self._editors)))
 		while self._editors:
 			self._editors.pop().close()
 
@@ -123,11 +123,11 @@ class pyqode_manager(base_extension):
 		editor.action_swap_line_down.setShortcut(
 			cfg.pyqode_shortcut_swap_line_down
 		)
-		oslogger.debug(u'registering {}'.format(editor))
+		oslogger.info(u'registering {}'.format(editor))
 
 	def event_unregister_editor(self, editor):
 
 		editor.close()
 		if editor in self._editors:
 			self._editors.remove(editor)
-		oslogger.debug(u'unregistering ({})'.format(len(self._editors)))
+		oslogger.info(u'unregistering ({})'.format(len(self._editors)))
