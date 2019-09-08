@@ -82,6 +82,7 @@ class pyqode_manager(base_extension):
 
 	def event_register_editor(self, editor, mime_type=u'text/plain'):
 
+		editor._auto_reset_stylesheet = False
 		self._editors.append(editor)
 		if 'PythonSH' in editor.modes.keys():
 			pass
@@ -123,6 +124,8 @@ class pyqode_manager(base_extension):
 		editor.action_swap_line_down.setShortcut(
 			cfg.pyqode_shortcut_swap_line_down
 		)
+		editor._auto_reset_stylesheet = True
+		editor._reset_stylesheet()
 		oslogger.info(u'registering {}'.format(editor))
 
 	def event_unregister_editor(self, editor):
