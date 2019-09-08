@@ -22,7 +22,7 @@ from qtpy import QtWidgets
 from libopensesame.sequence import sequence as sequence_runtime
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.widgets.tree_overview import tree_overview
-from libqtopensesame.items.qtitem import requires_init
+from libqtopensesame.items.qtitem import requires_init, wait_cursor
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.items.qtstructure_item import qtstructure_item
 from libqtopensesame.misc.translate import translation_context
@@ -59,6 +59,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		qtplugin.__init__(self)
 		self.last_removed_child = None, None
 
+	@wait_cursor
 	def init_edit_widget(self):
 
 		"""See qtitem."""
@@ -98,7 +99,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		self.toplevel_treeitem.setExpanded(True)
 		self.treewidget.resizeColumnToContents(0)
 		self.treewidget.append_button.set_position()
-				
+
 	@requires_init
 	@qtstructure_item.clears_children_cache
 	def rename(self, from_name, to_name):
@@ -219,5 +220,5 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 			self.last_removed_child = self.items[index]
 			del self.items[index]
 		if not self.update():
-			self.extension_manager.fire(u'change_item', name=self.name)		
+			self.extension_manager.fire(u'change_item', name=self.name)
 		self.main_window.set_unsaved(True)

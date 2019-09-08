@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.logger import logger as logger_runtime
 from libqtopensesame.items.qtplugin import qtplugin
+from libqtopensesame.items.qtitem import wait_cursor
 from libqtopensesame.widgets.logger_widget import logger_widget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'logger', category=u'item')
@@ -42,6 +43,7 @@ class logger(logger_runtime, qtplugin):
 		logger_runtime.__init__(self, name, experiment, string)
 		qtplugin.__init__(self)
 
+	@wait_cursor
 	def init_edit_widget(self):
 
 		"""See qtitem."""

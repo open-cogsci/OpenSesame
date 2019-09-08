@@ -435,6 +435,15 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		cfg.recent_files = u";;".join(self.recent_files)
 		cfg.save()
 
+	def is_busy(self):
+
+		"""
+		returns:
+			True if the cursos has a busy state, False otherwise
+		"""
+
+		return QtWidgets.QApplication.overrideCursor() is not None
+
 	def set_busy(self, state=True):
 
 		"""

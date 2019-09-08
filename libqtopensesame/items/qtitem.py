@@ -41,8 +41,29 @@ def requires_init(fnc):
 	def inner(self, *args, **kwargs):
 
 		if self.container_widget is None:
-			self.init_edit_widget()
+			from datamatrix import functional
+			with functional.profile():
+				self.init_edit_widget()
 		return fnc(self, *args, **kwargs)
+
+	return inner
+
+
+def wait_cursor(fnc):
+
+	"""
+	desc:
+		A decorator that shows a waiting cursor during the function
+	"""
+
+	def inner(self, *args, **kwargs):
+
+		if self.main_window.is_busy():
+			return fnc(self, *args, **kwargs)
+		self.main_window.set_busy(True)
+		retval = fnc(self, *args, **kwargs)
+		self.main_window.set_busy(False)
+		return retval
 
 	return inner
 
@@ -212,6 +233,7 @@ class qtitem(object):
 
 		return self.container_widget
 
+	@wait_cursor
 	def init_edit_widget(self, stretch=True):
 
 		"""

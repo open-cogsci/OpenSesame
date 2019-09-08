@@ -19,9 +19,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-import os
 from libopensesame import plugins
 from libqtopensesame.items.qtplugin import qtplugin
+from libqtopensesame.items.qtitem import wait_cursor
 from libqtopensesame import validators
 from libqtopensesame.misc.translate import translation_context
 from libopensesame.exceptions import osexception
@@ -36,6 +36,7 @@ class qtautoplugin(qtplugin):
 
 		qtplugin.__init__(self, plugin_file)
 
+	@wait_cursor
 	def init_edit_widget(self):
 
 		"""Construct the GUI controls based on info.yaml"""

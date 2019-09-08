@@ -22,7 +22,7 @@ from qdatamatrix import QDataMatrix
 from pseudorandom import EnforceFailed
 from libopensesame.loop import loop as loop_runtime
 from libopensesame.exceptions import osexception
-from libqtopensesame.items.qtitem import qtitem
+from libqtopensesame.items.qtitem import qtitem, wait_cursor
 from libqtopensesame.items.qtstructure_item import qtstructure_item
 from libqtopensesame.widgets.loop_widget import loop_widget
 from libqtopensesame.widgets.tree_item_item import tree_item_item
@@ -48,6 +48,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		qtstructure_item.__init__(self)
 		qtitem.__init__(self)
 
+	@wait_cursor
 	def init_edit_widget(self):
 
 		"""Builds the loop controls."""

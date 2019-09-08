@@ -22,6 +22,7 @@ from libopensesame.keyboard_response import keyboard_response as \
 	keyboard_response_runtime
 from libqtopensesame.validators import timeout_validator
 from libqtopensesame.items.qtplugin import qtplugin
+from libqtopensesame.items.qtitem import wait_cursor
 from openexp.keyboard import keyboard
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.translate import translation_context
@@ -52,6 +53,7 @@ class keyboard_response(keyboard_response_runtime, qtplugin):
 		keyboard_response_runtime.__init__(self, name, experiment, string)
 		qtplugin.__init__(self)
 
+	@wait_cursor
 	def init_edit_widget(self):
 
 		"""Initialize controls"""

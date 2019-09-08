@@ -22,6 +22,7 @@ from qtpy.QtWidgets import QSizePolicy
 from qtpy.QtCore import Qt
 from libopensesame.inline_script import inline_script as inline_script_runtime
 from libqtopensesame.items.qtplugin import qtplugin
+from libqtopensesame.items.qtitem import wait_cursor
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'inline_script', category=u'item')
 
@@ -79,6 +80,7 @@ class inline_script(inline_script_runtime, qtplugin):
 
 		self._pyqode_tab_widget.setFocus()
 
+	@wait_cursor
 	def init_edit_widget(self):
 
 		"""See qtitem."""
