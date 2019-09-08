@@ -41,9 +41,7 @@ def requires_init(fnc):
 	def inner(self, *args, **kwargs):
 
 		if self.container_widget is None:
-			from datamatrix import functional
-			with functional.profile():
-				self.init_edit_widget()
+			self.init_edit_widget()
 		return fnc(self, *args, **kwargs)
 
 	return inner
