@@ -43,6 +43,7 @@ class pyqode_manager(base_extension):
 
 	def event_startup(self):
 
+		SplittableCodeEditTabWidget.fallback_editor = FallbackCodeEdit
 		SplittableCodeEditTabWidget.register_code_edit(PythonCodeEdit)
 		SplittableCodeEditTabWidget.register_code_edit(FallbackCodeEdit)
 		SplittableCodeEditTabWidget.register_code_edit(TextCodeEdit)
@@ -50,7 +51,7 @@ class pyqode_manager(base_extension):
 
 	def event_close(self):
 
-		oslogger.info(u'closing ({})'.format(len(self._editors)))
+		oslogger.debug(u'closing ({})'.format(len(self._editors)))
 		while self._editors:
 			self._editors.pop().close()
 
@@ -126,11 +127,11 @@ class pyqode_manager(base_extension):
 		)
 		editor._auto_reset_stylesheet = True
 		editor._reset_stylesheet()
-		oslogger.info(u'registering {}'.format(editor))
+		oslogger.debug(u'registering {}'.format(editor))
 
 	def event_unregister_editor(self, editor):
 
 		editor.close()
 		if editor in self._editors:
 			self._editors.remove(editor)
-		oslogger.info(u'unregistering ({})'.format(len(self._editors)))
+		oslogger.debug(u'unregistering ({})'.format(len(self._editors)))

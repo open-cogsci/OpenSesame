@@ -83,23 +83,19 @@ class FallbackCodeEdit(CodeEdit):
 
 	def setPlainText(self, txt, mime_type='', encoding=''):
 
-		if mime_type is None:
+		if not mime_type:
 			mime_type = self.file.mimetype
-		if encoding is None:
+		if not encoding:
 			encoding = self.file.encoding
 		try:
-			self.syntax_highlighter.set_lexer_from_filename(self.file.path)
-			try:
-				mimetype = self.syntax_highlighter._lexer.mimetypes[0]
-			except (AttributeError, IndexError):
-				mimetype = ''
-			if mimetype in self._char_based_mimetypes:
+			self.syntax_highlighter.set_lexer_from_mime_type(mime_type)
+		except AttributeError:
+			pass
+		else:
+			if mime_type in self._char_based_mimetypes:
 				self.syntax_highlighter.fold_detector = CharBasedFoldDetector()
 			else:
 				self.syntax_highlighter.fold_detector = IndentFoldDetector()
-		except AttributeError:
-			# syntax highlighter removed, e.g. file size > FileManager.limit
-			pass
 		super(FallbackCodeEdit, self).setPlainText(txt, mime_type, encoding)
 
 	def clone(self):

@@ -33,7 +33,8 @@ class inline_script(inline_script_runtime, qtplugin):
 
 	description = _(u'Executes Python code')
 	help_url = u'manual/python/about'
-	language = u'Python'
+	ext = u'.py'
+	mime_type = u'text/x-python'
 
 	def __init__(self, name, experiment, string=None):
 
@@ -99,9 +100,9 @@ class inline_script(inline_script_runtime, qtplugin):
 		self._pyqode_tab_bar.setContextMenuPolicy(Qt.NoContextMenu)
 		self._pyqode_tab_widget.main_tab_widget.setMovable(False)
 		self._pyqode_prepare_editor = \
-			self._pyqode_tab_widget.create_new_document('Prepare', '.py')
+			self._pyqode_tab_widget.create_new_document('Prepare', self.ext)
 		self._pyqode_run_editor = \
-			self._pyqode_tab_widget.create_new_document('Run', '.py')
+			self._pyqode_tab_widget.create_new_document('Run', self.ext)
 		self._pyqode_run_editor.focusOutEvent = self._editor_focus_out
 		self._pyqode_prepare_editor.focusOutEvent = self._editor_focus_out
 		self._set_modified()
@@ -119,6 +120,7 @@ class inline_script(inline_script_runtime, qtplugin):
 		else:
 			self._pyqode_tab_widget.main_tab_widget.setCurrentIndex(1)
 
+
 	def edit_widget(self):
 
 		"""See qtitem."""
@@ -126,10 +128,16 @@ class inline_script(inline_script_runtime, qtplugin):
 		qtplugin.edit_widget(self)
 		_prepare = safe_decode(self.var._prepare)
 		if _prepare != self._pyqode_prepare_editor.toPlainText():
-			self._pyqode_prepare_editor.setPlainText(_prepare)
+			self._pyqode_prepare_editor.setPlainText(
+				_prepare,
+				mime_type=self.mime_type
+			)
 		_run = safe_decode(self.var._run)
 		if _run != self._pyqode_run_editor.toPlainText():
-			self._pyqode_run_editor.setPlainText(_run)
+			self._pyqode_run_editor.setPlainText(
+				_run,
+				mime_type=self.mime_type
+			)
 
 	def get_ready(self):
 
