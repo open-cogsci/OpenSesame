@@ -29,8 +29,18 @@ if platform.system() != 'Linux':
 
 def set_paths():
 
-	from qtpy import QtCore
 	from libopensesame import misc
+	import sys
+	import platform
+	# On Windows, the working directory should be the folder with the Python
+	# interpreter. If not, Qt will have difficulty finding the correct paths.
+	if platform.system() == 'Windows':
+		os.chdir(os.path.dirname(sys.executable))
+	# Update the system path so that Qt can find itself
+	path = os.path.join(os.getcwd(), 'Library', 'bin')
+	if os.path.exists(path):
+		os.environ['PATH'] += ';' + path
+	from qtpy import QtCore
 	# Add the folder that contains the OpenSesame modules to the path. This is
 	# generally only necessary if OpenSesame is directly run from source,
 	# instead from an installation.
