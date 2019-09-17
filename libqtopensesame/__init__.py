@@ -19,14 +19,3 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.metadata import __version__
-
-from qtpy import QtCore
-if QtCore.QCoreApplication is not None:
-	# Redirect certain things so that the old way of from libqtopensesame import
-	# qtplugin still works.
-	from libqtopensesame.items import qtplugin
-	from libqtopensesame.widgets import pool_widget
-else:
-	# Load dummy modules to avoid dependency on qtpy
-	from libqtopensesame.misc import dummy as qtplugin
-	from libqtopensesame.misc import dummy as qtautoplugin
