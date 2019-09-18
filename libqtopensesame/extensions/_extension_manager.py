@@ -18,14 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-import sys
-from qtpy import QtWidgets, QtCore
+from qtpy import QtWidgets
 from libopensesame import plugins
 from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'extension_manager', category=u'core')
+
 
 def suspend_events(fnc):
 
@@ -43,6 +43,7 @@ def suspend_events(fnc):
 		return retval
 
 	return inner
+
 
 class extension_manager(base_subcomponent):
 
@@ -84,8 +85,9 @@ class extension_manager(base_subcomponent):
 				if not isinstance(e, osexception):
 					e = osexception(msg=u'Extension error', exception=e)
 				self.notify(
-					u'Failed to load extension %s (see debug window for stack trace)' \
-					% ext_name)
+					u'Failed to load extension %s (see debug window for stack trace)'
+					% ext_name
+				)
 				self.console.write(e)
 			else:
 				oslogger.debug(u'installing extension {}'.format(ext_name))
@@ -168,8 +170,9 @@ class extension_manager(base_subcomponent):
 				if not isinstance(e, osexception):
 					e = osexception(msg=u'Extension error', exception=e)
 				self.notify(
-					u'Extension %s misbehaved on event %s (see debug window for stack trace)' \
-					% (ext.name(), event))
+					u'Extension %s misbehaved on event %s (see debug window for stack trace)'
+					% (ext.name(), event)
+				)
 				self.console.write(e)
 
 	def provide(self, provide, **kwdict):
@@ -183,8 +186,9 @@ class extension_manager(base_subcomponent):
 			if not isinstance(e, osexception):
 				e = osexception(msg=u'Extension error', exception=e)
 			self.notify(
-				u'Extension %s misbehaved on providing %s (see debug window for stack trace)' \
-				% (ext.name(), provide))
+				u'Extension %s misbehaved on providing %s (see debug window for stack trace)'
+				% (ext.name(), provide)
+			)
 			self.console.write(e)
 
 	def activate(self, ext_name):
