@@ -106,14 +106,15 @@ class PythonCodeEdit(PyCodeEditBase):
 				i.strip() for i in cfg.pyqode_pep8_ignore.split(u';')
 			])
 			self.modes.append(pep8)
+		self.panels.append(panels.EncodingPanel(), api.Panel.Position.TOP)
+		self.panels.append(panels.ReadOnlyPanel(), api.Panel.Position.TOP)
+		# The PythonSH requires that _reset_stylesheet isn't dummied out
+		self._reset_stylesheet = _reset_stylesheet
 		self.modes.append(pymodes.PythonSH(
 			self.document(),
 			color_scheme=ColorScheme(cfg.pyqode_color_scheme))
 		)
 		self.syntax_highlighter.fold_detector = PythonFoldDetector()
-		self.panels.append(panels.EncodingPanel(), api.Panel.Position.TOP)
-		self.panels.append(panels.ReadOnlyPanel(), api.Panel.Position.TOP)
-		self._reset_stylesheet = _reset_stylesheet
 
 	def _init_actions(self, create_standard_actions):
 
