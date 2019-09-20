@@ -51,6 +51,8 @@ class PythonCodeEdit(PyCodeEditBase):
 
 	def __init__(self, parent):
 
+		_reset_stylesheet = self._reset_stylesheet
+		self._reset_stylesheet = lambda: None
 		super(PythonCodeEdit, self).__init__(parent=parent)
 		self._backend = BackendManager(self)
 		self.backend.start(
@@ -111,6 +113,7 @@ class PythonCodeEdit(PyCodeEditBase):
 		self.syntax_highlighter.fold_detector = PythonFoldDetector()
 		self.panels.append(panels.EncodingPanel(), api.Panel.Position.TOP)
 		self.panels.append(panels.ReadOnlyPanel(), api.Panel.Position.TOP)
+		self._reset_stylesheet = _reset_stylesheet
 
 	def _init_actions(self, create_standard_actions):
 

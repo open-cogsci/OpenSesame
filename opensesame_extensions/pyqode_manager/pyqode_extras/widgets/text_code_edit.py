@@ -44,6 +44,8 @@ class TextCodeEdit(CodeEdit):
 
 	def __init__(self, parent=None):
 
+		_reset_stylesheet = self._reset_stylesheet
+		self._reset_stylesheet = lambda: None
 		super(TextCodeEdit, self).__init__(parent)
 		self._backend = BackendManager(self)
 		self.backend.start(
@@ -79,6 +81,7 @@ class TextCodeEdit(CodeEdit):
 		self.modes.append(modes.SymbolMatcherMode())
 		self.panels.append(panels.EncodingPanel(), Panel.Position.TOP)
 		self.panels.append(panels.ReadOnlyPanel(), Panel.Position.TOP)
+		self._reset_stylesheet = _reset_stylesheet
 
 	def setPlainText(self, txt, mime_type='', encoding=''):
 
