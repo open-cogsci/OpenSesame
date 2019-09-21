@@ -359,6 +359,15 @@ class qtitem(object):
 
 	def _script_focus_out(self, event):
 
+		"""
+		desc:
+			Is called when the script editor loses focus, so that changes
+			can be applied.
+
+		arguments:
+			event: a QFocusEvent
+		"""
+
 		self.apply_script_changes()
 
 	def splitter_moved(self, pos, index):
@@ -649,22 +658,27 @@ class qtitem(object):
 
 		arguments:
 			item_name:
-			 	desc:	The name of the item to be deleted.
+				desc:	The name of the item to be deleted.
 				type:	str
 
 		keywords:
 			item_parent:
-			 	desc:	The name of the parent item.
+				desc:	The name of the parent item.
 				type:	str
 			index:
-			 	desc:	The index of the item in the parent.
+				desc:	The index of the item in the parent.
 				type:	int
 		"""
 
 		pass
 
-	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
-		extra_info=None):
+	def build_item_tree(
+		self,
+		toplevel=None,
+		items=[],
+		max_depth=-1,
+		extra_info=None
+	):
 
 		"""
 		desc:
@@ -672,11 +686,11 @@ class qtitem(object):
 
 		keywords:
 			toplevel:
-			 	desc:	The toplevel widget.
+				desc:	The toplevel widget.
 				type:	tree_base_item
 			items:
 				desc:	A list of item names that have already been added, to
-				 		prevent recursion.
+						prevent recursion.
 				tyep:	list
 
 		returns:
