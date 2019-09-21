@@ -49,6 +49,7 @@ class preload_items(base_extension):
 			self.extension_manager.fire(u'notify_suspend')
 			item.init_edit_widget()
 			item.edit_widget()
+			item.first_refresh = True
 			self.extension_manager.fire(u'notify_resume')
 			oslogger.debug('preloaded {} in {:.2f} ms\n'.format(
 				name,
