@@ -46,8 +46,10 @@ class preload_items(base_extension):
 			if item.container_widget is not None:
 				continue
 			t = time.time()
+			self.extension_manager.fire(u'notify_suspend')
 			item.init_edit_widget()
 			item.edit_widget()
+			self.extension_manager.fire(u'notify_resume')
 			oslogger.debug('preloaded {} in {:.2f} ms\n'.format(
 				name,
 				1000 * (time.time() - t))
