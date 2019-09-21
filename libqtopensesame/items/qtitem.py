@@ -232,7 +232,6 @@ class qtitem(object):
 
 		return self.container_widget
 
-	@wait_cursor
 	def init_edit_widget(self, stretch=True):
 
 		"""

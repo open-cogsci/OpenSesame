@@ -22,7 +22,7 @@ from qtpy import QtWidgets
 from libopensesame.sequence import sequence as sequence_runtime
 from libqtopensesame.widgets.tree_item_item import tree_item_item
 from libqtopensesame.widgets.tree_overview import tree_overview
-from libqtopensesame.items.qtitem import requires_init, wait_cursor
+from libqtopensesame.items.qtitem import requires_init
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.items.qtstructure_item import qtstructure_item
 from libqtopensesame.misc.translate import translation_context
@@ -59,7 +59,6 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 		qtplugin.__init__(self)
 		self.last_removed_child = None, None
 
-	@wait_cursor
 	def init_edit_widget(self):
 
 		"""See qtitem."""

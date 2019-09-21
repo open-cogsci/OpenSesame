@@ -20,7 +20,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.sketchpad import sketchpad as sketchpad_runtime
 from libqtopensesame.items.qtplugin import qtplugin
-from libqtopensesame.items.qtitem import wait_cursor
 from libqtopensesame.items.feedpad import feedpad
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'sketchpad', category=u'item')
@@ -39,7 +38,6 @@ class sketchpad(feedpad, qtplugin, sketchpad_runtime):
 		sketchpad_runtime.__init__(self, name, experiment, string)
 		qtplugin.__init__(self)
 
-	@wait_cursor
 	def init_edit_widget(self):
 
 		"""
