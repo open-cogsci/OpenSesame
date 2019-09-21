@@ -68,6 +68,16 @@ class pyqode_manager(base_extension):
 				self.event_unregister_editor(editor)
 		self.event_unregister_editor(item._script_widget)
 
+	def event_run_experiment(self, fullscreen):
+
+		for editor in self._editors:
+			editor.backend.stop()
+
+	def event_end_experiment_finished(self, ret_val):
+
+		for editor in self._editors:
+			editor._heartbeat_timer.start()
+
 	def event_prepare_purge_unused_items(self):
 
 		for name in self.item_store.unused():
