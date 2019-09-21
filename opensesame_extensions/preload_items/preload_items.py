@@ -21,6 +21,7 @@ from libopensesame.py3compat import *
 import time
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.extensions import base_extension
+from libopensesame.oslogging import oslogger
 from qtpy.QtCore import QTimer
 
 
@@ -46,12 +47,21 @@ class preload_items(base_extension):
 				continue
 			t = time.time()
 			item.init_edit_widget()
-			self.console.write('preloaded {} in {:.2f} ms\n'.format(
+			item.edit_widget()
+			oslogger.debug('preloaded {} in {:.2f} ms\n'.format(
 				name,
 				1000 * (time.time() - t))
 			)
 			self._timer.start()
 			break
+
+	def event_run_experiment(self, fullscreen):
+
+		self._timer.stop()
+
+	def event_end_experiment(self, ret_val):
+
+		self._timer.start()
 
 	def event_regenerate(self):
 

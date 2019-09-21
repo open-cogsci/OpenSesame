@@ -355,6 +355,7 @@ class qtitem(object):
 		self._script_layout.setContentsMargins(0, 12, 0, 0)
 		self._script_layout.setSpacing(12)
 		self._script_frame.setLayout(self._script_layout)
+		self.update_script()
 
 	def _script_focus_out(self, event):
 
