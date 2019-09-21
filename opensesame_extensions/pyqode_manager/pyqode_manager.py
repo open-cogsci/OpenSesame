@@ -111,11 +111,6 @@ class pyqode_manager(base_extension):
 			if cfg.pyqode_line_wrap
 			else QPlainTextEdit.NoWrap
 		)
-		editor.setTabStopWidth(
-			QFontMetrics(
-				editor.font()
-			).averageCharWidth() * cfg.pyqode_tab_length
-		)
 		editor.action_duplicate_line.setShortcut(
 			cfg.pyqode_shortcut_duplicate_line
 		)
@@ -127,6 +122,11 @@ class pyqode_manager(base_extension):
 		)
 		editor._auto_reset_stylesheet = True
 		editor._reset_stylesheet()
+		editor.setTabStopWidth(
+			QFontMetrics(
+				editor.font()
+			).averageCharWidth() * cfg.pyqode_tab_length
+		)
 		oslogger.debug(u'registering {}'.format(editor))
 
 	def event_unregister_editor(self, editor):
