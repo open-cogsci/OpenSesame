@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+import textwrap
 from qtpy import QtCore, QtWidgets
 from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
@@ -246,6 +247,7 @@ class qtitem(object):
 				type:	bool
 		"""
 
+		oslogger.debug(u'initializing controls for {}'.format(self.name))
 		# Header widget
 		self.header = header_widget.header_widget(self)
 		self.header_hbox = QtWidgets.QHBoxLayout()
@@ -295,8 +297,39 @@ class qtitem(object):
 		self._edit_widget = QtWidgets.QWidget()
 		self._edit_widget.setWindowIcon(self.theme.qicon(self.item_type))
 		self._edit_widget.setLayout(self.edit_vbox)
-		# The _script_widget contains the script editor and an apply button
+		# The script widget is not initialized yet, to improve performance.
+		# This will happen only when the script is shown.
+		self._script_widget = None
+		self._script_frame = QtWidgets.QWidget()
+		# The container_widget is the top-level widget that is actually inserted
+		# into the tab widget.
+		self.splitter = qtitem_splitter(self)
+		if self.initial_view == u'controls':
+			self.set_view_controls()
+		elif self.initial_view == u'script':
+			self.set_view_script()
+		elif self.initial_view == u'split':
+			self.set_view_split()
+		else:
+			oslogger.warning(u'Invalid initial_view: %s' % self.initial_view)
+			self.set_view_controls()
+		self.splitter.splitterMoved.connect(self.splitter_moved)
+		self.container_vbox = QtWidgets.QVBoxLayout()
+		self.container_vbox.setContentsMargins(12, 12, 12, 12)
+		self.container_vbox.setSpacing(18)
+		self.container_vbox.addWidget(self.header_widget)
+		self.container_vbox.addWidget(self.splitter)
+		self.container_widget = QtWidgets.QWidget()
+		self.container_widget.setLayout(self.container_vbox)
+		self.container_widget.on_activate = self.show_tab
+		self.container_widget.__item__ = self.name
+
+	@wait_cursor
+	def init_script_widget(self):
+
 		from pyqode_extras.widgets import OpenSesameCodeEdit
+
+		oslogger.debug(u'initializing script widget for {}'.format(self.name))
 		self._script_widget = OpenSesameCodeEdit(self.main_window)
 		self._script_widget.focusOutEvent = self._script_focus_out
 		self.extension_manager.fire(
@@ -322,30 +355,7 @@ class qtitem(object):
 		self._script_layout.setAlignment(QtCore.Qt.AlignRight)
 		self._script_layout.setContentsMargins(0, 12, 0, 0)
 		self._script_layout.setSpacing(12)
-		self._script_frame = QtWidgets.QWidget()
 		self._script_frame.setLayout(self._script_layout)
-		# The container_widget is the top-level widget that is actually inserted
-		# into the tab widget.
-		self.splitter = qtitem_splitter(self)
-		if self.initial_view == u'controls':
-			self.set_view_controls()
-		elif self.initial_view == u'script':
-			self.set_view_script()
-		elif self.initial_view == u'split':
-			self.set_view_split()
-		else:
-			oslogger.warning(u'Invalid initial_view: %s' % self.initial_view)
-			self.set_view_controls()
-		self.splitter.splitterMoved.connect(self.splitter_moved)
-		self.container_vbox = QtWidgets.QVBoxLayout()
-		self.container_vbox.setContentsMargins(12, 12, 12, 12)
-		self.container_vbox.setSpacing(18)
-		self.container_vbox.addWidget(self.header_widget)
-		self.container_vbox.addWidget(self.splitter)
-		self.container_widget = QtWidgets.QWidget()
-		self.container_widget.setLayout(self.container_vbox)
-		self.container_widget.on_activate = self.show_tab
-		self.container_widget.__item__ = self.name
 
 	def _script_focus_out(self, event):
 
@@ -394,6 +404,8 @@ class qtitem(object):
 			Puts the splitter in script view.
 		"""
 
+		if self._script_widget is None:
+			self.init_script_widget()
 		self.splitter.setSizes([0, self.splitter.width()])
 		self.button_view.set_view_icon(u'script')
 
@@ -404,8 +416,10 @@ class qtitem(object):
 			Puts the splitter in split view.
 		"""
 
-		self.splitter.setSizes([self.splitter.width()/2,
-			self.splitter.width()/2])
+		if self._script_widget is None:
+			self.init_script_widget()
+		width = self.splitter.width() / 2
+		self.splitter.setSizes([width, width])
 		self.button_view.set_view_icon(u'split')
 
 	def update(self):
@@ -430,20 +444,22 @@ class qtitem(object):
 			Regenerates the script and updates the script widget.
 		"""
 
+		if self._script_widget is None:
+			return
 		# Normally, the script starts with a 'define' line and is indented by
 		# a tab. We want to undo this, and present only unindented content.
-		import textwrap
 		script = self.to_string()
 		script = script[script.find(u'\t'):]
 		script = textwrap.dedent(script)
-		if self._script_widget.toPlainText() != script:
-			self.main_window.set_unsaved()
-			self._script_widget.setPlainText(
-				script,
-				u'text/generic',
-				u'utf-8'
-			)
-			self.extension_manager.fire(u'change_item', name=self.name)
+		if self._script_widget.toPlainText() == script:
+			return
+		self.main_window.set_unsaved()
+		self._script_widget.setPlainText(
+			script,
+			u'text/generic',
+			u'utf-8'
+		)
+		self.extension_manager.fire(u'change_item', name=self.name)
 
 	def edit_widget(self, *deprecated, **_deprecated):
 
