@@ -106,6 +106,14 @@ class FallbackCodeEdit(CodeEdit):
 		clone = self.__class__(parent=self.parent())
 		return clone
 
+	@property
+	def language(self):
+
+		filenames = self.syntax_highlighter._lexer.filenames
+		if u'*.R' in filenames:
+			return u'R'
+		return None
+
 	def __repr__(self):
 
 		return 'FallbackCodeEdit(path=%r)' % self.file.path

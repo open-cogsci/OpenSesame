@@ -48,6 +48,7 @@ class PythonCodeEdit(PyCodeEditBase):
 	LIGHT_STYLE = 1
 
 	mimetypes = ['text/x-python']
+	language = u'python'
 
 	def __init__(self, parent):
 
