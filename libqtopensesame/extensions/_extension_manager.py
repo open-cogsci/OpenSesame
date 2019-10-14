@@ -80,7 +80,12 @@ class extension_manager(base_subcomponent):
 				oslogger.debug(u'filtering extension {}'.format(ext_name))
 				continue
 			try:
-				ext = plugins.load_extension(ext_name, self.main_window)
+				if self.main_window.options.profile:
+					from datamatrix import functional as fnc
+					with fnc.profile('profile-loadext-{}.log'.format(ext_name)):
+						ext = plugins.load_extension(ext_name, self.main_window)
+				else:
+					ext = plugins.load_extension(ext_name, self.main_window)
 			except Exception as e:
 				if not isinstance(e, osexception):
 					e = osexception(msg=u'Extension error', exception=e)

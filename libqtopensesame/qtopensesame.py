@@ -310,6 +310,12 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			help=u"Log all translatable text (for developers)"
 		)
 		group.add_option(
+			u"--performance-profile",
+			action=u"store_true",
+			dest=u"profile",
+			help=u"Profile OpenSesame performance (for developers)"
+		)
+		group.add_option(
 			u"--no-global-resources",
 			action=u"store_true",
 			dest=u"no_global_resources",
