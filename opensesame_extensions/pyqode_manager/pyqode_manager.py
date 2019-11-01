@@ -29,6 +29,7 @@ from pyqode_extras.widgets import (
 )
 from pyqode.core.api import ColorScheme
 from pyqode.core.modes import PygmentsSH
+from pyqode.core.managers import backend
 from qtpy.QtGui import QFontMetrics
 from qtpy.QtWidgets import QPlainTextEdit
 
@@ -43,6 +44,7 @@ class pyqode_manager(base_extension):
 
 	def event_startup(self):
 
+		backend.comm = oslogger.debug
 		SplittableCodeEditTabWidget.fallback_editor = FallbackCodeEdit
 		SplittableCodeEditTabWidget.register_code_edit(PythonCodeEdit)
 		SplittableCodeEditTabWidget.register_code_edit(FallbackCodeEdit)
@@ -71,12 +73,12 @@ class pyqode_manager(base_extension):
 	def event_run_experiment(self, fullscreen):
 
 		for editor in self._editors:
-			editor.backend.stop()
+			editor.backend.suspend()
 
-	def event_end_experiment_finished(self, ret_val):
+	def event_end_experiment(self, ret_val):
 
 		for editor in self._editors:
-			editor._heartbeat_timer.start()
+			editor.backend.resume()
 
 	def event_prepare_purge_unused_items(self):
 
