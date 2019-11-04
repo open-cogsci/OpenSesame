@@ -143,6 +143,8 @@ class pyqode_manager(base_extension):
 
 	def event_unregister_editor(self, editor):
 
+		if editor is None:
+			return
 		editor.close()
 		if editor in self._editors:
 			self._editors.remove(editor)
