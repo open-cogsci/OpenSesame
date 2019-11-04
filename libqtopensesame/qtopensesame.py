@@ -1158,3 +1158,9 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 		self._read_only = read_only
 		self.ui.action_save.setEnabled(not read_only)
+
+
+if __name__ == u'__main__':
+
+	from libqtopensesame import __main__
+	__main__.opensesame()
