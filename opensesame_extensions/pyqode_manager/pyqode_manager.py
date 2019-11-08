@@ -45,10 +45,12 @@ class pyqode_manager(base_extension):
 	def event_startup(self):
 
 		backend.comm = oslogger.debug
+		SplittableCodeEditTabWidget.editors = {}
 		SplittableCodeEditTabWidget.fallback_editor = FallbackCodeEdit
 		SplittableCodeEditTabWidget.register_code_edit(PythonCodeEdit)
 		SplittableCodeEditTabWidget.register_code_edit(FallbackCodeEdit)
-		SplittableCodeEditTabWidget.register_code_edit(TextCodeEdit)
+		# Syntax is broken for TextCodeEdit, so we don't use it for now
+		# SplittableCodeEditTabWidget.register_code_edit(TextCodeEdit)
 		self._editors = []
 
 	def event_close(self):

@@ -44,6 +44,7 @@ class FallbackCodeEdit(CodeEdit):
 		'text/x-chdr',
 		'text/x-csrc',
 		'text/x-csharp',
+		'text/x-plain',
 		'application/javascript'
 	]
 
