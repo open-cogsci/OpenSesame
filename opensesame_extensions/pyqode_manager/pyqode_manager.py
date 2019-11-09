@@ -151,3 +151,40 @@ class pyqode_manager(base_extension):
 		if editor in self._editors:
 			self._editors.remove(editor)
 		oslogger.debug(u'unregistering ({})'.format(len(self._editors)))
+
+	def event_pyqode_set_line_wrap(self, line_wrap):
+
+		cfg.pyqode_line_wrap = line_wrap
+		for editor in self._editors:
+			editor.setLineWrapMode(
+				QPlainTextEdit.WidgetWidth
+				if cfg.pyqode_line_wrap
+				else QPlainTextEdit.NoWrap
+			)
+
+	def event_pyqode_set_show_whitespaces(self, show_whitespaces):
+
+		cfg.pyqode_show_whitespaces = show_whitespaces
+		for editor in self._editors:
+			editor.show_whitespaces = cfg.pyqode_show_whitespaces
+
+	def event_pyqode_select_indentation_mode(self):
+
+		def _select_indentation_mode(mode):
+
+			cfg.pyqode_indentation = mode
+			for editor in self._editors:
+				if 'AutodetectIndentationMode' not in editor.modes.keys():
+					continue
+				editor.modes.get('AutodetectIndentationMode')._autodetect_indentation()
+
+		haystack = [
+			(_('autodetect'), 'autodetect', _select_indentation_mode),
+			(_('spaces'), 'spaces', _select_indentation_mode),
+			(_('tabs'), 'tabs', _select_indentation_mode)
+		]
+		self.extension_manager.fire(
+			u'quick_select',
+			haystack=haystack,
+			placeholder_text=_(u'Select indentation mode …')
+		)

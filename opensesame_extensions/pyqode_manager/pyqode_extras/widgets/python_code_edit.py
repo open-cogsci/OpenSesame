@@ -31,8 +31,8 @@ from pyqode.python.backend.workers import defined_names
 from pyqode.python.folding import PythonFoldDetector
 from pyqode.python.widgets.code_edit import PyCodeEditBase
 from pyqode_extras.modes import (
-    ConvertIndentationMode,
-    AutodetectIndentationMode
+	ConvertIndentationMode,
+	AutodetectIndentationMode
 )
 
 
