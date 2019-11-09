@@ -9,13 +9,19 @@
         "pyqode_pyflakes_validation": true,
         "pyqode_pep8_validation": true,
         "pyqode_right_margin": false,
-        "pyqode_highlight_caret_line": false,
+        "pyqode_highlight_caret_line": true,
         "pyqode_code_completion": true,
         "pyqode_smart_editing": true,
         "pyqode_indentation": "auto",
         "pyqode_show_whitespaces": false,
-        "pyqode_pep8_ignore": "W191",
-        "pyqode_pyflakes_ignore": "",
+        "pyqode_pep8_ignore": {
+            "ide": "W191",
+            "default": "W191"
+        },
+        "pyqode_pyflakes_ignore": {
+            "ide": "",
+            "default": "undefined name"
+        },
         "pyqode_tab_length": 4,
         "pyqode_line_wrap": true,
         "pyqode_shortcut_duplicate_line": "Ctrl+Shift+D",

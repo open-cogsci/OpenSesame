@@ -583,6 +583,8 @@ class base_extension(base_subcomponent):
 		"""
 
 		for setting, default in self.info.get(u'settings', {}).items():
+			if isinstance(default, dict):
+				default = default.get(self.main_window.mode, u'')
 			cfg.register(setting, default=default)
 
 	def settings_widget(self):
