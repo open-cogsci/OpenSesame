@@ -79,6 +79,8 @@ class multiprocess_runner(base_runner):
 				continue
 			# Capture exceptions
 			if isinstance(msg, Exception):
+				self.exp_process.join()
+				self.exp_process.close()
 				return msg
 			# The workspace globals are sent as a dict. A special __pause__ key
 			# indicates whether the experiment should be paused or resumed.
@@ -102,6 +104,8 @@ class multiprocess_runner(base_runner):
 			return osexception(
 				u"Illegal message type received from child process: %s (%s)" \
 				% (msg, type(msg)))
+		self.exp_process.join()
+		self.exp_process.close()
 		if not finished:
 			if self.exp_process.killed:
 				return osexception(u'The experiment process was killed.')
