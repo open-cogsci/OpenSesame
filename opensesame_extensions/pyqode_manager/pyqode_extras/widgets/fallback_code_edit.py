@@ -56,12 +56,14 @@ class FallbackCodeEdit(CodeEdit):
 			sys.executable,
 			reuse=False
 		)
-		self.panels.append(panels.LineNumberPanel())
+		if cfg.pyqode_show_line_numbers:
+			self.panels.append(panels.LineNumberPanel())
 		self.panels.append(
 			panels.SearchAndReplacePanel(),
 			Panel.Position.BOTTOM
 		)
-		self.panels.append(panels.FoldingPanel())
+		if cfg.pyqode_code_folding:
+			self.panels.append(panels.FoldingPanel())
 		self.modes.append(modes.CursorHistoryMode())
 		self.modes.append(modes.AutoCompleteMode())
 		self.modes.append(modes.ExtendedSelectionMode())

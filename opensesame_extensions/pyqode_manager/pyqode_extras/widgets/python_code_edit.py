@@ -69,8 +69,10 @@ class PythonCodeEdit(PyCodeEditBase):
 			panels.SearchAndReplacePanel(),
 			panels.SearchAndReplacePanel.Position.BOTTOM
 		)
-		self.panels.append(panels.FoldingPanel())
-		self.panels.append(panels.LineNumberPanel())
+		if cfg.pyqode_code_folding:
+			self.panels.append(panels.FoldingPanel())
+		if cfg.pyqode_show_line_numbers:
+			self.panels.append(panels.LineNumberPanel())
 		self.panels.append(panels.CheckerPanel())
 		self.panels.append(
 			panels.GlobalCheckerPanel(),

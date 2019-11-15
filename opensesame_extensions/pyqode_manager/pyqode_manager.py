@@ -28,7 +28,9 @@ from pyqode_extras.widgets import (
 	TextCodeEdit
 )
 from pyqode.core.api import ColorScheme
-from pyqode.core.modes import PygmentsSH
+from pyqode.core.api.panel import Panel
+from pyqode.core.panels import LineNumberPanel, FoldingPanel
+from pyqode.core.modes import PygmentsSH, RightMarginMode
 from pyqode.core.managers import backend
 from qtpy.QtGui import QFontMetrics
 from qtpy.QtWidgets import QPlainTextEdit
@@ -168,6 +170,32 @@ class pyqode_manager(base_extension):
 		for editor in self._editors:
 			editor.show_whitespaces = cfg.pyqode_show_whitespaces
 
+	def event_pyqode_set_show_right_margin(self, show_right_margin):
+
+		self._toggle_mode(
+			'pyqode_right_margin',
+			show_right_margin,
+			RightMarginMode
+		)
+
+	def event_pyqode_set_show_line_numbers(self, show_line_numbers):
+
+		self._toggle_panel(
+			'pyqode_show_line_numbers',
+			show_line_numbers,
+			LineNumberPanel,
+			Panel.Position.LEFT
+		)
+
+	def event_pyqode_set_code_folding(self, code_folding):
+
+		self._toggle_panel(
+			'pyqode_code_folding',
+			code_folding,
+			FoldingPanel,
+			Panel.Position.LEFT
+		)
+
 	def event_pyqode_select_indentation_mode(self):
 
 		def _select_indentation_mode(mode):
@@ -188,3 +216,34 @@ class pyqode_manager(base_extension):
 			haystack=haystack,
 			placeholder_text=_(u'Select indentation mode …')
 		)
+
+	def _toggle_mode(self, config, enabled, cls):
+
+		cfg[config] = enabled
+		for editor in self._editors:
+			if enabled:
+				if cls.__name__ in editor.modes.keys():
+					continue
+				editor.modes.append(cls())
+			else:
+				if cls.__name__ not in editor.modes.keys():
+					continue
+				editor.modes.remove(cls.__name__)
+			editor.viewport().repaint()
+
+	def _toggle_panel(self, config, enabled, cls, pos):
+
+		cfg[config] = enabled
+		for editor in self._editors:
+			if enabled:
+				if cls.__name__ in editor.panels._panels[pos]:
+					continue
+				panel = cls()
+				editor.panels.append(panel, position=pos)
+				editor.panels.refresh()
+				panel.show()
+			else:
+				if cls.__name__ not in editor.panels._panels[pos]:
+					continue
+				editor.panels.remove(cls.__name__)
+				editor.panels.refresh()
