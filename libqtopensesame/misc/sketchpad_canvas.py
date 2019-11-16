@@ -39,22 +39,8 @@ class QtCanvas(Canvas, Coordinates):
 
 	def __init__(self, experiment):
 
-		# We set the color backend to a dummy value. This avoids PyGame from
-		# being unnecessarily loaded in the legacy color backend. Then we
-		# restore the backend, also catching the case in which no color backend
-		# was set.
-		color_backend = (
-			experiment.var.color_backend
-			if u'color_backend' in experiment.var
-			else None
-		)
-		experiment.var.color_backend = 'color'
 		Canvas.__init__(self, experiment)
 		Coordinates.__init__(self)
-		if color_backend is None:
-			del experiment.var.color_backend
-		else:
-			experiment.var.color_backend = color_backend
 
 
 class QtRichText(RichText):
@@ -727,12 +713,27 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 			properties[u'font_size'] = self._font_size(properties[u'font_size'])
 		x = self._x(x)
 		y = self._x(y)
+		# We set the color backend to a dummy value. This avoids PyGame from
+		# being unnecessarily loaded in the legacy color backend. Then we
+		# restore the backend, also catching the case in which no color backend
+		# was set.
+		color_backend = (
+			self.sketchpad.experiment.var.color_backend
+			if u'color_backend' in self.sketchpad.experiment.var
+			else None
+		)
+		self.sketchpad.experiment.var.color_backend = 'color'
 		t = QtRichText(
 			QtCanvas(self.sketchpad.experiment),
 			text,
 			x=x, y=y, center=center, max_width=max_width,
 			**properties
 		)
+		# Restore the color backend so that we don't change the experiment
+		if color_backend is None:
+			del self.sketchpad.experiment.var.color_backend
+		else:
+			self.sketchpad.experiment.var.color_backend = color_backend
 		im = t._to_pil()
 		qim = QtGui.QImage(
 			im.tobytes('raw', 'BGRA'),
