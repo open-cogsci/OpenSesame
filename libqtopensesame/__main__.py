@@ -103,14 +103,14 @@ def opensesame():
 		from qtpy import QtWebEngineWidgets
 	except ImportError:
 		pass
-	app = QApplication(sys.argv)
 	# Enable High DPI pixmaps with PyQt5
 	if hasattr(qtpy.QtCore.Qt, 'AA_UseHighDpiPixmaps'):
-		app.setAttribute(qtpy.QtCore.Qt.AA_UseHighDpiPixmaps)
+		QApplication.setAttribute(qtpy.QtCore.Qt.AA_UseHighDpiPixmaps)
 	# Enable scaling for High DPI displays with PyQt5
 	if hasattr(qtpy.QtCore.Qt, 'AA_EnableHighDpiScaling'):
-		app.setAttribute(qtpy.QtCore.Qt.AA_EnableHighDpiScaling)
+		QApplication.setAttribute(qtpy.QtCore.Qt.AA_EnableHighDpiScaling)
 	from libqtopensesame.qtopensesame import qtopensesame
+	app = QApplication(sys.argv)
 	opensesame = qtopensesame(app)
 	opensesame.__script__ = __file__
 	app.processEvents()
