@@ -115,8 +115,13 @@ class FallbackCodeEdit(CodeEdit):
 		filenames = self.syntax_highlighter._lexer.filenames
 		if u'*.R' in filenames:
 			return u'R'
+		if u'*.md' in filenames:
+			return u'markdown'
 		return None
 
 	def __repr__(self):
 
-		return 'FallbackCodeEdit(path=%r)' % self.file.path
+		return 'FallbackCodeEdit(path={}, language={})'.format(
+			self.file.path,
+			self.language
+		)
