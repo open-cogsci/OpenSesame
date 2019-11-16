@@ -17,12 +17,13 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+import time
+import os
+import json
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libqtopensesame.extensions import base_extension
 from libopensesame import misc
-import time
-import os
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'after_experiment', category=u'extension')
 
@@ -61,23 +62,32 @@ class after_experiment(base_extension):
 			type:	[str, NoneType]
 		"""
 
-		d = self.console.get_workspace_globals()
-		if u'var' not in d or u'logfile' not in d[u'var']:
-			return None
-		return d[u'var'].logfile
-		
+		var = self.extension_manager.provide(
+			'jupyter_workspace_variable',
+			name='var'
+		)
+		if not var or 'logfile' not in var:
+			return
+		return var.logfile
+
 	@property
 	def _extra_data_files(self):
-		
+
 		"""
 		returns:
 			A list of extra data files, such as eye-tracking data.
 		"""
-		
-		return list(filter(
-			lambda path: path != self._logfile,
-			self.console.get_workspace_globals().get(u'data_files', [])
-			))
+
+		data_files = self.extension_manager.provide(
+			'jupyter_workspace_variable',
+			name='data_files'
+		)
+		if not data_files:
+			return
+		return [
+			path for path in data_files
+			if path != self._logfile
+		]
 
 	def event_after_experiment_copy_logfile(self):
 
@@ -128,6 +138,7 @@ class after_experiment(base_extension):
 			u'logfile': logfile
 			}
 		if self._extra_data_files:
+			print(self._extra_data_files)
 			md += u'\n' \
 				+ _(u'The following extra data files where created:') + u'\n\n'
 			for data_file in self._extra_data_files:
