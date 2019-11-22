@@ -49,22 +49,24 @@ included_plugins = [
 
 # List of included extensions
 included_extensions = [
+	'after_experiment',
 	'analytics',
 	'automatic_backup',
+	'bug_report',
+	'example_experiments',
+	'file_handler'
 	'get_started',
 	'help',
-	'plugin_manager',
-	'toolbar_menu',
-	'update_checker',
-	'pyqode_manager',
-	'example_experiments',
-	'preload_items',
-	'undo_manager',
-	'bug_report',
-	'variable_inspector',
-	'after_experiment',
-	'system_information',
-	'system_check',
 	'notifications',
-	'tab_to_dockwidget'
-	]
+	'plugin_manager',
+	'preload_items',
+	'pyqode_manager',
+	'quick_switcher',
+	'system_check',
+	'system_information',
+	'tab_to_dockwidget',
+	'toolbar_menu',
+	'variable_inspector',
+	'undo_manager',
+	'update_checker',
+]
