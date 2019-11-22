@@ -24,22 +24,13 @@ from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'opensesame_3_notifications', category=u'extension')
 
+
 class opensesame_3_notifications(base_extension):
 
 	"""
 	desc:
 		Provides tips for new users of OpenSesame 3.
 	"""
-
-	def event_os3n_dismiss_startup(self):
-
-		"""
-		desc:
-			Permanently disables the startup tab.
-		"""
-
-		cfg.os3n_new_user_notification = False
-		self.main_window.tabwidget.close_current()
 
 	def event_os3n_dismiss_old_experiment(self):
 
@@ -50,17 +41,6 @@ class opensesame_3_notifications(base_extension):
 
 		cfg.os3n_old_experiment_notification = False
 		self.main_window.tabwidget.close_current()
-
-	def event_startup(self):
-
-		"""
-		desc:
-			Called at the end of the OpenSesame startup process.
-		"""
-
-		if cfg.os3n_new_user_notification and not self.experiment.items.error_log:
-			self.tabwidget.open_markdown(self.ext_resource(u'new-user.md'),
-				title=u'Welcome!')
 
 	def event_open_experiment(self, path):
 
