@@ -69,8 +69,10 @@ class FallbackCodeEdit(CodeEdit):
 		self.modes.append(modes.ExtendedSelectionMode())
 		self.modes.append(modes.CaseConverterMode())
 		self.modes.append(modes.FileWatcherMode())
-		self.modes.append(modes.CaretLineHighlighterMode())
-		self.modes.append(modes.RightMarginMode())
+		if cfg.pyqode_highlight_caret_line:
+			self.modes.append(modes.CaretLineHighlighterMode())
+		if cfg.pyqode_right_margin:
+			self.modes.append(modes.RightMarginMode())
 		self.modes.append(modes.PygmentsSyntaxHighlighter(
 			self.document(),
 			color_scheme=ColorScheme(cfg.pyqode_color_scheme))
