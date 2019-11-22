@@ -36,6 +36,15 @@ _ = translation_context(u'qtopensesame', category=u'core')
 oslogger.start(u'gui')
 
 
+SAVE_FILE_FILTER = u'OpenSesame files (*.osexp)'
+OPEN_FILE_FILTER = (
+	u'OpenSesame files (*.osexp *.opensesame.tar.gz *.opensesame);;'
+	u'Python scripts (*.py);;'
+	u'R scripts (*.R);;'
+	u'All files (*.*)'
+)
+
+
 class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 	"""The main class of the OpenSesame GUI"""
@@ -116,11 +125,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# Create .opensesame folder if it doesn't exist yet
 		if not os.path.exists(os.path.join(self.home_folder, u".opensesame")):
 			os.mkdir(os.path.join(self.home_folder, u".opensesame"))
-
-		# Set the filter-string for opening and saving files
-		self.save_file_filter = u'OpenSesame files (*.osexp)'
-		self.open_file_filter = \
-			u'OpenSesame files (*.osexp *.opensesame.tar.gz *.opensesame)'
 
 		# Set the window message
 		self._read_only = False
@@ -742,7 +746,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			path = QtWidgets.QFileDialog.getOpenFileName(
 				self.ui.centralwidget,
 				_(u"Open file"),
-				filter=self.open_file_filter,
+				filter=OPEN_FILE_FILTER,
 				directory=cfg.file_dialog_path
 			)
 		# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of
@@ -750,6 +754,13 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		# here.
 		if isinstance(path, tuple):
 			path = path[0]
+		file_handler = self.extension_manager.provide(
+			'file_handler',
+			path=path
+		)
+		if file_handler:
+			file_handler(path)
+			return
 		if path is None or not osexpreader.valid_extension(path):
 			return
 		self.set_busy()
@@ -889,7 +900,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			self.ui.centralwidget,
 			_(u'Save as…'),
 			directory=cfg.file_dialog_path,
-			filter=self.save_file_filter
+			filter=SAVE_FILE_FILTER
 		)
 		# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of
 		# a string, of which the first position contains the path.

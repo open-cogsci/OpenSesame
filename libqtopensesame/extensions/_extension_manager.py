@@ -164,7 +164,9 @@ class extension_manager(base_subcomponent):
 			self._suspended = False
 			self._suspended_until = None
 		if self._suspended:
+			oslogger.debug('event suspended {}'.format(event))
 			return
+		oslogger.debug('firing {}'.format(event))
 		if event == u'open_experiment':
 			for ext in self._extensions:
 				ext.register_ui_files()
@@ -183,8 +185,10 @@ class extension_manager(base_subcomponent):
 	def provide(self, provide, **kwdict):
 
 		if provide not in self.provides:
+			oslogger.debug('cannot not provide {}'.format(provide))
 			return None
 		ext = self.provides[provide]
+		oslogger.debug('{} provides {}'.format(ext, provide))
 		try:
 			return ext.provide(provide, **kwdict)
 		except Exception as e:
