@@ -18,6 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+import re
+import types
+from openexp.canvas_elements import ElementFactory
+from libopensesame import python_workspace_api as api
+from libopensesame.widgets.widget_factory import WidgetFactory
 from libqtopensesame.misc.config import cfg
 from libopensesame.oslogging import oslogger
 from libqtopensesame.extensions import base_extension
@@ -31,6 +36,7 @@ from pyqode.core.api import ColorScheme
 from pyqode.core.api.panel import Panel
 from pyqode.core.panels import LineNumberPanel, FoldingPanel
 from pyqode.core.modes import PygmentsSH, RightMarginMode
+from pyqode.python.modes import sh
 from pyqode.core.managers import backend
 from qtpy.QtGui import QFontMetrics
 from qtpy.QtWidgets import QPlainTextEdit
@@ -44,9 +50,44 @@ class pyqode_manager(base_extension):
 		closed. And also modifies their behavior somewhat.
 	"""
 
+	def _is_opensesame_api_object(self, name, obj):
+
+		if name.startswith(u'safe_'):
+			return False
+		if isinstance(obj, types.FunctionType):
+			return True
+		if isinstance(obj, type) and issubclass(
+			obj, (WidgetFactory, ElementFactory)):
+				return True
+		return False
+
+	def _register_opensesame_builtins(self):
+
+		builtins = [
+			u'exp',
+			u'var',
+			u'pool',
+			u'items',
+			u'clock',
+			u'log',
+			u'responses',
+			u'data_files',
+			u'AbortCoroutines'
+		] + [
+			name
+			for name, obj in api.__dict__.items()
+			if self._is_opensesame_api_object(name, obj)
+		]
+		sh.PythonSH.PROG = re.compile(
+			sh.make_python_patterns(additional_builtins=builtins),
+			re.S
+		)
+
 	def event_startup(self):
 
 		backend.comm = oslogger.debug
+		if self.main_window.mode == u'default':
+			self._register_opensesame_builtins()
 		SplittableCodeEditTabWidget.editors = {}
 		SplittableCodeEditTabWidget.fallback_editor = FallbackCodeEdit
 		SplittableCodeEditTabWidget.register_code_edit(PythonCodeEdit)
