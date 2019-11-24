@@ -18,8 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-import os
 import fnmatch
+import subprocess
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.extensions import BaseExtension
@@ -73,7 +73,14 @@ class FileHandler(BaseExtension):
 
 		for pattern, cmd in self._bindings.items():
 			if fnmatch.fnmatch(path, pattern):
-				os.system('{} "{}"'.format(cmd, path))
+				try:
+					subprocess.Popen([cmd, path])
+				except Exception as e:
+					self.notify(_(
+						u'Failed to open file. '
+						u'See debug window for error message.'
+					))
+					self.console.write(e)
 
 
 # PEP8 alias

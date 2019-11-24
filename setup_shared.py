@@ -54,7 +54,7 @@ included_extensions = [
 	'automatic_backup',
 	'bug_report',
 	'example_experiments',
-	'file_handler'
+	'file_handler',
 	'get_started',
 	'help',
 	'notifications',
