@@ -172,10 +172,12 @@ class base_extension(base_subcomponent):
 		"""
 
 		tooltip = self.info.get(u'tooltip', None)
-		if tooltip is not None:
-			return self._(tooltip)
-		return None
-
+		if not tooltip:
+			return
+		shortcut = self.shortcut()
+		if not shortcut:
+			return tooltip
+		return '{} ({})'.format(tooltip, shortcut)
 
 	def checkable(self):
 

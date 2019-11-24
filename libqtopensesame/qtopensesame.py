@@ -175,6 +175,17 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.ui.shortcut_itemtree = self._kb_shortcut(self.focus_overview_area)
 		self.ui.shortcut_tabwidget = self._kb_shortcut(self.ui.tabwidget.focus)
 		self.ui.shortcut_pool = self._kb_shortcut(self.focus_file_pool)
+		# Add shortcuts to tooltips
+		self._tooltip_shortcut(self.action_open)
+		self._tooltip_shortcut(self.action_save)
+		self._tooltip_shortcut(self.action_save_as)
+		self._tooltip_shortcut(self.action_run)
+		self._tooltip_shortcut(self.action_run_in_window)
+		self._tooltip_shortcut(self.action_run_quick)
+		self._tooltip_shortcut(self.action_close_other_tabs)
+		self._tooltip_shortcut(self.action_onetabmode)
+		self._tooltip_shortcut(self.action_show_pool)
+		self._tooltip_shortcut(self.action_show_overview)
 		# Create the initial experiment, which is the default template. Because
 		# not all backends are supported under Python 3, we use a different
 		# backend for each.
@@ -198,6 +209,22 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.console = ConsoleBridge(self)
 		self.extension_manager = extension_manager(self)
 		self.extension_manager.fire(u'startup')
+
+	def _tooltip_shortcut(self, action):
+
+		"""
+		desc:
+			Adds a shortcut between parentheses to the tooltip of an action.
+
+		arguments:
+			action:		A QAction
+		"""
+
+		if not action.shortcut() or action.toolTip()[-1] == u')':
+			return
+		action.setToolTip(
+			u'{} ({})'.format(action.toolTip(), action.shortcut().toString())
+		)
 
 	def _kb_shortcut(self, target):
 
