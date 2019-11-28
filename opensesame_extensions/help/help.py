@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtWidgets, QtCore
+import webbrowser
 import yaml
 from libopensesame import metadata
 from libqtopensesame.extensions import base_extension
@@ -69,7 +70,7 @@ class ActionPage(QtWidgets.QAction, base_subcomponent):
 			Opens the page URL.
 		"""
 
-		self.main_window.tabwidget.open_browser(self.link)
+		webbrowser.open(self.link)
 
 
 class GetSitemapThread(QtCore.QThread):
@@ -159,16 +160,18 @@ class help(base_extension):
 			self.menu,
 			cfg.online_help_base_url,
 			_(u'Online help'),
-			_dict
+			_dict,
+			sub_menu=cfg.online_help_psychopy
 		)
 		if menu is not None:
 			self.action_online_help = self.menu.addMenu(menu)
-		menu = self.psychopy_help_menu()
-		if menu is not None:
-			self.action_psychopy_help = self.menu.addMenu(menu)
+		if cfg.online_help_psychopy:
+			menu = self.psychopy_help_menu()
+			if menu is not None:
+				self.action_psychopy_help = self.menu.addMenu(menu)
 		self.menu.addSeparator()
 
-	def build_menu(self, parent_menu, base_url, title, _dict):
+	def build_menu(self, parent_menu, base_url, title, _dict, sub_menu=True):
 
 		"""
 		desc:
@@ -185,10 +188,13 @@ class help(base_extension):
 			A QMenu.
 		"""
 
-		menu = parent_menu.addMenu(
-			self.theme.qicon(u'applications-internet'),
-			title
-		)
+		if sub_menu:
+			menu = parent_menu.addMenu(
+				self.theme.qicon(u'applications-internet'),
+				title
+			)
+		else:
+			menu = parent_menu
 		for name, link in _dict.items():
 			if not isinstance(link, basestring):
 				self.build_menu(menu, base_url, name, link)
