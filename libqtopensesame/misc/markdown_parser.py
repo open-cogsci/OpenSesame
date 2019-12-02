@@ -97,10 +97,10 @@ class markdown_parser(base_subcomponent):
 </p>
 
 <div class="footer">
-OpenSesame %s %s —
+%s
 Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-2019
 </div>
-''' % (_(u'Dismiss this message'), metadata.__version__, metadata.codename)
+''' % (_(u'Dismiss this message'), metadata.identity)
 
 	def highlight(self, md):
 

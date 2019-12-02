@@ -35,3 +35,4 @@ codename = u'TBA'
 channel = u'dev'
 api = StrictVersion(u'2.1')
 platform = sys.platform
+identity = u'OpenSesame {} {}'.format(__version__, codename)
