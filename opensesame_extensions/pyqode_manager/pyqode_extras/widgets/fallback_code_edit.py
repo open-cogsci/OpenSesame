@@ -30,6 +30,9 @@ from pyqode.core.api import (
 	ColorScheme
 )
 
+# For markdown it's annoying if quotes are autocompleted
+DISABLE_AUTO_COMPLETE_QUOTES = ['markdown']
+
 
 class FallbackCodeEdit(CodeEdit):
 
@@ -104,7 +107,33 @@ class FallbackCodeEdit(CodeEdit):
 					self.syntax_highlighter.fold_detector = CharBasedFoldDetector()
 				else:
 					self.syntax_highlighter.fold_detector = IndentFoldDetector()
+		if self.language in DISABLE_AUTO_COMPLETE_QUOTES:
+			self._disable_auto_complete_for_quotes()
+		else:
+			self._enable_auto_complete_for_quotes()
 		super(FallbackCodeEdit, self).setPlainText(txt, mime_type, encoding)
+
+	def _enable_auto_complete_for_quotes(self):
+
+		try:
+			auto_complete_mode = self.modes.get('AutoCompleteMode')
+		except KeyError:
+			oslogger.debug('AutoCompleteMode not enabled')
+			return
+		auto_complete_mode.MAPPING['\''] = '\''
+		auto_complete_mode.MAPPING['"'] = '"'
+
+	def _disable_auto_complete_for_quotes(self):
+
+		try:
+			auto_complete_mode = self.modes.get('AutoCompleteMode')
+		except KeyError:
+			oslogger.debug('AutoCompleteMode not enabled')
+			return
+		if '\'' not in auto_complete_mode.MAPPING:
+			return
+		del auto_complete_mode.MAPPING['\'']
+		del auto_complete_mode.MAPPING['"']
 
 	def clone(self):
 
