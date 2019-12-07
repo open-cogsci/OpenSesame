@@ -12,6 +12,7 @@ before_install:
   - wget https://github.com/smathot/python-yamldoc/archive/release/0.2.0.tar.gz -O yamldoc.tar.gz
   - tar -xzvf yamldoc.tar.gz
   - export PYTHONPATH=$PYTHONPATH:python-yamldoc-release-0.2.0
+  - pip install pygame
 before_script:
   - "export DISPLAY=:99.0"
   - "export AUDIODEV=null" # PyGame needs audio device
