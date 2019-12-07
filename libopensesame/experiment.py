@@ -447,6 +447,12 @@ class experiment(item.item):
 		self.python_workspace.init_globals()
 		self.reset_feedback()
 		self.init_heartbeat()
+		if self.var.uniform_coordinates != u'yes':
+			oslogger.warning(
+				u'Uniform coordinates are disabled. This is deprecated, and '
+				u'will be removed in the future. Please enable uniform '
+				u'coordinates in the script of your experiment.'
+			)
 		oslogger.info(u"experiment started")
 		if self.var.start in self.items:
 			item_stack_singleton.clear()

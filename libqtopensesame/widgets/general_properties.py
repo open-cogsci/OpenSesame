@@ -44,8 +44,10 @@ class general_properties(base_widget):
 			main_window:	A qtopensesame object.
 		"""
 
-		super(general_properties, self).__init__(main_window,
-			ui=u'widgets.general_properties')
+		super(general_properties, self).__init__(
+			main_window,
+			ui=u'widgets.general_properties'
+		)
 		self.lock = False
 		# Set the header, with the icon, label and script button
 		self.header_widget = general_header_widget(self, self.main_window)
@@ -53,7 +55,7 @@ class general_properties(base_widget):
 		header_hbox.addWidget(self.theme.qlabel(u"experiment"))
 		header_hbox.addWidget(self.header_widget)
 		header_hbox.addStretch()
-		header_hbox.setContentsMargins(0,0,0,0)
+		header_hbox.setContentsMargins(0, 0 ,0, 0)
 		header_hbox.setSpacing(12)
 		header_widget = QtWidgets.QWidget()
 		header_widget.setLayout(header_hbox)
@@ -83,7 +85,6 @@ class general_properties(base_widget):
 				self.ui.spinbox_width.editingFinished,
 				self.ui.spinbox_height.editingFinished,
 				self.ui.checkbox_disable_garbage_collection.stateChanged,
-				self.ui.checkbox_uniform_coordinates.stateChanged,
 				self.ui.edit_foreground.textEdited,
 				self.ui.edit_background.textEdited,
 				self.ui.widget_font.font_changed,
@@ -178,8 +179,6 @@ class general_properties(base_widget):
 		# Other checkboxes
 		self.experiment.var.disable_garbage_collection = \
 			self.ui.checkbox_disable_garbage_collection.isChecked()
-		self.experiment.var.uniform_coordinates = \
-			self.ui.checkbox_uniform_coordinates.isChecked()
 		# Refresh the interface and unlock the general tab
 		self.lock = False
 		self.main_window.extension_manager.fire(u'change_experiment')
@@ -211,9 +210,10 @@ class general_properties(base_widget):
 		try:
 			self.ui.spinbox_width.setValue(int(self.experiment.var.width))
 			self.ui.spinbox_height.setValue(int(self.experiment.var.height))
-		except:
+		except ValueError:
 			self.experiment.notify(
-				_(u"Failed to parse the resolution. Expecting positive numeric values."))
+				_(u"Failed to parse the resolution. Expecting positive numeric values.")
+			)
 		# Set the colors
 		self.ui.edit_foreground.setText(safe_decode(
 			self.experiment.var.foreground))
@@ -222,7 +222,5 @@ class general_properties(base_widget):
 		self.ui.widget_font.initialize(self.experiment)
 		self.ui.checkbox_disable_garbage_collection.setChecked(
 			self.experiment.var.disable_garbage_collection == u'yes')
-		self.ui.checkbox_uniform_coordinates.setChecked(
-			self.experiment.var.uniform_coordinates == u'yes')
 		# Release the general tab
 		self.lock = False
