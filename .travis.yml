@@ -1,23 +1,22 @@
+dist: bionic
 language: python
 python:
-  - "2.7"
+  - "3.7"
 sudo: false
 virtualenv:
   system_site_packages: true
 before_script:
   - "export DISPLAY=:99.0"
   - "export AUDIODEV=null" # PyGame needs audio device
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
+services:
+  - xvfb
 addons:
   apt:
+    sources:
+    - ppa:smathot/rapunzel
     packages:
-    - python-pygame
-    - python-qt4
-    - python-scipy
-    - python-pyglet
+    - python3-opensesame
 before_install:
-  - pip install pillow webcolors python-datamatrix python-qdatamatrix python-pseudorandom openpyxl qtpy expyriment psychopy==1.85.3 json_tricks configobj pyyaml==5.1.1 imageio
   - wget https://github.com/smathot/python-yamldoc/archive/release/0.2.0.tar.gz -O yamldoc.tar.gz
   - tar -xzvf yamldoc.tar.gz
   - export PYTHONPATH=$PYTHONPATH:python-yamldoc-release-0.2.0
