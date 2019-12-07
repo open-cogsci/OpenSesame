@@ -5,19 +5,16 @@ python:
 sudo: false
 virtualenv:
   system_site_packages: true
+before_install:
+  - sudo add-apt-repository -y ppa:smathot/rapunzel
+  - sudo apt-get -q update
+  - sudo apt-get -y install python3-opensesame
+  - wget https://github.com/smathot/python-yamldoc/archive/release/0.2.0.tar.gz -O yamldoc.tar.gz
+  - tar -xzvf yamldoc.tar.gz
+  - export PYTHONPATH=$PYTHONPATH:python-yamldoc-release-0.2.0
 before_script:
   - "export DISPLAY=:99.0"
   - "export AUDIODEV=null" # PyGame needs audio device
 services:
   - xvfb
-addons:
-  apt:
-    sources:
-    - ppa:smathot/rapunzel
-    packages:
-    - python3-opensesame
-before_install:
-  - wget https://github.com/smathot/python-yamldoc/archive/release/0.2.0.tar.gz -O yamldoc.tar.gz
-  - tar -xzvf yamldoc.tar.gz
-  - export PYTHONPATH=$PYTHONPATH:python-yamldoc-release-0.2.0
 script: ./run_unittests.py
