@@ -20,7 +20,7 @@ define sequence experiment
 
 define notepad getting_started
 	__note__
-	Welcome to OpenSesame 3.2 "Kafkaesque Koffka"!
+	Welcome to OpenSesame 3.3!
 
 	If you are new to OpenSesame, it is a good idea to follow one of the tutorials,
 	which can be found on the documentation site:
