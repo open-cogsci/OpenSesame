@@ -22,7 +22,8 @@ import unittest
 from openexp._color.color import color
 from libopensesame.exceptions import osexception
 
-class check_color(unittest.TestCase):
+
+class CheckColor(unittest.TestCase):
 
 	"""
 	desc: |
@@ -36,36 +37,54 @@ class check_color(unittest.TestCase):
 			Checks various correct and incorrect color specifications.
 		"""
 
-		for colorspec in [
-			u'white',
-			u'#FFFFFF',
-			u'#ffffff',
-			u'#FFF',
-			u'#fff',
-			(255, 255, 255),
-			255,
-			u'rgb(255,255,255)',
-			u'rgb( 255 , 255 , 255 )',
-			u'rgb(100%,100%,100%)',
-			u'rgb( 100% , 100% , 100% )',
-			]:
-			print(u'Checking correct %s (%s)' % (str(colorspec), type(colorspec)))
-			self.assertEqual(u'#ffffff', color.to_hex(colorspec))
+		for colorspec, colorref in [
+			(u'green', u'#008000'),
+			(255, u'#ffffff'),
+			(u'#00FF00', u'#00ff00'),
+			(u'#00ff00', u'#00ff00'),
+			(u'#0F0', u'#00ff00'),
+			(u'#0F0', u'#00ff00'),
+			((0, 255, 0), u'#00ff00'),
+			(u'rgb(0,255,0)', u'#00ff00'),
+			(u'rgb( 0 , 255 , 0 )', u'#00ff00'),
+			(u'rgb(0%,100%,0%)', u'#00ff00'),
+			(u'rgb( 0% , 100% , 0% )', u'#00ff00'),
+			(u'hsl(120,100%,50%)', u'#00ff00'),
+			(u'hsl( 120 , 100% , 50% )', u'#00ff00'),
+			(u'hsv(120,100%,100%)', u'#00ff00'),
+			(u'hsv( 120 , 100% , 100% )', u'#00ff00'),
+			(u'lab(53,-20,0)', '#163e35'),
+			(u'lab( 53 , -20 , 0 )', '#163e35')
+		]:
+			print(
+				u'Checking correct {} ({}) -> {}'.format(
+					str(colorspec),
+					type(colorspec),
+					colorref
+				)
+			)
+			self.assertEqual(color.to_hex(colorspec), colorref)
 
 		for colorspec in [
 			u'wihte',
 			u'#FFFFF',
 			u'#FFFFG',
-			(255,255,255.0),
+			(255, 255, 255.0),
 			(255, 255, 255, 255),
 			255.0,
 			u'rgb(255,255)',
 			u'rgb(255,255,255,255)',
 			u'rgb(100%,100%,100)',
-			]:
-			print(u'Checking incorrect %s (%s)' \
-				% (str(colorspec), type(colorspec)))
+			u'hsl(120,100,50)',
+			u'hsv(120,100,50)'
+		]:
+			print(
+				u'Checking incorrect %s (%s)'
+				% (str(colorspec), type(colorspec))
+			)
 			self.assertRaises(osexception, color.to_hex, colorspec)
 
+
 if __name__ == '__main__':
+
 	unittest.main()

@@ -100,23 +100,23 @@ class Canvas(Backend):
 		arguments:
 
 		- `color` specifies the foreground color. For valid color
-		  specifications, see [colors].
+			specifications, see [colors].
 		- `background_color` specifies the background color. For valid color
-		  specifications, see [colors].
+			specifications, see [colors].
 		- `fill` indicates whether rectangles, circles, polygons, and ellipses
-		  are filled (`True`), or drawn as an outline (`False`).
+			are filled (`True`), or drawn as an outline (`False`).
 		- `penwidth` indicates a penwidth in pixels and should be `int` or
-		  `float`.
+			`float`.
 		- `html` indicates whether HTML-tags are interpreted, and should be
-		  `True` or `False`. For supported tags, see [/usage/text/]().
+			`True` or `False`. For supported tags, see [/usage/text/]().
 		- `font_family` is the name of a font family, such as 'sans'.
 		- `font_size` is a font size in pixels.
 		- `font_italic` indicates whether text should italics, and should be
-		  `True` or `False`.
+			`True` or `False`.
 		- `font_bold` indicates whether text should bold, and should be
-		  `True` or `False`.
+			`True` or `False`.
 		- `font_underline` indicates whether text should underlined, and should
-		  be `True` or `False`.
+			be `True` or `False`.
 
 		~~~ .python
 		# Draw a green fixation dot
@@ -150,44 +150,54 @@ class Canvas(Backend):
 		my_canvas.show()
 		~~~
 
-		### Coordinates
-
-		- When *Uniform coordinates* is set to 'yes', coordinates are
-		  relative to the center of the display. That is, (0,0) is the center.
-		  This is the default as of OpenSesame 3.0.0.
-		- When *Uniform coordinates* is set to 'no', coordinates are relative to
-		  the top-left of the display. That is, (0,0) is the top-left. This was
-		  the default in OpenSesame 2.9.X and earlier.
 
 		### Colors
 
-		You can specify colors in the following CSS3-compatible ways:
+		You can specify colors in the following ways. This includes CSS3-type
+		color specifications, but also supports some extra specifications,
+		such as CIE l\* a\* b\* color space.
+
+		__Version note:__ The `hsv`, `hsl`, and `lab` color spaces are new in
+		v3.3.0.
 
 		- __Color names:__ 'red', 'black', etc. A full list of valid color names
-		  can be found
-		  [here](http://www.w3.org/TR/SVG11/types.html#ColorKeywords).
-		- __Seven-character hexadecimal strings:__ '#FF0000', '#000000', etc.
-		  Here, values range from '00' to 'FF', so that '#FF0000' is bright red.
-		- __Four-character hexadecimal strings:__ '#F00', '#000', etc. Here,
-		  values range from '0' to 'F' so that '#F00' is bright red.
-		- __RGB strings:__ 'rgb(255,0,0)', 'rgb(0,0,0)', etc. Here, values
-		  range from '0' to '255' so that 'rgb(255,0,0)' is bright red.
-		- __RGB percentage strings:__ 'rgb(100%,0%,0%)', 'rgb(0%,0%,0%)', etc.
-		  Here, values range from '0%' to '100%' so that 'rgb(100%,0%,0%)' is
-		  bright red.
+			can be found
+			[here](http://www.w3.org/TR/SVG11/types.html#ColorKeywords).
+		- __Seven-character hexadecimal strings:__ `#FF0000`, `#000000`, etc.
+			Here, values range from `00` to `FF`, so that `#FF0000` is bright red.
+		- __Four-character hexadecimal strings:__ `#F00`, `#000`, etc. Here,
+			values range from '0' to 'F' so that `#F00` is bright red.
+		- __RGB strings:__ `rgb(255,0,0)`, `rgb(0,0,0)`, etc. Here, values
+			range from 0 to 255 so that `rgb(255,0,0)` is bright red.
+		- __RGB percentage strings:__ `rgb(100%,0%,0%)`, `rgb(0%,0%,0%)`, etc.
+			Here, values range from 0% to 100% so that `rgb(100%,0%,0%)` is
+			bright red.
 		- __RGB tuples:__ `(255, 0, 0)`, `(0, 0 ,0)`, etc. Here, values range
-		  from `0` to `255` so that `(255,0,0)' is bright red.
+			from `0` to `255` so that `(255,0,0)' is bright red.
+		- __HSV strings:__ `hsv(120, 100%, 100%)`. In the [HSV](https://en.wikipedia.org/wiki/HSL_and_HSV)
+			color space, the hue parameter is an angle from 0 to 359, and the
+			saturation and value parameters are percentages from 0% to 100%.
+		- __HSL strings:__ `hsl(120, 100%, 50%)`. In the [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV)
+			color space, the hue parameter is an angle from 0 to 359, and the
+			saturation and lightness parameters are percentages from 0% to 100%.
+		- __LAB strings:__ `lab(53, -20, 0)`. In the [CIELAB](https://en.wikipedia.org/wiki/CIELAB_color_space)
+			color space, the parameters reflect lightness (`l*`),
+			green-red axis (`a*`, negative is green), and blue-yellow axis
+			(`b*`, negative is blue).
 		- __Luminance values:__  `255`, `0`, etc. Here, values range from `0` to
-		  `255` so that `255` is white.
+			`255` so that `255` is white.
 
 		~~~ .python
 		# Various ways to specify green
-		my_canvas.fixdot(color=u'green')
-		my_canvas.fixdot(color=u'#00ff00')
-		my_canvas.fixdot(color=u'#0f0')
-		my_canvas.fixdot(color=u'rgb(0,255,0)')
-		my_canvas.fixdot(color=u'rgb(0%,100%,0%)')
-		my_canvas.fixdot(color=(0,255,0))
+		my_canvas.fixdot(color='green')  # Dark green
+		my_canvas.fixdot(color='#00ff00')
+		my_canvas.fixdot(color='#0f0')
+		my_canvas.fixdot(color='rgb(0, 255, 0)')
+		my_canvas.fixdot(color='rgb(0%, 100%, 0%)')
+		my_canvas.fixdot(color='hsl(100, 100%, 50%)')
+		my_canvas.fixdot(color='hsv(0, 100%, 100%)')
+		my_canvas.fixdot(color='lab(53, -20, 0)')  # Dark green
+		my_canvas.fixdot(color=(0, 255, 0))
 		# Specify a luminance value (white)
 		my_canvas.fixdot(color=255)
 		~~~
