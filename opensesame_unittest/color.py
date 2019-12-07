@@ -56,6 +56,12 @@ class CheckColor(unittest.TestCase):
 			(u'lab(53,-20,0)', '#163e35'),
 			(u'lab( 53 , -20 , 0 )', '#163e35')
 		]:
+			if colorspec.startswith('lab'):
+				try:
+					import psychopy
+				except ImportError:
+					print('PsychoPy is not installed, skipping CIElab test')
+					continue
 			print(
 				u'Checking correct {} ({}) -> {}'.format(
 					str(colorspec),
