@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 import unittest
+from libopensesame.py3compat import *
 from openexp._color.color import color
 from libopensesame.exceptions import osexception
 
@@ -56,7 +57,7 @@ class CheckColor(unittest.TestCase):
 			(u'lab(53,-20,0)', '#163e35'),
 			(u'lab( 53 , -20 , 0 )', '#163e35')
 		]:
-			if colorspec.startswith('lab'):
+			if isinstance(colorspec, basestring) and colorspec.startswith('lab'):
 				try:
 					import psychopy
 				except ImportError:
