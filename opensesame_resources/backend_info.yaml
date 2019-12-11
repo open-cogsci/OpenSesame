@@ -35,15 +35,3 @@ xpyriment:
   icon: os-expyriment
   py2: true
   py3: true
-droid:
-  description: for Android devices
-  canvas: droid
-  keyboard: droid
-  mouse: droid
-  sampler: legacy
-  color: legacy
-  clock: legacy
-  log: csv
-  icon: os-android
-  py2: true
-  py3: true

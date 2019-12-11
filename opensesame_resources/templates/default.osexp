@@ -10,7 +10,7 @@ set height 768
 set foreground "white"
 set coordinates "uniform"
 set compensation 0
-set canvas_backend "xpyriment"
+set canvas_backend "psycho"
 set background "black"
 
 define sequence experiment
