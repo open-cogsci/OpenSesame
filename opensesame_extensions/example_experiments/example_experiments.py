@@ -58,7 +58,9 @@ class example_experiments(base_extension):
 		except:
 			return
 		d = e.front_matter
-		d[u'src'] = src
+		# We need to use forward slashes, also on Windows, otherwise it leads
+		# to an invalid URL when prefixed with opensesame://
+		d[u'src'] = src.replace(u'\\', u'/')
 		if u'Title' not in d:
 			d[u'Title'] = u'No title'
 		if u'Description' not in d:

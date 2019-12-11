@@ -235,7 +235,7 @@ class webbrowser(base_widget):
 		self.ui.top_widget.hide()
 		html = self.markdown_parser.to_html(md)
 		if tmpl is not None:
-			html = tmpl % {u'body' : html}
+			html = tmpl % {u'body': html}
 		self.ui.webview.setHtml(html, baseUrl=url)
 		self.ui.webview.setZoomFactor(display.display_scaling)
 

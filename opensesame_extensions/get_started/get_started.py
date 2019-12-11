@@ -53,7 +53,9 @@ class get_started(base_extension):
 				cls = u'important-button'
 			else:
 				cls = u'button'
-			path = os.path.abspath(path)
+			# We need to use forward slashes, also on Windows, otherwise it
+			# leads to an invalid URL when prefixed with opensesame://
+			path = os.path.abspath(path).replace(u'\\', u'/')
 			md = u'<a href="opensesame://%s" class="%s">%s</a><br />' \
 				% (path, cls, desc)
 			templates.append(md)
