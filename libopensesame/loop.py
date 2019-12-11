@@ -222,7 +222,7 @@ class loop(item.item):
 				}
 				try:
 					cols = dm[colname]
-				except:
+				except AttributeError:
 					raise osexception(
 						u'Column %s does not exist' % colname
 					)
@@ -240,10 +240,12 @@ class loop(item.item):
 			if arglist:
 				try:
 					colname = arglist[-1]
-					col = dm[colname]
-				except:
+					if not isinstance(colname, int):
+						col = dm[colname]
+				except (IndexError, AttributeError):
 					raise osexception(
-						u'Column %s does not exist' % arglist[-1])
+						u'Column %s does not exist' % arglist[-1]
+					)
 			if cmd == u'fullfactorial':
 				try:
 					dm = operations.fullfactorial(dm)
@@ -264,13 +266,14 @@ class loop(item.item):
 					for _colname in arglist:
 						try:
 							dm[_colname]
-						except:
+						except AttributeError:
 							raise osexception(
 								u'Column %s does not exist'
 								% _colname
 							)
 					dm = operations.shuffle_horiz(
-						*[dm[_colname] for _colname in arglist])
+						*[dm[_colname] for _colname in arglist]
+					)
 			elif cmd == u'slice':
 				self._require_arglist(cmd, arglist, minlen=2)
 				dm = dm[arglist[0]: arglist[1]]
