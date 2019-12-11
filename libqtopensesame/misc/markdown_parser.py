@@ -86,7 +86,7 @@ class markdown_parser(base_subcomponent):
 			self.css += self.html_formatter.get_style_defs(u'.highlight')
 			self.re_script = re.compile(
 				r'^~~~\s*.(?P<syntax>\w+)(?P<script>.*?)^~~~', re.S | re.M)
-		self.css += u'</style>'
+		self.css += u'</style><link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">'
 		if markdown is not None:
 			self.ext = [attr_list.AttrListExtension(), extra.ExtraExtension(),
 				toc.TocExtension(title=u'Overview'),
