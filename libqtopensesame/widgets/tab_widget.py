@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame import debug, metadata
+from libopensesame import debug, metadata, misc
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
 from qtpy import QtGui, QtWidgets
@@ -379,8 +379,9 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 			url:	A sub-url to view on osdoc.
 		"""
 
-		self.open_browser(u'http://osdoc.cogsci.nl/%s/%s' \
-			% (metadata.main_version, url))
+		misc.open_url(
+			u'http://osdoc.cogsci.nl/%s/%s' % (metadata.main_version, url)
+		)
 
 	def open_stdout_help(self):
 

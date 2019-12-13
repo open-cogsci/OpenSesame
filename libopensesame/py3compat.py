@@ -85,7 +85,7 @@ def safe_read(path):
 # Depending on the version of yaml, we should pass the Loader keyword or not
 if hasattr(yaml, u'FullLoader'):
 	def safe_yaml_load(s):
-		return yaml.load(s, Loader=yaml.FullLoader)
+		return yaml.load(s, Loader=yaml.UnsafeLoader)
 else:
 	def safe_yaml_load(s):
 		return yaml.load(s)

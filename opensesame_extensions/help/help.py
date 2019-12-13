@@ -131,7 +131,7 @@ class help(base_extension):
 				u'[version]',
 				metadata.main_version
 			),
-			local_sitemap=u'sitemap-osdoc.yaml'
+			local_sitemap=None
 		)
 		self._get_sitemap_thread.start()
 		self._get_sitemap_thread.finished.connect(self.populate_help_menu)
@@ -222,36 +222,11 @@ class help(base_extension):
 			A QMenu.
 		"""
 
-		import yaml
 		with safe_open(self.ext_resource(u'psychopy_sitemap.yaml')) as fd:
 			sitemap = fd.read()
 		_dict = safe_yaml_load(sitemap)
 		menu = self.build_menu(self.menu, None, _(u'PsychoPy API'), _dict)
 		return menu
-
-	def build_cache(self):
-
-		"""
-		desc:
-			Creates a webbrowser cache for all help pages. This is mostly a help
-			function so that this cache can be bundled along with OpenSesame
-			when it is distributed, so that help is also available offline.
-		"""
-
-		import pickle
-
-		cache = {}
-		for url in self._urls:
-			try:
-				fd = urlopen(url)
-				page = fd.read()
-			except Exception:
-				print('failed to cache %s' % url)
-				continue
-			cache[url] = page
-			print('cached %s' % url)
-		with open(u'help-cache.pkl', u'w') as fd:
-			pickle.dump(cache, fd, protocol=2)
 
 	def _is_url(self, link):
 

@@ -42,20 +42,7 @@ else:
 
 # These urls are viewed internally in the browser component. All other urls are
 # opened in an external browser.
-INTERNAL_URLS = [
-	u'http://osdoc.cogsci.nl/',
-	u'https://osdoc.cogsci.nl/',
-	u'http://www.psychopy.org/',
-	u'https://www.psychopy.org/',
-	u'http://psychopy.org/',
-	u'https://psychopy.org/',
-	u'http://www.expyriment.org/',
-	u'https://www.expyriment.org/',
-	u'http://expyriment.org/',
-	u'https://expyriment.org/',
-	u'http://docs.expyriment.org/',
-	u'https://docs.expyriment.org/',
-	]
+INTERNAL_URLS = []
 
 
 class small_webview(WebView):
@@ -76,7 +63,7 @@ class small_webview(WebView):
 			A QSize
 		"""
 
-		return QtCore.QSize(100,100)
+		return QtCore.QSize(100, 100)
 
 
 class small_webpage(WebPage):
@@ -168,8 +155,10 @@ class webbrowser(base_widget):
 			main_window:	A qtopensesame object.
 		"""
 
-		super(webbrowser, self).__init__(main_window,
-			ui=u'widgets.webbrowser_widget')
+		super(webbrowser, self).__init__(
+			main_window,
+			ui=u'widgets.webbrowser_widget'
+		)
 		self._current_url = u''
 		self._cache = None
 		self.ui.webview = small_webview(self)
@@ -239,61 +228,6 @@ class webbrowser(base_widget):
 		self.ui.webview.setHtml(html, baseUrl=url)
 		self.ui.webview.setZoomFactor(display.display_scaling)
 
-	def init_cache(self):
-
-		"""
-		desc:
-			Initializes the webbrowser cache, if available.
-		"""
-
-		import pickle
-
-		cache_file = misc.resource(u'webbrowser-cache.pkl')
-		if cache_file is None:
-			self.extension_manager.fire(u'notify',
-				message=_(u'No webbrowser cache available'),
-				category=u'info')
-			self._cache = {}
-			return
-		with open(cache_file) as fd:
-			try:
-				self._cache = pickle.load(fd)
-			except:
-				self._cache = {}
-				return
-		if not isinstance(self._cache, dict):
-			self.extension_manager.fire(u'notify',
-				message=_(u'Webbrowser cache is corrupt'),
-				category=u'warning')
-			self._cache = {}
-			return
-
-	def try_cache(self):
-
-		"""
-		desc:
-			Checks if the current page, after a failed load, is available in the
-			cache, and if so, loads it from the cache.
-		"""
-
-		# On some versions of Qt, the load_finished signal is also sent when
-		# displaying pages that have been set programmatically. In this case,
-		# the current_url is '', so we ignore those.
-		if self._current_url in (None, u''):
-			return
-		if self._cache is None:
-			self.init_cache()
-		if self._current_url not in self._cache:
-			self.extension_manager.fire(u'notify',
-				message=_(u'Failed to load page: ') + self._current_url,
-				category=u'warning')
-			return
-		self.extension_manager.fire(u'notify',
-			message=_(u'Displaying cached version of: %s. For a better viewing experience, connect to the internet.') \
-			% self._current_url, category=u'info')
-		self.ui.webview.setHtml(self._cache[self._current_url])
-		self.ui.webview.setZoomFactor(display.display_scaling)
-
 	def load_finished(self, ok):
 
 		"""
@@ -301,8 +235,6 @@ class webbrowser(base_widget):
 			Hides the statusbar to indicate that loading is finished.
 		"""
 
-		if not ok:
-			self.try_cache()
 		self.ui.label_load_progress.setText(_(u'Done'))
 		self.ui.webview.setZoomFactor(display.display_scaling)
 
