@@ -18,7 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from qtpy import QtCore
+from qtpy.QtCore import QTimer
+import multiprocessing
+from distutils.version import StrictVersion
+from libopensesame import metadata
 from libopensesame.oslogging import oslogger
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.config import cfg
@@ -30,65 +33,94 @@ class update_checker(base_extension):
 
 	def activate(self):
 
-		self.check_for_updates()
+		self._check_for_updates()
 
 	def event_startup(self):
 
-		QtCore.QTimer.singleShot(
-			cfg.check_delay,
-			lambda: self.check_for_updates(always=False)
+		self._checking = False
+		self._check_for_updates(always=False)
+
+	def _check_for_updates(self, always=True):
+
+		self._always = always
+		if not always and not cfg.auto_update_check:
+			oslogger.debug(u'skipping update check')
+			return
+		if self._checking:
+			oslogger.debug(u'update check already in progress')
+			return
+		self._checking = True
+		self._queue = multiprocessing.Queue()
+		self._update_checker = multiprocessing.Process(
+			target=_update_checker,
+			args=(self._queue, cfg.remote_metadata_url)
+		)
+		self._update_checker.start()
+		oslogger.debug(u'checking (PID={})'.format(self._update_checker.pid))
+		QTimer.singleShot(1000, self._poll_update_process)
+
+	def _error_notify(self):
+
+		self.extension_manager.fire(
+			u'notify',
+			message=_(u'Failed to check for updates'),
+			category=u'warning',
+			always_show=True,
 		)
 
-	def check_for_updates(self, always=True):
+	def _poll_update_process(self):
 
-		if py3:
-			from urllib.request import urlopen
-		else:
-			from urllib2 import urlopen
-		from distutils.version import StrictVersion
-		from libopensesame import metadata
-		import yaml
-
-		if not always and not cfg.auto_update_check:
-			oslogger.debug(u"skipping update check")
+		if self._queue.empty():
+			oslogger.debug(u'queue still empty')
+			QTimer.singleShot(1000, self._poll_update_process)
 			return
-		oslogger.debug(u"opening %s" % cfg.remote_metadata_url)
-		success = True
+		content = self._queue.get()
+		self._update_checker.join()
 		try:
-			fd = urlopen(cfg.remote_metadata_url)
-			s = fd.read()
-			fd.close()
-		except:
-			oslogger.error(u"failed to load remote metadata.yaml")
-			success = False
-		if success:
-			try:
-				remote_metadata = safe_yaml_load(s)
-			except:
-				oslogger.error(u"failed to load parse metadata.yaml")
-				success = False
-		if success:
-			if u'stable_version' not in remote_metadata:
-				oslogger.error(u"no stable_version in metadata")
-				success = False
-			else:
-				try:
-					remote_strict_version = StrictVersion(
-						remote_metadata[u'stable_version'])
-				except:
-					oslogger.error(u"stable_version is not strict")
-					success = False
-		if not success:
-			self.tabwidget.open_markdown(self.ext_resource(u'failed.md'))
+			self._update_checker.close()
+		except AttributeError:
+			# Process.close() was introduced only in Python 3.7
+			pass
+		self._checking = False
+		if content is None:
+			self._error_notify()
+			return
+		try:
+			remote_metadata = safe_yaml_load(content)
+			remote_strict_version = StrictVersion(remote_metadata[u'stable_version'])
+		except Exception as e:
+			self._error_notify()
+			oslogger.error(u"failed to parse metadata: {}".format(e))
 			return
 		if remote_strict_version > metadata.strict_version:
 			oslogger.debug(u"new version available")
 			s = safe_read(self.ext_resource(u'update-available.md'))
-			self.tabwidget.open_markdown(s % remote_metadata,
-				title=u'Update available!')
-		else:
-			oslogger.debug(u"up to date")
-			if always:
-				self.tabwidget.open_markdown(
-					self.ext_resource(u'up-to-date.md'),
-					title=_(u'Up to date!'))
+			self.tabwidget.open_markdown(
+				s % remote_metadata,
+				title=u'Update available!'
+			)
+			return
+		oslogger.debug(u"up to date")
+		if not self._always:
+			return
+		self.tabwidget.open_markdown(
+			self.ext_resource(u'up-to-date.md'),
+			title=_(u'Up to date!')
+		)
+
+
+def _update_checker(queue, metadata_url):
+
+	if py3:
+		from urllib.request import urlopen
+	else:
+		from urllib2 import urlopen
+	try:
+		fd = urlopen(metadata_url)
+		content = fd.read()
+		fd.close()
+	except Exception as e:
+		print('failed to check for updates: {}'.format(e))
+		queue.put(None)
+	else:
+		queue.put(content)
