@@ -323,7 +323,14 @@ class loop(item.item):
 		# Compile break-if statement
 		break_if = self.var.get(u'break_if', _eval=False)
 		if break_if not in (u'never', u''):
-			self._break_if = self.syntax.compile_cond(break_if)
+			try:
+				self._break_if = self.syntax.compile_cond(break_if)
+			except osexception as e:
+				raise osexception(
+					u'Error compiling break-if expression',
+					item=self.name,
+					exception=e
+				)
 		else:
 			self._break_if = None
 		# Create a keyboard to flush responses between cycles
@@ -350,14 +357,32 @@ class loop(item.item):
 			self.experiment.var.set('live_row_%s' % self.name, self.live_row)
 			for name, val in self.live_dm[self.live_row]:
 				if isinstance(val, basestring) and val.startswith(u'='):
-					val = self.python_workspace._eval(val[1:])
+					try:
+						val = self.python_workspace._eval(val[1:])
+					except Exception as e:
+						raise osexception(
+							u'Error evaluating Python expression in loop table',
+							line_offset=0,
+							item=self.name,
+							phase=u'run',
+							exception=e
+						)
 				self.experiment.var.set(name, val)
 			# Evaluate the run if statement
-			if self._break_if is not None and \
-				(not first or self.var.break_if_on_first == u'yes'):
+			if (
+				self._break_if is not None and
+				(not first or self.var.break_if_on_first == u'yes')
+			):
 				self.python_workspace[u'self'] = self
-				if self.python_workspace._eval(self._break_if):
-					break
+				try:
+					if self.python_workspace._eval(self._break_if):
+						break
+				except osexception as e:
+					raise osexception(
+						u'Error evaluating break-if expression',
+						item=self.name,
+						exception=e
+					)
 			# Run the item!
 			self.experiment.items.execute(self._item)
 			# If the repeat_cycle flag was set, run the item again later
