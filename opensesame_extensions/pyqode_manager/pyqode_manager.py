@@ -34,7 +34,7 @@ from pyqode_extras.widgets import (
 )
 from pyqode.core.api import ColorScheme
 from pyqode.core.api.panel import Panel
-from pyqode.core.panels import LineNumberPanel, FoldingPanel
+from pyqode.core.panels import LineNumberPanel, FoldingPanel, MarginPanel
 from pyqode.core.modes import PygmentsSH, RightMarginMode
 from pyqode.python.modes import sh
 from pyqode.core.managers import backend
@@ -205,6 +205,16 @@ class pyqode_manager(base_extension):
 				else QPlainTextEdit.NoWrap
 			)
 
+	def event_pyqode_set_fixed_width(self, fixed_width):
+
+		self._toggle_panel(
+			'pyqode_fixed_width',
+			fixed_width,
+			MarginPanel,
+			Panel.Position.LEFT,
+			nchar=cfg.pyqode_fixed_width_nchar
+		)
+
 	def event_pyqode_set_show_whitespaces(self, show_whitespaces):
 
 		cfg.pyqode_show_whitespaces = show_whitespaces
@@ -258,28 +268,28 @@ class pyqode_manager(base_extension):
 			placeholder_text=_(u'Select indentation mode …')
 		)
 
-	def _toggle_mode(self, config, enabled, cls):
+	def _toggle_mode(self, config, enabled, cls, **kwargs):
 
 		cfg[config] = enabled
 		for editor in self._editors:
 			if enabled:
 				if cls.__name__ in editor.modes.keys():
 					continue
-				editor.modes.append(cls())
+				editor.modes.append(cls(**kwargs))
 			else:
 				if cls.__name__ not in editor.modes.keys():
 					continue
 				editor.modes.remove(cls.__name__)
 			editor.viewport().repaint()
 
-	def _toggle_panel(self, config, enabled, cls, pos):
+	def _toggle_panel(self, config, enabled, cls, pos, **kwargs):
 
 		cfg[config] = enabled
 		for editor in self._editors:
 			if enabled:
 				if cls.__name__ in editor.panels._panels[pos]:
 					continue
-				panel = cls()
+				panel = cls(**kwargs)
 				editor.panels.append(panel, position=pos)
 				editor.panels.refresh()
 				panel.show()

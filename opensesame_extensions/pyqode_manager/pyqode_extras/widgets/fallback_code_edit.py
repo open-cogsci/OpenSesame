@@ -88,6 +88,11 @@ class FallbackCodeEdit(CodeEdit):
 		self.modes.append(modes.SmartBackSpaceMode())
 		self.panels.append(panels.EncodingPanel(), Panel.Position.TOP)
 		self.panels.append(panels.ReadOnlyPanel(), Panel.Position.TOP)
+		if cfg.pyqode_fixed_width:
+			self.panels.append(
+				panels.MarginPanel(nchar=cfg.pyqode_fixed_width_nchar),
+				Panel.Position.LEFT
+			)
 
 	def setPlainText(self, txt, mime_type='', encoding=''):
 

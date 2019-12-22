@@ -111,6 +111,11 @@ class PythonCodeEdit(PyCodeEditBase):
 			self.modes.append(pep8)
 		self.panels.append(panels.EncodingPanel(), api.Panel.Position.TOP)
 		self.panels.append(panels.ReadOnlyPanel(), api.Panel.Position.TOP)
+		if cfg.pyqode_fixed_width:
+			self.panels.append(
+				panels.MarginPanel(nchar=cfg.pyqode_fixed_width_nchar),
+				api.Panel.Position.LEFT
+			)
 		# The PythonSH requires that _reset_stylesheet isn't dummied out
 		self._reset_stylesheet = _reset_stylesheet
 		self.modes.append(pymodes.PythonSH(
