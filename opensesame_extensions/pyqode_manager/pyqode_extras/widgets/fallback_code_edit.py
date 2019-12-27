@@ -74,8 +74,6 @@ class FallbackCodeEdit(CodeEdit):
 		self.modes.append(modes.FileWatcherMode())
 		if cfg.pyqode_highlight_caret_line:
 			self.modes.append(modes.CaretLineHighlighterMode())
-		if cfg.pyqode_right_margin:
-			self.modes.append(modes.RightMarginMode())
 		self.modes.append(modes.PygmentsSyntaxHighlighter(
 			self.document(),
 			color_scheme=ColorScheme(cfg.pyqode_color_scheme))
@@ -93,6 +91,14 @@ class FallbackCodeEdit(CodeEdit):
 				panels.MarginPanel(nchar=cfg.pyqode_fixed_width_nchar),
 				Panel.Position.LEFT
 			)
+		if cfg.pyqode_right_margin:
+			rmm = modes.RightMarginMode()
+			self.modes.append(rmm)
+			try:
+				rmm.color = self.syntax_highlighter.formats['comment'] \
+					.foreground().color()
+			except Exception as e:  # Don't know how safe this is
+				pass
 
 	def setPlainText(self, txt, mime_type='', encoding=''):
 

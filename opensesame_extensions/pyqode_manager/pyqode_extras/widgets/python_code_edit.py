@@ -87,8 +87,6 @@ class PythonCodeEdit(PyCodeEditBase):
 		self.modes.append(pymodes.CommentsMode())
 		if cfg.pyqode_highlight_caret_line:
 			self.modes.append(modes.CaretLineHighlighterMode())
-		if cfg.pyqode_right_margin:
-			self.modes.append(modes.RightMarginMode())
 		if cfg.pyqode_code_completion:
 			self.modes.append(modes.CodeCompletionMode())
 			self.modes.append(pymodes.PyAutoCompleteMode())
@@ -123,6 +121,14 @@ class PythonCodeEdit(PyCodeEditBase):
 			color_scheme=ColorScheme(cfg.pyqode_color_scheme))
 		)
 		self.syntax_highlighter.fold_detector = PythonFoldDetector()
+		if cfg.pyqode_right_margin:
+			rmm = modes.RightMarginMode()
+			self.modes.append(rmm)
+			try:
+				rmm.color = self.syntax_highlighter.formats['comment'] \
+					.foreground().color()
+			except Exception as e:  # Don't know how safe this is
+				pass
 
 	def _init_actions(self, create_standard_actions):
 

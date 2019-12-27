@@ -25,10 +25,10 @@ from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
 from qtpy import QtGui, QtWidgets, QtCore
 
-available_themes = [u'default']
+available_themes = [u'default', u'monokai']
 
 
-class theme:
+class theme(object):
 
 	"""Handles the GUI theme"""
 
@@ -47,8 +47,9 @@ class theme:
 		"""
 
 		self.main_window = main_window
-		self.fallback_icon = QtGui.QIcon(os.path.join(misc.resource(u"theme"),
-			u"fallback.png"))
+		self.fallback_icon = QtGui.QIcon(
+			os.path.join(misc.resource(u"theme"), u"fallback.png")
+		)
 		self.theme = cfg.theme if theme is None else theme
 		self.theme_folder = misc.resource(os.path.join(u"theme", self.theme))
 		oslogger.debug(u"theme = '%s' (%s)" % (self.theme, self.theme_folder))
@@ -65,12 +66,18 @@ class theme:
 				os.path.join(u"theme", self.theme))
 		self.theme_info = os.path.join(self.theme_folder, u"__theme__.py")
 		if os.path.exists(self.theme_info):
-			info = imp.load_source(self.theme,
-				safe_str(self.theme_info, enc=misc.filesystem_encoding()))
+			info = imp.load_source(
+				self.theme,
+				safe_str(self.theme_info, enc=misc.filesystem_encoding())
+			)
 			with safe_open(os.path.join(self.theme_folder, info.qss)) as fd:
 				self._qss = fd.read()
 			self._icon_map = info.icon_map
 			self._icon_theme = info.icon_theme
+			if hasattr(info, 'qdatamatrix'):
+				from qdatamatrix import _qcell
+				for key, color in info.qdatamatrix.items():
+					setattr(_qcell, key, color)
 		self.load_icon_map()
 		self.apply_theme(self.main_window)
 
@@ -117,8 +124,10 @@ class theme:
 			fallback = u'text-x-generic'
 		else:
 			fallback = category + u'-x-generic'
-		return QtGui.QIcon.fromTheme(filetype,
-			QtGui.QIcon.fromTheme(fallback))
+		return QtGui.QIcon.fromTheme(
+			filetype,
+			QtGui.QIcon.fromTheme(fallback)
+		)
 
 	def qicon(self, icon):
 
@@ -149,15 +158,24 @@ class theme:
 				size = 16
 			qicon.addFile(icon, size=QtCore.QSize(size, size))
 			return qicon
-		if hasattr(self, u'experiment') and (u'%s_large.png' % icon in \
-			self.experiment.resources or '%s.png' in self.experiment.resources):
+		if (
+			hasattr(self, u'experiment') and
+			(
+				u'%s_large.png' % icon in self.experiment.resources or
+				'%s.png' in self.experiment.resources
+			)
+		):
 			qicon = QtGui.QIcon()
 			if u'%s_large.png' % icon in self.experiment.resources:
-				qicon.addFile(self.experiment.resource(
-					u'%s_large.png' % icon), size=QtCore.QSize(32,32))
+				qicon.addFile(
+					self.experiment.resource(u'%s_large.png' % icon),
+					size=QtCore.QSize(32, 32)
+				)
 			if u'%s.png' % icon in self.experiment.resources:
-				qicon.addFile(self.experiment.resource(u'%s.png' % icon),
-					size=QtCore.QSize(16,16))
+				qicon.addFile(
+					self.experiment.resource(u'%s.png' % icon),
+					size=QtCore.QSize(16, 16)
+				)
 			return qicon
 		if icon in self.icon_map:
 			name = self.icon_map[icon][0]
@@ -214,9 +232,9 @@ class theme:
 		A QLabel
 		"""
 
-		l = QtWidgets.QLabel()
-		l.setPixmap(self.qpixmap(icon, size=size))
-		return l
+		label = QtWidgets.QLabel()
+		label.setPixmap(self.qpixmap(icon, size=size))
+		return label
 
 	def load_icon_map(self):
 
@@ -225,27 +243,31 @@ class theme:
 		self.original_theme = QtGui.QIcon.themeName()
 		if os.path.exists(os.path.join(self.theme_folder, self._icon_theme)):
 			oslogger.debug(u"using custom icon theme")
-			QtGui.QIcon.setThemeSearchPaths(QtGui.QIcon.themeSearchPaths() \
-				+ [self.theme_folder])
+			QtGui.QIcon.setThemeSearchPaths(
+				QtGui.QIcon.themeSearchPaths() + [self.theme_folder]
+			)
 			QtGui.QIcon.setThemeName(self._icon_theme)
 		else:
 			oslogger.warning(u"using default icon theme, icons may be missing")
 		self.icon_map = {}
 		path = os.path.join(self.theme_folder, self._icon_map)
 		with safe_open(path) as fd:
-			for l in fd:
-				l = l.split(u',')
-				if len(l) == 3:
-					try:
-						size = int(l[2])
-					except:
-						size = 32
-					alias = l[0].strip()
-					name = l[1].strip()
-					if alias in self.icon_map:
-						oslogger.debug(u"alias '%s' already in icon map, overwriting" % \
-							alias, reason=u"warning")
-					self.icon_map[alias] = name, size
+			for line in fd:
+				line = line.split(u',')
+				if len(line) != 3:
+					continue
+				try:
+					size = int(line[2])
+				except ValueError:
+					size = 32
+				alias = line[0].strip()
+				name = line[1].strip()
+				if alias in self.icon_map:
+					oslogger.debug(
+						u"alias '%s' already in icon map, overwriting" % alias,
+						reason=u"warning"
+					)
+				self.icon_map[alias] = name, size
 
 	def load_icons(self, ui):
 
