@@ -52,6 +52,7 @@ class theme(object):
 		)
 		self.theme = cfg.theme if theme is None else theme
 		self.theme_folder = misc.resource(os.path.join(u"theme", self.theme))
+		self._icon_theme_path = self.theme_folder
 		oslogger.debug(u"theme = '%s' (%s)" % (self.theme, self.theme_folder))
 		# The theme folder must exist, and contain a file called __theme__.py,
 		# if not, we fall back to the default theme, which is assumed to always
@@ -78,6 +79,10 @@ class theme(object):
 				from qdatamatrix import _qcell
 				for key, color in info.qdatamatrix.items():
 					setattr(_qcell, key, color)
+			if hasattr(info, 'icon_theme_path'):
+				self._icon_theme_path = misc.resource(
+					os.path.join(u"theme", info.icon_theme_path)
+				)
 		self.load_icon_map()
 		self.apply_theme(self.main_window)
 
@@ -241,10 +246,12 @@ class theme(object):
 		"""Load the icon map"""
 
 		self.original_theme = QtGui.QIcon.themeName()
-		if os.path.exists(os.path.join(self.theme_folder, self._icon_theme)):
+		if os.path.exists(
+			os.path.join(self._icon_theme_path, self._icon_theme)
+		):
 			oslogger.debug(u"using custom icon theme")
 			QtGui.QIcon.setThemeSearchPaths(
-				QtGui.QIcon.themeSearchPaths() + [self.theme_folder]
+				QtGui.QIcon.themeSearchPaths() + [self._icon_theme_path]
 			)
 			QtGui.QIcon.setThemeName(self._icon_theme)
 		else:

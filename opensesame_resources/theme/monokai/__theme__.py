@@ -17,9 +17,10 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-icon_map = "../default/icon_map.csv"
-icon_theme = "../default/MokaSesame"
-qss = "stylesheet.qss"
+icon_map = u'../default/icon_map.csv'
+icon_theme = u'MokaSesame'
+icon_theme_path = u'default'
+qss = u'stylesheet.qss'
 qdatamatrix = {
     'HEADER_BACKGROUND': '#49483e',
     'HEADER_FOREGROUND': '#f8f8f2',
