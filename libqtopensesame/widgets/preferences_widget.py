@@ -44,8 +44,10 @@ class preferences_widget(base_widget):
 			main_window:	A qtopensesame object.
 		"""
 
-		super(preferences_widget, self).__init__(main_window,
-			ui=u'widgets.preferences_widget')
+		super(preferences_widget, self).__init__(
+			main_window,
+			ui=u'widgets.preferences_widget'
+		)
 		self.tab_name = u'__preferences__'
 		self.lock = False
 		# Connect the controls
@@ -67,7 +69,7 @@ class preferences_widget(base_widget):
 				if not isinstance(e, osexception):
 					e = osexception(msg=u'Extension error', exception=e)
 				self.notify(
-					u'Extension %s failed to return settings widget (see debug window for stack trace)' \
+					u'Extension %s failed to return settings widget (see debug window for stack trace)'
 					% ext.name())
 				self.console.write(e)
 				continue
@@ -88,12 +90,16 @@ class preferences_widget(base_widget):
 		self.ui.checkbox_autoresponse.setChecked(
 			self.experiment.auto_response)
 		self.ui.checkbox_toolbar_text.setChecked(
-			self.main_window.ui.toolbar_main.toolButtonStyle() == \
-			QtCore.Qt.ToolButtonTextUnderIcon)
+			self.main_window.ui.toolbar_main.toolButtonStyle() ==
+			QtCore.Qt.ToolButtonTextUnderIcon
+		)
 		self.ui.checkbox_small_toolbar.setChecked(cfg.toolbar_size == 16)
 		self.ui.combobox_runner.setCurrentIndex(
-			self.ui.combobox_runner.findText(cfg.runner,
-			flags=QtCore.Qt.MatchContains))
+			self.ui.combobox_runner.findText(
+				cfg.runner,
+				flags=QtCore.Qt.MatchContains
+			)
+		)
 		# Set the locale combobox
 		self.ui.combobox_locale.addItem(u'[Default]')
 		self.ui.combobox_locale.setCurrentIndex(0)
@@ -107,19 +113,19 @@ class preferences_widget(base_widget):
 		for i, locale in enumerate(locales):
 			self.ui.combobox_locale.addItem(locale)
 			if cfg.locale == locale:
-				self.ui.combobox_locale.setCurrentIndex(i+1)
+				self.ui.combobox_locale.setCurrentIndex(i + 1)
 		# Set the style combobox
 		self.ui.combobox_style.addItem(u"[Default]")
 		self.ui.combobox_style.setCurrentIndex(0)
 		for i, style in enumerate(QtWidgets.QStyleFactory.keys()):
 			self.ui.combobox_style.addItem(style)
 			if cfg.style == style:
-				self.ui.combobox_style.setCurrentIndex(i+1)
+				self.ui.combobox_style.setCurrentIndex(i + 1)
 		# Set the theme combobox
 		for i, _theme in enumerate(theme.available_themes):
 			self.ui.combobox_theme.addItem(_theme)
 			if cfg.theme == _theme:
-				self.ui.combobox_theme.setCurrentIndex(i+1)
+				self.ui.combobox_theme.setCurrentIndex(i)
 		self.lock = False
 
 	def apply(self):
@@ -134,9 +140,10 @@ class preferences_widget(base_widget):
 		self.main_window.ui.action_enable_auto_response.setChecked(
 			self.ui.checkbox_autoresponse.isChecked())
 		self.main_window.ui.toolbar_main.setToolButtonStyle(
-			QtCore.Qt.ToolButtonTextUnderIcon \
-			if self.ui.checkbox_toolbar_text.isChecked() else \
-			QtCore.Qt.ToolButtonIconOnly)
+			QtCore.Qt.ToolButtonTextUnderIcon
+			if self.ui.checkbox_toolbar_text.isChecked() else
+			QtCore.Qt.ToolButtonIconOnly
+		)
 		# Apply locale
 		cfg.locale = self.ui.combobox_locale.currentText()
 		if cfg.locale == u'[Default]':
