@@ -58,13 +58,15 @@ class theme(object):
 		# if not, we fall back to the default theme, which is assumed to always
 		# exist.
 		if self.theme_folder is None or not os.path.exists(
-			os.path.join(self.theme_folder, u'__theme__.py')):
+			os.path.join(self.theme_folder, u'__theme__.py')
+		):
 			oslogger.warning(
 				u"theme '%s' does not exist, using 'default'" % theme,
 			)
 			self.theme = u"default"
-			self.theme_folder = misc.resource(
-				os.path.join(u"theme", self.theme))
+			self._icon_theme_path = self.theme_folder = misc.resource(
+				os.path.join(u"theme", self.theme)
+			)
 		self.theme_info = os.path.join(self.theme_folder, u"__theme__.py")
 		if os.path.exists(self.theme_info):
 			info = imp.load_source(
