@@ -70,6 +70,7 @@ class FallbackCodeEdit(CodeEdit):
 		self.modes.append(modes.CursorHistoryMode())
 		self.modes.append(modes.ExtendedSelectionMode())
 		self.modes.append(modes.CaseConverterMode())
+		self.modes.append(modes.LineSorterMode())
 		self.modes.append(modes.FileWatcherMode())
 		if cfg.pyqode_highlight_caret_line:
 			self.modes.append(modes.CaretLineHighlighterMode())

@@ -81,6 +81,7 @@ class PythonCodeEdit(PyCodeEditBase):
 		self.add_separator()
 		self.modes.append(modes.ExtendedSelectionMode())
 		self.modes.append(modes.CaseConverterMode())
+		self.modes.append(modes.LineSorterMode())
 		self.modes.append(modes.FileWatcherMode())
 		self.modes.append(modes.ZoomMode())
 		self.modes.append(modes.SymbolMatcherMode())
