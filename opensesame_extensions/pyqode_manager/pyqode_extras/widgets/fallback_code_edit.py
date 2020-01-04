@@ -68,7 +68,6 @@ class FallbackCodeEdit(CodeEdit):
 		if cfg.pyqode_code_folding:
 			self.panels.append(panels.FoldingPanel())
 		self.modes.append(modes.CursorHistoryMode())
-		self.modes.append(modes.AutoCompleteMode())
 		self.modes.append(modes.ExtendedSelectionMode())
 		self.modes.append(modes.CaseConverterMode())
 		self.modes.append(modes.FileWatcherMode())
@@ -78,8 +77,10 @@ class FallbackCodeEdit(CodeEdit):
 			self.document(),
 			color_scheme=ColorScheme(cfg.pyqode_color_scheme))
 		)
+		if cfg.pyqode_code_completion:
+			self.modes.append(modes.AutoCompleteMode())
+			self.modes.append(modes.CodeCompletionMode())
 		self.modes.append(modes.ZoomMode())
-		self.modes.append(modes.CodeCompletionMode())
 		self.modes.append(modes.AutoIndentMode())
 		self.modes.append(modes.IndenterMode())
 		self.modes.append(modes.SymbolMatcherMode())

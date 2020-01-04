@@ -35,8 +35,17 @@ from pyqode_extras.widgets import (
 from pyqode.core.api import ColorScheme
 from pyqode.core.api.panel import Panel
 from pyqode.core.panels import LineNumberPanel, FoldingPanel, MarginPanel
-from pyqode.core.modes import PygmentsSH, RightMarginMode
-from pyqode.python.modes import sh
+from pyqode.core.modes import (
+	PygmentsSH,
+	RightMarginMode,
+	CodeCompletionMode,
+	AutoCompleteMode
+)
+from pyqode.python.modes import (
+	sh,
+	PyAutoCompleteMode,
+	CalltipsMode
+)
 from pyqode.core.managers import backend
 from qtpy.QtGui import QFontMetrics
 from qtpy.QtWidgets import QPlainTextEdit
@@ -204,6 +213,24 @@ class pyqode_manager(base_extension):
 				if cfg.pyqode_line_wrap
 				else QPlainTextEdit.NoWrap
 			)
+
+	def event_pyqode_set_code_completion(self, code_completion):
+
+		editors = self._editors
+		self._editors = [e for e in editors if isinstance(e, FallbackCodeEdit)]
+		for mode in (
+			CodeCompletionMode,
+			AutoCompleteMode
+		):
+			self._toggle_mode('pyqode_code_completion', code_completion, mode)
+		self._editors = [e for e in editors if isinstance(e, PythonCodeEdit)]
+		for mode in (
+			CodeCompletionMode,
+			PyAutoCompleteMode,
+			CalltipsMode
+		):
+			self._toggle_mode('pyqode_code_completion', code_completion, mode)
+		self._editors = editors
 
 	def event_pyqode_set_fixed_width(self, fixed_width):
 
