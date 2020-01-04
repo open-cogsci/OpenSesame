@@ -176,13 +176,13 @@ class Sampler(Backend):
 
 		self.experiment = experiment
 		Backend.__init__(self, configurables={
-			u'volume' : self.assert_numeric,
-			u'pan' : self.assert_pan,
-			u'pitch' : self.assert_numeric,
-			u'duration' : self.assert_numeric_or_None,
-			u'fade_in' : self.assert_numeric_or_None,
-			u'block' : self.assert_bool,
-			}, **playback_args)
+			u'volume': self.assert_numeric,
+			u'pan': self.assert_pan,
+			u'pitch': self.assert_numeric,
+			u'duration': self.assert_numeric_or_None,
+			u'fade_in': self.assert_numeric_or_None,
+			u'block': self.assert_bool,
+		}, **playback_args)
 
 	def default_config(self):
 
@@ -193,7 +193,21 @@ class Sampler(Backend):
 			u'duration'			: None,
 			u'fade_in'			: None,
 			u'block'			: False,
-			}
+		}
+
+	def set_config(self, **cfg):
+
+		if u'duration' in cfg and cfg[u'duration'] is None:
+			cfg[u'duration'] = 0
+		if u'fade_in' in cfg and cfg[u'fade_in'] is None:
+			cfg[u'fade_in'] = 0
+		Sampler.set_config(self, **cfg)
+		if u'volume' in cfg:
+			self.sound.set_volume(cfg[u'volume'])
+		if u'pitch' in cfg:
+			self.adjust_pitch(cfg[u'pitch'])
+		if u'pan' in cfg:
+			self.adjust_pan(cfg[u'pan'])
 
 	def assert_pan(self, key, val):
 
@@ -321,8 +335,11 @@ class Sampler(Backend):
 		desc:		deprecated
 		"""
 
-		warnings.warn(u'sampler.stop_after() has been deprecated. '
-			'Use sampler.duration instead.', DeprecationWarning)
+		warnings.warn(
+			u'sampler.stop_after() has been deprecated. '
+			'Use sampler.duration instead.',
+			DeprecationWarning
+		)
 		self.duration = ms
 
 	@staticmethod

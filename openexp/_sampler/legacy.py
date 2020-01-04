@@ -92,20 +92,6 @@ class Legacy(Sampler):
 		Sampler.__init__(self, experiment, src, **playback_args)
 		self.keyboard = Keyboard(experiment)
 
-	def set_config(self, **cfg):
-
-		if u'duration' in cfg and cfg[u'duration'] is None:
-			cfg[u'duration'] = 0
-		if u'fade_in' in cfg and cfg[u'fade_in'] is None:
-			cfg[u'fade_in'] = 0
-		Sampler.set_config(self, **cfg)
-		if u'volume' in cfg:
-			self.sound.set_volume(cfg[u'volume'])
-		if u'pitch' in cfg:
-			self.adjust_pitch(cfg[u'pitch'])
-		if u'pan' in cfg:
-			self.adjust_pan(cfg[u'pan'])
-
 	def adjust_pitch(self, p):
 
 		# On Android, numpy does not exist and this is not supported
