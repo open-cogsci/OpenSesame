@@ -21,5 +21,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 # checking if __name__ is __main__ is required to let multiprocessing correctly
 # work on Windows (or any other platform that is not able to use os.fork)
 if __name__ == "__main__":
+	import sys
+	sys.modules['__main__'] == __file__
 	from libqtopensesame import __main__
 	__main__.opensesame()
