@@ -58,7 +58,7 @@ def Synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
 		raise osexception(
 			u'Decay must be a numeric value between 0 and the sound length')
 	# We need to multiply the rate by two to get a stereo signal
-	rate = 2*experiment.var.get(u'sampler_frequency', 48100)
+	rate = 2*experiment.var.get(u'sound_freq', 48000)
 	signal = osc_gen(osc, key_to_freq(freq), length, rate)
 	_envelope = envelope(length, attack, decay, rate)
 	sound = to_int_16(signal * _envelope)

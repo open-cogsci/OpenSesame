@@ -15,7 +15,7 @@ psycho:
   canvas: psycho
   keyboard: psycho
   mouse: psycho
-  sampler: legacy
+  sampler: psycho
   color: psycho
   clock: psycho
   log: csv
