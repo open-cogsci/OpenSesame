@@ -1,11 +1,10 @@
 ---
 API: 2.1
+Citation: 'Logan, G. D., Cowan, W. B., & Davis, K. A. (1984). On the ability to inhibit
+  simple and choice reaction time responses: a model and a method. *Journal of Experimental
+  Psychology: Human Perception and Performance*, *10*(2), 276. <http://doi.org/10.1037/0096-1523.10.2.276>'
 Description: Loosely based on Logan et al. (1984)
-Citation: 'Logan, G. D., Cowan, W. B., & Davis, K. A. (1984). On the ability to
-  inhibit simple and choice reaction time responses: a model and a method.
-  *Journal of Experimental Psychology: Human Perception and Performance*,
-  *10*(2), 276. <http://doi.org/10.1037/0096-1523.10.2.276>'
-OpenSesame: 3.2.0a18
+OpenSesame: 3.3.0a49
 Platform: posix
 Title: Stop-Signal Task
 ---
@@ -19,10 +18,10 @@ set sound_sample_size -16
 set sound_freq 48000
 set sound_channels 2
 set sound_buf_size 1024
-set sampler_backend legacy
+set sampler_backend psycho
 set round_decimals 2
-set mouse_backend xpyriment
-set keyboard_backend legacy
+set mouse_backend psycho
+set keyboard_backend psycho
 set height 768
 set fullscreen no
 set form_clicks no
@@ -37,18 +36,16 @@ set disable_garbage_collection yes
 set description "Loosely based on Logan (1984) Journal of Experimental Psychology: Human Perception and Performance"
 set coordinates uniform
 set compensation 0
-set color_backend legacy
-set clock_backend legacy
-set canvas_backend xpyriment
+set color_backend psycho
+set clock_backend psycho
+set canvas_backend psycho
 set bidi no
 set background black
 
 define notepad about_this_example
 	__note__
 	This is an example of a stop-signal task. In this experiment, participants respond to a leftward- or rightward-pointing arrow by pressing the left or right key, respectively. On some trials, a red square is presented—this is the stop signal. Participants should withold their response when the stop-signal is presented.
-
 	This experiment is based on, but not identical to, the studies described by Gordon Logan in:
-
 	- Logan, G. D., Cowan, W. B., & Davis, K. A. (1984). On the ability to inhibit simple and choice reaction time responses: a model and a method. *Journal of Experimental Psychology: Human Perception and Performance*, 10(2), 276. <http://doi.org/10.1037/0096-1523.10.2.276>
 	__end__
 	set description "A simple notepad to document your experiment. This plug-in does nothing."
@@ -180,3 +177,4 @@ define sequence trial_sequence
 	run error_feedback "[correct] = 0"
 	run blank always
 	run logger always
+

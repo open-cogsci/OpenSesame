@@ -1,114 +1,122 @@
 ---
-API: 2
+API: 2.1
 Citation: Friesen, C. K., & Kingstone, A. (1998). The eyes have it! Reflexive orienting
   is triggered by nonpredictive gaze. *Psychonomic Bulletin & Review*, *5*, 490-495.
   <http://doi.org/10.3758/BF03208827>
 Description: Experiment from the step-by-step tutorial, adapted for Android tablets
-OpenSesame: 3.0.0a22
+OpenSesame: 3.3.0a49
 Platform: posix
 Title: 'Gaze cuing: The eyes have it!
 
   '
 ---
 set width 1280
-set uniform_coordinates "yes"
-set transparent_variables "no"
+set uniform_coordinates yes
+set transparent_variables no
 set title "Gaze cuing: The eyes have it! (Android)"
-set synth_backend "legacy"
-set subject_parity "even"
+set subject_parity even
 set subject_nr 0
-set start "experiment"
-set sampler_backend "legacy"
-set mouse_backend "droid"
-set keyboard_backend "droid"
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set round_decimals 2
 set height 800
-set foreground "black"
+set fullscreen no
+set form_clicks no
+set foreground black
+set font_underline no
 set font_size 32
-set font_italic "no"
-set font_family "mono"
-set font_bold "no"
+set font_italic no
+set font_family mono
+set font_bold no
+set experiment_path "/home/sebastiaan/git/OpenSesame/opensesame_extensions/example_experiments/examples/gaze_cuing"
+set disable_garbage_collection yes
 set description "Default description"
-set coordinates "relative"
+set coordinates relative
 set compensation 0
-set color_backend "legacy"
-set clock_backend "legacy"
-set canvas_backend "droid"
-set bidi "no"
-set background "white"
+set canvas_backend psycho
+set bidi no
+set background white
 
 define sketchpad blank
-	set start_response_interval "no"
+	set start_response_interval no
 	set duration 100
 	set description "Clear the screen to indicate that the trial is finished"
 
 define loop block_loop
+	set source_file ""
+	set source table
 	set skip 0
 	set repeat 1
-	set order "random"
-	set offset "no"
-	set item "trial_sequence"
+	set order random
+	set offset no
+	set item trial_sequence
 	set description "A block of trials"
 	set cycles 8
+	set continuous no
 	set column_order "soa;left_letter;gaze;right_letter;correct_response"
-	set break_if "never"
-	setcycle 0 soa "100"
-	setcycle 0 left_letter "F"
-	setcycle 0 correct_response "1"
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 soa 100
+	setcycle 0 left_letter F
+	setcycle 0 correct_response 1
 	setcycle 0 gaze "left.png"
-	setcycle 0 right_letter "H"
-	setcycle 1 soa "100"
-	setcycle 1 left_letter "F"
-	setcycle 1 correct_response "1"
+	setcycle 0 right_letter H
+	setcycle 1 soa 100
+	setcycle 1 left_letter F
+	setcycle 1 correct_response 1
 	setcycle 1 gaze "right.png"
-	setcycle 1 right_letter "H"
-	setcycle 2 soa "100"
-	setcycle 2 left_letter "H"
-	setcycle 2 correct_response "2"
+	setcycle 1 right_letter H
+	setcycle 2 soa 100
+	setcycle 2 left_letter H
+	setcycle 2 correct_response 2
 	setcycle 2 gaze "left.png"
-	setcycle 2 right_letter "F"
-	setcycle 3 soa "100"
-	setcycle 3 left_letter "H"
-	setcycle 3 correct_response "2"
+	setcycle 2 right_letter F
+	setcycle 3 soa 100
+	setcycle 3 left_letter H
+	setcycle 3 correct_response 2
 	setcycle 3 gaze "right.png"
-	setcycle 3 right_letter "F"
-	setcycle 4 soa "1000"
-	setcycle 4 left_letter "F"
-	setcycle 4 correct_response "1"
+	setcycle 3 right_letter F
+	setcycle 4 soa 1000
+	setcycle 4 left_letter F
+	setcycle 4 correct_response 1
 	setcycle 4 gaze "left.png"
-	setcycle 4 right_letter "H"
-	setcycle 5 soa "1000"
-	setcycle 5 left_letter "F"
-	setcycle 5 correct_response "1"
+	setcycle 4 right_letter H
+	setcycle 5 soa 1000
+	setcycle 5 left_letter F
+	setcycle 5 correct_response 1
 	setcycle 5 gaze "right.png"
-	setcycle 5 right_letter "H"
-	setcycle 6 soa "1000"
-	setcycle 6 left_letter "H"
-	setcycle 6 correct_response "2"
+	setcycle 5 right_letter H
+	setcycle 6 soa 1000
+	setcycle 6 left_letter H
+	setcycle 6 correct_response 2
 	setcycle 6 gaze "left.png"
-	setcycle 6 right_letter "F"
-	setcycle 7 soa "1000"
-	setcycle 7 left_letter "H"
-	setcycle 7 correct_response "2"
+	setcycle 6 right_letter F
+	setcycle 7 soa 1000
+	setcycle 7 left_letter H
+	setcycle 7 correct_response 2
 	setcycle 7 gaze "right.png"
-	setcycle 7 right_letter "F"
+	setcycle 7 right_letter F
 	run trial_sequence
 
 define sequence block_sequence
-	set flush_keyboard "yes"
+	set flush_keyboard yes
 	set description "A block of trials, followed by feedback"
-	run reset_feedback "always"
-	run block_loop "always"
-	run feedback "always"
+	run reset_feedback always
+	run block_loop always
+	run feedback always
 
 define sketchpad cue
-	set start_response_interval "no"
+	set start_response_interval no
 	set duration "[soa]"
 	set description "A gaze cue. Click on 'Edit script' to see the definition."
 	draw image center=1 file="[gaze]" scale=2 show_if=always x=0 y=0 z_index=0
 
 define sketchpad end_of_practice
-	set start_response_interval "no"
-	set duration "mouseclick"
+	set start_response_interval no
+	set duration mouseclick
 	set description "Indicate that the practice phase has ended"
 	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=always text="The practice phase is finished<br /><br />Tap the screen to continue ..." x=0 y=0 z_index=0
 
@@ -123,44 +131,48 @@ define sampler error_sound
 	set description "Play a sound if a mistake was made"
 
 define sequence experiment
-	set flush_keyboard "yes"
+	set flush_keyboard yes
 	set description "The main sequence of the experiment"
-	run form_instructions "always"
-	run practice_loop "always"
-	run end_of_practice "always"
-	run experimental_loop "always"
-	run goodbye "always"
+	run form_instructions always
+	run practice_loop always
+	run end_of_practice always
+	run experimental_loop always
+	run goodbye always
 
 define loop experimental_loop
+	set source_file ""
+	set source table
 	set skip 0
 	set repeat 5
-	set order "sequential"
-	set offset "no"
-	set item "block_sequence"
+	set order sequential
+	set offset no
+	set item block_sequence
 	set description "The experiment consists of five blocks"
 	set cycles 1
-	set column_order "practice"
-	set break_if "never"
-	setcycle 0 practice "no"
+	set continuous no
+	set column_order practice
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 practice no
 	run block_sequence
 
 define feedback feedback
-	set reset_variables "yes"
-	set duration "mouseclick"
+	set reset_variables yes
+	set duration mouseclick
 	set description "Provides feedback to the participant"
 	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=always text="End of block<br /><br />Your average reaction time was [avg_rt] ms<br />Your accuracy was [acc]%<br /><br />Tap the screen to continue!" x=0 y=0 z_index=0
 
 define sketchpad fixdot
-	set start_response_interval "no"
+	set start_response_interval no
 	set duration 750
 	set description "A fixation dot"
 	draw fixdot color=black show_if=always style=default x=0 y=0 z_index=0
 
 define form_text_display form_instructions
-	set timeout "infinite"
+	set timeout infinite
 	set spacing 10
 	set rows "1;4;1"
-	set only_render "no"
+	set only_render no
 	set ok_text "Let's go!"
 	set margins "50;50;50;50"
 	set form_title "<span size=24>Instructions</span>"
@@ -175,46 +187,50 @@ define form_text_display form_instructions
 	__end__
 	set description "A simple text display form"
 	set cols "1;1;1"
-	set _theme "gray"
+	set _theme gray
 	widget 0 0 3 1 label text="[form_title]"
 	widget 0 1 3 1 label center=no text="[form_text]"
 	widget 1 2 1 1 button text="[ok_text]"
 
 
 define sketchpad goodbye
-	set start_response_interval "no"
-	set duration "mouseclick"
+	set start_response_interval no
+	set duration mouseclick
 	set description "Say goodbye"
 	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=always text="The experiment is finished<br /><br />Tap the screen to exit ..." x=0 y=0 z_index=0
 
 define logger logger
 	set description "Logs experimental data"
-	set auto_log "yes"
+	set auto_log yes
 
 define sketchpad neutral_gaze
-	set start_response_interval "no"
+	set start_response_interval no
 	set duration 1000
 	set description "A neutral gaze"
 	draw image center=1 file="neutral.png" scale=2 show_if=always x=0 y=0 z_index=0
 
 define loop practice_loop
+	set source_file ""
+	set source table
 	set skip 0
 	set repeat 1
-	set order "random"
-	set offset "no"
-	set item "block_sequence"
+	set order random
+	set offset no
+	set item block_sequence
 	set description "A single practice block"
 	set cycles 1
-	set column_order "practice"
-	set break_if "never"
-	setcycle 0 practice "yes"
+	set continuous no
+	set column_order practice
+	set break_if_on_first yes
+	set break_if never
+	setcycle 0 practice yes
 	run block_sequence
 
 define reset_feedback reset_feedback
 	set description "Resets the feedback variables, such as 'avg_rt' and 'acc'"
 
 define sketchpad target
-	set start_response_interval "yes"
+	set start_response_interval yes
 	set duration 100
 	set description "A gaze cue and a target. Click on 'Edit script' to see the definition."
 	draw image center=1 file="[gaze]" scale=2 show_if=always x=0 y=0 z_index=0
@@ -223,22 +239,24 @@ define sketchpad target
 
 define touch_response touch_response
 	set timeout 3000
-	set show_cursor "yes"
-	set flush "yes"
-	set duration "mouseclick"
+	set show_cursor yes
+	set linked_sketchpad ""
+	set flush yes
+	set event_type mouseclick
+	set duration mouseclick
 	set description "A grid-based response item, convenient for touch screens"
 	set _nrow 1
 	set _ncol 2
 
 define sequence trial_sequence
-	set flush_keyboard "yes"
+	set flush_keyboard yes
 	set description "A single trial"
-	run fixdot "always"
-	run neutral_gaze "always"
-	run cue "always"
-	run target "always"
-	run touch_response "always"
+	run fixdot always
+	run neutral_gaze always
+	run cue always
+	run target always
+	run touch_response always
 	run error_sound "[correct] = 0"
-	run blank "always"
-	run logger "always"
+	run blank always
+	run logger always
 

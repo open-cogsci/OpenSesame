@@ -4,14 +4,13 @@ Citation: 'Raymond, J. E., Shapiro, K. L., & Arnell, K. M. (1992). Temporary sup
   of visual processing in an RSVP task: An attentional blink? *Journal of Experimental
   Psychology: Human Perception and Performance*, *18*(3), 849-860. <http://doi.org/10.1037/0096-1523.18.3.849>'
 Description: Experiment from the attentional-blink tutorial
-OpenSesame: 3.2.0a2
+OpenSesame: 3.3.0a49
 Platform: posix
 Title: Attentional blink
 ---
 set width 1024
 set uniform_coordinates no
 set title "Attentional blink"
-set synth_backend legacy
 set subject_parity even
 set subject_nr 0
 set start experiment
@@ -19,10 +18,7 @@ set sound_sample_size -16
 set sound_freq 48000
 set sound_channels 2
 set sound_buf_size 1024
-set sampler_backend legacy
 set round_decimals 2
-set mouse_backend psycho
-set keyboard_backend psycho
 set height 768
 set fullscreen no
 set form_clicks no
@@ -69,7 +65,7 @@ define inline_script RSVP
 	
 	# Randomly sample letters from all uppercase letters, except for the X, which
 	# is used for the T2 (when present).
-	letters = list(string.uppercase)
+	letters = list(string.ascii_uppercase)
 	letters.remove('X')
 	stim_list = random.sample(letters, var.stream_len)
 	
@@ -142,7 +138,7 @@ define inline_script assertions
 	# indicate a bug in the experiment somewhere.
 	assert(var.condition in ['experimental', 'control'])
 	assert(var.T2_present in ['y', 'n'])
-	assert(var.lag in ['']+range(0,9))
+	assert(var.lag in [''] + list(range(0, 9)))
 	assert((var.lag == '') != (var.T2_present == 'y'))
 	__end__
 
@@ -352,6 +348,7 @@ define reset_feedback reset_feedback
 define keyboard_response response_T1
 	set timeout infinite
 	set flush yes
+	set event_type keypress
 	set duration keypress
 	set description "Collects keyboard responses"
 	set correct_response "[T1]"
@@ -359,6 +356,7 @@ define keyboard_response response_T1
 define keyboard_response response_T2
 	set timeout infinite
 	set flush yes
+	set event_type keypress
 	set duration keypress
 	set description "Collects keyboard responses"
 	set correct_response "[T2_present]"
