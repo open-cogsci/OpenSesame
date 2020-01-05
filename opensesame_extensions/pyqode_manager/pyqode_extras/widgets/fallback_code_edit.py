@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import sys
+from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
 from pyqode.core import panels, modes
 from pyqode.core.backend import server
