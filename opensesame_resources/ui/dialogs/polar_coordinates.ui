@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>ui_polar_coordinates</class>
  <widget class="QDialog" name="ui_polar_coordinates">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>429</width>
-    <height>365</height>
-   </rect>
-  </property>
   <property name="windowTitle">
    <string>Polar coordinates</string>
   </property>
@@ -29,6 +21,21 @@
    <property name="bottomMargin">
     <number>12</number>
    </property>
+   <item row="0" column="0" colspan="2">
+    <widget class="QLabel" name="label_9">
+     <property name="font">
+      <font>
+       <italic>true</italic>
+      </font>
+     </property>
+     <property name="text">
+      <string>This tool allows you to calculate cartesian (x, y) coordinates from polar coordinates.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0" colspan="2">
     <widget class="QLabel" name="label_5">
      <property name="text">
@@ -151,7 +158,7 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="0" colspan="2">
+   <item row="11" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -161,20 +168,18 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="2">
-    <widget class="QLabel" name="label_9">
-     <property name="font">
-      <font>
-       <italic>true</italic>
-      </font>
+   <item row="10" column="0" colspan="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <property name="text">
-      <string>This tool allows you to calculate cartesian (x, y) coordinates from polar coordinates.</string>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
      </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
+    </spacer>
    </item>
   </layout>
  </widget>

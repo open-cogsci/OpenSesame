@@ -43,7 +43,6 @@ class polar_coordinates(base_dialog):
 		base_dialog.__init__(self, main_window, ui=u'dialogs.polar_coordinates')
 		self.update()
 
-	@property
 	def xy(self):
 
 		return xy_from_polar(
@@ -55,7 +54,7 @@ class polar_coordinates(base_dialog):
 	def update(self):
 
 		base_dialog.update(self)
-		x, y = self.xy
+		x, y = self.xy()
 		self.ui.label_cartesian_x.setText(u'%.2f px' % x)
 		self.ui.label_cartesian_y.setText(u'%.2f px' % y)
 
@@ -72,4 +71,4 @@ class polar_coordinates(base_dialog):
 
 		if self.exec_() != QtWidgets.QDialog.Accepted:
 			return None
-		return self.xy
+		return self.xy()
