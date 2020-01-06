@@ -29,37 +29,38 @@ if platform.system() != 'Linux':
 
 def patch_pyqt():
 
+	"""This patches PyQt such that properties are removed from objects before
+	connectSlotsByName() tries to inspect the object. This is necessary because
+	in some versions, the introspection crashes when properties cannot be
+	accessed, for example because the object to be initialized first.
+	"""
+
 	def _(fnc):
 
 		def make_object_safe(obj, cls):
 
 			tmp = {}
-			for name in dir(obj):
+			for name, value in list(cls.__dict__.items()):
 				try:
 					getattr(obj, name)
 				except AttributeError:
-					if name not in cls.__dict__:
-						print('... cannot pop', name)
-						continue
-					print('... popping', name)
-					tmp[name] = cls.__dict__[name]
+					tmp[name] = value
 					delattr(cls, name)
 			return tmp
 
-		def restore_object(obj, cls, tmp):
+		def restore_object(cls, tmp):
 
 			for name, value in tmp.items():
 				setattr(cls, name, value)
 
 		def inner(obj):
 
-			print('Connecting', obj)
-			tmp = make_object_safe(obj, obj.__class__)
-			tmp2 = make_object_safe(obj, obj.__class__.__class__)
+			tmp = {}
+			for cls in obj.__class__.mro():
+				tmp[cls] = make_object_safe(obj, cls)
 			fnc(obj)
-			restore_object(obj, obj.__class__, tmp)
-			restore_object(obj, obj.__class__.__class__, tmp2)
-			print('Restored', obj)
+			for cls in tmp:
+				restore_object(cls, tmp[cls])
 
 		return inner
 
@@ -111,7 +112,8 @@ def set_paths():
 def opensesame():
 
 	set_paths()
-	patch_pyqt()
+	if py3:
+		patch_pyqt()
 	# Support for multiprocessing when packaged
 	# In OS X the multiprocessing module is horribly broken, but a fixed
 	# version has been released as the 'billiard' module
