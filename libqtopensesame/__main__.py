@@ -27,6 +27,47 @@ if platform.system() != 'Linux':
 	os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
 
 
+def patch_pyqt():
+
+	def _(fnc):
+
+		def make_object_safe(obj, cls):
+
+			tmp = {}
+			for name in dir(obj):
+				try:
+					getattr(obj, name)
+				except AttributeError:
+					if name not in cls.__dict__:
+						print('... cannot pop', name)
+						continue
+					print('... popping', name)
+					tmp[name] = cls.__dict__[name]
+					delattr(cls, name)
+			return tmp
+
+		def restore_object(obj, cls, tmp):
+
+			for name, value in tmp.items():
+				setattr(cls, name, value)
+
+		def inner(obj):
+
+			print('Connecting', obj)
+			tmp = make_object_safe(obj, obj.__class__)
+			tmp2 = make_object_safe(obj, obj.__class__.__class__)
+			fnc(obj)
+			restore_object(obj, obj.__class__, tmp)
+			restore_object(obj, obj.__class__.__class__, tmp2)
+			print('Restored', obj)
+
+		return inner
+
+	from qtpy import QtCore
+	QtCore.QMetaObject.connectSlotsByName = \
+		_(QtCore.QMetaObject.connectSlotsByName)
+
+
 def set_paths():
 
 	from libopensesame import misc
@@ -70,6 +111,7 @@ def set_paths():
 def opensesame():
 
 	set_paths()
+	patch_pyqt()
 	# Support for multiprocessing when packaged
 	# In OS X the multiprocessing module is horribly broken, but a fixed
 	# version has been released as the 'billiard' module
