@@ -24,6 +24,7 @@ from libqtopensesame.runners import base_runner
 from qtpy import QtWidgets
 from libopensesame.exceptions import osexception
 
+
 class multiprocess_runner(base_runner):
 
 	"""Runs an experiment in another process using multiprocessing."""
@@ -35,8 +36,7 @@ class multiprocess_runner(base_runner):
 		"""See base_runner.execute()."""
 
 		import platform
-		if platform.system() == 'Darwin' and \
-			sys.version_info < (3,4):
+		if platform.system() == 'Darwin' and sys.version_info < (3, 4):
 				# In OS X the multiprocessing module is horribly broken,
 				# for python 2.7 but a fixed version has been released
 				# as the 'billiard' module
@@ -49,12 +49,16 @@ class multiprocess_runner(base_runner):
 		self._workspace_globals = {}
 		self.channel = multiprocessing.Queue()
 		try:
-			self.exp_process = process.ExperimentProcess(self.experiment,
-				self.channel)
+			self.exp_process = process.ExperimentProcess(
+				self.experiment,
+				self.channel
+			)
 		except Exception as e:
-			return osexception(_(u'Failed to initialize experiment process'),
-				exception=e)
-		self.console.set_workspace_globals({u'process' : self.exp_process})
+			return osexception(
+				_(u'Failed to initialize experiment process'),
+				exception=e
+			)
+		self.console.set_workspace_globals({u'process': self.exp_process})
 		# Start process!
 		self.exp_process.start()
 		# Wait for experiment to finish.
@@ -72,7 +76,7 @@ class multiprocess_runner(base_runner):
 			# before timeout.
 			try:
 				msg = self.channel.get(True, 0.05)
-			except:
+			except Exception:
 				continue
 			if isinstance(msg, basestring):
 				sys.stdout.write(safe_decode(msg, errors=u'ignore'))
@@ -80,7 +84,11 @@ class multiprocess_runner(base_runner):
 			# Capture exceptions
 			if isinstance(msg, Exception):
 				self.exp_process.join()
-				self.exp_process.close()
+				try:
+					self.exp_process.close()
+				except AttributeError:
+					# Process.close() was introduced only in Python 3.7
+					pass
 				return msg
 			# The workspace globals are sent as a dict. A special __pause__ key
 			# indicates whether the experiment should be paused or resumed.
@@ -89,7 +97,10 @@ class multiprocess_runner(base_runner):
 				if u'__kill__' in msg:
 					self.exp_process.kill()
 				if u'__heartbeat__' in msg:
-					self.console.set_workspace_globals(msg)
+					self.main_window.extension_manager.fire(
+						u'set_workspace_globals',
+						global_dict=msg
+					)
 					self.main_window.extension_manager.fire(u'heartbeat')
 				elif u'__pause__' in msg:
 					if msg[u'__pause__']:
@@ -102,17 +113,23 @@ class multiprocess_runner(base_runner):
 			# Anything that is not a string, not an Exception, and not None is
 			# unexpected
 			return osexception(
-				u"Illegal message type received from child process: %s (%s)" \
-				% (msg, type(msg)))
+				u"Illegal message type received from child process: %s (%s)"
+				% (msg, type(msg))
+			)
 		self.exp_process.join()
-		self.exp_process.close()
-		if not finished:
-			if self.exp_process.killed:
-				return osexception(u'The experiment process was killed.')
-			else:
-				return osexception(u'Python seems to have crashed. This should not '
-					u'happen. If Python crashes often, please report it on the '
-					u'OpenSesame forum.')
+		try:
+			self.exp_process.close()
+		except AttributeError:
+			# Process.close() was introduced only in Python 3.7
+			pass
+		if finished:
+			return
+		if self.exp_process.killed:
+			return osexception(u'The experiment process was killed.')
+		return osexception(
+			u'Python seems to have crashed. This should not happen. If Python '
+			u'crashes often, please report it on the OpenSesame forum.'
+		)
 
 	def kill(self):
 

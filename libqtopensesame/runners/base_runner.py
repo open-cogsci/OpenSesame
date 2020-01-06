@@ -93,39 +93,53 @@ class base_runner(object):
 
 		remember_logfile = True
 		if quick:
-			logfile = os.path.join(cfg.default_logfile_folder,
-				cfg.quick_run_logfile)
+			logfile = os.path.join(
+				cfg.default_logfile_folder,
+				cfg.quick_run_logfile
+			)
 			try:
 				open(logfile, u'w').close()
-			except:
+			except Exception:
 				import tempfile
 				from libopensesame import misc
 				oslogger.warning(u'failed to open %s' % logfile)
-				logfile = os.path.join(safe_decode(tempfile.gettempdir(),
-					enc=misc.filesystem_encoding()), safe_decode(
-					tempfile.gettempprefix(),
-					enc=misc.filesystem_encoding())+u'quickrun.csv')
+				logfile = os.path.join(
+					safe_decode(
+						tempfile.gettempdir(),
+						enc=misc.filesystem_encoding()
+					),
+					safe_decode(
+						tempfile.gettempprefix(),
+						enc=misc.filesystem_encoding()
+					) + u'quickrun.csv'
+				)
 				oslogger.warning(u'Using temporary file %s' % logfile)
 				remember_logfile = False
 		else:
 			# Suggested filename
-			suggested_path = os.path.join(cfg.default_logfile_folder,
-				u'subject-%d.csv' % subject_nr)
+			suggested_path = os.path.join(
+				cfg.default_logfile_folder,
+				u'subject-%d.csv' % subject_nr
+			)
 			# Get the data file
 			csv_filter = u'Comma-separated values (*.csv)'
-			logfile = QtWidgets.QFileDialog.getSaveFileName( \
-				self.main_window.ui.centralwidget, \
-				_(u"Choose location for logfile (press 'escape' for default location)"), \
-				suggested_path, filter=csv_filter)
+			logfile = QtWidgets.QFileDialog.getSaveFileName(
+				self.main_window.ui.centralwidget,
+				_(u"Choose location for logfile (press 'escape' for default location)"),
+				suggested_path,
+				filter=csv_filter
+			)
 			# In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of
 			# a string, of which the first position contains the path.
-			if isinstance(logfile,tuple):
+			if isinstance(logfile, tuple):
 				logfile = logfile[0]
 			# An empty string indicates that the dialogue was cancelled, in
 			# which case we fall back to a default location.
 			if logfile == u'':
-				logfile = os.path.join(cfg.default_logfile_folder,
-					u'defaultlog.csv')
+				logfile = os.path.join(
+					cfg.default_logfile_folder,
+					u'defaultlog.csv'
+				)
 			# If a logfile was provided, but it did not have a proper extension,
 			# we add a `.csv` extension.
 			else:
@@ -135,10 +149,13 @@ class base_runner(object):
 		# If the logfile is not writable, inform the user and cancel.
 		try:
 			open(logfile, u'w').close()
-		except:
-			self.main_window.experiment.notify( \
-				_(u"The logfile '%s' is not writable. Please choose another location for the logfile.") \
-				% logfile)
+		except Exception:
+			self.main_window.experiment.notify(
+				_(
+					u"The logfile '%s' is not writable. Please choose "
+					u"another location for the logfile."
+				) % logfile
+			)
 			return None
 		if remember_logfile:
 			# Remember the logfile folder for the next run
@@ -162,15 +179,22 @@ class base_runner(object):
 
 		if quick:
 			return 999
-		subject_nr, ok = QtWidgets.QInputDialog.getInt( \
-			self.main_window.ui.centralwidget, _(u'Subject number'), \
-			_(u'Please enter the subject number'), min=0)
+		subject_nr, ok = QtWidgets.QInputDialog.getInt(
+			self.main_window.ui.centralwidget,
+			_(u'Subject number'),
+			_(u'Please enter the subject number'),
+			min=0
+		)
 		if not ok:
 			return None
 		return subject_nr
 
-	def init_experiment(self, quick=False, fullscreen=False, auto_response= \
-		False):
+	def init_experiment(
+		self,
+		quick=False,
+		fullscreen=False,
+		auto_response=False
+	):
 
 		"""
 		Initializes a new experiment, which is a newly generated instance of the
@@ -191,8 +215,10 @@ class base_runner(object):
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e = osexception(u'Unexpected error', exception=e)
-			md = _(u'# Error\n\nFailed to generate experiment for the '
-				u'following reason:\n\n- ') + e.markdown()
+			md = _(
+				u'# Error\n\nFailed to generate experiment for the '
+				u'following reason:\n\n- '
+			) + e.markdown()
 			self.console.write(e)
 			self.tabwidget.open_markdown(md)
 			return False
@@ -209,22 +235,30 @@ class base_runner(object):
 		if self.main_window.experiment.experiment_path is not None:
 			experiment_path = self.main_window.experiment.experiment_path
 			if self.main_window.current_path is not None:
-				experiment_path = os.path.join(experiment_path,
-					self.main_window.current_path)
+				experiment_path = os.path.join(
+					experiment_path,
+					self.main_window.current_path
+				)
 		else:
 			experiment_path = None
 		# Build a new experiment. This can trigger a script error.
 		try:
-			self.experiment = experiment(string=script,
+			self.experiment = experiment(
+				string=script,
 				pool_folder=self.main_window.experiment.pool.folder(),
-				experiment_path=experiment_path, fullscreen=fullscreen,
-				auto_response=auto_response, subject_nr=subject_nr,
-				logfile=logfile)
+				experiment_path=experiment_path,
+				fullscreen=fullscreen,
+				auto_response=auto_response,
+				subject_nr=subject_nr,
+				logfile=logfile
+			)
 		except Exception as e:
 			if not isinstance(e, osexception):
 				e = osexception(u'Unexpected error', exception=e)
-			md = _(u'# Error\n\nFailed to parse experiment for the '
-				u'following reason:\n\n- ') + e.markdown()
+			md = _(
+				u'# Error\n\nFailed to parse experiment for the '
+				u'following reason:\n\n- '
+			) + e.markdown()
 			self.console.write(e)
 			self.tabwidget.open_markdown(md)
 			return False
@@ -303,8 +337,10 @@ class base_runner(object):
 		"""
 
 		self.console.set_workspace_globals(self.workspace_globals())
-		print(u'The experiment has been paused. Switch back to the experiment '
-			u'window and press space to resume.')
+		print(
+			u'The experiment has been paused. Switch back to the experiment '
+			u'window and press space to resume.'
+		)
 		self.console.show_prompt()
 		self.main_window.set_run_status(u'paused')
 		self.main_window.extension_manager.fire(u'pause_experiment')
