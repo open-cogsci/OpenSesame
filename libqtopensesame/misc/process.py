@@ -130,6 +130,7 @@ class ExperimentProcess(multiprocessing.Process):
 		# so that the new process can find the main script.
 		if os.name == u'nt':
 			os.chdir(misc.opensesame_folder())
+			os.environ['PATH'] += ';' + os.getcwd()
 		# Reroute output to OpenSesame main process, so everything will be
 		# printed in the Debug window there.
 		pipeToMainProcess = OutputChannel(self.output)

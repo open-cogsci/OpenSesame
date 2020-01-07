@@ -268,23 +268,38 @@ def opensesame_folder():
 	# done so the child process can find all relevant modules too.
 	# See http://www.py2exe.org/index.cgi/HowToDetermineIfRunningFromExe
 	#
-	# There are two scenarios: Either OpenSesame is run from a frozen state,
-	# in which case the OpenSesame folder is the folder containing the
-	# executable, or OpenSesame is run from source, in which case we go to
-	# the OpenSesame folder by going two levels up from the __file__ folder.
+	# There are three scenarios:
+	#
+	# - OpenSesame is run from a frozen state, in which case the OpenSesame
+	#   folder is the folder containing the
+	# - OpenSesame is run from source, in which case we go to the OpenSesame
+	#   folder by going a levels up from the __file__ folder.
+	# - OpenSesame is run in Anaconda, in which case we need to go two levels
+	#   up to get out of the site-packages folder.
 	if platform.system() == u'Darwin':
 		return os.getcwd()
 	elif platform.system() == u'Windows':
 		import imp
-		if (hasattr(sys, u'frozen') or hasattr(sys, u'importers') or \
-			imp.is_frozen(u'__main__')):
-			path = safe_decode(os.path.dirname(sys.executable),
-				enc=sys.getfilesystemencoding())
+		if (
+			hasattr(sys, u'frozen') or
+			hasattr(sys, u'importers') or
+			imp.is_frozen(u'__main__')
+		):
+			path = safe_decode(
+				os.path.dirname(sys.executable),
+				enc=sys.getfilesystemencoding()
+			)
 		else:
 			# To get the opensesame folder, simply jump to levels up
-			path = safe_decode(os.path.dirname(__file__),
-				enc=sys.getfilesystemencoding())
+			path = safe_decode(
+				os.path.dirname(__file__),
+				enc=sys.getfilesystemencoding()
+			)
+			# The current should not be the site-packages folder, which
+			# happens on Anaconda if launched in multiprocess mode.
 			path = os.path.normpath(os.path.join(path, u'..'))
+			if path.endswith(u'Lib\\site-packages'):
+				path = os.path.normpath(os.path.join(path, u'..', u'..'))
 		return path
 	else:
 		return None
