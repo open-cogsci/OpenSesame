@@ -130,6 +130,10 @@ class Psycho(Canvas, PsychoCoordinates):
 
 	@staticmethod
 	def init_display(experiment):
+		
+		if not py3:
+			from json_tricks import utils
+			utils.get_arg_names = _get_arg_names
 
 		global _experiment, _old_gamma
 		_experiment = experiment
@@ -186,6 +190,27 @@ class Psycho(Canvas, PsychoCoordinates):
 			oslogger.error(
 				u'An error occurred while closing the PsychoPy window.',
 			)
+
+
+def _get_arg_names(callable):
+	
+	"""A hack to make json_tricks work on Python 2, after some unknown module
+	has injected getfullargspec into inspect.
+	"""
+	
+	from functools import partial
+	from logging import warn
+	from sys import version_info
+	from inspect import getargspec
+	
+	if type(callable) == partial and version_info[0] == 2:
+		if not hasattr(get_arg_names, '__warned_partial_argspec'):
+			get_arg_names.__warned_partial_argspec = True
+			warn("'functools.partial' and 'inspect.getargspec' are not compatible in this Python version; "
+				"ignoring the 'partial' wrapper when inspecting arguments of {}, which can lead to problems".format(callable))
+		return set(getargspec(callable.func).args)
+	argspec = getargspec(callable)
+	return set(argspec.args)
 
 
 def _psychopy_clean_quit():
