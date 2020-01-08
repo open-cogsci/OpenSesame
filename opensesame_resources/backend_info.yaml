@@ -22,6 +22,18 @@ psycho:
   icon: os-psychopy
   py2: true
   py3: true
+psycho_legacy:
+  description: uses PsychoPy with PyGame sound backend
+  canvas: psycho
+  keyboard: psycho
+  mouse: psycho
+  sampler: legacy
+  color: psycho
+  clock: psycho
+  log: csv
+  icon: os-psychopy
+  py2: true
+  py3: true
 xpyriment:
   description: uses Expyriment
   canvas: xpyriment

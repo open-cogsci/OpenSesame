@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
+from openexp import backend
 from libopensesame.var_store import var_store
 from libopensesame.item_store import item_store
 from libopensesame.response_store import response_store
@@ -163,6 +164,13 @@ class experiment(item.item):
 			else:
 				self.var.experiment_path = self.experiment_path \
 					= experiment_path
+		if not py3 and backend.backend_guess(self, 'sampler') == u'psycho':
+			self.var.sampler_backend = 'legacy'
+			oslogger.warning(
+				u'The psycho sampler backend is not compatible with Python 2. '
+				u'Falling back to legacy sampler backend'
+			)
+
 
 	@property
 	def pool_folder(self):
