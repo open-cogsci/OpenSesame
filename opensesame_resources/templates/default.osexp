@@ -20,7 +20,7 @@ define sequence experiment
 
 define notepad getting_started
 	__note__
-	Welcome to OpenSesame 3.3!
+	Welcome to OpenSesame 3.3 "Lentiform Loewenfeld"!
 
 	If you are new to OpenSesame, it is a good idea to follow one of the tutorials,
 	which can be found on the documentation site:
@@ -42,4 +42,4 @@ define sketchpad welcome
 	set start_response_interval "no"
 	set reset_variables "no"
 	set duration "keypress"
-	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text="OpenSesame 3.2 <i>Kafkaesque Koffka</i>" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text="OpenSesame 3.3 <i>Lentiform Loewenfeld</i>" x=0 y=0 z_index=0
