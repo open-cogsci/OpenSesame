@@ -25,6 +25,12 @@ import platform
 # On Linux this appears to be buggy
 if platform.system() != 'Linux':
 	os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+# Attach a dummy console when launched with pythonw.exe. This is necessary for
+# some libraries.
+if sys.executable.endswith('pythonw.exe'):
+	sys.stdout = open(os.devnull, 'w')
+	sys.stderr = open(os.devnull, 'w')
+	sys.stdin = open(os.devnull)
 
 
 def patch_pyqt():
