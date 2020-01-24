@@ -79,7 +79,11 @@ def safe_encode(s, enc='utf-8', errors='strict'):
 
 def safe_read(path):
 	with open(path, u'r') as fd:
-		return safe_decode(fd.read(), errors=u'ignore')
+		try:
+			s = fd.read()
+		except UnicodeDecodeError:
+			return u''
+	return safe_decode(s, errors=u'ignore')
 
 
 # Depending on the version of yaml, we should pass the Loader keyword or not
