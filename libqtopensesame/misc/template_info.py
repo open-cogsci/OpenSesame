@@ -21,18 +21,9 @@ from libopensesame.py3compat import *
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'template', category=u'core')
 
-if py3:
-	templates = [
-		(u'templates/default-py3.osexp', _(u'Default template')),
-		(u'templates/extended_template-py3.osexp', _(u'Extended template')),
-		(u'templates/form_template.osexp',
-			_(u'Questionnaire template')),
-	]
-else:
-	templates = [
-		(u'templates/default.osexp', _(u'Default template')),
-		(u'templates/extended_template.osexp', _(u'Extended template')),
-		(u'templates/form_template.osexp',
-			_(u'Questionnaire template')),
-		(u'templates/pygaze_template.osexp', _(u'Eye-tracking template')),
-	]
+templates = [
+	(u'templates/default.osexp', _(u'Default template')),
+	(u'templates/extended_template.osexp', _(u'Extended template')),
+	(u'templates/form_template.osexp', _(u'Questionnaire template')),
+	(u'templates/pygaze_template.osexp', _(u'Eye-tracking template')),
+]
