@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import os
+import time
 import functools
 from qtpy import QtWidgets, QtCore
 from libopensesame.oslogging import oslogger
@@ -52,6 +53,10 @@ class base_extension(base_subcomponent):
 		"""
 
 		oslogger.debug(u'creating %s' % self.name())
+		if main_window.options.profile:
+			# Use a special fire() function that keeps track of durations
+			self._event_durations = {}
+			self.fire = self._fire_and_time
 		self._ = translation_context(self.name(), category=u'extension')
 		self.info = info
 		self.setup(main_window)
@@ -411,6 +416,22 @@ class base_extension(base_subcomponent):
 
 		if hasattr(self, u'event_%s' % event):
 			getattr(self, u'event_%s' % event)(**kwdict)
+			
+	def _fire_and_time(self, event, **kwdict):
+		
+		"""
+		desc:
+			Similar to fire() but also keeps track of the duration of each
+			event for benchmarking purposes. This function is used if the
+			--performance-profile argument is passed.
+		"""
+		
+		if hasattr(self, u'event_%s' % event):
+			t0 = time.time()
+			getattr(self, u'event_%s' % event)(**kwdict)
+			if event not in self._event_durations:
+				self._event_durations[event] = []
+			self._event_durations[event].append(time.time() - t0)
 
 	def provide(self, provide, **kwdict):
 
