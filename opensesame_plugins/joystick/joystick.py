@@ -73,7 +73,7 @@ class joystick(base_response_item):
 			self.experiment,
 			keylist=(
 				self._allowed_responses if self._allowed_responses
-				else list(range(0,10)) # Only numeric keys
+				else list(range(0,10))  # Only numeric keys
 			),
 			timeout=self._timeout
 		)
@@ -104,7 +104,7 @@ class joystick(base_response_item):
 		if self.var._dummy == u'yes':
 			self._keyboard.timeout = 0
 		else:
-			self.experiment.joystick.timeout = 0
+			self._timeout = 0
 		alive = True
 		yield
 		self._t0 = self.set_item_onset()
