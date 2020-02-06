@@ -16,7 +16,7 @@ set font_bold "no"
 set description "A template for eye-tracking experiments"
 set coordinates "relative"
 set compensation 0
-set canvas_backend "xpyriment"
+set canvas_backend "psycho"
 set bidi "yes"
 set background "black"
 
