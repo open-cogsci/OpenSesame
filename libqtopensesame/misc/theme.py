@@ -190,7 +190,9 @@ class theme(object):
 			name = icon
 		icon = QtGui.QIcon.fromTheme(name, self.fallback_icon)
 		if icon.name() != name:
-			oslogger.warning(u'missing icon %s' % name)
+			oslogger.debug(
+				u'missing icon {}, using {}'.format(name, icon.name())
+			)
 		return icon
 
 	def qpixmap(self, icon, size=None):
