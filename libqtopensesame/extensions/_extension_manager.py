@@ -95,22 +95,28 @@ class extension_manager(base_subcomponent):
 				)
 				self.console.write(e)
 			else:
-				oslogger.debug(u'installing extension {}'.format(ext_name))
 				self._extensions.append(ext)
-				for event in ext.supported_events():
-					if event not in self.events:
-						self.events[event] = []
-					self.events[event].append(ext)
-				for provide in ext.supported_provides():
-					if provide in self.provides:
-						oslogger.warning(
-							u'multiple extensions provide {}'.format(provide)
-						)
-						continue
-					self.provides[provide] = ext
+				self.register_extension(ext, ext_name)
 				if ext.extension_filter is not None:
 					extension_filter = ext.extension_filter
 		self.main_window.set_busy(False)
+		
+	def register_extension(self, ext, ext_name=None):
+		
+		if ext_name is None:
+			ext_name = str(ext)
+		oslogger.debug(u'installing extension {}'.format(ext_name))
+		for event in ext.supported_events():
+			if event not in self.events:
+				self.events[event] = []
+			self.events[event].append(ext)
+		for provide in ext.supported_provides():
+			if provide in self.provides:
+				oslogger.warning(
+					u'multiple extensions provide {}'.format(provide)
+				)
+				continue
+			self.provides[provide] = ext
 
 	def __getitem__(self, extension_name):
 
