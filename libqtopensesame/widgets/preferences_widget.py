@@ -51,16 +51,12 @@ class preferences_widget(base_widget):
 		self.tab_name = u'__preferences__'
 		self.lock = False
 		# Connect the controls
-		self.ui.checkbox_autoresponse.toggled.connect(self.apply)
 		self.ui.checkbox_toolbar_text.toggled.connect(self.apply)
 		self.ui.checkbox_small_toolbar.toggled.connect(self.apply)
 		self.ui.combobox_runner.currentIndexChanged.connect(self.apply)
 		self.ui.combobox_style.currentIndexChanged.connect(self.apply)
 		self.ui.combobox_theme.currentIndexChanged.connect(self.apply)
 		self.ui.combobox_locale.currentIndexChanged.connect(self.apply)
-		# Hide miscellaneous group for now, because it only contains the
-		# auto-response option, which is defunct
-		self.ui.group_miscellaneous.setVisible(False)
 		self.set_controls()
 		for ext in self.extensions:
 			try:
@@ -69,11 +65,18 @@ class preferences_widget(base_widget):
 				if not isinstance(e, osexception):
 					e = osexception(msg=u'Extension error', exception=e)
 				self.notify(
-					u'Extension %s failed to return settings widget (see debug window for stack trace)'
-					% ext.name())
+					(
+						u'Extension %s failed to return settings widget '
+						u'(see debug window for stack trace)'
+					) % ext.name()
+				)
 				self.console.write(e)
 				continue
-			if w is not None:
+			if w is None:
+				continue
+			if hasattr(w, u'__advanced__'):
+				self.ui.layout_advanced.addWidget(w)
+			else:
 				self.ui.layout_preferences.addWidget(w)
 		self.ui.container_widget.adjustSize()
 
@@ -87,8 +90,6 @@ class preferences_widget(base_widget):
 		if self.lock:
 			return
 		self.lock = True
-		self.ui.checkbox_autoresponse.setChecked(
-			self.experiment.auto_response)
 		self.ui.checkbox_toolbar_text.setChecked(
 			self.main_window.ui.toolbar_main.toolButtonStyle() ==
 			QtCore.Qt.ToolButtonTextUnderIcon
@@ -126,6 +127,7 @@ class preferences_widget(base_widget):
 			self.ui.combobox_theme.addItem(_theme)
 			if cfg.theme == _theme:
 				self.ui.combobox_theme.setCurrentIndex(i)
+		self.ui.groupbox_appearance.adjustSize()
 		self.lock = False
 
 	def apply(self):
@@ -135,10 +137,6 @@ class preferences_widget(base_widget):
 		if self.lock:
 			return
 		self.lock = True
-		self.experiment.auto_response = \
-			self.ui.checkbox_autoresponse.isChecked()
-		self.main_window.ui.action_enable_auto_response.setChecked(
-			self.ui.checkbox_autoresponse.isChecked())
 		self.main_window.ui.toolbar_main.setToolButtonStyle(
 			QtCore.Qt.ToolButtonTextUnderIcon
 			if self.ui.checkbox_toolbar_text.isChecked() else

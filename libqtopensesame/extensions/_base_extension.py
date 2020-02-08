@@ -37,6 +37,7 @@ class base_extension(base_subcomponent):
 	"""
 
 	extension_filter = None
+	preferences_ui = None
 
 	def __init__(self, main_window, info={}):
 
@@ -499,7 +500,22 @@ class base_extension(base_subcomponent):
 			if isinstance(default, dict):
 				default = default.get(self.main_window.mode, u'')
 			cfg.register(setting, default=default)
-
+			
+	def _settings_widget_from_ui(self, ui):
+		
+		"""
+		desc:
+			Generates a standard preferences widget based on a ui file.
+			
+		arguments:
+			ui: A ui file.
+		"""
+		
+		from libqtopensesame.widgets.base_preferences_widget import (
+			BasePreferencesWidget
+		)
+		return BasePreferencesWidget(self.main_window, ui)
+			
 	def settings_widget(self):
 
 		"""
@@ -512,11 +528,16 @@ class base_extension(base_subcomponent):
 			A settings QWidget or None.
 		"""
 
+		if self.preferences_ui is not None:
+			return self._settings_widget_from_ui(self.preferences_ui)
 		r = 10000000 # Maximumum range for spinbox widgets
 		if u'settings' not in self.info:
 			return None
-		group = QtWidgets.QGroupBox(self._(u'Extension: %s') % self.name(),
-			self.main_window)
+		group = QtWidgets.QGroupBox(
+			self._(u'Extension: %s') % self.name(),
+			self.main_window
+		)
+		group.__advanced__ = True
 		layout = QtWidgets.QFormLayout(group)
 		self.settings_controls = {}
 		for setting, default in self.info[u'settings'].items():

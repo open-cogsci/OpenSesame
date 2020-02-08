@@ -91,6 +91,11 @@ class pyqode_manager(base_extension):
 			sh.make_python_patterns(additional_builtins=builtins),
 			re.S
 		)
+		
+	def settings_widget(self):
+		
+		from pyqode_preferences import PyQodePreferences
+		return PyQodePreferences(self.main_window)
 
 	def event_startup(self):
 
@@ -203,8 +208,23 @@ class pyqode_manager(base_extension):
 		if editor in self._editors:
 			self._editors.remove(editor)
 		oslogger.debug(u'unregistering ({})'.format(len(self._editors)))
+		
+	def event_setting_changed(self, setting, value):
+		
+		fnc = '_setting_{}'.format(setting)
+		if hasattr(self, fnc):
+			getattr(self, fnc)(value)
+			
+	def _setting_pyqode_show_line_numbers(self, show_line_numbers):
 
-	def event_pyqode_set_line_wrap(self, line_wrap):
+		self._toggle_panel(
+			'pyqode_show_line_numbers',
+			show_line_numbers,
+			LineNumberPanel,
+			Panel.Position.LEFT
+		)
+
+	def _setting_pyqode_line_wrap(self, line_wrap):
 
 		cfg.pyqode_line_wrap = line_wrap
 		for editor in self._editors:
@@ -214,7 +234,7 @@ class pyqode_manager(base_extension):
 				else QPlainTextEdit.NoWrap
 			)
 
-	def event_pyqode_set_code_completion(self, code_completion):
+	def _setting_pyqode_code_completion(self, code_completion):
 
 		editors = self._editors
 		self._editors = [e for e in editors if isinstance(e, FallbackCodeEdit)]
@@ -232,7 +252,7 @@ class pyqode_manager(base_extension):
 			self._toggle_mode('pyqode_code_completion', code_completion, mode)
 		self._editors = editors
 
-	def event_pyqode_set_fixed_width(self, fixed_width):
+	def _setting_pyqode_fixed_width(self, fixed_width):
 
 		self._toggle_panel(
 			'pyqode_fixed_width',
@@ -242,13 +262,13 @@ class pyqode_manager(base_extension):
 			nchar=cfg.pyqode_fixed_width_nchar
 		)
 
-	def event_pyqode_set_show_whitespaces(self, show_whitespaces):
+	def _setting_pyqode_show_whitespaces(self, show_whitespaces):
 
 		cfg.pyqode_show_whitespaces = show_whitespaces
 		for editor in self._editors:
 			editor.show_whitespaces = cfg.pyqode_show_whitespaces
 
-	def event_pyqode_set_show_right_margin(self, show_right_margin):
+	def _setting_pyqode_right_margin(self, show_right_margin):
 
 		self._toggle_mode(
 			'pyqode_right_margin',
@@ -256,16 +276,7 @@ class pyqode_manager(base_extension):
 			RightMarginMode
 		)
 
-	def event_pyqode_set_show_line_numbers(self, show_line_numbers):
-
-		self._toggle_panel(
-			'pyqode_show_line_numbers',
-			show_line_numbers,
-			LineNumberPanel,
-			Panel.Position.LEFT
-		)
-
-	def event_pyqode_set_code_folding(self, code_folding):
+	def _setting_pyqode_code_folding(self, code_folding):
 
 		self._toggle_panel(
 			'pyqode_code_folding',

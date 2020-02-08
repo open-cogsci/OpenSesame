@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>621</width>
+    <height>805</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>18</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QGroupBox" name="groupbox_appearance">
+     <property name="title">
+      <string>Code editor: Appearance</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout">
+      <property name="labelAlignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="horizontalSpacing">
+       <number>12</number>
+      </property>
+      <property name="leftMargin">
+       <number>12</number>
+      </property>
+      <property name="topMargin">
+       <number>12</number>
+      </property>
+      <property name="rightMargin">
+       <number>12</number>
+      </property>
+      <property name="bottomMargin">
+       <number>12</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_font">
+        <property name="text">
+         <string>Font</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_color_scheme">
+        <property name="text">
+         <string>Color scheme</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="cfg_pyqode_color_scheme"/>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_tab_length">
+        <property name="text">
+         <string>Tab width</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QSpinBox" name="cfg_pyqode_tab_length">
+        <property name="suffix">
+         <string> characters</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_show_line_numbers">
+        <property name="text">
+         <string>Show line numbers</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_highlight_caret_line">
+        <property name="text">
+         <string>Highlight current line</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_right_margin">
+        <property name="text">
+         <string>Show right margin</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_show_whitespaces">
+        <property name="text">
+         <string>Show whitespace</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_line_wrap">
+        <property name="text">
+         <string>Wrap lines</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_code_folding">
+        <property name="text">
+         <string>Allow code folding</string>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_fixed_width">
+        <property name="text">
+         <string>Fix editor width</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0">
+       <widget class="QLabel" name="label_fixed_width_nchar">
+        <property name="text">
+         <string>Editor width</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="1">
+       <widget class="QSpinBox" name="cfg_pyqode_fixed_width_nchar">
+        <property name="suffix">
+         <string> characters</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QWidget" name="widget_font" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QFontComboBox" name="cfg_pyqode_font_name"/>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="cfg_pyqode_font_size">
+           <property name="suffix">
+            <string> pt</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupbox_behavior">
+     <property name="title">
+      <string>Code editor: Behavior</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_2">
+      <property name="labelAlignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="horizontalSpacing">
+       <number>12</number>
+      </property>
+      <property name="leftMargin">
+       <number>12</number>
+      </property>
+      <property name="topMargin">
+       <number>12</number>
+      </property>
+      <property name="rightMargin">
+       <number>12</number>
+      </property>
+      <property name="bottomMargin">
+       <number>12</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_indentation">
+        <property name="text">
+         <string>Indentation</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="cfg_pyqode_indentation">
+        <item>
+         <property name="text">
+          <string>auto</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>spaces</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>tabs</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_pep8_ignore">
+        <property name="text">
+         <string>Ignore style violations&lt;br /&gt;&lt;a href=&quot;https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;List of error codes&lt;/span&gt;&lt;/a&gt;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="openExternalLinks">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLineEdit" name="cfg_pyqode_pep8_ignore"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_code_completion">
+        <property name="text">
+         <string>Enable code completion</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_pyflakes_validation">
+        <property name="text">
+         <string>Check Python syntax (pyflakes)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_pep8_validation">
+        <property name="text">
+         <string>Check Python style (PEP8)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupbox_keyboard_shortcuts">
+     <property name="title">
+      <string>Code editor: Keyboard shortcuts</string>
+     </property>
+     <layout class="QFormLayout" name="formLayout_3">
+      <property name="labelAlignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="horizontalSpacing">
+       <number>12</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>6</number>
+      </property>
+      <property name="leftMargin">
+       <number>12</number>
+      </property>
+      <property name="topMargin">
+       <number>12</number>
+      </property>
+      <property name="rightMargin">
+       <number>12</number>
+      </property>
+      <property name="bottomMargin">
+       <number>12</number>
+      </property>
+      <item row="0" column="1">
+       <widget class="QKeySequenceEdit" name="cfg_pyqode_shortcut_duplicate_line"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_shortcut_duplicate_line">
+        <property name="text">
+         <string>Duplicate line</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_shortcut_swap_line_up">
+        <property name="text">
+         <string>Swap line up</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_shortcut_swap_line_down">
+        <property name="text">
+         <string>Swap line down</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QKeySequenceEdit" name="cfg_pyqode_shortcut_swap_line_up"/>
+      </item>
+      <item row="2" column="1">
+       <widget class="QKeySequenceEdit" name="cfg_pyqode_shortcut_swap_line_down"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>cfg_pyqode_fixed_width</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>cfg_pyqode_fixed_width_nchar</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>335</x>
+     <y>336</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>335</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cfg_pyqode_fixed_width</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_fixed_width_nchar</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>335</x>
+     <y>336</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>71</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
