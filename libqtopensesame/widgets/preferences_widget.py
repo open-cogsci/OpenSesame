@@ -75,9 +75,9 @@ class preferences_widget(base_widget):
 			if w is None:
 				continue
 			if hasattr(w, u'__advanced__'):
-				self.ui.layout_advanced.addWidget(w)
+				self.ui.layout_advanced.addRow(w, None)
 			else:
-				self.ui.layout_preferences.addWidget(w)
+				self.ui.layout_preferences.addRow(w, None)
 		self.ui.container_widget.adjustSize()
 
 	def set_controls(self):
@@ -127,7 +127,6 @@ class preferences_widget(base_widget):
 			self.ui.combobox_theme.addItem(_theme)
 			if cfg.theme == _theme:
 				self.ui.combobox_theme.setCurrentIndex(i)
-		self.ui.groupbox_appearance.adjustSize()
 		self.lock = False
 
 	def apply(self):

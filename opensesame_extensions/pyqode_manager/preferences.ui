@@ -367,5 +367,37 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>cfg_pyqode_pep8_validation</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>cfg_pyqode_pep8_ignore</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>394</x>
+     <y>560</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>394</x>
+     <y>592</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cfg_pyqode_pep8_validation</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>label_pep8_ignore</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>394</x>
+     <y>560</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>92</x>
+     <y>595</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
 </ui>

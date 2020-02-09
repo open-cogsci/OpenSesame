@@ -44,3 +44,9 @@ class PyQodePreferences(BasePreferencesWidget):
 		self.ui.label_fixed_width_nchar.setEnabled(
 			cfg.pyqode_fixed_width
 		)
+		self.ui.cfg_pyqode_pep8_ignore.setEnabled(
+			cfg.pyqode_pep8_validation
+		)
+		self.ui.label_pep8_ignore.setEnabled(
+			cfg.pyqode_pep8_validation
+		)

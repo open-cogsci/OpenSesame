@@ -81,10 +81,7 @@
             <height>720</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="layout_preferences">
-           <property name="spacing">
-            <number>18</number>
-           </property>
+          <layout class="QFormLayout" name="layout_preferences">
            <property name="leftMargin">
             <number>12</number>
            </property>
@@ -97,7 +94,7 @@
            <property name="bottomMargin">
             <number>12</number>
            </property>
-           <item>
+           <item row="0" column="0">
             <widget class="QGroupBox" name="groupbox_appearance">
              <property name="title">
               <string>Application appearance</string>
@@ -168,7 +165,7 @@
              </layout>
             </widget>
            </item>
-           <item>
+           <item row="1" column="0">
             <widget class="QGroupBox" name="groupbox_runner">
              <property name="title">
               <string>Running experiments</string>
@@ -264,23 +261,7 @@
             <height>720</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="layout_advanced">
-           <property name="spacing">
-            <number>18</number>
-           </property>
-           <property name="leftMargin">
-            <number>12</number>
-           </property>
-           <property name="topMargin">
-            <number>12</number>
-           </property>
-           <property name="rightMargin">
-            <number>12</number>
-           </property>
-           <property name="bottomMargin">
-            <number>12</number>
-           </property>
-          </layout>
+          <layout class="QFormLayout" name="layout_advanced"/>
          </widget>
         </widget>
        </item>
