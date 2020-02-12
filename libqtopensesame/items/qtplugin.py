@@ -497,3 +497,6 @@ class qtplugin(qtitem.qtitem):
 				self.apply_edit_changes()
 				return True
 		return qtitem.qtitem.get_ready(self)
+
+
+QtPlugin = qtplugin

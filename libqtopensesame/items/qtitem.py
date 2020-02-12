@@ -1018,3 +1018,6 @@ class qtitem(object):
 		"""
 
 		pass
+
+
+QtItem = qtitem

@@ -171,3 +171,6 @@ class qtautoplugin(qtplugin):
 		qtplugin.edit_widget(self)
 		self.lock = False
 		return self._edit_widget
+
+
+QtAutoPlugin = qtautoplugin

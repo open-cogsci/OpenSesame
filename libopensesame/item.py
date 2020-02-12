@@ -553,3 +553,6 @@ class item(object):
 			u'item.eval_text() has been deprecated. Please use syntax.eval_text()',
 			DeprecationWarning)
 		return self.syntax.eval_text(text, round_float=round_float)
+
+
+Item = item
