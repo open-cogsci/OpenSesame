@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+import time
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_component import base_component
