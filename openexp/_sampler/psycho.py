@@ -71,7 +71,7 @@ class Psycho(Sampler):
 			self._data, self._samplerate = sf.read(src)
 		# Make sure that the data is a [samples, 2] array for stereo data
 		if self._data.ndim == 1:
-			self.self._data.shape = [len(thisArray), 1]
+			self._data.shape = [len(self._data), 1]
 		if self._data.shape[1] == 1:
 			self._data = self._data.repeat(2, axis=1)
 		self._sound = Sound(
