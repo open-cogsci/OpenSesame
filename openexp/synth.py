@@ -134,15 +134,15 @@ def key_to_freq(key):
 def osc_gen(_type, freq, length, rate):
 
 	length *= .001
-	t = np.linspace(0, length, length*rate)
+	t = np.linspace(0, length, int(length*rate))
 	if _type == u'square':
-		return signal.square(2*np.pi*freq*t)
+		return signal.square(2 * np.pi * freq * t)
 	if _type == u'saw':
-		return signal.sawtooth(2*np.pi*freq*t)
+		return signal.sawtooth(2 * np.pi * freq * t)
 	if _type == u'sine':
-		return np.sin(2*np.pi*freq*t)
+		return np.sin(2 * np.pi * freq * t)
 	if _type == u'white_noise':
-		return np.random.random(int(length*rate))*2 - 1
+		return np.random.random(int(length * rate)) * 2 - 1
 	raise osexception(u'Invalid oscillator: %s' % _type)
 
 
