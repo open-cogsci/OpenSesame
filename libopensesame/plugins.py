@@ -283,35 +283,35 @@ def list_plugins(filter_disabled=True, _type=u'plugins', mode=u'default'):
 		A list of plugins (item_types).
 	"""
 
-	global _plugin_dict
-	if _type in _plugin_dict:
-		return [plugin for plugin in _plugin_dict[_type] \
-			if not (filter_disabled and plugin_disabled(plugin, _type=_type))]
-	plugins = []
-	for folder in plugin_folders(_type=_type):
-		for plugin in os.listdir(folder):
-			if is_plugin(plugin, _type=_type):
-				if mode not in plugin_property(
-					plugin,
-					u'modes',
-					default=[u'default'],
-					_type=_type
-				):
-					oslogger.debug(
-						'{} does not support mode {}'.format(plugin, mode)
+	if _type not in _plugin_dict:
+		plugins = []
+		for folder in plugin_folders(_type=_type):
+			for plugin in os.listdir(folder):
+				if is_plugin(plugin, _type=_type):
+					if mode not in plugin_property(
+						plugin,
+						u'modes',
+						default=[u'default'],
+						_type=_type
+					):
+						oslogger.debug(
+							'{} does not support mode {}'.format(plugin, mode)
+						)
+						continue
+					_plugin = plugin, plugin_property(
+						plugin, u'priority',
+						_type=_type
 					)
-					continue
-				_plugin = plugin, plugin_property(
-					plugin, u'priority',
-					_type=_type
-				)
-				if _plugin not in plugins:
-					plugins.append(_plugin)
-	# Sort (inversely) by priority
-	plugins.sort(key=lambda p: -p[1])
-	_plugin_dict[_type] = [plugin[0] for plugin in plugins]
-	return [plugin for plugin in _plugin_dict[_type] \
-		if not (filter_disabled and plugin_disabled(plugin, _type=_type))]
+					if _plugin not in plugins:
+						plugins.append(_plugin)
+		# Sort (inversely) by priority
+		plugins.sort(key=lambda p: -p[1])
+		_plugin_dict[_type] = [plugin[0] for plugin in plugins]
+	return [
+		plugin
+		for plugin in _plugin_dict[_type]
+		if not (filter_disabled and plugin_disabled(plugin, _type=_type))
+	]
 
 
 def plugin_folder(plugin, _type=u'plugins'):
