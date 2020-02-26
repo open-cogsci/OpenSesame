@@ -32,7 +32,7 @@ class font_widget_base(base_widget):
 	font_list = [
 		u'mono', u'sans', u'serif', u'arabic',
 		u'chinese-japanese-korean', u'hebrew', u'hindi',
-		_(u'other ...', context=u'font_widget')
+		_(u'other ...')
 	]
 
 	font_changed = QtCore.Signal(['QString', int, bool, bool])

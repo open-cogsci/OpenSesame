@@ -677,10 +677,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			return True
 		resp = confirmation(
 			self,
-			msg=_(
-				u'Your experiment contains unsaved changes. '
-				u'Do you want to save your experiment?'
-			),
+			msg=_(u'Your experiment contains unsaved changes. Do you want to save your experiment?'),
 			title=_(u'Save changes?'), allow_cancel=True,
 			default=u'cancel'
 		).show()
