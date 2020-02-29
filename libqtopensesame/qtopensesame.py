@@ -74,6 +74,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			)
 		else:
 			QtWidgets.QMainWindow.__init__(self, parent)
+		self._locale = None
 		self.app = app
 		self.first_show = True
 		self.current_path = None
@@ -506,6 +507,39 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			oslogger.debug(u"using style '%s'" % cfg.style)
 		else:
 			cfg.style = u''
+			
+	@property
+	def locale(self):
+		
+		if self._locale:
+			return self._locale
+		# If a locale has been explicitly specified, use it; otherwise, use the
+		# system default locale.
+		locale = (
+			cfg.locale
+			if cfg.locale
+			else QtCore.QLocale().system().name()
+		)
+		# If a locale has been specified on the command line, it overrides.
+		for i, argv in enumerate(sys.argv[:-1]):
+			if argv == '--locale':
+				locale = safe_decode(sys.argv[i + 1])
+		qm = libopensesame.misc.resource(
+			os.path.join(u'locale', locale) + u'.qm'
+		)
+		# Say that we're trying to load de_AT, and it is not found, then we'll
+		# try de_DE as fallback.
+		if qm is None:
+			loctuple = locale.split(u'_')
+			if loctuple:
+				_locale = loctuple[0] + u'_' + loctuple[0].upper()
+				qm = libopensesame.misc.resource(
+					os.path.join(u'locale', _locale + u'.qm')
+				)
+				if qm is not None:
+					locale = _locale
+		self._locale = locale
+		return self._locale
 
 	def set_locale(self, translator):
 
@@ -521,30 +555,13 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 				type:	QTranslator
 		"""
 
-		# If a locale has been explicitly specified, use it; otherwise, use the
-		# system default locale.
-		locale = cfg.locale if cfg.locale != u'' else \
-			QtCore.QLocale().system().name()
-		# If a locale has been specified on the command line, it overrides.
-		for i, argv in enumerate(sys.argv[:-1]):
-			if argv == '--locale':
-				locale = safe_decode(sys.argv[i + 1])
-		qm = libopensesame.misc.resource(
-			os.path.join(u'locale', locale) + u'.qm')
-		# Say that we're trying to load de_AT, and it is not found, then we'll
-		# try de_DE as fallback.
-		if qm is None:
-			loctuple = locale.split(u'_')
-			if loctuple:
-				_locale = loctuple[0] + u'_' + loctuple[0].upper()
-				qm = libopensesame.misc.resource(
-					os.path.join(u'locale', _locale + u'.qm')
-				)
-				if qm is not None:
-					locale = _locale
-		self._locale = locale
-		translator.load(qm)
-		QtWidgets.QApplication.installTranslator(translator)
+		self.translator = translator
+		self.translator.load(
+			libopensesame.misc.resource(
+				os.path.join(u'locale', self.locale + u'.qm')
+			)
+		)
+		QtWidgets.QApplication.installTranslator(self.translator)
 
 	def set_auto_response(self):
 

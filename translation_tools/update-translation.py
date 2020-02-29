@@ -26,7 +26,7 @@ import subprocess
 import argparse
 
 EXCLUDE_FOLDERS = [u'build', u'dist', 'deb_dist', 'pgs4a-0.9.4']
-LUPDATE = ['pylupdate5', '-noobsolete']
+LUPDATE = ['pylupdate5']  # + ['-noobsolete']
 LRELEASE = u'lrelease'
 TRANSLATABLES_PY = os.path.abspath('translation_tools/translatables.py')
 TRANSLATE_PRO = os.path.abspath('translation_tools/translate.pro')
@@ -72,7 +72,8 @@ class Translatables(object):
         for context, translatables in self._translatables.items():
             ls.append(u'class %s:\n\tdef _():' % context)
             for s in translatables:
-                s = s.replace(u"'", u"\\'")
+                # Escape all unescapted single quotes
+                s = re.sub(r"(?<!\\)'", "\\'", s)
                 s = s.replace(u'\n', u'\\n')
                 ls.append(u'\t\tself.tr(\'%s\')' % s)
         return safe_str(u'\n'.join(ls) + u'\n')
@@ -154,19 +155,31 @@ def parse_folder(path, t, ui_list, category):
             parse_folder(_fname, t, ui_list, category)
 
 
-def compile_ts(locales, t, ui_list, fname=TRANSLATE_PRO):
+def ts_path(ts_folder, locale):
+    
+    return os.path.abspath(os.path.join(ts_folder, locale + '.ts'))
+
+
+def qm_path(qm_folder, locale):
+    
+    return os.path.abspath(os.path.join(qm_folder, locale + '.qm'))
+                                        
+
+def compile_ts(locales, t, ui_list, ts_folder, fname=TRANSLATE_PRO):
 
     t.to_file()
-    if not os.path.exists('opensesame_resources/ts'):
+    if not os.path.exists(ts_folder):
         print('No ts files found')
         return
     pro = pro_tmpl.format(
         ui_list=' \\\n\t'.join(ui_list),
         locales=' \\\n\t'.join(
             [
-                os.path.abspath(u'opensesame_resources/ts/%s.ts' % locale)
+                ts_path(ts_folder, locale)
                 for locale in locales
-                if os.path.exists(u'opensesame_resources/ts/%s.ts' % locale)
+                if locale == 'translatables' or os.path.exists(
+                    ts_path(ts_folder, locale)
+                )
             ]
         ),
         sources=TRANSLATABLES_PY
@@ -177,14 +190,14 @@ def compile_ts(locales, t, ui_list, fname=TRANSLATE_PRO):
     subprocess.call(cmd)
 
 
-def compile_qm(locales):
+def compile_qm(locales, ts_folder, qm_folder):
 
     for locale in locales:
-        src = u'opensesame_resources/ts/%s.ts' % locale
+        src = ts_path(ts_folder, locale)
         if not os.path.exists(src):
             print('{} does not exist'.format(src))
             continue
-        target = u'opensesame_resources/locale/%s.qm' % locale
+        target = qm_path(qm_folder, locale)
         cmd = [LRELEASE, src, u'-qm', target]
         subprocess.call(cmd)
 
@@ -207,10 +220,10 @@ def check_markdown_translations(dirname, locale):
             print('- %s' % path)
 
 
-def add_message_encoding(locales):
+def add_message_encoding(locales, ts_folder):
 
     for locale in locales:
-        path = u'opensesame_resources/ts/%s.ts' % locale
+        path = ts_path(ts_folder, locale)
         if not os.path.exists(path):
             print('{} does not exist'.format(path))
             continue
@@ -239,6 +252,18 @@ if __name__ == u'__main__':
         choices=[u'plugin', u'extension', u'auto'],
         help='Should be "plugin", "extension", or "auto"'
     )
+    parser.add_argument(
+        '--ts_folder',
+        type=str,
+        default=u'opensesame_resources/ts',
+        help='The folder that contains the ts files'
+    )
+    parser.add_argument(
+        '--qm_folder',
+        type=str,
+        default=u'opensesame_resources/locale',
+        help='The folder that contains the qm files'
+    )
     args = parser.parse_args()
     translatables = Translatables()
     ui_list = []
@@ -250,11 +275,11 @@ if __name__ == u'__main__':
         category=args.category
     )
     print('Adding message encodings …')
-    add_message_encoding(LOCALES)
+    add_message_encoding(LOCALES, args.ts_folder)
     print('Compiling ts …')
-    compile_ts(LOCALES, translatables, ui_list)
+    compile_ts(LOCALES, translatables, ui_list, args.ts_folder)
     print('Compiling qm …')
-    compile_qm(LOCALES)
+    compile_qm(LOCALES, args.ts_folder, args.qm_folder)
     for locale in LOCALES:
         if locale == 'translatables':
             continue
