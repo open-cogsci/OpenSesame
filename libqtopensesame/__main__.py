@@ -165,12 +165,16 @@ def opensesame():
 	opensesame = qtopensesame(app)
 	opensesame.__script__ = __file__
 	app.processEvents()
-	# Install the translator. For some reason, the translator needs to be
+	# Install the translator. For some reason, the translators need to be
 	# instantiated here and not in the set_locale() function, otherwise the
 	# locale is ignored.
 	from qtpy.QtCore import QTranslator
-	translator = QTranslator()
-	opensesame.set_locale(translator)
+	opensesame.set_locale([
+		QTranslator(),
+		QTranslator(),
+		QTranslator(),
+		QTranslator()
+	])
 	# Now that the window is shown, load the remaining modules and resume the
 	# GUI initialization.
 	opensesame.resume_init()

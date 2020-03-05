@@ -159,10 +159,10 @@ class base_extension(base_subcomponent):
 			type:    [unicode, NoneType]
 		"""
 
-		label = self.info.get(u'label', None)
-		if label is not None:
-			return self._(label)
-		return None
+		if not hasattr(self, '_label'):
+			label = self.info.get(u'label', None)
+			self._label = None if label is None else self._(label)
+		return self._label
 
 	def tooltip(self):
 
@@ -177,13 +177,17 @@ class base_extension(base_subcomponent):
 			type:    [unicode, NoneType]
 		"""
 
-		tooltip = self.info.get(u'tooltip', None)
-		if not tooltip:
-			return
-		shortcut = self.shortcut()
-		if not shortcut:
-			return tooltip
-		return '{} ({})'.format(tooltip, shortcut)
+		if not hasattr(self, '_tooltip'):
+			tooltip = self.info.get(u'tooltip', None)
+			if not tooltip:
+				self._tooltip = None
+			else:
+				shortcut = self.shortcut()
+				if not shortcut:
+					self._tooltip = tooltip
+				else:
+					self._tooltip = '{} ({})'.format(tooltip, shortcut)
+		return self._tooltip
 
 	def checkable(self):
 

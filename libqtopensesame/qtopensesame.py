@@ -541,7 +541,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self._locale = locale
 		return self._locale
 
-	def set_locale(self, translator):
+	def set_locale(self, translators):
 
 		""""
 		desc:
@@ -555,13 +555,14 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 				type:	QTranslator
 		"""
 
-		self.translator = translator
-		self.translator.load(
+		self.translators = translators
+		self._main_translator = self.translators.pop()
+		self._main_translator.load(
 			libopensesame.misc.resource(
 				os.path.join(u'locale', self.locale + u'.qm')
 			)
 		)
-		QtWidgets.QApplication.installTranslator(self.translator)
+		QtWidgets.QApplication.installTranslator(self._main_translator)
 
 	def set_auto_response(self):
 
