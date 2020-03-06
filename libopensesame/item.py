@@ -29,8 +29,7 @@ class item(object):
 	"""Abstract class that serves as the basis for all OpenSesame items."""
 
 	encoding = u'utf-8'
-	__deepcopy__ = None
-
+	
 	def __init__(self, name, experiment, string=None):
 
 		"""
@@ -63,6 +62,11 @@ class item(object):
 		else:
 			self.var.description = self.description
 		self.from_string(string)
+		
+	def __deepcopy__(self, memo):
+		"""Disable deep-copying of items"""
+		
+		return None
 
 	@property
 	def clock(self):

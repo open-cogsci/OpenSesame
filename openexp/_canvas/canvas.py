@@ -757,10 +757,12 @@ class Canvas(Backend):
 		desc: |
 			Turns the current `Canvas` into a copy of the passed `Canvas`.
 
-			__Note:__
+			__Warning:__
 
-			If you want to create a copy of a `sketchpad` `Canvas`, you can also
-			use the `inline_script.copy_sketchpad` function.
+			Copying `Canvas` objects can result in unpredictable behavior. In
+			many cases, a better solution is to recreate multiple `Canvas`
+			objects from scratch, and/ or to use the element interface to
+			update `Canvas` elements individually.
 
 		arguments:
 			canvas:
