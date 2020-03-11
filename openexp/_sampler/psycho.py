@@ -26,6 +26,9 @@ from openexp.keyboard import Keyboard
 import soundfile as sf
 import numpy as np
 
+DEFAULT_SOUND_FREQ = 48000
+DEFAULT_BLOCK_SIZE = 128
+NEEDS_BLOCK_SIZE = 'sounddevice', 'PTB'
 # Will be intialized during init_sound()
 Sound = None
 PLAYING = None
@@ -50,7 +53,12 @@ class Psycho(Sampler):
 		'sound_freq': {
 			'name': 'Sampling frequency for synth',
 			'description': 'Determines the sampling rate of synthesized sounds',
-			'default': 48000
+			'default': DEFAULT_SOUND_FREQ
+		},
+		'block_size': {
+			'name': 'Buffer size',
+			'description': 'Low values for low latency. High values for stability.',
+			'default': DEFAULT_BLOCK_SIZE
 		}
 	}
 
@@ -66,9 +74,22 @@ class Psycho(Sampler):
 			# trace, so we expand it here.
 			self._data = np.array(src, dtype=np.float64) / 32767
 			self._data = self._data.reshape((self._data.shape[0] // 2, 2))
-			self._samplerate = experiment.var.get(u'sound_freq', 48000)
+			self._samplerate = experiment.var.get(
+				'sound_freq',
+				DEFAULT_SOUND_FREQ
+			)
 		else:
 			self._data, self._samplerate = sf.read(src)
+		# Create keyword arguments, which depend on the sound backend
+		kwargs = {}
+		if (
+			experiment.var.get('psycho_audiolib', 'sounddevice')
+			in NEEDS_BLOCK_SIZE
+		):			
+			kwargs['blockSize'] = experiment.var.get(
+				'block_size',
+				DEFAULT_BLOCK_SIZE
+			)
 		# Make sure that the data is a [samples, 2] array for stereo data
 		if self._data.ndim == 1:
 			self._data.shape = [len(self._data), 1]
@@ -77,6 +98,7 @@ class Psycho(Sampler):
 		self._sound = Sound(
 			self._data,
 			sampleRate=self._samplerate,
+			**kwargs
 		)
 		self._keyboard = Keyboard(experiment)
 		Sampler.__init__(self, experiment, src, **playback_args)
