@@ -22,6 +22,7 @@ from libopensesame.py3compat import *
 import yaml
 import re
 import os
+import sys
 import subprocess
 import argparse
 
@@ -218,6 +219,21 @@ def check_markdown_translations(dirname, locale):
             os.path.join(dirname, u'locale', locale, basename)
         ):
             print('- %s' % path)
+            
+
+def list_markdown_translations(dirname):
+    
+    if not os.path.isdir(dirname):
+        print('{} is not a directory'.format(dirname))
+        return
+    for basename in os.listdir(dirname):
+        path = os.path.join(dirname, basename)
+        if os.path.isdir(path) and basename != u'locale':
+            list_markdown_translations(path)
+            continue
+        if not path.endswith(u'.md'):
+            continue
+        print('- `{}`'.format(path))
 
 
 def add_message_encoding(locales, ts_folder):
@@ -246,6 +262,11 @@ if __name__ == u'__main__':
         description=u'Update ts and qm files for OpenSesame-related projects'
     )
     parser.add_argument(
+        '--list-markdown',
+        action='store_true',
+        help='Activate to list Markdown tabs and then quit'
+    )
+    parser.add_argument(
         '--category',
         type=str,
         default=u'auto',
@@ -265,6 +286,11 @@ if __name__ == u'__main__':
         help='The folder that contains the qm files'
     )
     args = parser.parse_args()
+    if args.list_markdown:
+        list_markdown_translations('opensesame_extensions')
+        list_markdown_translations('opensesame_plugins')
+        list_markdown_translations('opensesame_resources')
+        sys.exit()
     translatables = Translatables()
     ui_list = []
     print('Parsing folders …')
