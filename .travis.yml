@@ -8,7 +8,7 @@ virtualenv:
 before_install:
   - sudo add-apt-repository -y ppa:smathot/rapunzel
   - sudo apt-get -q update
-  - sudo apt-get -y install python3-opensesame
+  - sudo apt-get -y install python3-opensesame scipy
   - wget https://github.com/smathot/python-yamldoc/archive/release/0.2.0.tar.gz -O yamldoc.tar.gz
   - tar -xzvf yamldoc.tar.gz
   - export PYTHONPATH=$PYTHONPATH:python-yamldoc-release-0.2.0
