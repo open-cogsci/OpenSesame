@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="zh_CN" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>Form</name>
     <message>
@@ -75,7 +76,7 @@
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="174"/>
         <source> pt</source>
-        <translation type="unfinished">磅</translation>
+        <translation type="unfinished"> 磅</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="187"/>
@@ -557,7 +558,7 @@
         <source>The following error occured while trying to save:&lt;br/&gt;%s</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="334"/>
         <source>Save as…</source>
         <translation type="unfinished"></translation>
@@ -792,7 +793,7 @@ Description: %s</source>
         <source>Done</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="455"/>
         <source>Loading …</source>
         <translation type="unfinished"></translation>
@@ -947,7 +948,7 @@ The experiment did not finish normally for the following reason:
 </context>
 <context>
     <name>extension_get_started</name>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="217"/>
         <source>New…</source>
         <translation type="unfinished"></translation>
@@ -995,7 +996,7 @@ The experiment did not finish normally for the following reason:
         <source>Adds a Help menu</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="172"/>
         <source>Please wait …</source>
         <translation type="unfinished"></translation>
@@ -1181,7 +1182,7 @@ The experiment did not finish normally for the following reason:
         <source>Quickly open items</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="243"/>
         <source>Search items …</source>
         <translation type="unfinished"></translation>
@@ -2171,7 +2172,7 @@ The experiment did not finish normally for the following reason:
         <translation type="unfinished"></translation>
     </message>
 </context>
-<context encoding="UTF-8">
+<context>
     <name>plugin_quest_staircase_init</name>
     <message>
         <location filename="../../translation_tools/translatables.py" line="42"/>
@@ -2208,17 +2209,17 @@ The experiment did not finish normally for the following reason:
         <source>Experimental variable for test value</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="39"/>
         <source>Chance level (γ)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="46"/>
         <source>Proportion of random responses at maximum stimulus intensity (δ)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="43"/>
         <source>Steepness of the Weibull psychometric function (β)</source>
         <translation type="unfinished"></translation>
@@ -2587,7 +2588,7 @@ Various settings related to the control of the display, sound, and input devices
         <source>Color 1&lt;br /&gt;&lt;i&gt;e.g., &apos;black&apos; or &apos;#000000&apos;&lt;/i&gt;</source>
         <translation type="unfinished">颜色 1&lt;br /&gt;&lt;i&gt;如., &apos;黑色&apos; 或 &apos;#FFFFFF&apos;&lt;/i&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
         <source> °</source>
         <translation type="unfinished"></translation>
@@ -2651,7 +2652,7 @@ Various settings related to the control of the display, sound, and input devices
         <source> px</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/general_properties.ui" line="183"/>
         <source>×</source>
         <translation type="unfinished"></translation>
@@ -3064,22 +3065,22 @@ Edit your experiment in script form</source>
         <source>One-tab mode</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="274"/>
         <source>Open…</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="304"/>
         <source>Save as…</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="327"/>
         <source>Run fullscreen…</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="365"/>
         <source>Run in window…</source>
         <translation type="unfinished"></translation>
@@ -3273,7 +3274,7 @@ Edit your experiment in script form</source>
         <source>Angle (phi)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="116"/>
         <source>°</source>
         <translation type="unfinished"></translation>
@@ -3597,7 +3598,7 @@ Edit your experiment in script form</source>
         <source>Select and move elements</source>
         <translation type="unfinished"></translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/sketchpad.ui" line="472"/>
         <source>°</source>
         <translation type="unfinished"></translation>
