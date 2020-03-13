@@ -27,11 +27,11 @@ from libopensesame.exceptions import osexception
 RGB_HEX6 = r'#(?P<r>[0-9a-fA-F]{2})(?P<g>[0-9a-fA-F]{2})(?P<b>[0-9a-fA-F]{2})$'
 RGB_HEX3 = r'#(?P<r>[0-9a-fA-F])(?P<g>[0-9a-fA-F])(?P<b>[0-9a-fA-F])$'
 RGB_255 = r'rgb\(\s*(?P<r>\d+)\s*,\s*(?P<g>\d+)\s*,\s*(?P<b>\d+)\s*\)\s*$'
-RGB_PERC = r'rgb\(\s*(?P<r>\d+)%\s*,\s*(?P<g>\d+)%\s*,\s*(?P<b>\d+)%\s*\)\s*$'
-HSL = r'hsl\(\s*(?P<h>\d+)\s*,\s*(?P<s>\d+)%\s*,\s*(?P<l>\d+)%\s*\)\s*$'
-HSV = r'hsv\(\s*(?P<h>\d+)\s*,\s*(?P<s>\d+)%\s*,\s*(?P<v>\d+)%\s*\)\s*$'
-LAB = r'lab\(\s*(?P<l>-?\d+)\s*,\s*(?P<a>-?\d+)\s*,\s*(?P<b>-?\d+)\s*\)\s*$'
-
+RGB_PERC = r'rgb\(\s*(?P<r>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)%\s*,\s*(?P<g>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)%\s*,\s*(?P<b>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)%\s*\)\s*$'
+HSL = r'hsl\(\s*(?P<h>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)\s*,\s*(?P<s>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)%\s*,\s*(?P<l>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)%\s*\)\s*$'
+HSV = r'hsv\(\s*(?P<h>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)\s*,\s*(?P<s>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)%\s*,\s*(?P<v>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)%\s*\)\s*$'
+LAB = r'lab\(\s*(?P<l>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)\s*,\s*(?P<a>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)\s*,\s*(?P<b>[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)\s*\)\s*$'
+ 
 
 def _is_rgb(colorspec):
 
@@ -170,7 +170,12 @@ class Color(object):
 				raise osexception(u'CIE L*a*b* color space requires PsychoPy')
 			# RGB values are between -1 and 1
 			r, g, b = cst.cielab2rgb(
-				(float(m.group('l')), float(m.group('a')), float(m.group('b')))
+				(
+					float(m.group('l')),
+					float(m.group('a')),
+					float(m.group('b'))
+				),
+				transferFunc=cst.srgbTF
 			)
 			return webcolors.rgb_to_hex((
 				int((r + 1) * 127.5),

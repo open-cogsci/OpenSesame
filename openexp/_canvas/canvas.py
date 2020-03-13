@@ -183,7 +183,8 @@ class Canvas(Backend):
 		- __LAB strings:__ `lab(53, -20, 0)`. In the [CIELAB](https://en.wikipedia.org/wiki/CIELAB_color_space)
 			color space, the parameters reflect lightness (`l*`),
 			green-red axis (`a*`, negative is green), and blue-yellow axis
-			(`b*`, negative is blue).
+			(`b*`, negative is blue). This uses the D65 white point and the
+			sRGB transfer function, as implemented [here](https://www.psychopy.org/_modules/psychopy/tools/colorspacetools.html).
 		- __Luminance values:__  `255`, `0`, etc. Here, values range from `0` to
 			`255` so that `255` is white.
 
