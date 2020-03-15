@@ -27,7 +27,7 @@ import soundfile as sf
 import numpy as np
 
 DEFAULT_SOUND_FREQ = 48000
-DEFAULT_BLOCK_SIZE = 128
+DEFAULT_BLOCK_SIZE = 256
 NEEDS_BLOCK_SIZE = 'sounddevice', 'PTB'
 # Will be intialized during init_sound()
 Sound = None
