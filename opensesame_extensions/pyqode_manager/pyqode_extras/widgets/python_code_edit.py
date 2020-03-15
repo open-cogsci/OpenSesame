@@ -88,7 +88,10 @@ class PythonCodeEdit(PyCodeEditBase):
 		self.modes.append(pymodes.CommentsMode())
 		if cfg.pyqode_highlight_caret_line:
 			self.modes.append(modes.CaretLineHighlighterMode())
-		if cfg.pyqode_code_completion:
+		if (
+			cfg.pyqode_code_completion and
+			self.language not in cfg.pyqode_code_completion_excluded_mimetypes
+		):
 			self.modes.append(modes.CodeCompletionMode())
 			self.modes.append(pymodes.PyAutoCompleteMode())
 			self.modes.append(pymodes.CalltipsMode())

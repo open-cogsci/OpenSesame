@@ -79,9 +79,6 @@ class FallbackCodeEdit(CodeEdit):
 			self.document(),
 			color_scheme=ColorScheme(cfg.pyqode_color_scheme))
 		)
-		if cfg.pyqode_code_completion:
-			self.modes.append(modes.AutoCompleteMode())
-			self.modes.append(modes.CodeCompletionMode())
 		self.modes.append(modes.ZoomMode())
 		self.modes.append(modes.AutoIndentMode())
 		self.modes.append(modes.IndenterMode())
@@ -126,6 +123,12 @@ class FallbackCodeEdit(CodeEdit):
 		else:
 			self._enable_auto_complete_for_quotes()
 		super(FallbackCodeEdit, self).setPlainText(txt, mime_type, encoding)
+		if (
+			cfg.pyqode_code_completion and
+			self.language not in cfg.pyqode_code_completion_excluded_mimetypes
+		):
+			self.modes.append(modes.AutoCompleteMode())
+			self.modes.append(modes.CodeCompletionMode())
 
 	def _enable_auto_complete_for_quotes(self):
 
@@ -162,7 +165,7 @@ class FallbackCodeEdit(CodeEdit):
 			return u'R'
 		if u'*.md' in filenames:
 			return u'markdown'
-		return None
+		return u'unknown'
 
 	def __repr__(self):
 

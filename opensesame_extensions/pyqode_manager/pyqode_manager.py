@@ -237,13 +237,21 @@ class pyqode_manager(base_extension):
 	def _setting_pyqode_code_completion(self, code_completion):
 
 		editors = self._editors
-		self._editors = [e for e in editors if isinstance(e, FallbackCodeEdit)]
+		self._editors = [
+			e for e in editors
+			if isinstance(e, FallbackCodeEdit) and
+			e.language not in cfg.pyqode_code_completion_excluded_mimetypes
+		]
 		for mode in (
 			CodeCompletionMode,
 			AutoCompleteMode
 		):
 			self._toggle_mode('pyqode_code_completion', code_completion, mode)
-		self._editors = [e for e in editors if isinstance(e, PythonCodeEdit)]
+		self._editors = [
+			e for e in editors
+			if isinstance(e, PythonCodeEdit) and
+			e.language not in cfg.pyqode_code_completion_excluded_mimetypes
+		]
 		for mode in (
 			CodeCompletionMode,
 			PyAutoCompleteMode,

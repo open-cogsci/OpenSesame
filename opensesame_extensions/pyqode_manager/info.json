@@ -11,6 +11,7 @@
         "pyqode_right_margin": false,
         "pyqode_highlight_caret_line": true,
         "pyqode_code_completion": true,
+        "pyqode_code_completion_excluded_mimetypes": "markdown",
         "pyqode_code_folding": false,
         "pyqode_indentation": "auto",
         "pyqode_show_whitespaces": false,

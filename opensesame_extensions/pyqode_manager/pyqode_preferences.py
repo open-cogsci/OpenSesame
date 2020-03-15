@@ -50,3 +50,9 @@ class PyQodePreferences(BasePreferencesWidget):
 		self.ui.label_pep8_ignore.setEnabled(
 			cfg.pyqode_pep8_validation
 		)
+		self.ui.cfg_pyqode_code_completion_excluded_mimetypes.setEnabled(
+			cfg.pyqode_code_completion
+		)
+		self.ui.label_pyqode_code_completion_excluded_mimetypes.setEnabled(
+			cfg.pyqode_code_completion
+		)
