@@ -109,13 +109,19 @@ class Color(object):
 			desc:	A hexadecimal color specification.
 			type:	unicode
 		"""
-
-		if isinstance(colorspec, int):
+		
+		if isinstance(colorspec, int):  # 0-255 luminance value
 			return webcolors.rgb_to_hex((colorspec, colorspec, colorspec))
 		if _is_rgb(colorspec):
 			return webcolors.rgb_to_hex(colorspec)
 		if not isinstance(colorspec, basestring):
 			_raise_invalid(colorspec)
+		try:  # 0-255 luminance value passed as string
+			colorspec = int(colorspec)
+		except ValueError:
+			pass
+		else:
+			return webcolors.rgb_to_hex((colorspec, colorspec, colorspec))
 		try:
 			return webcolors.name_to_hex(colorspec)
 		except ValueError:

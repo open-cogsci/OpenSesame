@@ -41,6 +41,7 @@ class CheckColor(unittest.TestCase):
 		for colorspec, colorref in [
 			(u'green', u'#008000'),
 			(255, u'#ffffff'),
+			(u'255', u'#ffffff'),
 			(u'#00FF00', u'#00ff00'),
 			(u'#00ff00', u'#00ff00'),
 			(u'#0F0', u'#00ff00'),
