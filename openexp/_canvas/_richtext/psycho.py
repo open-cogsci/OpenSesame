@@ -28,7 +28,10 @@ class Psycho(PsychoElement, RichText):
 	def prepare(self):
 
 		im = self._to_pil()
-		x, y = self.to_xy(self.x, self.y)
+		x_ratio = self.win.size[0] / self.experiment.width
+		y_ratio = self.win.size[1] / self.experiment.height
+		im = im.resize((int(im.width * x_ratio), int(im.height * y_ratio)))
+		x, y = self.to_xy(int(self.x * x_ratio), int(self.y * y_ratio))
 		if not self.center:
 			x += im.width // 2
 			y -= im.height // 2
