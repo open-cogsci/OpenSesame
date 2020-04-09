@@ -32,13 +32,24 @@ if sys.executable.endswith('pythonw.exe'):
 	sys.stderr = open(os.devnull, 'w')
 	sys.stdin = open(os.devnull)
 
+# On MacOS, the locations of the SSL cerfificates need to be explicitly indicated when packaged
+# as an app, otherwise urllib.urlopen fails with an SSL related error. To do so, we make use of the
+# certifi package that can provide this location, but it is unclear if certifi is always installed,
+# so let's fail gracefully if it isn't.
+if platform.system() == 'Darwin':
+	try:
+		import certifi
+		os.environ['SSL_CERT_FILE'] = certifi.where()
+		os.environ['SSL_CERT_DIR'] = os.path.dirname(certifi.where())
+	except ImportError:
+		pass # Or log something here?
 
 def patch_pyqt():
 
 	"""This patches PyQt such that properties are removed from objects before
 	connectSlotsByName() tries to inspect the object. This is necessary because
 	in some versions, the introspection crashes when properties cannot be
-	accessed, for example because the object to be initialized first.
+	accessed, for example because the object needs to be initialized first.
 	"""
 
 	def _(fnc):
