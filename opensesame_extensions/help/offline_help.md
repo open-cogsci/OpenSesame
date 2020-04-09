@@ -61,7 +61,5 @@ You can run your experiment in:
 
 In quick-run mode, the experiments starts immediately in a window, using log file `quickrun.csv`, and subject number 999. This is useful during development.
 
-When the 'auto-response' option (*Run -> Enable auto-response*) is enabled, OpenSesame simulates key press and mouse click responses, which is useful during development.
-
 [python]: http://www.python.org/
 [ipython]: http://www.ipython.org/
