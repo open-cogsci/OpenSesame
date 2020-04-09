@@ -31,11 +31,14 @@ class Psycho(PsychoElement, RichText):
 		# When displaying on Mac retina screens, the resolutions reported by psychopy's window object
 		# and OpenSesame's experiment object may diverge. This results in incorrectly rendered text
 		# with respect to scale and positioning. We correct for the discrepancy between reported sizes
-		# by the ratios calculated below.
-		x_ratio = self.win.size[0] / self.experiment.width
-		y_ratio = self.win.size[1] / self.experiment.height
-		im = im.resize((int(im.width * x_ratio), int(im.height * y_ratio)))
-		x, y = self.to_xy(int(self.x * x_ratio), int(self.y * y_ratio))
+		# by the ratios calculated below. If the sizes reported by win and experiment are equal, the ratio
+		# values should end up as 1, and nothing changes.
+		x_ratio = int(self.win.size[0] / self.experiment.width)
+		y_ratio = int(self.win.size[1] / self.experiment.height)
+		# Only resize if necessary to prevent unnecessary operations
+		if x_ratio != 1 or y_ratio != 1:
+			im = im.resize((im.width * x_ratio, im.height * y_ratio))
+		x, y = self.to_xy(self.x * x_ratio, self.y * y_ratio)
 		if not self.center:
 			x += im.width // 2
 			y -= im.height // 2
