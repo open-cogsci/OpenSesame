@@ -67,6 +67,7 @@ included_extensions = [
 	'tab_to_dockwidget',
 	'toolbar_menu',
 	'variable_inspector',
+	'restore_ui_elements',
 	'undo_manager',
 	'update_checker',
 ]
