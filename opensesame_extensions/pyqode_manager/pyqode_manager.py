@@ -39,7 +39,8 @@ from pyqode.core.modes import (
 	PygmentsSH,
 	RightMarginMode,
 	CodeCompletionMode,
-	AutoCompleteMode
+	AutoCompleteMode,
+	BreakpointMode
 )
 from pyqode.python.modes import (
 	sh,
@@ -109,6 +110,7 @@ class pyqode_manager(base_extension):
 		# Syntax is broken for TextCodeEdit, so we don't use it for now
 		# SplittableCodeEditTabWidget.register_code_edit(TextCodeEdit)
 		self._editors = []
+		self._breakpoints = {}
 
 	def event_close(self):
 
@@ -173,6 +175,7 @@ class pyqode_manager(base_extension):
 			)
 			sh.set_mime_type(mime_type)
 			editor.modes.append(sh)
+		editor.modes.append(BreakpointMode(breakpoints=self._breakpoints))
 		editor.font_size = cfg.pyqode_font_size
 		editor.font_name = cfg.pyqode_font_name
 		editor.show_whitespaces = cfg.pyqode_show_whitespaces
@@ -215,6 +218,30 @@ class pyqode_manager(base_extension):
 		if hasattr(self, fnc):
 			getattr(self, fnc)(value)
 			
+	def provide_pyqode_breakpoints(self):
+		
+		return self._breakpoints
+
+	def event_pyqode_set_breakpoints(self, breakpoints):
+		
+		self._breakpoints = breakpoints
+
+	def event_pyqode_clear_breakpoints(self):
+		
+		self.extension_manager.fire(
+			'notify',
+			message=_(u'Cleared {} breakpoint(s) in {} file(s)'.format(
+				sum(len(lines) for lines in self._breakpoints.values()),
+				len(self._breakpoints))
+			)
+		)
+		self._breakpoints.clear()
+		for editor in self._editors:
+			if 'BreakpointMode' not in editor.modes.keys():
+				continue
+			editor.modes.get('BreakpointMode').clear_messages()
+			editor.repaint()
+
 	def _setting_pyqode_show_line_numbers(self, show_line_numbers):
 
 		self._toggle_panel(
