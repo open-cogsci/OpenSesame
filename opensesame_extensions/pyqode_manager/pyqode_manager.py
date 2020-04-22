@@ -157,7 +157,7 @@ class pyqode_manager(base_extension):
 	def event_register_editor(self, editor, mime_type=u'text/plain'):
 
 		editor._auto_reset_stylesheet = False
-		self._editors.append(editor)
+		self._editors.append(editor)		
 		if 'PythonSH' in editor.modes.keys():
 			pass
 		elif 'TextSH' in editor.modes.keys():
@@ -175,10 +175,10 @@ class pyqode_manager(base_extension):
 			)
 			sh.set_mime_type(mime_type)
 			editor.modes.append(sh)
-		editor.modes.append(BreakpointMode(breakpoints=self._breakpoints))
+		if cfg.pyqode_enable_breakpoints:
+			editor.modes.append(BreakpointMode(breakpoints=self._breakpoints))
 		editor.font_size = cfg.pyqode_font_size
 		editor.font_name = cfg.pyqode_font_name
-		editor.show_whitespaces = cfg.pyqode_show_whitespaces
 		editor.tab_length = cfg.pyqode_tab_length
 		editor.setLineWrapMode(
 			QPlainTextEdit.WidgetWidth

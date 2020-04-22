@@ -60,6 +60,7 @@ class FallbackCodeEdit(CodeEdit):
 			sys.executable,
 			reuse=False
 		)
+		self.show_whitespaces = cfg.pyqode_show_whitespaces
 		if cfg.pyqode_show_line_numbers:
 			self.panels.append(panels.LineNumberPanel())
 		self.panels.append(
