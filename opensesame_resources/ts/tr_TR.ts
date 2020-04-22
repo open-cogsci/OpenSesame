@@ -1,151 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="tr" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="tr">
 <context>
     <name>Form</name>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="35"/>
         <source>Code editor: Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod editorü: görünüş</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="59"/>
         <source>Font</source>
-        <translation type="unfinished">Yazı tipi</translation>
+        <translation>Yazı tipi</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="66"/>
         <source>Color scheme</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk düzeni</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="76"/>
         <source>Tab width</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekme genişliği</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="146"/>
         <source> characters</source>
-        <translation type="unfinished"></translation>
+        <translation> karakterler</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="90"/>
         <source>Show line numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır numaralarını göster</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="97"/>
         <source>Highlight current line</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanılan satırı etiketle</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="104"/>
         <source>Show right margin</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağ taraftaki sayfa kenar boşluğunu göster</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="111"/>
         <source>Show whitespace</source>
-        <translation type="unfinished"></translation>
+        <translation>Alfabe dışı karakterleri göster</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="118"/>
         <source>Wrap lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Satırları grupla</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="125"/>
         <source>Allow code folding</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodların katlanmasına izin ver</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="132"/>
         <source>Fix editor width</source>
-        <translation type="unfinished"></translation>
+        <translation>Editör genişliğini sabitle</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="139"/>
         <source>Editor width</source>
-        <translation type="unfinished"></translation>
+        <translation>Editör genişliği</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="174"/>
         <source> pt</source>
-        <translation type="unfinished"></translation>
+        <translation> pt</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="187"/>
         <source>Code editor: Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod editörü: Davranış</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="211"/>
         <source>Indentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Girinti</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="219"/>
         <source>auto</source>
-        <translation type="unfinished">Otomatik</translation>
+        <translation>otomatik</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="224"/>
         <source>spaces</source>
-        <translation type="unfinished"></translation>
+        <translation>boşluklar</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="229"/>
         <source>tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>sekmeler</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="237"/>
         <source>Ignore style violations&lt;br /&gt;&lt;a href=&quot;https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;List of error codes&lt;/span&gt;&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil ihlallerini görmezden gel &lt;br /&gt;&lt;a href=&quot;https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Hata kodları listesi&lt;/span&gt;&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="253"/>
         <source>Enable code completion</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod tamamlamayı aktive et</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="260"/>
         <source>Check Python syntax (pyflakes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Python syntaxını kontrol et (pyflakes)</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="267"/>
         <source>Check Python style (PEP8)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="287"/>
-        <source>Code editor: Keyboard shortcuts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="317"/>
-        <source>Duplicate line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="324"/>
-        <source>Swap line up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="331"/>
-        <source>Swap line down</source>
-        <translation type="unfinished"></translation>
+        <translation>Python stilini kontrol et (PEP8)</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="277"/>
-        <source>No code completion for</source>
-        <translation type="unfinished"></translation>
+        <source>Code editor: Keyboard shortcuts</source>
+        <translation>Kod editörü: kısayol tuşları</translation>
+    </message>
+    <message>
+        <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="307"/>
+        <source>Duplicate line</source>
+        <translation>Satırın iki tane kopyasını çıkart</translation>
+    </message>
+    <message>
+        <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="314"/>
+        <source>Swap line up</source>
+        <translation>Satırı yukarıdaki ile değiştir</translation>
+    </message>
+    <message>
+        <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="321"/>
+        <source>Swap line down</source>
+        <translation>Satırı aşağıdaki ile değiştir</translation>
     </message>
 </context>
 <context>
@@ -163,13 +159,13 @@
     <message>
         <location filename="../../translation_tools/translatables.py" line="539"/>
         <source>Settings for %s:</source>
-        <translation></translation>
+        <translation>%s için ayarlar:</translation>
     </message>
 </context>
 <context>
     <name>core_base_runner</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="321"/>
+        <location filename="../../translation_tools/translatables.py" line="322"/>
         <source>Subject number</source>
         <translation>Katılımcı numarası</translation>
     </message>
@@ -179,7 +175,7 @@
         <translation>Lütfen katılımcı numaranızı giriniz</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="322"/>
+        <location filename="../../translation_tools/translatables.py" line="321"/>
         <source>Choose location for logfile (press &apos;escape&apos; for default location)</source>
         <translation>Kayıt dosyasının konumu seçiniz (varsayılan konum için &quot;esc&quot;ye basınız)</translation>
     </message>
@@ -205,7 +201,7 @@
     <message>
         <location filename="../../translation_tools/translatables.py" line="514"/>
         <source>other ...</source>
-        <translation type="unfinished">diğer ...</translation>
+        <translation>diğer ...</translation>
     </message>
 </context>
 <context>
@@ -240,22 +236,22 @@
 <context>
     <name>core_item_category</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="3"/>
+        <location filename="../../translation_tools/translatables.py" line="7"/>
         <source>Form</source>
         <translation>Oluştur</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="7"/>
+        <location filename="../../translation_tools/translatables.py" line="8"/>
         <source>Miscellaneous</source>
         <translation>Diğer</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="9"/>
+        <location filename="../../translation_tools/translatables.py" line="5"/>
         <source>Staircase</source>
         <translation>Merdiven yöntemi</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="4"/>
+        <location filename="../../translation_tools/translatables.py" line="9"/>
         <source>Visual stimuli</source>
         <translation>Görsel uyarıcı</translation>
     </message>
@@ -265,12 +261,12 @@
         <translation>Yanıt toplama</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="8"/>
+        <location filename="../../translation_tools/translatables.py" line="4"/>
         <source>miscellaneous</source>
         <translation>diğer</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="5"/>
+        <location filename="../../translation_tools/translatables.py" line="3"/>
         <source>Flow control</source>
         <translation>Akış kontrolü</translation>
     </message>
@@ -286,52 +282,52 @@
 <context>
     <name>core_item_context_menu</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="484"/>
+        <location filename="../../translation_tools/translatables.py" line="491"/>
         <source>Open</source>
         <translation>Aç</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="485"/>
+        <location filename="../../translation_tools/translatables.py" line="489"/>
         <source>Rename</source>
         <translation>Yeniden adlandır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="486"/>
+        <location filename="../../translation_tools/translatables.py" line="485"/>
         <source>Edit run-if statement</source>
         <translation>Run-if komutlarını düzenle</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="493"/>
+        <location filename="../../translation_tools/translatables.py" line="492"/>
         <source>Copy (unlinked)</source>
         <translation>Kopyala (bağlantısız)</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="488"/>
+        <location filename="../../translation_tools/translatables.py" line="490"/>
         <source>Copy (linked)</source>
         <translation>Kopyala (bağlantılı)</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="489"/>
+        <location filename="../../translation_tools/translatables.py" line="487"/>
         <source>Paste</source>
         <translation>Yapıştır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="492"/>
+        <location filename="../../translation_tools/translatables.py" line="493"/>
         <source>Delete</source>
         <translation>Sil</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="490"/>
+        <location filename="../../translation_tools/translatables.py" line="484"/>
         <source>Permanently delete all linked copies</source>
         <translation>Bağlantılı kopyaları kalıcı olarak sil</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="487"/>
+        <location filename="../../translation_tools/translatables.py" line="486"/>
         <source>Permanently delete</source>
         <translation>Kalıcı olarak sil</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="491"/>
+        <location filename="../../translation_tools/translatables.py" line="488"/>
         <source>Help</source>
         <translation>Yardım</translation>
     </message>
@@ -349,12 +345,12 @@
         <translation>Komutları gör</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="461"/>
+        <location filename="../../translation_tools/translatables.py" line="462"/>
         <source>Split view</source>
         <translation>Geçerli görünümü ikiye böl</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="462"/>
+        <location filename="../../translation_tools/translatables.py" line="461"/>
         <source>Select view</source>
         <translation>Geçerli görünümü seç</translation>
     </message>
@@ -378,67 +374,67 @@
 <context>
     <name>core_pool_widget</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="506"/>
+        <location filename="../../translation_tools/translatables.py" line="504"/>
         <source>Failed to copy %s to file pool</source>
         <translation>%s dosya havuzuna kopyalanamadı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="507"/>
+        <location filename="../../translation_tools/translatables.py" line="508"/>
         <source>Add files to pool</source>
         <translation>Havuza dosya ekle</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="511"/>
+        <location filename="../../translation_tools/translatables.py" line="507"/>
         <source>Failed to refresh file pool</source>
         <translation>Dosya havuzu yenilenemedi</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="499"/>
+        <location filename="../../translation_tools/translatables.py" line="506"/>
         <source>Open</source>
         <translation>Aç</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="502"/>
+        <location filename="../../translation_tools/translatables.py" line="509"/>
         <source>Remove from pool</source>
         <translation>Havuzdan kaldır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="500"/>
+        <location filename="../../translation_tools/translatables.py" line="505"/>
         <source>Rename</source>
         <translation>Yenıden adlandır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="508"/>
+        <location filename="../../translation_tools/translatables.py" line="503"/>
         <source>And %d more file(s)</source>
         <translation>%d daha fazla dosya</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="503"/>
+        <location filename="../../translation_tools/translatables.py" line="499"/>
         <source>Failed to rename &quot;%s&quot; to &quot;%s&quot;.</source>
         <translation>&quot;%s&quot; ten &quot;%s&quot;e yeniden adlandırma yapılamadı.</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="509"/>
+        <location filename="../../translation_tools/translatables.py" line="502"/>
         <source>Cancel</source>
         <translation>İptal et</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="505"/>
+        <location filename="../../translation_tools/translatables.py" line="501"/>
         <source>Select</source>
         <translation>Seç</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="501"/>
+        <location filename="../../translation_tools/translatables.py" line="500"/>
         <source>Select file from pool</source>
         <translation>Havuzdan dosya seç</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="510"/>
+        <location filename="../../translation_tools/translatables.py" line="511"/>
         <source>A file named &apos;%s&apos; already exists in the pool. Do you want to overwrite this file?</source>
         <translation>Havuzda &apos;%s&apos; adında bir dosya zaten mevcut. Mevcut dosyanın üzerine yeni dosyayı kaydetmek istediğinize emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="504"/>
+        <location filename="../../translation_tools/translatables.py" line="510"/>
         <source>There already is a file named &apos;%s&apos; in the file pool</source>
         <translation>&apos;%s&apos; adında bir dosya havuzda zaten mevcut</translation>
     </message>
@@ -448,7 +444,7 @@
     <message>
         <location filename="../../translation_tools/translatables.py" line="271"/>
         <source>Cancel</source>
-        <translation>Iptal et</translation>
+        <translation>İptal et</translation>
     </message>
 </context>
 <context>
@@ -459,17 +455,17 @@
         <translation>%s kontrolleri için info.yaml ın içine &quot;tür&quot;ü belirtmeniz gereklidir</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="396"/>
+        <location filename="../../translation_tools/translatables.py" line="395"/>
         <source>You must specify &quot;%s&quot; for %s controls in info.yaml</source>
         <translation>%s kontrolleri için info.yaml ın içine &quot;%s&quot; ü belirtmeniz gereklidir</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="394"/>
+        <location filename="../../translation_tools/translatables.py" line="396"/>
         <source>Invalid variable name (%s) specified in %s plugin info</source>
         <translation>Geçersiz değişken ismi (%s) %s eklenti bilgisinin içine belirtilmiştir</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="395"/>
+        <location filename="../../translation_tools/translatables.py" line="394"/>
         <source>&quot;%s&quot; is not a valid qtautoplugin control</source>
         <translation>&quot;%s&quot; geçerli bir qtautoplugin kontrolü değildir</translation>
     </message>
@@ -482,7 +478,7 @@
 <context>
     <name>core_qtitem</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="344"/>
+        <location filename="../../translation_tools/translatables.py" line="343"/>
         <source>Toggle pop-out</source>
         <translation>Açılır pencereyi değiştir</translation>
     </message>
@@ -492,35 +488,35 @@
         <translation>%s ögesi hakkında bana daha fazla bilgi ver</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="341"/>
+        <location filename="../../translation_tools/translatables.py" line="340"/>
         <source>Failed to set control &apos;%s&apos;: %s</source>
         <translation>Kontrol ayarlanamadı &apos;%s&apos;:%s</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="343"/>
+        <location filename="../../translation_tools/translatables.py" line="341"/>
         <source>Default description</source>
         <translation>Varsayılan tanım</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="342"/>
         <source>Failed to parse script. See debug window for details</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod metninin çalışması tamamlanamadı. Hata ayıklayıcı penceresinde detayları görebilirsiniz</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="340"/>
+        <location filename="../../translation_tools/translatables.py" line="344"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygula</translation>
     </message>
 </context>
 <context>
     <name>core_qtitem_store</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="316"/>
+        <location filename="../../translation_tools/translatables.py" line="317"/>
         <source>An item with that name already exists.</source>
         <translation>Bu isimde bir öge zaten mevcut.</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="317"/>
+        <location filename="../../translation_tools/translatables.py" line="316"/>
         <source>An item name cannot be empty.</source>
         <translation>Bir öge ismi boş olamaz.</translation>
     </message>
@@ -528,27 +524,27 @@
 <context>
     <name>core_qtopensesame</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="336"/>
+        <location filename="../../translation_tools/translatables.py" line="328"/>
         <source>New experiment</source>
         <translation>Yeni deney</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="332"/>
+        <location filename="../../translation_tools/translatables.py" line="330"/>
         <source>Save changes?</source>
         <translation>Değişiklikleri kaydet?</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="330"/>
+        <location filename="../../translation_tools/translatables.py" line="326"/>
         <source>(No recent files)</source>
         <translation>(Son kullanılan dosya yok)</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="327"/>
+        <location filename="../../translation_tools/translatables.py" line="325"/>
         <source>Open file</source>
         <translation>Dosya aç</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="325"/>
+        <location filename="../../translation_tools/translatables.py" line="331"/>
         <source>The following error occured while trying to save:&lt;br/&gt;%s</source>
         <translation>Kaydetmeye çalışırken hata oluştu:&lt;br/&gt;%s</translation>
     </message>
@@ -558,17 +554,17 @@
         <translation>Dosya kaydedilirken hata oluştu. Hata: %s</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="326"/>
+        <location filename="../../translation_tools/translatables.py" line="329"/>
         <source>Could not parse script: %s</source>
         <translation>Komut dosyası yürütülemedi: %s</translation>
     </message>
-    <message encoding="UTF-8">
-        <location filename="../../translation_tools/translatables.py" line="331"/>
+    <message>
+        <location filename="../../translation_tools/translatables.py" line="334"/>
         <source>Save as…</source>
         <translation>Farklı kaydet…</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="334"/>
+        <location filename="../../translation_tools/translatables.py" line="332"/>
         <source>Errors occurred while opening the file:
 
 </source>
@@ -577,19 +573,19 @@
 </translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="335"/>
+        <location filename="../../translation_tools/translatables.py" line="336"/>
         <source>Error</source>
         <translation>Hata</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="329"/>
+        <location filename="../../translation_tools/translatables.py" line="327"/>
         <source> [read only]</source>
         <translation> [salt okunur]</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="328"/>
+        <location filename="../../translation_tools/translatables.py" line="335"/>
         <source>Your experiment contains unsaved changes. Do you want to save your experiment?</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneyiniz kaydedilmemiş değişiklikler içeriyor. Deneyinizi kaydetmek ister misiniz?</translation>
     </message>
 </context>
 <context>
@@ -600,27 +596,27 @@
         <translation>Yardım</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="548"/>
+        <location filename="../../translation_tools/translatables.py" line="546"/>
         <source>Back-end settings</source>
         <translation>Sunucu uygulama ayarları</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="546"/>
+        <location filename="../../translation_tools/translatables.py" line="547"/>
         <source>General properties</source>
         <translation>Genel özellikler</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="547"/>
+        <location filename="../../translation_tools/translatables.py" line="544"/>
         <source>General script editor</source>
         <translation>Genel komut düzenleyici</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="544"/>
+        <location filename="../../translation_tools/translatables.py" line="543"/>
         <source>Unused items</source>
         <translation>Kullanılmayan ögeler</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="543"/>
+        <location filename="../../translation_tools/translatables.py" line="548"/>
         <source>Preferences</source>
         <translation>Tercihler</translation>
     </message>
@@ -628,22 +624,22 @@
 <context>
     <name>core_template</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="308"/>
+        <location filename="../../translation_tools/translatables.py" line="310"/>
         <source>Default template</source>
         <translation>Varsayılan şablon</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="309"/>
+        <location filename="../../translation_tools/translatables.py" line="307"/>
         <source>Extended template</source>
         <translation>Genişletilmiş şablon</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="307"/>
+        <location filename="../../translation_tools/translatables.py" line="309"/>
         <source>Questionnaire template</source>
         <translation>Anket şablonu</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="310"/>
+        <location filename="../../translation_tools/translatables.py" line="308"/>
         <source>Eye-tracking template</source>
         <translation>Göz izleme şablonu</translation>
     </message>
@@ -667,12 +663,12 @@
 <context>
     <name>core_tree_append_menu</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="523"/>
+        <location filename="../../translation_tools/translatables.py" line="524"/>
         <source>Append new item</source>
         <translation>Sonuna yeni öge ekle</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="524"/>
+        <location filename="../../translation_tools/translatables.py" line="523"/>
         <source>Append existing item (linked)</source>
         <translation>Sonuna mevcut öge ekle (bağlantılı)</translation>
     </message>
@@ -700,7 +696,7 @@ Tanım: %s</translation>
         <translation>%s&apos;u bir öge olarak çalıştır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="551"/>
+        <location filename="../../translation_tools/translatables.py" line="556"/>
         <source>Insert into %s</source>
         <translation>%s&apos;in içine yerleştir</translation>
     </message>
@@ -710,7 +706,7 @@ Tanım: %s</translation>
         <translation>%s &apos;nin aşağısına bırak</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="556"/>
+        <location filename="../../translation_tools/translatables.py" line="551"/>
         <source>Permanently delete item</source>
         <translation>Ögeyi kalıcı olarak sil</translation>
     </message>
@@ -723,27 +719,27 @@ Tanım: %s</translation>
 <context>
     <name>core_tree_overview</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="529"/>
+        <location filename="../../translation_tools/translatables.py" line="527"/>
         <source>Item name</source>
         <translation>Öge ismi</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="530"/>
+        <location filename="../../translation_tools/translatables.py" line="531"/>
         <source>Run if</source>
         <translation>yürüt eğer</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="528"/>
+        <location filename="../../translation_tools/translatables.py" line="529"/>
         <source>Unknown item type: %s</source>
         <translation>Bilinmeyen öge türü: %s</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="527"/>
+        <location filename="../../translation_tools/translatables.py" line="530"/>
         <source>Insert into %s</source>
         <translation>%s nin içine yerleştir</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="531"/>
+        <location filename="../../translation_tools/translatables.py" line="528"/>
         <source>Insert after %s</source>
         <translation>%s&apos;den sonra yerleştir</translation>
     </message>
@@ -753,18 +749,18 @@ Tanım: %s</translation>
     <message>
         <location filename="../../translation_tools/translatables.py" line="496"/>
         <source>Recursion detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekrarlama tespit edildi</translation>
     </message>
 </context>
 <context>
     <name>core_tree_unused_items_item</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="466"/>
+        <location filename="../../translation_tools/translatables.py" line="465"/>
         <source>Unused items</source>
         <translation>Kullanılmayan ögeler</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="465"/>
+        <location filename="../../translation_tools/translatables.py" line="466"/>
         <source>Move to unused items</source>
         <translation>Kullanılmayan ögelere taşı</translation>
     </message>
@@ -772,7 +768,7 @@ Tanım: %s</translation>
 <context>
     <name>core_unused_widget</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="476"/>
+        <location filename="../../translation_tools/translatables.py" line="475"/>
         <source>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Unused&lt;/font&gt;&lt;/b&gt;</source>
         <translation>&lt;b&gt;&lt;font size=&apos;5&apos;&gt;Kullanılmayan&lt;/font&gt;&lt;/b&gt;</translation>
     </message>
@@ -782,7 +778,7 @@ Tanım: %s</translation>
         <translation>Kullanılmayan ögeleri kalıcı olarak sil</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="475"/>
+        <location filename="../../translation_tools/translatables.py" line="476"/>
         <source>Permanently delete items?</source>
         <translation>Ögeleri kalıcı olarak silmek istediğinize emin misiniz?</translation>
     </message>
@@ -799,7 +795,7 @@ Tanım: %s</translation>
         <source>Done</source>
         <translation>Tamamlandı</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="455"/>
         <source>Loading …</source>
         <translation>Yükleniyor …</translation>
@@ -808,17 +804,17 @@ Tanım: %s</translation>
 <context>
     <name>extension_after_experiment</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="190"/>
+        <location filename="../../translation_tools/translatables.py" line="192"/>
         <source>Finished</source>
         <translation>Bitti</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="189"/>
+        <location filename="../../translation_tools/translatables.py" line="191"/>
         <source>Aborted</source>
         <translation>İşlem durduruldu</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="186"/>
+        <location filename="../../translation_tools/translatables.py" line="188"/>
         <source># Aborted
 
 - </source>
@@ -832,12 +828,12 @@ Tanım: %s</translation>
         <translation>İşlem durdu</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="191"/>
+        <location filename="../../translation_tools/translatables.py" line="189"/>
         <source>Handles the end of an experimental run</source>
         <translation>Bir deneyin sonunu idare eder</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="192"/>
+        <location filename="../../translation_tools/translatables.py" line="190"/>
         <source># Stopped
 
 The experiment did not finish normally for the following reason:
@@ -850,7 +846,7 @@ Deney takip eden hatadan dolayı bitmedi:
 - </translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="188"/>
+        <location filename="../../translation_tools/translatables.py" line="186"/>
         <source>The following extra data files where created:</source>
         <translation>Takip edem ekstra veri dosyları kaydedildi:</translation>
     </message>
@@ -858,7 +854,7 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_analytics</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="168"/>
+        <location filename="../../translation_tools/translatables.py" line="169"/>
         <source>Sends a ping to Google Analytics when OpenSesame is started</source>
         <translation>OpenSesame açıldığında Google Analytics&apos;e bildirim gönderir</translation>
     </message>
@@ -868,7 +864,7 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>OpenSesame kullanım verileriniz anonim olarak toplandı. Bu özelliği &lt;i&gt;analytics&lt;/i&gt; eklentisini devre dışı bırakarak kaldırabilirsiniz.</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="169"/>
+        <location filename="../../translation_tools/translatables.py" line="168"/>
         <source>Got it!</source>
         <translation>Anladım!</translation>
     </message>
@@ -894,22 +890,22 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Gönderilmemiş bug raporu</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="181"/>
+        <location filename="../../translation_tools/translatables.py" line="179"/>
         <source>Bug report sent</source>
         <translation>Gönderilmiş bug raporu</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="182"/>
+        <location filename="../../translation_tools/translatables.py" line="180"/>
         <source>Oops ...</source>
         <translation>Haydaaaa ...</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="179"/>
+        <location filename="../../translation_tools/translatables.py" line="182"/>
         <source>Bug report</source>
         <translation>Bug raporu</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="180"/>
+        <location filename="../../translation_tools/translatables.py" line="181"/>
         <source>Sends a bug report when an exception occurs</source>
         <translation>İstisnai bir durum olduğunda bug raporu gönder</translation>
     </message>
@@ -922,12 +918,12 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Örnek eklenti</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="224"/>
+        <location filename="../../translation_tools/translatables.py" line="226"/>
         <source>An example extenstion</source>
         <translation>Bir örnek eklenti</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="226"/>
+        <location filename="../../translation_tools/translatables.py" line="224"/>
         <source>Some tooltip</source>
         <translation>Birkaç ipucu</translation>
     </message>
@@ -935,12 +931,12 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_example_experiments</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="209"/>
+        <location filename="../../translation_tools/translatables.py" line="210"/>
         <source>Example experiments</source>
         <translation>Örnek deneyler</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="210"/>
+        <location filename="../../translation_tools/translatables.py" line="209"/>
         <source>Shows a list of example experiments</source>
         <translation>Bütün örnek deneyleri listele</translation>
     </message>
@@ -950,18 +946,18 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translation_tools/translatables.py" line="229"/>
         <source>Opens external files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dıştan gelen dosyaları açar</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="230"/>
         <source>Handles opening of external files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dıştan gelen dosyaların açılmasını yürütür</translation>
     </message>
 </context>
 <context>
     <name>extension_get_started</name>
-    <message encoding="UTF-8">
-        <location filename="../../translation_tools/translatables.py" line="216"/>
+    <message>
+        <location filename="../../translation_tools/translatables.py" line="217"/>
         <source>New…</source>
         <translation>Yeni…</translation>
     </message>
@@ -971,17 +967,17 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Bir başlangıç noktası</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="217"/>
+        <location filename="../../translation_tools/translatables.py" line="215"/>
         <source>Start a new experiment</source>
         <translation>Yeni bir deney başlat</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="215"/>
+        <location filename="../../translation_tools/translatables.py" line="214"/>
         <source>Continue with a recent experiment:</source>
         <translation>Son deney ile devam et:</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="214"/>
+        <location filename="../../translation_tools/translatables.py" line="216"/>
         <source>Get started!</source>
         <translation>Başla!</translation>
     </message>
@@ -989,40 +985,40 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_help</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="175"/>
+        <location filename="../../translation_tools/translatables.py" line="174"/>
         <source>Help</source>
         <translation>Yardım</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="176"/>
+        <location filename="../../translation_tools/translatables.py" line="175"/>
         <source>Online help</source>
         <translation>Çevirimiçi yardım</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="172"/>
+        <location filename="../../translation_tools/translatables.py" line="173"/>
         <source>PsychoPy API</source>
         <translation>PsychoPy API</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="173"/>
+        <location filename="../../translation_tools/translatables.py" line="176"/>
         <source>Adds a Help menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardım menüsü ekler</translation>
     </message>
-    <message encoding="UTF-8">
-        <location filename="../../translation_tools/translatables.py" line="174"/>
+    <message>
+        <location filename="../../translation_tools/translatables.py" line="172"/>
         <source>Please wait …</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen bekleyiniz...</translation>
     </message>
 </context>
 <context>
     <name>extension_notifications</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="256"/>
+        <location filename="../../translation_tools/translatables.py" line="255"/>
         <source>Notifications</source>
         <translation>Bldirimler</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="255"/>
+        <location filename="../../translation_tools/translatables.py" line="256"/>
         <source>Pretty notifications for OpenSesame</source>
         <translation>OpenSesame için güzel bildirimler</translation>
     </message>
@@ -1043,7 +1039,7 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_plugin_manager</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="235"/>
+        <location filename="../../translation_tools/translatables.py" line="233"/>
         <source>Plug-in and extension manager</source>
         <translation>Eklenti ve uzantı yöneticisi</translation>
     </message>
@@ -1053,7 +1049,7 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Eklenti ya da uzantlarıı etkinleştir ya da devre dışı bırak.</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="233"/>
+        <location filename="../../translation_tools/translatables.py" line="235"/>
         <source>Manage plug-ins and extensions</source>
         <translation>Eklenti ya da uzantıları yönet</translation>
     </message>
@@ -1120,12 +1116,12 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="167"/>
         <source>Startup time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlama zamanı:</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="174"/>
         <source>Not started</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlamadı</translation>
     </message>
 </context>
 <context>
@@ -1133,23 +1129,23 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translation_tools/translatables.py" line="220"/>
         <source>Preload items</source>
-        <translation type="unfinished"></translation>
+        <translation>Ögeleri önyükle</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="221"/>
         <source>Preloads items in the background for smoother use</source>
-        <translation type="unfinished"></translation>
+        <translation>Daha yumuşak bir kullanım için ögeleri arka planda önyükle</translation>
     </message>
 </context>
 <context>
     <name>extension_psychopy_monitor_center</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="156"/>
+        <location filename="../../translation_tools/translatables.py" line="157"/>
         <source>PsychoPy monitor center</source>
         <translation>PsychoPy görüntüleme merkezi</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="157"/>
+        <location filename="../../translation_tools/translatables.py" line="156"/>
         <source>Launches the PsychoPy monitor center</source>
         <translation>PsychoPy görüntüleme merkezini çalıştırır</translation>
     </message>
@@ -1162,24 +1158,24 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_pyqode_manager</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="203"/>
-        <source>PyQode manager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../translation_tools/translatables.py" line="205"/>
-        <source>Convert tabs to spaces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../translation_tools/translatables.py" line="204"/>
-        <source>Convert spaces to tabs</source>
-        <translation type="unfinished"></translation>
+        <source>PyQode manager</source>
+        <translation>PyQode yöneticisi</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="206"/>
+        <source>Convert tabs to spaces</source>
+        <translation>Tabları boşluklara dönüştür</translation>
+    </message>
+    <message>
+        <location filename="../../translation_tools/translatables.py" line="203"/>
+        <source>Convert spaces to tabs</source>
+        <translation>Boşlukları tablara dönüştür</translation>
+    </message>
+    <message>
+        <location filename="../../translation_tools/translatables.py" line="204"/>
         <source>Manages PyQode, the code-editor component</source>
-        <translation type="unfinished"></translation>
+        <translation>PyQode&apos;u yönetir, kod yönetici bileşeni</translation>
     </message>
 </context>
 <context>
@@ -1190,14 +1186,14 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Hızlı değiştirici</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="243"/>
-        <source>Quickly open items</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
         <location filename="../../translation_tools/translatables.py" line="242"/>
+        <source>Quickly open items</source>
+        <translation>Ögeleri hızlıca açar</translation>
+    </message>
+    <message>
+        <location filename="../../translation_tools/translatables.py" line="243"/>
         <source>Search items …</source>
-        <translation type="unfinished"></translation>
+        <translation>Ögeleri ara ...</translation>
     </message>
 </context>
 <context>
@@ -1224,17 +1220,17 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_tab_to_dockwidget</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="247"/>
+        <location filename="../../translation_tools/translatables.py" line="246"/>
         <source>Tab to dockwidget</source>
         <translation>Dockwidget sekmesi</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="246"/>
+        <location filename="../../translation_tools/translatables.py" line="248"/>
         <source>Turns a tab into a dockwidget</source>
         <translation>Bir sekmeyi dockwidgeta dönüştürür</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="248"/>
+        <location filename="../../translation_tools/translatables.py" line="247"/>
         <source>Turn tab into dockwidget</source>
         <translation>Bir sekmeyi dockwidgeta dönüştür</translation>
     </message>
@@ -1242,22 +1238,22 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_toolbar_menu</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="164"/>
+        <location filename="../../translation_tools/translatables.py" line="163"/>
         <source>Menu</source>
         <translation>Menü</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="161"/>
+        <location filename="../../translation_tools/translatables.py" line="162"/>
         <source>Integrate menu and toolbar</source>
         <translation>Menü ve araç çubuğunu birleştir</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="162"/>
+        <location filename="../../translation_tools/translatables.py" line="164"/>
         <source>Integrates the menu into the toolbar.</source>
         <translation>.Menüyü araç çubuğunun içerisine birleştirir.</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="163"/>
+        <location filename="../../translation_tools/translatables.py" line="161"/>
         <source>Integrates the menu into the toolbar</source>
         <translation>Menüyü araç çubuğunun içerisine birleştirir</translation>
     </message>
@@ -1265,27 +1261,27 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_undo_manager</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="151"/>
+        <location filename="../../translation_tools/translatables.py" line="150"/>
         <source>Undo</source>
         <translation>Geri al</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="153"/>
+        <location filename="../../translation_tools/translatables.py" line="152"/>
         <source>Undo most recent action</source>
         <translation>En son yapılan eylemi geri al</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="152"/>
+        <location filename="../../translation_tools/translatables.py" line="149"/>
         <source>Redo</source>
         <translation>İşlemi yinele</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="149"/>
+        <location filename="../../translation_tools/translatables.py" line="151"/>
         <source>Implements undo/ redo</source>
         <translation>Geri al/yineleyi uygular</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="150"/>
+        <location filename="../../translation_tools/translatables.py" line="153"/>
         <source>Redo most recently undone action</source>
         <translation>En son yapılan geri al eylemini yinele</translation>
     </message>
@@ -1293,45 +1289,45 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>extension_update_checker</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="143"/>
+        <location filename="../../translation_tools/translatables.py" line="144"/>
         <source>Check for updates</source>
         <translation>Güncellemeleri denetle</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="144"/>
+        <location filename="../../translation_tools/translatables.py" line="145"/>
         <source>Checks whether a new version of OpenSesame is available.</source>
         <translation>OpenSesame&apos;nin yeni bir sürümü olup olmadığını denetler.</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="145"/>
+        <location filename="../../translation_tools/translatables.py" line="146"/>
         <source>Up to date!</source>
         <translation>Uygulama güncel!</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="146"/>
+        <location filename="../../translation_tools/translatables.py" line="143"/>
         <source>Failed to check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Güncellemeler denetlenemedi</translation>
     </message>
 </context>
 <context>
     <name>extension_variable_inspector</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="260"/>
+        <location filename="../../translation_tools/translatables.py" line="262"/>
         <source>Variable inspector</source>
         <translation>Değişken denetleyicisi</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="261"/>
+        <location filename="../../translation_tools/translatables.py" line="259"/>
         <source>Experiment status: &lt;b&gt;%s&lt;/b&gt;</source>
         <translation>Deney durumu: &lt;b&gt;%s&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="259"/>
+        <location filename="../../translation_tools/translatables.py" line="261"/>
         <source>Show variable inspector</source>
         <translation>Değişken denetleyicisini göster</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="262"/>
+        <location filename="../../translation_tools/translatables.py" line="260"/>
         <source>Graphical variable inspector</source>
         <translation>Çizgesel değişken denetleyicisi</translation>
     </message>
@@ -1360,80 +1356,80 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_inline_script</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="347"/>
+        <location filename="../../translation_tools/translatables.py" line="349"/>
         <source>Prepare</source>
         <translation>Hazırla</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="348"/>
+        <location filename="../../translation_tools/translatables.py" line="347"/>
         <source>Run</source>
         <translation>Çalıştır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="349"/>
+        <location filename="../../translation_tools/translatables.py" line="348"/>
         <source>Executes Python code</source>
-        <translation type="unfinished"></translation>
+        <translation>Python kodunu çalıştırır</translation>
     </message>
 </context>
 <context>
     <name>item_keyboard_response</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="412"/>
+        <location filename="../../translation_tools/translatables.py" line="405"/>
         <source>Collects keyboard responses</source>
         <translation>Klavye yanıtlarını toplar</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="411"/>
+        <location filename="../../translation_tools/translatables.py" line="412"/>
         <source>Correct response</source>
         <translation>Doğru yanıt</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="405"/>
+        <location filename="../../translation_tools/translatables.py" line="403"/>
         <source>Allowed responses</source>
         <translation>İzin verilen değerler</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="403"/>
+        <location filename="../../translation_tools/translatables.py" line="408"/>
         <source>Timeout</source>
         <translation>Süre aşımı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="406"/>
+        <location filename="../../translation_tools/translatables.py" line="411"/>
         <source>List available keys</source>
         <translation>Uygun tuşları listele</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="401"/>
+        <location filename="../../translation_tools/translatables.py" line="402"/>
         <source>Leave empty to use &quot;correct_response&quot;</source>
         <translation>&quot;correct_response&quot;u kullanmak için boş bırak</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="402"/>
+        <location filename="../../translation_tools/translatables.py" line="401"/>
         <source>Separated by semicolons, e.g. &quot;z;/&quot;</source>
         <translation>Noktalı virgül ile ayrılır, örneğin &quot;z;/&quot;</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="410"/>
+        <location filename="../../translation_tools/translatables.py" line="407"/>
         <source>In milliseconds or &quot;infinite&quot;</source>
         <translation>Milisaniye olarak ya da &quot;infinite&quot; (sonsuz)</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="404"/>
+        <location filename="../../translation_tools/translatables.py" line="406"/>
         <source>Key names</source>
         <translation>Tuş isimleri</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="408"/>
+        <location filename="../../translation_tools/translatables.py" line="410"/>
         <source>The following key names are valid:</source>
         <translation>Geçerli tuş isimleri:</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="407"/>
+        <location filename="../../translation_tools/translatables.py" line="409"/>
         <source>Event type</source>
         <translation>Olay türü</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="409"/>
+        <location filename="../../translation_tools/translatables.py" line="404"/>
         <source>Flush pending key events</source>
         <translation>Beklemede olan tuş olaylarını iptal et</translation>
     </message>
@@ -1441,22 +1437,22 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_logger</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="416"/>
+        <location filename="../../translation_tools/translatables.py" line="415"/>
         <source>You have multiple unlinked loggers. This can lead to messy log files.</source>
         <translation>Birden fazla ilişkilendirilmemiş kaydediciniz var. Bu durum karışık kayıt dosyalarına neden olabilir.</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="415"/>
+        <location filename="../../translation_tools/translatables.py" line="419"/>
         <source>Add custom variable</source>
         <translation>Özel değişken ekle</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="419"/>
+        <location filename="../../translation_tools/translatables.py" line="417"/>
         <source>Which variable do you wish to log?</source>
         <translation>Hangi değişkenleri kaydetmek istersiniz?</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="417"/>
+        <location filename="../../translation_tools/translatables.py" line="416"/>
         <source>custom</source>
         <translation>özel</translation>
     </message>
@@ -1469,57 +1465,57 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_loop</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="375"/>
+        <location filename="../../translation_tools/translatables.py" line="373"/>
         <source>Repeatedly runs another item</source>
         <translation>Başka bir ögeyi tekrarlanan bir şekilde çalıştırır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="378"/>
+        <location filename="../../translation_tools/translatables.py" line="385"/>
         <source># Preview of loop table</source>
         <translation># Döngü tablosunu önizleme</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="381"/>
+        <location filename="../../translation_tools/translatables.py" line="371"/>
         <source>Failed to generate preview.</source>
         <translation>Önizleme hazırlanamadı.</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="385"/>
+        <location filename="../../translation_tools/translatables.py" line="383"/>
         <source>one row occurs</source>
         <translation>bır satır oldu</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="377"/>
+        <location filename="../../translation_tools/translatables.py" line="379"/>
         <source>two rows occur</source>
         <translation>iki satır oldu</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="371"/>
+        <location filename="../../translation_tools/translatables.py" line="382"/>
         <source>never</source>
         <translation>hiçbir zaman</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="383"/>
+        <location filename="../../translation_tools/translatables.py" line="376"/>
         <source>once</source>
         <translation>yalnızca biir kere</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="376"/>
+        <location filename="../../translation_tools/translatables.py" line="375"/>
         <source>twice</source>
         <translation>iki kere</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="379"/>
+        <location filename="../../translation_tools/translatables.py" line="377"/>
         <source>Warning: No item to run has been specified</source>
         <translation>Uyarı: çalıştırılmayacak ögeler belirlendi</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="372"/>
+        <location filename="../../translation_tools/translatables.py" line="374"/>
         <source>Note: Order or repeat is unknown or variably defined</source>
         <translation>Not: Sıra ya da tekrar bilinmiyor ya da değişken bir biçimde tanımlanmış</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="374"/>
+        <location filename="../../translation_tools/translatables.py" line="381"/>
         <source>Note: Loop data will be read from file</source>
         <translation>Not: Döngü verileri dosyadan okunacak</translation>
     </message>
@@ -1529,17 +1525,17 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Summary: &lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; order.</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="373"/>
+        <location filename="../../translation_tools/translatables.py" line="378"/>
         <source>The number of rows is %s.</source>
         <translation>Satır sayısı %s&apos;dır.</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="382"/>
+        <location filename="../../translation_tools/translatables.py" line="380"/>
         <source>All rows occur %s.</source>
         <translation>Bütün satırlar %s gerçekleşti.</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="380"/>
+        <location filename="../../translation_tools/translatables.py" line="372"/>
         <source>This means that %s %s and %s %s.</source>
         <translation>Bu %s %s ve %s %s anlamına gelir.</translation>
     </message>
@@ -1547,32 +1543,32 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_mouse_response</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="426"/>
+        <location filename="../../translation_tools/translatables.py" line="435"/>
         <source>Collects mouse responses</source>
         <translation>Fare yanıtlarını toplar</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="434"/>
+        <location filename="../../translation_tools/translatables.py" line="437"/>
         <source>Correct response</source>
         <translation>Doğru yanıt</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="431"/>
+        <location filename="../../translation_tools/translatables.py" line="429"/>
         <source>Allowed responses</source>
         <translation>İzin verilen yanıtlar</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="430"/>
+        <location filename="../../translation_tools/translatables.py" line="433"/>
         <source>Timeout</source>
         <translation>Süre aşımı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="432"/>
+        <location filename="../../translation_tools/translatables.py" line="427"/>
         <source>Visible mouse cursor</source>
         <translation>Görünür fare imleci</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="436"/>
+        <location filename="../../translation_tools/translatables.py" line="431"/>
         <source>Flush pending mouse clicks</source>
         <translation>Beklemede olan fare tıklarını iptal et</translation>
     </message>
@@ -1582,95 +1578,95 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>&quot;correct_response&quot;u kullanmak için boş bırak</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="437"/>
+        <location filename="../../translation_tools/translatables.py" line="430"/>
         <source>Separated by semicolons, e.g. &quot;left_button;right_button&quot;</source>
         <translation>Noktalı virgül ile ayrılır, örneğin &quot;sol_tuşu;sağ_tuşu&quot;</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="435"/>
+        <location filename="../../translation_tools/translatables.py" line="432"/>
         <source>In milliseconds or &quot;infinite&quot;</source>
         <translation>Milisaniye olarak ya da &quot;infinite&quot; (sonsuz)</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="427"/>
+        <location filename="../../translation_tools/translatables.py" line="426"/>
         <source>Linked sketchpad</source>
         <translation>Bağlantılı sketchpad</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="429"/>
+        <location filename="../../translation_tools/translatables.py" line="436"/>
         <source>Elements define regions of interest</source>
         <translation>İlgilenilen alanları tanımlayan elementler</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="433"/>
+        <location filename="../../translation_tools/translatables.py" line="434"/>
         <source>Event type</source>
-        <translation type="unfinished">Olay türü</translation>
+        <translation>Olay türü</translation>
     </message>
 </context>
 <context>
     <name>item_sampler</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="444"/>
+        <location filename="../../translation_tools/translatables.py" line="449"/>
         <source>Plays a sound file in .wav or .ogg format</source>
         <translation>.wav ya da .ogg formatında ses dosyası oynatır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="441"/>
+        <location filename="../../translation_tools/translatables.py" line="440"/>
         <source>Sound file</source>
         <translation>Ses dosyası</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="450"/>
+        <location filename="../../translation_tools/translatables.py" line="451"/>
         <source>Volume</source>
         <translation>Ses</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="442"/>
+        <location filename="../../translation_tools/translatables.py" line="452"/>
         <source> x original</source>
         <translation> x orjinal</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="445"/>
+        <location filename="../../translation_tools/translatables.py" line="446"/>
         <source>Panning</source>
         <translation>Gezdirme</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="443"/>
+        <location filename="../../translation_tools/translatables.py" line="442"/>
         <source>Pitch</source>
         <translation>Ses perdesi (akord)</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="449"/>
+        <location filename="../../translation_tools/translatables.py" line="447"/>
         <source>Stop after</source>
         <translation>Bitince dur</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="452"/>
+        <location filename="../../translation_tools/translatables.py" line="443"/>
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="451"/>
+        <location filename="../../translation_tools/translatables.py" line="444"/>
         <source>Fade in</source>
         <translation>Güçlenme (ses)</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="448"/>
+        <location filename="../../translation_tools/translatables.py" line="445"/>
         <source>Duration</source>
         <translation>Süre</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="440"/>
+        <location filename="../../translation_tools/translatables.py" line="450"/>
         <source>In .ogg or .wav format</source>
         <translation>.wav ya da .ogg formatında</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="446"/>
+        <location filename="../../translation_tools/translatables.py" line="441"/>
         <source>Positive values toward the right; &quot;left&quot; or &quot;right&quot; for full panning</source>
         <translation>Pozitif değerler sağa doğru; tam bir gezdirme için ise &quot;sol&quot; ya da &quot;sağ&quot;</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="447"/>
+        <location filename="../../translation_tools/translatables.py" line="448"/>
         <source>In milliseconds, &quot;sound&quot;, &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
         <translation>Milisaniye olarak &quot;sound&quot;(ses), &quot;keypress&quot; (tuşa basılması), ya da &quot;mouseclic&quot;(fare tıklaması)</translation>
     </message>
@@ -1678,17 +1674,17 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_sequence</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="390"/>
+        <location filename="../../translation_tools/translatables.py" line="388"/>
         <source>Sequence contains non-existing item: %s</source>
         <translation>Dizge olmayan ögeleri içermektedir: %s</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="388"/>
+        <location filename="../../translation_tools/translatables.py" line="391"/>
         <source>Runs a number of items in sequence</source>
         <translation>Dizgedeki ögeleri belirtilen sayı kadar çalıştırır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="391"/>
+        <location filename="../../translation_tools/translatables.py" line="390"/>
         <source>Flush pending key presses at sequence start</source>
         <translation>Dizge başladığında beklemede olan basılı tuşları iptal et</translation>
     </message>
@@ -1701,102 +1697,102 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_sketchpad</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="291"/>
+        <location filename="../../translation_tools/translatables.py" line="282"/>
         <source>Image name &quot;%s&quot; is unknown or variably defined, using fallback image</source>
         <translation>&quot;%s&quot; resim ismi bilinmiyor ya da değişken bir biçimde tanımlanmış,yedek resim kullanılıyor</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="290"/>
+        <location filename="../../translation_tools/translatables.py" line="301"/>
         <source>Penwidth &quot;%s&quot; is unknown or variably defined, using 1</source>
         <translation>Kalem kalınlığı &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,kalem kalınlığı 1 olarak kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="302"/>
+        <location filename="../../translation_tools/translatables.py" line="287"/>
         <source>Scale &quot;%s&quot; is unknown or variably defined, using 1</source>
         <translation>Ölçeklendirme &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,ölçeklendirme 1 olarak kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="292"/>
+        <location filename="../../translation_tools/translatables.py" line="284"/>
         <source>Color &quot;%s&quot; is unknown or variably defined, using placeholder color</source>
         <translation>Renk &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,varsayılan renk kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="282"/>
+        <location filename="../../translation_tools/translatables.py" line="293"/>
         <source>X coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
         <translation>X koordinatı &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, koordinat merkez olarak kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="288"/>
+        <location filename="../../translation_tools/translatables.py" line="298"/>
         <source>Y coordinate &quot;%s&quot; is unknown or variably defined, using display center</source>
         <translation>Y koordinatı &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, koordinat merkez olarak kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="289"/>
+        <location filename="../../translation_tools/translatables.py" line="281"/>
         <source>Radius &quot;%s&quot; is unknown or variably defined, using 50</source>
         <translation>Yarıçap &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, yarıçap 50 olarak belirlenmiştir</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="304"/>
+        <location filename="../../translation_tools/translatables.py" line="292"/>
         <source>Proportion &quot;%s&quot; is unknown or variably defined, using .5</source>
         <translation>Oran &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,oran 5 olarak kullanılmıştır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="293"/>
+        <location filename="../../translation_tools/translatables.py" line="286"/>
         <source>Width &quot;%s&quot; is unknown or variably defined, using 100</source>
         <translation>Genişlik &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, genişlik 100 olarak kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="287"/>
+        <location filename="../../translation_tools/translatables.py" line="288"/>
         <source>Height &quot;%s&quot; is unknown or variably defined, using 100</source>
         <translation>Yükseklik &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,yükseklik 100 olarak kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="296"/>
+        <location filename="../../translation_tools/translatables.py" line="279"/>
         <source>Font size &quot;%s&quot; is invalid or variably defined, using 18</source>
         <translation>Yazı boyutu &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış,18 punto kullanılacaktır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="281"/>
+        <location filename="../../translation_tools/translatables.py" line="300"/>
         <source>Some properties of a Gabor patch are unknown or variably defined, using fallback image</source>
         <translation>Gabor parçasının bazı özellikleri bilinmiyor ya da değişken bir biçimde tanımlanmış, son çare resmi kullanılıyor</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="303"/>
+        <location filename="../../translation_tools/translatables.py" line="277"/>
         <source>Some properties of a noise patch are unknown or variably defined, using fallback image</source>
         <translation>Gürültü parçasının (noise patch) bazı özellikleri bilinmiyor ya da değişken bir biçimde tanımlanmış, son çare resmi kullanılıyor</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="295"/>
+        <location filename="../../translation_tools/translatables.py" line="291"/>
         <source>Fixdot style &quot;%s&quot; is unknown or variably defined</source>
         <translation>Odaklanma noktası (fıxdot) stili &quot;%s&quot; bilinmiyor ya da değişken bir şekilde tanımlanmış</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="283"/>
+        <location filename="../../translation_tools/translatables.py" line="290"/>
         <source>Edit text</source>
         <translation>Metni düzenle</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="279"/>
+        <location filename="../../translation_tools/translatables.py" line="297"/>
         <source>Please enter a text for the textline</source>
         <translation>Lütfen metin satırına bir metin giriniz</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="301"/>
+        <location filename="../../translation_tools/translatables.py" line="296"/>
         <source>New textline</source>
         <translation>Yeni metin satırı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="285"/>
+        <location filename="../../translation_tools/translatables.py" line="289"/>
         <source>Element script</source>
         <translation>Element komut dizisi</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="277"/>
+        <location filename="../../translation_tools/translatables.py" line="303"/>
         <source>Edit script</source>
         <translation>Komut dizisini düzenle</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="294"/>
+        <location filename="../../translation_tools/translatables.py" line="295"/>
         <source>Raise to front</source>
         <translation>Ön tarafı yükselt</translation>
     </message>
@@ -1806,37 +1802,37 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Altı aşağı indir</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="286"/>
+        <location filename="../../translation_tools/translatables.py" line="302"/>
         <source>Delete</source>
         <translation>Sil</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="299"/>
+        <location filename="../../translation_tools/translatables.py" line="304"/>
         <source>Displays stimuli</source>
         <translation>Uyarıcıyı görüntüle</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="297"/>
+        <location filename="../../translation_tools/translatables.py" line="285"/>
         <source>Draw %s element</source>
         <translation>%s elementini çiz</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="284"/>
+        <location filename="../../translation_tools/translatables.py" line="278"/>
         <source>Enter text</source>
         <translation>Metin gir</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="300"/>
+        <location filename="../../translation_tools/translatables.py" line="294"/>
         <source>Fill &quot;%s&quot; is unknown or variably defined, assuming filled</source>
         <translation>Doldurma rengi &quot;%s&quot; bilinmiyor ya da değişken bir biçimde tanımlanmış, doldurulmuş farzedilecek</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="298"/>
+        <location filename="../../translation_tools/translatables.py" line="299"/>
         <source>Rotation &quot;%s&quot; is unknown or variably defined, using 0</source>
         <translation>Dönüştürme değeri &quot;%s&quot; bilinmiyor ya da da 0 olarak değişken bir biçimde tanımlanmış</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="278"/>
+        <location filename="../../translation_tools/translatables.py" line="283"/>
         <source>Specify polar coordinates</source>
         <translation>Kutup koordinatlarını belirle</translation>
     </message>
@@ -1844,7 +1840,7 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>item_synth</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="355"/>
+        <location filename="../../translation_tools/translatables.py" line="354"/>
         <source>A basic sound synthesizer</source>
         <translation>Basit bir ses birleştirici</translation>
     </message>
@@ -1854,12 +1850,12 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Dalga biçimi</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="363"/>
+        <location filename="../../translation_tools/translatables.py" line="364"/>
         <source>Attack</source>
         <translation>Atak</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="365"/>
+        <location filename="../../translation_tools/translatables.py" line="358"/>
         <source> ms</source>
         <translation> ms</translation>
     </message>
@@ -1869,47 +1865,47 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Bozulma</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="353"/>
+        <location filename="../../translation_tools/translatables.py" line="365"/>
         <source>Volume</source>
         <translation>Ses</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="358"/>
+        <location filename="../../translation_tools/translatables.py" line="363"/>
         <source> x maximum</source>
         <translation> x maksimum</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="354"/>
+        <location filename="../../translation_tools/translatables.py" line="361"/>
         <source>Panning</source>
         <translation>Gezdirme</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="359"/>
+        <location filename="../../translation_tools/translatables.py" line="352"/>
         <source>Length</source>
         <translation>Uzunluk</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="362"/>
+        <location filename="../../translation_tools/translatables.py" line="359"/>
         <source>Duration</source>
         <translation>Süre</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="352"/>
+        <location filename="../../translation_tools/translatables.py" line="356"/>
         <source>Frequency</source>
         <translation>Frekans</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="364"/>
+        <location filename="../../translation_tools/translatables.py" line="355"/>
         <source>In Hertz or as note, e.g. &quot;A1&quot;</source>
         <translation>Hertz ya da nota olarak, örneğin &quot;A1&quot;</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="356"/>
+        <location filename="../../translation_tools/translatables.py" line="353"/>
         <source>Positive values toward the right; &quot;left&quot; or &quot;right&quot; for full panning</source>
         <translation>Pozitif değerler sağa doğru; tam bir gezdirme için ise &quot;sol&quot; ya da &quot;sağ&quot;</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="361"/>
+        <location filename="../../translation_tools/translatables.py" line="362"/>
         <source>In milliseconds, &quot;sound&quot;, &quot;keypress&quot;, or &quot;mouseclick&quot;</source>
         <translation>Milisaniye olarak &quot;sound&quot;(ses),&quot;keypress&quot; (tuşa basılması), ya da &quot;mouseclic&quot;(fare tıklaması)</translation>
     </message>
@@ -1922,17 +1918,17 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Süre</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="55"/>
+        <location filename="../../translation_tools/translatables.py" line="54"/>
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="53"/>
+        <location filename="../../translation_tools/translatables.py" line="55"/>
         <source>Jitter</source>
         <translation>Sapma</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="54"/>
+        <location filename="../../translation_tools/translatables.py" line="53"/>
         <source>Jitter mode</source>
         <translation>Sapma modu</translation>
     </message>
@@ -1945,17 +1941,17 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Python kodunu bir dosyadan çalıştırır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="120"/>
+        <location filename="../../translation_tools/translatables.py" line="119"/>
         <source>Script file</source>
         <translation>Komut dizisi dosyası</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="117"/>
+        <location filename="../../translation_tools/translatables.py" line="120"/>
         <source>Prepare function in script</source>
         <translation>Komut dizisinin içerisinde fonksiyon hazırla</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="119"/>
+        <location filename="../../translation_tools/translatables.py" line="117"/>
         <source>Run function in script</source>
         <translation>Komut dizisinin içerisinde fonksiyon çalıştır</translation>
     </message>
@@ -1963,22 +1959,22 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_fixation_dot</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="97"/>
+        <location filename="../../translation_tools/translatables.py" line="98"/>
         <source>Style</source>
         <translation>Stil</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="100"/>
+        <location filename="../../translation_tools/translatables.py" line="101"/>
         <source>Pen width</source>
         <translation>Kalem kalınlığı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="104"/>
+        <location filename="../../translation_tools/translatables.py" line="102"/>
         <source>px</source>
         <translation>px</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="99"/>
+        <location filename="../../translation_tools/translatables.py" line="100"/>
         <source>Duration</source>
         <translation>Süre</translation>
     </message>
@@ -1988,17 +1984,17 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Ön plan rengi</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="102"/>
+        <location filename="../../translation_tools/translatables.py" line="97"/>
         <source>Background color</source>
         <translation>Arkaplan rengi</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="101"/>
+        <location filename="../../translation_tools/translatables.py" line="99"/>
         <source>X coordinate</source>
         <translation>X koordinatı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="98"/>
+        <location filename="../../translation_tools/translatables.py" line="104"/>
         <source>Y coordinate</source>
         <translation>Y koordinatı</translation>
     </message>
@@ -2006,7 +2002,7 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_form_base</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="137"/>
+        <location filename="../../translation_tools/translatables.py" line="139"/>
         <source>cols, rows, and margins should be numeric values separated by a semi-colon</source>
         <translation>sütunlar, satırlar ve kenar boşlukları noktalı virgül ile ayrılmış sayısal değerler olmalıdır</translation>
     </message>
@@ -2016,12 +2012,12 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Bir form aracında sütun, satır, sütun genişliği ve satır genişliği bir tamsayı olmalıdır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="139"/>
+        <location filename="../../translation_tools/translatables.py" line="140"/>
         <source>You can only specify one focus widget</source>
         <translation>Sadece bir adet odaklanma aracı seçebilirsiniz</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="140"/>
+        <location filename="../../translation_tools/translatables.py" line="137"/>
         <source>Edit the script to modify the form</source>
         <translation>Formu değiştirmek için komut dizisini düzenle</translation>
     </message>
@@ -2062,42 +2058,42 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_form_multiple_choice</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="29"/>
+        <location filename="../../translation_tools/translatables.py" line="33"/>
         <source>Form title</source>
         <translation>Form başlığı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="28"/>
+        <location filename="../../translation_tools/translatables.py" line="32"/>
         <source>Response variable</source>
         <translation>Yanıt değişkeni</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="32"/>
+        <location filename="../../translation_tools/translatables.py" line="34"/>
         <source>Allow multiple options to be selected</source>
         <translation>Çoklu seçenekleri seçmeye izin ver</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="27"/>
+        <location filename="../../translation_tools/translatables.py" line="28"/>
         <source>Advance immediately to the next item once a selection has been made</source>
         <translation>Bir öge seçildikten sonra beklemeden diğer ögeye  geç</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="31"/>
+        <location filename="../../translation_tools/translatables.py" line="30"/>
         <source>Button text</source>
         <translation>Buton metni</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="30"/>
+        <location filename="../../translation_tools/translatables.py" line="31"/>
         <source>Timeout</source>
         <translation>Zaman aşımı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="34"/>
+        <location filename="../../translation_tools/translatables.py" line="27"/>
         <source>Your question</source>
         <translation>Soru</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="33"/>
+        <location filename="../../translation_tools/translatables.py" line="29"/>
         <source>Response options (different options on different lines)</source>
         <translation>Yanıtlar (farklı seçenekler için farklı satırlar kullanın)</translation>
     </message>
@@ -2105,12 +2101,12 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_form_text_display</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="124"/>
+        <location filename="../../translation_tools/translatables.py" line="123"/>
         <source>Form title</source>
         <translation>Form başlığı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="123"/>
+        <location filename="../../translation_tools/translatables.py" line="124"/>
         <source>Ok-button text</source>
         <translation>Tamam-butonu metni</translation>
     </message>
@@ -2123,7 +2119,7 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_form_text_input</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="15"/>
+        <location filename="../../translation_tools/translatables.py" line="14"/>
         <source>Form title</source>
         <translation>Form başlığı</translation>
     </message>
@@ -2138,7 +2134,7 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Süre aşımı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="14"/>
+        <location filename="../../translation_tools/translatables.py" line="15"/>
         <source>Your question</source>
         <translation>Sorunuz</translation>
     </message>
@@ -2151,17 +2147,17 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Sahte mod (joystik yerine klavye kullan)</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="66"/>
+        <location filename="../../translation_tools/translatables.py" line="70"/>
         <source>Device nr.</source>
         <translation>Alet no.</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="70"/>
+        <location filename="../../translation_tools/translatables.py" line="69"/>
         <source>Correct response</source>
         <translation>Doğru yanıt</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="69"/>
+        <location filename="../../translation_tools/translatables.py" line="66"/>
         <source>Allowed responses</source>
         <translation>İzin verilen yanıtlar</translation>
     </message>
@@ -2181,60 +2177,60 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translation_tools/translatables.py" line="20"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiçbiri</translation>
     </message>
 </context>
-<context encoding="UTF-8">
+<context>
     <name>plugin_quest_staircase_init</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="38"/>
+        <location filename="../../translation_tools/translatables.py" line="42"/>
         <source>Estimated threshold (used for starting test value)</source>
         <translation>Tahmini eşik (başlangıç test değişkeni için kullanılır)</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="39"/>
+        <location filename="../../translation_tools/translatables.py" line="37"/>
         <source>Std. dev. of estimated threshold</source>
         <translation>Tahmini eşik değerinin standart sapması</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="37"/>
+        <location filename="../../translation_tools/translatables.py" line="40"/>
         <source>Desired proportion of correct responses</source>
         <translation>Doğru yanıtların istenen oranı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="41"/>
+        <location filename="../../translation_tools/translatables.py" line="38"/>
         <source>Method to determine optimal test value</source>
         <translation>Optımum test değerini berlirlemek için metod</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="42"/>
+        <location filename="../../translation_tools/translatables.py" line="44"/>
         <source>Minimum test value</source>
         <translation>Minimum test değeri</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="40"/>
+        <location filename="../../translation_tools/translatables.py" line="41"/>
         <source>Maximum test value</source>
         <translation>Maksimum test değeri</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="46"/>
+        <location filename="../../translation_tools/translatables.py" line="45"/>
         <source>Experimental variable for test value</source>
         <translation>Test değeri için deneysel değişken</translation>
     </message>
-    <message encoding="UTF-8">
-        <location filename="../../translation_tools/translatables.py" line="45"/>
+    <message>
+        <location filename="../../translation_tools/translatables.py" line="39"/>
         <source>Chance level (γ)</source>
-        <translation type="unfinished"></translation>
+        <translation>Şans seviyesi (y)</translation>
     </message>
-    <message encoding="UTF-8">
-        <location filename="../../translation_tools/translatables.py" line="43"/>
+    <message>
+        <location filename="../../translation_tools/translatables.py" line="46"/>
         <source>Proportion of random responses at maximum stimulus intensity (δ)</source>
-        <translation type="unfinished"></translation>
+        <translation>Maksimum uyarıcı yoğunlunda (δ) rastgele cevap oranı</translation>
     </message>
-    <message encoding="UTF-8">
-        <location filename="../../translation_tools/translatables.py" line="44"/>
+    <message>
+        <location filename="../../translation_tools/translatables.py" line="43"/>
         <source>Steepness of the Weibull psychometric function (β)</source>
-        <translation type="unfinished"></translation>
+        <translation>Weibul psikometrik fonksiyonunun (β) dikliği</translation>
     </message>
 </context>
 <context>
@@ -2248,12 +2244,12 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_repeat_cycle</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="23"/>
+        <location filename="../../translation_tools/translatables.py" line="24"/>
         <source>Marks the current loop cycle so that it is repeated</source>
         <translation>Geçerli döngüyü işaretler, döngü tekrar edilir</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="24"/>
+        <location filename="../../translation_tools/translatables.py" line="23"/>
         <source>Repeat if</source>
         <translation>Repeat if</translation>
     </message>
@@ -2269,42 +2265,42 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_srbox</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="79"/>
+        <location filename="../../translation_tools/translatables.py" line="74"/>
         <source>Dummy mode (use keyboard instead)</source>
         <translation>Sahte mod (klavye kullanılır)</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="76"/>
+        <location filename="../../translation_tools/translatables.py" line="75"/>
         <source>Ignore buttons that are already pressed</source>
         <translation>Basılmış olan tuşları yoksay</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="73"/>
+        <location filename="../../translation_tools/translatables.py" line="77"/>
         <source>Device name</source>
         <translation>Cihazın adı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="80"/>
+        <location filename="../../translation_tools/translatables.py" line="79"/>
         <source>Correct response</source>
         <translation>Doğru yanıt</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="78"/>
+        <location filename="../../translation_tools/translatables.py" line="73"/>
         <source>Allowed responses</source>
         <translation>İzin verilen yanıtlar</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="77"/>
+        <location filename="../../translation_tools/translatables.py" line="76"/>
         <source>Timeout</source>
         <translation>Süre aşımı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="74"/>
+        <location filename="../../translation_tools/translatables.py" line="78"/>
         <source>Turn on lights</source>
         <translation>Işıkları aç</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="75"/>
+        <location filename="../../translation_tools/translatables.py" line="80"/>
         <source>&lt;small&gt;&lt;b&gt;Note:&lt;/b&gt; If there are multiple srbox items in the experiment, the first srbox item determines the device name and whether dummy mode is enabled&lt;/small&gt;
 </source>
         <translation>&lt;small&gt;&lt;b&gt;Not:&lt;/b&gt; Eğer deneyde birden fazla srbox ögesi bulunursa ilk srbox ögesi cihaz ismini belirler ve sahte modun etkinleştirlip etkinleştirilmediğine karar verir&lt;/small&gt;
@@ -2339,17 +2335,17 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Doğru tepki</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="110"/>
+        <location filename="../../translation_tools/translatables.py" line="113"/>
         <source>Timeout</source>
         <translation>Zaman aşımı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="111"/>
+        <location filename="../../translation_tools/translatables.py" line="110"/>
         <source>Number of columns</source>
         <translation>Sütun sayısı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="113"/>
+        <location filename="../../translation_tools/translatables.py" line="111"/>
         <source>Number of rows</source>
         <translation>Satır sayısı</translation>
     </message>
@@ -2362,22 +2358,22 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugin_video_player</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="131"/>
+        <location filename="../../translation_tools/translatables.py" line="134"/>
         <source>Video file</source>
         <translation>Vidyo dosyası</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="134"/>
+        <location filename="../../translation_tools/translatables.py" line="133"/>
         <source>Resize to fit screen</source>
         <translation>Ekrana sığdırmak için yeniden boyutlandır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="132"/>
+        <location filename="../../translation_tools/translatables.py" line="131"/>
         <source>Duration</source>
         <translation>Not</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="133"/>
+        <location filename="../../translation_tools/translatables.py" line="132"/>
         <source>ms</source>
         <translation>ms</translation>
     </message>
@@ -2385,47 +2381,47 @@ Deney takip eden hatadan dolayı bitmedi:
 <context>
     <name>plugins_coroutines</name>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="87"/>
+        <location filename="../../translation_tools/translatables.py" line="90"/>
         <source>Run items simultaneously</source>
         <translation>Ögeleri eş zamanlı olarak çalıştır</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="90"/>
+        <location filename="../../translation_tools/translatables.py" line="89"/>
         <source>Item name</source>
         <translation>Öge ismi</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="88"/>
+        <location filename="../../translation_tools/translatables.py" line="93"/>
         <source>Start time</source>
         <translation>Başlangıç zamanı</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="94"/>
+        <location filename="../../translation_tools/translatables.py" line="88"/>
         <source>End time (if applicable)</source>
         <translation>Bitirme zamanı (eğer uygulanabilirse)</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="91"/>
+        <location filename="../../translation_tools/translatables.py" line="94"/>
         <source>Duration</source>
         <translation>Süre</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="93"/>
+        <location filename="../../translation_tools/translatables.py" line="91"/>
         <source>Generator function name (optional)</source>
         <translation>Üretici fonksiyonu ismi (isteğe bağlı)</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="86"/>
+        <location filename="../../translation_tools/translatables.py" line="92"/>
         <source>Flush pending key presses at coroutines start</source>
         <translation>coroutines başladığında beklemede olan basılan tuşların görevlerini iptal et</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="89"/>
+        <location filename="../../translation_tools/translatables.py" line="87"/>
         <source>&quot;%s&quot; does not support coroutines.</source>
         <translation>&quot;%s&quot; coroutinesi desteklememektedir.</translation>
     </message>
     <message>
-        <location filename="../../translation_tools/translatables.py" line="92"/>
+        <location filename="../../translation_tools/translatables.py" line="86"/>
         <source>End after item (optional)</source>
         <translation>Ögeden sonra bitir (isteğe bağlı)</translation>
     </message>
@@ -2568,7 +2564,7 @@ Görüntünün, sesin ve girdi aletleriyle ilgili ayarlar</translation>
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation>Yön &lt;br /&gt;&lt;i&gt;derece olarak (0 .. 360)&lt;/i&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
         <source> °</source>
         <translation> °</translation>
@@ -2668,7 +2664,7 @@ Görüntünün, sesin ve girdi aletleriyle ilgili ayarlar</translation>
         <source> px</source>
         <translation> px</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/general_properties.ui" line="183"/>
         <source>×</source>
         <translation>×</translation>
@@ -2721,7 +2717,7 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
     <message>
         <location filename="../ui/widgets/general_script_editor.ui" line="95"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygula</translation>
     </message>
 </context>
 <context>
@@ -3082,22 +3078,22 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
         <source>One-tab mode</source>
         <translation>Bir sekme modu</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="274"/>
         <source>Open…</source>
         <translation>Aç…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="304"/>
         <source>Save as…</source>
         <translation>Farklı kaydet…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="327"/>
         <source>Run fullscreen…</source>
         <translation>Tam ekran modunda çalıştır…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="365"/>
         <source>Run in window…</source>
         <translation>Pencerede çalıştır…</translation>
@@ -3105,12 +3101,12 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
     <message>
         <location filename="../ui/misc/main_window.ui" line="464"/>
         <source>Kill experiment</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneyi durdur</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="467"/>
         <source>Forcibly kill the experiment</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneyi zorla durdur</translation>
     </message>
 </context>
 <context>
@@ -3293,7 +3289,7 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
         <source>Angle (phi)</source>
         <translation>Açı (phi)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="116"/>
         <source>°</source>
         <translation>°</translation>
@@ -3402,12 +3398,12 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="193"/>
         <source>Run experiment in the same process (inprocess)</source>
-        <translation>Deneyi aynı işlemin içinde çalıştır (tekli işlem)</translation>
+        <translation>Deneyi aynı işlem olarak çalıştır (tekli işlem)</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="198"/>
         <source>Run experiment in a separate process (multiprocess)</source>
-        <translation>Deneyi farklı bir işlemin içinde çalıştır (çoklu işlem)</translation>
+        <translation>Deneyi ayrı bir işlem olarak çalıştır (çoklu işlem)</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="203"/>
@@ -3422,37 +3418,37 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="35"/>
         <source>Some changes require a restart to take effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Bazı değişikliklerin yürürlüğe girmesi yeniden başlatma gerektirir</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="49"/>
         <source>Common settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel ayarlar</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="100"/>
         <source>Application appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama görünümü</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="144"/>
         <source>Color theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk teması</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="171"/>
         <source>Running experiments</source>
-        <translation type="unfinished"></translation>
+        <translation>Çalışan deneyler</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="211"/>
         <source>It is recommended to run experiments in a separate process (multiprocress)</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneyleri ayrı bir işlem (çoklu işlem) şeklinde çalıştırmanız önerilir</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="229"/>
         <source>Advanced settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelişmiş ayarlar</translation>
     </message>
 </context>
 <context>
@@ -3617,7 +3613,7 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
         <source>Select and move elements</source>
         <translation>Elementleri seç ve yerlerini değiştir</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/sketchpad.ui" line="472"/>
         <source>°</source>
         <translation>°</translation>
