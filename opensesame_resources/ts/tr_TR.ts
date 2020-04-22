@@ -1,146 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="tr" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="tr">
 <context>
     <name>Form</name>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="35"/>
         <source>Code editor: Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod editorü: görünüş</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="59"/>
         <source>Font</source>
-        <translation type="unfinished">Yazı tipi</translation>
+        <translation>Yazı tipi</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="66"/>
         <source>Color scheme</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk düzeni</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="76"/>
         <source>Tab width</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekme genişliği</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="146"/>
         <source> characters</source>
-        <translation type="unfinished"></translation>
+        <translation> karakterler</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="90"/>
         <source>Show line numbers</source>
-        <translation type="unfinished"></translation>
+        <translation>Satır numaralarını göster</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="97"/>
         <source>Highlight current line</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanılan satırı etiketle</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="104"/>
         <source>Show right margin</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağ taraftaki sayfa kenar boşluğunu göster</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="111"/>
         <source>Show whitespace</source>
-        <translation type="unfinished"></translation>
+        <translation>Alfabe dışı karakterleri göster</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="118"/>
         <source>Wrap lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Satırları grupla</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="125"/>
         <source>Allow code folding</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodların katlanmasına izin ver</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="132"/>
         <source>Fix editor width</source>
-        <translation type="unfinished"></translation>
+        <translation>Editör genişliğini sabitle</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="139"/>
         <source>Editor width</source>
-        <translation type="unfinished"></translation>
+        <translation>Editör genişliği</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="174"/>
         <source> pt</source>
-        <translation type="unfinished"></translation>
+        <translation> pt</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="187"/>
         <source>Code editor: Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod editörü: Davranış</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="211"/>
         <source>Indentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Girinti</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="219"/>
         <source>auto</source>
-        <translation type="unfinished">Otomatik</translation>
+        <translation>otomatik</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="224"/>
         <source>spaces</source>
-        <translation type="unfinished"></translation>
+        <translation>boşluklar</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="229"/>
         <source>tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>sekmeler</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="237"/>
         <source>Ignore style violations&lt;br /&gt;&lt;a href=&quot;https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;List of error codes&lt;/span&gt;&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil ihlallerini görmezden gel &lt;br /&gt;&lt;a href=&quot;https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Hata kodları listesi&lt;/span&gt;&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="253"/>
         <source>Enable code completion</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod tamamlamayı aktive et</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="260"/>
         <source>Check Python syntax (pyflakes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Python syntaxını kontrol et (pyflakes)</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="267"/>
         <source>Check Python style (PEP8)</source>
-        <translation type="unfinished"></translation>
+        <translation>Python stilini kontrol et (PEP8)</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="277"/>
         <source>Code editor: Keyboard shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod editörü: kısayol tuşları</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="307"/>
         <source>Duplicate line</source>
-        <translation type="unfinished"></translation>
+        <translation>Satırın iki tane kopyasını çıkart</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="314"/>
         <source>Swap line up</source>
-        <translation type="unfinished"></translation>
+        <translation>Satırı yukarıdaki ile değiştir</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="321"/>
         <source>Swap line down</source>
-        <translation type="unfinished"></translation>
+        <translation>Satırı aşağıdaki ile değiştir</translation>
     </message>
 </context>
 <context>
@@ -158,7 +159,7 @@
     <message>
         <location filename="../../translation_tools/translatables.py" line="539"/>
         <source>Settings for %s:</source>
-        <translation></translation>
+        <translation>%s için ayarlar:</translation>
     </message>
 </context>
 <context>
@@ -200,7 +201,7 @@
     <message>
         <location filename="../../translation_tools/translatables.py" line="514"/>
         <source>other ...</source>
-        <translation type="unfinished">diğer ...</translation>
+        <translation>diğer ...</translation>
     </message>
 </context>
 <context>
@@ -443,7 +444,7 @@
     <message>
         <location filename="../../translation_tools/translatables.py" line="271"/>
         <source>Cancel</source>
-        <translation>Iptal et</translation>
+        <translation>İptal et</translation>
     </message>
 </context>
 <context>
@@ -499,12 +500,12 @@
     <message>
         <location filename="../../translation_tools/translatables.py" line="342"/>
         <source>Failed to parse script. See debug window for details</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod metninin çalışması tamamlanamadı. Hata ayıklayıcı penceresinde detayları görebilirsiniz</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="344"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygula</translation>
     </message>
 </context>
 <context>
@@ -557,7 +558,7 @@
         <source>Could not parse script: %s</source>
         <translation>Komut dosyası yürütülemedi: %s</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="334"/>
         <source>Save as…</source>
         <translation>Farklı kaydet…</translation>
@@ -584,7 +585,7 @@
     <message>
         <location filename="../../translation_tools/translatables.py" line="335"/>
         <source>Your experiment contains unsaved changes. Do you want to save your experiment?</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneyiniz kaydedilmemiş değişiklikler içeriyor. Deneyinizi kaydetmek ister misiniz?</translation>
     </message>
 </context>
 <context>
@@ -748,7 +749,7 @@ Tanım: %s</translation>
     <message>
         <location filename="../../translation_tools/translatables.py" line="496"/>
         <source>Recursion detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekrarlama tespit edildi</translation>
     </message>
 </context>
 <context>
@@ -794,7 +795,7 @@ Tanım: %s</translation>
         <source>Done</source>
         <translation>Tamamlandı</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="455"/>
         <source>Loading …</source>
         <translation>Yükleniyor …</translation>
@@ -945,17 +946,17 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translation_tools/translatables.py" line="229"/>
         <source>Opens external files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dıştan gelen dosyaları açar</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="230"/>
         <source>Handles opening of external files</source>
-        <translation type="unfinished"></translation>
+        <translation>Dıştan gelen dosyaların açılmasını yürütür</translation>
     </message>
 </context>
 <context>
     <name>extension_get_started</name>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="217"/>
         <source>New…</source>
         <translation>Yeni…</translation>
@@ -1001,12 +1002,12 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translation_tools/translatables.py" line="176"/>
         <source>Adds a Help menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardım menüsü ekler</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="172"/>
         <source>Please wait …</source>
-        <translation type="unfinished"></translation>
+        <translation>Lütfen bekleyiniz...</translation>
     </message>
 </context>
 <context>
@@ -1115,12 +1116,12 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="167"/>
         <source>Startup time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlama zamanı:</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="174"/>
         <source>Not started</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlamadı</translation>
     </message>
 </context>
 <context>
@@ -1128,12 +1129,12 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translation_tools/translatables.py" line="220"/>
         <source>Preload items</source>
-        <translation type="unfinished"></translation>
+        <translation>Ögeleri önyükle</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="221"/>
         <source>Preloads items in the background for smoother use</source>
-        <translation type="unfinished"></translation>
+        <translation>Daha yumuşak bir kullanım için ögeleri arka planda önyükle</translation>
     </message>
 </context>
 <context>
@@ -1159,22 +1160,22 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translation_tools/translatables.py" line="205"/>
         <source>PyQode manager</source>
-        <translation type="unfinished"></translation>
+        <translation>PyQode yöneticisi</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="206"/>
         <source>Convert tabs to spaces</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabları boşluklara dönüştür</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="203"/>
         <source>Convert spaces to tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Boşlukları tablara dönüştür</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="204"/>
         <source>Manages PyQode, the code-editor component</source>
-        <translation type="unfinished"></translation>
+        <translation>PyQode&apos;u yönetir, kod yönetici bileşeni</translation>
     </message>
 </context>
 <context>
@@ -1187,12 +1188,12 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translation_tools/translatables.py" line="242"/>
         <source>Quickly open items</source>
-        <translation type="unfinished"></translation>
+        <translation>Ögeleri hızlıca açar</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="243"/>
         <source>Search items …</source>
-        <translation type="unfinished"></translation>
+        <translation>Ögeleri ara ...</translation>
     </message>
 </context>
 <context>
@@ -1305,7 +1306,7 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translation_tools/translatables.py" line="143"/>
         <source>Failed to check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Güncellemeler denetlenemedi</translation>
     </message>
 </context>
 <context>
@@ -1367,7 +1368,7 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translation_tools/translatables.py" line="348"/>
         <source>Executes Python code</source>
-        <translation type="unfinished"></translation>
+        <translation>Python kodunu çalıştırır</translation>
     </message>
 </context>
 <context>
@@ -1599,7 +1600,7 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translation_tools/translatables.py" line="434"/>
         <source>Event type</source>
-        <translation type="unfinished">Olay türü</translation>
+        <translation>Olay türü</translation>
     </message>
 </context>
 <context>
@@ -2176,10 +2177,10 @@ Deney takip eden hatadan dolayı bitmedi:
     <message>
         <location filename="../../translation_tools/translatables.py" line="20"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiçbiri</translation>
     </message>
 </context>
-<context encoding="UTF-8">
+<context>
     <name>plugin_quest_staircase_init</name>
     <message>
         <location filename="../../translation_tools/translatables.py" line="42"/>
@@ -2216,20 +2217,20 @@ Deney takip eden hatadan dolayı bitmedi:
         <source>Experimental variable for test value</source>
         <translation>Test değeri için deneysel değişken</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="39"/>
         <source>Chance level (γ)</source>
-        <translation type="unfinished"></translation>
+        <translation>Şans seviyesi (y)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="46"/>
         <source>Proportion of random responses at maximum stimulus intensity (δ)</source>
-        <translation type="unfinished"></translation>
+        <translation>Maksimum uyarıcı yoğunlunda (δ) rastgele cevap oranı</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="43"/>
         <source>Steepness of the Weibull psychometric function (β)</source>
-        <translation type="unfinished"></translation>
+        <translation>Weibul psikometrik fonksiyonunun (β) dikliği</translation>
     </message>
 </context>
 <context>
@@ -2563,7 +2564,7 @@ Görüntünün, sesin ve girdi aletleriyle ilgili ayarlar</translation>
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation>Yön &lt;br /&gt;&lt;i&gt;derece olarak (0 .. 360)&lt;/i&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
         <source> °</source>
         <translation> °</translation>
@@ -2663,7 +2664,7 @@ Görüntünün, sesin ve girdi aletleriyle ilgili ayarlar</translation>
         <source> px</source>
         <translation> px</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/general_properties.ui" line="183"/>
         <source>×</source>
         <translation>×</translation>
@@ -2716,7 +2717,7 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
     <message>
         <location filename="../ui/widgets/general_script_editor.ui" line="95"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygula</translation>
     </message>
 </context>
 <context>
@@ -3077,22 +3078,22 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
         <source>One-tab mode</source>
         <translation>Bir sekme modu</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="274"/>
         <source>Open…</source>
         <translation>Aç…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="304"/>
         <source>Save as…</source>
         <translation>Farklı kaydet…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="327"/>
         <source>Run fullscreen…</source>
         <translation>Tam ekran modunda çalıştır…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="365"/>
         <source>Run in window…</source>
         <translation>Pencerede çalıştır…</translation>
@@ -3100,12 +3101,12 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
     <message>
         <location filename="../ui/misc/main_window.ui" line="464"/>
         <source>Kill experiment</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneyi durdur</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="467"/>
         <source>Forcibly kill the experiment</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneyi zorla durdur</translation>
     </message>
 </context>
 <context>
@@ -3288,7 +3289,7 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
         <source>Angle (phi)</source>
         <translation>Açı (phi)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="116"/>
         <source>°</source>
         <translation>°</translation>
@@ -3397,12 +3398,12 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="193"/>
         <source>Run experiment in the same process (inprocess)</source>
-        <translation>Deneyi aynı işlemin içinde çalıştır (tekli işlem)</translation>
+        <translation>Deneyi aynı işlem olarak çalıştır (tekli işlem)</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="198"/>
         <source>Run experiment in a separate process (multiprocess)</source>
-        <translation>Deneyi farklı bir işlemin içinde çalıştır (çoklu işlem)</translation>
+        <translation>Deneyi ayrı bir işlem olarak çalıştır (çoklu işlem)</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="203"/>
@@ -3417,37 +3418,37 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="35"/>
         <source>Some changes require a restart to take effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Bazı değişikliklerin yürürlüğe girmesi yeniden başlatma gerektirir</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="49"/>
         <source>Common settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel ayarlar</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="100"/>
         <source>Application appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulama görünümü</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="144"/>
         <source>Color theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Renk teması</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="171"/>
         <source>Running experiments</source>
-        <translation type="unfinished"></translation>
+        <translation>Çalışan deneyler</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="211"/>
         <source>It is recommended to run experiments in a separate process (multiprocress)</source>
-        <translation type="unfinished"></translation>
+        <translation>Deneyleri ayrı bir işlem (çoklu işlem) şeklinde çalıştırmanız önerilir</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="229"/>
         <source>Advanced settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Gelişmiş ayarlar</translation>
     </message>
 </context>
 <context>
@@ -3612,7 +3613,7 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
         <source>Select and move elements</source>
         <translation>Elementleri seç ve yerlerini değiştir</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/sketchpad.ui" line="472"/>
         <source>°</source>
         <translation>°</translation>
