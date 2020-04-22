@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="fr" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="fr">
 <context>
     <name>Form</name>
     <message>
@@ -145,7 +146,7 @@
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="277"/>
         <source>No code completion for</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de complétion de code pour</translation>
     </message>
 </context>
 <context>
@@ -581,7 +582,7 @@
         <source> [read only]</source>
         <translation> [lecture seulement]</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="331"/>
         <source>Save as…</source>
         <translation>Enregistrer sous…</translation>
@@ -799,7 +800,7 @@ Description : %s</translation>
         <source>Done</source>
         <translation>Fini</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="455"/>
         <source>Loading …</source>
         <translation>En train de charger…</translation>
@@ -980,7 +981,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <source>Get started!</source>
         <translation>Lancez-vous !</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="216"/>
         <source>New…</source>
         <translation>Nouveau…</translation>
@@ -1008,7 +1009,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <source>Adds a Help menu</source>
         <translation>Ajoute un menu d&apos;aide</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="174"/>
         <source>Please wait …</source>
         <translation>Vuillez patienter…</translation>
@@ -1194,7 +1195,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <source>Quickly open items</source>
         <translation>Ouvrir des items rapidement</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="242"/>
         <source>Search items …</source>
         <translation>Rechercher des items…</translation>
@@ -2184,7 +2185,7 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <translation>None</translation>
     </message>
 </context>
-<context encoding="UTF-8">
+<context>
     <name>plugin_quest_staircase_init</name>
     <message>
         <location filename="../../translation_tools/translatables.py" line="38"/>
@@ -2221,17 +2222,17 @@ L&apos;éxpérience ne s&apos;est pas terminée normalement pour la raison suiva
         <source>Experimental variable for test value</source>
         <translation>Variable expérimentale pour la valeur de test</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="43"/>
         <source>Proportion of random responses at maximum stimulus intensity (δ)</source>
         <translation>Proportion de réponses aléatoires à l&apos;intensité maximale du stimulus (δ)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="44"/>
         <source>Steepness of the Weibull psychometric function (β)</source>
         <translation>Pente de la fonction psychométrique de Weibull (β)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="45"/>
         <source>Chance level (γ)</source>
         <translation>Niveau de chance (γ)</translation>
@@ -2615,7 +2616,7 @@ Différents réglages liés au contrôle de l&apos;affichage, le son, et les sys
         <translation>Couleur de fond&lt;br /&gt;
 &lt;i&gt;N&apos;a pas d&apos;effet dans l&apos;arriere-fond psycho&lt;/i&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
         <source> °</source>
         <translation> °</translation>
@@ -2693,7 +2694,7 @@ Différents réglages liés au contrôle de l&apos;affichage, le son, et les sys
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/backends/&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/backends/&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Pourquoi est-ce important ?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/general_properties.ui" line="183"/>
         <source>×</source>
         <translation>×</translation>
@@ -3092,22 +3093,22 @@ Edit your experiment in script form</source>
         <source>Forcibly kill the experiment</source>
         <translation>Tuer l&apos;expérience</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="274"/>
         <source>Open…</source>
         <translation>Ouvrir …</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="304"/>
         <source>Save as…</source>
         <translation>Enregistrer sous…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="327"/>
         <source>Run fullscreen…</source>
         <translation>Exécuter en plein écran…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="365"/>
         <source>Run in window…</source>
         <translation>Exécuter en mode fenêtre…</translation>
@@ -3318,7 +3319,7 @@ Edit your experiment in script form</source>
         <source>This tool allows you to calculate cartesian (x, y) coordinates from polar coordinates.</source>
         <translation>Cet outil vous permet de calculer des coordonnées cartésiennes (x, y) à partir des coordonées polaires.</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="116"/>
         <source>°</source>
         <translation>°</translation>
@@ -3632,7 +3633,7 @@ Edit your experiment in script form</source>
         <source>auto</source>
         <translation>auto</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/sketchpad.ui" line="472"/>
         <source>°</source>
         <translation>°</translation>
