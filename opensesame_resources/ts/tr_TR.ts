@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="tr" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="tr">
 <context>
     <name>Form</name>
     <message>
@@ -562,7 +563,7 @@
         <source>Could not parse script: %s</source>
         <translation>Komut dosyası yürütülemedi: %s</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="334"/>
         <source>Save as…</source>
         <translation>Farklı kaydet…</translation>
@@ -799,7 +800,7 @@ Tanım: %s</translation>
         <source>Done</source>
         <translation>Tamamlandı</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="459"/>
         <source>Loading …</source>
         <translation>Yükleniyor …</translation>
@@ -960,7 +961,7 @@ Deney takip eden hatadan dolayı bitmedi:
 </context>
 <context>
     <name>extension_get_started</name>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="216"/>
         <source>New…</source>
         <translation>Yeni…</translation>
@@ -1008,7 +1009,7 @@ Deney takip eden hatadan dolayı bitmedi:
         <source>Adds a Help menu</source>
         <translation>Yardım menüsü ekler</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="176"/>
         <source>Please wait …</source>
         <translation>Lütfen bekleyiniz …</translation>
@@ -1194,10 +1195,10 @@ Deney takip eden hatadan dolayı bitmedi:
         <source>Quickly open items</source>
         <translation>Ögeleri hızlıca açar</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="246"/>
         <source>Search items …</source>
-        <translation>Ögeleri ara ...</translation>
+        <translation>Ögeleri ara …</translation>
     </message>
 </context>
 <context>
@@ -2192,7 +2193,7 @@ Deney takip eden hatadan dolayı bitmedi:
         <translation>Hiçbiri</translation>
     </message>
 </context>
-<context encoding="UTF-8">
+<context>
     <name>plugin_quest_staircase_init</name>
     <message>
         <location filename="../../translation_tools/translatables.py" line="37"/>
@@ -2229,17 +2230,17 @@ Deney takip eden hatadan dolayı bitmedi:
         <source>Experimental variable for test value</source>
         <translation>Test değeri için deneysel değişken</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="42"/>
         <source>Chance level (γ)</source>
         <translation>Şans seviyesi (y)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="41"/>
         <source>Proportion of random responses at maximum stimulus intensity (δ)</source>
         <translation>Maksimum uyarıcı yoğunlunda (δ) rastgele cevap oranı</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="40"/>
         <source>Steepness of the Weibull psychometric function (β)</source>
         <translation>Weibul psikometrik fonksiyonunun (β) dikliği</translation>
@@ -2576,7 +2577,7 @@ Görüntünün, sesin ve girdi aletleriyle ilgili ayarlar</translation>
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation>Yön &lt;br /&gt;&lt;i&gt;derece olarak (0 .. 360)&lt;/i&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
         <source> °</source>
         <translation> °</translation>
@@ -2676,7 +2677,7 @@ Görüntünün, sesin ve girdi aletleriyle ilgili ayarlar</translation>
         <source> px</source>
         <translation> px</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/general_properties.ui" line="183"/>
         <source>×</source>
         <translation>×</translation>
@@ -3090,22 +3091,22 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
         <source>One-tab mode</source>
         <translation>Bir sekme modu</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="274"/>
         <source>Open…</source>
         <translation>Aç…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="304"/>
         <source>Save as…</source>
         <translation>Farklı kaydet…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="327"/>
         <source>Run fullscreen…</source>
         <translation>Tam ekran modunda çalıştır…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="365"/>
         <source>Run in window…</source>
         <translation>Pencerede çalıştır…</translation>
@@ -3301,7 +3302,7 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
         <source>Angle (phi)</source>
         <translation>Açı (phi)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="116"/>
         <source>°</source>
         <translation>°</translation>
@@ -3625,7 +3626,7 @@ Deneylerinizi komut dizisi üzerinden düzenle</translation>
         <source>Select and move elements</source>
         <translation>Elementleri seç ve yerlerini değiştir</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/sketchpad.ui" line="472"/>
         <source>°</source>
         <translation>°</translation>
