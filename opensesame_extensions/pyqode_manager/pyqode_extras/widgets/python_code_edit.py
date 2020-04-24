@@ -55,6 +55,11 @@ class PythonCodeEdit(PyCodeEditBase):
 		_reset_stylesheet = self._reset_stylesheet
 		self._reset_stylesheet = lambda: None
 		super(PythonCodeEdit, self).__init__(parent=parent)
+		self._word_separators = [
+			'~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+', '{',
+			'}', '|', ':', "<", ">", "?", ",", "/", ";", '[',
+			']', '\\', '\n', '\t', '=', '-', ' '
+		]
 		self.show_whitespaces = cfg.pyqode_show_whitespaces
 		self._backend = BackendManager(self)
 		self.backend.start(
