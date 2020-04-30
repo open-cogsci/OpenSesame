@@ -50,10 +50,11 @@ def safe_decode(s, enc='utf-8', errors='strict'):
 	# that, at least in some cases, they have to be encodeed to str first.
 	# Presumably, there is a better way to do this, but for now this at
 	# least gives sensible results.
-	try:
-		return safe_decode(bytes(s), enc=enc, errors=errors)
-	except:
-		pass
+	if isinstance(s, Exception):
+		try:
+			return safe_decode(bytes(s), enc=enc, errors=errors)
+		except:
+			pass
 	# For other types, the unicode representation doesn't require a specific
 	# encoding. This mostly applies to non-stringy things, such as integers.
 	try:
