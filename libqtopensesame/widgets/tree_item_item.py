@@ -57,7 +57,7 @@ class tree_item_item(tree_base_item):
 			item.var.description)
 		self.setText(0, item.name)
 		if extra_info is not None:
-			self.setText(1, extra_info)
+			self.setText(1, safe_decode(extra_info))
 		self.setFlags(QtCore.Qt.ItemIsEditable | self.flags())
 		self.setIcon(0, self.theme.qicon(item.item_icon()))
 		self.name = item.name
