@@ -1012,7 +1012,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translation_tools/translatables.py" line="177"/>
         <source>Please wait …</source>
-        <translation>Bitte warte ...</translation>
+        <translation>Bitte warte …</translation>
     </message>
 </context>
 <context>
@@ -1198,7 +1198,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translation_tools/translatables.py" line="244"/>
         <source>Search items …</source>
-        <translation>Suche Items ...</translation>
+        <translation>Suche Items …</translation>
     </message>
 </context>
 <context>
