@@ -1,151 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="de_DE" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="de_DE">
 <context>
     <name>Form</name>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished">Formular</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="35"/>
         <source>Code editor: Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Code Editor: Aussehen</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="59"/>
         <source>Font</source>
-        <translation type="unfinished">Schriftart</translation>
+        <translation>Schriftart</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="66"/>
         <source>Color scheme</source>
-        <translation type="unfinished">Farbschema</translation>
+        <translation>Farbschema</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="76"/>
         <source>Tab width</source>
-        <translation type="unfinished">Tabulatorbreite</translation>
+        <translation>Tabulatorbreite</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="146"/>
         <source> characters</source>
-        <translation type="unfinished"> Zeichen</translation>
+        <translation> Zeichen</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="90"/>
         <source>Show line numbers</source>
-        <translation type="unfinished">Zeilennummern anzeigen</translation>
+        <translation>Zeilennummern anzeigen</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="97"/>
         <source>Highlight current line</source>
-        <translation type="unfinished">Aktuelle Zeile hervorheben</translation>
+        <translation>Aktuelle Zeile hervorheben</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="104"/>
         <source>Show right margin</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige den rechten Rand</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="111"/>
         <source>Show whitespace</source>
-        <translation type="unfinished">Leerraum anzeigen</translation>
+        <translation>Leerraum anzeigen</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="118"/>
         <source>Wrap lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Führe einen Zeilenumbruch aus</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="125"/>
         <source>Allow code folding</source>
-        <translation type="unfinished"></translation>
+        <translation>Erlaube Code-Faltung</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="132"/>
         <source>Fix editor width</source>
-        <translation type="unfinished"></translation>
+        <translation>Fixiere Editorweite</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="139"/>
         <source>Editor width</source>
-        <translation type="unfinished"></translation>
+        <translation>Editorweite</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="174"/>
         <source> pt</source>
-        <translation type="unfinished"> pt</translation>
+        <translation> pt</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="187"/>
         <source>Code editor: Behavior</source>
-        <translation type="unfinished"></translation>
+        <translation>Code Editor- Verhalten</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="211"/>
         <source>Indentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Einschub</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="219"/>
         <source>auto</source>
-        <translation type="unfinished">Auto</translation>
+        <translation>autoAuto</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="224"/>
         <source>spaces</source>
-        <translation type="unfinished"></translation>
+        <translation>Leerraum</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="229"/>
         <source>tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Tabulator</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="237"/>
         <source>Ignore style violations&lt;br /&gt;&lt;a href=&quot;https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;List of error codes&lt;/span&gt;&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignoriere Verstöße gegen Stilrichtlinien&lt;br /&gt;&lt;a href=&quot;https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Liste mit Fehlercodes&lt;/span&gt;&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="253"/>
         <source>Enable code completion</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiviere automatische Code-Verfollständigung</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="260"/>
         <source>Check Python syntax (pyflakes)</source>
-        <translation type="unfinished"></translation>
+        <translation>Überprüfe Python Syntax (pyflakes)</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="267"/>
         <source>Check Python style (PEP8)</source>
-        <translation type="unfinished"></translation>
+        <translation>Überprüfe Python Style (PEP8)</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="287"/>
         <source>Code editor: Keyboard shortcuts</source>
-        <translation type="unfinished"></translation>
+        <translation>Code Editor: Tastaturkurzbefehl</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="317"/>
         <source>Duplicate line</source>
-        <translation type="unfinished"></translation>
+        <translation>Dupliziere Zeile</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="324"/>
         <source>Swap line up</source>
-        <translation type="unfinished"></translation>
+        <translation>Tausche Zeile nach oben</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="331"/>
         <source>Swap line down</source>
-        <translation type="unfinished"></translation>
+        <translation>Tausche Zeile nach unten</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="277"/>
         <source>No code completion for</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Codevervollständigung für</translation>
     </message>
 </context>
 <context>
@@ -205,7 +206,7 @@
     <message>
         <location filename="../../translation_tools/translatables.py" line="517"/>
         <source>other ...</source>
-        <translation type="unfinished">Andere ...</translation>
+        <translation>Andere ...</translation>
     </message>
 </context>
 <context>
@@ -504,12 +505,12 @@
     <message>
         <location filename="../../translation_tools/translatables.py" line="346"/>
         <source>Failed to parse script. See debug window for details</source>
-        <translation type="unfinished"></translation>
+        <translation>Das Parsing des Skripts ist fehlgeschlagen. Siehe das Debugfenster für Details</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="344"/>
         <source>Apply</source>
-        <translation type="unfinished">Anwenden</translation>
+        <translation>Anwenden</translation>
     </message>
 </context>
 <context>
@@ -562,7 +563,7 @@
         <source>Could not parse script: %s</source>
         <translation>Konnte Skript nicht analysieren: %s</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="339"/>
         <source>Save as…</source>
         <translation>Speichern unter…</translation>
@@ -589,7 +590,7 @@
     <message>
         <location filename="../../translation_tools/translatables.py" line="338"/>
         <source>Your experiment contains unsaved changes. Do you want to save your experiment?</source>
-        <translation type="unfinished"></translation>
+        <translation>Dein Experiment beinhaltet ungespeicherte Änderungen. Willst du das Experiment speichern?</translation>
     </message>
 </context>
 <context>
@@ -753,7 +754,7 @@ Beschreibung: %s</translation>
     <message>
         <location filename="../../translation_tools/translatables.py" line="499"/>
         <source>Recursion detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Rekursion detektiert</translation>
     </message>
 </context>
 <context>
@@ -799,7 +800,7 @@ Beschreibung: %s</translation>
         <source>Done</source>
         <translation>Fertig</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="458"/>
         <source>Loading …</source>
         <translation>Lade …</translation>
@@ -950,17 +951,17 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translation_tools/translatables.py" line="233"/>
         <source>Opens external files</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnet externe Dateilen</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="232"/>
         <source>Handles opening of external files</source>
-        <translation type="unfinished"></translation>
+        <translation>Händelt das Öffnen von externen Dateien</translation>
     </message>
 </context>
 <context>
     <name>extension_get_started</name>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="220"/>
         <source>New…</source>
         <translation>Neu…</translation>
@@ -1006,12 +1007,12 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translation_tools/translatables.py" line="178"/>
         <source>Adds a Help menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Fügt ein Hilfemenü dazu</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="177"/>
         <source>Please wait …</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte warte ...</translation>
     </message>
 </context>
 <context>
@@ -1045,7 +1046,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translation_tools/translatables.py" line="238"/>
         <source>Plug-in and extension manager</source>
-        <translation>Plugin- und Erweiterungsmanager</translation>
+        <translation>Plugin und Erweiterungsmanager</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="236"/>
@@ -1120,12 +1121,12 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="167"/>
         <source>Startup time:</source>
-        <translation type="unfinished"></translation>
+        <translation>Beginnzeit:</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/plugin_manager/plugin.ui" line="174"/>
         <source>Not started</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicht begonnen</translation>
     </message>
 </context>
 <context>
@@ -1133,12 +1134,12 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translation_tools/translatables.py" line="223"/>
         <source>Preload items</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade items vor</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="224"/>
         <source>Preloads items in the background for smoother use</source>
-        <translation type="unfinished"></translation>
+        <translation>Lade items in den Hintergrund um gleichmässigere Nutzung zu erlauben</translation>
     </message>
 </context>
 <context>
@@ -1164,22 +1165,22 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translation_tools/translatables.py" line="208"/>
         <source>PyQode manager</source>
-        <translation type="unfinished"></translation>
+        <translation>PyQode Manager</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="209"/>
         <source>Convert tabs to spaces</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertiere Tabulatoren in Leerraum</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="207"/>
         <source>Convert spaces to tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Konvertiere Leerraum in Tabulator</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="206"/>
         <source>Manages PyQode, the code-editor component</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwaltet PyQode, die Code Editor Komponente</translation>
     </message>
 </context>
 <context>
@@ -1192,12 +1193,12 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translation_tools/translatables.py" line="246"/>
         <source>Quickly open items</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffnet Items schnell</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="244"/>
         <source>Search items …</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche Items ...</translation>
     </message>
 </context>
 <context>
@@ -1205,7 +1206,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translation_tools/translatables.py" line="143"/>
         <source>Show toolbars and menu when they are hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige die Werkzeugleise und das Menü wenn sie versteckt sind</translation>
     </message>
 </context>
 <context>
@@ -1318,7 +1319,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translation_tools/translatables.py" line="148"/>
         <source>Failed to check for updates</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche nach Updates fehlgeschlagen</translation>
     </message>
 </context>
 <context>
@@ -1380,7 +1381,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translation_tools/translatables.py" line="352"/>
         <source>Executes Python code</source>
-        <translation type="unfinished"></translation>
+        <translation>Führt Python Code aus</translation>
     </message>
 </context>
 <context>
@@ -2189,10 +2190,10 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
     <message>
         <location filename="../../translation_tools/translatables.py" line="20"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine</translation>
     </message>
 </context>
-<context encoding="UTF-8">
+<context>
     <name>plugin_quest_staircase_init</name>
     <message>
         <location filename="../../translation_tools/translatables.py" line="38"/>
@@ -2229,20 +2230,20 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
         <source>Experimental variable for test value</source>
         <translation>Variable für Testwert</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="37"/>
         <source>Chance level (γ)</source>
-        <translation type="unfinished"></translation>
+        <translation>Zufallswahrscheinlichkeit (γ)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="44"/>
         <source>Proportion of random responses at maximum stimulus intensity (δ)</source>
-        <translation type="unfinished"></translation>
+        <translation>Proportion von Zufallsanworten bei der höchsten Stimulusintensität (δ)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="39"/>
         <source>Steepness of the Weibull psychometric function (β)</source>
-        <translation type="unfinished"></translation>
+        <translation>Steile der Weibull psychometrischen Funktion (β)</translation>
     </message>
 </context>
 <context>
@@ -2576,7 +2577,7 @@ Zahlreiche Einstellungen zur Kontrolle der Anzeige, des Tons und der Eingabeger�
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation>Ausrichtung&lt;br /&gt;&lt;i&gt;in Grad (0 .. 360)&lt;/i&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
         <source> °</source>
         <translation> °</translation>
@@ -2675,7 +2676,7 @@ Zahlreiche Einstellungen zur Kontrolle der Anzeige, des Tons und der Eingabeger�
         <source> px</source>
         <translation> px</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/general_properties.ui" line="183"/>
         <source>×</source>
         <translation>x</translation>
@@ -2728,7 +2729,7 @@ Bearbeite Dein Experiment in Skriptform</translation>
     <message>
         <location filename="../ui/widgets/general_script_editor.ui" line="95"/>
         <source>Apply</source>
-        <translation type="unfinished">Anwenden</translation>
+        <translation>Anwenden</translation>
     </message>
 </context>
 <context>
@@ -3088,22 +3089,22 @@ Bearbeite Dein Experiment in Skriptform</translation>
         <source>One-tab mode</source>
         <translation>Ein-Tab-Modus</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="274"/>
         <source>Open…</source>
         <translation>Öffne…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="304"/>
         <source>Save as…</source>
         <translation>Speichern unter…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="327"/>
         <source>Run fullscreen…</source>
         <translation>Ausführen im Vollbildmodus…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="365"/>
         <source>Run in window…</source>
         <translation>Ausführen im Fenstermodus…</translation>
@@ -3111,12 +3112,12 @@ Bearbeite Dein Experiment in Skriptform</translation>
     <message>
         <location filename="../ui/misc/main_window.ui" line="464"/>
         <source>Kill experiment</source>
-        <translation type="unfinished"></translation>
+        <translation>Breche das Experiment ab</translation>
     </message>
     <message>
         <location filename="../ui/misc/main_window.ui" line="467"/>
         <source>Forcibly kill the experiment</source>
-        <translation type="unfinished"></translation>
+        <translation>Erzwinge den Abbruch des Experiments</translation>
     </message>
 </context>
 <context>
@@ -3299,7 +3300,7 @@ Bearbeite Dein Experiment in Skriptform</translation>
         <source>Angle (phi)</source>
         <translation>Winkel (phi)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="116"/>
         <source>°</source>
         <translation>°</translation>
@@ -3428,37 +3429,37 @@ Bearbeite Dein Experiment in Skriptform</translation>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="35"/>
         <source>Some changes require a restart to take effect</source>
-        <translation type="unfinished"></translation>
+        <translation>Einige Änderungen setzen einen Neustart voraus um die Änderungen zu aktivieren</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="49"/>
         <source>Common settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Normale Einstellungen</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="100"/>
         <source>Application appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Erscheinung der Andwendung</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="144"/>
         <source>Color theme</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbschema</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="171"/>
         <source>Running experiments</source>
-        <translation type="unfinished"></translation>
+        <translation>Experimentausführung</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="211"/>
         <source>It is recommended to run experiments in a separate process (multiprocress)</source>
-        <translation type="unfinished"></translation>
+        <translation>Es wird empfohlen Experimente in einem separaten Prozess auszuführen (multiprocess)</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="229"/>
         <source>Advanced settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortgeschrittene Einstellungen</translation>
     </message>
 </context>
 <context>
@@ -3623,7 +3624,7 @@ Bearbeite Dein Experiment in Skriptform</translation>
         <source>Check to display the grid and enable snap-to-grid</source>
         <translation>Ankreuzen um das Gitternetz zu zeigen und Objekte daran auszurichten</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/sketchpad.ui" line="472"/>
         <source>°</source>
         <translation>°</translation>
