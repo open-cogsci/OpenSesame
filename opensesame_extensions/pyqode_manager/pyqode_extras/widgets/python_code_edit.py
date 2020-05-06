@@ -58,7 +58,7 @@ class PythonCodeEdit(PyCodeEditBase):
 		self._word_separators = [
 			'~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+', '{',
 			'}', '|', ':', "<", ">", "?", ",", "/", ";", '[',
-			']', '\\', '\n', '\t', '=', '-', ' '
+			']', '\\', '\n', '\t', '=', '-', ' ', u'\u2029', u'.'
 		]
 		self.show_whitespaces = cfg.pyqode_show_whitespaces
 		self._backend = BackendManager(self)
