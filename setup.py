@@ -150,7 +150,7 @@ shutil.copy(u'readme.md', u'README.txt')
 
 setup(
 	# The PyPi name is python-opensesame
-	name=u'python-opensesame' if 'upload' in sys.argv else u"opensesame",
+	name=u'opensesame' if u'bdist_deb' in sys.argv else u'python-opensesame',
 	version=version,
 	description=u"A graphical experiment builder for the social sciences",
 	author=u"Sebastiaan Mathot",
