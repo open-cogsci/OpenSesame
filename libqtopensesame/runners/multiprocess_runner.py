@@ -23,6 +23,9 @@ import time
 from libqtopensesame.runners import base_runner
 from qtpy import QtWidgets
 from libopensesame.exceptions import osexception
+from libopensesame.oslogging import oslogger
+
+JOIN_TIMEOUT = 3  # Seconds to wait for the process to end cleanly
 
 
 class multiprocess_runner(base_runner):
@@ -83,12 +86,19 @@ class multiprocess_runner(base_runner):
 				continue
 			# Capture exceptions
 			if isinstance(msg, Exception):
-				self.exp_process.join()
+				self.exp_process.join(JOIN_TIMEOUT)
 				try:
 					self.exp_process.close()
 				except AttributeError:
 					# Process.close() was introduced only in Python 3.7
 					pass
+				except ValueError:
+					# This happens when the join times out. Then we forcibly
+					# terminate the process.
+					self.exp_process.terminate()
+					oslogger.warning(
+						'experiment process was forcibly terminated'
+					)
 				return msg
 			# The workspace globals are sent as a dict. A special __pause__ key
 			# indicates whether the experiment should be paused or resumed.
@@ -116,12 +126,17 @@ class multiprocess_runner(base_runner):
 				u"Illegal message type received from child process: %s (%s)"
 				% (msg, type(msg))
 			)
-		self.exp_process.join()
+		self.exp_process.join(JOIN_TIMEOUT)
 		try:
 			self.exp_process.close()
 		except AttributeError:
 			# Process.close() was introduced only in Python 3.7
 			pass
+		except ValueError:
+			# This happens when the join times out. Then we forcibly
+			# terminate the process.
+			self.exp_process.terminate()
+			oslogger.warning('experiment process was forcibly terminated')
 		if finished:
 			return
 		if self.exp_process.killed:
