@@ -43,9 +43,9 @@ class Psycho(PsychoElement, RichText):
 			if x_ratio != 1 or y_ratio != 1:
 				im = im.resize((im.width * x_ratio, im.height * y_ratio))
 			x, y = self.to_xy(self.x * x_ratio, self.y * y_ratio)
-			if not self.center:
-				x += im.width // 2
-				y -= im.height // 2
 		else:
 			x, y = self.to_xy(self.x, self.y)
+		if not self.center:
+			x += im.width // 2
+			y -= im.height // 2
 		self._stim = visual.SimpleImageStim(self.win, im, pos=(x, y))
