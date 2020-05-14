@@ -24,4 +24,25 @@ from openexp._canvas._polygon.legacy import Legacy as LegacyPolygon
 
 class Legacy(LegacyPolygon, Arrow):
 
-	pass
+	def copy(self, canvas):
+
+		vertices = self._properties['vertices']
+		del self._properties['vertices']
+		arrow_copy = LegacyPolygon.copy(self, canvas)
+		self._properties['vertices'] = vertices
+		return arrow_copy
+
+	def _on_attribute_change(self, **kwargs):
+
+		# When a change occurs the shapely line (if any) needs to be
+		# redetermined in __contains__
+		self._properties['vertices'] = self._shape(
+			self.sx,
+			self.sy,
+			self.ex,
+			self.ey,
+			self.body_length,
+			self.body_width,
+			self.head_width
+		)
+		Arrow._on_attribute_change(self, **kwargs)

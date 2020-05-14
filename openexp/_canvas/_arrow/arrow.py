@@ -27,9 +27,29 @@ class Arrow(Polygon):
 	def __init__(self, canvas, sx, sy, ex, ey, body_length=0.8, body_width=.5,
 		head_width=30, **properties):
 
-		Polygon.__init__(self, canvas,
+		self._create_property('sx')
+		self._create_property('sy')
+		self._create_property('ex')
+		self._create_property('ey')
+		self._create_property('body_length')
+		self._create_property('body_width')
+		self._create_property('head_width')
+		properties = properties.copy()
+		properties.update({
+			'sx': sx,
+			'sy': sy,
+			'ex': ex,
+			'ey': ey,
+			'body_length': body_length,
+			'body_width': body_width,
+			'head_width': head_width,
+		})
+		Polygon.__init__(
+			self,
+			canvas,
 			self._shape(sx, sy, ex, ey, body_length, body_width, head_width),
-			**properties)
+			**properties
+		)
 
 	@staticmethod
 	def _shape(sx, sy, ex, ey, body_length, body_width, head_width):
