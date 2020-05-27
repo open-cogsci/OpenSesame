@@ -24,6 +24,6 @@ from libqtopensesame.runners.inprocess_runner import inprocess_runner
 from libqtopensesame.runners.external_runner import external_runner
 from libqtopensesame.runners.multiprocess_runner import multiprocess_runner
 
-runner_list = ['inprocess', 'external', 'multiprocess']
-	
-	
+# This order has to match the order in the preferences combobox
+RUNNER_LIST = 'inprocess', 'multiprocess', 'external'
+DEFAULT_RUNNER = 'multiprocess'

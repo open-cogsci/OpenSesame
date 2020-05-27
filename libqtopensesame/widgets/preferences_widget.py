@@ -23,6 +23,8 @@ from libopensesame.exceptions import osexception
 from libqtopensesame.widgets.base_widget import base_widget
 from libqtopensesame.misc import theme
 from libqtopensesame.misc.config import cfg
+from libopensesame.oslogging import oslogger
+from libqtopensesame.runners import RUNNER_LIST, DEFAULT_RUNNER
 from qtpy import QtCore, QtWidgets
 import os
 
@@ -95,12 +97,12 @@ class preferences_widget(base_widget):
 			QtCore.Qt.ToolButtonTextUnderIcon
 		)
 		self.ui.checkbox_small_toolbar.setChecked(cfg.toolbar_size == 16)
-		self.ui.combobox_runner.setCurrentIndex(
-			self.ui.combobox_runner.findText(
-				cfg.runner,
-				flags=QtCore.Qt.MatchContains
-			)
-		)
+		try:
+			runner_index = RUNNER_LIST.index(cfg.runner)
+		except ValueError:
+			oslogger.warning('invalid runner: {}'.format(cfg.runner))
+			runner_index = RUNNER_LIST.index(DEFAULT_RUNNER)
+		self.ui.combobox_runner.setCurrentIndex(runner_index)
 		# Set the locale combobox
 		self.ui.combobox_locale.addItem(u'[Default]')
 		self.ui.combobox_locale.setCurrentIndex(0)
@@ -152,10 +154,7 @@ class preferences_widget(base_widget):
 			cfg.toolbar_size = new_size
 			self.theme.set_toolbar_size(cfg.toolbar_size)
 		# Apply runner
-		from libqtopensesame import runners
-		for runner in runners.runner_list:
-			if runner in self.ui.combobox_runner.currentText():
-				cfg.runner = runner
+		cfg.runner = RUNNER_LIST[self.ui.combobox_runner.currentIndex()]
 		# Apply theme and style
 		cfg.theme = self.ui.combobox_theme.currentText()
 		cfg.style = self.ui.combobox_style.currentText()
