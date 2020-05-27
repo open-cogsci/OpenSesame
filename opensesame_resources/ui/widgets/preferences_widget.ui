@@ -78,7 +78,7 @@
             <x>0</x>
             <y>0</y>
             <width>769</width>
-            <height>720</height>
+            <height>724</height>
            </rect>
           </property>
           <layout class="QFormLayout" name="layout_preferences">
@@ -208,7 +208,7 @@
               <item row="0" column="0" colspan="2">
                <widget class="QLabel" name="label">
                 <property name="text">
-                 <string>It is recommended to run experiments in a separate process (multiprocress)</string>
+                 <string>It is recommended to run experiments in a separate process (multiprocess)</string>
                 </property>
                 <property name="wordWrap">
                  <bool>true</bool>
@@ -257,8 +257,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>769</width>
-            <height>720</height>
+            <width>100</width>
+            <height>30</height>
            </rect>
           </property>
           <layout class="QFormLayout" name="layout_advanced"/>
