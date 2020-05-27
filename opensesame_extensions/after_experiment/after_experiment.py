@@ -62,13 +62,21 @@ class after_experiment(base_extension):
 			type:	[str, NoneType]
 		"""
 
+		# Depending on the runner, the logfile is either a property of the
+		# var object ...
 		var = self.extension_manager.provide(
 			'jupyter_workspace_variable',
 			name='var'
 		)
-		if not var or 'logfile' not in var:
-			return
-		return var.logfile
+		if var and 'logfile' in var:
+			return var.logfile
+		# ... or it is a global variable in the workspace
+		logfile = self.extension_manager.provide(
+			'jupyter_workspace_variable',
+			name='logfile'
+		)
+		if logfile:
+			return logfile
 
 	@property
 	def _extra_data_files(self):

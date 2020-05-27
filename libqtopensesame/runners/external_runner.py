@@ -51,10 +51,12 @@ class external_runner(base_runner):
 		# Determine the name of the executable. The executable depends on the
 		# platform, package, and Python version.
 		if cfg.opensesamerun_exec == u'':
+			# Is there a direct executable?
 			if os.path.exists(u'opensesamerun.exe'):
 				self.cmd = [u'opensesamerun.exe']
 			elif os.path.exists(u'opensesamerun'):
 				self.cmd = [u'opensesamerun']
+			# Or is there a Python interpreter and a script with a known name?
 			elif (
 				os.path.exists(u'python.exe')
 				and os.path.exists(os.path.join(u'Scripts', u'opensesamerun'))
@@ -62,6 +64,16 @@ class external_runner(base_runner):
 				self.cmd = [
 					u'python.exe',
 					os.path.join(u'Scripts', u'opensesamerun')
+				]
+			elif (
+				os.path.exists(u'python.exe')
+				and os.path.exists(
+					os.path.join(u'Scripts', u'opensesamerun-script.py')
+				)
+			):
+				self.cmd = [
+					u'python.exe',
+					os.path.join(u'Scripts', u'opensesamerun-script.py')
 				]
 		else:
 			self.cmd = cfg.opensesamerun_exec.split()
@@ -104,3 +116,7 @@ class external_runner(base_runner):
 		except:
 			pass
 		return None
+
+	def workspace_globals(self):
+
+		return {'logfile': self.experiment.logfile}
