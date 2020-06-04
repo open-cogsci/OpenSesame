@@ -56,6 +56,11 @@ class update_checker(base_extension):
 			args=(self._queue, cfg.remote_metadata_url)
 		)
 		self._update_checker.start()
+		self.extension_manager.fire(
+			'register_subprocess',
+			pid=self._update_checker.pid,
+			description='update_checker'
+		)
 		oslogger.debug(u'checking (PID={})'.format(self._update_checker.pid))
 		QTimer.singleShot(1000, self._poll_update_process)
 

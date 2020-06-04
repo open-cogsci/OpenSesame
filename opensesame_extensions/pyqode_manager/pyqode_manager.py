@@ -111,6 +111,7 @@ class pyqode_manager(base_extension):
 		# SplittableCodeEditTabWidget.register_code_edit(TextCodeEdit)
 		self._editors = []
 		self._breakpoints = {}
+		self._auto_backend_restart = True
 
 	def event_close(self):
 
@@ -133,13 +134,16 @@ class pyqode_manager(base_extension):
 
 	def event_run_experiment(self, fullscreen):
 
+		self._auto_backend_restart = False
 		for editor in self._editors:
 			editor.backend.suspend()
+		self._auto_backend_restart = True
 
 	def event_end_experiment(self, ret_val):
 
 		for editor in self._editors:
 			editor.backend.resume()
+			self._register_backend_process(editor)
 
 	def event_prepare_purge_unused_items(self):
 
@@ -201,16 +205,36 @@ class pyqode_manager(base_extension):
 				editor.font()
 			).averageCharWidth() * cfg.pyqode_tab_length
 		)
+		# This function is defined here so to keep the editor in the scope.
+		# This is necessary in case the backend crashes and it needs to be
+		# restarted.
+		def auto_restart():
+			if not self._auto_backend_restart:
+				return
+			oslogger.warning(
+				u'restarting backend: {}'.format(editor.__class__.__name__)
+			)
+			del editor.backend.SHARE_COUNT[editor.backend._share_id]
+			editor.backend._process = None
+			editor.backend.resume()
+			self._register_backend_process(editor)
+		try:
+			editor.backend._process.error.connect(auto_restart)
+			self._register_backend_process(editor)
+		except RuntimeError:
+			auto_restart()
 		oslogger.debug(u'registering {}'.format(editor))
 
 	def event_unregister_editor(self, editor):
 
 		if editor is None:
 			return
+		self._auto_backend_restart = False
 		editor.close()
 		if editor in self._editors:
 			self._editors.remove(editor)
 		oslogger.debug(u'unregistering ({})'.format(len(self._editors)))
+		self._auto_backend_restart = True
 		
 	def event_setting_changed(self, setting, value):
 		
@@ -241,6 +265,16 @@ class pyqode_manager(base_extension):
 				continue
 			editor.modes.get('BreakpointMode').clear_messages()
 			editor.repaint()
+			
+	def _register_backend_process(self, editor):
+		
+		self.extension_manager.fire(
+			'register_subprocess',
+			pid=editor.backend._process.processId(),
+			description='BackendProcess:{}'.format(
+				editor.__class__.__name__
+			)
+		)
 
 	def _setting_pyqode_show_line_numbers(self, show_line_numbers):
 
