@@ -96,6 +96,7 @@ class FallbackCodeEdit(CodeEdit):
 					.foreground().color()
 			except Exception as e:  # Don't know how safe this is
 				pass
+		self._set_comment_mode()
 
 	def _start_backend(self):
 		
@@ -104,6 +105,17 @@ class FallbackCodeEdit(CodeEdit):
 			sys.executable,
 			reuse=False
 		)
+		
+	def _set_comment_mode(self):
+		
+		comment_prefix = self.comment_prefix
+		if comment_prefix:
+			if 'CommentsMode' in self.modes.keys():
+				self.modes.get('CommentsMode').prefix = comment_prefix
+			else:
+				self.modes.append(modes.CommentsMode(prefix=comment_prefix))
+		elif 'CommentsMode' in self.modes.keys():
+			self.modes.remove('CommentsMode')
 
 	def setPlainText(self, txt, mime_type='', encoding=''):
 
@@ -143,6 +155,7 @@ class FallbackCodeEdit(CodeEdit):
 				if auto_indent_mode.enabled:
 					auto_indent_mode.enabled = False
 					auto_indent_mode.enabled = True
+		self._set_comment_mode()
 
 	def _enable_auto_complete_for_quotes(self):
 
@@ -182,6 +195,15 @@ class FallbackCodeEdit(CodeEdit):
 		if u'*.js' in filenames:
 			return u'javascript'
 		return u'unknown'
+		
+	@property
+	def comment_prefix(self):
+		
+		lang = self.language
+		if lang == 'R':
+			return '# '
+		if lang == 'javascript':
+			return '// '
 
 	def __repr__(self):
 
