@@ -115,9 +115,11 @@ class pyqode_manager(base_extension):
 
 	def event_close(self):
 
+		self._auto_backend_restart = False
 		oslogger.debug(u'closing ({})'.format(len(self._editors)))
 		while self._editors:
 			self._editors.pop().close()
+		self._auto_backend_restart = True
 
 	def event_prepare_delete_item(self, name):
 

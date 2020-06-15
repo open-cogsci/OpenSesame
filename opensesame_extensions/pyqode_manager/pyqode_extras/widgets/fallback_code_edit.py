@@ -55,11 +55,7 @@ class FallbackCodeEdit(CodeEdit):
 	def __init__(self, parent=None):
 
 		super(FallbackCodeEdit, self).__init__(parent)
-		self.backend.start(
-			server.__file__,
-			sys.executable,
-			reuse=False
-		)
+		self._start_backend()
 		self.show_whitespaces = cfg.pyqode_show_whitespaces
 		if cfg.pyqode_show_line_numbers:
 			self.panels.append(panels.LineNumberPanel())
@@ -100,6 +96,14 @@ class FallbackCodeEdit(CodeEdit):
 					.foreground().color()
 			except Exception as e:  # Don't know how safe this is
 				pass
+
+	def _start_backend(self):
+		
+		self.backend.start(
+			server.__file__,
+			sys.executable,
+			reuse=False
+		)
 
 	def setPlainText(self, txt, mime_type='', encoding=''):
 
