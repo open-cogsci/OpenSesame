@@ -248,6 +248,14 @@ class pyqode_manager(base_extension):
 		
 		return self._breakpoints
 
+	def event_pyqode_suspend_auto_backend_restart(self):
+		
+		self._auto_backend_restart = False
+
+	def event_pyqode_resume_auto_backend_restart(self):
+		
+		self._auto_backend_restart = True
+
 	def event_pyqode_set_breakpoints(self, breakpoints):
 		
 		self._breakpoints = breakpoints
