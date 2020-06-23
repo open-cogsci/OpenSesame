@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import os
 from libopensesame import plugins
+from libopensesame.oslogging import oslogger
 from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.items import qtitem
 from libqtopensesame.widgets import color_edit
@@ -105,7 +106,7 @@ class qtplugin(qtitem.qtitem):
 		desc:
 			Updates the GUI controls.
 		"""
-
+		
 		qtitem.qtitem.edit_widget(self)
 		self.auto_edit_widget()
 
@@ -425,6 +426,21 @@ class qtplugin(qtitem.qtitem):
 		editor.focusOutEvent = self._editor_focus_out
 		if var is not None:
 			self.auto_editor[var] = editor
+		# This is a horrible hack to avoid the situation in which newly created
+		# editors are closed on the open_experiment event, which should only
+		# close editors linked to the old experiment. This only affects editors
+		# that bypass the lazy-init system, and for these editors the close()
+		# function should be bypassed exactly once.
+		if not self.lazy_init:
+			def ignore_close_once(editor):
+				def inner():
+					oslogger.debug(
+						'ignoring close() once for {}'.format(editor)
+					)
+					editor.close = orig_close
+				orig_close = editor.close
+				return inner	
+			editor.close = ignore_close_once(editor)
 		self.edit_vbox.addWidget(editor)
 		self.set_focus_widget(editor)
 		self.extension_manager.fire(u'register_editor', editor=editor)
