@@ -132,7 +132,7 @@ class undo_manager(base_extension):
 			item:	The item name.
 		"""
 
-		script = self.experiment.items[item].to_string()
+		script = self.experiment.items[item].cached_script
 		self.stack.set_current(item, script)
 
 	def remember_item_state(self, item):
@@ -145,7 +145,7 @@ class undo_manager(base_extension):
 			item:	The item name.
 		"""
 
-		script = self.experiment.items[item].to_string()
+		script = self.experiment.items[item].cached_script
 		self.stack.add(item, script)
 		self.set_enabled(self.stack.can_redo())
 		self.undo_action.setEnabled(self.stack.can_undo())

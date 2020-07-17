@@ -101,6 +101,7 @@ class qtitem(object):
 		self.maximized = False
 		self.set_validator()
 		oslogger.debug(u'created %s' % self.name)
+		self.cached_script = self.to_string()
 
 	@property
 	def main_window(self):
@@ -453,21 +454,21 @@ class qtitem(object):
 			Regenerates the script and updates the script widget.
 		"""
 
-		if self._script_widget is None:
-			return
+		script = self.to_string()
+		if self.cached_script == script:
+			return  # nothing changed
+		self.cached_script = script
 		# Normally, the script starts with a 'define' line and is indented by
 		# a tab. We want to undo this, and present only unindented content.
-		script = self.to_string()
 		script = script[script.find(u'\t'):]
 		script = textwrap.dedent(script)
-		if self._script_widget.toPlainText() == script:
-			return
 		self.main_window.set_unsaved()
-		self._script_widget.setPlainText(
-			script,
-			u'text/generic',
-			u'utf-8'
-		)
+		if self._script_widget is not None:
+			self._script_widget.setPlainText(
+				script,
+				u'text/generic',
+				u'utf-8'
+			)
 		self.extension_manager.fire(u'change_item', name=self.name)
 
 	def edit_widget(self, *deprecated, **_deprecated):
@@ -507,6 +508,7 @@ class qtitem(object):
 		self.from_string(new_script)
 		if old_script != new_script:
 			self.main_window.set_unsaved()
+			self.cached_script = new_script
 		self.edit_widget()
 
 	def apply_script_changes_and_switch_view(self, *deprecated, **_deprecated):

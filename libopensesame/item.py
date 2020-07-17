@@ -62,7 +62,7 @@ class item(object):
 		else:
 			self.var.description = self.description
 		self.from_string(string)
-		
+
 	def __deepcopy__(self, memo):
 		"""Disable deep-copying of items"""
 		
@@ -282,6 +282,7 @@ class item(object):
 				type:	[str, NoneType]
 		"""
 
+		self._script = string
 		textblock_var = None
 		self.var.clear()
 		self.reset()
@@ -345,7 +346,7 @@ class item(object):
 		for comment in self.comments:
 			s += u'\t# %s\n' % comment.strip()
 		for var in self.var:
-			s += u'\t' + self.variable_to_string(var)
+			s += u'\t' + self.variable_to_string(var)	
 		return s
 
 	def resolution(self):
