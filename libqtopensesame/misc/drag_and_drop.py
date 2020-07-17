@@ -56,7 +56,7 @@ from libopensesame.py3compat import *
 
 
 # For unknown mimetypes
-invalid_data = {
+INVALID_DATA = {
 	u'type' : u'invalid'
 }
 
@@ -111,20 +111,20 @@ def receive(drop_event):
 	# Reject unknown mimedata
 	if not mimedata.hasText() and not mimedata.hasUrls():
 		oslogger.warning(u'No text data')
-		return invalid_data
+		return INVALID_DATA
 	# Process url mimedata
 	if mimedata.hasUrls():
 		urls = mimedata.urls()
 		if len(urls) == 0:
-			return invalid_data
+			return INVALID_DATA
 		url = urls[0]
 		if not url.isLocalFile():
-			return invalid_data
+			return INVALID_DATA
 		path = str(url.toLocalFile())
 		data = {
-			u'type' : u'url-local',
-			u'url'	: path
-			}
+			u'type': u'url-local',
+			u'url': path
+		}
 		return data
 	# Process JSON text data
 	text = str(mimedata.text())
@@ -132,9 +132,9 @@ def receive(drop_event):
 		data = json.loads(text)
 	except:
 		oslogger.warning(u'Failed to load json mime data')
-		return invalid_data
-	if u'type' not in data:
-		return invalid_data
+		return INVALID_DATA
+	if not isinstance(data, dict) or u'type' not in data:
+		return INVALID_DATA
 	return data
 
 def send(drag_src, data):
