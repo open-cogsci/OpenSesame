@@ -216,7 +216,8 @@ class pyqode_manager(base_extension):
 			oslogger.warning(
 				u'restarting backend: {}'.format(editor.__class__.__name__)
 			)
-			del editor.backend.SHARE_COUNT[editor.backend._share_id]
+			if editor.backend._share_id in editor.backend.SHARE_COUNT:
+				del editor.backend.SHARE_COUNT[editor.backend._share_id]
 			editor.backend._process = None
 			editor.backend.resume()
 			self._register_backend_process(editor)

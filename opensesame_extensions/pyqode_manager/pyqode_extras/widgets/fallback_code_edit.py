@@ -97,10 +97,10 @@ class FallbackCodeEdit(CodeEdit):
 			except Exception as e:  # Don't know how safe this is
 				pass
 		self._set_comment_mode()
-
+		
 	def _start_backend(self):
 		
-		self.backend.start(
+		self._backend.start(
 			server.__file__,
 			sys.executable,
 			reuse=False
