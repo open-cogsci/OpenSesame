@@ -29,6 +29,7 @@ class item(object):
 	"""Abstract class that serves as the basis for all OpenSesame items."""
 
 	encoding = u'utf-8'
+	var = None
 	
 	def __init__(self, name, experiment, string=None):
 
@@ -43,9 +44,7 @@ class item(object):
 		string		--	An definition string. (default=None).
 		"""
 
-		try:
-			object.__getattr__(self, u'var')
-		except:
+		if self.var is None:
 			self.var = var_store(self, parent=experiment.var)
 		self.name = name
 		self.experiment = experiment

@@ -461,6 +461,14 @@ class var_store(object):
 		desc:
 			Implements custom pickling. See var_store_pickle.
 		"""
+		
+		try:
+			# If the parent var store is specified and is not None, then this
+			# is a var store of an item, and we don't pickle it.
+			if self.__parent__ is not None:
+				return None
+		except AttributeError:
+			pass
 		return (var_store_pickle, (self.inspect(), ))
 
 class var_store_pickle(var_store):
