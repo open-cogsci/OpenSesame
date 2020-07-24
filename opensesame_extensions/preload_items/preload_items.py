@@ -22,7 +22,7 @@ import time
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.extensions import base_extension
 from libopensesame.oslogging import oslogger
-from qtpy.QtCore import QTimer
+from qtpy.QtCore import QAbstractEventDispatcher, QTime
 
 
 class preload_items(base_extension):
@@ -34,11 +34,46 @@ class preload_items(base_extension):
 
 	def event_startup(self):
 
-		self._timer = QTimer()
-		self._timer.setSingleShot(True)
-		self._timer.setInterval(cfg.preload_items_interval)
-		self._timer.timeout.connect(self._preload_one_item)
-		self._timer.start()
+		self._monitoring_idle = False
+		self._interval = cfg.preload_items_interval
+		self._threshold = cfg.preload_items_idle_threshold
+		self._start_idle_monitor()
+		
+	def _start_idle_monitor(self):
+		
+		if self._monitoring_idle:
+			return
+		self._idle = False
+		self._monitoring_idle = True
+		self._aed = QAbstractEventDispatcher.instance()
+		self._aed.awake.connect(self._on_awake)
+		self._n_events = 0
+		self._last_update = QTime.currentTime()
+		oslogger.debug('starting idle monitor')
+		
+	def _stop_idle_monitor(self):
+		
+		self._aed.awake.disconnect()
+		self._monitoring_idle = False
+		oslogger.debug('stopping idle monitor')
+		
+	def _on_awake(self):
+		
+		self._n_events += 1
+		self._last_awake = QTime.currentTime()
+		time_past = self._last_update.msecsTo(self._last_awake)
+		if time_past < self._interval:
+			return
+		event_rate = self._n_events / time_past
+		if event_rate < self._threshold:
+			self._idle = True
+			oslogger.debug('idle {:4f}'.format(event_rate))
+			self._preload_one_item()
+		else:
+			self._idle = False
+			oslogger.debug('busy {:4f}'.format(event_rate))
+		self._last_update = self._last_awake
+		self._n_events = 0
 
 	def _preload_one_item(self):
 
@@ -55,21 +90,22 @@ class preload_items(base_extension):
 				name,
 				1000 * (time.time() - t))
 			)
-			self._timer.start()
 			break
+		else:
+			self._stop_idle_monitor()
 
 	def event_run_experiment(self, fullscreen):
 
-		self._timer.stop()
+		self._stop_idle_monitor()
 
 	def event_end_experiment(self, ret_val):
 
-		self._timer.start()
+		self._start_idle_monitor()
 
 	def event_regenerate(self):
 
-		self._timer.start()
+		self._start_idle_monitor()
 
 	def event_open_experiment(self, path):
 
-		self._timer.start()
+		self._start_idle_monitor()
