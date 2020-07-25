@@ -53,6 +53,8 @@ class preload_items(base_extension):
 		
 	def _stop_idle_monitor(self):
 		
+		if not self._monitoring_idle:
+			return
 		self._aed.awake.disconnect()
 		self._monitoring_idle = False
 		oslogger.debug('stopping idle monitor')
