@@ -356,7 +356,7 @@ class qtitem(object):
 		self._script_layout.setContentsMargins(0, 12, 0, 0)
 		self._script_layout.setSpacing(12)
 		self._script_frame.setLayout(self._script_layout)
-		self.update_script()
+		self.update_script(use_cache=False)
 
 	def _script_focus_out(self, event):
 
@@ -447,7 +447,7 @@ class qtitem(object):
 		self.edit_widget()
 		return True
 
-	def update_script(self):
+	def update_script(self, use_cache=True):
 
 		"""
 		desc:
@@ -455,7 +455,7 @@ class qtitem(object):
 		"""
 
 		script = self.to_string()
-		if self.cached_script == script:
+		if use_cache and self.cached_script == script:
 			return  # nothing changed
 		self.cached_script = script
 		# Normally, the script starts with a 'define' line and is indented by
