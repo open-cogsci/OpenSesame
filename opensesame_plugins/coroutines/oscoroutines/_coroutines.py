@@ -113,7 +113,14 @@ class coroutines(item):
 
 		s = item.to_string(self)
 		for item_name, start_time, end_time, cond in self.schedule:
-			if self.is_oneshot_coroutine(item_name):
+			# If the item doesn't exist yet, then we simply go with the times
+			# from the schedule. This happens during loading, if the
+			# coroutines script is parsed before the scripts of the items that
+			# are in it.
+			if (
+				item_name in self.experiment.items and
+				self.is_oneshot_coroutine(item_name)
+			):
 				end_time = start_time
 			s += u'\t' + self.syntax.create_cmd(u'run', [item_name], {
 				u'start' : start_time,
