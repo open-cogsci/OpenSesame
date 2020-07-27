@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from distutils.version import StrictVersion
 import sys
 
-__version__ = u'3.3.4a3'
+__version__ = u'3.3.4a4'
 strict_version = StrictVersion(__version__)
 # The version without the prerelease (if any): e.g. 3.0.0
 main_version = u'.'.join([str(i) for i in strict_version.version])
