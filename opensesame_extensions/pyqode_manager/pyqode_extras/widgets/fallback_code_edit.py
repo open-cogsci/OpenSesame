@@ -103,7 +103,7 @@ class FallbackCodeEdit(CodeEdit):
 		self._backend.start(
 			server.__file__,
 			sys.executable,
-			reuse=False
+			reuse=True
 		)
 		
 	def _set_comment_mode(self):
