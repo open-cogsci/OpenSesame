@@ -340,6 +340,7 @@ class qtitem(object):
 			self.theme.qicon(u'dialog-apply'),
 			_(u'Apply')
 		)
+		self._script_button.is_apply_button = True
 		self._script_button.clicked.connect(
 			self.apply_script_changes_and_switch_view
 		)
@@ -369,7 +370,15 @@ class qtitem(object):
 			event: a QFocusEvent
 		"""
 
-		self.apply_script_changes()
+		# When the apply button is pressed, the script is also applied. But this
+		# also triggers a focusOutEvent. Hence, this check avoids applying the
+		# script twice.
+		w = self.main_window.focusWidget()
+		if (
+			not isinstance(w, QtWidgets.QPushButton) or
+			not hasattr(w, 'is_apply_button')
+		):
+			self.apply_script_changes()
 
 	def splitter_moved(self, pos, index):
 
@@ -522,6 +531,7 @@ class qtitem(object):
 		if not self.validate_script():
 			self.set_view_script()
 			return
+		self.apply_script_changes()
 		self.set_view_controls()
 
 	def validate_script(self):
