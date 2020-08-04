@@ -315,11 +315,11 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self._update_source()
 		self._warn_empty_rows()
 
-	def update_script(self):
+	def update_script(self, use_cache=True):
 
 		"""See qtitem."""
 
-		qtitem.update_script(self)
+		qtitem.update_script(self, use_cache=use_cache)
 		self._update_summary()
 
 	def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
