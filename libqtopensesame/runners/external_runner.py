@@ -49,11 +49,13 @@ class external_runner(base_runner):
 		self.experiment.save(self.path, True)
 		oslogger.debug(u"experiment saved as '%s'" % self.path)
 		# Determine the name of the executable. The executable depends on the
-		# platform, package, and Python version.
+		# platform, package, and Python version.\
 		if cfg.opensesamerun_exec == u'':
 			# Is there a direct executable?
 			if os.path.exists(u'opensesamerun.exe'):
 				self.cmd = [u'opensesamerun.exe']
+			elif os.path.exists(u'opensesamerun.bat'):
+				self.cmd = [u'opensesamerun.bat']
 			elif os.path.exists(u'opensesamerun'):
 				self.cmd = [u'opensesamerun']
 			# Or is there a Python interpreter and a script with a known name?
@@ -75,6 +77,11 @@ class external_runner(base_runner):
 					u'python.exe',
 					os.path.join(u'Scripts', u'opensesamerun-script.py')
 				]
+			else:
+				raise osexception(
+					u'Failed to locate opensesamerun. Try selecting a '
+					u'different runner under Preferences.'
+				)
 		else:
 			self.cmd = cfg.opensesamerun_exec.split()
 		self.cmd += [
