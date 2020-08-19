@@ -147,7 +147,6 @@ def data_files():
 
 # Temporarily create README.txt
 shutil.copy(u'readme.md', u'README.txt')
-
 setup(
 	# The PyPi name is python-opensesame
 	name=u'opensesame' if u'bdist_deb' in sys.argv else u'python-opensesame',
@@ -205,8 +204,8 @@ setup(
 		],
 	data_files=data_files(),
 	install_requires=[
-		'pyqode.core',
-		'pyqode.python',
+		'pyqode3.core',
+		'pyqode3.python',
 		'python-qdatamatrix',
 		'python-pseudorandom',
 		'python-qnotifications',
