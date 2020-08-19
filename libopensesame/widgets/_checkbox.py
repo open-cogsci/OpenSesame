@@ -90,12 +90,13 @@ class Checkbox(Button):
 				desc:	The name of the experimental variable that should be
 						used to log the widget status. This variable will
 						contain a semi-colon separated list of the text of all
-						checked checkboxes in the same group, or 'no' if no
-						checkbox in the group is checked. For the purpose of the
-						variable, all checkboxes that are not part of a group
-						are placed in the same group. For more information about
-						the use of response variables in forms, see the form
-						documentation page.
+						checked checkboxes in the same group (falling back to
+						checkbox1, etc. if no text has been specified), or
+						'no' if no checkbox in the group is checked. 	For the
+						purpose of the variable, all checkboxes that are not
+						part of a group are placed in the same group. For more
+						information about the use of response variables in
+						forms, see the form documentation page.
 				type:	[str, unicode, NoneType]
 		"""
 
@@ -190,25 +191,36 @@ class Checkbox(Button):
 			var = self.var
 		if var is None:
 			return
-
 		# Set the response variable
 		l_val = []
-
 		# When this function is called via the constructor, the checkbox is not
 		# yet part of the form. Therefore, we need to add it explicitly to the
 		# widget list.
 		widget_list = self.form.widgets[:]
 		if self not in self.form.widgets:
 			widget_list += [self]
-
 		for widget in widget_list:
-			if widget is not None and widget.type == u'checkbox' and \
-				widget.var == self.var:
-				if widget.group != self.group and self.group is not None:
-					raise osexception(
-						u'All checkbox widgets without a group or within the same group should have the same variable.')
-				if widget.checked or widget.checked == u'yes':
-					l_val.append(safe_decode(widget.text))
+			# Only consider checkbox widgets that use the same variable as
+			# the current checkbox
+			if (
+				widget is None or
+				widget.type != u'checkbox' or
+				widget.var != self.var
+			):
+				continue
+			if widget.group != self.group and self.group is not None:
+				raise osexception(
+					u'All checkbox widgets without a group or within the same group should have the same variable.'
+				)
+			# Ignore the checkbox if it isn't checked
+			if not widget.checked and widget.checked != u'yes':
+				continue
+			# The variable is normally the text on the checkbox. However, if
+			# no text has been specified, then we use checkbox1, etc. as text
+			text = safe_decode(widget.text).strip()
+			if not text:
+				text = 'checkbox{}'.format(widget_list.index(widget))
+			l_val.append(text)
 		val = u';'.join(l_val)
 		if val == u'':
 			val = u'no'
