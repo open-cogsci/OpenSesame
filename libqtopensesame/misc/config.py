@@ -287,7 +287,7 @@ class config(object):
 			Restore settings from a QSettings.
 		"""
 
-		self.mode = mode
+		oslogger.info('restoring config profile {}'.format(mode))
 		qsettings = QtCore.QSettings(u"cogscinl", mode)
 		qsettings.beginGroup(u'MainWindow')
 		for setting, default in self.config.items():
@@ -297,6 +297,7 @@ class config(object):
 				continue
 			value = self.type_qvariant(value, default)
 			self.config[setting] = value
+		self.mode = mode
 		qsettings.endGroup()
 
 	def save(self):
@@ -306,6 +307,7 @@ class config(object):
 			Save settings to a QSettings.
 		"""
 
+		oslogger.info('saving config profile {}'.format(self.mode))
 		qsettings = QtCore.QSettings(u"cogscinl", self.mode)
 		qsettings.beginGroup(u'MainWindow')
 		for setting, value in self.config.items():

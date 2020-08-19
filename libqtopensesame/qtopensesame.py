@@ -114,8 +114,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.set_warnings()
 		# Setup the UI
 		self.load_ui(u'misc.main_window')
-		self.mode = \
-			self.options.mode if self.options.mode is not None else u'default'
 		self.theme = theme.theme(self, self.options._theme)
 		self.ui.itemtree.setup(self)
 		self.ui.tabwidget.main_window = self
@@ -210,6 +208,19 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self.console = ConsoleBridge(self)
 		self.extension_manager = extension_manager(self)
 		self.extension_manager.fire(u'startup')
+		
+	@property
+	def mode(self):
+		
+		"""
+		desc:
+			A property that determines the application mode, falling back to
+			'default'.
+		"""
+		
+		if self.options.mode is None:
+			return u'default'
+		return self.options.mode
 
 	def _tooltip_shortcut(self, action):
 
@@ -310,6 +321,13 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			)
 		)
 		group.add_option(
+			u"-p",
+			u"--profile",
+			action=u"store",
+			dest=u"_config_profile",
+			help=(u"Specify a profile with its own configuration")
+		)
+		group.add_option(
 			u"-t",
 			u"--theme",
 			action=u"store",
@@ -401,8 +419,13 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
 		"""Restores the configuration settings, but doesn't apply anything"""
 
-		if not self.options.start_clean:
-			cfg.restore(self.options.mode)
+		if self.options.start_clean:
+			return
+		cfg.restore(
+			self.mode
+			if self.options._config_profile is None
+			else self.options._config_profile
+		)
 
 	def restore_state(self):
 
