@@ -766,7 +766,22 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 				if isinstance(parent_item, sequence):
 					break
 				target_treeitem = parent_treeitem
-			index = parent_treeitem.indexOfChild(target_treeitem)+1
+			index = parent_treeitem.indexOfChild(target_treeitem) + 1
+			# Below we correct the index when an item is moved down in the same
+			# sequence. In this case, the item is first removed from the
+			# sequence (in drop_event_item_existing) and because the treewidget
+			# is not refreshed, the index as returned by the parent_treeitem
+			# is one too high. (This is clearly a hack, but it seems to work.)
+			children = parent_item.direct_children()
+			if len(children) > 1:
+				try:
+					if (
+						children[index - 1] != target_item.name and
+						children[index - 2] == target_item.name
+					):
+						index -= 1
+				except IndexError:
+					pass
 			parent_item.insert_child_item(item.name, index=index)
 		if e is not None:
 			e.accept()

@@ -971,6 +971,17 @@ class qtitem(object):
 		"""
 
 		return []
+		
+	def direct_children(self):
+		
+		"""
+		returns:
+			desc:	A list of direct children, which does not include grand
+					children, and so on.
+			type:	list
+		"""		
+		
+		return []
 
 	def is_child_item(self, item_name):
 

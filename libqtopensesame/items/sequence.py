@@ -182,6 +182,14 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 			self._children += [item] + self.experiment.items[item].children()
 		return self._children
 
+	def direct_children(self):
+		
+		return [
+			item
+			for item, cond in self.items
+			if item in self.experiment.items
+		]
+
 	def is_child_item(self, item):
 
 		"""See qtitem."""

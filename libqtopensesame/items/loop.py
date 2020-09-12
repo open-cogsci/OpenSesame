@@ -345,6 +345,10 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		if self._item not in self.experiment.items:
 			return []
 		return [self._item] + self.experiment.items[self._item].children()
+		
+	def direct_children(self):
+		
+		return [self._item] if self._item in self.experiment.items else []
 
 	def is_child_item(self, item):
 
