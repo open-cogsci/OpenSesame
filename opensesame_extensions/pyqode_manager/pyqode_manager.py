@@ -185,7 +185,6 @@ class pyqode_manager(base_extension):
 			editor.modes.append(BreakpointMode(breakpoints=self._breakpoints))
 		editor.font_size = cfg.pyqode_font_size
 		editor.font_name = cfg.pyqode_font_name
-		editor.tab_length = cfg.pyqode_tab_length
 		editor.setLineWrapMode(
 			QPlainTextEdit.WidgetWidth
 			if cfg.pyqode_line_wrap

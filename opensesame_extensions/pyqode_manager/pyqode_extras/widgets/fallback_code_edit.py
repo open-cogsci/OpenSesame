@@ -30,6 +30,7 @@ from pyqode.core.api import (
 	IndentFoldDetector,
 	ColorScheme
 )
+from pyqode_extras.modes import AutodetectIndentationMode
 
 # For markdown it's annoying if quotes are autocompleted
 DISABLE_AUTO_COMPLETE_QUOTES = ['markdown']
@@ -81,6 +82,7 @@ class FallbackCodeEdit(CodeEdit):
 		self.modes.append(modes.IndenterMode())
 		self.modes.append(modes.SymbolMatcherMode())
 		self.modes.append(modes.SmartBackSpaceMode())
+		self.modes.append(AutodetectIndentationMode())
 		self.panels.append(panels.EncodingPanel(), Panel.Position.TOP)
 		self.panels.append(panels.ReadOnlyPanel(), Panel.Position.TOP)
 		if cfg.pyqode_fixed_width:

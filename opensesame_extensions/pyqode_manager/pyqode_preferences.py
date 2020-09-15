@@ -56,3 +56,12 @@ class PyQodePreferences(BasePreferencesWidget):
 		self.ui.label_pyqode_code_completion_excluded_mimetypes.setEnabled(
 			cfg.pyqode_code_completion
 		)
+		self.ui.cfg_pyqode_indentation.currentTextChanged.connect(
+			self._toggle_indentation
+		)
+		self._toggle_indentation(cfg.pyqode_indentation)
+		
+	def _toggle_indentation(self, indentation):
+		
+		self.ui.cfg_pyqode_tab_length.setEnabled(indentation == 'spaces')
+		self.ui.label_tab_length.setEnabled(indentation == 'spaces')
