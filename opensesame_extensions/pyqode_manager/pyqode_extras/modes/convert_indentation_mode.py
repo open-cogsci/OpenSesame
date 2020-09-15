@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+import re
 from pyqode.core import api
 from pyqode.qt import QtWidgets
 from libqtopensesame.misc.config import cfg
@@ -77,12 +78,12 @@ class ConvertIndentationMode(api.Mode):
 
 	def _spaces_to_tabs(self):
 
-		import re
-
 		code = self.editor.toPlainText()
 		while True:
 			match = re.search(
-				u'(?<=\n)({})+'.format(u' ' * cfg.pyqode_tab_length),
+				u'((?<=\n){indent}+)|(\A{indent}+)'.format(
+					indent=u' ' * cfg.pyqode_tab_length
+				),
 				code
 			)
 			if not match:
@@ -94,11 +95,9 @@ class ConvertIndentationMode(api.Mode):
 
 	def _tabs_to_spaces(self):
 
-		import re
-
 		code = self.editor.toPlainText()
 		while True:
-			match = re.search(u'(?<=\n)\t+', code)
+			match = re.search(u'((?<=\n)\t+)|(\A\t+)', code)
 			if not match:
 				break
 			space_indent = u' ' * len(match.group()) * cfg.pyqode_tab_length
