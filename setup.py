@@ -204,7 +204,6 @@ setup(
 		],
 	data_files=data_files(),
 	install_requires=[
-		'pyqode3.core',
 		'pyqode3.python',
 		'python-qdatamatrix',
 		'python-pseudorandom',
