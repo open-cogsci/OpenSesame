@@ -95,7 +95,7 @@ class AutodetectIndentationMode(api.Mode):
 				return 4
 			if i3 - i2 > THRESHOLD and i3 - i4 > THRESHOLD:
 				return 3
-			if i2 - i3 > THRESHOLD and i2 - i3 > THRESHOLD:
+			if i2 - i3 > THRESHOLD and i2 - i4 > THRESHOLD:
 				return 2
 		if i4 > max(i2, i3):
 			return 4
