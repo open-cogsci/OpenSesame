@@ -25,6 +25,11 @@ import platform
 # On Linux this appears to be buggy
 if platform.system() != 'Linux':
 	os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+
+# solves a library conflict for Linux with Nvidia drivers
+if platform.system() == 'Linux':
+	from OpenGL import GL
+
 # Attach a dummy console when launched with pythonw.exe. This is necessary for
 # some libraries.
 if sys.executable.endswith('pythonw.exe'):
