@@ -129,7 +129,7 @@ class help(base_extension):
 			self,
 			sitemap_url=cfg.online_help_sitemap.replace(
 				u'[version]',
-				metadata.main_version
+				metadata.major_version
 			),
 			local_sitemap=None
 		)

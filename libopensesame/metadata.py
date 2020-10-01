@@ -21,10 +21,12 @@ from libopensesame.py3compat import *
 from distutils.version import StrictVersion
 import sys
 
-__version__ = u'3.3.4a12'
+__version__ = u'3.3.4a13'
 strict_version = StrictVersion(__version__)
 # The version without the prerelease (if any): e.g. 3.0.0
 main_version = u'.'.join([str(i) for i in strict_version.version])
+# The version without maintenance release suffix: e.g. 3.0
+major_version = u'.'.join([str(i) for i in strict_version.version[:-1]])
 # The version following the debian convention: e.g. 3.0.0~a1
 if strict_version.prerelease is None:
 	deb_version = main_version
