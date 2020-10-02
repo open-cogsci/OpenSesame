@@ -103,11 +103,11 @@ def set_paths():
 	# Update the system path so that Qt can find itself
 	path = os.path.join(os.getcwd(), 'Library', 'bin')
 	if os.path.exists(path):
-		os.environ['PATH'] += ';' + path
+		os.environ['PATH'] = path + ';' + os.environ['PATH']
 	# Add the Scripts subfolder, which is where Anaconda scripts are located
 	path = os.path.join(os.getcwd(), 'Scripts')
 	if os.path.exists(path):
-		os.environ['PATH'] += ';' + path
+		os.environ['PATH'] = path + ';' + os.environ['PATH']
 	from qtpy import QtCore
 	# Add the folder that contains the OpenSesame modules to the path. This is
 	# generally only necessary if OpenSesame is directly run from source,
