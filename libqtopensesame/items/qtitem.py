@@ -97,6 +97,7 @@ class qtitem(object):
 		else:
 			self.init_edit_widget()
 		self._dirty = False
+		self._shown = False
 		self.lock = False
 		self.maximized = False
 		self.set_validator()
@@ -216,6 +217,19 @@ class qtitem(object):
 			Is called when the tab becomes visible, and updated the contents.
 		"""
 
+		# The first time that the tab is shown, the view is determined. For
+		# the controls view, nothing needs to be done, because this is the
+		# default view after initialization.
+		if not self._shown:
+			self._shown = True
+			self.main_window.ui.itemtree.inhibit_drag = True
+			oslogger.debug(u'Invalid initial_view: %s' % self.initial_view)
+			if self.initial_view == u'script':
+				self.set_view_script()
+			elif self.initial_view == u'split':
+				self.set_view_split()
+			elif self.initial_view != u'controls':
+				oslogger.warning(u'Invalid initial_view: %s' % self.initial_view)
 		self.extension_manager.fire(u'prepare_open_item', name=self.name)
 		self.update_script()
 		self.edit_widget()
@@ -304,15 +318,7 @@ class qtitem(object):
 		# The container_widget is the top-level widget that is actually inserted
 		# into the tab widget.
 		self.splitter = qtitem_splitter(self)
-		if self.initial_view == u'controls':
-			self.set_view_controls()
-		elif self.initial_view == u'script':
-			self.set_view_script()
-		elif self.initial_view == u'split':
-			self.set_view_split()
-		else:
-			oslogger.warning(u'Invalid initial_view: %s' % self.initial_view)
-			self.set_view_controls()
+		self.set_view_controls()
 		self.splitter.splitterMoved.connect(self.splitter_moved)
 		self.container_vbox = QtWidgets.QVBoxLayout()
 		self.container_vbox.setContentsMargins(12, 12, 12, 12)

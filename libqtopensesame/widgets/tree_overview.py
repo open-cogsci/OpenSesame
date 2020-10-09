@@ -85,6 +85,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		self.itemChanged.connect(self.text_edited)
 		self.pending_drag_data = None
 		self.drag_timer = None
+		self.inhibit_drag = False
 		if not self.overview_mode:
 			shortcut(self, cfg.shortcut_edit_runif, self.start_edit_runif)
 			self.append_button = tree_append_button(self)
@@ -321,10 +322,14 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		target_treeitem = self.itemAt(e.pos())
 		if target_treeitem is None:
 			return
+		# When opening a tab takes a while, a drag may be inadvertently 
+		# started. For that reason, items can set the inhibit_drag flag to 
+		# True so that a drag is inhibited, but only once.
+		self.inhibit_drag = False
 		if self.overview_mode:
 			target_treeitem.open_tab()
 		# Only start drags for draggable tree items.
-		if not self.draggable(target_treeitem):
+		if self.inhibit_drag or not self.draggable(target_treeitem):
 			e.ignore()
 			return
 		# Get the target item
