@@ -33,7 +33,6 @@ class Csv(Log):
 
 		self._log = None
 		Log.__init__(self, experiment, path)
-		experiment.data_files.append(path)
 
 	def close(self):
 
@@ -47,12 +46,17 @@ class Csv(Log):
 		# If only a filename is present, we interpret this filename as relative
 		# to the experiment folder, instead of relative to the current working
 		# directory.
-		if os.path.basename(path) == path and \
-			self.experiment.experiment_path is not None:
+		if (
+			os.path.basename(path) == path and
+			self.experiment.experiment_path is not None
+		):
 			self._path = os.path.join(self.experiment.experiment_path, path)
 		else:
 			self._path = path
 		# Open the logfile
+		self.experiment.var.logfile = self._path
+		if self._path not in self.experiment.data_files:
+			self.experiment.data_files.append(self._path)
 		self._log = safe_open(self._path, u'w')
 		self._header_written = False
 
