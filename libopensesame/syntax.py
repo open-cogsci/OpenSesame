@@ -96,6 +96,9 @@ class syntax(object):
 
 		try:
 			f = float(val)
+			# No flanking whitespace
+			if isinstance(val, basestring):
+				assert(val == val.strip())
 		except:
 			return safe_decode(val, errors=u'ignore')
 		if int(f) == f:
@@ -487,10 +490,12 @@ class syntax(object):
 		s = safe_decode(s).replace(u'\\', u'\\\\')
 		try:
 			float(s)
+			assert(s == s.strip())  # No flanking whitespace
 		except:
 			if not s.replace(u'_', u'').isalnum():
-				s = u'"%s"' % s.replace(u'"', u'\\"')
+				return u'"%s"' % s.replace(u'"', u'\\"')
 		return s
+
 
 	def sanitize(self, s, strict=False, allow_vars=True):
 

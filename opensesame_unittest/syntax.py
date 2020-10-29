@@ -35,6 +35,7 @@ class check_syntax(unittest.TestCase):
 
 		print(u'Checking: %s' % s)
 		_cmd, _arglist, _kwdict = self.exp.syntax.parse_cmd(s)
+		print(_cmd, _arglist, _kwdict)
 		self.assertTrue(cmd == _cmd)
 		self.assertTrue(arglist == _arglist)
 		self.assertTrue(kwdict == _kwdict)
@@ -68,8 +69,14 @@ class check_syntax(unittest.TestCase):
 			u'set', [u'test', u'c:\\'], {u'x' : u'd:\\'})
 		self.checkCmd(u'test "\\"quoted\\""',
 			u'test', [u'\"quoted\"'], {})
-		self.checkCmd(u'test test="\\"quoted\\""', u'test',	[],
+		self.checkCmd(u'test test="\\"quoted\\""', u'test', [],
 			{u'test' : u'\"quoted\"'},)
+		self.checkCmd(
+			u'draw textline text=" 1 "',
+			u'draw',
+			[u'textline'],
+			{u'text': ' 1 '}
+		)
 		with self.assertRaises(osexception):
 			print(u'Testing exception ...')
 			self.checkCmd(u'widget 0 0 1 1 label text="Tést 123',
