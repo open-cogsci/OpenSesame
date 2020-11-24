@@ -68,7 +68,7 @@ class PythonCodeEdit(PyCodeEditBase):
 			reuse=True,
 			share_id='python'
 		)
-		self.setLineWrapMode(self.NoWrap)
+		self.setLineWrapMode(self.NoWrap)		
 		self.modes.append(modes.OutlineMode(defined_names))
 		self.modes.append(ConvertIndentationMode())
 		self.panels.append(
@@ -91,6 +91,12 @@ class PythonCodeEdit(PyCodeEditBase):
 		self.modes.append(modes.FileWatcherMode())
 		self.modes.append(modes.ZoomMode())
 		self.modes.append(modes.SymbolMatcherMode())
+		if cfg.pyqode_autopep8:
+			self.modes.append(pymodes.AutoPEP8(
+				lookbehind=cfg.pyqode_autopep8_lookbehind,
+				aggressive=cfg.pyqode_autopep8_aggressive,
+				ignore=cfg.pyqode_pep8_ignore.split(u';')
+			))
 		self.modes.append(pymodes.CommentsMode())
 		if cfg.pyqode_highlight_caret_line:
 			self.modes.append(modes.CaretLineHighlighterMode())

@@ -59,6 +59,9 @@ class PyQodePreferences(BasePreferencesWidget):
 		self.ui.cfg_pyqode_indentation.currentTextChanged.connect(
 			self._toggle_indentation
 		)
+		self.ui.cfg_pyqode_autopep8_aggressive.setEnabled(
+			cfg.pyqode_autopep8
+		)
 		self._toggle_indentation(cfg.pyqode_indentation)
 		
 	def _toggle_indentation(self, indentation):

@@ -18,6 +18,9 @@
         "pyqode_show_line_numbers": true,
         "pyqode_fixed_width": false,
         "pyqode_fixed_width_nchar": 80,
+        "pyqode_autopep8": false,
+        "pyqode_autopep8_lookbehind": 20,
+        "pyqode_autopep8_aggressive": false,
         "pyqode_pep8_ignore": {
             "ide": "W191",
             "default": "W191"
