@@ -129,7 +129,7 @@ class BasePreferencesWidget(BaseWidget):
 				widget.setCurrentText(cfg[setting])
 				widget.currentTextChanged.connect(change_setting)
 			else:
-				oslogger.warn('invalid QWidget with name {}'.format(name))
+				oslogger.warning('invalid QWidget with name {}'.format(name))
 				
 	def event_setting_changed(self, setting, value):
 		
