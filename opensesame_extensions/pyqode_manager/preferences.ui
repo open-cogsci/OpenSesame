@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>468</width>
-    <height>783</height>
+    <width>516</width>
+    <height>841</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -217,6 +217,26 @@
         </item>
        </widget>
       </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_tab_length">
+        <property name="text">
+         <string>Tab width</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="cfg_pyqode_tab_length">
+        <property name="suffix">
+         <string> characters</string>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>32</number>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="1">
        <widget class="QCheckBox" name="cfg_pyqode_code_completion">
         <property name="text">
@@ -248,7 +268,7 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
+      <item row="8" column="0">
        <widget class="QLabel" name="label_pep8_ignore">
         <property name="text">
          <string>Ignore style violations&lt;br /&gt;&lt;a href=&quot;https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;List of error codes&lt;/span&gt;&lt;/a&gt;</string>
@@ -261,20 +281,20 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="1">
+      <item row="8" column="1">
        <widget class="QLineEdit" name="cfg_pyqode_pep8_ignore"/>
       </item>
-      <item row="1" column="1">
-       <widget class="QSpinBox" name="cfg_pyqode_tab_length">
-        <property name="suffix">
-         <string> characters</string>
+      <item row="6" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_autopep8">
+        <property name="text">
+         <string>Correct Python whitespace (AutoPEP8)</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_tab_length">
+      <item row="7" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_autopep8_aggressive">
         <property name="text">
-         <string>Tab width</string>
+         <string>Correct Python style (AutoPEP8)</string>
         </property>
        </widget>
       </item>
@@ -438,6 +458,22 @@
     <hint type="destinationlabel">
      <x>99</x>
      <y>512</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cfg_pyqode_autopep8</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>cfg_pyqode_autopep8_aggressive</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>344</x>
+     <y>593</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>344</x>
+     <y>622</y>
     </hint>
    </hints>
   </connection>

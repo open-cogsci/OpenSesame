@@ -41,20 +41,23 @@ class AutodetectIndentationMode(api.Mode):
 	def _autodetect_indentation(self):
 
 		if cfg.pyqode_indentation == 'spaces':
-			self._set_space_indentation()
+			self._set_space_indentation(cfg.pyqode_tab_length)
 			return
 		if cfg.pyqode_indentation == 'tabs':
 			self._set_tab_indentation()
 			return
 		code = self.editor.toPlainText().replace(u'\u2029', u'\n')
-		tab_length = self._guess_indentation_width(code)
 		match_tabs = re.findall(u'((?<=\n)\t+)|(\A\t+)', code)
-		match_spaces = re.findall(
-			u'((?<=\n){indent}+)|(\A{indent}+)'.format(
-				indent=u' ' * tab_length
-			),
-			code
-		)
+		tab_length = self._guess_indentation_width(code)
+		if tab_length == 0:
+			match_spaces = []
+		else:
+			match_spaces = re.findall(
+				u'((?<=\n){indent}+)|(\A{indent}+)'.format(
+					indent=u' ' * tab_length
+				),
+				code
+			)
 		if len(match_tabs) > len(match_spaces):
 			oslogger.debug(u'detected tab-based indentation')
 			self._set_tab_indentation()
