@@ -23,6 +23,7 @@ import tarfile
 import tempfile
 import shutil
 from libopensesame.osexpfile import osexpbase
+from libopensesame.oslogging import oslogger
 
 
 class osexpwriter(osexpbase):
@@ -107,9 +108,12 @@ class osexpwriter(osexpbase):
 		# with poor Unicode support in .tar.gz.
 		tmp_pool = tempfile.mkdtemp(suffix=u'.opensesame.pool')
 		for fname in os.listdir(self._pool.folder()):
-			sname = self._syntax.to_ascii(fname)
-			shutil.copyfile(os.path.join(self._pool.folder(), fname),
-				os.path.join(tmp_pool, sname))
+			src = os.path.join(self._pool.folder(), fname)
+			if not os.path.isfile(src):
+				oslogger.warning('{} is not a file'.format(src))
+				continue
+			dst = os.path.join(tmp_pool, self._syntax.to_ascii(fname))
+			shutil.copyfile(src, dst)
 		tar.add(tmp_pool, u'pool', True)
 		tar.close()
 		# Move the file to the intended location
