@@ -56,7 +56,7 @@ class base_rect_ellipse(base_element):
 	@classmethod
 	def mouse_move(cls, sketchpad, pos):
 
-		if cls.pos_start is None:
+		if cls.pos_start is None or cls.preview is None:
 			return
 		x = cls.pos_start[0]
 		y = cls.pos_start[1]

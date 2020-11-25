@@ -55,7 +55,7 @@ class base_line_arrow(base_element):
 	@classmethod
 	def mouse_move(cls, sketchpad, pos):
 
-		if cls.pos_start is None:
+		if cls.pos_start is None or cls.preview is None:
 			return
 		cls.preview.setLine(cls.pos_start[0], cls.pos_start[1], pos[0], pos[1])
 

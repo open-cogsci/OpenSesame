@@ -67,7 +67,7 @@ class circle(base_element, circle_runtime):
 	@classmethod
 	def mouse_move(cls, sketchpad, pos):
 
-		if cls.pos_start is None:
+		if cls.pos_start is None or cls.preview is None:
 			return
 		xc = sketchpad.canvas.xcenter()
 		yc = sketchpad.canvas.ycenter()
