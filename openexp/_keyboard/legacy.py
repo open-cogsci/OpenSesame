@@ -97,6 +97,11 @@ class Legacy(Keyboard):
 		timeout = self.timeout
 		while True:
 			time = pygame.time.get_ticks()
+			# Some input methods send multiple key events at the same time, 
+			# for example when composing a multicharacter Chinese or Japanese 
+			# string. That's why we process up all events, rather than 
+			# assuming that there's only a single relevant event in the queue.
+			key = u''
 			for event in pygame.event.get(event_type):
 				if event.key == pygame.K_ESCAPE:
 					self.experiment.pause()
@@ -111,12 +116,12 @@ class Legacy(Keyboard):
 				else:
 					ucode = u''
 				if ucode in invalid_unicode:
-					key = self.key_name(event.key)
+					key += self.key_name(event.key)
 				else:
-					key = ucode
-				if keylist is None or key in keylist:
-					return key, time
-			if timeout is not None and time-start_time >= timeout:
+					key += ucode
+			if key and (keylist is None or key in keylist):
+				return key, time
+			if timeout is not None and time - start_time >= timeout:
 				break
 		return None, time
 
