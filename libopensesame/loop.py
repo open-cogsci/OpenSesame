@@ -299,8 +299,14 @@ class loop(item.item):
 					dm[colname] = list(col[-steps:]) + list(col[:-steps])
 			elif cmd == u'weight':
 				self._require_arglist(cmd, arglist)
+				# Evaluate the weights before passing them to the weight 
+				# function, so that weights can be defined in terms of 
+				# variables.
+				ecol = col @ (
+					lambda w: self.syntax.auto_type(self.syntax.eval_text(w))
+				)
 				try:
-					dm = operations.weight(col)
+					dm = operations.weight(ecol)
 				except TypeError:
 					raise osexception(
 						u'weight values should be non-negative numeric values'
