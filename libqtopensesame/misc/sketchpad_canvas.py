@@ -297,12 +297,15 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
 					graphics_item = item
 		# ... else don't find an element.
 		if graphics_item is None:
-			return None
+			return
 		# If the item is part of a group, we want the group, not the invdividual
 		# item, because the group has the element property.
 		if graphics_item.group() is not None:
 			graphics_item = graphics_item.group()
-		return graphics_item.element
+		try:
+			return graphics_item.element
+		except AttributeError:  # Appears to happen in rare race conditions
+			return
 
 	def cursor_pos(self, e, grid=True):
 
