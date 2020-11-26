@@ -91,7 +91,7 @@ class PythonCodeEdit(PyCodeEditBase):
 		self.modes.append(modes.FileWatcherMode())
 		self.modes.append(modes.ZoomMode())
 		self.modes.append(modes.SymbolMatcherMode())
-		if cfg.pyqode_autopep8:
+		if cfg.pyqode_autopep8 and hasattr(pymodes, 'AutoPEP8'):
 			self.modes.append(pymodes.AutoPEP8(
 				lookbehind=cfg.pyqode_autopep8_lookbehind,
 				aggressive=cfg.pyqode_autopep8_aggressive,
