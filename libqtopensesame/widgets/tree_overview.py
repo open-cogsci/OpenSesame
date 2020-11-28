@@ -565,6 +565,8 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 				)
 				self.locked = False
 		if self.drop_event_item_new(data, e, target_treeitem=target_treeitem):
+			if not data['move']:
+				self.extension_manager.fire('new_linked_copy', name=item_name)
 			return
 		if need_restore:
 			self.experiment.items[parent_item_name].insert_child_item(
