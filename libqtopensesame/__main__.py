@@ -28,7 +28,10 @@ if platform.system() != 'Linux':
 # solves a library conflict for Linux with Nvidia drivers
 # See https://forum.qt.io/topic/81328/ubuntu-qopenglshaderprogram-shader-program-is-not-linked/2
 else:
-	from OpenGL import GL
+	try:
+		from OpenGL import GL
+	except ImportError:  # Rapunzel doesn't need OpenGL
+		pass
 
 # Attach a dummy console when launched with pythonw.exe. This is necessary for
 # some libraries.
