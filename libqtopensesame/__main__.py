@@ -51,6 +51,9 @@ if platform.system() == 'Darwin':
 		os.environ['SSL_CERT_DIR'] = os.path.dirname(certifi.where())
 	except ImportError:
 		pass # Or log something here?
+	# Workaround for an incompatibility between Qt and Mac OS Big Sur. See:
+	# - https://forum.cogsci.nl/discussion/comment/21525/#Comment_21525
+	os.environ['QT_MAC_WANTS_LAYER'] = '1'
 
 def patch_pyqt():
 
