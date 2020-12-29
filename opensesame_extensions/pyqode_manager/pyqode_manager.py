@@ -210,7 +210,7 @@ class pyqode_manager(base_extension):
 		# This is necessary in case the backend crashes and it needs to be
 		# restarted.
 		def auto_restart():
-			if not self._auto_backend_restart:
+			if editor._closed or not self._auto_backend_restart:
 				return
 			oslogger.warning(
 				u'restarting backend: {}'.format(editor.__class__.__name__)
