@@ -62,12 +62,7 @@ class PythonCodeEdit(PyCodeEditBase):
 		]
 		self.show_whitespaces = cfg.pyqode_show_whitespaces
 		self._backend = BackendManager(self)
-		self.backend.start(
-			server.__file__,
-			sys.executable,
-			reuse=True,
-			share_id='python'
-		)
+		self._start_backend()
 		self.setLineWrapMode(self.NoWrap)		
 		self.modes.append(modes.OutlineMode(defined_names))
 		self.modes.append(ConvertIndentationMode())
@@ -145,6 +140,15 @@ class PythonCodeEdit(PyCodeEditBase):
 					.foreground().color()
 			except Exception as e:  # Don't know how safe this is
 				pass
+
+	def _start_backend(self):
+		
+		self.backend.start(
+			server.__file__,
+			sys.executable,
+			reuse=True,
+			share_id='python'
+		)
 
 	def _init_actions(self, create_standard_actions):
 
