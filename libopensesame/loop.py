@@ -20,8 +20,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame import item
-from datamatrix import operations, DataMatrix
-from pseudorandom import Enforce, MaxRep, MinDist, InvalidConstraint
+from datamatrix import operations, DataMatrix, functional
+from pseudorandom import Enforce, MaxRep, MinDist
 import openexp.keyboard
 
 
@@ -302,8 +302,9 @@ class loop(item.item):
 				# Evaluate the weights before passing them to the weight 
 				# function, so that weights can be defined in terms of 
 				# variables.
-				ecol = col @ (
-					lambda w: self.syntax.auto_type(self.syntax.eval_text(w))
+				ecol = functional.map_(
+					lambda w: self.syntax.auto_type(self.syntax.eval_text(w)),
+					col
 				)
 				try:
 					dm = operations.weight(ecol)
