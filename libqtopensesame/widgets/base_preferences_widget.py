@@ -151,17 +151,37 @@ class BasePreferencesWidget(BaseWidget):
 		self._its_me = True
 		widget = getattr(self.ui, name)
 		if isinstance(widget, QCheckBox):
-			widget.setChecked(value)
+			widget.setChecked(bool(value))
 		elif isinstance(widget, QLineEdit):
 			widget.setText(value)
 		elif isinstance(widget, (QSpinBox, QDoubleSpinBox)):
-			widget.setValue(value)
+			try:
+				widget.setValue(value)
+			except TypeError:
+				oslogger.warning(
+					'invalid value {} for {}',format(value, setting)
+				)
 		elif isinstance(widget, QKeySequenceEdit):
-			widget.setKeySequence(QKeySequence(value))
+			try:
+				widget.setKeySequence(QKeySequence(value))
+			except TypeError:
+				oslogger.warning(
+					'invalid value {} for {}',format(value, setting)
+				)
 		elif isinstance(widget, QFontComboBox):
-			widget.setCurrentFont(QFont(value))
+			try:
+				widget.setCurrentFont(QFont(value))
+			except TypeError:
+				oslogger.warning(
+					'invalid value {} for {}',format(value, setting)
+				)
 		elif isinstance(widget, QComboBox):
-			widget.setCurrentText(value)
+			try:
+				widget.setCurrentText(value)
+			except TypeError:
+				oslogger.warning(
+					'invalid value {} for {}',format(value, setting)
+				)
 		else:
 			oslogger.warn('invalid QWidget with name {}'.format(name))
 		self._its_me = False

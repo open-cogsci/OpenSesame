@@ -299,7 +299,7 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QCheckBox" name="cfg_image_annotations">
+       <widget class="QCheckBox" name="cfg_pyqode_image_annotations">
         <property name="text">
          <string>Enable image annotations</string>
         </property>

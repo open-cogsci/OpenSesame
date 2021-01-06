@@ -33,6 +33,8 @@ class PyQodePreferences(BasePreferencesWidget):
 			main_window,
 			ui=u'extensions.pyqode_manager.preferences'
 		)
+		if 'ImageAnnotations' not in self.extension_manager:
+			self.ui.cfg_pyqode_image_annotations.hide()
 		
 	def _before_init_widgets(self):
 		
