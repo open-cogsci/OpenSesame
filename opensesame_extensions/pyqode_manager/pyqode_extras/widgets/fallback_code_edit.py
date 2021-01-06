@@ -58,6 +58,11 @@ class FallbackCodeEdit(CodeEdit):
 		super(FallbackCodeEdit, self).__init__(parent)
 		self._start_backend()
 		self.show_whitespaces = cfg.pyqode_show_whitespaces
+		if cfg.pyqode_image_annotations:
+			self.panels.append(
+				panels.ImageAnnotationsPanel(),
+				panels.ImageAnnotationsPanel.Position.RIGHT
+			)
 		if cfg.pyqode_show_line_numbers:
 			self.panels.append(panels.LineNumberPanel())
 		self.panels.append(

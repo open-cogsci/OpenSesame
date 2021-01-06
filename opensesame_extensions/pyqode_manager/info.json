@@ -14,6 +14,7 @@
         "pyqode_code_completion_excluded_mimetypes": "markdown",
         "pyqode_code_folding": false,
         "pyqode_indentation": "auto",
+        "pyqode_image_annotations": true,
         "pyqode_show_whitespaces": false,
         "pyqode_show_line_numbers": true,
         "pyqode_fixed_width": false,

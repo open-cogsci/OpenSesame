@@ -70,6 +70,11 @@ class PythonCodeEdit(PyCodeEditBase):
 			panels.SearchAndReplacePanel(),
 			panels.SearchAndReplacePanel.Position.BOTTOM
 		)
+		if cfg.pyqode_image_annotations:
+			self.panels.append(
+				panels.ImageAnnotationsPanel(),
+				panels.ImageAnnotationsPanel.Position.RIGHT
+			)
 		if cfg.pyqode_code_folding:
 			self.panels.append(panels.FoldingPanel())
 		if cfg.pyqode_show_line_numbers:
