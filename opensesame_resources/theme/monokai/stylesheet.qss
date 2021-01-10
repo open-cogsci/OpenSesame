@@ -46,136 +46,142 @@ QTabWidget {
     border: none;
 }
 
+QToolTip {
+    background-color: #272822;
+    color: #f8f8f2;
+    border: 0px;  /** See https://bugreports.qt.io/browse/QTBUG-41313 **/
+}
+
 /** Original stylesheet **/
 
 
 #user_hint_widget QPushButton {
-	background-color: #03A9F4;
+    background-color: #03A9F4;
 }
 
 #label_size_warning {
-	background-color: #03A9F4;
-	color: #ffffff;
-	border-radius: 2px;
-	padding: 4px;
+    background-color: #03A9F4;
+    color: #ffffff;
+    border-radius: 2px;
+    padding: 4px;
 }
 
 #user_hint_widget,
 #input_header,
 #input_header QLabel {
-	background-color: #03A9F4;
-	border-radius: 2px;
-	padding: 0px;
+    background-color: #03A9F4;
+    border-radius: 2px;
+    padding: 0px;
 }
 
 #user_hint_widget QPushButton,
 #user_hint_widget QLabel,
 #input_header QLabel {
-	color: #ffffff;
-	padding-left: 4px;
+    color: #ffffff;
+    padding-left: 4px;
 }
 
 #input_header QLabel {
-	font-size: 14pt;
+    font-size: 14pt;
 }
 
 #item_name {
-	font-family: 'Roboto Slab';
-	color: #0277bd;
-	font-size: 16pt;
+    font-family: 'Roboto Slab';
+    color: #0277bd;
+    font-size: 16pt;
 }
 
 #item_type {
-	font-family: 'Roboto Slab';
-	font-size: 16pt;
-	color: #78909c;
+    font-family: 'Roboto Slab';
+    font-size: 16pt;
+    color: #78909c;
 }
 
 #label_summary,
 #control-info,
 #item_desc {
-	font-family: 'Roboto Condensed', sans;
-	color: #78909c;
+    font-family: 'Roboto Condensed', sans;
+    color: #78909c;
 }
 
 #quick_switcher #filter_line_edit {
-	font-size: 14pt;
+    font-size: 14pt;
 }
 
 #quick_switcher {
-	border-color: #0277bd;
-	background-color: #03A9F4;
+    border-color: #0277bd;
+    background-color: #03A9F4;
 }
 
 #quick_switcher QListWidget,
 #quick_switcher QLineEdit {
-	border: none;
-	border-radius: 2px;
-	background-color: #eeeeec;
-	padding: 4px;
+    border: none;
+    border-radius: 2px;
+    background-color: #eeeeec;
+    padding: 4px;
 }
 
 #quick_switcher #label_quick_switcher_wait {
-	font-size: 14pt;
-	color: #ffffff;
+    font-size: 14pt;
+    color: #ffffff;
 }
 
 #form_sketchpad * {
-	font-size: 8pt;
+    font-size: 8pt;
 }
 
 #form_sketchpad #label_cursor_pos {
-	font-family: monospace;
+    font-family: monospace;
 }
 
 #toolbar_items QLabel {
-	font-size: 8pt;
-	font-family: "Roboto Condensed";
+    font-size: 8pt;
+    font-family: "Roboto Condensed";
 }
 
 QTreeView::item {
-	padding: 4px;
+    padding: 4px;
 }
 
 /** QNotifications **/
 
 QNotification {
-	font-size: 16px;
-	padding: 0px;
-	margin: 0px;
-	border-radius: 6px;
+    font-size: 16px;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 6px;
 }
 
 QNotification #message{
-	color: #FFFFFF;
-	padding: 0px;
-	margin: 0px;
+    color: #FFFFFF;
+    padding: 0px;
+    margin: 0px;
 }
 
 QNotification #closeButton{
-	color: #FFFFFF;
-	padding: 0px;
-	margin: 0px;
+    color: #FFFFFF;
+    padding: 0px;
+    margin: 0px;
 }
 
 QNotification#info,
 QNotification#primary,
 QNotification#info QLabel,
 QNotification#primary QLabel {
-	background-color: #1dc7e7;
-	border-color: #118ca3;
+    background-color: #1dc7e7;
+    border-color: #118ca3;
 }
 
 QNotification#success,
 QNotification#success QLabel {
-	background-color: #78a917;
-	border-color: #5f8612;
+    background-color: #78a917;
+    border-color: #5f8612;
 }
 
 QNotification#danger,
 QNotification#warning,
 QNotification#danger QLabel,
 QNotification#warning QLabel {
-	background-color: #f92672;
-	border-color: #ca064c;
+    background-color: #f92672;
+    border-color: #ca064c;
 }
