@@ -26,11 +26,11 @@ from libopensesame.widgets.widget_factory import WidgetFactory
 from libqtopensesame.misc.config import cfg
 from libopensesame.oslogging import oslogger
 from libqtopensesame.extensions import base_extension
+from pyqode.core import icons
 from pyqode.core.widgets import SplittableCodeEditTabWidget
 from pyqode_extras.widgets import (
 	PythonCodeEdit,
-	FallbackCodeEdit,
-	TextCodeEdit
+	FallbackCodeEdit
 )
 from pyqode.core.api import ColorScheme
 from pyqode.core.api.panel import Panel
@@ -103,6 +103,14 @@ class pyqode_manager(base_extension):
 		backend.comm = oslogger.debug
 		if self.main_window.mode == u'default':
 			self._register_opensesame_builtins()
+		icons.USE_QTAWESOME = True
+		icons.QTA_OPTIONS = {
+			'color': self.main_window.palette().text().color().name(),
+			'color_disabled': self.main_window.palette().mid().color().name(),
+			'color_info': '#66d9ef',
+			'color_warning': '#e6db74',
+			'color_error': '#f92672'
+		}
 		SplittableCodeEditTabWidget.editors = {}
 		SplittableCodeEditTabWidget.fallback_editor = FallbackCodeEdit
 		SplittableCodeEditTabWidget.register_code_edit(PythonCodeEdit)
