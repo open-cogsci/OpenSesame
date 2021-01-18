@@ -36,11 +36,13 @@ class check_syntax(unittest.TestCase):
 		print(u'Checking: %s' % s)
 		_cmd, _arglist, _kwdict = self.exp.syntax.parse_cmd(s)
 		print(_cmd, _arglist, _kwdict)
-		self.assertTrue(cmd == _cmd)
-		self.assertTrue(arglist == _arglist)
-		self.assertTrue(kwdict == _kwdict)
-		self.assertTrue(
-			s == self.exp.syntax.create_cmd(_cmd, _arglist, _kwdict))
+		self.assertEqual(cmd, _cmd)
+		self.assertEqual(arglist, _arglist)
+		self.assertEqual(kwdict, _kwdict)
+		self.assertEqual(
+			s,
+			self.exp.syntax.create_cmd(_cmd, _arglist, _kwdict)
+		)
 
 	def checkEvalText(self, sIn, sOut):
 
@@ -50,8 +52,10 @@ class check_syntax(unittest.TestCase):
 	def checkCnd(self, sIn, sOut):
 
 		print(u'Checking: %s -> %s' % (sIn, sOut))
-		self.assertTrue(
-			self.exp.syntax.compile_cond(sIn, bytecode=False) == sOut)
+		self.assertEqual(
+			self.exp.syntax.compile_cond(sIn, bytecode=False),
+			sOut
+		)
 
 	def runTest(self):
 
@@ -110,6 +114,10 @@ class check_syntax(unittest.TestCase):
 		self.checkCnd(u'"y\'es" = \'y"es\'', u'"y\'es" == \'y"es\'')
 		self.checkCnd(u'("a b c" = abc) or (x != 10) and ([width] == 100)',
 			u'("a b c" == "abc") or ("x" != 10) and (var.width == 100)')
+		self.checkCnd(
+			u'[text] = has_underscore',
+			'var.text == "has_underscore"'
+		)
 
 if __name__ == '__main__':
 	unittest.main()

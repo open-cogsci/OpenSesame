@@ -398,12 +398,14 @@ class syntax(object):
 						continue
 					if in_var:
 						continue
-					# Detect symbols starts, i.e. the first alphanumeric character
-					if ch.isalnum():
+					# Detect symbols starts, i.e. the first alphanumeric 
+					# character or underscore
+					if ch.isalnum() or ch == u'_':
 						if symbol_start is None:
 							symbol_start = i
-					# Detect symbol ends, i.e. the first non-alphanumeric character
-					# after an alphanumeric character.
+					# Detect symbol ends, i.e. the first non-alphanumeric 
+					# character after an alphanumeric character or an 
+					# underscore.
 					elif symbol_start is not None:
 						symbol = cnd[symbol_start:i]
 						symbol_range = symbol_start, i
