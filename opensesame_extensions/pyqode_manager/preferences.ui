@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>505</width>
-    <height>870</height>
+    <height>841</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -237,38 +237,52 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="2" column="1">
        <widget class="QCheckBox" name="cfg_pyqode_code_completion">
         <property name="text">
          <string>Enable code completion</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="label_pyqode_code_completion_excluded_mimetypes">
         <property name="text">
          <string>No code completion for</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="3" column="1">
        <widget class="QLineEdit" name="cfg_pyqode_code_completion_excluded_mimetypes"/>
       </item>
-      <item row="5" column="1">
+      <item row="4" column="1">
        <widget class="QCheckBox" name="cfg_pyqode_pyflakes_validation">
         <property name="text">
          <string>Check Python syntax (pyflakes)</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="1">
+      <item row="5" column="1">
        <widget class="QCheckBox" name="cfg_pyqode_pep8_validation">
         <property name="text">
          <string>Check Python style (PEP8)</string>
         </property>
        </widget>
       </item>
-      <item row="9" column="0">
+      <item row="6" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_autopep8">
+        <property name="text">
+         <string>Correct Python whitespace (AutoPEP8)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QCheckBox" name="cfg_pyqode_autopep8_aggressive">
+        <property name="text">
+         <string>Correct Python style (AutoPEP8)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
        <widget class="QLabel" name="label_pep8_ignore">
         <property name="text">
          <string>Ignore style violations&lt;br /&gt;&lt;a href=&quot;https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;List of error codes&lt;/span&gt;&lt;/a&gt;</string>
@@ -281,29 +295,8 @@
         </property>
        </widget>
       </item>
-      <item row="9" column="1">
-       <widget class="QLineEdit" name="cfg_pyqode_pep8_ignore"/>
-      </item>
-      <item row="7" column="1">
-       <widget class="QCheckBox" name="cfg_pyqode_autopep8">
-        <property name="text">
-         <string>Correct Python whitespace (AutoPEP8)</string>
-        </property>
-       </widget>
-      </item>
       <item row="8" column="1">
-       <widget class="QCheckBox" name="cfg_pyqode_autopep8_aggressive">
-        <property name="text">
-         <string>Correct Python style (AutoPEP8)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QCheckBox" name="cfg_pyqode_image_annotations">
-        <property name="text">
-         <string>Enable image annotations</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="cfg_pyqode_pep8_ignore"/>
       </item>
      </layout>
     </widget>
