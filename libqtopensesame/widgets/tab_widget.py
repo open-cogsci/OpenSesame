@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame import debug, metadata, misc
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
-from qtpy import QtGui, QtWidgets
+from qtpy import QtGui, QtWidgets, QtCore
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tab_widget', category=u'core')
 
@@ -33,6 +33,8 @@ MAX_TAB_STACK = 3
 class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 
 	"""A custom tab widget with some extra functionality"""
+	
+	tab_removed = QtCore.Signal(int)
 
 	def __init__(self, parent=None):
 
@@ -106,6 +108,17 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		"""
 
 		self.removeTab(i)
+		
+	def tabRemoved(self, i):
+		
+		"""
+		desc:
+			Overridden to emit the tab_removed signal when a tab has been
+			removed.
+		"""
+		
+		QtWidgets.QTabWidget.tabRemoved(self, i)
+		self.tab_removed.emit(i)
 
 	def add(self, widget, icon, name, switch=True):
 
