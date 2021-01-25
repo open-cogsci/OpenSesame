@@ -78,7 +78,7 @@ class external_runner(base_runner):
 					os.path.join(u'Scripts', u'opensesamerun-script.py')
 				]
 			else:
-				raise osexception(
+				return osexception(
 					u'Failed to locate opensesamerun. Try selecting a '
 					u'different runner under Preferences.'
 				)
