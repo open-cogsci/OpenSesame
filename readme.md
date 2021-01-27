@@ -1,10 +1,10 @@
 # OpenSesame
 
-![](resources/theme/default/os-custom-icons/32x32/misc/os-experiment.png)
+![](opensesame_resources/theme/default/MokaSesame/32x32/misc/os-experiment.png)
 
 OpenSesame is a tool to create experiments for psychology, neuroscience, and experimental economics.
 
-Copyright, 2010-2020, Sebastiaan Mathôt and contributors.
+Copyright, 2010-2021, Sebastiaan Mathôt and contributors.
 
 <http://osdoc.cogsci.nl/>
 
@@ -41,7 +41,7 @@ Mathôt, S., Schreij, D., & Theeuwes, J. (2012). OpenSesame: An open-source, gra
 
 If you wish to contribute to OpenSesame (and you are welcome to!), please visit:
 
-- <http://osdoc.cogsci.nl/3.2/dev/howtocontribute/>
+- <http://osdoc.cogsci.nl/dev/howtocontribute/>
 
 ## License
 

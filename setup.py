@@ -147,11 +147,15 @@ def data_files():
 
 # Temporarily create README.txt
 shutil.copy(u'readme.md', u'README.txt')
+with open('readme.md') as fd:
+	readme = fd.read()
 setup(
 	# The PyPi name is python-opensesame
 	name=u'opensesame' if u'bdist_deb' in sys.argv else u'python-opensesame',
 	version=version,
 	description=u"A graphical experiment builder for the social sciences",
+	long_description=readme,
+	long_description_content_type='text/markdown',
 	author=u"Sebastiaan Mathot",
 	author_email=u"s.mathot@cogsci.nl",
 	url=u"http://osdoc.cogsci.nl/",
