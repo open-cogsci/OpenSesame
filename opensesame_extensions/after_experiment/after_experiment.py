@@ -68,8 +68,14 @@ class after_experiment(base_extension):
 			'jupyter_workspace_variable',
 			name='var'
 		)
-		if var and 'logfile' in var:
-			return var.logfile
+		try:
+			if var and 'logfile' in var:
+				return var.logfile
+		except TypeError:
+			# JupyterConsole returns a custom FailedToGetWorkspaceVariable
+			# Exception when an error occurs. This is not iterable and results
+			# in a TypeError.
+			pass
 		# ... or it is a global variable in the workspace
 		logfile = self.extension_manager.provide(
 			'jupyter_workspace_variable',
