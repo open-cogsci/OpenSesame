@@ -34,6 +34,18 @@ from pyqode_extras.modes import AutodetectIndentationMode
 
 # For markdown it's annoying if quotes are autocompleted
 DISABLE_AUTO_COMPLETE_QUOTES = ['markdown']
+COMMENT_PREFIX = {
+	'R': '# ',
+	'javascript': '// ',
+	'matlab': '% ',
+	'octave': '% ',
+	'perl': '# ',
+	'php': '# ',
+	'python': '# ',
+	'ruby': '# ',
+	'typescript': '// ',
+	'yaml': '# ',
+}
 
 
 class FallbackCodeEdit(CodeEdit):
@@ -206,11 +218,7 @@ class FallbackCodeEdit(CodeEdit):
 	@property
 	def comment_prefix(self):
 		
-		lang = self.language
-		if lang == 'R':
-			return '# '
-		if lang == 'javascript':
-			return '// '
+		return COMMENT_PREFIX.get(self.language, None)
 
 	def __repr__(self):
 
