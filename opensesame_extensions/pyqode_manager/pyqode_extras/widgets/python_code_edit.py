@@ -108,7 +108,7 @@ class PythonCodeEdit(PyCodeEditBase):
 			self.modes.append(pymodes.PyAutoCompleteMode())
 			self.modes.append(pymodes.CalltipsMode())
 		self.modes.append(modes.SmartBackSpaceMode())
-		self.modes.append(pymodes.PyIndenterMode())
+		self.modes.append(modes.IndenterMode())
 		self.modes.append(pymodes.PyAutoIndentMode())
 		self.modes.append(AutodetectIndentationMode())
 		if cfg.pyqode_pyflakes_validation:

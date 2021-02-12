@@ -87,16 +87,18 @@ class inline_script(inline_script_runtime, qtplugin):
 		from pyqode.core.widgets import SplittableCodeEditTabWidget
 
 		qtplugin.init_edit_widget(self, stretch=False)
-		self._pyqode_tab_widget = SplittableCodeEditTabWidget()
+		self._pyqode_tab_widget = SplittableCodeEditTabWidget(
+			tabs_movable=False,
+			plus_button=False,
+			tab_context_menu=False,
+			empty_context_menu=False
+		)
 		self._pyqode_tab_widget.setSizePolicy(
 			QSizePolicy.Expanding,
 			QSizePolicy.Expanding
 		)
-		self._pyqode_tab_widget.main_tab_widget.setCornerWidget(None)
 		self._pyqode_tab_bar = self._pyqode_tab_widget.main_tab_widget.tabBar()
 		self._pyqode_tab_bar.setTabsClosable(False)
-		self._pyqode_tab_bar.setContextMenuPolicy(Qt.NoContextMenu)
-		self._pyqode_tab_widget.main_tab_widget.setMovable(False)
 		self._pyqode_prepare_editor = \
 			self._pyqode_tab_widget.create_new_document('Prepare', self.ext)
 		self._pyqode_run_editor = \

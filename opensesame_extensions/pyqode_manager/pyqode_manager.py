@@ -170,6 +170,9 @@ class pyqode_manager(base_extension):
 
 	def event_register_editor(self, editor, mime_type=u'text/plain'):
 
+		if editor in self._editors:
+			oslogger.debug('editor already registered')
+			return
 		editor._auto_reset_stylesheet = False
 		self._editors.append(editor)		
 		if 'PythonSH' in editor.modes.keys():
