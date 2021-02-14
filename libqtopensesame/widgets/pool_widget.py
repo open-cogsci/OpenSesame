@@ -107,18 +107,23 @@ class pool_widget(base_widget):
 
 		if not files:
 			return
+		n_replace = sum(
+			self.pool.in_folder(os.path.basename(path))
+			for path in files
+		)
+		if not rename and n_replace:
+			if n_replace == 1:
+				msg = _(u"The file pool already contains a file with the same name. Do you want to overwrite it?")
+			else:
+				msg = _(u"The file pool already contains files with the same names. Do you want to overwrite {} files?")
+			c = confirmation(self.main_window, msg.format(n_replace))
+			if not c.show():
+				return
 		for path in files:
 			basename = os.path.basename(path)
-			if self.pool.in_folder(basename):
-				if rename:
-					while self.pool.in_folder(basename):
-						basename = u'_' + basename
-				else:
-					c = confirmation(self.main_window,
-						_(u"A file named '%s' already exists in the pool. Do you want to overwrite this file?") \
-						% basename)
-					if not c.show():
-						continue
+			if self.pool.in_folder(basename) and rename:
+				while self.pool.in_folder(basename):
+					basename = u'_' + basename
 			try:
 				self.pool.add(path, new_name=basename)
 			except (IOError, shutil.Error) as e:
