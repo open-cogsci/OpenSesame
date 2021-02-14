@@ -26,9 +26,19 @@ class Circle(Ellipse):
 	def __init__(self, canvas, x, y, r, **properties):
 
 		properties = properties.copy()
-		properties.update({ 'x' : x, 'y' : y, 'w' : 2*r, 'h' : 2*r, u'r' : r })
+		self._r = r
+		properties.update({ 'x' : x, 'y' : y, 'w' : 2*r, 'h' : 2*r})
 		self.prepare = self.circle_prepare(self.prepare)
 		Ellipse.__init__(self, canvas, **properties)
+		
+	@property
+	def r(self):
+		return self._r
+	
+	@r.setter
+	def r(self, val):
+		self._r = val
+		self.w = self.h = 2 * val
 
 	@property
 	def rect(self):
