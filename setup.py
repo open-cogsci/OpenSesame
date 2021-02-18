@@ -146,9 +146,12 @@ def data_files():
 
 
 # Temporarily create README.txt
-shutil.copy(u'readme.md', u'README.txt')
-with open('readme.md') as fd:
-	readme = fd.read()
+if os.path.exists('readme.md'):
+	shutil.copy(u'readme.md', u'README.txt')
+	with open('readme.md') as fd:
+		readme = fd.read()
+else:
+	readme = ''
 setup(
 	# The PyPi name is python-opensesame
 	name=u'opensesame' if u'bdist_deb' in sys.argv else u'python-opensesame',
