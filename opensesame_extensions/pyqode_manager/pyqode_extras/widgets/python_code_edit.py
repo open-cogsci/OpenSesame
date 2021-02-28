@@ -63,8 +63,7 @@ class PythonCodeEdit(PyCodeEditBase):
 		self.show_whitespaces = cfg.pyqode_show_whitespaces
 		self._backend = BackendManager(self)
 		self._start_backend()
-		self.setLineWrapMode(self.NoWrap)		
-		self.modes.append(modes.OutlineMode(defined_names))
+		self.setLineWrapMode(self.NoWrap)
 		self.modes.append(ConvertIndentationMode())
 		self.panels.append(
 			panels.SearchAndReplacePanel(),
