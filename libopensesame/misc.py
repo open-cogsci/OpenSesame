@@ -228,8 +228,7 @@ def resource(name):
 	"""
 
 	for folder in resource_folders:
-		path = os.path.join(folder, u'opensesame_resources',
-			safe_decode(name, enc=u'utf-8'))
+		path = os.path.join(folder, safe_decode(name, enc=u'utf-8'))
 		if os.path.exists(path):
 			return path
 	return None
@@ -443,7 +442,9 @@ if hasattr(site, u'getsitepackages'):
 	]
 base_folders += [u'/usr/local/share', u'/usr/share']
 base_folders = list(filter(os.path.exists, base_folders))
+resource_folders = [
+	os.path.join(path, u'opensesame_resources')
+	for path in base_folders
+]
 if 'OPENSESAME_RESOURCES_PATH' in os.environ:
-	resource_folders = base_folders + [os.environ['OPENSESAME_RESOURCES_PATH']]
-else:
-	resource_folders = base_folders
+	resource_folders.append(os.environ['OPENSESAME_RESOURCES_PATH'])
