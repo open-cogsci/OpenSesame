@@ -227,7 +227,7 @@ def resource(name):
 	A Unicode string with the full path to the resource.
 	"""
 
-	for folder in base_folders:
+	for folder in resource_folders:
 		path = os.path.join(folder, u'opensesame_resources',
 			safe_decode(name, enc=u'utf-8'))
 		if os.path.exists(path):
@@ -443,3 +443,7 @@ if hasattr(site, u'getsitepackages'):
 	]
 base_folders += [u'/usr/local/share', u'/usr/share']
 base_folders = list(filter(os.path.exists, base_folders))
+if 'OPENSESAME_RESOURCES_PATH' in os.environ:
+	resource_folders = base_folders + [os.environ['OPENSESAME_RESOURCES_PATH']]
+else:
+	resource_folders = base_folders
