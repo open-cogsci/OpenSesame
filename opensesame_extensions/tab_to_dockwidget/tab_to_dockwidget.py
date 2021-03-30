@@ -104,6 +104,18 @@ class tab_to_dockwidget(base_extension):
 
 		for docktab in self._docktabs.values():
 			docktab.delete(name)
+			
+	def provide_item_in_dockwidget(self, name):
+		
+		"""
+		desc:
+			Checks whether an item (by name) is currently shown as a
+			dockwidget.
+		"""
+		
+		if name not in self.item_store:
+			return False
+		return self.item_store[name].widget() in self._docktabs
 
 	def activate(self):
 

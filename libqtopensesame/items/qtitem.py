@@ -454,9 +454,17 @@ class qtitem(object):
 			Updates both the script and the controls.
 		"""
 
-		# Items are updated when their tab is shown, so we don't need to update
-		# them if they aren't shown.
-		if self.tabwidget.current_item() != self.name:
+		# Items are updated when they are shown in a tab, or as a maximized
+		# window, or in a dockwidget. If items are not shown, we don't need to
+		# update them, thus improving performance.
+		if (
+			not self.maximized and
+			not self.extension_manager.provide(
+				'item_in_dockwidget',
+				name=self.name
+			) and
+			self.tabwidget.current_item() != self.name
+		):
 			return False
 		self.update_script()
 		self.edit_widget()
