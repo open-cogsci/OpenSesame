@@ -98,10 +98,13 @@ class after_experiment(base_extension):
 		)
 		if not data_files:
 			return
-		return [
-			path for path in data_files
-			if path != self._logfile
-		]
+		try:
+			return [path for path in data_files if path != self._logfile]
+		except TypeError:
+			# JupyterConsole returns a custom FailedToGetWorkspaceVariable
+			# Exception when an error occurs. This is not iterable and results
+			# in a TypeError.
+			pass
 
 	def event_after_experiment_copy_logfile(self):
 
@@ -113,7 +116,7 @@ class after_experiment(base_extension):
 		if self._logfile is None:
 			return
 		self.main_window.ui.pool_widget.add([self._logfile],
- 			rename=True)
+			rename=True)
 
 	def event_after_experiment_open_logfile_folder(self):
 
