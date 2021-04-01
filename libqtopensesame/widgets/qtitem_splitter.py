@@ -55,7 +55,8 @@ class qtitem_splitter(base_subcomponent, QtWidgets.QSplitter):
 	def _on_splitter_moved(self, pos, index):
 
 		self.splitterMoved.disconnect()
-		self.item.init_script_widget()
+		if self.item._script_widget is None:
+			self.item.init_script_widget()
 
 	def minimumSizeHint(self):
 
