@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="de_DE" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.1" language="de_DE">
 <context>
     <name>Form</name>
     <message>
@@ -150,12 +151,12 @@
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="274"/>
         <source>Correct Python whitespace (AutoPEP8)</source>
-        <translation type="unfinished"></translation>
+        <translation>Korrekte Python Leerzeichen (AutoPEP8)</translation>
     </message>
     <message>
         <location filename="../../opensesame_extensions/pyqode_manager/preferences.ui" line="281"/>
         <source>Correct Python style (AutoPEP8)</source>
-        <translation type="unfinished"></translation>
+        <translation>Korrekter Python Stil (AutoPEP8)</translation>
     </message>
 </context>
 <context>
@@ -455,12 +456,12 @@
     <message>
         <location filename="../../translation_tools/translatables.py" line="537"/>
         <source>The file pool already contains files with the same names. Do you want to overwrite {} files?</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datensammlung enthält bereits Dateien mit diesen Namen. Möchtest du {} Dateien überschreiben?</translation>
     </message>
     <message>
         <location filename="../../translation_tools/translatables.py" line="541"/>
         <source>The file pool already contains a file with the same name. Do you want to overwrite it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datensammlung enthält bereits eine Datei mit diesen Namen. Möchtest du sie überschreiben?</translation>
     </message>
 </context>
 <context>
@@ -582,7 +583,7 @@
         <source>Could not parse script: %s</source>
         <translation>Konnte Skript nicht analysieren: %s</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="428"/>
         <source>Save as…</source>
         <translation>Speichern unter…</translation>
@@ -819,7 +820,7 @@ Beschreibung: %s</translation>
         <source>Done</source>
         <translation>Fertig</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="488"/>
         <source>Loading …</source>
         <translation>Lade …</translation>
@@ -980,7 +981,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
 </context>
 <context>
     <name>extension_get_started</name>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="100"/>
         <source>New…</source>
         <translation>Neu…</translation>
@@ -1028,7 +1029,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
         <source>Adds a Help menu</source>
         <translation>Fügt ein Hilfemenü dazu</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="111"/>
         <source>Please wait …</source>
         <translation>Bitte warte …</translation>
@@ -1214,7 +1215,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
         <source>Quickly open items</source>
         <translation>Öffnet Items schnell</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="3"/>
         <source>Search items …</source>
         <translation>Suche Items …</translation>
@@ -2212,7 +2213,7 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
         <translation>Keine</translation>
     </message>
 </context>
-<context encoding="UTF-8">
+<context>
     <name>plugin_quest_staircase_init</name>
     <message>
         <location filename="../../translation_tools/translatables.py" line="229"/>
@@ -2249,17 +2250,17 @@ Das Experiment konnte aus dem folgenden Grund nicht normal abgeschlossen werden:
         <source>Experimental variable for test value</source>
         <translation>Variable für Testwert</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="231"/>
         <source>Chance level (γ)</source>
         <translation>Zufallswahrscheinlichkeit (γ)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="226"/>
         <source>Proportion of random responses at maximum stimulus intensity (δ)</source>
         <translation>Proportion von Zufallsanworten bei der höchsten Stimulusintensität (δ)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../../translation_tools/translatables.py" line="232"/>
         <source>Steepness of the Weibull psychometric function (β)</source>
         <translation>Steile der Weibull psychometrischen Funktion (β)</translation>
@@ -2596,7 +2597,7 @@ Zahlreiche Einstellungen zur Kontrolle der Anzeige, des Tons und der Eingabeger�
         <source>Orientation&lt;br /&gt;&lt;i&gt;in degrees (0 .. 360)&lt;/i&gt;</source>
         <translation>Ausrichtung&lt;br /&gt;&lt;i&gt;in Grad (0 .. 360)&lt;/i&gt;</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/gabor_settings.ui" line="100"/>
         <source> °</source>
         <translation> °</translation>
@@ -2695,7 +2696,7 @@ Zahlreiche Einstellungen zur Kontrolle der Anzeige, des Tons und der Eingabeger�
         <source> px</source>
         <translation> px</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/general_properties.ui" line="183"/>
         <source>×</source>
         <translation>x</translation>
@@ -3108,22 +3109,22 @@ Bearbeite Dein Experiment in Skriptform</translation>
         <source>One-tab mode</source>
         <translation>Ein-Tab-Modus</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="274"/>
         <source>Open…</source>
         <translation>Öffne…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="304"/>
         <source>Save as…</source>
         <translation>Speichern unter…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="327"/>
         <source>Run fullscreen…</source>
         <translation>Ausführen im Vollbildmodus…</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/misc/main_window.ui" line="365"/>
         <source>Run in window…</source>
         <translation>Ausführen im Fenstermodus…</translation>
@@ -3319,7 +3320,7 @@ Bearbeite Dein Experiment in Skriptform</translation>
         <source>Angle (phi)</source>
         <translation>Winkel (phi)</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/dialogs/polar_coordinates.ui" line="116"/>
         <source>°</source>
         <translation>°</translation>
@@ -3473,7 +3474,7 @@ Bearbeite Dein Experiment in Skriptform</translation>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="211"/>
         <source>It is recommended to run experiments in a separate process (multiprocess)</source>
-        <translation type="unfinished">Es wird empfohlen Experimente in einem separaten Prozess auszuführen (multiprocess)</translation>
+        <translation>Es wird empfohlen Experimente in einem separaten Prozess auszuführen (multiprocess)</translation>
     </message>
     <message>
         <location filename="../ui/widgets/preferences_widget.ui" line="229"/>
@@ -3643,7 +3644,7 @@ Bearbeite Dein Experiment in Skriptform</translation>
         <source>Check to display the grid and enable snap-to-grid</source>
         <translation>Ankreuzen um das Gitternetz zu zeigen und Objekte daran auszurichten</translation>
     </message>
-    <message encoding="UTF-8">
+    <message>
         <location filename="../ui/widgets/sketchpad.ui" line="472"/>
         <source>°</source>
         <translation>°</translation>
