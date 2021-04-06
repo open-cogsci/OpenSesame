@@ -178,7 +178,7 @@ class base_extension(base_subcomponent):
 		"""
 
 		if not hasattr(self, '_tooltip'):
-			tooltip = self.info.get(u'tooltip', None)
+			tooltip = self._(self.info.get(u'tooltip', None))
 			if not tooltip:
 				self._tooltip = None
 			else:
