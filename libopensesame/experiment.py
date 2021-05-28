@@ -164,6 +164,13 @@ class experiment(item.item):
 			else:
 				self.var.experiment_path = self.experiment_path \
 					= experiment_path
+		# When a template is opened, it should not result in the experiment
+		# path being defined, because it is intended to be saved as a new
+		# experiment. Templates are identified by the is_template variable,
+		# which is removed when the file is opened.
+		if self.var.get('is_template', 0):
+			self.experiment_path = self.var.experiment_path = None
+			del self.var.is_template
 		if not py3 and backend.backend_guess(self, 'sampler') == u'psycho':
 			self.var.sampler_backend = 'legacy'
 			oslogger.warning(

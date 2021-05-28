@@ -1,6 +1,7 @@
 ---
 API: 2
 ---
+set is_template 1
 set width 1024
 set uniform_coordinates "yes"
 set title "Extended template"
