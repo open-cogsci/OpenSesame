@@ -288,6 +288,7 @@ class base_runner(object):
 			fullscreen=fullscreen,
 			auto_response=auto_response
 		):
+			self.main_window.extension_manager.fire('run_experiment_canceled')
 			return
 		ret_val = self.execute()
 		self.main_window.set_run_status(u'finished')

@@ -141,19 +141,31 @@ class pyqode_manager(base_extension):
 			for editor in self.auto_editor.values():
 				self.event_unregister_editor(editor)
 		self.event_unregister_editor(item._script_widget)
-
-	def event_run_experiment(self, fullscreen):
-
+		
+	def _suspend(self):
+		
 		self._auto_backend_restart = False
 		for editor in self._editors:
 			editor.backend.suspend()
 		self._auto_backend_restart = True
-
-	def event_end_experiment(self, ret_val):
-
+		
+	def _resume(self):
+		
 		for editor in self._editors:
 			editor.backend.resume()
 			self._register_backend_process(editor)
+
+	def event_run_experiment(self, fullscreen):
+
+		self._suspend()
+
+	def event_end_experiment(self, ret_val):
+		
+		self._resume()
+
+	def event_run_experiment_canceled(self):
+		
+		self._resume()
 
 	def event_prepare_purge_unused_items(self):
 
