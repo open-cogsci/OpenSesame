@@ -79,7 +79,7 @@ def safe_encode(s, enc='utf-8', errors='strict'):
 
 
 def safe_read(path):
-	with open(path, u'r') as fd:
+	with safe_open(path, u'r') as fd:
 		try:
 			s = fd.read()
 		except UnicodeDecodeError:
@@ -96,11 +96,11 @@ else:
 		return yaml.load(s)
 
 
-safe_open = functools.partial(io.open, encoding=u'utf-8')
-
 if py3:
 	safe_str = safe_decode
+	safe_open = functools.partial(open, encoding=u'utf-8')
 else:
+	safe_open = functools.partial(io.open, encoding=u'utf-8')
 	safe_str = safe_encode
 
 __all__ = [

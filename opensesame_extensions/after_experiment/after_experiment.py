@@ -155,7 +155,6 @@ class after_experiment(base_extension):
 			u'logfile': logfile
 			}
 		if self._extra_data_files:
-			print(self._extra_data_files)
 			md += u'\n' \
 				+ _(u'The following extra data files where created:') + u'\n\n'
 			for data_file in self._extra_data_files:
