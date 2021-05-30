@@ -21,6 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame import debug, metadata, misc
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
+from libqtopensesame.widgets.tab_bar import TabBar
 from qtpy import QtGui, QtWidgets, QtCore
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tab_widget', category=u'core')
@@ -35,6 +36,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 	"""A custom tab widget with some extra functionality"""
 	
 	tab_removed = QtCore.Signal(int)
+	tab_inserted = QtCore.Signal(int)
 
 	def __init__(self, parent=None):
 
@@ -47,12 +49,9 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		"""
 
 		QtWidgets.QTabWidget.__init__(self, parent)
+		self.setTabBar(TabBar(self))
 		base_subcomponent.setup(self, parent)
-		try:
-			self.tabCloseRequested.connect(self.removeTab)
-		except:
-			# Catch what appears to be a bug in earlier versions of qtpy.
-			self.tabCloseRequested.connect(self._removeTab)
+		self.tabCloseRequested.connect(self.removeTab)
 		self.currentChanged.connect(self.index_changed)
 		self.setSizePolicy(
 			QtWidgets.QSizePolicy.MinimumExpanding,
@@ -95,19 +94,14 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		if i >= self.count():
 			i = 0
 		self.setCurrentIndex(i)
-
-	def _removeTab(self, i):
-
-		"""
-		This is simply a wrapper around QTabWidget.removeTab(). For some reason,
-		connecting this function to tabCloseRequested causes an exception on
-		older versions of qtpy. This functions is a workaround.
-
-		Arguments:
-		i		--	The index of the tab to close.
-		"""
-
-		self.removeTab(i)
+		
+	def _update_actions(self):
+		
+		count = self.count()
+		index = self.currentIndex()
+		self.main_window.ui.action_close_other_tabs.setVisible(count > 1)
+		self.main_window.ui.action_close_all_tabs.setVisible(count > 0)
+		self.main_window.ui.action_close_current_tab.setVisible(count > 0)
 		
 	def tabRemoved(self, i):
 		
@@ -119,6 +113,19 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		
 		QtWidgets.QTabWidget.tabRemoved(self, i)
 		self.tab_removed.emit(i)
+		self._update_actions()
+		
+	def tabInserted(self, i):
+		
+		"""
+		desc:
+			Overridden to emit the tab_removed signal when a tab has been
+			removed.
+		"""
+		
+		QtWidgets.QTabWidget.tabInserted(self, i)
+		self.tab_inserted.emit(i)
+		self._update_actions()
 
 	def add(self, widget, icon, name, switch=True):
 
@@ -206,9 +213,9 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 				type:	bool
 		"""
 
-		while self.count() > 0:
+		while self.count():
 			self.removeTab(0)
-		if avoid_empty and self.count() == 0:
+		if avoid_empty and not self.count():
 			self.open_general()
 
 	def close_current(self, dummy=None, avoid_empty=True):
@@ -225,18 +232,18 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		"""
 
 		self.removeTab(self.currentIndex())
-		if avoid_empty and not self.count():
-			if self._tab_stack:
-				self.add(*self._tab_stack.pop())
-			else:
-				self.open_general()
+		if not avoid_empty or self.count():
+			return
+		if self._tab_stack:
+			self.add(*self._tab_stack.pop())
+		else:
+			self.open_general()
 
 	def close_other(self):
 
 		"""Close all tabs except for the currently opened one"""
 
-		while self.count() > 0 and \
-			self.currentIndex() != 0:
+		while self.count() > 0 and self.currentIndex() != 0:
 			self.removeTab(0)
 		while self.count() > 1:
 			self.removeTab(1)
@@ -470,6 +477,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 		if hasattr(w, u'on_activate'):
 			w.on_activate()
 		self.currentChanged.connect(self.index_changed)
+		self._update_actions()
 
 	def open_markdown(self, md, icon=u'dialog-information',
 		title=u'Attention!', url=None, tmpl=None):
