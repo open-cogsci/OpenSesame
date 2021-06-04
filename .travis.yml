@@ -1,14 +1,17 @@
-dist: bionic
+dist: focal
 language: python
 python:
-  - "3.6"
-sudo: required
-virtualenv:
-  system_site_packages: true
+  - "3.8"
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:smathot/rapunzel'
+    packages:
+    - python3-opensesame
+    - python3-scipy
+    - python3-imageio 
+    - python3-openpyxl
 before_install:
-  - sudo add-apt-repository -y ppa:smathot/rapunzel
-  - sudo apt-get -q update
-  - sudo apt-get -y install python3-opensesame python3-scipy python3-imageio python3-openpyxl
   - wget https://github.com/smathot/python-yamldoc/archive/release/0.2.0.tar.gz -O yamldoc.tar.gz
   - tar -xzvf yamldoc.tar.gz
   - export PYTHONPATH=$PYTHONPATH:python-yamldoc-release-0.2.0
