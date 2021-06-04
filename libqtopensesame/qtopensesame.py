@@ -185,14 +185,8 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		self._tooltip_shortcut(self.action_onetabmode)
 		self._tooltip_shortcut(self.action_show_pool)
 		self._tooltip_shortcut(self.action_show_overview)
-		# Create the initial experiment, which is the default template. Because
-		# not all backends are supported under Python 3, we use a different
-		# backend for each.
-		if py3:
-			tmpl = u'default-py3.osexp'
-		else:
-			tmpl = u'default.osexp'
-		with safe_open(misc.resource(os.path.join(u'templates', tmpl)), u'r') as fd:
+		# Create the initial experiment, which is the default template.
+		with safe_open(misc.resource(os.path.join(u'templates', u'default.osexp')), u'r') as fd:
 			self.experiment = experiment.experiment(
 				self,
 				u'New experiment',
