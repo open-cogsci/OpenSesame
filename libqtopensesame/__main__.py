@@ -104,7 +104,9 @@ def set_paths():
 	import platform
 	# On Windows, the working directory should be the folder with the Python
 	# interpreter. If not, Qt will have difficulty finding the correct paths.
-	if platform.system() == 'Windows':
+	# We can disable this behavior on the command line, because it will
+	# actually break things on some installations.
+	if platform.system() == 'Windows' and '--no-chdir' not in sys.argv:
 		os.chdir(os.path.dirname(sys.executable))
 	# Update the system path so that Qt can find itself
 	path = os.path.join(os.getcwd(), 'Library', 'bin')

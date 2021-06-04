@@ -384,6 +384,13 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 			dest=u"mode",
 			help=u"Specify the application mode (default or ide)"
 		)
+		group.add_option(
+			u"--no-chdir",
+			action=u"store_true",
+			default=u"false",
+			dest=u"no_chdir",
+			help=u"Don't change the working directory to that of the Pythone executable (Windows only)'"
+		)
 		parser.add_option_group(group)
 		self.options, args = parser.parse_args(sys.argv)
 
