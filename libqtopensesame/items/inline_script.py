@@ -21,6 +21,7 @@ from libopensesame.py3compat import *
 from qtpy.QtWidgets import QSizePolicy
 from qtpy.QtCore import Qt
 from libopensesame.inline_script import inline_script as inline_script_runtime
+from libopensesame.oslogging import oslogger
 from libqtopensesame.items.qtplugin import qtplugin
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'inline_script', category=u'item')
@@ -84,6 +85,11 @@ class inline_script(inline_script_runtime, qtplugin):
 
 		"""See qtitem."""
 
+		# PsychoPy deletes the _ built-in
+		if '_' not in __builtins__:
+			oslogger.warning('re-installing missing gettext built-in')
+			import gettext
+			gettext.NullTranslations().install()
 		from pyqode.core.widgets import SplittableCodeEditTabWidget
 
 		qtplugin.init_edit_widget(self, stretch=False)

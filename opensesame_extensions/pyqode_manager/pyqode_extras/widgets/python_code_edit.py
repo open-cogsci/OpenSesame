@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libqtopensesame.misc.config import cfg
+from libopensesame.oslogging import oslogger
 import sys
 from pyqode.core.api import ColorScheme
 from pyqode.python.backend import server
@@ -52,6 +53,11 @@ class PythonCodeEdit(PyCodeEditBase):
 
 	def __init__(self, parent):
 
+		# PsychoPy deletes the _ built-in
+		if '_' not in __builtins__:
+			oslogger.warning('re-installing missing gettext built-in')
+			import gettext
+			gettext.NullTranslations().install()
 		_reset_stylesheet = self._reset_stylesheet
 		self._reset_stylesheet = lambda: None
 		super(PythonCodeEdit, self).__init__(parent=parent)

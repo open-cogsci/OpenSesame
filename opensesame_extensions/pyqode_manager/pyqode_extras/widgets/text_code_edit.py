@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import sys
 from libqtopensesame.misc.config import cfg
+from libopensesame.oslogging import oslogger
 from pyqode.core.managers import BackendManager
 from pyqode.core.backend import server
 from pyqode.core import panels, modes
@@ -43,7 +44,12 @@ class TextCodeEdit(CodeEdit):
 	mimetypes = ['text/x-plain', 'text/x-log', 'text/plain']
 
 	def __init__(self, parent=None):
-
+		
+		# PsychoPy deletes the _ built-in
+		if '_' not in __builtins__:
+			oslogger.warning('re-installing missing gettext built-in')
+			import gettext
+			gettext.NullTranslations().install()
 		_reset_stylesheet = self._reset_stylesheet
 		self._reset_stylesheet = lambda: None
 		super(TextCodeEdit, self).__init__(parent)

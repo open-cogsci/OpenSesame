@@ -67,6 +67,11 @@ class FallbackCodeEdit(CodeEdit):
 
 	def __init__(self, parent=None):
 
+		# PsychoPy deletes the _ built-in
+		if '_' not in __builtins__:
+			oslogger.warning('re-installing missing gettext built-in')
+			import gettext
+			gettext.NullTranslations().install()
 		super(FallbackCodeEdit, self).__init__(parent)
 		self._start_backend()
 		self.show_whitespaces = cfg.pyqode_show_whitespaces
