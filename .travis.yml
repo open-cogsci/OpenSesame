@@ -11,6 +11,7 @@ addons:
     - python3-scipy
     - python3-imageio 
     - python3-openpyxl
+    - python3-yaml
 before_install:
   - wget https://github.com/smathot/python-yamldoc/archive/release/0.2.0.tar.gz -O yamldoc.tar.gz
   - tar -xzvf yamldoc.tar.gz
