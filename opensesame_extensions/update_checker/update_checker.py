@@ -77,7 +77,7 @@ class update_checker(base_extension):
 
 		if self._queue.empty():
 			oslogger.debug(u'queue still empty')
-			QTimer.singleShot(1000, self._poll_update_process)
+			QTimer.singleShot(5000, self._poll_update_process)
 			return
 		content = self._queue.get()
 		self._update_checker.join()
