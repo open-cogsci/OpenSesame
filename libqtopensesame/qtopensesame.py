@@ -746,9 +746,9 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 		if not self.save_unsaved_changes():
 			e.ignore()
 			return
-		self.extension_manager.fire(u'close')
 		self.save_state()
 		self.experiment.pool.clean_up()
+		self.extension_manager.fire(u'close')
 		e.accept()
 
 	def update_recent_files(self):
