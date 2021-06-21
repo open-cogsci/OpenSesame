@@ -44,12 +44,26 @@ def parse_environment_file():
 		d = safe_yaml_load(fd.read())
 	# Convert all values from UTF8 to the filesystem encoding
 	for key, val in d.items():
-		d[key] = safe_str(safe_decode(val), enc=filesystem_encoding())
+		if isinstance(val, basestring):
+			d[key] = safe_str(safe_decode(val), enc=filesystem_encoding())
+		elif isinstance(val, list):
+			d[key] = [
+				safe_str(safe_decode(i), enc=filesystem_encoding())
+				for i in val
+			]
+		else:
+			raise TypeError('values in environment.yaml should be str or list')
 	# The Python path is added to sys.path, the rest is added as an environment
 	# variable.
 	if u'PYTHON_PATH' in d:
-		sys.path = d[u'PYTHON_PATH'].split(';') + sys.path
+		if isinstance(d[u'PYTHON_PATH'], basestring):
+			sys.path = d[u'PYTHON_PATH'].split(';') + sys.path
+		else:
+			sys.path = d[u'PYTHON_PATH'] + sys.path
 		del d[u'PYTHON_PATH']
+	for key in (u'OPENSESAME_EXTENSION_PATH', u'OPENSESAME_PLUGIN_PATH'):
+		if isinstance(d.get(key, None), list):
+			d[key] = u';'.join(d[key])
 	os.environ.update(d)
 
 def change_working_dir():
