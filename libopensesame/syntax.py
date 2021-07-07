@@ -494,7 +494,8 @@ class syntax(object):
 			float(s)
 			assert(s == s.strip())  # No flanking whitespace
 		except:
-			if not s.replace(u'_', u'').isascii():
+			t = s.replace(u'_', u'')
+			if not t.isalnum() or not t.isascii():
 				return u'"%s"' % s.replace(u'"', u'\\"')
 		return s
 
