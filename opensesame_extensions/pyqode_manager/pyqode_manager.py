@@ -50,6 +50,7 @@ from pyqode.python.modes import (
 from pyqode.core.managers import backend
 from qtpy.QtGui import QFontMetrics
 from qtpy.QtWidgets import QPlainTextEdit
+from qtpy.QtCore import QProcess
 
 
 class pyqode_manager(base_extension):
@@ -232,7 +233,7 @@ class pyqode_manager(base_extension):
 		# This function is defined here so to keep the editor in the scope.
 		# This is necessary in case the backend crashes and it needs to be
 		# restarted.
-		def auto_restart():
+		def on_error():
 			if editor._closed or not self._auto_backend_restart:
 				return
 			oslogger.warning(
@@ -242,9 +243,16 @@ class pyqode_manager(base_extension):
 				del editor.backend.SHARE_COUNT[editor.backend._share_id]
 			editor.backend._process = None
 			editor.backend.resume()
+			editor.backend._process.error.connect(on_error)
+			editor.backend._process.finished.connect(on_finished)
 			self._register_backend_process(editor)
+		def on_finished(exit_status):
+			if exit_status == QProcess.CrashExit:
+				oslogger.warning('backend crashed (exit status: {})'.format(exit_status))
+				on_error()
 		try:
-			editor.backend._process.error.connect(auto_restart)
+			editor.backend._process.error.connect(on_error)
+			editor.backend._process.finished.connect(on_finished)
 			self._register_backend_process(editor)
 		except RuntimeError:
 			auto_restart()
