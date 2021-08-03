@@ -83,6 +83,8 @@ class AutodetectIndentationMode(api.Mode):
 		i2 = i3 = i4 = 0
 		for line in code.splitlines():
 			n_indent = len(line) - len(line.lstrip(u' '))
+			if not n_indent:
+				continue
 			if not n_indent % 4:
 				i4 += 1
 				i3 -= 1
