@@ -65,8 +65,9 @@ class qtautoplugin(qtplugin):
 			u'suffix' : u'',
 			u'left_label' : u'min.',
 			u'right_label' : u'max.',
-			u'syntax' : False
-			}
+			u'syntax' : False,
+			u'language': 'python'
+		}
 		# This indicates whether we should pad the controls with a stretch at
 		# the end.
 		need_stretch = True
@@ -110,7 +111,7 @@ class qtautoplugin(qtplugin):
 			# Parse editor
 			elif c[u'type'] == u'editor':
 				widget = self.add_editor_control(c[u'var'], c[u'label'],
-					syntax=c[u'syntax'])
+					syntax=c[u'syntax'], language=c[u'language'])
 				need_stretch = False
 			# Parse filepool
 			elif c[u'type'] == u'filepool':

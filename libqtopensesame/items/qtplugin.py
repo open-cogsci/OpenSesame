@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import os
+import mimetypes
 from libopensesame import plugins
 from libopensesame.oslogging import oslogger
 from qtpy import QtGui, QtCore, QtWidgets
@@ -401,7 +402,7 @@ class qtplugin(qtitem.qtitem):
 		self.add_control(label, edit, **kwdict)
 		return edit
 
-	def add_editor_control(self, var, label, syntax=False):
+	def add_editor_control(self, var, label, syntax=False, language='python'):
 
 		"""
 		Adds an editor that is linked to a variable.
@@ -413,16 +414,25 @@ class qtplugin(qtitem.qtitem):
 		keywords:
 			syntax:		A boolean indicating whether Python syntax highlighting
 						should be activated.
+			language:	The name of a programming language
 
 		returns:
 			An editor widget.
 		"""
 
 		if syntax:
-			from pyqode_extras.widgets import PythonCodeEdit as CodeEdit
+			if language == 'python':
+				from pyqode_extras.widgets import PythonCodeEdit as CodeEdit
+			else:
+				from pyqode_extras.widgets import FallbackCodeEdit as CodeEdit
 		else:
 			from pyqode_extras.widgets import TextCodeEdit as CodeEdit
 		editor = CodeEdit(self.main_window)
+		if syntax and language != 'python':
+			editor.setPlainText(
+				'',
+				mime_type=mimetypes.guess_type('basename.' + language)
+			)
 		editor.focusOutEvent = self._editor_focus_out
 		if var is not None:
 			self.auto_editor[var] = editor
