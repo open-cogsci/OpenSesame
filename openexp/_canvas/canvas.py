@@ -844,7 +844,7 @@ class Canvas(Backend):
 			my_canvas = Canvas()
 			my_canvas.fixdot(color='green')
 			my_canvas.show()
-			sleep(1000)
+			clock.sleep(1000)
 			my_canvas.clear()
 			my_canvas.fixdot(color='red')
 			my_canvas.show()
@@ -955,12 +955,12 @@ class Canvas(Backend):
 
 		Example: |
 			my_canvas = Canvas()
-			w = self.var.width
-			h = self.var.height
+			ex = var.width / 2
+			ey = var.height / 2
 			# Function interface
-			my_canvas.line(0, 0, w, h)
+			my_canvas.line(0, 0, ex, ey)
 			# Element interface
-			my_canvas['my_line'] = Line(0, 0, w, h)
+			my_canvas['my_line'] = Line(0, 0, ex, ey)
 		"""
 
 		self += Line(sx, sy, ex, ey, **style_args)
