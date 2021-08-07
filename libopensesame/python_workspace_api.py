@@ -504,11 +504,15 @@ def xy_circle(n, rho, phi0=0, pole=(0, 0)):
 		c.show()
 	"""
 
-	if not isinstance(n, int) or n < 0:
+	try:
+		n = int(n)
+		if n < 0:
+			raise ValueError()
+	except (ValueError, TypeError):
 		raise osexception(u'n should be a non-negative integer in xy_circle()')
 	try:
 		phi0 = float(phi0)
-	except:
+	except (ValueError, TypeError):
 		raise osexception(u'phi0 should be numeric in xy_circle()')
 	l = []
 	for i in range(n):
@@ -629,8 +633,12 @@ def xy_random(n, width, height, min_dist=0, pole=(0,0)):
 		c.show()
 	"""
 
-	if not isinstance(n, int) or n < 0:
-		raise osexception(u'n should be a non-negative integer in xy_random()')
+	try:
+		n = int(n)
+		if n < 0:
+			raise ValueError()
+	except (ValueError, TypeError):
+		raise osexception(u'n should be a non-negative integer in xy_circle()')
 	try:
 		width = float(width)
 	except:
