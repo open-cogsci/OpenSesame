@@ -45,7 +45,7 @@ class CheckColor(unittest.TestCase):
 			(u'#00FF00', u'#00ff00'),
 			(u'#00ff00', u'#00ff00'),
 			(u'#0F0', u'#00ff00'),
-			(u'#0F0', u'#00ff00'),
+			(u'#0f0', u'#00ff00'),
 			((0, 255, 0), u'#00ff00'),
 			(u'rgb(0,255,0)', u'#00ff00'),
 			(u'rgb( 0 , 255 , 0 )', u'#00ff00'),
