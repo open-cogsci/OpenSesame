@@ -34,6 +34,13 @@ else:
 	RecursionError = RuntimeError
 	PermissionError = IOError
 	FileNotFoundError = OSError
+	
+try:
+	str.isascii
+	isascii = lambda s: s.isascii()
+except AttributeError:  # str.isascii doesn't exist before Python 3.7
+	import string
+	isascii = lambda s: all(ch in string.printable for ch in s)
 
 
 def safe_decode(s, enc='utf-8', errors='strict'):
@@ -111,7 +118,8 @@ __all__ = [
 	'universal_newline_mode',
 	'safe_read',
 	'safe_open',
-	'safe_yaml_load'
+	'safe_yaml_load',
+	'isascii'
 ]
 if not py3:
 	__all__ += [
