@@ -1,6 +1,6 @@
 # OpenSesame
 
-![](opensesame_resources/theme/default/MokaSesame/32x32/misc/os-experiment.png)
+![](https://github.com/open-cogsci/OpenSesame/raw/loewenfeld/opensesame_resources/einstein.png)
 
 OpenSesame is a tool to create experiments for psychology, neuroscience, and experimental economics.
 
@@ -12,15 +12,18 @@ Copyright, 2010-2021, Sebastiaan Mathôt and contributors.
 
 ## Features
 
-- __A comprehensive graphical user interface__--flexible and easy-to-use
-- __Support for Python scripting__--add the power of Python to your experiment
-- __Support for external devices__--use your eye tracker, button box, EEG equipment, etc.
-- __Free and open source__--released under the GPL3
-- __Crossplatform__--runs on Windows, Mac OS, Linux, and Android (runtime only)
+- A user-friendly interface — a modern, professional, and easy-to-use graphical interface
+- Online experiments — run your experiment in a browser with OSWeb
+- Python — add the power of Python to your experiment
+- JavaScript — add the power of JavaScript to your experiment
+- Use your devices — use your eye tracker, button box, EEG equipment, and more.
+- Free — released under the GPL3
+- Crossplatform — Windows, Mac OS, and Linux
+
 
 ## Branches
 
-Each major version of OpenSesame lives in its own branch. The master branch contains the latest stable version.
+Each major version of OpenSesame lives in its own branch. The default branch is currently `loewenfeld`.
 
 - `gibson` - 2.8
 - `heisenberg` - 2.9
@@ -29,19 +32,16 @@ Each major version of OpenSesame lives in its own branch. The master branch cont
 - `kuhn` - 3.2
 - `loewenfeld` - 3.3
 
+
 ## About
 
 OpenSesame is a graphical experiment builder. OpenSesame provides an easy to use, point-and-click interface for creating psychological/ neuroscientific experiments.
+
 
 ## Citation
 
 Mathôt, S., Schreij, D., & Theeuwes, J. (2012). OpenSesame: An open-source, graphical experiment builder for the social sciences. *Behavior Research Methods*, *44*(2), 314-324. [doi:10.3758/s13428-011-0168-7](http://dx.doi.org/doi:10.3758/s13428-011-0168-7)
 
-## Contribute
-
-If you wish to contribute to OpenSesame (and you are welcome to!), please visit:
-
-- <http://osdoc.cogsci.nl/dev/howtocontribute/>
 
 ## License
 
@@ -50,6 +50,7 @@ OpenSesame is distributed under the terms of the GNU General Public License 3. T
 - <http://www.gnu.org/licenses/gpl.txt>
 
 OpenSesame contains works of others. For the full license information, please refer to `debian/copyright`.
+
 
 ## Documentation
 
