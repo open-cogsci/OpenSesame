@@ -79,7 +79,7 @@ class Legacy(Sampler):
 						u"openexp._sampler.legacy.__init__() the file '%s' does not exist" \
 						% src)
 				if os.path.splitext(src)[1].lower() not in (".ogg", ".wav"):
-					raise ossexception( \
+					raise osexception( \
 						u"openexp._sampler.legacy.__init__() the file '%s' is not an .ogg or .wav file" \
 						% src)
 				# The mixer chokes on unicode pathnames that contain special
