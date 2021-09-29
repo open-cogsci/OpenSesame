@@ -28,6 +28,9 @@ from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'update_checker', category=u'extension')
 
+POLL_MAX_ATTEMPT = 5
+POLL_DELAY = 5000
+
 
 class update_checker(base_extension):
 
@@ -62,6 +65,7 @@ class update_checker(base_extension):
 			description='update_checker'
 		)
 		oslogger.debug(u'checking (PID={})'.format(self._update_checker.pid))
+		self._attempt = 1
 		QTimer.singleShot(1000, self._poll_update_process)
 
 	def _error_notify(self):
@@ -76,8 +80,16 @@ class update_checker(base_extension):
 	def _poll_update_process(self):
 
 		if self._queue.empty():
-			oslogger.debug(u'queue still empty')
-			QTimer.singleShot(5000, self._poll_update_process)
+			if self._attempt > POLL_MAX_ATTEMPT:
+				oslogger.debug(u'giving up')
+				if self._update_checker.is_alive():
+					oslogger.debug(u'terminating update-checker process')
+					self._update_checker.terminate()
+				self._checking = False
+			else:
+				oslogger.debug(u'queue still empty ({})'.format(self._attempt))
+				self._attempt += 1
+				QTimer.singleShot(POLL_DELAY, self._poll_update_process)
 			return
 		content = self._queue.get()
 		self._update_checker.join()
@@ -121,7 +133,7 @@ def _update_checker(queue, metadata_url):
 	else:
 		from urllib2 import urlopen
 	try:
-		fd = urlopen(metadata_url)
+		fd = urlopen(metadata_url, timeout=1)
 		content = fd.read()
 		fd.close()
 	except Exception as e:
@@ -129,3 +141,5 @@ def _update_checker(queue, metadata_url):
 		queue.put(None)
 	else:
 		queue.put(content)
+	queue.close()
+	queue.join_thread()
