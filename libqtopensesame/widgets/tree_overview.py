@@ -268,12 +268,13 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		if col == 0:
 			if hasattr(treeitem, u'name'):
 				from_name = treeitem.name
-				to_name = str(treeitem.text(0))
-				to_name = self.experiment.items.rename(from_name, to_name)
+				to_name = self.experiment.items.rename(
+					from_name, treeitem.text(0))
 				if to_name is None:
 					self.itemChanged.disconnect()
 					treeitem.setText(0, from_name)
 					self.itemChanged.connect(self.text_edited)
+					to_name = from_name
 				if from_name != to_name:
 					self.itemChanged.disconnect()
 					treeitem.setText(0, to_name)
@@ -972,8 +973,8 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
 		A list of unused items (names as strings)
 		"""
 
-		return self.main_window.ui.itemtree.recursive_children( \
-			self.main_window.ui.itemtree.topLevelItem( \
+		return self.main_window.ui.itemtree.recursive_children(
+			self.main_window.ui.itemtree.topLevelItem(
 				self.main_window.ui.itemtree.topLevelItemCount()-1))
 
 	def rename(self, from_name, to_name):
