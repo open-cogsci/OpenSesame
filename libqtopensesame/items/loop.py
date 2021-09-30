@@ -56,6 +56,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		self.loop_widget = loop_widget(self.experiment.main_window)
 		self.qdm = QDataMatrix(self.dm)
 		self.qdm.changed.connect(self._apply_table)
+		self.qdm.cellchanged.connect(self._on_cell_changed)
 		self.edit_vbox.addWidget(self.loop_widget)
 		self.edit_vbox.addWidget(self.qdm)
 		self.set_focus_widget(self.qdm)
@@ -139,6 +140,24 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 		"""
 
 		self.loop_widget.ui.combobox_item.select(self._item)
+		
+	def _on_cell_changed(self, rownr, colnr):
+		
+		"""
+		desc:
+			Protects the table from having newlines in the cells.
+		"""
+		
+		if rownr == 0:
+			return
+		col = self.qdm.dm.columns[colnr][1]
+		val = self.qdm.dm[col][rownr - 1]
+		if u'\n' not in val:
+			return
+		val = val.replace(u'\n', u'')
+		self.qdm._spreadsheet._setcell(rownr, colnr, val)
+		self.qdm.dm[col][rownr - 1] = val
+		self._apply_table()
 
 	def _apply_table(self):
 
