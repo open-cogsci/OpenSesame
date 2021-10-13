@@ -152,7 +152,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
 			return
 		col = self.qdm.dm.columns[colnr][1]
 		val = self.qdm.dm[col][rownr - 1]
-		if u'\n' not in val:
+		if not isinstance(val, basestring) or u'\n' not in val:
 			return
 		val = val.replace(u'\n', u'')
 		self.qdm._spreadsheet._setcell(rownr, colnr, val)
