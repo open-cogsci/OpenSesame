@@ -397,7 +397,7 @@ class base_extension(base_subcomponent):
 
 		menu_name = u'menu_%s' % menu_text.lower()
 		if not hasattr(self.main_window.ui, menu_name):
-			menu_name = u'menu_tools'
+			menu_name = u'menu_custom_{}'.format(len(self.menubar.actions()))
 			menu = QtWidgets.QMenu(menu_text)
 			self.menubar.addMenu(menu)
 			setattr(self.main_window.ui, menu_name, menu)
