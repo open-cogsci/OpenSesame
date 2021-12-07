@@ -291,6 +291,11 @@ class base_runner(object):
 			self.main_window.extension_manager.fire('run_experiment_canceled')
 			return
 		ret_val = self.execute()
+		# PsychoPy deletes the _ built-in
+		if '_' not in __builtins__:
+			oslogger.warning('re-installing missing gettext built-in')
+			import gettext
+			gettext.NullTranslations().install()
 		self.main_window.set_run_status(u'finished')
 		self.main_window.extension_manager.fire(
 			u'set_workspace_globals',

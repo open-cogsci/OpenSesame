@@ -85,11 +85,6 @@ class inline_script(inline_script_runtime, qtplugin):
 
 		"""See qtitem."""
 
-		# PsychoPy deletes the _ built-in
-		if '_' not in __builtins__:
-			oslogger.warning('re-installing missing gettext built-in')
-			import gettext
-			gettext.NullTranslations().install()
 		from pyqode.core.widgets import SplittableCodeEditTabWidget
 
 		qtplugin.init_edit_widget(self, stretch=False)
