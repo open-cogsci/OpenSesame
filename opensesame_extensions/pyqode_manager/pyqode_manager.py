@@ -255,7 +255,7 @@ class pyqode_manager(base_extension):
 			editor.backend._process.finished.connect(on_finished)
 			self._register_backend_process(editor)
 		except RuntimeError:
-			auto_restart()
+			on_error()
 		oslogger.debug(u'registering {}'.format(editor))
 
 	def event_unregister_editor(self, editor):
