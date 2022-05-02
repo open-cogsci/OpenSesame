@@ -52,7 +52,7 @@ class tree_append_button(base_subcomponent, QtWidgets.QPushButton):
 			last_item = self.tree_overview.itemBelow(last_item)
 		index = self.tree_overview.indexFromItem(last_item)
 		rect = self.tree_overview.visualRect(index)
-		rect.moveTop(rect.top() + 1.75*rect.height())
+		rect.moveTop(int(rect.top() + 1.75*rect.height()))
 		rect.moveLeft(4)
 		geom = self.geometry()
 		geom.moveTopLeft(rect.bottomLeft())

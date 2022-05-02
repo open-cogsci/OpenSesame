@@ -197,7 +197,7 @@ class RichText(Element):
 		rect = t.boundingRect()
 		height = rect.height()
 		width = rect.width()
-		pixmap = QPixmap(width, height)
+		pixmap = QPixmap(int(width), int(height))
 		pixmap.fill(Qt.transparent)
 		painter = QPainter(pixmap)
 		painter.setPen(Qt.red)
