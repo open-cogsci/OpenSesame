@@ -443,7 +443,7 @@ class qtitem(object):
 
 		if self._script_widget is None:
 			self.init_script_widget()
-		width = self.splitter.width() / 2
+		width = self.splitter.width() // 2
 		self.splitter.setSizes([width, width])
 		self.button_view.set_view_icon(u'split')
 
