@@ -4,7 +4,7 @@
 
 OpenSesame is a tool to create experiments for psychology, neuroscience, and experimental economics.
 
-Copyright, 2010-2021, Sebastiaan Mathôt and contributors.
+Copyright, 2010-2022, Sebastiaan Mathôt and contributors.
 
 <http://osdoc.cogsci.nl/>
 
@@ -38,9 +38,12 @@ Each major version of OpenSesame lives in its own branch. The default branch is 
 OpenSesame is a graphical experiment builder. OpenSesame provides an easy to use, point-and-click interface for creating psychological/ neuroscientific experiments.
 
 
-## Citation
+## Citations
 
 Mathôt, S., Schreij, D., & Theeuwes, J. (2012). OpenSesame: An open-source, graphical experiment builder for the social sciences. *Behavior Research Methods*, *44*(2), 314-324. [doi:10.3758/s13428-011-0168-7](http://dx.doi.org/doi:10.3758/s13428-011-0168-7)
+
+Mathôt, S., & March, J. (in press). Conducting linguistic experiments online with OpenSesame and OSWeb. *Language Learning*. 
+<br /><small>[Related preprint (not identical to published manuscript)](https://doi.org/10.31234/osf.io/wnryc)</small>
 
 
 ## License
