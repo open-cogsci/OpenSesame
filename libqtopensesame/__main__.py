@@ -23,9 +23,10 @@ import sys
 import platform
 import multiprocessing
 
-# Appears more stable when running experiments on Linux and Mac OS, where
-# fork is the default multiprocessing method.
-multiprocessing.set_start_method('spawn')
+# Appears more stable when running experiments on Linux, where fork is the 
+# default multiprocessing method.
+if platform.system() == 'Linux':
+	multiprocessing.set_start_method('spawn')
 # On Linux this appears to be buggy
 if platform.system() != 'Linux':
 	os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
