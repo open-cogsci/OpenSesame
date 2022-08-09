@@ -170,15 +170,17 @@ class FallbackCodeEdit(CodeEdit):
 		):
 			self.modes.append(modes.AutoCompleteMode())
 			self.modes.append(modes.CodeCompletionMode())
-			# The AutoIndentMode should catch key presses after the
-			# CodeCompletionMode, otherwise code completions will have an ugly
-			# newline in it. Toggling the state accomplishes this, although
-			# it's an ugly hack.
-			if 'AutoIndentMode' in self.modes.keys():
-				auto_indent_mode = self.modes.get('AutoIndentMode')
-				if auto_indent_mode.enabled:
-					auto_indent_mode.enabled = False
-					auto_indent_mode.enabled = True
+			# The AutoIndentMode and SmartBackSpaceMode should catch key
+			# presses after the # CodeCompletionMode, otherwise code
+			# completions will have an ugly # newline in it. Toggling the
+			# state accomplishes this, although # it's an ugly hack.
+			for mode_name in ['AutoIndentMode', 'SmartBackSpaceMode']:
+				if mode_name in self.modes.keys():
+					mode = self.modes.get(mode_name)
+					oslogger.debug('toggling mode {}'.format(mode_name))
+					if mode.enabled:
+						mode.enabled = False
+						mode.enabled = True
 		self._set_comment_mode()
 
 	def _enable_auto_complete_for_quotes(self):
