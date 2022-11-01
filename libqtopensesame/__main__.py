@@ -23,16 +23,12 @@ import sys
 import platform
 import multiprocessing
 
-# Appears more stable when running experiments on Linux, where fork is the 
-# default multiprocessing method.
 if platform.system() == 'Linux':
+	# Appears more stable when running experiments on Linux, where fork is the 
+	# default multiprocessing method.
 	multiprocessing.set_start_method('spawn')
-# On Linux this appears to be buggy
-if platform.system() != 'Linux':
-	os.environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
-# solves a library conflict for Linux with Nvidia drivers
-# See https://forum.qt.io/topic/81328/ubuntu-qopenglshaderprogram-shader-program-is-not-linked/2
-else:
+	# solves a library conflict for Linux with Nvidia drivers
+	# See https://forum.qt.io/topic/81328/ubuntu-qopenglshaderprogram-shader-program-is-not-linked/2
 	try:
 		from OpenGL import GL
 	except ImportError:  # Rapunzel doesn't need OpenGL
@@ -175,6 +171,7 @@ def opensesame():
 	sip.setapi('QVariant', 2)
 	# Do the basic window initialization
 	from qtpy.QtWidgets import QApplication
+	from qtpy.QtCore import Qt
 	# From Qt 5.6 on, QtWebEngine is the default way to render web pages
 	# QtWebEngineWidgets must be imported before a QCoreApplication instance is
 	# created.
@@ -182,13 +179,17 @@ def opensesame():
 		from qtpy import QtWebEngineWidgets
 	except ImportError:
 		pass
-	if platform.system() != 'Linux':
-		# Enable High DPI pixmaps with PyQt5
-		if hasattr(qtpy.QtCore.Qt, 'AA_UseHighDpiPixmaps'):
-			QApplication.setAttribute(qtpy.QtCore.Qt.AA_UseHighDpiPixmaps)
-		# Enable scaling for High DPI displays with PyQt5
-		if hasattr(qtpy.QtCore.Qt, 'AA_EnableHighDpiScaling'):
-			QApplication.setAttribute(qtpy.QtCore.Qt.AA_EnableHighDpiScaling)
+	# Enable High DPI pixmaps with PyQt5
+	if hasattr(Qt, 'AA_UseHighDpiPixmaps'):
+		QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
+	# Enable scaling for High DPI displays with PyQt5
+	if hasattr(Qt, 'AA_EnableHighDpiScaling'):
+		QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
+	# Enable proportional scaling so that things don't look disproportionately
+	# large on Windows
+	if hasattr(Qt, 'HighDpiScaleFactorRoundingPolicy'):
+		QApplication.setHighDpiScaleFactorRoundingPolicy(
+			Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
 	from libqtopensesame.qtopensesame import qtopensesame
 	app = QApplication(sys.argv)
 	opensesame = qtopensesame(app)
@@ -198,12 +199,8 @@ def opensesame():
 	# instantiated here and not in the set_locale() function, otherwise the
 	# locale is ignored.
 	from qtpy.QtCore import QTranslator
-	opensesame.set_locale([
-		QTranslator(),
-		QTranslator(),
-		QTranslator(),
-		QTranslator()
-	])
+	opensesame.set_locale([QTranslator(), QTranslator(), QTranslator(),
+		QTranslator()])
 	# Now that the window is shown, load the remaining modules and resume the
 	# GUI initialization.
 	opensesame.resume_init()
