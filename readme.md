@@ -10,6 +10,12 @@ Copyright, 2010-2022, Sebastiaan Mathôt and contributors.
 
 [![Build Status](https://travis-ci.org/smathot/OpenSesame.svg?branch=ising)](https://travis-ci.org/smathot/OpenSesame)
 
+
+## About
+
+OpenSesame is a graphical experiment builder. OpenSesame provides an easy to use, point-and-click interface for creating psychological/ neuroscientific experiments.
+
+
 ## Features
 
 - A user-friendly interface — a modern, professional, and easy-to-use graphical interface
@@ -19,6 +25,20 @@ Copyright, 2010-2022, Sebastiaan Mathôt and contributors.
 - Use your devices — use your eye tracker, button box, EEG equipment, and more.
 - Free — released under the GPL3
 - Crossplatform — Windows, Mac OS, and Linux
+
+
+## Related repositories
+
+In addition to this repository, OpenSesame relies on a number repositories that are all hosted by the [Cogsci.nl](https://github.com/open-cogsci/) organization on GitHub. The most important of these are:
+
+- [rapunzel](https://github.com/open-cogsci/rapunzel) is a set of extensions that turns OpenSesame into a code editor
+- [osweb](https://github.com/open-cogsci/osweb) implements OSWeb, the online OpenSesame runtime
+- [opensesame-extension-osweb](https://github.com/open-cogsci/opensesame-extension-osweb) embeds OSWeb into the OpenSesame user interface
+- [pyqode.core](https://github.com/open-cogsci/pyqode.core) implements generic code-editor widgets
+- [pyqode.python](https://github.com/open-cogsci/pyqode.python) implements Python-specific code-editor widgets
+- [datamatrix](https://github.com/open-cogsci/python-datamatrix) implements a tabular data structure that is used by the `loop` item
+- [qdatamatrix](https://github.com/open-cogsci/python-qdatamatrix) implements a Qt widget for editing datamatrix objects
+- [pseudorandom](https://github.com/open-cogsci/python-pseudorandom) implements pseudorandomization/ randomization constraints
 
 
 ## Branches
@@ -33,17 +53,10 @@ Each major version of OpenSesame lives in its own branch. The default branch is 
 - `loewenfeld` - 3.3
 
 
-## About
-
-OpenSesame is a graphical experiment builder. OpenSesame provides an easy to use, point-and-click interface for creating psychological/ neuroscientific experiments.
-
-
 ## Citations
 
-Mathôt, S., Schreij, D., & Theeuwes, J. (2012). OpenSesame: An open-source, graphical experiment builder for the social sciences. *Behavior Research Methods*, *44*(2), 314-324. [doi:10.3758/s13428-011-0168-7](http://dx.doi.org/doi:10.3758/s13428-011-0168-7)
-
-Mathôt, S., & March, J. (in press). Conducting linguistic experiments online with OpenSesame and OSWeb. *Language Learning*. 
-<br /><small>[Related preprint (not identical to published manuscript)](https://doi.org/10.31234/osf.io/wnryc)</small>
+- Mathôt, S., Schreij, D., & Theeuwes, J. (2012). OpenSesame: An open-source, graphical experiment builder for the social sciences. *Behavior Research Methods*, *44*(2), 314-324. [doi:10.3758/s13428-011-0168-7](https://doi.org/doi:10.3758/s13428-011-0168-7)
+- Mathôt, S., & March, J. (2022). Conducting linguistic experiments online with OpenSesame and OSWeb. *Language Learning*. [doi:10.1111/lang.12509](https://doi.org/10.1111/lang.12509)
 
 
 ## License
