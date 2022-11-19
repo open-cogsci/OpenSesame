@@ -149,6 +149,7 @@ class experiment(experiment_runtime):
 		self.overview_area.insertTopLevelItem(0, self.treeitem_general)
 		self.overview_area.insertTopLevelItem(1, self.treeitem_unused)
 		self.overview_area.set_fold_state(fold_state)
+		self.overview_area.scrollToTop()
 		if select is not None:
 			self.ui.itemtree.select_item(select)
 
