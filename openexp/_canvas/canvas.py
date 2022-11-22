@@ -128,7 +128,7 @@ class Canvas(Backend):
 		Style keywords only affect the current drawing operation (except when
 		passed to `Canvas()` while creating the `Canvas`). To change the style
 		for all subsequent drawing operations, set style properties, such as
-		[canvas.color], directly:
+		`canvas.color`, directly:
 
 		~~~ .python
 		# Draw a red cross with a 2px penwidth
@@ -211,9 +211,10 @@ class Canvas(Backend):
 		individually, without having to redraw the entire `Canvas`.
 
 		For example, the following will first add a red `Line` element to a
-		`Canvas` and show it, and then change the color of the line to green and
-		show it again. The name of the element (`my_line`) is used to refer to
-		the element later on to change it.
+		`Canvas` and show it, then change the color of the line to green and
+		show it again, and then finally delete the line and show the canvas
+		again (which is now blank_. The name of the element (`my_line`) is used
+		to refer to the element for all the operations.
 
 		~~~ .python
 		my_canvas = Canvas()
@@ -221,6 +222,9 @@ class Canvas(Backend):
 		my_canvas.show()
 		clock.sleep(1000)
 		my_canvas['my_line'].color = 'green'
+		my_canvas.show()
+		clock.sleep(1000)
+		del my_canvas['my_line']
 		my_canvas.show()
 		~~~
 
