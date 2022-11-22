@@ -31,6 +31,7 @@ import libopensesame.misc
 import os
 import sys
 import warnings
+import platform
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'qtopensesame', category=u'core')
 oslogger.start(u'gui')
@@ -460,6 +461,11 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 					oslogger.debug(u"missing recent file '%s'" % path)
 		self.ui.action_enable_auto_response.setChecked(
 			self.experiment.auto_response)
+		# On Mac OS we always enable one-tab mode to deal with an issue in
+		# Qt that makes the tabbar grow too large.
+		if platform.system() == 'Darwin':
+			cfg.onetabmode = True
+			self.ui.action_onetabmode.setVisible(False)
 		self.ui.action_onetabmode.setChecked(cfg.onetabmode)
 		self.ui.tabwidget.toggle_onetabmode()
 		if cfg.toolbar_text:
