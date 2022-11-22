@@ -166,6 +166,11 @@ class Legacy(Canvas, LegacyCoordinates):
 	def _text_size(self, text):
 
 		return self._font.size(text)
+		
+	def __delitem__(self, key):
+
+		del self._elements[key]
+		self.redraw()
 
 	@staticmethod
 	def init_display(experiment):
