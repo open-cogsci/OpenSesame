@@ -134,8 +134,9 @@ class Keyboard(Backend):
 
 		keyword-dict:
 			resp_args:
-				Optional [response keywords] (`timeout` and `keylist`) that will
-				be used as the default for this `Keyboard` object.
+				Optional [response keywords](#response-keywords) (`timeout`
+				and `keylist`) that will be used as the default for this
+				`Keyboard` object.
 
 		example: |
 			my_keyboard = Keyboard(keylist=['z', 'm'], timeout=2000)
@@ -174,9 +175,10 @@ class Keyboard(Backend):
 
 		keyword-dict:
 			resp_args:
-				Optional [response keywords] (`timeout` and `keylist`) that will
-				be used for this call to [keyboard.get_key]. This does not
-				affect subsequent operations.
+				Optional [response keywords](#response-keywords) (`timeout
+				and `keylist`) that will be used for this call to
+				`Keyboard.get_key()`. This does not affect subsequent
+				operations.
 
 		returns:
 			desc:		A `(key, timestamp)` tuple. `key` is None if a timeout
@@ -208,9 +210,10 @@ class Keyboard(Backend):
 
 		keyword-dict:
 			resp_args:
-				Optional [response keywords] (`timeout` and `keylist`) that will
-				be used for this call to [keyboard.get_key_release]. This does
-				not affect subsequent operations.
+				Optional [response keywords](#response-keywords) (`timeout`
+				and `keylist`) that will be used for this call to 
+				`Keyboard.get_key_release()`. This does not affect subsequent
+				operations.
 
 		returns:
 			desc:		A `(key, timestamp)` tuple. `key` is None if a timeout
@@ -308,7 +311,7 @@ class Keyboard(Backend):
 			Shows or hides a virtual keyboard if this is supported by the
 			back-end. This function is only necessary if you want the virtual
 			keyboard to remain visible while collecting multicharacter
-			responses. Otherwise, [keyboard.get_key] will implicitly shown and
+			responses. Otherwise, `Keyboard.get_key()` will implicitly show and
 			hide the keyboard for a single-character response.
 
 			This function does nothing for back-ends that do not support virtual

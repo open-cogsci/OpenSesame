@@ -32,7 +32,7 @@ class file_pool_store(object):
 	desc: |
 		The `pool` object provides dict-like access to the file pool. When
 		checking whether a file is in the file pool, several folders are
-		searched. For more details, see [folders].
+		searched. For more details, see `pool.folders()`.
 
 		A `pool` object is created automatically when the experiment starts.
 
@@ -345,10 +345,10 @@ class file_pool_store(object):
 			Gives a list of all folders that are searched when retrieving the
 			full path to a file. These are (in order):
 
-			1. The file pool folder itself, as returned by [folder].
+			1. The file pool folder itself, as returned by `pool.folder()`.
 			2. The folder of the current experiment (if it exists)
-			3. The fallback pool folder, as returned by [fallback_folder]
-			   (if it exists)
+			3. The fallback pool folder, as returned by
+			   `pool.fallback_folder()` (if it exists)
 
 		keywords:
 			include_fallback_folder:

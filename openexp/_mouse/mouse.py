@@ -101,7 +101,7 @@ class Mouse(Backend):
 		  to `None` accept all buttons.
 		- `visible` indicates whether the mouse cursor becomes visible when a
 		  click is collected (`True` or `False`). To immediately change cursor
-		  visibility, use [mouse.show_cursor].
+		  visibility, use `Mouse.show_cursor()`.
 
 		~~~ .python
 		# Get a left or right button press with a timeout of 3000 ms
@@ -110,7 +110,7 @@ class Mouse(Backend):
 		~~~
 
 		Response keywords only affect the current operation (except when passed
-		to [mouse.\_\_init\_\_][__init__]). To change the behavior for all
+		to `Mouse()` when creating the object). To change the behavior for all
 		subsequent operations, set the response properties directly:
 
 		~~~ .python
@@ -122,7 +122,7 @@ class Mouse(Backend):
 		button2, time2 = my_mouse.get_click()
 		~~~
 
-		Or pass the response keywords to [mouse.\_\_init\_\_][__init__]:
+		Or pass the response keywords to `Mouse()` when creating the object:
 
 		~~~ .python
 		# Get two left or right presses with a 5000 ms timeout
@@ -149,8 +149,8 @@ class Mouse(Backend):
 
 		keyword-dict:
 			resp_args:
-				Optional [response keywords] that will be used as the default
-				for this `Mouse` object.
+				Optional [response keywords](#response-keywords) that will be
+				used as the default for this `Mouse` object.
 
 		example: |
 			my_mouse = Mouse(buttonlist=[1, 2], timeout=2000)
@@ -238,8 +238,9 @@ class Mouse(Backend):
 
 		keyword-dict:
 			resp_args:
-				Optional [response keywords] that will be used for this call to
-				[mouse.get_click]. This does not affect subsequent operations.
+				Optional [response keywords](#response-keywords) that will be
+				used for this call to `Mouse.get_click()`. This does not affect
+				subsequent operations.
 
 		returns:
 			desc:			A (button, position, timestamp) tuple. The button
@@ -270,9 +271,9 @@ class Mouse(Backend):
 
 		keyword-dict:
 			resp_args:
-				Optional [response keywords] that will be used for this call to
-				[mouse.get_click_release]. This does not affect subsequent
-				operations.
+				Optional [response keywords](#response-keywords) that will be
+				used for this call to `Mouse.get_click_release()`. This does
+				not affect subsequent operations.
 
 		returns:
 			desc:			A (button, position, timestamp) tuple. The button

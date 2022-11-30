@@ -406,8 +406,8 @@ class var_store(object):
 
 		"""
 		desc:
-			Returns a list of (variable_name, value) tuples. See [vars] for a
-			note about the non-exhaustiveness of this function.
+			Returns a list of (variable_name, value) tuples. See `var.vars()`
+			for a note about the non-exhaustiveness of this function.
 
 		returns:
 			desc:	A list of (variable_name, value) tuples.

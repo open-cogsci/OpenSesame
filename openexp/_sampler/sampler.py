@@ -76,15 +76,15 @@ class Sampler(Backend):
 
 		### Backwards incompatible changes from 2.9 to 3.0
 
-		The following are now properties, as described under
-		[playback keywords]:
+		The following are now properties (and no longer functions), as
+		described under [playback keywords](#playback-keywords):
 
-		- [sampler.block]
-		- [sampler.duration]
-		- [sampler.fade_in]
-		- [sampler.pan]
-		- [sampler.pitch]
-		- [sampler.volume]
+		- `sampler.block`
+		- `sampler.duration`
+		- `sampler.fade_in`
+		- `sampler.pan`
+		- `sampler.pitch`
+		- `sampler.volume`
 
 		Therefore, the following will no longer work:
 
@@ -124,8 +124,8 @@ class Sampler(Backend):
 		~~~
 
 		Playback keywords only affect the current operation (except when passed
-		to [sampler.\_\_init\_\_][__init__]). To change the behavior for all
-		subsequent operations, set the playback properties directly:
+		to `Sampler()` when creating the object). To change the behavior for
+		all subsequent operations, set the playback properties directly:
 
 		~~~ .python
 		src = pool['bark.ogg']
@@ -136,7 +136,7 @@ class Sampler(Backend):
 		my_sampler.play()
 		~~~
 
-		Or pass the playback keywords to [sampler.\_\_init\_\_][__init__]:
+		Or pass the playback keywords to `Sampler()` when creating the object:
 
 		~~~ .python
 		src = pool['bark.ogg']
@@ -166,8 +166,8 @@ class Sampler(Backend):
 
 		keyword-dict:
 			playback_args:
-				Optional [playback keywords] that will be used as the default
-				for this SAMPLER object.
+				Optional [playback keywords](#playback-keywords) that will be
+				used as the default for this SAMPLER object.
 
 		example: |
 			src = pool[u'my_sound.ogg']
@@ -211,8 +211,9 @@ class Sampler(Backend):
 
 		keyword-dict:
 			playback_args:
-				Optional [playback keywords] that will be used for this call to
-				[sampler.play]. This does not affect subsequent operations.
+				Optional [playback keywords](#playback-keywords) that will be
+				used for this call to `Sampler.play()`. This does not affect
+				subsequent operations.
 
 		example: |
 			src = pool[u'my_sound.ogg']
