@@ -163,6 +163,11 @@ class ExperimentProcess(multiprocessing.Process):
 			else:
 				e_run = e
 		exp.transmit_workspace()
+		# Communicate the exception. We do this before calling exp.end() 
+		# because Python may crash in this step and we need to send the 
+		# exception before that happens.
+		if e_run is not None:
+			self.output.put(e_run)
 		# End the experiment and catch any Exceptions. These exceptions are just
 		# printed out and not explicitly passed on to the user, because they are
 		# less important than the run-related exceptions.
@@ -170,9 +175,8 @@ class ExperimentProcess(multiprocessing.Process):
 			exp.end()
 		except Exception as e_exp:
 			oslogger.error(u'An Exception occurred during exp.end(): %s' % e_exp)
-		# Communicate the exception and exit with error
+		# Exit with error status if an exception occurred.
 		if e_run is not None:
-			self.output.put(e_run)
 			sys.exit(1)
 		# Exit with success
 		sys.exit(0)
