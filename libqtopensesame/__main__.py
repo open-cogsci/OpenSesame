@@ -24,9 +24,13 @@ import platform
 import multiprocessing
 
 if platform.system() == 'Linux':
-	# Appears more stable when running experiments on Linux, where fork is the 
-	# default multiprocessing method.
-	multiprocessing.set_start_method('spawn')
+	# The fork multiprocessing method, which is the default on Linux, seems
+	# unstable on some systems. Therefore, we use spawn as the default. 
+	# However, setting the OPENSESAME_MULTIPROCESSING_METHOD environment 
+	# variable allows users to customize this. See also:
+	# - <https://github.com/open-cogsci/OpenSesame/issues/782>
+	multiprocessing.set_start_method(
+		os.environ.get('OPENSESAME_MULTIPROCESSING_METHOD', 'spawn'))
 	# solves a library conflict for Linux with Nvidia drivers
 	# See https://forum.qt.io/topic/81328/ubuntu-qopenglshaderprogram-shader-program-is-not-linked/2
 	try:
