@@ -82,9 +82,16 @@ class qtitem_store(item_store):
 		"""
 
 		self.extension_manager.fire(u'prepare_delete_item', name=name)
+		# Temporarily disable build_item_tree to avoid recursively calling it,
+		# which can take a long time when experiments are big. This is an ugly
+		# hack that doesn't fix the recursion issue as such.
+		fnc = self.experiment.build_item_tree
+		self.experiment.build_item_tree = lambda: None
 		del self.__items__[name]
 		for _name in self:
 			self[_name].remove_child_item(name, index=-1)
+		self.experiment.build_item_tree = fnc
+		self.experiment.build_item_tree()
 		self.extension_manager.fire(u'delete_item', name=name)
 
 	def new(
