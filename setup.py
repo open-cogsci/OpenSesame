@@ -212,7 +212,7 @@ setup(
 	data_files=data_files(),
 	install_requires=[
 		'pyqode3.python',
-		'python-qdatamatrix',
+		'qdatamatrix',
 		'python-pseudorandom',
 		'python-qnotifications',
 		'python-fileinspector',
