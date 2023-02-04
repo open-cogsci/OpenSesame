@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -22,8 +22,8 @@ from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'template', category=u'core')
 
 templates = [
-	(u'templates/default.osexp', _(u'Default template')),
-	(u'templates/extended_template.osexp', _(u'Extended template')),
-	(u'templates/form_template.osexp', _(u'Questionnaire template')),
-	(u'templates/pygaze_template.osexp', _(u'Eye-tracking template')),
+    (u'templates/default.osexp', _(u'Default template')),
+    (u'templates/extended_template.osexp', _(u'Extended template')),
+    (u'templates/form_template.osexp', _(u'Questionnaire template')),
+    (u'templates/pygaze_template.osexp', _(u'Eye-tracking template')),
 ]

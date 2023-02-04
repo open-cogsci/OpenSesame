@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,37 +24,35 @@ from openexp.canvas_elements import FixDot
 
 class fixdot(base_element):
 
-	"""
-	desc:
-		A fixation-dot element for the sketchpad.
-	"""
+    """
+    desc:
+            A fixation-dot element for the sketchpad.
+    """
 
-	def __init__(self, sketchpad, string):
+    def __init__(self, sketchpad, string):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                sketchpad:		A sketchpad object.
+                string:			A definition string.
+        """
 
-		arguments:
-			sketchpad:		A sketchpad object.
-			string:			A definition string.
-		"""
+        defaults = [
+            (u'x', None),
+            (u'y', None),
+            (u'color', sketchpad.var.get(u'foreground')),
+            (u'style', u'default'),
+        ]
+        super(fixdot, self).__init__(sketchpad, string, defaults=defaults)
 
-		defaults = [
-			(u'x'		, None),
-			(u'y'		, None),
-			(u'color'	, sketchpad.var.get(u'foreground')),
-			(u'style'	, u'default'),
-			]
-		super(fixdot, self).__init__(sketchpad, string, defaults=defaults)
+    def draw(self):
+        """
+        desc:
+                Draws the element to the canvas of the sketchpad.
+        """
 
-	def draw(self):
-
-		"""
-		desc:
-			Draws the element to the canvas of the sketchpad.
-		"""
-
-		properties = self.eval_properties()
-		return self.canvas.fixdot(properties[u'x'], properties[u'y'],
-			style=properties[u'style'], color=properties[u'color'])
+        properties = self.eval_properties()
+        return self.canvas.fixdot(properties[u'x'], properties[u'y'],
+                                  style=properties[u'style'], color=properties[u'color'])

@@ -23,8 +23,8 @@ from openexp._canvas._element.element import Element
 
 class Text(Element):
 
-	def __init__(self, canvas, text, x, y, **properties):
+    def __init__(self, canvas, text, x, y, **properties):
 
-		properties = properties.copy()
-		properties.update({ 'text' : text, 'x' : x, 'y' : y })
-		Element.__init__(self, canvas, **properties)
+        properties = properties.copy()
+        properties.update({'text': text, 'x': x, 'y': y})
+        Element.__init__(self, canvas, **properties)

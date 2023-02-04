@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -31,99 +31,98 @@ import time
 
 class external_runner(base_runner):
 
-	"""Runs an experiment using opensesamerun."""
+    """Runs an experiment using opensesamerun."""
 
-	def execute(self):
+    def execute(self):
+        """See base_runner.execute()."""
 
-		"""See base_runner.execute()."""
+        # Temporary file for the standard output and experiment
+        self.stdout = tempfile.mktemp(suffix=u".stdout")
+        if self.experiment.experiment_path is None:
+            return osexception(
+                u'Please save your experiment first, before running it using '
+                u'opensesamerun'
+            )
+        self.path = os.path.join(self.experiment.experiment_path,
+                                 '.opensesamerun-tmp.osexp')
+        self.experiment.save(self.path, True)
+        oslogger.debug(u"experiment saved as '%s'" % self.path)
+        # Determine the name of the executable. The executable depends on the
+        # platform, package, and Python version.\
+        if cfg.opensesamerun_exec == u'':
+            # Is there a direct executable?
+            if os.path.exists(u'opensesamerun.exe'):
+                self.cmd = [u'opensesamerun.exe']
+            elif os.path.exists(u'opensesamerun.bat'):
+                self.cmd = [u'opensesamerun.bat']
+            elif os.path.exists(u'opensesamerun'):
+                self.cmd = [u'opensesamerun']
+            # Or is there a Python interpreter and a script with a known name?
+            elif (
+                    os.path.exists(u'python.exe')
+                    and os.path.exists(os.path.join(u'Scripts', u'opensesamerun'))
+            ):
+                self.cmd = [
+                    u'python.exe',
+                    os.path.join(u'Scripts', u'opensesamerun')
+                ]
+            elif (
+                    os.path.exists(u'python.exe')
+                    and os.path.exists(
+                        os.path.join(u'Scripts', u'opensesamerun-script.py')
+                    )
+            ):
+                self.cmd = [
+                    u'python.exe',
+                    os.path.join(u'Scripts', u'opensesamerun-script.py')
+                ]
+            else:
+                return osexception(
+                    u'Failed to locate opensesamerun. Try selecting a '
+                    u'different runner under Preferences.'
+                )
+        else:
+            self.cmd = cfg.opensesamerun_exec.split()
+        self.cmd += [
+            self.path,
+            u"--logfile=%s" % self.experiment.logfile,
+            u"--subject=%s" % self.experiment.var.subject_nr
+        ]
+        if oslogger.debug_mode:
+            self.cmd.append(u"--debug")
+        if self.experiment.var.fullscreen == u'yes':
+            self.cmd.append(u"--fullscreen")
+        oslogger.debug(u"spawning opensesamerun as a separate process")
+        # Call opensesamerun and wait for the process to complete
+        try:
+            p = subprocess.Popen(self.cmd, stdout=open(self.stdout, u"w"))
+        except Exception as e:
+            try:
+                os.remove(self.path)
+                os.remove(self.stdout)
+            except:
+                pass
+            return osexception(e)
+        # Wait for OpenSesame run to complete, process events in the meantime,
+        # to make sure that the new process is shown (otherwise it will crash
+        # on Windows).
+        retcode = None
+        while retcode is None:
+            retcode = p.poll()
+            QtWidgets.QApplication.processEvents()
+            time.sleep(1)
+        oslogger.debug(u"opensesamerun returned %d" % retcode)
+        print()
+        print(open(self.stdout, u"r").read())
+        print()
+        # Clean up the temporary file
+        try:
+            os.remove(self.path)
+            os.remove(self.stdout)
+        except:
+            pass
+        return None
 
-		# Temporary file for the standard output and experiment
-		self.stdout = tempfile.mktemp(suffix=u".stdout")
-		if self.experiment.experiment_path is None:
-			return osexception(
-				u'Please save your experiment first, before running it using '
-				u'opensesamerun'
-			)
-		self.path = os.path.join(self.experiment.experiment_path,
-			'.opensesamerun-tmp.osexp')
-		self.experiment.save(self.path, True)
-		oslogger.debug(u"experiment saved as '%s'" % self.path)
-		# Determine the name of the executable. The executable depends on the
-		# platform, package, and Python version.\
-		if cfg.opensesamerun_exec == u'':
-			# Is there a direct executable?
-			if os.path.exists(u'opensesamerun.exe'):
-				self.cmd = [u'opensesamerun.exe']
-			elif os.path.exists(u'opensesamerun.bat'):
-				self.cmd = [u'opensesamerun.bat']
-			elif os.path.exists(u'opensesamerun'):
-				self.cmd = [u'opensesamerun']
-			# Or is there a Python interpreter and a script with a known name?
-			elif (
-				os.path.exists(u'python.exe')
-				and os.path.exists(os.path.join(u'Scripts', u'opensesamerun'))
-			):
-				self.cmd = [
-					u'python.exe',
-					os.path.join(u'Scripts', u'opensesamerun')
-				]
-			elif (
-				os.path.exists(u'python.exe')
-				and os.path.exists(
-					os.path.join(u'Scripts', u'opensesamerun-script.py')
-				)
-			):
-				self.cmd = [
-					u'python.exe',
-					os.path.join(u'Scripts', u'opensesamerun-script.py')
-				]
-			else:
-				return osexception(
-					u'Failed to locate opensesamerun. Try selecting a '
-					u'different runner under Preferences.'
-				)
-		else:
-			self.cmd = cfg.opensesamerun_exec.split()
-		self.cmd += [
-			self.path,
-			u"--logfile=%s" % self.experiment.logfile,
-			u"--subject=%s" % self.experiment.var.subject_nr
-		]
-		if oslogger.debug_mode:
-			self.cmd.append(u"--debug")
-		if self.experiment.var.fullscreen == u'yes':
-			self.cmd.append(u"--fullscreen")
-		oslogger.debug(u"spawning opensesamerun as a separate process")
-		# Call opensesamerun and wait for the process to complete
-		try:
-			p = subprocess.Popen(self.cmd, stdout=open(self.stdout, u"w"))
-		except Exception as e:
-			try:
-				os.remove(self.path)
-				os.remove(self.stdout)
-			except:
-				pass
-			return osexception(e)
-		# Wait for OpenSesame run to complete, process events in the meantime,
-		# to make sure that the new process is shown (otherwise it will crash
-		# on Windows).
-		retcode = None
-		while retcode is None:
-			retcode = p.poll()
-			QtWidgets.QApplication.processEvents()
-			time.sleep(1)
-		oslogger.debug(u"opensesamerun returned %d" % retcode)
-		print()
-		print(open(self.stdout, u"r").read())
-		print()
-		# Clean up the temporary file
-		try:
-			os.remove(self.path)
-			os.remove(self.stdout)
-		except:
-			pass
-		return None
+    def workspace_globals(self):
 
-	def workspace_globals(self):
-
-		return {'logfile': self.experiment.logfile}
+        return {'logfile': self.experiment.logfile}

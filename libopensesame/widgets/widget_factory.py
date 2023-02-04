@@ -23,25 +23,44 @@ from openexp import backend
 
 class WidgetFactory(object):
 
-	def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
 
-		self._args = args
-		self._kwargs = kwargs
+        self._args = args
+        self._kwargs = kwargs
 
-	def construct(self, form):
+    def construct(self, form):
 
-		mod = __import__(
-			'libopensesame.widgets._%s' % self.mod,
-			fromlist=['dummy']
-		)
-		cls = getattr(mod, self.__class__.__name__)
-		return cls(form, *self._args, **self._kwargs)
+        mod = __import__(
+            'libopensesame.widgets._%s' % self.mod,
+            fromlist=['dummy']
+        )
+        cls = getattr(mod, self.__class__.__name__)
+        return cls(form, *self._args, **self._kwargs)
 
 
-class Label(WidgetFactory): mod = 'label'
-class Button(WidgetFactory): mod = 'button'
-class ImageButton(WidgetFactory): mod = 'image_button'
-class ImageWidget(WidgetFactory): mod = 'image'
-class RatingScale(WidgetFactory): mod = 'rating_scale'
-class TextInput(WidgetFactory): mod = 'text_input'
-class Checkbox(WidgetFactory): mod = 'checkbox'
+class Label(WidgetFactory):
+    mod = 'label'
+
+
+class Button(WidgetFactory):
+    mod = 'button'
+
+
+class ImageButton(WidgetFactory):
+    mod = 'image_button'
+
+
+class ImageWidget(WidgetFactory):
+    mod = 'image'
+
+
+class RatingScale(WidgetFactory):
+    mod = 'rating_scale'
+
+
+class TextInput(WidgetFactory):
+    mod = 'text_input'
+
+
+class Checkbox(WidgetFactory):
+    mod = 'checkbox'

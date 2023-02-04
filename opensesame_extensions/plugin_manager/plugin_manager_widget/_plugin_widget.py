@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -22,79 +22,77 @@ from libopensesame import plugins
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.base_widget import base_widget
 try:
-	from qtpy.QtCore import QPyNullVariant
+    from qtpy.QtCore import QPyNullVariant
 except ImportError:
-	QPyNullVariant = type(None)
+    QPyNullVariant = type(None)
+
 
 class plugin_widget(base_widget):
 
-	"""
-	desc:
-		A widget for a single plugin.
-	"""
+    """
+    desc:
+            A widget for a single plugin.
+    """
 
-	def __init__(self, plugin, main_window):
+    def __init__(self, plugin, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                plugin:			The name of the plugin.
+                main_window:	The main-window object.
+        """
 
-		arguments:
-			plugin:			The name of the plugin.
-			main_window:	The main-window object.
-		"""
+        super(plugin_widget, self).__init__(main_window,
+                                            ui=u'extensions.plugin_manager.plugin')
+        self.plugin = plugin
+        self.info = plugins.plugin_properties(plugin)
+        self.ui.label_name.setText(plugin)
+        self.ui.label_folder.setText(self.info[u'plugin_folder'])
+        if u'description' in self.info:
+            self.ui.label_description.setText(safe_decode(
+                self.info[u'description']))
+        if u'author' in self.info:
+            self.ui.label_author.setText(safe_decode(self.info[u'author']))
+        if u'version' in self.info:
+            self.ui.label_version.setText(safe_decode(self.info[u'version']))
+        if u'url' in self.info:
+            self.ui.label_url.setText(safe_decode(self.info[u'url']))
+        if u'startup_time' in self.info:
+            self.ui.label_startup_time.setText(
+                u'%.4f s' % self.info[u'startup_time']
+            )
+        self.ui.checkbox_enable.setChecked(self.is_enabled())
+        self.ui.checkbox_enable.clicked.connect(self.toggle)
 
-		super(plugin_widget, self).__init__(main_window,
-			ui=u'extensions.plugin_manager.plugin')
-		self.plugin = plugin
-		self.info = plugins.plugin_properties(plugin)
-		self.ui.label_name.setText(plugin)
-		self.ui.label_folder.setText(self.info[u'plugin_folder'])
-		if u'description' in self.info:
-			self.ui.label_description.setText(safe_decode(
-				self.info[u'description']))
-		if u'author' in self.info:
-			self.ui.label_author.setText(safe_decode(self.info[u'author']))
-		if u'version' in self.info:
-			self.ui.label_version.setText(safe_decode(self.info[u'version']))
-		if u'url' in self.info:
-			self.ui.label_url.setText(safe_decode(self.info[u'url']))
-		if u'startup_time' in self.info:
-			self.ui.label_startup_time.setText(
-				u'%.4f s' % self.info[u'startup_time']
-			)
-		self.ui.checkbox_enable.setChecked(self.is_enabled())
-		self.ui.checkbox_enable.clicked.connect(self.toggle)
+    def is_enabled(self):
+        """
+        returns:
+                True if the plug-in is enabled, False otherwise.
+        """
 
-	def is_enabled(self):
+        cfg_var = u'disabled_%s' % self.info[u'type']
+        # On Mac (at least) cfg['disabled_plugins'] will return a QPyNullVariant type
+        # when the disabled plugin list is empty. the 'in' operator is not allowed on
+        # this datatype. It is reasonable to assume that the plugin is not disabled if
+        # the disabled list is empty and thus a QPyNullVariant.
+        if isinstance(cfg[cfg_var], QPyNullVariant):
+            return True
+        return self.plugin not in cfg[cfg_var]
 
-		"""
-		returns:
-			True if the plug-in is enabled, False otherwise.
-		"""
+    def toggle(self):
+        """
+        desc:
+                Toggles the enabled status of the plugin.
+        """
 
-		cfg_var = u'disabled_%s' % self.info[u'type']
-		# On Mac (at least) cfg['disabled_plugins'] will return a QPyNullVariant type
-		# when the disabled plugin list is empty. the 'in' operator is not allowed on
-		# this datatype. It is reasonable to assume that the plugin is not disabled if
-		# the disabled list is empty and thus a QPyNullVariant.
-		if isinstance(cfg[cfg_var], QPyNullVariant):
-			return True
-		return self.plugin not in cfg[cfg_var]
-
-	def toggle(self):
-
-		"""
-		desc:
-			Toggles the enabled status of the plugin.
-		"""
-
-		cfg_var = u'disabled_%s' % self.info[u'type']
-		disabled_plugins = cfg[cfg_var].split(u';')
-		if self.ui.checkbox_enable.isChecked():
-			if self.plugin in disabled_plugins:
-				disabled_plugins.remove(self.plugin)
-		else:
-			if self.plugin not in disabled_plugins:
-				disabled_plugins.append(self.plugin)
-		cfg[cfg_var] = u';'.join(disabled_plugins)
+        cfg_var = u'disabled_%s' % self.info[u'type']
+        disabled_plugins = cfg[cfg_var].split(u';')
+        if self.ui.checkbox_enable.isChecked():
+            if self.plugin in disabled_plugins:
+                disabled_plugins.remove(self.plugin)
+        else:
+            if self.plugin not in disabled_plugins:
+                disabled_plugins.append(self.plugin)
+        cfg[cfg_var] = u';'.join(disabled_plugins)

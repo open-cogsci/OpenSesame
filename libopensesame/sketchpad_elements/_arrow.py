@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -21,51 +21,50 @@ from libopensesame.py3compat import *
 
 from libopensesame.sketchpad_elements._base_element import base_element
 
+
 class arrow(base_element):
 
-	"""
-	desc:
-		An arrow element for the sketchpad.
-	"""
+    """
+    desc:
+            An arrow element for the sketchpad.
+    """
 
-	def __init__(self, sketchpad, string):
+    def __init__(self, sketchpad, string):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                sketchpad:		A sketchpad object.
+                string:			A definition string.
+        """
 
-		arguments:
-			sketchpad:		A sketchpad object.
-			string:			A definition string.
-		"""
+        defaults = [
+            (u'x1', None),
+            (u'y1', None),
+            (u'x2', None),
+            (u'y2', None),
+            (u'arrow_head_width', 30),
+            (u'arrow_body_width', 0.5),
+            (u'arrow_body_length', 0.8),
+            (u'color', sketchpad.var.foreground),
+            (u'penwidth', 1),
+            (u'fill', True),
+        ]
+        super(arrow, self).__init__(sketchpad, string, defaults=defaults)
 
-		defaults = [
-			(u'x1'				, None),
-			(u'y1'				, None),
-			(u'x2'				, None),
-			(u'y2'				, None),
-			(u'arrow_head_width', 30),
-			(u'arrow_body_width', 0.5),
-			(u'arrow_body_length', 0.8),
-			(u'color'			, sketchpad.var.foreground),
-			(u'penwidth'		, 1),
-			(u'fill'			, True),
-			]
-		super(arrow, self).__init__(sketchpad, string, defaults=defaults)
+    def draw(self):
+        """
+        desc:
+                Draws the element to the canvas of the sketchpad.
+        """
 
-	def draw(self):
-
-		"""
-		desc:
-			Draws the element to the canvas of the sketchpad.
-		"""
-
-		properties = self.eval_properties()
-		return self.canvas.arrow(properties[u'x1'], properties[u'y1'],
-			properties[u'x2'], properties[u'y2'],
-			color=properties[u'color'],
-			penwidth=properties[u'penwidth'],
-			head_width=properties[u'arrow_head_width'],
-			body_width=properties[u'arrow_body_width'],
-			body_length=properties[u'arrow_body_length'],
-			fill=properties[u'fill'])
+        properties = self.eval_properties()
+        return self.canvas.arrow(properties[u'x1'], properties[u'y1'],
+                                 properties[u'x2'], properties[u'y2'],
+                                 color=properties[u'color'],
+                                 penwidth=properties[u'penwidth'],
+                                 head_width=properties[u'arrow_head_width'],
+                                 body_width=properties[u'arrow_body_width'],
+                                 body_length=properties[u'arrow_body_length'],
+                                 fill=properties[u'fill'])

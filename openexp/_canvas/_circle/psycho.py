@@ -24,4 +24,4 @@ from openexp._canvas._ellipse.psycho import Psycho as PsychoEllipse
 
 class Psycho(PsychoEllipse, Circle):
 
-	pass
+    pass

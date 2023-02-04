@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -21,54 +21,52 @@ from libopensesame.py3compat import *
 import threading
 import time
 
+
 class heartbeat(threading.Thread):
 
-	"""
-	desc:
-		A thread that sends regular heartbeats to the launch process (if any).
-		A heartbeat is a transfer of the experiment workspace.
-	"""
+    """
+    desc:
+            A thread that sends regular heartbeats to the launch process (if any).
+            A heartbeat is a transfer of the experiment workspace.
+    """
 
-	def __init__(self, exp, interval=1):
+    def __init__(self, exp, interval=1):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                exp:
+                        desc:	The experiment object.
+                        type:	experiment
 
-		arguments:
-			exp:
-				desc:	The experiment object.
-				type:	experiment
+        keywords:
+                interval:
+                        desc:	The heartbeat interval in seconds.
+                        type:	[float, int]
+        """
 
-		keywords:
-			interval:
-				desc:	The heartbeat interval in seconds.
-				type:	[float, int]
-		"""
+        super(heartbeat, self).__init__()
+        self.exp = exp
+        self.interval = interval
+        self.lock = threading.Lock()
 
-		super(heartbeat, self).__init__()
-		self.exp = exp
-		self.interval = interval
-		self.lock = threading.Lock()
+    def run(self):
+        """
+        desc:
+                Runs the heartbeat loop.
+        """
 
-	def run(self):
+        while self.exp.running:
+            time.sleep(self.interval)
+            self.beat()
 
-		"""
-		desc:
-			Runs the heartbeat loop.
-		"""
+    def beat(self):
+        """
+        desc:
+                Sends a single heartbeat.
+        """
 
-		while self.exp.running:
-			time.sleep(self.interval)
-			self.beat()
-
-	def beat(self):
-
-		"""
-		desc:
-			Sends a single heartbeat.
-		"""
-
-		self.lock.acquire()
-		self.exp.transmit_workspace(__heartbeat__=True)
-		self.lock.release()
+        self.lock.acquire()
+        self.exp.transmit_workspace(__heartbeat__=True)
+        self.lock.release()

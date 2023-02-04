@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,35 +23,35 @@ from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'item_category', category=u'core')
 
+
 class toolbar_items_label(base_subcomponent, QtWidgets.QFrame):
 
-	"""
-	desc:
-		A label for the item toolbar.
-	"""
+    """
+    desc:
+            A label for the item toolbar.
+    """
 
-	def __init__(self, parent, label):
+    def __init__(self, parent, label):
+        """
+        desc:
+                Constructor
 
-		"""
-		desc:
-			Constructor
+        arguments:
+                parent:
+                        desc:	The parent.
+                        type:	QWidget
+                label:
+                        desc:	Label text.
+                        type:	unicode
+        """
 
-		arguments:
-			parent:
-				desc:	The parent.
-				type:	QWidget
-			label:
-				desc:	Label text.
-				type:	unicode
-		"""
-
-		super(toolbar_items_label, self).__init__(parent)
-		self.setup(parent)
-		l = QtWidgets.QLabel(_(label))
-		l.setMaximumWidth(90)
-		l.setIndent(6)
-		l.setWordWrap(True)
-		hbox = QtWidgets.QHBoxLayout()
-		hbox.setContentsMargins(0,0,0,0)
-		hbox.addWidget(l)
-		self.setLayout(hbox)
+        super(toolbar_items_label, self).__init__(parent)
+        self.setup(parent)
+        l = QtWidgets.QLabel(_(label))
+        l.setMaximumWidth(90)
+        l.setIndent(6)
+        l.setWordWrap(True)
+        hbox = QtWidgets.QHBoxLayout()
+        hbox.setContentsMargins(0, 0, 0, 0)
+        hbox.addWidget(l)
+        self.setLayout(hbox)

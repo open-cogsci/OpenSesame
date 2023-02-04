@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -25,192 +25,183 @@ from openexp.canvas_elements import Rect
 
 class Widget(object):
 
-	"""
-	desc:
-		The base class for all other widgets.
-	"""
+    """
+    desc:
+            The base class for all other widgets.
+    """
 
-	def __init__(self, form):
+    def __init__(self, form):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                form:
+                        desc:	The parent form.
+                        type:	form
+        """
 
-		arguments:
-			form:
-				desc:	The parent form.
-				type:	form
-		"""
+        self.type = u'widget'
+        self.form = form
+        self.frame = False
+        self.rect = None
+        self._focus = False
+        self.var = None
+        # Check if the form parameter is valid
+        if not isinstance(form, Form):
+            raise osexception(
+                u'The first parameter passed to the constructor of a form widget should be a form, not "%s"'
+                % form)
 
-		self.type = u'widget'
-		self.form = form
-		self.frame = False
-		self.rect = None
-		self._focus = False
-		self.var = None
-		# Check if the form parameter is valid
-		if not isinstance(form, Form):
-			raise osexception(
-				u'The first parameter passed to the constructor of a form widget should be a form, not "%s"'
-				% form)
+    @property
+    def focus(self):
 
-	@property
-	def focus(self):
+        return self._focus
 
-		return self._focus
+    @focus.setter
+    def focus(self, focus):
 
-	@focus.setter
-	def focus(self, focus):
+        self._focus = focus
+        self._update()
 
-		self._focus = focus
-		self._update()
+    @property
+    def box_size(self):
+        return self.form.theme_engine.box_size()
 
-	@property
-	def box_size(self):
-		return self.form.theme_engine.box_size()
+    @property
+    def theme_engine(self):
+        return self.form.theme_engine
 
-	@property
-	def theme_engine(self):
-		return self.form.theme_engine
+    @property
+    def canvas(self):
+        return self.form.canvas
 
-	@property
-	def canvas(self):
-		return self.form.canvas
+    def _inside(self, pos, rect):
 
-	def _inside(self, pos, rect):
+        x1, y1 = pos
+        x2, y2, w, h = rect
+        return not (x1 < x2 or y1 < y2 or x1 > x2+w or y1 > y2+h)
 
-		x1, y1 = pos
-		x2, y2, w, h = rect
-		return not (x1 < x2 or y1 < y2 or x1 > x2+w or y1 > y2+h)
+    def _init_canvas_elements(self):
+        """
+        desc:
+                Initializes all canvas elements.
+        """
 
-	def _init_canvas_elements(self):
+        self._frame_elements = {}
 
-		"""
-		desc:
-			Initializes all canvas elements.
-		"""
+    def _update_frame(self, rect=None, style=u'normal'):
+        """
+        desc:
+                Draws a simple frame around the widget.
 
-		self._frame_elements = {}
+        keywords:
+                rect:
+                        desc:	A (left, top, width, height) tuple for the frame
+                                        geometry or `None` to use the widget geometry.
+                        type:	[tuple, NoneType]
+                style:
+                        desc:	A visual style. Should be 'normal', 'active', or
+                                        'light'.
+                        type:	[str, unicode]
+        """
 
-	def _update_frame(self, rect=None, style=u'normal'):
+        if not self.frame:
+            return
+        if style not in self._frame_elements:
+            element = self.theme_engine.frame(*self.rect, style=style)
+            self._frame_elements[style] = element
+            self.canvas.add_element(element)
+            self.canvas.lower_to_bottom(element)
+        for element_style, element in self._frame_elements.items():
+            element.visible = element_style == style
 
-		"""
-		desc:
-			Draws a simple frame around the widget.
+    def _update(self):
+        """
+        desc:
+                Draws the widget.
+        """
 
-		keywords:
-			rect:
-				desc:	A (left, top, width, height) tuple for the frame
-						geometry or `None` to use the widget geometry.
-				type:	[tuple, NoneType]
-			style:
-				desc:	A visual style. Should be 'normal', 'active', or
-						'light'.
-				type:	[str, unicode]
-		"""
+        self._update_frame(self.rect)
 
-		if not self.frame:
-			return
-		if style not in self._frame_elements:
-			element = self.theme_engine.frame(*self.rect, style=style)
-			self._frame_elements[style] = element
-			self.canvas.add_element(element)
-			self.canvas.lower_to_bottom(element)
-		for element_style, element in self._frame_elements.items():
-			element.visible = element_style == style
+    def set_rect(self, rect):
+        """
+        desc:
+                Sets the widget geometry.
 
-	def _update(self):
+        arguments:
+                rect:
+                        desc:	A (left, top, width, height) tuple.
+                        type:	tuple
+        """
 
-		"""
-		desc:
-			Draws the widget.
-		"""
+        self.rect = rect
+        self._init_canvas_elements()
+        self._update()
 
-		self._update_frame(self.rect)
+    def set_var(self, val, var=None):
+        """
+        desc:
+                Sets an experimental variable.
 
-	def set_rect(self, rect):
+        arguments:
+                val:
+                        desc:	A value.
 
-		"""
-		desc:
-			Sets the widget geometry.
+        keywords:
+                var:
+                        desc:	A variable name, or None to use widget default.
+                        type:	[str, unicode, NoneType]
+        """
 
-		arguments:
-			rect:
-				desc:	A (left, top, width, height) tuple.
-				type:	tuple
-		"""
+        if var is None:
+            var = self.var
+        if var is None:
+            return
+        self.form.experiment.var.set(var, val)
 
-		self.rect = rect
-		self._init_canvas_elements()
-		self._update()
+    def on_key_press(self, key):
+        """
+        desc:
+                Is called whenever the widget is focused and the users enters a key.
 
-	def set_var(self, val, var=None):
+        arguments:
+                key:
+                        desc:	A key
+                        type:	str
+        """
 
-		"""
-		desc:
-			Sets an experimental variable.
+        pass
 
-		arguments:
-			val:
-				desc:	A value.
+    def on_mouse_click(self, pos):
+        """
+        desc:
+                Is called whenever the user clicks on the widget.
 
-		keywords:
-			var:
-				desc:	A variable name, or None to use widget default.
-				type:	[str, unicode, NoneType]
-		"""
+        arguments:
+                pos:
+                        desc:	An (x, y) coordinates tuple.
+                        type:	tuple
+        """
 
-		if var is None:
-			var = self.var
-		if var is None:
-			return
-		self.form.experiment.var.set(var, val)
+        pass
 
-	def on_key_press(self, key):
+    def coroutine(self):
+        """
+        desc:
+                Implements the interaction. This can be overridden to implement more
+                complicated keyboard/ mouse interactions.
+        """
 
-		"""
-		desc:
-			Is called whenever the widget is focused and the users enters a key.
-
-		arguments:
-			key:
-				desc:	A key
-				type:	str
-		"""
-
-		pass
-
-	def on_mouse_click(self, pos):
-
-		"""
-		desc:
-			Is called whenever the user clicks on the widget.
-
-		arguments:
-			pos:
-				desc:	An (x, y) coordinates tuple.
-				type:	tuple
-		"""
-
-		pass
-
-	def coroutine(self):
-
-		"""
-		desc:
-			Implements the interaction. This can be overridden to implement more
-			complicated keyboard/ mouse interactions.
-		"""
-
-		retval = None
-		while True:
-			d = yield retval
-			if d[u'type'] == u'click':
-				retval = self.on_mouse_click(d['pos'])
-			elif d[u'type'] == u'key':
-				retval = self.on_key_press(d[u'key'])
-			elif d[u'type'] == u'stop':
-				break
+        retval = None
+        while True:
+            d = yield retval
+            if d[u'type'] == u'click':
+                retval = self.on_mouse_click(d['pos'])
+            elif d[u'type'] == u'key':
+                retval = self.on_key_press(d[u'key'])
+            elif d[u'type'] == u'stop':
+                break
 
 
 widget = Widget

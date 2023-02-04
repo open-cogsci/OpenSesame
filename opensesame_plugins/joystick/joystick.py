@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -26,100 +26,94 @@ from openexp.keyboard import keyboard
 
 class joystick(base_response_item):
 
-	"""
-	desc:
-		A plug-in for using a joystick/gamepad.
-	"""
+    """
+    desc:
+            A plug-in for using a joystick/gamepad.
+    """
 
-	description = u'Collects input from a joystick or gamepad'
-	process_feedback = True
+    description = u'Collects input from a joystick or gamepad'
+    process_feedback = True
 
-	def reset(self):
+    def reset(self):
+        """See item."""
 
-		"""See item."""
+        self.var.timeout = u'infinite'
+        self.var.allowed_responses = u''
+        self.var._dummy = u'no'
+        self.var._device = 0
 
-		self.var.timeout = u'infinite'
-		self.var.allowed_responses = u''
-		self.var._dummy = u'no'
-		self.var._device = 0
+    def validate_response(self, response):
+        """See base_response_item."""
 
-	def validate_response(self, response):
+        try:
+            response = int(response)
+        except ValueError:
+            return False
+        return response >= 0 or response <= 255
 
-		"""See base_response_item."""
+    def _get_button_press(self):
+        """
+        desc:
+                Calls libjoystick.get_button_press() with the correct arguments.
+        """
 
-		try:
-			response = int(response)
-		except ValueError:
-			return False
-		return response >= 0 or response <= 255
+        return self.experiment.joystick.get_joybutton(
+            joybuttonlist=self._allowed_responses,
+            timeout=self._timeout
+        )
 
-	def _get_button_press(self):
+    def prepare_response_func(self):
+        """See base_response_item."""
 
-		"""
-		desc:
-			Calls libjoystick.get_button_press() with the correct arguments.
-		"""
+        self._keyboard = keyboard(
+            self.experiment,
+            keylist=(
+                self._allowed_responses if self._allowed_responses
+                else list(range(0, 10))  # Only numeric keys
+            ),
+            timeout=self._timeout
+        )
+        if self.var._dummy == u'yes':
+            return self._keyboard.get_key
+        # Dynamically load a joystick instance
+        if not hasattr(self.experiment, u'joystick'):
+            _joystick = plugins.load_mod(__file__, u'libjoystick')
+            self.experiment.joystick = _joystick.libjoystick(
+                self.experiment,
+                device=self._device
+            )
+            self.python_workspace[u'joystick'] = self.experiment.joystick
+        if self._allowed_responses is not None:
+            self._allowed_responses = [int(r) for r in self._allowed_responses]
+        return self._get_button_press
 
-		return self.experiment.joystick.get_joybutton(
-			joybuttonlist=self._allowed_responses,
-			timeout=self._timeout
-		)
+    def response_matches(self, test, ref):
+        """See base_response_item."""
 
-	def prepare_response_func(self):
+        return safe_decode(test) in ref
 
-		"""See base_response_item."""
+    def coroutine(self):
+        """See coroutines plug-in."""
 
-		self._keyboard = keyboard(
-			self.experiment,
-			keylist=(
-				self._allowed_responses if self._allowed_responses
-				else list(range(0,10))  # Only numeric keys
-			),
-			timeout=self._timeout
-		)
-		if self.var._dummy == u'yes':
-			return self._keyboard.get_key
-		# Dynamically load a joystick instance
-		if not hasattr(self.experiment, u'joystick'):
-			_joystick = plugins.load_mod(__file__, u'libjoystick')
-			self.experiment.joystick = _joystick.libjoystick(
-				self.experiment,
-				device=self._device
-			)
-			self.python_workspace[u'joystick'] = self.experiment.joystick
-		if self._allowed_responses is not None:
-			self._allowed_responses = [int(r) for r in self._allowed_responses]
-		return self._get_button_press
-
-	def response_matches(self, test, ref):
-
-		"""See base_response_item."""
-
-		return safe_decode(test) in ref
-
-	def coroutine(self):
-
-		"""See coroutines plug-in."""
-
-		if self.var._dummy == u'yes':
-			self._keyboard.timeout = 0
-		else:
-			self._timeout = 0
-		alive = True
-		yield
-		self._t0 = self.set_item_onset()
-		while alive:
-			button, time = self._collect_response()
-			if button is not None:
-				break
-			alive = yield
-		self.process_response((button, time))
+        if self.var._dummy == u'yes':
+            self._keyboard.timeout = 0
+        else:
+            self._timeout = 0
+        alive = True
+        yield
+        self._t0 = self.set_item_onset()
+        while alive:
+            button, time = self._collect_response()
+            if button is not None:
+                break
+            alive = yield
+        self.process_response((button, time))
 
 
 class qtjoystick(joystick, qtautoplugin):
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
 
-		# Call parent constructors.
-		joystick.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        # Call parent constructors.
+        joystick.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

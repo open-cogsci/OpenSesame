@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -25,34 +25,32 @@ from libqtopensesame.runners import base_runner
 
 class inprocess_runner(base_runner):
 
-	"""Runs an experiment in the traditional way, in the same process."""
+    """Runs an experiment in the traditional way, in the same process."""
 
-	def execute(self):
+    def execute(self):
+        """See base_runner.execute()."""
 
-		"""See base_runner.execute()."""
+        # Exceptions during the run phase are important and returned so that the
+        # user is notified.
+        retval = None
+        try:
+            self.experiment.run()
+        except Exception as e:
+            if not isinstance(e, osexception):
+                retval = osexception(u'Unexpected error', e)
+            else:
+                retval = e
+        # Exceptions during the end phase are less important and only printed
+        # to the debug window.
+        try:
+            self.experiment.end()
+        except Exception as _e:
+            oslogger.error(u'exception during experiment.end(): %s' % _e)
+        return retval
 
-		# Exceptions during the run phase are important and returned so that the
-		# user is notified.
-		retval = None
-		try:
-			self.experiment.run()
-		except Exception as e:
-			if not isinstance(e, osexception):
-				retval = osexception(u'Unexpected error', e)
-			else:
-				retval = e
-		# Exceptions during the end phase are less important and only printed
-		# to the debug window.
-		try:
-			self.experiment.end()
-		except Exception as _e:
-			oslogger.error(u'exception during experiment.end(): %s' % _e)
-		return retval
+    def workspace_globals(self):
+        """See base_runner."""
 
-	def workspace_globals(self):
-
-		"""See base_runner."""
-
-		if not hasattr(self, u'experiment'):
-			return {}
-		return self.experiment.python_workspace._globals
+        if not hasattr(self, u'experiment'):
+            return {}
+        return self.experiment.python_workspace._globals

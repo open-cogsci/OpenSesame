@@ -26,15 +26,15 @@ import numpy as np
 
 class Psycho(RotatingElement, PsychoElement, NoisePatch):
 
-	def prepare(self):
+    def prepare(self):
 
-		env, size = self._mask(self.env, self.size, self.stdev)
-		tex = 2*(np.random.random([size, size])-0.5)
-		self._stim = visual.GratingStim(
-			win=self.win,
-			pos=self.to_xy(self.x, self.y),
-			tex=tex,
-			mask=env,
-			size=size,
-			color=self.col1
-		)
+        env, size = self._mask(self.env, self.size, self.stdev)
+        tex = 2*(np.random.random([size, size])-0.5)
+        self._stim = visual.GratingStim(
+            win=self.win,
+            pos=self.to_xy(self.x, self.y),
+            tex=tex,
+            mask=env,
+            size=size,
+            color=self.col1
+        )

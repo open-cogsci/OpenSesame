@@ -23,33 +23,33 @@ import copy
 
 class XpyrimentElement(object):
 
-	"""
-	desc:
-		Together with Element, XpyrimentElement is the base object for all
-		xpyriment sketchpad elements.
-	"""
+    """
+    desc:
+            Together with Element, XpyrimentElement is the base object for all
+            xpyriment sketchpad elements.
+    """
 
-	ANTI_ALIAS = 1
+    ANTI_ALIAS = 1
 
-	@property
-	def win(self):
-		return self._canvas.experiment.window
+    @property
+    def win(self):
+        return self._canvas.experiment.window
 
-	def show(self, **kwargs):
+    def show(self, **kwargs):
 
-		if self.visible:
-			if not hasattr(self, u'_stim'):
-				self.prepare()
-			self._stim.present(**kwargs)
+        if self.visible:
+            if not hasattr(self, u'_stim'):
+                self.prepare()
+            self._stim.present(**kwargs)
 
-	def copy(self, canvas):
+    def copy(self, canvas):
 
-		e = copy.copy(self)
-		e._stim = self._stim.copy()
-		e._canvas = canvas
-		return e
+        e = copy.copy(self)
+        e._stim = self._stim.copy()
+        e._canvas = canvas
+        return e
 
-	def _on_attribute_change(self, **kwargs):
+    def _on_attribute_change(self, **kwargs):
 
-		if self._canvas.auto_prepare:
-			self.prepare()
+        if self._canvas.auto_prepare:
+            self.prepare()

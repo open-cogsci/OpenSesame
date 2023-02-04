@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.keyboard_response import keyboard_response as \
-	keyboard_response_runtime
+    keyboard_response_runtime
 from libqtopensesame.validators import timeout_validator
 from libqtopensesame.items.qtplugin import qtplugin
 from openexp.keyboard import keyboard
@@ -30,76 +30,73 @@ _ = translation_context(u'keyboard_response', category=u'item')
 
 class keyboard_response(keyboard_response_runtime, qtplugin):
 
-	"""keyboard_response item GUI"""
+    """keyboard_response item GUI"""
 
-	description = _(u'Collects keyboard responses')
-	help_url = u'manual/response/keyboard'
-	lazy_init = True
+    description = _(u'Collects keyboard responses')
+    help_url = u'manual/response/keyboard'
+    lazy_init = True
 
-	def __init__(self, name, experiment, string=None):
+    def __init__(self, name, experiment, string=None):
+        """
+        Constructor
 
-		"""
-		Constructor
+        Arguments:
+        name -- item name
+        experiment -- experiment instance
 
-		Arguments:
-		name -- item name
-		experiment -- experiment instance
+        Keywords arguments:
+        string -- a definition string (default=None)
+        """
 
-		Keywords arguments:
-		string -- a definition string (default=None)
-		"""
+        keyboard_response_runtime.__init__(self, name, experiment, string)
+        qtplugin.__init__(self)
 
-		keyboard_response_runtime.__init__(self, name, experiment, string)
-		qtplugin.__init__(self)
+    def init_edit_widget(self):
+        """Initialize controls"""
 
-	def init_edit_widget(self):
+        qtplugin.init_edit_widget(self, stretch=True)
+        # Use auto-controls for most stuff
+        self.add_line_edit_control(
+            var=u'correct_response',
+            label=_(u'Correct response'),
+            info=_(u'Leave empty to use "correct_response"')
+        )
+        self.add_line_edit_control(
+            var=u'allowed_responses',
+            label=_(u'Allowed responses'),
+            info=_(u'Separated by semicolons, e.g. "z;/"')
+        )
+        self.add_line_edit_control(
+            var=u'timeout',
+            label=_(u'Timeout'),
+            info=_(u'In milliseconds or "infinite"'),
+            validator=timeout_validator(self)
+        )
+        self.add_combobox_control(
+            var=u'event_type',
+            label=_(u'Event type'),
+            options=[
+                u'keypress',
+                u'keyrelease'
+            ]
+        )
+        self.add_checkbox_control(u'flush', _(u'Flush pending key events'))
+        # List available keys
+        button_list_keys = QtWidgets.QPushButton(
+            self.theme.qicon(u"help-about"),
+            _(u"List available keys")
+        )
+        button_list_keys.setIconSize(QtCore.QSize(16, 16))
+        button_list_keys.clicked.connect(self.list_keys)
+        self.add_control(u'', button_list_keys)
 
-		"""Initialize controls"""
+    def list_keys(self):
+        """Show a dialog with available key names"""
 
-		qtplugin.init_edit_widget(self, stretch=True)
-		# Use auto-controls for most stuff
-		self.add_line_edit_control(
-			var=u'correct_response',
-			label=_(u'Correct response'),
-			info=_(u'Leave empty to use "correct_response"')
-		)
-		self.add_line_edit_control(
-			var=u'allowed_responses',
-			label=_(u'Allowed responses'),
-			info=_(u'Separated by semicolons, e.g. "z;/"')
-		)
-		self.add_line_edit_control(
-			var=u'timeout',
-			label=_(u'Timeout'),
-			info=_(u'In milliseconds or "infinite"'),
-			validator=timeout_validator(self)
-		)
-		self.add_combobox_control(
-			var=u'event_type',
-			label=_(u'Event type'),
-			options=[
-				u'keypress',
-				u'keyrelease'
-			]
-		)
-		self.add_checkbox_control(u'flush', _(u'Flush pending key events'))
-		# List available keys
-		button_list_keys = QtWidgets.QPushButton(
-			self.theme.qicon(u"help-about"),
-			_(u"List available keys")
-		)
-		button_list_keys.setIconSize(QtCore.QSize(16,16))
-		button_list_keys.clicked.connect(self.list_keys)
-		self.add_control(u'', button_list_keys)
-
-	def list_keys(self):
-
-		"""Show a dialog with available key names"""
-
-		my_keyboard = keyboard(self.experiment)
-		keylist = filter(lambda key: key.strip(), my_keyboard.valid_keys())
-		md = u'# ' + _(u'Key names') + u'\n\n' \
-			+ _(u'The following key names are valid:') + u'\n\n- ' \
-			+ u'\n- '.join([u'`%s`' % key for key in keylist])
-		self.tabwidget.open_markdown(md, icon=u'os-keyboard_response',
-			title=_(u'Key names'))
+        my_keyboard = keyboard(self.experiment)
+        keylist = filter(lambda key: key.strip(), my_keyboard.valid_keys())
+        md = u'# ' + _(u'Key names') + u'\n\n' \
+            + _(u'The following key names are valid:') + u'\n\n- ' \
+            + u'\n- '.join([u'`%s`' % key for key in keylist])
+        self.tabwidget.open_markdown(md, icon=u'os-keyboard_response',
+                                     title=_(u'Key names'))

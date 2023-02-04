@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -21,23 +21,22 @@ from libopensesame.py3compat import *
 
 from libqtopensesame.widgets.base_widget import base_widget
 
+
 class synth_widget(base_widget):
 
-	"""
-	desc:
-		The sampler controls.
-	"""
+    """
+    desc:
+            The sampler controls.
+    """
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:	A qtopensesame object.
+        """
 
-		arguments:
-			main_window:	A qtopensesame object.
-		"""
-
-		super(synth_widget, self).__init__(main_window,
-			ui=u'widgets.synth_widget')
-
+        super(synth_widget, self).__init__(main_window,
+                                           ui=u'widgets.synth_widget')

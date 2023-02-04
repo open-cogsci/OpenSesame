@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -20,22 +20,22 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libqtopensesame.widgets.base_widget import base_widget
 
+
 class loop_widget(base_widget):
 
-	"""
-	desc:
-		A widget for the loop controls.
-	"""
+    """
+    desc:
+            A widget for the loop controls.
+    """
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        keywords:
+                main_window:	A qtopensesame object.
+        """
 
-		keywords:
-			main_window:	A qtopensesame object.
-		"""
-
-		super(loop_widget, self).__init__(main_window,
-			ui=u'widgets.loop_widget')
+        super(loop_widget, self).__init__(main_window,
+                                          ui=u'widgets.loop_widget')

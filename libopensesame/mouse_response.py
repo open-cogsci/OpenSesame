@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -26,172 +26,163 @@ from openexp.mouse import mouse
 
 class mouse_response_mixin(object):
 
-	"""
-	desc:
-		A mixin class that should be inherited along with base_response_item
-		by all classes that want to collect mouse responses.
-	"""
+    """
+    desc:
+            A mixin class that should be inherited along with base_response_item
+            by all classes that want to collect mouse responses.
+    """
 
-	_resp_codes = {
-		u'none' : None,
-		u'timeout' : None,
-		u'left_button' : 1,
-		u'middle_button' : 2,
-		u'right_button' : 3,
-		u'left' : 1,
-		u'middle' : 2,
-		u'right' : 3,
-		u'scroll_up' : 4,
-		u'scroll_down': 5
-	}
+    _resp_codes = {
+        u'none': None,
+        u'timeout': None,
+        u'left_button': 1,
+        u'middle_button': 2,
+        u'right_button': 3,
+        u'left': 1,
+        u'middle': 2,
+        u'right': 3,
+        u'scroll_up': 4,
+        u'scroll_down': 5
+    }
 
-	def button_code(self, response):
+    def button_code(self, response):
 
-		if response is None or isinstance(response, int):
-			return response
-		try:
-			return int(response)
-		except:
-			return self._resp_codes[response.lower()]
+        if response is None or isinstance(response, int):
+            return response
+        try:
+            return int(response)
+        except:
+            return self._resp_codes[response.lower()]
 
-	def prepare_response_func(self):
+    def prepare_response_func(self):
+        """See base_response_item."""
 
-		"""See base_response_item."""
+        if self._allowed_responses is None:
+            buttonlist = None
+        else:
+            buttonlist = [self.button_code(r) for r in self._allowed_responses]
+        self._mouse = mouse(
+            self.experiment,
+            timeout=self._timeout,
+            buttonlist=buttonlist
+        )
+        if self.var.get(u'event_type', default=u'mouseclick') == u'mouseclick':
+            return self._mouse.get_click
+        if self.var.event_type == u'mouserelease':
+            return self._mouse.get_click_release
+        raise osexception(
+            u'event_type should be "mouseclick" or "mouserelease"'
+        )
 
-		if self._allowed_responses is None:
-			buttonlist = None
-		else:
-			buttonlist = [self.button_code(r) for r in self._allowed_responses]
-		self._mouse = mouse(
-			self.experiment,
-			timeout=self._timeout,
-			buttonlist=buttonlist
-		)
-		if self.var.get(u'event_type', default=u'mouseclick') == u'mouseclick':
-			return self._mouse.get_click
-		if self.var.event_type == u'mouserelease':
-			return self._mouse.get_click_release
-		raise osexception(
-			u'event_type should be "mouseclick" or "mouserelease"'
-		)
+    def process_response(self, response_args):
+        """See base_response_item."""
 
-	def process_response(self, response_args):
-
-		"""See base_response_item."""
-
-		response, pos, t1 = response_args
-		if pos is None:
-			self.experiment.var.cursor_x = u'NA'
-			self.experiment.var.cursor_y = u'NA'
-		else:
-			self.experiment.var.cursor_x, self.experiment.var.cursor_y = pos
-		if self.var.get(u'linked_sketchpad', default=u'') and pos is not None:
-			if self.var.linked_sketchpad not in self.experiment.items:
-				raise osexception(
-					u'Item does not exist: %s'
-					% self.var.linked_sketchpad
-				)
-			item = self.experiment.items[self.var.linked_sketchpad]
-			if (
-				not hasattr(item, u'canvas')
-				or not isinstance(item.canvas, Canvas)
-			):
-				raise osexception(
-					u'Item does not have a canvas: %s'
-					% self.var.linked_sketchpad
-				)
-			self.experiment.var.cursor_roi = u';'.join(
-				item.canvas.elements_at(*pos)
-			)
-		else:
-			self.experiment.var.cursor_roi = u'undefined'
-		base_response_item.process_response(self, (response, t1) )
+        response, pos, t1 = response_args
+        if pos is None:
+            self.experiment.var.cursor_x = u'NA'
+            self.experiment.var.cursor_y = u'NA'
+        else:
+            self.experiment.var.cursor_x, self.experiment.var.cursor_y = pos
+        if self.var.get(u'linked_sketchpad', default=u'') and pos is not None:
+            if self.var.linked_sketchpad not in self.experiment.items:
+                raise osexception(
+                    u'Item does not exist: %s'
+                    % self.var.linked_sketchpad
+                )
+            item = self.experiment.items[self.var.linked_sketchpad]
+            if (
+                    not hasattr(item, u'canvas')
+                    or not isinstance(item.canvas, Canvas)
+            ):
+                raise osexception(
+                    u'Item does not have a canvas: %s'
+                    % self.var.linked_sketchpad
+                )
+            self.experiment.var.cursor_roi = u';'.join(
+                item.canvas.elements_at(*pos)
+            )
+        else:
+            self.experiment.var.cursor_roi = u'undefined'
+        base_response_item.process_response(self, (response, t1))
 
 
 class mouse_response(mouse_response_mixin, base_response_item):
 
-	"""
-	desc:
-		An item for collecting mouse responses.
-	"""
+    """
+    desc:
+            An item for collecting mouse responses.
+    """
 
-	description = u'Collects mouse responses'
-	process_feedback = True
+    description = u'Collects mouse responses'
+    process_feedback = True
 
-	def reset(self):
+    def reset(self):
+        """See item."""
 
-		"""See item."""
+        self.var.flush = u'yes'
+        self.var.show_cursor = u'yes'
+        self.var.timeout = u'infinite'
+        self.var.duration = u'mouseclick'
+        self.var.linked_sketchpad = u''
+        self.var.event_type = u'mouseclick'
+        self.var.unset(u'allowed_responses')
+        self.var.unset(u'correct_response')
 
-		self.var.flush = u'yes'
-		self.var.show_cursor = u'yes'
-		self.var.timeout = u'infinite'
-		self.var.duration = u'mouseclick'
-		self.var.linked_sketchpad = u''
-		self.var.event_type = u'mouseclick'
-		self.var.unset(u'allowed_responses')
-		self.var.unset(u'correct_response')
+    def validate_response(self, response):
+        """See base_response_item."""
 
-	def validate_response(self, response):
+        try:
+            self.button_code(response)
+        except:
+            return False
+        return True
 
-		"""See base_response_item."""
+    def response_matches(self, test, ref):
+        """See base_response_item."""
 
-		try:
-			self.button_code(response)
-		except:
-			return False
-		return True
+        return any(self.button_code(test) == self.button_code(r) for r in ref)
 
-	def response_matches(self, test, ref):
+    def prepare(self):
+        """See item."""
 
-		"""See base_response_item."""
+        base_response_item.prepare(self)
+        self._flush = self.var.flush == u'yes'
 
-		return any(self.button_code(test) == self.button_code(r) for r in ref)
+    def run(self):
+        """See item."""
 
-	def prepare(self):
+        if self._flush:
+            self._mouse.flush()
+        # Show cursor if necessary
+        if self.var.show_cursor == u'yes':
+            self._mouse.visible = True
+        base_response_item.run(self)
+        self._mouse.visible = False
 
-		"""See item."""
+    def coroutine(self):
+        """See coroutines plug-in."""
 
-		base_response_item.prepare(self)
-		self._flush = self.var.flush == u'yes'
+        self._mouse.timeout = 0
+        alive = True
+        yield
+        self._t0 = self.set_item_onset()
+        if self._flush:
+            self._mouse.flush()
+        if self.var.show_cursor == u'yes':
+            self._mouse.visible = True
+        while alive:
+            button, pos, time = self._mouse.get_click()
+            if button is not None:
+                break
+            alive = yield
+        self.process_response((button, pos, time))
+        self._mouse.visible = False
 
-	def run(self):
+    def var_info(self):
+        """See item."""
 
-		"""See item."""
-
-		if self._flush:
-			self._mouse.flush()
-		# Show cursor if necessary
-		if self.var.show_cursor == u'yes':
-			self._mouse.visible = True
-		base_response_item.run(self)
-		self._mouse.visible = False
-
-	def coroutine(self):
-
-		"""See coroutines plug-in."""
-
-		self._mouse.timeout = 0
-		alive = True
-		yield
-		self._t0 = self.set_item_onset()
-		if self._flush:
-			self._mouse.flush()
-		if self.var.show_cursor == u'yes':
-			self._mouse.visible = True
-		while alive:
-			button, pos, time = self._mouse.get_click()
-			if button is not None:
-				break
-			alive = yield
-		self.process_response((button, pos, time))
-		self._mouse.visible = False
-
-	def var_info(self):
-
-		"""See item."""
-
-		return base_response_item.var_info(self) + [
-			(u'cursor_x', u'[Depends on response]'),
-			(u'cursor_y', u'[Depends on response]'),
-			(u'cursor_roi', u'[Depends on response]')
-		]
+        return base_response_item.var_info(self) + [
+            (u'cursor_x', u'[Depends on response]'),
+            (u'cursor_y', u'[Depends on response]'),
+            (u'cursor_roi', u'[Depends on response]')
+        ]

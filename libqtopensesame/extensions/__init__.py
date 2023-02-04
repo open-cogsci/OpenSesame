@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 from libqtopensesame.extensions._extension_manager import extension_manager, \
-	suspend_events
+    suspend_events
 from libqtopensesame.extensions._base_extension import base_extension
 
 # PEP-8 alias

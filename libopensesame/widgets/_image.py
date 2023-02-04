@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -28,129 +28,126 @@ import os
 
 class ImageWidget(Widget):
 
-	"""
-	desc: |
-		The `Image` widget is used to display a non-interactive image.
+    """
+    desc: |
+            The `Image` widget is used to display a non-interactive image.
 
-		__Example (OpenSesame script):__
+            __Example (OpenSesame script):__
 
-		~~~
-		widget 0 0 1 1 image path='5.png'
-		~~~
+            ~~~
+            widget 0 0 1 1 image path='5.png'
+            ~~~
 
-		__Example (Python):__
+            __Example (Python):__
 
-		~~~ .python
-		form = Form()
-		# The full path to the image needs to be provided.
-		# self.experiment.pool can be used to retrieve the full path
-		# to an image in the file pool.
-		image = ImageWidget(path=pool['5.png'])
-		form.set_widget(image, (0,0))
-		form._exec()
-		~~~
+            ~~~ .python
+            form = Form()
+            # The full path to the image needs to be provided.
+            # self.experiment.pool can be used to retrieve the full path
+            # to an image in the file pool.
+            image = ImageWidget(path=pool['5.png'])
+            form.set_widget(image, (0,0))
+            form._exec()
+            ~~~
 
-		[TOC]
-	"""
+            [TOC]
+    """
 
-	def __init__(self, form, path=None, adjust=True, frame=False):
+    def __init__(self, form, path=None, adjust=True, frame=False):
+        """
+        desc: |
+                Constructor to create a new `ImageWidget` object. You do not
+                generally call this constructor directly, but use the
+                `ImageWidget()` factory function, which is described here:
+                [/python/common/]().
 
-		"""
-		desc: |
-			Constructor to create a new `ImageWidget` object. You do not
-			generally call this constructor directly, but use the
-			`ImageWidget()` factory function, which is described here:
-			[/python/common/]().
+        arguments:
+                form:
+                        desc:	The parent form.
+                        type:	form
 
-		arguments:
-			form:
-				desc:	The parent form.
-				type:	form
+        keywords:
+                path:
+                        desc:	The full path to the image. To show an image from the
+                                        file pool, you need to first use `experiment.get_file`
+                                        to determine the full path to the image.
+                        type:	[str, unicode, NoneType]
+                adjust:
+                        desc:	Indicates whether the image should be scaled according
+                                        to the size of the widget.
+                        type:	bool
+                frame:
+                        desc:	Indicates whether a frame should be drawn around the
+                                        widget.
+                        type:	bool
+        """
 
-		keywords:
-			path:
-				desc:	The full path to the image. To show an image from the
-						file pool, you need to first use `experiment.get_file`
-						to determine the full path to the image.
-				type:	[str, unicode, NoneType]
-			adjust:
-				desc:	Indicates whether the image should be scaled according
-						to the size of the widget.
-				type:	bool
-			frame:
-				desc:	Indicates whether a frame should be drawn around the
-						widget.
-				type:	bool
-		"""
+        if isinstance(adjust, basestring):
+            adjust = adjust == u'yes'
+        if isinstance(frame, basestring):
+            frame = frame == u'yes'
+        Widget.__init__(self, form)
+        self.adjust = adjust
+        self.frame = frame
+        self.path = path
+        self.type = u'image'
 
-		if isinstance(adjust, basestring):
-			adjust = adjust == u'yes'
-		if isinstance(frame, basestring):
-			frame = frame == u'yes'
-		Widget.__init__(self, form)
-		self.adjust = adjust
-		self.frame = frame
-		self.path = path
-		self.type = u'image'
+    def _init_canvas_elements(self):
+        """
+        desc:
+                Initializes all canvas elements.
+        """
 
-	def _init_canvas_elements(self):
+        _path = safe_str(self.path, enc=misc.filesystem_encoding())
+        if not os.path.exists(_path):
+            raise osexception(
+                u'No valid path has been specified in image widget')
+        x, y, w, h = self.rect
+        x += w/2
+        y += h/2
+        self.canvas.add_element(
+            ImageElement(_path, x=x, y=y, scale=self.scale, center=True)
+            .construct(self.canvas)
+        )
+        Widget._init_canvas_elements(self)
+        if self.frame:
+            self._update_frame(self.rect)
 
-		"""
-		desc:
-			Initializes all canvas elements.
-		"""
+    def set_rect(self, rect):
+        """
+        desc:
+                Sets the widget geometry.
 
-		_path = safe_str(self.path, enc=misc.filesystem_encoding())
-		if not os.path.exists(_path):
-			raise osexception(
-				u'No valid path has been specified in image widget')
-		x, y, w, h = self.rect
-		x += w/2
-		y += h/2
-		self.canvas.add_element(
-			ImageElement(_path, x=x, y=y, scale=self.scale, center=True)
-				.construct(self.canvas)
-		)
-		Widget._init_canvas_elements(self)
-		if self.frame:
-			self._update_frame(self.rect)
+        arguments:
+                rect:
+                        desc:	A (left, top, width, height) tuple.
+                        type:	tuple
+        """
 
-	def set_rect(self, rect):
-
-		"""
-		desc:
-			Sets the widget geometry.
-
-		arguments:
-			rect:
-				desc:	A (left, top, width, height) tuple.
-				type:	tuple
-		"""
-
-		self.rect = rect
-		_path = safe_str(self.path, enc=misc.filesystem_encoding())
-		if not os.path.isfile(_path):
-			raise osexception(u'"%s" does not exist' % _path)
-		if self.adjust:
-			x, y, w, h = self.rect
-			try:
-				img = Image.open(_path)
-				img_w, img_h = img.size
-			except:
-				try:
-					import pygame
-					img = pygame.image.load(_path)
-				except:
-					raise osexception(
-						u'Failed to open image "%s". Perhaps the file is not an image, or the image format is not supported.'
-						% self.path)
-				img_w, img_h = img.get_size()
-			scale_x = 1.*w/img_w
-			scale_y = 1.*h/img_h
-			self.scale = min(scale_x, scale_y)
-		else:
-			self.scale = 1
-		Widget.set_rect(self, rect)
+        self.rect = rect
+        _path = safe_str(self.path, enc=misc.filesystem_encoding())
+        if not os.path.isfile(_path):
+            raise osexception(u'"%s" does not exist' % _path)
+        if self.adjust:
+            x, y, w, h = self.rect
+            try:
+                img = Image.open(_path)
+                img_w, img_h = img.size
+            except:
+                try:
+                    import pygame
+                    img = pygame.image.load(_path)
+                except:
+                    raise osexception(
+                        u'Failed to open image "%s". Perhaps the file is not an image, or the image format is not supported.'
+                        % self.path)
+                img_w, img_h = img.get_size()
+            scale_x = 1.*w/img_w
+            scale_y = 1.*h/img_h
+            self.scale = min(scale_x, scale_y)
+        else:
+            self.scale = 1
+        Widget.set_rect(self, rect)
 
 
 image = ImageWidget

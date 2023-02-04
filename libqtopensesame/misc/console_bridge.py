@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,53 +24,53 @@ from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 
 class ConsoleBridge(BaseSubcomponent):
 
-	"""
-	desc:
-		A base console for debug-window consoles.
-	"""
+    """
+    desc:
+            A base console for debug-window consoles.
+    """
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
 
-		super(ConsoleBridge, self).__init__()
-		self.setup(main_window)
-		self._jupyter_console = None
-		self._writing = False
+        super(ConsoleBridge, self).__init__()
+        self.setup(main_window)
+        self._jupyter_console = None
+        self._writing = False
 
-	def write(self, s):
+    def write(self, s):
 
-		oslogger.debug(s)
-		if self._writing:
-			oslogger.warning(u'recursive write() call')
-			print(safe_decode(s, errors=u'ignore'))
-			return
-		self._writing = True
-		if hasattr(self, u'extension_manager'):
-			self.extension_manager.fire(u'jupyter_write', msg=s)
-		else:
-			oslogger.info(s)
-		self._writing = False
+        oslogger.debug(s)
+        if self._writing:
+            oslogger.warning(u'recursive write() call')
+            print(safe_decode(s, errors=u'ignore'))
+            return
+        self._writing = True
+        if hasattr(self, u'extension_manager'):
+            self.extension_manager.fire(u'jupyter_write', msg=s)
+        else:
+            oslogger.info(s)
+        self._writing = False
 
-	def reset(self):
+    def reset(self):
 
-		self.main_window.set_run_status(u'inactive')
-		self.extension_manager.fire(u'jupyter_restart')
+        self.main_window.set_run_status(u'inactive')
+        self.extension_manager.fire(u'jupyter_restart')
 
-	def get_workspace_globals(self):
+    def get_workspace_globals(self):
 
-		if self._jupyter_console is None:
-			try:
-				self._jupyter_console = self.extension_manager['JupyterConsole']
-			except Exception:
-				return {}
-		return self._jupyter_console.get_workspace_globals()
+        if self._jupyter_console is None:
+            try:
+                self._jupyter_console = self.extension_manager['JupyterConsole']
+            except Exception:
+                return {}
+        return self._jupyter_console.get_workspace_globals()
 
-	def set_workspace_globals(self, _globals={}):
+    def set_workspace_globals(self, _globals={}):
 
-		self.extension_manager.fire(
-			u'set_workspace_globals',
-			global_dict=_globals
-		)
+        self.extension_manager.fire(
+            u'set_workspace_globals',
+            global_dict=_globals
+        )
 
-	def show_prompt(self):
+    def show_prompt(self):
 
-		self.extension_manager.fire(u'jupyter_show_prompt')
+        self.extension_manager.fire(u'jupyter_show_prompt')

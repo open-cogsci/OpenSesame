@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -27,48 +27,48 @@ _ = translation_context(u'pool_select', category=u'core')
 
 class pool_select(QtWidgets.QWidget, base_subcomponent):
 
-	"""
-	desc:
-		A widget that implements a file-pool selector. Partly emulates the
-		QLineEdit API.
-	"""
+    """
+    desc:
+            A widget that implements a file-pool selector. Partly emulates the
+            QLineEdit API.
+    """
 
-	editingFinished = QtCore.Signal()
-	textEdited = QtCore.Signal()
+    editingFinished = QtCore.Signal()
+    textEdited = QtCore.Signal()
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
 
-		QtWidgets.QComboBox.__init__(self, main_window)
-		self.setup(main_window)
-		self.edit = QtWidgets.QLineEdit()
-		self.edit.editingFinished.connect(self.editingFinished.emit)
-		self.edit.textEdited.connect(self.textEdited.emit)
-		self.edit.setMinimumWidth(200)
-		self.button = QtWidgets.QPushButton(
-			self.theme.qicon(u'browse'),
-			_(u'Browse')
-		)
-		self.button.setIconSize(QtCore.QSize(16, 16))
-		self.button.clicked.connect(self.browse)
-		self.hbox = QtWidgets.QHBoxLayout(self)
-		self.hbox.addWidget(self.edit)
-		self.hbox.addWidget(self.button)
-		self.hbox.setContentsMargins(0, 0, 0, 0)
-		self.hbox.setSpacing(6)
-		self.setLayout(self.hbox)
+        QtWidgets.QComboBox.__init__(self, main_window)
+        self.setup(main_window)
+        self.edit = QtWidgets.QLineEdit()
+        self.edit.editingFinished.connect(self.editingFinished.emit)
+        self.edit.textEdited.connect(self.textEdited.emit)
+        self.edit.setMinimumWidth(200)
+        self.button = QtWidgets.QPushButton(
+            self.theme.qicon(u'browse'),
+            _(u'Browse')
+        )
+        self.button.setIconSize(QtCore.QSize(16, 16))
+        self.button.clicked.connect(self.browse)
+        self.hbox = QtWidgets.QHBoxLayout(self)
+        self.hbox.addWidget(self.edit)
+        self.hbox.addWidget(self.button)
+        self.hbox.setContentsMargins(0, 0, 0, 0)
+        self.hbox.setSpacing(6)
+        self.setLayout(self.hbox)
 
-	def text(self):
+    def text(self):
 
-		return self.edit.text()
+        return self.edit.text()
 
-	def setText(self, value):
+    def setText(self, value):
 
-		return self.edit.setText(value)
+        return self.edit.setText(value)
 
-	def browse(self):
+    def browse(self):
 
-		s = pool_widget.select_from_pool(self.main_window)
-		if not s:
-			return
-		self.edit.setText(s)
-		self.editingFinished.emit()
+        s = pool_widget.select_from_pool(self.main_window)
+        if not s:
+            return
+        self.edit.setText(s)
+        self.editingFinished.emit()

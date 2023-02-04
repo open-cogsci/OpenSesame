@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -27,133 +27,131 @@ from libopensesame.oslogging import oslogger
 from libqtopensesame.items import sequence as qtsequence
 from libqtopensesame.items import qtplugin
 try:
-	from libqtopensesame.misc.translate import translation_context
-	_ = translation_context(u'parallel', category=u'plugin')
+    from libqtopensesame.misc.translate import translation_context
+    _ = translation_context(u'parallel', category=u'plugin')
 except ImportError:
-	pass
+    pass
 
 
 class parallel_process(threading.Thread):
 
-	"""A wrapper for a single process"""
+    """A wrapper for a single process"""
 
-	def __init__(self, item):
+    def __init__(self, item):
+        """
+        Constructor
 
-		"""
-		Constructor
+        Arguments:
+        item -- the item to run
+        """
 
-		Arguments:
-		item -- the item to run
-		"""
+        threading.Thread.__init__(self)
+        self.item = item
+        self.exception = None
 
-		threading.Thread.__init__(self)
-		self.item = item
-		self.exception = None
+    def run(self):
+        """Runs the item"""
 
-	def run(self):
+        self.launch_time = self.item.time()
+        try:
+            self.item.run()
+        except Exception as e:
+            self.exception = e
 
-		"""Runs the item"""
-
-		self.launch_time = self.item.time()
-		try:
-			self.item.run()
-		except Exception as e:
-			self.exception = e
 
 class parallel(sequence.sequence):
 
-	"""
-	The parallel plug-in behaves much like a sequence, but it runs items in
-	parallel. The parallel exits when the last item is finished
-	"""
+    """
+    The parallel plug-in behaves much like a sequence, but it runs items in
+    parallel. The parallel exits when the last item is finished
+    """
 
-	def run(self):
+    def run(self):
+        """
+        Run the parallel
 
-		"""
-		Run the parallel
+        Returns:
+        True on success, False on failure
+        """
 
-		Returns:
-		True on success, False on failure
-		"""
+        # Optionally flush the responses to catch escape presses
+        if self._keyboard is not None:
+            self._keyboard.flush()
 
-		# Optionally flush the responses to catch escape presses
-		if self._keyboard is not None:
-			self._keyboard.flush()
+        # Do nothing if there are no items
+        if len(self._items) == 0:
+            return
 
-		# Do nothing if there are no items
-		if len(self._items) == 0:
-			return
+        # The first item is the main item, which is not executed in a thread
+        item, cond = self._items[0]
+        if eval(cond):
+            main_item = self.experiment.items[item]
+        else:
+            main_item = None
 
-		# The first item is the main item, which is not executed in a thread
-		item, cond = self._items[0]
-		if eval(cond):
-			main_item = self.experiment.items[item]
-		else:
-			main_item = None
+        # Create a list of threads for the rest of the items
+        tl = []
+        if len(self._items) > 1:
+            for item, cond in self._items[1:]:
+                if eval(cond):
+                    tl.append(parallel_process(self.experiment.items[item]))
 
-		# Create a list of threads for the rest of the items
-		tl = []
-		if len(self._items) > 1:
-			for item, cond in self._items[1:]:
-				if eval(cond):
-					tl.append(parallel_process(self.experiment.items[item]))
+        # Run all threads
+        for t in tl:
+            t.start()
 
-		# Run all threads
-		for t in tl:
-			t.start()
+        # Run the main item
+        if main_item is not None:
+            self.launch_time = self.time()
+            main_item.run()
 
-		# Run the main item
-		if main_item is not None:
-			self.launch_time = self.time()
-			main_item.run()
+        # Wait for the threads to finish
+        while True:
+            alive = False
+            for t in tl:
+                if t.is_alive():
+                    alive = True
+                if t.exception is not None:
+                    raise t.exception
+            if alive:
+                self.sleep(100)
+            else:
+                break
 
-		# Wait for the threads to finish
-		while True:
-			alive = False
-			for t in tl:
-				if t.is_alive():
-					alive = True
-				if t.exception is not None:
-					raise t.exception
-			if alive:
-				self.sleep(100)
-			else:
-				break
+        # Debug output to verify timing
+        oslogger.debug('main item was launched at %s' % self.launch_time)
+        for t in tl:
+            oslogger.debug('thread was launched at %s' % t.launch_time)
 
-		# Debug output to verify timing
-		oslogger.debug('main item was launched at %s' % self.launch_time)
-		for t in tl:
-			oslogger.debug('thread was launched at %s' % t.launch_time)
+        return True
 
-		return True
 
 class qtparallel(qtsequence.sequence, qtplugin.qtplugin):
 
-	"""Parallel GUI"""
+    """Parallel GUI"""
 
-	def __init__(self, name, experiment, string=None):
+    def __init__(self, name, experiment, string=None):
+        """
+        Constructor
 
-		"""
-		Constructor
+        Arguments:
+        name -- the name of the item
+        experiment -- an instance of libopensesame.experiment
 
-		Arguments:
-		name -- the name of the item
-		experiment -- an instance of libopensesame.experiment
+        Keyword arguments:
+        string -- a string with the item definition (default=None)
+        """
 
-		Keyword arguments:
-		string -- a string with the item definition (default=None)
-		"""
+        qtsequence.sequence.__init__(self, name, experiment, string)
+        self.item_type = 'parallel'
+        self.description = "Runs a number of items in parallel"
+        qtplugin.qtplugin.__init__(self, __file__)
 
-		qtsequence.sequence.__init__(self, name, experiment, string)
-		self.item_type = 'parallel'
-		self.description = "Runs a number of items in parallel"
-		qtplugin.qtplugin.__init__(self, __file__)
+    def edit_widget(self):
 
-	def edit_widget(self):
-
-		qtplugin.qtplugin.edit_widget(self)
-		self.extension_manager.fire(u'notify',
-			message=_(u'Using the parallel plug-in is not recommended. For an '
-			u'alternative, see <a href="http://osdoc.cogsci.nl/usage/coroutines/"> '
-			u'coroutines</a>.'),
-			category=u'danger')
+        qtplugin.qtplugin.edit_widget(self)
+        self.extension_manager.fire(u'notify',
+                                    message=_(u'Using the parallel plug-in is not recommended. For an '
+                                              u'alternative, see <a href="http://osdoc.cogsci.nl/usage/coroutines/"> '
+                                              u'coroutines</a>.'),
+                                    category=u'danger')

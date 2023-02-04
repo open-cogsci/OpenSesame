@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -22,55 +22,52 @@ from openexp import backend
 
 
 def Sampler(experiment, *arglist, **kwdict):
+    """
+    desc:
+            A factory that returns a back-end specific sampler object.
 
-	"""
-	desc:
-		A factory that returns a back-end specific sampler object.
+    arguments:
+            experiment:
+                    desc:	The experiment object.
+                    type:	experiment
 
-	arguments:
-		experiment:
-			desc:	The experiment object.
-			type:	experiment
+    argument-list:
+            arglist:	See sampler.__init__().
 
-	argument-list:
-		arglist:	See sampler.__init__().
+    keyword-dict:
+            kwdict:		See sampler.__init__().
+    """
 
-	keyword-dict:
-		kwdict:		See sampler.__init__().
-	"""
-
-	cls = backend.get_backend_class(experiment, u'sampler')
-	return cls(experiment, *arglist, **kwdict)
+    cls = backend.get_backend_class(experiment, u'sampler')
+    return cls(experiment, *arglist, **kwdict)
 
 
 def init_sound(experiment):
+    """
+    desc:
+            Calls the back-end specific init_sound function.
 
-	"""
-	desc:
-		Calls the back-end specific init_sound function.
+    arguments:
+            experiment:		The experiment object.
+            type:			experiment
+    """
 
-	arguments:
-		experiment:		The experiment object.
-		type:			experiment
-	"""
-
-	cls = backend.get_backend_class(experiment, u'sampler')
-	cls.init_sound(experiment)
+    cls = backend.get_backend_class(experiment, u'sampler')
+    cls.init_sound(experiment)
 
 
 def close_sound(experiment):
+    """
+    desc:
+            Calls the back-end specific close_sound function.
 
-	"""
-	desc:
-		Calls the back-end specific close_sound function.
+    arguments:
+            experiment:		The experiment object.
+            type:			experiment
+    """
 
-	arguments:
-		experiment:		The experiment object.
-		type:			experiment
-	"""
-
-	cls = backend.get_backend_class(experiment, u'sampler')
-	cls.close_sound(experiment)
+    cls = backend.get_backend_class(experiment, u'sampler')
+    cls.close_sound(experiment)
 
 
 # Non PEP-8 alias for backwards compatibility

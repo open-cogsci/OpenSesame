@@ -23,14 +23,14 @@ from openexp._canvas._element.element import Element
 
 class Rect(Element):
 
-	def __init__(self, canvas, x, y, w, h, **properties):
+    def __init__(self, canvas, x, y, w, h, **properties):
 
-		properties = properties.copy()
-		x, y, w, h = self._rect(x, y, w, h)
-		properties.update({ 'x' : x, 'y' : y, 'w' : w, 'h' : h })
-		Element.__init__(self, canvas, **properties)
+        properties = properties.copy()
+        x, y, w, h = self._rect(x, y, w, h)
+        properties.update({'x': x, 'y': y, 'w': w, 'h': h})
+        Element.__init__(self, canvas, **properties)
 
-	@property
-	def rect(self):
+    @property
+    def rect(self):
 
-		return self.x, self.y, self.w, self.h
+        return self.x, self.y, self.w, self.h

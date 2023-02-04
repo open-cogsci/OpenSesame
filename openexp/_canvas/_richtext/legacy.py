@@ -25,21 +25,21 @@ import pygame
 
 class Legacy(LegacyElement, RichText):
 
-	def prepare(self):
+    def prepare(self):
 
-		if not hasattr(self, '_text_surface') or self._dirty:
-			im = self._to_pil()
-			self._text_surface = pygame.image.fromstring(
-				im.tobytes(), im.size, im.mode)
-			self._dirty = False
-		x, y = self.to_xy(self.x, self.y)
-		if self.center:
-			x -= self._text_surface.get_width()//2
-			y -= self._text_surface.get_height()//2
-		self.surface.blit(self._text_surface, (x, y))
+        if not hasattr(self, '_text_surface') or self._dirty:
+            im = self._to_pil()
+            self._text_surface = pygame.image.fromstring(
+                im.tobytes(), im.size, im.mode)
+            self._dirty = False
+        x, y = self.to_xy(self.x, self.y)
+        if self.center:
+            x -= self._text_surface.get_width()//2
+            y -= self._text_surface.get_height()//2
+        self.surface.blit(self._text_surface, (x, y))
 
-	@staticmethod
-	def _setter(key, self, val):
+    @staticmethod
+    def _setter(key, self, val):
 
-		self._dirty = True
-		RichText._setter(key, self, val)
+        self._dirty = True
+        RichText._setter(key, self, val)

@@ -25,12 +25,12 @@ from expyriment.stimuli import Ellipse as ExpyrimentEllipse
 
 class Xpyriment(XpyrimentElement, Ellipse):
 
-	def prepare(self):
+    def prepare(self):
 
-		self._stim = ExpyrimentEllipse(
-			radii=(self.w//2, self.h//2),
-			position=self.to_xy(self.x+self.w//2, self.y+self.h//2),
-			colour=self.color.backend_color,
-			line_width=0 if self.fill else self.penwidth
-		)
-		self._stim.preload()
+        self._stim = ExpyrimentEllipse(
+            radii=(self.w//2, self.h//2),
+            position=self.to_xy(self.x+self.w//2, self.y+self.h//2),
+            colour=self.color.backend_color,
+            line_width=0 if self.fill else self.penwidth
+        )
+        self._stim.preload()

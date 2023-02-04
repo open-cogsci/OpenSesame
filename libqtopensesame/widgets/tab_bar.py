@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -26,35 +26,35 @@ _ = translation_context(u'tab_bar', category=u'core')
 
 
 class TabBar(BaseSubcomponent, QTabBar):
-	"""A tab-bar for the overview area, implementing a right-click context
-	menu, and a close-on-middle-click.
-	"""
-	
-	def __init__(self, tab_widget):
-		
-		QTabBar.__init__(self, tab_widget)
-		BaseSubcomponent.setup(self, tab_widget)
-		self._tab_widget = tab_widget
-		self.setContextMenuPolicy(Qt.CustomContextMenu)
-		self.customContextMenuRequested.connect(self._show_context_menu)
-		
-	def mousePressEvent(self, event):
-		
-		QTabBar.mousePressEvent(self, event)
-		if event.button() == Qt.MiddleButton:
-			self._tab_widget.removeTab(self.tabAt(event.pos()))
-			
-	def _show_context_menu(self, pos):
-		
-		tab_index = self.tabAt(pos)
-		self._tab_widget.setCurrentIndex(tab_index)
-		menu = QMenu(self)
-		menu.addAction(self.main_window.ui.action_close_current_tab)
-		menu.addAction(self.main_window.ui.action_close_all_tabs)
-		menu.addAction(self.main_window.ui.action_close_other_tabs)
-		if 'tab_to_dockwidget' in self.extension_manager:
-			menu.addSeparator()
-			menu.addAction(
-				self.extension_manager['tab_to_dockwidget'].action
-			)
-		menu.exec_(self.mapToGlobal(pos))
+    """A tab-bar for the overview area, implementing a right-click context
+    menu, and a close-on-middle-click.
+    """
+
+    def __init__(self, tab_widget):
+
+        QTabBar.__init__(self, tab_widget)
+        BaseSubcomponent.setup(self, tab_widget)
+        self._tab_widget = tab_widget
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self._show_context_menu)
+
+    def mousePressEvent(self, event):
+
+        QTabBar.mousePressEvent(self, event)
+        if event.button() == Qt.MiddleButton:
+            self._tab_widget.removeTab(self.tabAt(event.pos()))
+
+    def _show_context_menu(self, pos):
+
+        tab_index = self.tabAt(pos)
+        self._tab_widget.setCurrentIndex(tab_index)
+        menu = QMenu(self)
+        menu.addAction(self.main_window.ui.action_close_current_tab)
+        menu.addAction(self.main_window.ui.action_close_all_tabs)
+        menu.addAction(self.main_window.ui.action_close_other_tabs)
+        if 'tab_to_dockwidget' in self.extension_manager:
+            menu.addSeparator()
+            menu.addAction(
+                self.extension_manager['tab_to_dockwidget'].action
+            )
+        menu.exec_(self.mapToGlobal(pos))

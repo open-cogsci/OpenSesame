@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,30 +23,30 @@ from openexp._coordinates.coordinates import Coordinates
 
 class Psycho(Coordinates):
 
-	"""
-	desc:
-		For function specifications and docstrings, see
-		`openexp._coordinates.coordinates`.
-	"""
+    """
+    desc:
+            For function specifications and docstrings, see
+            `openexp._coordinates.coordinates`.
+    """
 
-	def to_xy(self, x, y=None):
+    def to_xy(self, x, y=None):
 
-		if isinstance(x, tuple):
-			x, y = x
-		x, y = self.none_to_center(x, y)
-		# For PsychoPy, 0,0 is the display center and positive y
-		# coordinates are down.
-		if self.uniform_coordinates:
-			return x, -y
-		return x - self._xcenter, self._ycenter - y
+        if isinstance(x, tuple):
+            x, y = x
+        x, y = self.none_to_center(x, y)
+        # For PsychoPy, 0,0 is the display center and positive y
+        # coordinates are down.
+        if self.uniform_coordinates:
+            return x, -y
+        return x - self._xcenter, self._ycenter - y
 
-	def from_xy(self, x, y=None):
+    def from_xy(self, x, y=None):
 
-		if y is None:
-			x, y = x
-		if self.uniform_coordinates:
-			return x, -y
-		return x + self._xcenter, self._ycenter - y
+        if y is None:
+            x, y = x
+        if self.uniform_coordinates:
+            return x, -y
+        return x + self._xcenter, self._ycenter - y
 
 
 # Non PEP-8 alias for backwards compatibility

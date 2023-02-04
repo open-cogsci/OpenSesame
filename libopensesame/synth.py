@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -26,43 +26,41 @@ from openexp.synth import synth as openexp_synth
 
 class synth(sampler):
 
-	"""
-	desc:
-		An item for synthesized-sound playback.
-	"""
+    """
+    desc:
+            An item for synthesized-sound playback.
+    """
 
-	description = u'A basic sound synthesizer'
+    description = u'A basic sound synthesizer'
 
-	def reset(self):
+    def reset(self):
+        """See item."""
 
-		"""See item."""
+        self.var.freq = 440
+        self.var.length = 100
+        self.var.osc = u'sine'
+        self.var.pan = 0
+        self.var.attack = 0
+        self.var.decay = 5
+        self.var.volume = 1.0
+        self.var.duration = u'sound'
+        self.block = False
 
-		self.var.freq = 440
-		self.var.length = 100
-		self.var.osc = u'sine'
-		self.var.pan = 0
-		self.var.attack = 0
-		self.var.decay = 5
-		self.var.volume = 1.0
-		self.var.duration = u'sound'
-		self.block = False
+    def prepare(self):
+        """Prepares for playback."""
 
-	def prepare(self):
-
-		"""Prepares for playback."""
-
-		base_response_item.prepare(self)
-		try:
-			self.sampler = openexp_synth(self.experiment, osc=self.var.osc,
-				freq=self.var.freq, length=self.var.length,
-				attack=self.var.attack, decay=self.var.decay)
-		except Exception as e:
-			raise osexception(u'Failed to generate sound', exception=e)
-		pan = self.var.pan
-		if pan == -20:
-			pan = u'left'
-		elif pan == 20:
-			pan = u'right'
-		self.sampler.pan = pan
-		self.sampler.volume = self.var.volume
-		self.sampler.block = self.var.duration == u'sound'
+        base_response_item.prepare(self)
+        try:
+            self.sampler = openexp_synth(self.experiment, osc=self.var.osc,
+                                         freq=self.var.freq, length=self.var.length,
+                                         attack=self.var.attack, decay=self.var.decay)
+        except Exception as e:
+            raise osexception(u'Failed to generate sound', exception=e)
+        pan = self.var.pan
+        if pan == -20:
+            pan = u'left'
+        elif pan == 20:
+            pan = u'right'
+        self.sampler.pan = pan
+        self.sampler.volume = self.var.volume
+        self.sampler.block = self.var.duration == u'sound'

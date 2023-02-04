@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -29,119 +29,112 @@ _ = translation_context(u'inline_script', category=u'item')
 
 class inline_script(inline_script_runtime, qtplugin):
 
-	"""The inline_script GUI controls"""
+    """The inline_script GUI controls"""
 
-	description = _(u'Executes Python code')
-	help_url = u'manual/python/about'
-	ext = u'.py'
-	mime_type = u'text/x-python'
+    description = _(u'Executes Python code')
+    help_url = u'manual/python/about'
+    ext = u'.py'
+    mime_type = u'text/x-python'
 
-	def __init__(self, name, experiment, string=None):
+    def __init__(self, name, experiment, string=None):
+        """See item."""
 
-		"""See item."""
+        inline_script_runtime.__init__(self, name, experiment, string)
+        qtplugin.__init__(self)
 
-		inline_script_runtime.__init__(self, name, experiment, string)
-		qtplugin.__init__(self)
+    def apply_edit_changes(self):
+        """See qtitem."""
 
-	def apply_edit_changes(self):
+        sp = self._pyqode_prepare_editor.toPlainText()
+        sr = self._pyqode_run_editor.toPlainText()
+        self._set_modified()
+        self.var._prepare = sp
+        self.var._run = sr
+        qtplugin.apply_edit_changes(self)
 
-		"""See qtitem."""
+    def _set_modified(self, prepare=False, run=False):
+        """
+        desc:
+                Sets the modified status of the editors.
+        """
 
-		sp = self._pyqode_prepare_editor.toPlainText()
-		sr = self._pyqode_run_editor.toPlainText()
-		self._set_modified()
-		self.var._prepare = sp
-		self.var._run = sr
-		qtplugin.apply_edit_changes(self)
+        self._pyqode_prepare_editor.document().setModified(prepare)
+        self._pyqode_run_editor.document().setModified(run)
+        self._pyqode_tab_bar.setTabText(
+            0,
+            (u'* ' if prepare else u'') + _(u'Prepare')
+        )
+        self._pyqode_tab_bar.setTabText(
+            1,
+            (u'* ' if prepare else u'') + _(u'Run')
+        )
 
-	def _set_modified(self, prepare=False, run=False):
+    def set_focus(self):
+        """
+        desc:
+                Allows the item to focus the most important widget.
+        """
 
-		"""
-		desc:
-			Sets the modified status of the editors.
-		"""
+        self._pyqode_tab_widget.setFocus()
 
-		self._pyqode_prepare_editor.document().setModified(prepare)
-		self._pyqode_run_editor.document().setModified(run)
-		self._pyqode_tab_bar.setTabText(
-			0,
-			(u'* ' if prepare else u'') + _(u'Prepare')
-		)
-		self._pyqode_tab_bar.setTabText(
-			1,
-			(u'* ' if prepare else u'') + _(u'Run')
-		)
+    def init_edit_widget(self):
+        """See qtitem."""
 
-	def set_focus(self):
+        from pyqode.core.widgets import SplittableCodeEditTabWidget
 
-		"""
-		desc:
-			Allows the item to focus the most important widget.
-		"""
+        qtplugin.init_edit_widget(self, stretch=False)
+        self._pyqode_tab_widget = SplittableCodeEditTabWidget(
+            tabs_movable=False,
+            plus_button=False,
+            tab_context_menu=False,
+            empty_context_menu=False
+        )
+        self._pyqode_tab_widget.setSizePolicy(
+            QSizePolicy.Expanding,
+            QSizePolicy.Expanding
+        )
+        self._pyqode_tab_bar = self._pyqode_tab_widget.main_tab_widget.tabBar()
+        self._pyqode_tab_bar.setTabsClosable(False)
+        self._pyqode_prepare_editor = \
+            self._pyqode_tab_widget.create_new_document('Prepare', self.ext)
+        self._pyqode_run_editor = \
+            self._pyqode_tab_widget.create_new_document('Run', self.ext)
+        self._pyqode_run_editor.focusOutEvent = self._editor_focus_out
+        self._pyqode_prepare_editor.focusOutEvent = self._editor_focus_out
+        self._set_modified()
+        self.extension_manager.fire(
+            u'register_editor',
+            editor=self._pyqode_run_editor
+        )
+        self.extension_manager.fire(
+            u'register_editor',
+            editor=self._pyqode_prepare_editor
+        )
+        self.edit_vbox.addWidget(self._pyqode_tab_widget)
+        if not self.var._run and self.var._prepare:
+            self._pyqode_tab_widget.main_tab_widget.setCurrentIndex(0)
+        else:
+            self._pyqode_tab_widget.main_tab_widget.setCurrentIndex(1)
 
-		self._pyqode_tab_widget.setFocus()
+    def edit_widget(self):
+        """See qtitem."""
 
-	def init_edit_widget(self):
+        qtplugin.edit_widget(self)
+        _prepare = safe_decode(self.var._prepare)
+        if _prepare != self._pyqode_prepare_editor.toPlainText():
+            self._pyqode_prepare_editor.setPlainText(
+                _prepare,
+                mime_type=self.mime_type
+            )
+        _run = safe_decode(self.var._run)
+        if _run != self._pyqode_run_editor.toPlainText():
+            self._pyqode_run_editor.setPlainText(
+                _run,
+                mime_type=self.mime_type
+            )
 
-		"""See qtitem."""
+    def get_ready(self):
 
-		from pyqode.core.widgets import SplittableCodeEditTabWidget
-
-		qtplugin.init_edit_widget(self, stretch=False)
-		self._pyqode_tab_widget = SplittableCodeEditTabWidget(
-			tabs_movable=False,
-			plus_button=False,
-			tab_context_menu=False,
-			empty_context_menu=False
-		)
-		self._pyqode_tab_widget.setSizePolicy(
-			QSizePolicy.Expanding,
-			QSizePolicy.Expanding
-		)
-		self._pyqode_tab_bar = self._pyqode_tab_widget.main_tab_widget.tabBar()
-		self._pyqode_tab_bar.setTabsClosable(False)
-		self._pyqode_prepare_editor = \
-			self._pyqode_tab_widget.create_new_document('Prepare', self.ext)
-		self._pyqode_run_editor = \
-			self._pyqode_tab_widget.create_new_document('Run', self.ext)
-		self._pyqode_run_editor.focusOutEvent = self._editor_focus_out
-		self._pyqode_prepare_editor.focusOutEvent = self._editor_focus_out
-		self._set_modified()
-		self.extension_manager.fire(
-			u'register_editor',
-			editor=self._pyqode_run_editor
-		)
-		self.extension_manager.fire(
-			u'register_editor',
-			editor=self._pyqode_prepare_editor
-		)
-		self.edit_vbox.addWidget(self._pyqode_tab_widget)
-		if not self.var._run and self.var._prepare:
-			self._pyqode_tab_widget.main_tab_widget.setCurrentIndex(0)
-		else:
-			self._pyqode_tab_widget.main_tab_widget.setCurrentIndex(1)
-
-
-	def edit_widget(self):
-
-		"""See qtitem."""
-
-		qtplugin.edit_widget(self)
-		_prepare = safe_decode(self.var._prepare)
-		if _prepare != self._pyqode_prepare_editor.toPlainText():
-			self._pyqode_prepare_editor.setPlainText(
-				_prepare,
-				mime_type=self.mime_type
-			)
-		_run = safe_decode(self.var._run)
-		if _run != self._pyqode_run_editor.toPlainText():
-			self._pyqode_run_editor.setPlainText(
-				_run,
-				mime_type=self.mime_type
-			)
-
-	def get_ready(self):
-
-		if self.container_widget is None:
-			return
-		self.apply_edit_changes()
+        if self.container_widget is None:
+            return
+        self.apply_edit_changes()

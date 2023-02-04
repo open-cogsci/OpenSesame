@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,140 +23,134 @@ import warnings
 
 class Log(object):
 
-	"""
-	desc: |
-		The `log` object provides data logging. A `log` object is created
-		automatically when the experiment starts.
+    """
+    desc: |
+            The `log` object provides data logging. A `log` object is created
+            automatically when the experiment starts.
 
-		__Example__:
+            __Example__:
 
-		~~~ .python
-		# Write one line of text
-		log.write(u'My custom log message')
-		# Write all variables
-		log.write_vars()
-		~~~
+            ~~~ .python
+            # Write one line of text
+            log.write(u'My custom log message')
+            # Write all variables
+            log.write_vars()
+            ~~~
 
-		[TOC]
-	"""
+            [TOC]
+    """
 
-	def __init__(self, experiment, path):
+    def __init__(self, experiment, path):
+        """
+        visible: False
 
-		"""
-		visible: False
+        desc:
+                Constructor to create a new `log` object. You do not generally
+                call this constructor directly, because a `log` object is created
+                automatically when the experiment is launched.
 
-		desc:
-			Constructor to create a new `log` object. You do not generally
-			call this constructor directly, because a `log` object is created
-			automatically when the experiment is launched.
+        arguments:
+                experiment:
+                        desc:	The experiment object.
+                        type:	experiment
+        """
 
-		arguments:
-			experiment:
-				desc:	The experiment object.
-				type:	experiment
-		"""
+        self.experiment = experiment
+        self.experiment.var.logfile = path
+        self._all_vars = None
+        self.open(path)
 
-		self.experiment = experiment
-		self.experiment.var.logfile = path
-		self._all_vars = None
-		self.open(path)
+    def __call__(self, msg):
 
-	def __call__(self, msg):
+        warnings.warn(u'item.flog() has been deprecated. '
+                      u'Use experiment.log.write() instead.', DeprecationWarning)
+        self.write(msg)
 
-		warnings.warn(u'item.flog() has been deprecated. '
-			u'Use experiment.log.write() instead.', DeprecationWarning)
-		self.write(msg)
+    def close(self):
+        """
+        desc:
+                Closes the current log.
 
-	def close(self):
+        example: |
+                log.close()
+        """
 
-		"""
-		desc:
-			Closes the current log.
+        pass
 
-		example: |
-			log.close()
-		"""
+    def all_vars(self):
+        """
+        visible: False
 
-		pass
+        returns:
+                A list of all variables that exist in the experiment.
+        """
 
-	def all_vars(self):
+        if self._all_vars is None:
+            self._all_vars = list(self.experiment.var.inspect().keys())
+        return self._all_vars
 
-		"""
-		visible: False
+    def open(self, path):
+        """
+        desc:
+                Opens the current log. If a log was already open, it is closed
+                automatically, and re-opened.
 
-		returns:
-			A list of all variables that exist in the experiment.
-		"""
+        arguments:
+                path:
+                        desc:	The path to the current logfile. In most cases (unless)
+                                        a custom log back-end is used, this will be a filename.
+                        type:	[str, unicode]
 
-		if self._all_vars is None:
-			self._all_vars = list(self.experiment.var.inspect().keys())
-		return self._all_vars
+        example: |
+                # Open a new log
+                log.open(u'/path/to/new/logfile.csv')
+        """
 
-	def open(self, path):
+        pass
 
-		"""
-		desc:
-			Opens the current log. If a log was already open, it is closed
-			automatically, and re-opened.
+    def write(self, msg, newline=True):
+        """
+        desc:
+                Write one message to the log.
 
-		arguments:
-			path:
-				desc:	The path to the current logfile. In most cases (unless)
-						a custom log back-end is used, this will be a filename.
-				type:	[str, unicode]
+        arguments:
+                msg:
+                        desc:	A text message. When using Python 2, this should be
+                                        either `unicode` or a utf-8-encoded `str`. When using
+                                        Python 3, this should be either `str` or a utf-8-encoded
+                                        `bytes`.
+                        type:	[str, unicode]
 
-		example: |
-			# Open a new log
-			log.open(u'/path/to/new/logfile.csv')
-		"""
+        keywords:
+                newline:
+                        desc:	Indicates whether a newline should be written after the
+                                        message.
+                        type:	bool
 
-		pass
+        example: |
+                # Write a single string of text
+                log.write(u'time = %s' % clock.time())
+        """
 
-	def write(self, msg, newline=True):
+        pass
 
-		"""
-		desc:
-			Write one message to the log.
+    def write_vars(self, var_list=None):
+        """
+        desc:
+                Writes variables to the log.
 
-		arguments:
-			msg:
-				desc:	A text message. When using Python 2, this should be
-						either `unicode` or a utf-8-encoded `str`. When using
-						Python 3, this should be either `str` or a utf-8-encoded
-						`bytes`.
-				type:	[str, unicode]
+        keywords:
+                var_list:
+                        desc:	A list of variable names to write, or None to write all
+                                        variables that exist in the experiment.
+                        type:	[list, NoneType]
 
-		keywords:
-			newline:
-				desc:	Indicates whether a newline should be written after the
-						message.
-				type:	bool
+        example: |
+                # Write all variables to the logfile
+                log.write_vars()
+        """
 
-		example: |
-			# Write a single string of text
-			log.write(u'time = %s' % clock.time())
-		"""
-
-		pass
-
-	def write_vars(self, var_list=None):
-
-		"""
-		desc:
-			Writes variables to the log.
-
-		keywords:
-			var_list:
-				desc:	A list of variable names to write, or None to write all
-						variables that exist in the experiment.
-				type:	[list, NoneType]
-
-		example: |
-			# Write all variables to the logfile
-			log.write_vars()
-		"""
-
-		pass
+        pass
 
 
 # Non PEP-8 alias for backwards compatibility

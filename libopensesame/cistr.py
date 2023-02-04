@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -22,42 +22,42 @@ import operator
 
 
 class cistr(str):
-	
-	"""
-	desc:
-		A class for case-insensitive string comparisons. This is used to speed
-		up the item store, which gets a lot of look ups for item names. This is
-		not a full emulation of the str protocol, only those parts that are used
-		by the item store.
-	"""
 
-	def __init__(self, s):
-		
-		if py3:			
-			str.__init__(s)
-		else:
-			str.__init__(self, s)
-		self._lower = s.lower()
-		self._hash = hash(self._lower)
+    """
+    desc:
+            A class for case-insensitive string comparisons. This is used to speed
+            up the item store, which gets a lot of look ups for item names. This is
+            not a full emulation of the str protocol, only those parts that are used
+            by the item store.
+    """
 
-	def __eq__(self, other):
-		
-		try:
-			return other._hash == self._hash
-		except AttributeError:
-			if hasattr(other, u'lower'):
-				return other.lower() == self._lower
-		return other == self._lower
-		
-	def __ne__(self, other):
-		
-		try:
-			return other._hash != self._hash
-		except AttributeError:
-			if hasattr(other, u'lower'):
-				return other.lower() != self._lower
-		return other != self._lower				
-		
-	def __hash__(self):
-		
-		return self._hash
+    def __init__(self, s):
+
+        if py3:
+            str.__init__(s)
+        else:
+            str.__init__(self, s)
+        self._lower = s.lower()
+        self._hash = hash(self._lower)
+
+    def __eq__(self, other):
+
+        try:
+            return other._hash == self._hash
+        except AttributeError:
+            if hasattr(other, u'lower'):
+                return other.lower() == self._lower
+        return other == self._lower
+
+    def __ne__(self, other):
+
+        try:
+            return other._hash != self._hash
+        except AttributeError:
+            if hasattr(other, u'lower'):
+                return other.lower() != self._lower
+        return other != self._lower
+
+    def __hash__(self):
+
+        return self._hash

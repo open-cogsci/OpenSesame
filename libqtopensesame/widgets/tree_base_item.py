@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,153 +23,150 @@ from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_base_item', category=u'core')
 
+
 class tree_base_item(base_subcomponent, QtWidgets.QTreeWidgetItem):
 
-	"""
-	desc:
-		A base class that corresponds to any widget in the overview area.
-	"""
+    """
+    desc:
+            A base class that corresponds to any widget in the overview area.
+    """
 
-	def start_edit(self, col):
+    def start_edit(self, col):
 
-		self.treeWidget().editItem(self, col)
+        self.treeWidget().editItem(self, col)
 
-	def ancestry(self):
+    def ancestry(self):
 
-		return None
+        return None
 
-	def path(self):
+    def path(self):
 
-		if self.parent() is None:
-			return self.text(0)
-		return self.parent().path() + u'.' + self.text(0)
+        if self.parent() is None:
+            return self.text(0)
+        return self.parent().path() + u'.' + self.text(0)
 
-	def children(self):
+    def children(self):
 
-		l = []
-		for i in range(self.childCount()):
-			child = self.child(i)
-			l += [child] + child.children()
-		return l
+        l = []
+        for i in range(self.childCount()):
+            child = self.child(i)
+            l += [child] + child.children()
+        return l
 
-	def show_context_menu(self, pos):
+    def show_context_menu(self, pos):
 
-		pass
+        pass
 
-	def paste(self):
+    def paste(self):
 
-		pass
+        pass
 
-	def copy(self):
+    def copy(self):
 
-		pass
+        pass
 
-	def create_linked_copy(self):
+    def create_linked_copy(self):
 
-		pass
+        pass
 
-	def create_unlinked_copy(self):
+    def create_unlinked_copy(self):
 
-		pass
+        pass
 
-	def copy_linked(self):
+    def copy_linked(self):
 
-		pass
+        pass
 
-	def copy_unlinked(self):
+    def copy_unlinked(self):
 
-		pass
+        pass
 
-	def delete(self):
+    def delete(self):
 
-		pass
+        pass
 
-	def permanently_delete(self):
+    def permanently_delete(self):
 
-		pass
+        pass
 
-	def open_tab(self):
+    def open_tab(self):
 
-		pass
+        pass
 
-	def drop_hint(self):
+    def drop_hint(self):
 
-		return None
+        return None
 
-	def droppable(self, data):
+    def droppable(self, data):
 
-		return self._droppable
+        return self._droppable
 
-	def set_droppable(self, droppable):
+    def set_droppable(self, droppable):
 
-		self._droppabe = droppable
+        self._droppabe = droppable
 
-	def draggable(self):
+    def draggable(self):
 
-		return self._draggable
+        return self._draggable
 
-	def set_draggable(self, draggable):
+    def set_draggable(self, draggable):
 
-		self._draggable = draggable
+        self._draggable = draggable
 
-	def has_append_menu(self):
+    def has_append_menu(self):
 
-		return False
+        return False
 
-	def expand(self):
+    def expand(self):
+        """
+        desc:
+                Expands this item and all items under it.
+        """
 
-		"""
-		desc:
-			Expands this item and all items under it.
-		"""
+        self.setExpanded(True)
+        for i in range(self.childCount()):
+            self.child(i).expand()
 
-		self.setExpanded(True)
-		for i in range(self.childCount()):
-			self.child(i).expand()
+    def collapse(self):
+        """
+        desc:
+                Collapses this item and all items under it.
+        """
 
-	def collapse(self):
+        self.setExpanded(False)
+        for i in range(self.childCount()):
+            self.child(i).collapse()
 
-		"""
-		desc:
-			Collapses this item and all items under it.
-		"""
+    def rename(self, from_name, to_name):
+        """
+        desc:
+                Renames an item.
 
-		self.setExpanded(False)
-		for i in range(self.childCount()):
-			self.child(i).collapse()
+        arguments:
+                from_name:
+                        desc:	The old name.
+                        type:	unicode
+                to_name:
+                        desc:	The new name.
+                        type:	unicode
+        """
 
-	def rename(self, from_name, to_name):
+        for i in range(self.childCount()):
+            self.child(i).rename(from_name, to_name)
 
-		"""
-		desc:
-			Renames an item.
+    def set_icon(self, name, icon):
+        """
+        desc:
+                Changes an item's icon.
 
-		arguments:
-			from_name:
-				desc:	The old name.
-				type:	unicode
-			to_name:
-				desc:	The new name.
-				type:	unicode
-		"""
+        arguments:
+                name:
+                        desc:	The item name.
+                        type:	unicode
+                icon:
+                        desc:	The icon name.
+                        type:	unicode
+        """
 
-		for i in range(self.childCount()):
-			self.child(i).rename(from_name, to_name)
-
-	def set_icon(self, name, icon):
-
-		"""
-		desc:
-			Changes an item's icon.
-
-		arguments:
-			name:
-				desc:	The item name.
-				type:	unicode
-			icon:
-				desc:	The icon name.
-				type:	unicode
-		"""
-
-		for i in range(self.childCount()):
-			self.child(i).set_icon(name, icon)
+        for i in range(self.childCount()):
+            self.child(i).set_icon(name, icon)

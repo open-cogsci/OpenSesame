@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,157 +23,151 @@ import warnings
 
 class base_python_workspace(object):
 
-	"""
-	desc:
-		Provides a basic Python workspace for use in the GUI. This avoids
-		unnecessarily importing the entire runtime API.
-	"""
+    """
+    desc:
+            Provides a basic Python workspace for use in the GUI. This avoids
+            unnecessarily importing the entire runtime API.
+    """
 
-	def __init__(self, experiment):
+    def __init__(self, experiment):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                experiment:
+                        desc:	The experiment object.
+                        type:	experiment
+        """
 
-		arguments:
-			experiment:
-				desc:	The experiment object.
-				type:	experiment
-		"""
+        self.experiment = experiment
+        self._globals = {}
 
-		self.experiment = experiment
-		self._globals = {}
+    def check_syntax(self, script):
+        """
+        desc:
+                Checks whether a Python script is syntactically correct.
 
-	def check_syntax(self, script):
+        arguments:
+                script:
+                        desc:	A Python script.
+                        type:	unicode
 
-		"""
-		desc:
-			Checks whether a Python script is syntactically correct.
+        returns:
+                desc:	0 if script is correct, 1 if there is a syntax warning, and
+                                2 if there is a syntax error.
+                type:	int
+        """
 
-		arguments:
-			script:
-				desc:	A Python script.
-				type:	unicode
+        with warnings.catch_warnings(record=True) as warning_list:
+            try:
+                self._compile(safe_decode(script))
+            except:
+                return 2
+        if warning_list:
+            return 1
+        return 0
 
-		returns:
-			desc:	0 if script is correct, 1 if there is a syntax warning, and
-					2 if there is a syntax error.
-			type:	int
-		"""
+    def run_file(self, path):
+        """
+        desc:
+                Reads and executes a files.
 
-		with warnings.catch_warnings(record=True) as warning_list:
-			try:
-				self._compile(safe_decode(script))
-			except:
-				return 2
-		if warning_list:
-			return 1
-		return 0
+        arguments:
+                path:
+                        desc:	The full path to a Python file.
+                        type:	str
+        """
 
-	def run_file(self, path):
+        with safe_open(path) as fd:
+            script = fd.read()
+        bytecode = self._compile(script)
+        self._exec(bytecode)
 
-		"""
-		desc:
-			Reads and executes a files.
+    def _compile(self, script):
+        """
+        desc:
+                Compiles a script into bytecode.
 
-		arguments:
-			path:
-				desc:	The full path to a Python file.
-				type:	str
-		"""
+        arguments:
+                script:
+                        desc:	A Python script.
+                        type:	unicode
 
-		with safe_open(path) as fd:
-			script = fd.read()
-		bytecode = self._compile(script)
-		self._exec(bytecode)
+        returns:
+                desc:	The compiled script.
+                type:	code
+        """
 
-	def _compile(self, script):
+        # Prepend source encoding (PEP 0263) and encode scripts. This is
+        # necessary, because the exec statement doesn't take kindly to Unicode.
+        script = (u'#-*- coding:%s -*-\n' % self.experiment.encoding + script) \
+            .encode(self.experiment.encoding)
+        return compile(script, u'<string>', u'exec')
 
-		"""
-		desc:
-			Compiles a script into bytecode.
+    def _exec(self, bytecode):
+        """
+        desc:
+                Executes bytecode.
 
-		arguments:
-			script:
-				desc:	A Python script.
-				type:	unicode
+        arguments:
+                bytecode:
+                        desc:	A chunk of bytecode.
+                        type:	code
+        """
 
-		returns:
-			desc:	The compiled script.
-			type:	code
-		"""
+        exec(bytecode, self._globals)
 
-		# Prepend source encoding (PEP 0263) and encode scripts. This is
-		# necessary, because the exec statement doesn't take kindly to Unicode.
-		script = (u'#-*- coding:%s -*-\n' % self.experiment.encoding + script) \
-			.encode(self.experiment.encoding)
-		return compile(script, u'<string>', u'exec')
+    def _eval(self, bytecode):
+        """
+        desc:
+                Evaluates bytecode.
 
-	def _exec(self, bytecode):
+        arguments:
+                bytecode:
+                        desc:	A chunk of bytecode.
+                        type:	code
 
-		"""
-		desc:
-			Executes bytecode.
+        returns:
+                The evaluated value of the bytecode
+        """
 
-		arguments:
-			bytecode:
-				desc:	A chunk of bytecode.
-				type:	code
-		"""
+        return eval(bytecode, self._globals)
 
-		exec(bytecode, self._globals)
+    # The properties below emulate a dict interface.
 
-	def _eval(self, bytecode):
+    @property
+    def __setitem__(self):
+        return self._globals.__setitem__
 
-		"""
-		desc:
-			Evaluates bytecode.
+    @property
+    def __delitem__(self):
+        return self._globals.__delitem__
 
-		arguments:
-			bytecode:
-				desc:	A chunk of bytecode.
-				type:	code
+    @property
+    def __getitem__(self):
+        return self._globals.__getitem__
 
-		returns:
-			The evaluated value of the bytecode
-		"""
+    @property
+    def __len__(self):
+        return self._globals.__len__
 
-		return eval(bytecode, self._globals)
+    @property
+    def __iter__(self):
+        return self._globals.__iter__
 
-	# The properties below emulate a dict interface.
+    @property
+    def items(self):
+        return self._globals.items
 
-	@property
-	def __setitem__(self):
-		return self._globals.__setitem__
+    @property
+    def keys(self):
+        return self._globals.keys
 
-	@property
-	def __delitem__(self):
-		return self._globals.__delitem__
+    @property
+    def values(self):
+        return self._globals.values
 
-	@property
-	def __getitem__(self):
-		return self._globals.__getitem__
-
-	@property
-	def __len__(self):
-		return self._globals.__len__
-
-	@property
-	def __iter__(self):
-		return self._globals.__iter__
-
-	@property
-	def items(self):
-		return self._globals.items
-
-	@property
-	def keys(self):
-		return self._globals.keys
-
-	@property
-	def values(self):
-		return self._globals.values
-
-	@property
-	def copy(self):
-		return self._globals.copy
+    @property
+    def copy(self):
+        return self._globals.copy

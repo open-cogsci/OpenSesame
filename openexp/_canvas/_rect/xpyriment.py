@@ -25,12 +25,12 @@ from expyriment.stimuli import Rectangle
 
 class Xpyriment(XpyrimentElement, Rect):
 
-	def prepare(self):
+    def prepare(self):
 
-		self._stim = Rectangle(
-			position=self.to_xy(self.x+self.w//2, self.y+self.h//2),
-			size=(self.w, self.h),
-			line_width=0 if self.fill else self.penwidth,
-			colour=self.color.backend_color
-		)
-		self._stim.preload()
+        self._stim = Rectangle(
+            position=self.to_xy(self.x+self.w//2, self.y+self.h//2),
+            size=(self.w, self.h),
+            line_width=0 if self.fill else self.penwidth,
+            colour=self.color.backend_color
+        )
+        self._stim.preload()

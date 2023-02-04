@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -26,72 +26,68 @@ _ = translation_context(u'general_script_editor', category=u'core')
 
 class general_script_editor(base_widget):
 
-	"""
-	desc:
-		The general script editor.
-	"""
+    """
+    desc:
+            The general script editor.
+    """
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:	A qtopensesame object.
+        """
 
-		arguments:
-			main_window:	A qtopensesame object.
-		"""
+        from pyqode_extras.widgets import OpenSesameCodeEdit
+        super(general_script_editor, self).__init__(
+            main_window,
+            ui=u'widgets.general_script_editor'
+        )
+        self.ui.editor = OpenSesameCodeEdit()
+        self.extension_manager.fire(
+            u'register_editor',
+            editor=self.ui.editor,
+            mime_type='text/opensesame'
+        )
+        self.ui.layout_vbox.addWidget(self.ui.editor)
+        self.ui.button_apply.clicked.connect(self._apply)
+        self.tab_name = u'__general_script__'
 
-		from pyqode_extras.widgets import OpenSesameCodeEdit
-		super(general_script_editor, self).__init__(
-			main_window,
-			ui=u'widgets.general_script_editor'
-		)
-		self.ui.editor = OpenSesameCodeEdit()
-		self.extension_manager.fire(
-			u'register_editor',
-			editor=self.ui.editor,
-			mime_type='text/opensesame'
-		)
-		self.ui.layout_vbox.addWidget(self.ui.editor)
-		self.ui.button_apply.clicked.connect(self._apply)
-		self.tab_name = u'__general_script__'
+    def _apply(self):
+        """
+        desc:
+                Confirms and applies the script changes.
+        """
 
-	def _apply(self):
+        resp = QtWidgets.QMessageBox.question(
+            self.main_window,
+            _(u'Apply?'),
+            _(u'Are you sure you want to apply the changes to the general script?'),
+            QtWidgets.QMessageBox.Yes,
+            QtWidgets.QMessageBox.No
+        )
+        if resp == QtWidgets.QMessageBox.No:
+            return
+        self.main_window.regenerate(self.ui.editor.toPlainText())
 
-		"""
-		desc:
-			Confirms and applies the script changes.
-		"""
+    def on_activate(self):
+        """
+        desc:
+                Refreshes the tab when it is activated.
+        """
 
-		resp = QtWidgets.QMessageBox.question(
-			self.main_window,
-			_(u'Apply?'),
-			_(u'Are you sure you want to apply the changes to the general script?'),
-			QtWidgets.QMessageBox.Yes,
-			QtWidgets.QMessageBox.No
-		)
-		if resp == QtWidgets.QMessageBox.No:
-			return
-		self.main_window.regenerate(self.ui.editor.toPlainText())
+        self.refresh()
 
-	def on_activate(self):
+    def refresh(self):
+        """
+        desc:
+                Refreshes the contents of the general script.
+        """
 
-		"""
-		desc:
-			Refreshes the tab when it is activated.
-		"""
-
-		self.refresh()
-
-	def refresh(self):
-
-		"""
-		desc:
-			Refreshes the contents of the general script.
-		"""
-
-		self.ui.editor.setPlainText(
-			self.main_window.experiment.to_string(),
-			u'text/generic',
-			u'utf-8'
-		)
+        self.ui.editor.setPlainText(
+            self.main_window.experiment.to_string(),
+            u'text/generic',
+            u'utf-8'
+        )

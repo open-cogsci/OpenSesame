@@ -25,44 +25,44 @@ from openexp.canvas_elements import ElementFactory
 
 class Group(Element):
 
-	def __init__(self, canvas, elements=[], **properties):
+    def __init__(self, canvas, elements=[], **properties):
 
-		if not all(isinstance(e, (Element, ElementFactory)) for e in elements):
-			raise TypeError('A group can only contain canvas elements')
-		self._elements = [e if isinstance(e, Element) else e.construct(canvas) \
-			for e in elements]
-		Element.__init__(self, canvas, **properties)
+        if not all(isinstance(e, (Element, ElementFactory)) for e in elements):
+            raise TypeError('A group can only contain canvas elements')
+        self._elements = [e if isinstance(e, Element) else e.construct(canvas)
+                          for e in elements]
+        Element.__init__(self, canvas, **properties)
 
-	def prepare(self):
+    def prepare(self):
 
-		for element in self._elements:
-			element.prepare()
+        for element in self._elements:
+            element.prepare()
 
-	def show(self, **kwargs):
+    def show(self, **kwargs):
 
-		for element in self._elements:
-			element.show(**kwargs)
+        for element in self._elements:
+            element.show(**kwargs)
 
-	def __contains__(self, xy):
+    def __contains__(self, xy):
 
-		return any(xy in element for element in self._elements)
+        return any(xy in element for element in self._elements)
 
-	def __iter__(self):
+    def __iter__(self):
 
-		for e in self._elements:
-			yield e
+        for e in self._elements:
+            yield e
 
-	def __len__(self):
+    def __len__(self):
 
-		return len(self._elements)
+        return len(self._elements)
 
-	def __add__(self, element):
+    def __add__(self, element):
 
-		return Group(self._canvas, self._elements + [element])
+        return Group(self._canvas, self._elements + [element])
 
-	@staticmethod
-	def _setter(key, self, val):
+    @staticmethod
+    def _setter(key, self, val):
 
-		if key == u'visible':
-			return Element._setter(key, self, val)
-		raise TypeError(u'Properties of element groups cannot be changed')
+        if key == u'visible':
+            return Element._setter(key, self, val)
+        raise TypeError(u'Properties of element groups cannot be changed')

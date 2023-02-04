@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -20,21 +20,22 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libqtopensesame.validators._base_validator import base_validator
 
+
 class cond_validator(base_validator):
 
-	"""
-	desc:
-		A validator for conditional statements.
-	"""
+    """
+    desc:
+            A validator for conditional statements.
+    """
 
-	def __init__(self, main_window, default=u'always'):
+    def __init__(self, main_window, default=u'always'):
 
-		super(cond_validator, self).__init__(main_window, default=default)
+        super(cond_validator, self).__init__(main_window, default=default)
 
-	def is_valid(self, val):
+    def is_valid(self, val):
 
-		try:
-			self.experiment.syntax.compile_cond(str(val))
-			return True
-		except:
-			return False
+        try:
+            self.experiment.syntax.compile_cond(str(val))
+            return True
+        except:
+            return False

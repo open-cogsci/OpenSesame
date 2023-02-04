@@ -25,13 +25,13 @@ from expyriment.stimuli import Line as ExpyrimentLine
 
 class Xpyriment(XpyrimentElement, Line):
 
-	def prepare(self):
+    def prepare(self):
 
-		self._stim = ExpyrimentLine(
-			start_point=self.to_xy(self.sx, self.sy),
-			end_point=self.to_xy(self.ex, self.ey),
-			line_width=self.penwidth,
-			colour=self.color.backend_color,
-			anti_aliasing=self.ANTI_ALIAS
-		)
-		self._stim.preload()
+        self._stim = ExpyrimentLine(
+            start_point=self.to_xy(self.sx, self.sy),
+            end_point=self.to_xy(self.ex, self.ey),
+            line_width=self.penwidth,
+            colour=self.color.backend_color,
+            anti_aliasing=self.ANTI_ALIAS
+        )
+        self._stim.preload()

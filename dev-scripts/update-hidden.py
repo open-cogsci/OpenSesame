@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -20,27 +20,29 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
 hiddenExts = '.pyc', '.pyo'
+
+
 def updateHidden(folder):
+    """
+    Scans a folder and adds all files of a particular type to the .hidden file,
+    to avoid a cluttered view in Nautilus
 
-	"""
-	Scans a folder and adds all files of a particular type to the .hidden file,
-	to avoid a cluttered view in Nautilus
+    Arguments:
+    folder -- the folder to process
+    """
 
-	Arguments:
-	folder -- the folder to process
-	"""
+    print('Scanning', folder)
+    f = open(os.path.join(folder, '.hidden'), 'w')
+    for fname in os.listdir(folder):
+        if fname[0] == '.':
+            continue
+        path = os.path.join(folder, fname)
+        if os.path.isdir(path):
+            updateHidden(path)
+        elif os.path.splitext(fname)[1] in hiddenExts:
+            print('Hiding', fname)
+            f.write(fname+'\n')
+    f.close()
 
-	print('Scanning', folder)
-	f = open(os.path.join(folder, '.hidden'), 'w')
-	for fname in os.listdir(folder):
-		if fname[0] == '.':
-			continue
-		path = os.path.join(folder, fname)
-		if os.path.isdir(path):
-			updateHidden(path)
-		elif os.path.splitext(fname)[1] in hiddenExts:
-			print('Hiding', fname)
-			f.write(fname+'\n')
-	f.close()
 
 updateHidden('.')

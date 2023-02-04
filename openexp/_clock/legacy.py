@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,18 +24,18 @@ import pygame
 
 class Legacy(Clock):
 
-	"""
-	desc:
-		For docstrings, see openexp._clock.clock.
-	"""
+    """
+    desc:
+            For docstrings, see openexp._clock.clock.
+    """
 
-	def time(self):
+    def time(self):
 
-		return float(pygame.time.get_ticks())
+        return float(pygame.time.get_ticks())
 
-	def sleep(self, ms):
+    def sleep(self, ms):
 
-		pygame.time.delay(int(ms))
+        pygame.time.delay(int(ms))
 
 
 # Non PEP-8 alias for backwards compatibility

@@ -25,12 +25,12 @@ from psychopy import visual
 
 class Psycho(PsychoElement, Line):
 
-	def prepare(self):
+    def prepare(self):
 
-		self._stim = visual.Line(
-			self.win,
-			start=self.to_xy(self.sx, self.sy),
-			end=self.to_xy(self.ex, self.ey),
-			lineWidth=self.penwidth,
-			lineColor=self.color.backend_color
-		)
+        self._stim = visual.Line(
+            self.win,
+            start=self.to_xy(self.sx, self.sy),
+            end=self.to_xy(self.ex, self.ey),
+            lineWidth=self.penwidth,
+            lineColor=self.color.backend_color
+        )

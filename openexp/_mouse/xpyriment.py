@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -31,45 +31,45 @@ from openexp._coordinates.xpyriment import Xpyriment as XpyrimentCoordinates
 
 class Xpyriment(XpyrimentCoordinates, Legacy):
 
-	"""
-	desc:
-		This is a mouse backend built on top of PyGame, adapted for Expyriment.
-		For function specifications and docstrings, see
-		`openexp._mouse.mouse`.
-	"""
+    """
+    desc:
+            This is a mouse backend built on top of PyGame, adapted for Expyriment.
+            For function specifications and docstrings, see
+            `openexp._mouse.mouse`.
+    """
 
-	settings = {}
+    settings = {}
 
-	def __init__(self, experiment, **resp_args):
+    def __init__(self, experiment, **resp_args):
 
-		Mouse.__init__(self, experiment, **resp_args)
-		XpyrimentCoordinates.__init__(self)
+        Mouse.__init__(self, experiment, **resp_args)
+        XpyrimentCoordinates.__init__(self)
 
-	@configurable
-	def get_click(self):
+    @configurable
+    def get_click(self):
 
-		buttonlist = self.buttonlist
-		timeout = self.timeout
-		pygame.mouse.set_visible(self.visible)
-		start_time = pygame.time.get_ticks()
-		time = start_time
-		while True:
-			time = pygame.time.get_ticks()
-			# Process the input
-			for event in pygame.event.get():
-				if event.type == KEYDOWN:
-					if event.key == pygame.K_ESCAPE:
-						self.experiment.pause()
-						continue
-					pygame.event.post(event)
-				if event.type == MOUSEBUTTONDOWN:
-					if buttonlist is None or event.button in buttonlist:
-						pygame.mouse.set_visible(self._cursor_shown)
-						return event.button, self.from_xy(event.pos), time
-			if timeout is not None and time - start_time >= timeout:
-				break
-		pygame.mouse.set_visible(self._cursor_shown)
-		return None, None, time
+        buttonlist = self.buttonlist
+        timeout = self.timeout
+        pygame.mouse.set_visible(self.visible)
+        start_time = pygame.time.get_ticks()
+        time = start_time
+        while True:
+            time = pygame.time.get_ticks()
+            # Process the input
+            for event in pygame.event.get():
+                if event.type == KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self.experiment.pause()
+                        continue
+                    pygame.event.post(event)
+                if event.type == MOUSEBUTTONDOWN:
+                    if buttonlist is None or event.button in buttonlist:
+                        pygame.mouse.set_visible(self._cursor_shown)
+                        return event.button, self.from_xy(event.pos), time
+            if timeout is not None and time - start_time >= timeout:
+                break
+        pygame.mouse.set_visible(self._cursor_shown)
+        return None, None, time
 
 
 # Non PEP-8 alias for backwards compatibility

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,208 +23,197 @@ from libopensesame import item, generic_response
 from libopensesame.oslogging import oslogger
 from libqtopensesame import qtplugin
 try:
-	from ctypes import windll
+    from ctypes import windll
 except:
-	oslogger.warning(
-		"failed to load ctypes.windll mode (only dummy mode will be available)"
-	)
+    oslogger.warning(
+        "failed to load ctypes.windll mode (only dummy mode will be available)"
+    )
 
 
 class port_reader(item.item, generic_response.generic_response):
 
-	"""A plug-in to collect responses from a port (Window only)"""
+    """A plug-in to collect responses from a port (Window only)"""
 
-	description = \
-		u"Collects input from a port for the purpose of response collection"
+    description = \
+        u"Collects input from a port for the purpose of response collection"
 
-	def reset(self):
+    def reset(self):
+        """item.item."""
 
-		"""item.item."""
+        self.var.timeout = "infinite"
+        self.var.port = 889
+        self.var.resting_value = 127
+        self.var.auto_response = 255  # 'a'
+        self.var.duration = "portinput"
+        self.var.dummy = "no"
+        self.process_feedback = True
 
-		self.var.timeout = "infinite"
-		self.var.port = 889
-		self.var.resting_value = 127
-		self.var.auto_response = 255 # 'a'
-		self.var.duration = "portinput"
-		self.var.dummy = "no"
-		self.process_feedback = True
+    def get_portinput(self):
+        """Read port input"""
 
-	def get_portinput(self):
+        while True:
+            val = self._port.Inp32(self.port)
+            time = self.time()
+            if val != self.resting_value:
+                break
+            if self._timeout is not None and time - self.sri > self._timeout:
+                val = "timeout"
+                break
+        return val, time
 
-		"""Read port input"""
+    def prepare_duration_portinput(self):
+        """Prepare a portinput duration"""
 
-		while True:
-			val = self._port.Inp32(self.port)
-			time = self.time()
-			if val != self.resting_value:
-				break
-			if self._timeout is not None and time - self.sri > self._timeout:
-				val = "timeout"
-				break
-		return val, time
+        if self.experiment.auto_response:
+            self._duration_func = self.sleep_for_duration
+            self._duration = 500
+        else:
+            try:
+                self._port = windll.inpout32
+            except:
+                raise osexception(
+                    "Failed to load inpout32.dll in port_reader '%s'"
+                    % self.name)
+            self._duration_func = self.get_portinput
 
-	def prepare_duration_portinput(self):
+    def process_response_portinput(self, retval):
+        """Process a portinput response"""
 
-		"""Prepare a portinput duration"""
+        self.experiment._start_response_interval = self.sri
+        self.experiment.response, self.experiment.end_response_interval = retval
 
-		if self.experiment.auto_response:
-			self._duration_func = self.sleep_for_duration
-			self._duration = 500
-		else:
-			try:
-				self._port = windll.inpout32
-			except:
-				raise osexception( \
-					"Failed to load inpout32.dll in port_reader '%s'" \
-					% self.name)
-			self._duration_func = self.get_portinput
+    def prepare(self):
+        """
+        Prepare the item
 
-	def process_response_portinput(self, retval):
+        Returns:
+        True on success, False on failure
+        """
 
-		"""Process a portinput response"""
+        if self.dummy == "yes":
+            self.duration = "keypress"
 
-		self.experiment._start_response_interval = self.sri
-		self.experiment.response, self.experiment.end_response_interval = retval
+        item.item.prepare(self)
+        generic_response.generic_response.prepare(self)
+        return True
 
-	def prepare(self):
+    def run(self):
+        """
+        Runs the item
 
-		"""
-		Prepare the item
+        Returns:
+        True on success, False on failure
+        """
 
-		Returns:
-		True on success, False on failure
-		"""
+        # Record the onset of the current item
+        self.set_item_onset()
+        self.set_sri()
+        self.process_response()
 
-		if self.dummy == "yes":
-			self.duration = "keypress"
+        # Report success
+        return True
 
-		item.item.prepare(self)
-		generic_response.generic_response.prepare(self)
-		return True
+    def var_info(self):
+        """
+        Give a list of dictionaries with variable descriptions
 
-	def run(self):
+        Returns:
+        A list of (name, description) tuples
+        """
 
-		"""
-		Runs the item
+        return item.item.var_info(self) + \
+            generic_response.generic_response.var_info(self)
 
-		Returns:
-		True on success, False on failure
-		"""
-
-		# Record the onset of the current item
-		self.set_item_onset()
-		self.set_sri()
-		self.process_response()
-
-		# Report success
-		return True
-
-	def var_info(self):
-
-		"""
-		Give a list of dictionaries with variable descriptions
-
-		Returns:
-		A list of (name, description) tuples
-		"""
-
-		return item.item.var_info(self) + \
-			generic_response.generic_response.var_info(self)
 
 class qtport_reader(port_reader, qtplugin.qtplugin):
 
-	"""GUI controls for port_reader plug-in"""
+    """GUI controls for port_reader plug-in"""
 
-	def __init__(self, name, experiment, string=None):
+    def __init__(self, name, experiment, string=None):
+        """
+        Constructor
 
-		"""
-		Constructor
+        Arguments:
+        name -- item name
+        experiment -- experiment instance
 
-		Arguments:
-		name -- item name
-		experiment -- experiment instance
+        Keyword arguments:
+        string -- definition string (default=None)
+        """
 
-		Keyword arguments:
-		string -- definition string (default=None)
-		"""
+        # Pass the word on to the parents
+        port_reader.__init__(self, name, experiment, string)
+        qtplugin.qtplugin.__init__(self, __file__)
 
-		# Pass the word on to the parents
-		port_reader.__init__(self, name, experiment, string)
-		qtplugin.qtplugin.__init__(self, __file__)
+    def init_edit_widget(self):
+        """Initialize GUI controls"""
 
-	def init_edit_widget(self):
+        # Lock the widget until we're doing creating it
+        self.lock = True
 
-		"""Initialize GUI controls"""
+        # Pass the word on to the parent
+        qtplugin.qtplugin.init_edit_widget(self, False)
 
-		# Lock the widget until we're doing creating it
-		self.lock = True
+        # Create the controls
+        #
+        # A number of convenience functions are available which
+        # automatically create controls, which are also automatically
+        # updated and applied. If you set the varname to None, the
+        # controls will be created, but not automatically updated
+        # and applied.
+        #
+        # qtplugin.add_combobox_control(varname, label, list_of_options)
+        # - creates a QComboBox
+        # qtplugin.add_line_edit_control(varname, label)
+        # - creates a QLineEdit
+        # qtplugin.add_spinbox_control(varname, label, min, max, suffix = suffix, prefix = prefix)
 
-		# Pass the word on to the parent
-		qtplugin.qtplugin.init_edit_widget(self, False)
+        self.add_combobox_control("dummy",
+                                  "Dummy mode (use keyboard instead)", [
+                                      "yes", "no"],
+                                  tooltip="Enable dummy mode for testing purposes")
+        self.add_spinbox_control(
+            "port", "Port number", 0, 1024, tooltip="Expecting a valid port number")
+        self.add_spinbox_control("resting_value", "Resting state value", 0,
+                                 255, tooltip="A value that is read from the port when there is no input")
+        self.add_line_edit_control("correct_response", "Correct response",
+                                   tooltip="Expecting response values (0 .. 255)")
+        self.add_line_edit_control(
+            "timeout", "Timeout", tooltip="Expecting a value in milliseconds or 'infinite'", default="infinite")
 
-		# Create the controls
-		#
-		# A number of convenience functions are available which
-		# automatically create controls, which are also automatically
-		# updated and applied. If you set the varname to None, the
-		# controls will be created, but not automatically updated
-		# and applied.
-		#
-		# qtplugin.add_combobox_control(varname, label, list_of_options)
-		# - creates a QComboBox
-		# qtplugin.add_line_edit_control(varname, label)
-		# - creates a QLineEdit
-		# qtplugin.add_spinbox_control(varname, label, min, max, suffix = suffix, prefix = prefix)
+        # Add a stretch to the edit_vbox, so that the controls do not
+        # stretch to the bottom of the window.
+        self.edit_vbox.addStretch()
 
-		self.add_combobox_control("dummy", \
-			"Dummy mode (use keyboard instead)", ["yes", "no"], \
-			tooltip="Enable dummy mode for testing purposes")
-		self.add_spinbox_control("port", "Port number", 0, 1024, tooltip= \
-			"Expecting a valid port number")
-		self.add_spinbox_control("resting_value", "Resting state value", 0, \
-			255, tooltip= \
-			"A value that is read from the port when there is no input")
-		self.add_line_edit_control("correct_response", "Correct response", \
-			tooltip="Expecting response values (0 .. 255)")
-		self.add_line_edit_control("timeout", "Timeout", tooltip= \
-			"Expecting a value in milliseconds or 'infinite'", default= \
-			"infinite")
+        # Unlock
+        self.lock = True
 
-		# Add a stretch to the edit_vbox, so that the controls do not
-		# stretch to the bottom of the window.
-		self.edit_vbox.addStretch()
+    def apply_edit_changes(self):
+        """Apply GUI controls"""
 
-		# Unlock
-		self.lock = True
+        # Abort if the parent reports failure of if the controls are locked
+        if not qtplugin.qtplugin.apply_edit_changes(self) or self.lock:
+            return False
 
-	def apply_edit_changes(self):
+        # Refresh the main window, so that changes become visible everywhere
+        self.experiment.main_window.refresh(self.name)
 
-		"""Apply GUI controls"""
+        # Report success
+        return True
 
-		# Abort if the parent reports failure of if the controls are locked
-		if not qtplugin.qtplugin.apply_edit_changes(self) or self.lock:
-			return False
+    def edit_widget(self):
+        """Update GUI controls"""
 
-		# Refresh the main window, so that changes become visible everywhere
-		self.experiment.main_window.refresh(self.name)
+        # Lock the controls, otherwise a recursive loop might aris
+        # in which updating the controls causes the variables to be
+        # updated, which causes the controls to be updated, etc...
+        self.lock = True
 
-		# Report success
-		return True
+        # Let the parent handle everything
+        qtplugin.qtplugin.edit_widget(self)
 
-	def edit_widget(self):
+        # Unlock
+        self.lock = False
 
-		"""Update GUI controls"""
-
-		# Lock the controls, otherwise a recursive loop might aris
-		# in which updating the controls causes the variables to be
-		# updated, which causes the controls to be updated, etc...
-		self.lock = True
-
-		# Let the parent handle everything
-		qtplugin.qtplugin.edit_widget(self)
-
-		# Unlock
-		self.lock = False
-
-		# Return the _edit_widget
-		return self._edit_widget
+        # Return the _edit_widget
+        return self._edit_widget

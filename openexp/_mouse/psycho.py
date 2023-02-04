@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -26,70 +26,70 @@ from openexp.backend import configurable
 
 class Psycho(Mouse, PsychoCoordinates):
 
-	"""
-	desc:
-		This is a mouse backend built on top of PsychoPy.
-		For function specifications and docstrings, see
-		`openexp._mouse.mouse`.
-	"""
+    """
+    desc:
+            This is a mouse backend built on top of PsychoPy.
+            For function specifications and docstrings, see
+            `openexp._mouse.mouse`.
+    """
 
-	def __init__(self, experiment, **resp_args):
+    def __init__(self, experiment, **resp_args):
 
-		Mouse.__init__(self, experiment, **resp_args)
-		PsychoCoordinates.__init__(self)
-		self.mouse = event.Mouse(visible=False, win=self.experiment.window)
-		event.mouseButtons = [0, 0, 0]
+        Mouse.__init__(self, experiment, **resp_args)
+        PsychoCoordinates.__init__(self)
+        self.mouse = event.Mouse(visible=False, win=self.experiment.window)
+        event.mouseButtons = [0, 0, 0]
 
-	@configurable
-	def get_click(self):
+    @configurable
+    def get_click(self):
 
-		buttonlist = self.buttonlist
-		timeout = self.timeout
-		self.mouse.setVisible(self.visible)
-		start_time = self.experiment.clock.time()
-		button = None
-		pos = None
-		self.mouse.clickReset()
-		while True:
-			time = self.experiment.clock.time()
-			buttons, times = self.mouse.getPressed(getTime=True)
-			for i in (1,2,3):
-				if buttons[i-1] and (buttonlist is None or i in buttonlist):
-					button = i
-					pos = self.mouse.getPos()
-					break
-			else:
-				if timeout is not None and time-start_time >= timeout:
-					break
-				continue
-			break
-		if pos is not None:
-			pos = self.from_xy(pos)
-		self.mouse.setVisible(self._cursor_shown)
-		return button, pos, time
+        buttonlist = self.buttonlist
+        timeout = self.timeout
+        self.mouse.setVisible(self.visible)
+        start_time = self.experiment.clock.time()
+        button = None
+        pos = None
+        self.mouse.clickReset()
+        while True:
+            time = self.experiment.clock.time()
+            buttons, times = self.mouse.getPressed(getTime=True)
+            for i in (1, 2, 3):
+                if buttons[i-1] and (buttonlist is None or i in buttonlist):
+                    button = i
+                    pos = self.mouse.getPos()
+                    break
+            else:
+                if timeout is not None and time-start_time >= timeout:
+                    break
+                continue
+            break
+        if pos is not None:
+            pos = self.from_xy(pos)
+        self.mouse.setVisible(self._cursor_shown)
+        return button, pos, time
 
-	def show_cursor(self, show=True):
+    def show_cursor(self, show=True):
 
-		self.mouse.setVisible(show)
-		Mouse.show_cursor(self, show=show)
+        self.mouse.setVisible(show)
+        Mouse.show_cursor(self, show=show)
 
-	def get_pos(self):
+    def get_pos(self):
 
-		return self.from_xy(self.mouse.getPos()), self.experiment.time()
+        return self.from_xy(self.mouse.getPos()), self.experiment.time()
 
-	def set_pos(self, pos=(0,0)):
+    def set_pos(self, pos=(0, 0)):
 
-		self.mouse.setPos(self.to_xy(pos))
+        self.mouse.setPos(self.to_xy(pos))
 
-	def get_pressed(self):
+    def get_pressed(self):
 
-		return tuple(self.mouse.getPressed(getTime=False))
+        return tuple(self.mouse.getPressed(getTime=False))
 
-	def flush(self):
+    def flush(self):
 
-		event.mouseButtons = [0,0,0]
-		event.clearEvents()
-		return False
+        event.mouseButtons = [0, 0, 0]
+        event.clearEvents()
+        return False
 
 
 # Non PEP-8 alias for backwards compatibility

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,51 +23,51 @@ from libqtopensesame.widgets.tree_base_item import tree_base_item
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_general_item', category=u'core')
 
+
 class tree_general_item(tree_base_item):
 
-	"""
-	desc:
-		Corresponds to the general widget in the overview area.
-	"""
+    """
+    desc:
+            Corresponds to the general widget in the overview area.
+    """
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:
+                        desc:	The main-window object.
+                        type:	qtopensesame
+        """
 
-		arguments:
-			main_window:
-				desc:	The main-window object.
-				type:	qtopensesame
-		"""
+        super(tree_general_item, self).__init__()
+        self.setup(main_window)
+        self.setText(0, safe_decode(self.experiment.var.title))
+        self.setIcon(0, self.theme.qicon(u'os-experiment'))
+        self.setToolTip(0, _(u'General options'))
+        self._droppable = False
+        self._draggable = False
+        self.name = u'__general__'
+        if self.experiment.var.start in self.experiment.items:
+            try:
+                self.experiment.items[self.experiment.var.start] \
+                    .build_item_tree(self)
+            except RecursionError:
+                from libqtopensesame.widgets.tree_recursion_error_item import (
+                    tree_recursion_error_item
+                )
+                self.addChild(
+                    tree_recursion_error_item(self)
+                )
+            self.child(0).set_draggable(False)
+        self.expand()
 
-		super(tree_general_item, self).__init__()
-		self.setup(main_window)
-		self.setText(0, safe_decode(self.experiment.var.title))
-		self.setIcon(0, self.theme.qicon(u'os-experiment'))
-		self.setToolTip(0, _(u'General options'))
-		self._droppable = False
-		self._draggable = False
-		self.name = u'__general__'
-		if self.experiment.var.start in self.experiment.items:
-			try:
-				self.experiment.items[self.experiment.var.start] \
-					.build_item_tree(self)
-			except RecursionError:
-				from libqtopensesame.widgets.tree_recursion_error_item import (
-					tree_recursion_error_item
-				)
-				self.addChild(
-					tree_recursion_error_item(self)
-				)
-			self.child(0).set_draggable(False)
-		self.expand()
+    def ancestry(self):
 
-	def ancestry(self):
+        return u'__general__', u'__general__'
 
-		return u'__general__', u'__general__'
+    def open_tab(self):
 
-	def open_tab(self):
-
-		self.main_window.tabwidget.open_general()
+        self.main_window.tabwidget.open_general()

@@ -25,17 +25,17 @@ from psychopy import visual
 
 class Psycho(RotatingElement, PsychoElement, Gabor):
 
-	def prepare(self):
+    def prepare(self):
 
-		env, size = self._mask(self.env, self.size, self.stdev)
-		self._stim = visual.GratingStim(
-			win=self.win,
-			ori=self.orient,
-			sf=self.freq,
-			phase=self.phase,
-			pos=self.to_xy(self.x, self.y),
-			tex='sin',
-			mask=env,
-			size=size,
-			color=self.col1
-		)
+        env, size = self._mask(self.env, self.size, self.stdev)
+        self._stim = visual.GratingStim(
+            win=self.win,
+            ori=self.orient,
+            sf=self.freq,
+            phase=self.phase,
+            pos=self.to_xy(self.x, self.y),
+            tex='sin',
+            mask=env,
+            size=size,
+            color=self.col1
+        )

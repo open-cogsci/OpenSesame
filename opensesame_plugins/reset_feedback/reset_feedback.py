@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -22,22 +22,23 @@ from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 from qtpy import QtWidgets, QtCore
 
+
 class reset_feedback(item):
 
-	"""A very simple plug-in to reset feedback variables"""
+    """A very simple plug-in to reset feedback variables"""
 
-	description = \
-		u'Resets the feedback variables, such as \'avg_rt\' and \'acc\''
+    description = \
+        u'Resets the feedback variables, such as \'avg_rt\' and \'acc\''
 
-	def run(self):
+    def run(self):
+        """Resets the feedback variables."""
 
-		"""Resets the feedback variables."""
+        self.experiment.reset_feedback()
 
-		self.experiment.reset_feedback()
 
 class qtreset_feedback(reset_feedback, qtautoplugin):
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
 
-		reset_feedback.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        reset_feedback.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

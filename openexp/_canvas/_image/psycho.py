@@ -26,22 +26,22 @@ from psychopy import visual
 
 class Psycho(RotatingElement, PsychoElement, Image):
 
-	def prepare(self):
+    def prepare(self):
 
-		self._stim = visual.ImageStim(
-			win=self.win,
-			image=safe_decode(self.fname)
-		)
-		if self.rotation is not None and self.rotation != 0:
-			self._stim.ori = self.rotation
-		if self.scale is not None:
-			w, h = self._stim.size
-			w *= self.scale
-			h *= self.scale
-			self._stim.size = w, h
-		x, y = self.to_xy(self.x, self.y)
-		if not self.center:
-			size = self._stim.size
-			x += size[0] / 2
-			y -= size[1] / 2
-		self._stim.pos = x, y
+        self._stim = visual.ImageStim(
+            win=self.win,
+            image=safe_decode(self.fname)
+        )
+        if self.rotation is not None and self.rotation != 0:
+            self._stim.ori = self.rotation
+        if self.scale is not None:
+            w, h = self._stim.size
+            w *= self.scale
+            h *= self.scale
+            self._stim.size = w, h
+        x, y = self.to_xy(self.x, self.y)
+        if not self.center:
+            size = self._stim.size
+            x += size[0] / 2
+            y -= size[1] / 2
+        self._stim.pos = x, y

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,16 +23,17 @@ from variable_inspector_widget import variable_inspector_widget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'variable_inspector', category=u'extension')
 
+
 class variable_inspector_dockwidget(QtWidgets.QDockWidget):
 
-	"""
-	desc:
-		A QDocktWidget that holds the variable inspector.
-	"""
+    """
+    desc:
+            A QDocktWidget that holds the variable inspector.
+    """
 
-	def __init__(self, main_window, ext):
+    def __init__(self, main_window, ext):
 
-		super(variable_inspector_dockwidget, self).__init__(
-			_(u'Variable inspector'), main_window)
-		self.setWidget(variable_inspector_widget(main_window, ext))
-		self.setObjectName(u'variable_inspector')
+        super(variable_inspector_dockwidget, self).__init__(
+            _(u'Variable inspector'), main_window)
+        self.setWidget(variable_inspector_widget(main_window, ext))
+        self.setObjectName(u'variable_inspector')

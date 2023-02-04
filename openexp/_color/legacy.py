@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,11 +24,11 @@ from openexp._color.color import Color
 
 class Legacy(Color):
 
-	def to_backend_color(self, hexcolor):
+    def to_backend_color(self, hexcolor):
 
-		if py3:
-			return pygame.Color(hexcolor)
-		return pygame.Color(safe_encode(hexcolor))
+        if py3:
+            return pygame.Color(hexcolor)
+        return pygame.Color(safe_encode(hexcolor))
 
 
 # Non PEP-8 alias for backwards compatibility

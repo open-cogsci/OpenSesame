@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,34 +23,34 @@ from openexp.canvas_elements import Rect
 
 class plain:
 
-	def __init__(self, form):
+    def __init__(self, form):
 
-		self.form = form
-		if self.form.clicks:
-			from openexp.sampler import sampler
-			import os
-			self.click_sound = sampler(self.form.experiment,
-				self.form.experiment.resource(os.path.join(
-				'widgets', 'interaction.ogg')),
-				duration=0, volume=.5)
+        self.form = form
+        if self.form.clicks:
+            from openexp.sampler import sampler
+            import os
+            self.click_sound = sampler(self.form.experiment,
+                                       self.form.experiment.resource(os.path.join(
+                                           'widgets', 'interaction.ogg')),
+                                       duration=0, volume=.5)
 
-	@property
-	def canvas(self):
-		return self.form.canvas
+    @property
+    def canvas(self):
+        return self.form.canvas
 
-	def box(self, x, y, checked=False):
+    def box(self, x, y, checked=False):
 
-		return Rect(x, y, 16, 16, fill=checked).construct(self.canvas)
+        return Rect(x, y, 16, 16, fill=checked).construct(self.canvas)
 
-	def box_size(self):
+    def box_size(self):
 
-		return 16
+        return 16
 
-	def frame(self, x, y, w, h, style='normal'):
+    def frame(self, x, y, w, h, style='normal'):
 
-		return Rect(x, y, w, h).construct(self.canvas)
+        return Rect(x, y, w, h).construct(self.canvas)
 
-	def click(self):
+    def click(self):
 
-		if self.form.clicks:
-			self.click_sound.play()
+        if self.form.clicks:
+            self.click_sound.play()

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,85 +23,81 @@ from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'item_view_button', category=u'core')
 
+
 class item_view_button(base_subcomponent, QtWidgets.QPushButton):
 
-	"""
-	desc:
-		The view button in the top-right of the edit controls.
-	"""
+    """
+    desc:
+            The view button in the top-right of the edit controls.
+    """
 
-	def __init__(self, item):
+    def __init__(self, item):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                item:
+                        desc:	An item.
+                        type:	qtitem.
+        """
 
-		arguments:
-			item:
-				desc:	An item.
-				type:	qtitem.
-		"""
+        super(item_view_button, self).__init__(item.main_window)
+        self.item = item
+        self.setup(item)
+        self.set_view_icon(u'controls')
+        self.setIconSize(QtCore.QSize(16, 16))
+        self.menu_view = QtWidgets.QMenu()
+        self.menu_view.addAction(self.view_controls_icon(),
+                                 _(u'View controls'), self.item.set_view_controls)
+        self.menu_view.addAction(self.view_script_icon(), _(u'View script'),
+                                 self.item.set_view_script)
+        self.menu_view.addAction(self.view_split_icon(), _(u'Split view'),
+                                 self.item.set_view_split)
+        self.setMenu(self.menu_view)
+        self.setToolTip(_(u'Select view'))
 
-		super(item_view_button, self).__init__(item.main_window)
-		self.item = item
-		self.setup(item)
-		self.set_view_icon(u'controls')
-		self.setIconSize(QtCore.QSize(16,16))
-		self.menu_view = QtWidgets.QMenu()
-		self.menu_view.addAction(self.view_controls_icon(),
-			_(u'View controls'), self.item.set_view_controls)
-		self.menu_view.addAction(self.view_script_icon(), _(u'View script'),
-			self.item.set_view_script)
-		self.menu_view.addAction(self.view_split_icon(), _(u'Split view'),
-			self.item.set_view_split)
-		self.setMenu(self.menu_view)
-		self.setToolTip(_(u'Select view'))
+    def view_controls_icon(self):
+        """
+        returns:
+                desc:	The icon for the controls view.
+                type: 	QIcon
+        """
 
-	def view_controls_icon(self):
+        return self.theme.qicon(u'os-view-controls')
 
-		"""
-		returns:
-			desc:	The icon for the controls view.
-			type: 	QIcon
-		"""
+    def view_script_icon(self):
+        """
+        returns:
+                desc:	The icon for the script view.
+                type: 	QIcon
+        """
 
-		return self.theme.qicon(u'os-view-controls')
+        return self.theme.qicon(u'os-view-script')
 
-	def view_script_icon(self):
+    def view_split_icon(self):
+        """
+        returns:
+                desc:	The icon for the split view.
+                type: 	QIcon
+        """
 
-		"""
-		returns:
-			desc:	The icon for the script view.
-			type: 	QIcon
-		"""
+        return self.theme.qicon(u'os-view-split')
 
-		return self.theme.qicon(u'os-view-script')
+    def set_view_icon(self, view):
+        """
+        desc:
+                Sets the icon of the button according to a view.
 
-	def view_split_icon(self):
+        arguments:
+                view:
+                        desc:	'controls', 'script', or 'split'.
+                        type:	unicode
+        """
 
-		"""
-		returns:
-			desc:	The icon for the split view.
-			type: 	QIcon
-		"""
-
-		return self.theme.qicon(u'os-view-split')
-
-	def set_view_icon(self, view):
-
-		"""
-		desc:
-			Sets the icon of the button according to a view.
-
-		arguments:
-			view:
-				desc:	'controls', 'script', or 'split'.
-				type:	unicode
-		"""
-
-		if view == u'controls':
-			self.setIcon(self.view_controls_icon())
-		elif view == u'script':
-			self.setIcon(self.view_script_icon())
-		else:
-			self.setIcon(self.view_split_icon())
+        if view == u'controls':
+            self.setIcon(self.view_controls_icon())
+        elif view == u'script':
+            self.setIcon(self.view_script_icon())
+        else:
+            self.setIcon(self.view_split_icon())

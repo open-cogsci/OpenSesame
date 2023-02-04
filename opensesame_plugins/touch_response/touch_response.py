@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -25,51 +25,49 @@ from libqtopensesame.items.qtautoplugin import qtautoplugin
 
 class touch_response(mouse_response):
 
-	"""A simple fixation-dot plug-in."""
+    """A simple fixation-dot plug-in."""
 
-	description = \
-		u'A grid-based response item, convenient for touch screens'
+    description = \
+        u'A grid-based response item, convenient for touch screens'
 
-	def reset(self):
+    def reset(self):
 
-		self.var._ncol = 2
-		self.var._nrow = 1
-		mouse_response.reset(self)
+        self.var._ncol = 2
+        self.var._nrow = 1
+        mouse_response.reset(self)
 
-	def process_response(self, response_args):
+    def process_response(self, response_args):
+        """See base_response_item."""
 
-		"""See base_response_item."""
-
-		response, pos, t1 = response_args
-		if pos is not None:
-			x, y = pos
-			if self.experiment.var.uniform_coordinates == u'yes':
-				_x = x+self.experiment.var.width/2
-				_y = y+self.experiment.var.height/2
-			else:
-				_x, _y = x, y
-			col = _x // (self.experiment.var.width / self.var._ncol)
-			row = _y // (self.experiment.var.height / self.var._nrow)
-			response = row * self.var._ncol + col + 1
-		mouse_response.process_response(self, (response, pos, t1) )
+        response, pos, t1 = response_args
+        if pos is not None:
+            x, y = pos
+            if self.experiment.var.uniform_coordinates == u'yes':
+                _x = x+self.experiment.var.width/2
+                _y = y+self.experiment.var.height/2
+            else:
+                _x, _y = x, y
+            col = _x // (self.experiment.var.width / self.var._ncol)
+            row = _y // (self.experiment.var.height / self.var._nrow)
+            response = row * self.var._ncol + col + 1
+        mouse_response.process_response(self, (response, pos, t1))
 
 
 class qttouch_response(touch_response, qtautoplugin):
 
-	"""The GUI part of the plug-in. Controls are defined in info.json."""
+    """The GUI part of the plug-in. Controls are defined in info.json."""
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
+        """
+        Constructor.
 
-		"""
-		Constructor.
+        Arguments:
+        name		--	The name of the plug-in.
+        experiment	--	The experiment object.
 
-		Arguments:
-		name		--	The name of the plug-in.
-		experiment	--	The experiment object.
+        Keyword arguments:
+        script		--	A definition script. (default=None)
+        """
 
-		Keyword arguments:
-		script		--	A definition script. (default=None)
-		"""
-
-		touch_response.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        touch_response.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

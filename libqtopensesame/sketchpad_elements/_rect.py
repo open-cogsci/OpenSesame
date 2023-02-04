@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of openexp.
@@ -20,26 +20,27 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.sketchpad_elements._base_rect_ellipse import \
-	base_rect_ellipse
+    base_rect_ellipse
 from libopensesame.sketchpad_elements import rect as rect_runtime
+
 
 class rect(base_rect_ellipse, rect_runtime):
 
-	"""
-	desc:
-		A rect element.
+    """
+    desc:
+            A rect element.
 
-		See base_element for docstrings and function descriptions.
-	"""
+            See base_element for docstrings and function descriptions.
+    """
 
-	@classmethod
-	def mouse_press(cls, sketchpad, pos):
+    @classmethod
+    def mouse_press(cls, sketchpad, pos):
 
-		if cls.pos_start is not None:
-			return
-		cls.pos_start = pos
-		xc = sketchpad.canvas.xcenter()
-		yc = sketchpad.canvas.ycenter()
-		cls.preview = sketchpad.canvas.rect(pos[0]+xc, pos[1]+yc, 0, 0,
-			color=cfg.sketchpad_preview_color,
-			penwidth=cfg.sketchpad_preview_penwidth)
+        if cls.pos_start is not None:
+            return
+        cls.pos_start = pos
+        xc = sketchpad.canvas.xcenter()
+        yc = sketchpad.canvas.ycenter()
+        cls.preview = sketchpad.canvas.rect(pos[0]+xc, pos[1]+yc, 0, 0,
+                                            color=cfg.sketchpad_preview_color,
+                                            penwidth=cfg.sketchpad_preview_penwidth)

@@ -26,14 +26,14 @@ from expyriment.stimuli._visual import Visual
 
 class Xpyriment(XpyrimentElement, RichText):
 
-	def prepare(self):
+    def prepare(self):
 
-		im = self._to_pil()
-		surface = pygame.image.fromstring(im.tobytes(), im.size, im.mode)
-		x, y = self.to_xy(self.x, self.y)
-		if not self.center:
-			x += im.width // 2
-			y -= im.height // 2
-		self._stim = Visual(position=(x, y))
-		self._stim.set_surface(surface)
-		self._stim.preload()
+        im = self._to_pil()
+        surface = pygame.image.fromstring(im.tobytes(), im.size, im.mode)
+        x, y = self.to_xy(self.x, self.y)
+        if not self.center:
+            x += im.width // 2
+            y -= im.height // 2
+        self._stim = Visual(position=(x, y))
+        self._stim.set_surface(surface)
+        self._stim.preload()

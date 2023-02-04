@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,54 +23,53 @@ from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 import imp
 
+
 class external_script(item):
 
-	description = \
-		u"Run Python code directly from a script file"
+    description = \
+        u"Run Python code directly from a script file"
 
-	def reset(self):
+    def reset(self):
+        """
+        desc:
+                Resets plug-in to initial state.
+        """
 
-		"""
-		desc:
-			Resets plug-in to initial state.
-		"""
+        self.module = None
+        self.var.file = u''
+        self.var.prepare_func = u'prepare'
+        self.var.run_func = u'run'
 
-		self.module = None
-		self.var.file = u''
-		self.var.prepare_func = u'prepare'
-		self.var.run_func = u'run'
+    def prepare(self):
+        """
+        desc:
+                Prepares the item.
+        """
 
-	def prepare(self):
+        item.prepare(self)
+        if self.module is None:
+            path = self.experiment.pool[self.var.file]
+            self.experiment.python_workspace.run_file(path)
+        self.prepare_bytecode = self.experiment.python_workspace._compile(
+            u'%s()' % self.var.prepare_func)
+        self.run_bytecode = self.experiment.python_workspace._compile(
+            u'%s()' % self.var.run_func)
+        self.experiment.python_workspace._exec(self.prepare_bytecode)
 
-		"""
-		desc:
-			Prepares the item.
-		"""
+    def run(self):
+        """
+        desc:
+                Runs the item.
+        """
 
-		item.prepare(self)
-		if self.module is None:
-			path = self.experiment.pool[self.var.file]
-			self.experiment.python_workspace.run_file(path)
-		self.prepare_bytecode = self.experiment.python_workspace._compile(
-			u'%s()' % self.var.prepare_func)
-		self.run_bytecode = self.experiment.python_workspace._compile(
-			u'%s()' % self.var.run_func)
-		self.experiment.python_workspace._exec(self.prepare_bytecode)
+        self.set_item_onset()
+        self.experiment.python_workspace._exec(self.run_bytecode)
 
-	def run(self):
-
-		"""
-		desc:
-			Runs the item.
-		"""
-
-		self.set_item_onset()
-		self.experiment.python_workspace._exec(self.run_bytecode)
 
 class qtexternal_script(external_script, qtautoplugin):
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
 
-		# Call parent constructors.
-		external_script.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        # Call parent constructors.
+        external_script.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -25,170 +25,167 @@ import os
 import signal
 
 if platform.system() == 'Darwin' and \
-	sys.version_info < (3,4):
-		# In OS X Python < 3.4 the multiprocessing module is horribly broken,
-		# but a fixed version has been released as the 'billiard' module
-		import billiard as multiprocessing
+        sys.version_info < (3, 4):
+    # In OS X Python < 3.4 the multiprocessing module is horribly broken,
+    # but a fixed version has been released as the 'billiard' module
+    import billiard as multiprocessing
 else:
-	import multiprocessing
+    import multiprocessing
+
 
 class OutputChannel:
 
-	"""Passes messages from child process back to main process."""
+    """Passes messages from child process back to main process."""
 
-	def __init__(self, channel, orig=None):
+    def __init__(self, channel, orig=None):
+        """
+        Constructor.
 
-		"""
-		Constructor.
+        Arguments:
+        channel	--	A multiprocessing.JoinableQueue object that is referenced
+                                from the main process.
 
-		Arguments:
-		channel	--	A multiprocessing.JoinableQueue object that is referenced
-					from the main process.
+        Keyword arguments:
+        orig	--	The original stdout or stderr to also print the messages to.
+        """
 
-		Keyword arguments:
-		orig	--	The original stdout or stderr to also print the messages to.
-		"""
+        self.channel = channel
+        self.orig = orig
 
-		self.channel = channel
-		self.orig = orig
+    def write(self, m):
+        """
+        Writes a message to the queue.
 
-	def write(self, m):
+        Arguments
+        m		--	The message to write. Should be a string or an (Exception,
+                                traceback) tuple.
+        """
 
-		"""
-		Writes a message to the queue.
+        self.channel.put(m)
 
-		Arguments
-		m		--	The message to write. Should be a string or an (Exception,
-					traceback) tuple.
-		"""
+    def flush(self):
+        """Dummy function to mimic the stderr.flush() function."""
 
-		self.channel.put(m)
+        if self.orig:
+            self.orig.flush()
+        else:
+            pass
 
-	def flush(self):
+    def isatty(self):
+        """
+        desc:
+                Indicates that the output is not attached to a terminal.
+        """
 
-		"""Dummy function to mimic the stderr.flush() function."""
-
-		if self.orig:
-			self.orig.flush()
-		else:
-			pass
-
-	def isatty(self):
-
-		"""
-		desc:
-			Indicates that the output is not attached to a terminal.
-		"""
-
-		return False
+        return False
 
 
 class ExperimentProcess(multiprocessing.Process):
 
-	"""Creates a new process to run an experiment in."""
+    """Creates a new process to run an experiment in."""
 
-	def __init__(self, exp, output):
+    def __init__(self, exp, output):
+        """
+        Constructor.
 
-		"""
-		Constructor.
+        Arguments
+        exp		--	An instance of libopensesame.experiment.experiment
+        output	--	A reference to the queue object created in and used to
+                                communicate with the main process.
+        """
 
-		Arguments
-		exp		--	An instance of libopensesame.experiment.experiment
-		output	--	A reference to the queue object created in and used to
-					communicate with the main process.
-		"""
+        multiprocessing.Process.__init__(self)
+        self.output = output
+        # The experiment object is troublesome to serialize,
+        # therefore pull out all relevant data to pass on to the new process
+        # and rebuild the exp object in there.
+        self.script = exp.to_string()
+        self.pool_folder = exp.pool.folder()
+        self.subject_nr = exp.var.subject_nr
+        self.experiment_path = exp.experiment_path
+        self.fullscreen = exp.var.fullscreen == u'yes'
+        self.logfile = exp.logfile
+        self.auto_response = exp.auto_response
+        self.killed = False
 
-		multiprocessing.Process.__init__(self)
-		self.output = output
-		# The experiment object is troublesome to serialize,
-		# therefore pull out all relevant data to pass on to the new process
-		# and rebuild the exp object in there.
-		self.script = exp.to_string()
-		self.pool_folder = exp.pool.folder()
-		self.subject_nr = exp.var.subject_nr
-		self.experiment_path = exp.experiment_path
-		self.fullscreen = exp.var.fullscreen == u'yes'
-		self.logfile = exp.logfile
-		self.auto_response = exp.auto_response
-		self.killed = False
+    def run(self):
+        """
+        Everything in this function is run in a new process, therefore all
+        import statements are put in here. The function reroutes all output to
+        stdin and stderr to the pipe to the main process so OpenSesame can
+        handle all prints and errors.
+        """
 
-	def run(self):
+        import os
+        import sys
+        from libopensesame import misc
+        from libopensesame.experiment import experiment
+        from libopensesame.exceptions import osexception
+        # Under Windows, change the working directory to the OpenSesame folder,
+        # so that the new process can find the main script.
+        if os.name == u'nt':
+            os.chdir(misc.opensesame_folder())
+            os.environ['PATH'] += ';' + os.getcwd()
+        # Reroute output to OpenSesame main process, so everything will be
+        # printed in the Debug window there.
+        pipeToMainProcess = OutputChannel(self.output)
+        sys.stderr = sys.stdout = pipeToMainProcess
+        oslogger.start(u'runtime')
+        # First initialize the experiment and catch any resulting Exceptions
+        try:
+            exp = experiment(
+                string=self.script, pool_folder=self.pool_folder,
+                experiment_path=self.experiment_path,
+                fullscreen=self.fullscreen, auto_response=self.auto_response,
+                subject_nr=self.subject_nr, logfile=self.logfile
+            )
+        except Exception as e:
+            if not isinstance(e, osexception):
+                e = osexception(u'Unexpected error', exception=e)
+            # Communicate the exception and exit with error
+            self.output.put(e)
+            sys.exit(1)
+        oslogger.info(u'Starting experiment as %s' % self.name)
+        # Run the experiment and catch any Exceptions.
+        e_run = None
+        exp.set_output_channel(self.output)
+        try:
+            exp.run()
+            oslogger.info('experiment finished!')
+        except Exception as e:
+            if not isinstance(e, osexception):
+                e_run = osexception(u'Unexpected error', exception=e)
+            else:
+                e_run = e
+        exp.transmit_workspace()
+        # Communicate the exception. We do this before calling exp.end()
+        # because Python may crash in this step and we need to send the
+        # exception before that happens.
+        if e_run is not None:
+            self.output.put(e_run)
+        # End the experiment and catch any Exceptions. These exceptions are just
+        # printed out and not explicitly passed on to the user, because they are
+        # less important than the run-related exceptions.
+        try:
+            exp.end()
+        except Exception as e_exp:
+            oslogger.error(
+                u'An Exception occurred during exp.end(): %s' % e_exp)
+        # Exit with error status if an exception occurred.
+        if e_run is not None:
+            sys.exit(1)
+        # Exit with success
+        sys.exit(0)
 
-		"""
-		Everything in this function is run in a new process, therefore all
-		import statements are put in here. The function reroutes all output to
-		stdin and stderr to the pipe to the main process so OpenSesame can
-		handle all prints and errors.
-		"""
+    def kill(self):
 
-		import os
-		import sys
-		from libopensesame import misc
-		from libopensesame.experiment import experiment
-		from libopensesame.exceptions import osexception
-		# Under Windows, change the working directory to the OpenSesame folder,
-		# so that the new process can find the main script.
-		if os.name == u'nt':
-			os.chdir(misc.opensesame_folder())
-			os.environ['PATH'] += ';' + os.getcwd()
-		# Reroute output to OpenSesame main process, so everything will be
-		# printed in the Debug window there.
-		pipeToMainProcess = OutputChannel(self.output)
-		sys.stderr = sys.stdout = pipeToMainProcess
-		oslogger.start(u'runtime')
-		# First initialize the experiment and catch any resulting Exceptions
-		try:
-			exp = experiment(
-				string=self.script, pool_folder=self.pool_folder,
-				experiment_path=self.experiment_path,
-				fullscreen=self.fullscreen, auto_response=self.auto_response,
-				subject_nr=self.subject_nr, logfile=self.logfile
-			)
-		except Exception as e:
-			if not isinstance(e, osexception):
-				e = osexception(u'Unexpected error', exception=e)
-			# Communicate the exception and exit with error
-			self.output.put(e)
-			sys.exit(1)
-		oslogger.info(u'Starting experiment as %s' % self.name)
-		# Run the experiment and catch any Exceptions.
-		e_run = None
-		exp.set_output_channel(self.output)
-		try:
-			exp.run()
-			oslogger.info('experiment finished!')
-		except Exception as e:
-			if not isinstance(e, osexception):
-				e_run = osexception(u'Unexpected error', exception=e)
-			else:
-				e_run = e
-		exp.transmit_workspace()
-		# Communicate the exception. We do this before calling exp.end() 
-		# because Python may crash in this step and we need to send the 
-		# exception before that happens.
-		if e_run is not None:
-			self.output.put(e_run)
-		# End the experiment and catch any Exceptions. These exceptions are just
-		# printed out and not explicitly passed on to the user, because they are
-		# less important than the run-related exceptions.
-		try:
-			exp.end()
-		except Exception as e_exp:
-			oslogger.error(u'An Exception occurred during exp.end(): %s' % e_exp)
-		# Exit with error status if an exception occurred.
-		if e_run is not None:
-			sys.exit(1)
-		# Exit with success
-		sys.exit(0)
-
-	def kill(self):
-
-		oslogger.info(u'killing experiment process')
-		try:
-			os.kill(
-				self.pid,
-				signal.SIGKILL if hasattr(signal, u'SIGKILL') else signal.SIGTERM
-			)
-		except OSError:
-			oslogger.warning(u'failed to kill experiment process')
-		self.killed = True
+        oslogger.info(u'killing experiment process')
+        try:
+            os.kill(
+                self.pid,
+                signal.SIGKILL if hasattr(
+                    signal, u'SIGKILL') else signal.SIGTERM
+            )
+        except OSError:
+            oslogger.warning(u'failed to kill experiment process')
+        self.killed = True

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -26,74 +26,71 @@ import random
 
 class advanced_delay(item.item):
 
-	description = u'Waits for a specified duration'
+    description = u'Waits for a specified duration'
 
-	def reset(self):
+    def reset(self):
+        """
+        desc:
+                Initialize plug-in.
+        """
 
-		"""
-		desc:
-			Initialize plug-in.
-		"""
+        self.var.duration = 1000
+        self.var.jitter = 0
+        self.var.jitter_mode = u'Uniform'
 
-		self.var.duration = 1000
-		self.var.jitter = 0
-		self.var.jitter_mode = u'Uniform'
+    def prepare(self):
+        """
+        desc:
+                The preparation phase of the plug-in.
+        """
 
-	def prepare(self):
+        item.item.prepare(self)
+        # Sanity check on the duration value, which should be a positive numeric
+        # value.
+        if type(self.var.duration) not in (int, float) or self.var.duration < 0:
+            raise osexception(
+                u'Duration should be a positive numeric value in advanced_delay %s'
+                % self.name)
+        if self.var.jitter_mode == u'Uniform':
+            self._duration = random.uniform(self.var.duration-self.var.jitter/2,
+                                            self.var.duration+self.var.jitter/2)
+        elif self.var.jitter_mode == u'Std. Dev.':
+            self._duration = random.gauss(self.var.duration, self.var.jitter)
+        else:
+            raise osexception(
+                u'Unknown jitter mode in advanced_delay %s' % self.name)
+        # Don't allow negative durations.
+        if self._duration < 0:
+            self._duration = 0
+        self._duration = int(self._duration)
+        self.experiment.var.set(u'delay_%s' % self.name, self._duration)
 
-		"""
-		desc:
-			The preparation phase of the plug-in.
-		"""
+    def run(self):
+        """
+        desc:
+                The run phase of the plug-in.
+        """
 
-		item.item.prepare(self)
-		# Sanity check on the duration value, which should be a positive numeric
-		# value.
-		if type(self.var.duration) not in (int, float) or self.var.duration < 0:
-			raise osexception(
-				u'Duration should be a positive numeric value in advanced_delay %s' \
-				% self.name)
-		if self.var.jitter_mode == u'Uniform':
-			self._duration = random.uniform(self.var.duration-self.var.jitter/2,
-				self.var.duration+self.var.jitter/2)
-		elif self.var.jitter_mode == u'Std. Dev.':
-			self._duration = random.gauss(self.var.duration, self.var.jitter)
-		else:
-			raise osexception(
-				u'Unknown jitter mode in advanced_delay %s' % self.name)
-		# Don't allow negative durations.
-		if self._duration < 0:
-			self._duration = 0
-		self._duration = int(self._duration)
-		self.experiment.var.set(u'delay_%s' % self.name, self._duration)
+        self.set_item_onset(self.time())
+        self.sleep(self._duration)
 
-	def run(self):
+    def var_info(self):
+        """
+        Gives a list of dictionaries with variable descriptions.
 
-		"""
-		desc:
-			The run phase of the plug-in.
-		"""
+        Returns:
+        A list of (name, description) tuples.
+        """
 
-		self.set_item_onset(self.time())
-		self.sleep(self._duration)
+        return item.item.var_info(self) + [(u'delay_%s' % self.name,
+                                            u'[Determined at runtime]')]
 
-	def var_info(self):
-
-		"""
-		Gives a list of dictionaries with variable descriptions.
-
-		Returns:
-		A list of (name, description) tuples.
-		"""
-
-		return item.item.var_info(self) + [(u'delay_%s' % self.name, \
-			u'[Determined at runtime]')]
 
 class qtadvanced_delay(advanced_delay, qtautoplugin):
 
-	"""Automatic plug-in GUI."""
+    """Automatic plug-in GUI."""
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
 
-		advanced_delay.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        advanced_delay.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

@@ -26,16 +26,16 @@ from openexp._canvas._element.legacy import LegacyElement
 
 class Legacy(LegacyElement, NoisePatch):
 
-	def prepare(self):
+    def prepare(self):
 
-		im = canvas._noise_patch(
-			self.env,
-			self.size,
-			self.stdev,
-			self.col1,
-			self.col2,
-			self.bgmode
-		)
-		surface = pygame.image.fromstring(im.tobytes(), im.size, u'RGB')
-		x, y = self.to_xy(self.x, self.y)
-		self.surface.blit(surface, (x - 0.5 * self.size, y - 0.5 * self.size))
+        im = canvas._noise_patch(
+            self.env,
+            self.size,
+            self.stdev,
+            self.col1,
+            self.col2,
+            self.bgmode
+        )
+        surface = pygame.image.fromstring(im.tobytes(), im.size, u'RGB')
+        x, y = self.to_xy(self.x, self.y)
+        self.surface.blit(surface, (x - 0.5 * self.size, y - 0.5 * self.size))

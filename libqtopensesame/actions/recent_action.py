@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -25,33 +25,32 @@ __license__ = "GPLv3"
 from qtpy import QtWidgets
 import os.path
 
+
 class recent_action(QtWidgets.QAction):
 
-	"""Menu action for a recently opened file"""
+    """Menu action for a recently opened file"""
 
-	def __init__(self, path, main_window, menu):
+    def __init__(self, path, main_window, menu):
+        """
+        Constructor
 
-		"""
-		Constructor
+        Arguments:
+        path -- path to the recent file
+        main_window -- the main window
+        menu -- the menu into which the action should be inserted
+        """
 
-		Arguments:
-		path -- path to the recent file
-		main_window -- the main window
-		menu -- the menu into which the action should be inserted
-		"""
+        QtWidgets.QAction.__init__(self, os.path.basename(path), menu)
+        self.main_window = main_window
+        self.triggered.connect(self.open_file)
+        self.path = path
 
-		QtWidgets.QAction.__init__(self, os.path.basename(path), menu)
-		self.main_window = main_window
-		self.triggered.connect(self.open_file)
-		self.path = path
+    def open_file(self, dummy=None):
+        """
+        Open the file
 
-	def open_file(self, dummy = None):
+        Keyword arguments:
+        dummy -- a dummy argument passed by the signal handler (default=None)
+        """
 
-		"""
-		Open the file
-
-		Keyword arguments:
-		dummy -- a dummy argument passed by the signal handler (default=None)
-		"""
-
-		self.main_window.open_file(path=self.path)
+        self.main_window.open_file(path=self.path)

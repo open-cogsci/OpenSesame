@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -19,65 +19,63 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
+
 class item_stack(object):
 
-	"""
-	desc:
-		Keeps track of which item is currently active.
-	"""
+    """
+    desc:
+            Keeps track of which item is currently active.
+    """
 
-	def __init__(self):
+    def __init__(self):
+        """
+        desc:
+                Constructor.
+        """
 
-		"""
-		desc:
-			Constructor.
-		"""
+        self.clear()
 
-		self.clear()
+    def clear(self):
+        """
+        desc:
+                Clears the stack.
+        """
 
-	def clear(self):
+        self.l = []
 
-		"""
-		desc:
-			Clears the stack.
-		"""
+    def push(self, item, phase):
+        """
+        desc:
+                Adds a new item to the stack.
 
-		self.l = []
+        arguments:
+                item:
+                        desc:	The item to add.
+                        type:	str
+        """
 
-	def push(self, item, phase):
+        self.l.append((item, phase))
 
-		"""
-		desc:
-			Adds a new item to the stack.
+    def pop(self):
+        """
+        desc:
+                Pops the last item from the stack.
 
-		arguments:
-			item:
-				desc:	The item to add.
-				type:	str
-		"""
+        returns:
+                desc:	The popped item.
+                type:	str
+        """
 
-		self.l.append( (item, phase) )
+        return self.l.pop()
 
-	def pop(self):
+    def __str__(self):
 
-		"""
-		desc:
-			Pops the last item from the stack.
+        return '.'.join(['%s[%s]' % i for i in self.l])
 
-		returns:
-			desc:	The popped item.
-			type:	str
-		"""
+    def __unicode__(self):
 
-		return self.l.pop()
+        return u'.'.join([u'%s[%s]' % i for i in self.l])
 
-	def __str__(self):
-
-		return '.'.join(['%s[%s]' % i for i in self.l])
-
-	def __unicode__(self):
-
-		return u'.'.join([u'%s[%s]' % i for i in self.l])
 
 # Create a single instance of the stack
 item_stack_singleton = item_stack()

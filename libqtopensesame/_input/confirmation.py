@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,73 +23,72 @@ from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'confirmation', category=u'core')
 
+
 class confirmation(QtWidgets.QMessageBox, base_subcomponent):
 
-	"""
-	desc:
-		A simple yes/ no/ cancel confirmation dialog.
-	"""
+    """
+    desc:
+            A simple yes/ no/ cancel confirmation dialog.
+    """
 
-	def __init__(self, main_window, msg, title=None, allow_cancel=False,
-		default=u'no'):
+    def __init__(self, main_window, msg, title=None, allow_cancel=False,
+                 default=u'no'):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:
+                        desc:	The main-window object.
+                        type:	QWidget
+                msg:
+                        desc:	The message.
+                        type:	[unicode, str]
+                title:
+                        desc:	A Window title or None for a default title.
+                        type:	[str, NoneType]
+                allow_cancel:
+                        desc:	Indicates whether a cancel button should be included,
+                                        in addition to the yes and no buttons.
+                        type:	bool
+                default:
+                        desc:	The button that is active by default, 'no', 'yes', or
+                                        'cancel'
+                        type:	str
+        """
 
-		arguments:
-			main_window:
-				desc:	The main-window object.
-				type:	QWidget
-			msg:
-				desc:	The message.
-				type:	[unicode, str]
-			title:
-				desc:	A Window title or None for a default title.
-				type:	[str, NoneType]
-			allow_cancel:
-				desc:	Indicates whether a cancel button should be included,
-						in addition to the yes and no buttons.
-				type:	bool
-			default:
-				desc:	The button that is active by default, 'no', 'yes', or
-						'cancel'
-				type:	str
-		"""
+        QtWidgets.QMessageBox.__init__(self, main_window)
+        self.setup(main_window)
+        self.yes = self.addButton(QtWidgets.QMessageBox.Yes)
+        self.no = self.addButton(QtWidgets.QMessageBox.No)
+        if allow_cancel:
+            self.cancel = self.addButton(QtWidgets.QMessageBox.Cancel)
+        else:
+            self.cancel = None
+        if default == u'no':
+            self.setDefaultButton(QtWidgets.QMessageBox.No)
+        elif default == u'yes':
+            self.setDefaultButton(QtWidgets.QMessageBox.Yes)
+        elif default == u'cancel' and allow_cancel:
+            self.setDefaultButton(QtWidgets.QMessageBox.Cancel)
+        if title is None:
+            title = _(u'Please confirm')
+        self.setWindowTitle(title)
+        self.setText(msg)
 
-		QtWidgets.QMessageBox.__init__(self, main_window)
-		self.setup(main_window)
-		self.yes = self.addButton(QtWidgets.QMessageBox.Yes)
-		self.no = self.addButton(QtWidgets.QMessageBox.No)
-		if allow_cancel:
-			self.cancel = self.addButton(QtWidgets.QMessageBox.Cancel)
-		else:
-			self.cancel = None
-		if default == u'no':
-			self.setDefaultButton(QtWidgets.QMessageBox.No)
-		elif default == u'yes':
-			self.setDefaultButton(QtWidgets.QMessageBox.Yes)
-		elif default == u'cancel' and allow_cancel:
-			self.setDefaultButton(QtWidgets.QMessageBox.Cancel)
-		if title is None:
-			title = _(u'Please confirm')
-		self.setWindowTitle(title)
-		self.setText(msg)
+    def show(self):
+        """
+        desc:
+                Shows the confirmation dialog.
 
-	def show(self):
+        returns:
+                desc:	True if confirmed, False disconfirmed, and None if
+                                cancelled.
+                type:	[bool, NoneType]
+        """
 
-		"""
-		desc:
-			Shows the confirmation dialog.
-
-		returns:
-			desc:	True if confirmed, False disconfirmed, and None if
-					cancelled.
-			type:	[bool, NoneType]
-		"""
-
-		self.exec_()
-		button = self.clickedButton()
-		if self.cancel is not None and button is self.cancel:
-			return None
-		return button == self.yes
+        self.exec_()
+        button = self.clickedButton()
+        if self.cancel is not None and button is self.cancel:
+            return None
+        return button == self.yes

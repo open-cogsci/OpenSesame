@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -51,50 +51,49 @@ widget 1 3 1 1 button text=[decline_text]
 
 class form_consent(form_base.form_base):
 
-	initial_view = u'controls'
+    initial_view = u'controls'
 
-	def __init__(self, name, experiment, string=None):
+    def __init__(self, name, experiment, string=None):
+        """
+        Constructor.
 
-		"""
-		Constructor.
+        Arguments:
+        name		--	The name of the item.
+        experiment	--	The experiment instance.
 
-		Arguments:
-		name		--	The name of the item.
-		experiment	--	The experiment instance.
+        Keyword arguments:
+        string		--	A definition string. (default=None)
+        """
 
-		Keyword arguments:
-		string		--	A definition string. (default=None)
-		"""
+        if string is None or string.strip() == u'':
+            string = default_script
+        # Due to dynamic loading, we need to implement this super() hack. See
+        # <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
+        self.super_form_consent = super(form_consent, self)
+        self.super_form_consent.__init__(
+            name, experiment, string, item_type=u'form_consent', description=u'A simple consent form')
 
-		if string is None or string.strip() == u'':
-			string = default_script
-		# Due to dynamic loading, we need to implement this super() hack. See
-		# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
-		self.super_form_consent = super(form_consent, self)
-		self.super_form_consent.__init__(name, experiment, string, item_type= \
-			u'form_consent', description=u'A simple consent form')
+    def run(self):
+        """Executes the consent form."""
 
-	def run(self):
+        while True:
+            # In this case we cannot call super(form_consent, self), because
+            # modules may have been reloaded. The exact nature of the bug is
+            # unclear, but passing the __class__ property resolves it. See also
+            # <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
+            self.super_form_consent.run()
+            if self.var.get(u'checkbox_status') == self.var.get(u'checkbox_text') and \
+                    self.var.get(u'accept_status') == u'yes':
+                break
+            c = canvas(self.experiment)
+            c.text(self.var.get(u'decline_message'))
+            c.show()
+            self.sleep(5000)
 
-		"""Executes the consent form."""
-
-		while True:
-			# In this case we cannot call super(form_consent, self), because
-			# modules may have been reloaded. The exact nature of the bug is
-			# unclear, but passing the __class__ property resolves it. See also
-			# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
-			self.super_form_consent.run()
-			if self.var.get(u'checkbox_status') == self.var.get(u'checkbox_text') and \
-				self.var.get(u'accept_status') == u'yes':
-				break
-			c = canvas(self.experiment)
-			c.text(self.var.get(u'decline_message'))
-			c.show()
-			self.sleep(5000)
 
 class qtform_consent(form_consent, qtautoplugin):
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
 
-		form_consent.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        form_consent.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

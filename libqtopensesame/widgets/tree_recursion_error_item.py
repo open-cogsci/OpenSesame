@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -25,32 +25,31 @@ _ = translation_context(u'tree_recursion_error_item', category=u'core')
 
 class tree_recursion_error_item(tree_base_item):
 
-	"""
-	desc:
-		A placeholder item that is shown when there is a recursion in the
-		experiment that prevents the item tree from being built.
-	"""
+    """
+    desc:
+            A placeholder item that is shown when there is a recursion in the
+            experiment that prevents the item tree from being built.
+    """
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:
+                        desc:	The main-window object.
+                        type:	qtopensesame
+        """
 
-		arguments:
-			main_window:
-				desc:	The main-window object.
-				type:	qtopensesame
-		"""
+        super(tree_recursion_error_item, self).__init__()
+        self.setup(main_window)
+        self.setText(0, _(u'Recursion detected'))
+        self.setIcon(0, self.theme.qicon(u'dialog-error'))
+        self._droppable = False
+        self._draggable = False
+        self.name = u'__recursion_error__'
 
-		super(tree_recursion_error_item, self).__init__()
-		self.setup(main_window)
-		self.setText(0, _(u'Recursion detected'))
-		self.setIcon(0, self.theme.qicon(u'dialog-error'))
-		self._droppable = False
-		self._draggable = False
-		self.name = u'__recursion_error__'
+    def open_tab(self):
 
-	def open_tab(self):
-
-		self.main_window.tabwidget.open_general_script()
+        self.main_window.tabwidget.open_general_script()

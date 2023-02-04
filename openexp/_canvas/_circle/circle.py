@@ -23,62 +23,61 @@ from openexp._canvas._ellipse.ellipse import Ellipse
 
 class Circle(Ellipse):
 
-	def __init__(self, canvas, x, y, r, **properties):
+    def __init__(self, canvas, x, y, r, **properties):
 
-		properties = properties.copy()
-		self._r = r
-		properties.update({ 'x' : x, 'y' : y, 'w' : 2*r, 'h' : 2*r})
-		self.prepare = self.circle_prepare(self.prepare)
-		Ellipse.__init__(self, canvas, **properties)
-		
-	@property
-	def r(self):
-		return self._r
-	
-	@r.setter
-	def r(self, val):
-		self._r = val
-		self.w = self.h = 2 * val
+        properties = properties.copy()
+        self._r = r
+        properties.update({'x': x, 'y': y, 'w': 2*r, 'h': 2*r})
+        self.prepare = self.circle_prepare(self.prepare)
+        Ellipse.__init__(self, canvas, **properties)
 
-	@property
-	def rect(self):
-		return self.x-self.r, self.y-self.r, self.r*2, self.r*2
+    @property
+    def r(self):
+        return self._r
 
-	def __contains__(self, xy):
+    @r.setter
+    def r(self, val):
+        self._r = val
+        self.w = self.h = 2 * val
 
-		return ((xy[0]-self.x)**2+(xy[1]-self.y)**2)**0.5 <= self.r
+    @property
+    def rect(self):
+        return self.x-self.r, self.y-self.r, self.r*2, self.r*2
 
-	def circle_prepare(self, ellipse_prepare):
+    def __contains__(self, xy):
 
-		"""
-		desc:
-			A decorator that converts the center coordinates used by the circle
-			to the top-left coordinates used by the ellipse.
-		"""
+        return ((xy[0]-self.x)**2+(xy[1]-self.y)**2)**0.5 <= self.r
 
-		def inner():
+    def circle_prepare(self, ellipse_prepare):
+        """
+        desc:
+                A decorator that converts the center coordinates used by the circle
+                to the top-left coordinates used by the ellipse.
+        """
 
-			r = self._properties[u'w'] // 2
-			self._properties[u'x'] -= r
-			self._properties[u'y'] -= r
-			ellipse_prepare()
-			self._properties[u'x'] += r
-			self._properties[u'y'] += r
+        def inner():
 
-		return inner
+            r = self._properties[u'w'] // 2
+            self._properties[u'x'] -= r
+            self._properties[u'y'] -= r
+            ellipse_prepare()
+            self._properties[u'x'] += r
+            self._properties[u'y'] += r
 
-	@staticmethod
-	def _getter(key, self):
+        return inner
 
-		if key == u'r':
-			return self._properties[u'w'] // 2
-		return Ellipse._getter(key, self)
+    @staticmethod
+    def _getter(key, self):
 
-	@staticmethod
-	def _setter(key, self, val):
+        if key == u'r':
+            return self._properties[u'w'] // 2
+        return Ellipse._getter(key, self)
 
-		if key == u'r':
-			self._properties[u'w'] = val * 2
-			self._properties[u'h'] = val * 2
-			return
-		Ellipse._setter(key, self, val)
+    @staticmethod
+    def _setter(key, self, val):
+
+        if key == u'r':
+            self._properties[u'w'] = val * 2
+            self._properties[u'h'] = val * 2
+            return
+        Ellipse._setter(key, self, val)

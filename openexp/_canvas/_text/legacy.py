@@ -26,46 +26,46 @@ from openexp._canvas._element.legacy import LegacyElement
 
 class Legacy(LegacyElement, Text):
 
-	def __init__(self, canvas, text, x, y, **properties):
+    def __init__(self, canvas, text, x, y, **properties):
 
-		self._antialias = True
-		Text.__init__(self, canvas, text, x, y, **properties)
-		self._set_font()
+        self._antialias = True
+        Text.__init__(self, canvas, text, x, y, **properties)
+        self._set_font()
 
-	def prepare(self):
+    def prepare(self):
 
-		self._set_font()
-		surface = self._font.render(self.text, self._antialias,
-			self.color.backend_color)
-		self.surface.blit(surface, self.to_xy(self.x, self.y))
+        self._set_font()
+        surface = self._font.render(self.text, self._antialias,
+                                    self.color.backend_color)
+        self.surface.blit(surface, self.to_xy(self.x, self.y))
 
-	@property
-	def size(self):
+    @property
+    def size(self):
 
-		return self._font.size(self.text)
+        return self._font.size(self.text)
 
-	def _set_font(self):
+    def _set_font(self):
 
-		self._font = self._pygame_font(self.experiment, self.font_family,
-			self.font_size)
-		self._font.set_bold(self.font_bold)
-		self._font.set_italic(self.font_italic)
-		self._font.set_underline(self.font_underline)
+        self._font = self._pygame_font(self.experiment, self.font_family,
+                                       self.font_size)
+        self._font.set_bold(self.font_bold)
+        self._font.set_italic(self.font_italic)
+        self._font.set_underline(self.font_underline)
 
-	@staticmethod
-	def _pygame_font(experiment, family, size):
+    @staticmethod
+    def _pygame_font(experiment, family, size):
 
-		if (family, size) in legacy.fonts:
-			return legacy.fonts[(family, size)]
-		try:
-			path = experiment.resource(u'%s.ttf' % family)
-		except:
-			# If the family cannot be found in the filepool, assume that it is
-			# a system font.
-			font = pygame.font.SysFont(family, size)
-		else:
-			fd = open(path, u'rb')
-			legacy.fileobjects.append(fd)
-			font = pygame.font.Font(fd, size)
-		legacy.fonts[(family, size)] = font
-		return font
+        if (family, size) in legacy.fonts:
+            return legacy.fonts[(family, size)]
+        try:
+            path = experiment.resource(u'%s.ttf' % family)
+        except:
+            # If the family cannot be found in the filepool, assume that it is
+            # a system font.
+            font = pygame.font.SysFont(family, size)
+        else:
+            fd = open(path, u'rb')
+            legacy.fileobjects.append(fd)
+            font = pygame.font.Font(fd, size)
+        legacy.fonts[(family, size)] = font
+        return font

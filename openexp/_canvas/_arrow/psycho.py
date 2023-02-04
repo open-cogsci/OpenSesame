@@ -24,4 +24,4 @@ from openexp._canvas._polygon.psycho import Psycho as PsychoPolygon
 
 class Psycho(PsychoPolygon, Arrow):
 
-	pass
+    pass

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -28,93 +28,89 @@ _ = translation_context(u'toolbar_menu', category=u'extension')
 
 class toolbar_menu(base_extension):
 
-	"""
-	desc:
-		Integrates the menu into the toolbar.
-	"""
+    """
+    desc:
+            Integrates the menu into the toolbar.
+    """
 
-	def event_startup(self):
+    def event_startup(self):
 
-		self._menu = None
-		if not cfg.toolbar_menu_active:
-			return
-		cfg.toolbar_menu_active = False  # It will be toggled!
-		self.activate()
-		self.set_checked(True)
+        self._menu = None
+        if not cfg.toolbar_menu_active:
+            return
+        cfg.toolbar_menu_active = False  # It will be toggled!
+        self.activate()
+        self.set_checked(True)
 
-	def activate(self):
+    def activate(self):
+        """
+        desc:
+                Toggle the menubar integration.
+        """
 
-		"""
-		desc:
-			Toggle the menubar integration.
-		"""
+        if self._menu is None:
+            self._init_menu()
+        if cfg.toolbar_menu_active:
+            self._deactivate_toolbar_menu()
+        else:
+            self._activate_toolbar_menu()
 
-		if self._menu is None:
-			self._init_menu()
-		if cfg.toolbar_menu_active:
-			self._deactivate_toolbar_menu()
-		else:
-			self._activate_toolbar_menu()
-			
-	def _init_menu(self):
-		
-		"""
-		desc:
-			Creates a widget with a menu that copies all actions from the main
-			menu bar.
-		"""		
-			
-		self._menu = QtWidgets.QMenu()
-		for action in self.menubar.actions():
-			self._menu.addAction(action)
-		self.stretch = QtWidgets.QWidget()
-		self.stretch.setSizePolicy(
-			QtWidgets.QSizePolicy.Expanding,
-			QtWidgets.QSizePolicy.Expanding
-		)
-		self.button = QtWidgets.QPushButton(
-			self.theme.qicon(self.icon()),
-			_(u'Menu')
-		)
-		self.button.setMenu(self._menu)
-		self.button.setIconSize(
-			QtCore.QSize(cfg.toolbar_size, cfg.toolbar_size)
-		)
-		self.button.setFlat(True)
-		self.toolbar.addWidget(self.stretch)
-		self.menu_action = self.toolbar.addWidget(self.button)
-			
-	def _keep_toolbar_visible(self, visible):
-		
-		if visible:
-			return
-		oslogger.debug('keep toolbar visible')
-		self.toolbar.setVisible(True)
+    def _init_menu(self):
+        """
+        desc:
+                Creates a widget with a menu that copies all actions from the main
+                menu bar.
+        """
 
-	def _activate_toolbar_menu(self):
+        self._menu = QtWidgets.QMenu()
+        for action in self.menubar.actions():
+            self._menu.addAction(action)
+        self.stretch = QtWidgets.QWidget()
+        self.stretch.setSizePolicy(
+            QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Expanding
+        )
+        self.button = QtWidgets.QPushButton(
+            self.theme.qicon(self.icon()),
+            _(u'Menu')
+        )
+        self.button.setMenu(self._menu)
+        self.button.setIconSize(
+            QtCore.QSize(cfg.toolbar_size, cfg.toolbar_size)
+        )
+        self.button.setFlat(True)
+        self.toolbar.addWidget(self.stretch)
+        self.menu_action = self.toolbar.addWidget(self.button)
 
-		"""
-		desc:
-			Hide the menu bar and show the toolbar widget.
-		"""
+    def _keep_toolbar_visible(self, visible):
 
-		cfg.toolbar_menu_active = True
-		self.menubar.setVisible(False)
-		self.menu_action.setVisible(True)
-		self.stretch.setVisible(True)
-		if not self.toolbar.isVisible():
-			self.toolbar.setVisible(True)
-		self.toolbar.visibilityChanged.connect(self._keep_toolbar_visible)
+        if visible:
+            return
+        oslogger.debug('keep toolbar visible')
+        self.toolbar.setVisible(True)
 
-	def _deactivate_toolbar_menu(self):
+    def _activate_toolbar_menu(self):
+        """
+        desc:
+                Hide the menu bar and show the toolbar widget.
+        """
 
-		"""
-		desc:
-			Show the menu bar and hide the toolbar widget.
-		"""
+        cfg.toolbar_menu_active = True
+        self.menubar.setVisible(False)
+        self.menu_action.setVisible(True)
+        self.stretch.setVisible(True)
+        if not self.toolbar.isVisible():
+            self.toolbar.setVisible(True)
+        self.toolbar.visibilityChanged.connect(self._keep_toolbar_visible)
 
-		cfg.toolbar_menu_active = False
-		self.menubar.setVisible(True)
-		self.menu_action.setVisible(False)
-		self.stretch.setVisible(False)
-		self.toolbar.visibilityChanged.disconnect()
+    def _deactivate_toolbar_menu(self):
+        """
+        desc:
+                Show the menu bar and hide the toolbar widget.
+        """
+
+        cfg.toolbar_menu_active = False
+        self.menubar.setVisible(True)
+        self.menu_action.setVisible(False)
+        self.stretch.setVisible(False)
+        self.toolbar.visibilityChanged.disconnect()

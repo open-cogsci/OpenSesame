@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -25,79 +25,79 @@ from pyqode.core.managers import BackendManager
 from pyqode.core.backend import server
 from pyqode.core import panels, modes
 from pyqode.core.api import (
-	CodeEdit,
-	Panel,
-	SyntaxHighlighter,
-	ColorScheme
+    CodeEdit,
+    Panel,
+    SyntaxHighlighter,
+    ColorScheme
 )
 
 
 class TextSH(SyntaxHighlighter):
 
-	def highlight_block(self, text, user_data):
+    def highlight_block(self, text, user_data):
 
-		pass
+        pass
 
 
 class TextCodeEdit(CodeEdit):
 
-	mimetypes = ['text/x-plain', 'text/x-log', 'text/plain']
+    mimetypes = ['text/x-plain', 'text/x-log', 'text/plain']
 
-	def __init__(self, parent=None):
-		
-		# PsychoPy deletes the _ built-in
-		if '_' not in __builtins__:
-			oslogger.warning('re-installing missing gettext built-in')
-			import gettext
-			gettext.NullTranslations().install()
-		_reset_stylesheet = self._reset_stylesheet
-		self._reset_stylesheet = lambda: None
-		super(TextCodeEdit, self).__init__(parent)
-		self._backend = BackendManager(self)
-		self.backend.start(
-			server.__file__,
-			sys.executable,
-			reuse=True,
-			share_id='text'
-		)
-		# append panels
-		self.panels.append(
-			panels.SearchAndReplacePanel(),
-			Panel.Position.BOTTOM
-		)
-		self.panels.append(panels.FoldingPanel())
-		self.panels.append(panels.LineNumberPanel())
-		# append modes
-		self.modes.append(modes.AutoCompleteMode())
-		self.modes.append(modes.ExtendedSelectionMode())
-		self.modes.append(modes.CaseConverterMode())
-		self.modes.append(modes.FileWatcherMode())
-		self.modes.append(modes.CaretLineHighlighterMode())
-		self.modes.append(modes.RightMarginMode())
-		self.modes.append(
-			TextSH(
-				self.document(),
-				color_scheme=ColorScheme(cfg.pyqode_color_scheme)
-			)
-		)
-		self.modes.append(modes.ZoomMode())
-		self.modes.append(modes.CodeCompletionMode())
-		self.modes.append(modes.AutoIndentMode())
-		self.modes.append(modes.IndenterMode())
-		self.modes.append(modes.SymbolMatcherMode())
-		self.panels.append(panels.EncodingPanel(), Panel.Position.TOP)
-		self.panels.append(panels.ReadOnlyPanel(), Panel.Position.TOP)
-		self._reset_stylesheet = _reset_stylesheet
+    def __init__(self, parent=None):
 
-	def setPlainText(self, txt, mime_type='', encoding=''):
+        # PsychoPy deletes the _ built-in
+        if '_' not in __builtins__:
+            oslogger.warning('re-installing missing gettext built-in')
+            import gettext
+            gettext.NullTranslations().install()
+        _reset_stylesheet = self._reset_stylesheet
+        self._reset_stylesheet = lambda: None
+        super(TextCodeEdit, self).__init__(parent)
+        self._backend = BackendManager(self)
+        self.backend.start(
+            server.__file__,
+            sys.executable,
+            reuse=True,
+            share_id='text'
+        )
+        # append panels
+        self.panels.append(
+            panels.SearchAndReplacePanel(),
+            Panel.Position.BOTTOM
+        )
+        self.panels.append(panels.FoldingPanel())
+        self.panels.append(panels.LineNumberPanel())
+        # append modes
+        self.modes.append(modes.AutoCompleteMode())
+        self.modes.append(modes.ExtendedSelectionMode())
+        self.modes.append(modes.CaseConverterMode())
+        self.modes.append(modes.FileWatcherMode())
+        self.modes.append(modes.CaretLineHighlighterMode())
+        self.modes.append(modes.RightMarginMode())
+        self.modes.append(
+            TextSH(
+                self.document(),
+                color_scheme=ColorScheme(cfg.pyqode_color_scheme)
+            )
+        )
+        self.modes.append(modes.ZoomMode())
+        self.modes.append(modes.CodeCompletionMode())
+        self.modes.append(modes.AutoIndentMode())
+        self.modes.append(modes.IndenterMode())
+        self.modes.append(modes.SymbolMatcherMode())
+        self.panels.append(panels.EncodingPanel(), Panel.Position.TOP)
+        self.panels.append(panels.ReadOnlyPanel(), Panel.Position.TOP)
+        self._reset_stylesheet = _reset_stylesheet
 
-		super(TextCodeEdit, self).setPlainText(
-			txt,
-			mime_type,
-			encoding
-		)
+    def setPlainText(self, txt, mime_type='', encoding=''):
 
-	def clone(self):
+        super(TextCodeEdit, self).setPlainText(
+            txt,
+            mime_type,
+            encoding
+        )
 
-		clone = self.__class__(parent=self.parent())
-		return clone
+    def clone(self):
+
+        clone = self.__class__(parent=self.parent())
+        return clone

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -25,50 +25,50 @@ from libqtopensesame.dialogs.base_dialog import base_dialog
 
 class polar_coordinates(base_dialog):
 
-	"""
-	desc:
-		A dialog for determining cartesian coordinates from polar coordinates.
-	"""
+    """
+    desc:
+            A dialog for determining cartesian coordinates from polar coordinates.
+    """
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:	The main window object.
+        """
 
-		arguments:
-			main_window:	The main window object.
-		"""
+        base_dialog.__init__(
+            self, main_window, ui=u'dialogs.polar_coordinates')
+        self.update()
 
-		base_dialog.__init__(self, main_window, ui=u'dialogs.polar_coordinates')
-		self.update()
+    def xy(self):
 
-	def xy(self):
+        return xy_from_polar(
+            pole=(self.ui.spinbox_pole_x.value(),
+                  self.ui.spinbox_pole_y.value()),
+            rho=self.ui.spinbox_rho.value(),
+            phi=self.ui.spinbox_phi.value()
+        )
 
-		return xy_from_polar(
-			pole=(self.ui.spinbox_pole_x.value(), self.ui.spinbox_pole_y.value()),
-			rho=self.ui.spinbox_rho.value(),
-			phi=self.ui.spinbox_phi.value()
-		)
+    def update(self):
 
-	def update(self):
+        base_dialog.update(self)
+        x, y = self.xy()
+        self.ui.label_cartesian_x.setText(u'%.2f px' % x)
+        self.ui.label_cartesian_y.setText(u'%.2f px' % y)
 
-		base_dialog.update(self)
-		x, y = self.xy()
-		self.ui.label_cartesian_x.setText(u'%.2f px' % x)
-		self.ui.label_cartesian_y.setText(u'%.2f px' % y)
+    def get_xy(self):
+        """
+        desc:
+                Executes the dialog and gets the xy coordinates, or None if the
+                dialog was cancelled.
 
-	def get_xy(self):
+        returns:
+                type:	[tuple, NoneType]
+        """
 
-		"""
-		desc:
-			Executes the dialog and gets the xy coordinates, or None if the
-			dialog was cancelled.
-
-		returns:
-			type:	[tuple, NoneType]
-		"""
-
-		if self.exec_() != QtWidgets.QDialog.Accepted:
-			return None
-		return self.xy()
+        if self.exec_() != QtWidgets.QDialog.Accepted:
+            return None
+        return self.xy()

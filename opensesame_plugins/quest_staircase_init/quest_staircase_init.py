@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -26,123 +26,120 @@ from libqtopensesame.items.qtautoplugin import qtautoplugin
 
 Quest = None
 try:
-	import Quest
-	oslogger.debug(u'Loading Quest module directly')
+    import Quest
+    oslogger.debug(u'Loading Quest module directly')
 except:
-	oslogger.debug(u'Failed to load Quest module directly')
+    oslogger.debug(u'Failed to load Quest module directly')
 if Quest is None:
-	try:
-		from psychopy.contrib import quest as Quest
-		oslogger.debug(u'Loading Quest module from PsychoPy')
-	except:
-		oslogger.debug(u'Failed to load Quest module from PsychoPy')
+    try:
+        from psychopy.contrib import quest as Quest
+        oslogger.debug(u'Loading Quest module from PsychoPy')
+    except:
+        oslogger.debug(u'Failed to load Quest module from PsychoPy')
 if Quest is None:
-	try:
-		Quest = plugins.load_mod(__file__, u'Quest')
-		oslogger.debug(u'Loading Quest module from plug-in folder')
-	except:
-		oslogger.debug(u'Failed to load Quest module from plug-in folder')
+    try:
+        Quest = plugins.load_mod(__file__, u'Quest')
+        oslogger.debug(u'Loading Quest module from plug-in folder')
+    except:
+        oslogger.debug(u'Failed to load Quest module from plug-in folder')
 if Quest is None:
-		raise osexception(u'Failed to load Quest module.')
+    raise osexception(u'Failed to load Quest module.')
+
 
 class quest_staircase_init(item):
 
-	"""
-	desc:
-		A plug-in that iniializes a Quest staircase.
-	"""
+    """
+    desc:
+            A plug-in that iniializes a Quest staircase.
+    """
 
-	description = u'Initializes a new Quest staircase procedure'
+    description = u'Initializes a new Quest staircase procedure'
 
-	def reset(self):
+    def reset(self):
+        """
+        desc:
+                Initialize default variables.
+        """
 
-		"""
-		desc:
-			Initialize default variables.
-		"""
+        self.var.t_guess = .5
+        self.var.t_guess_sd = .25
+        self.var.p_threshold = .75
+        self.var.beta = 3.5
+        self.var.delta = .01
+        self.var.gamma = .5
+        self.var.test_value_method = u'quantile'
+        self.var.min_test_value = 0
+        self.var.max_test_value = 1
+        self.var.var_test_value = u'quest_test_value'
 
-		self.var.t_guess = .5
-		self.var.t_guess_sd = .25
-		self.var.p_threshold = .75
-		self.var.beta = 3.5
-		self.var.delta = .01
-		self.var.gamma = .5
-		self.var.test_value_method = u'quantile'
-		self.var.min_test_value = 0
-		self.var.max_test_value = 1
-		self.var.var_test_value = u'quest_test_value'
+    def quest_set_next_test_value(self):
+        """
+        desc:
+                Sets the next test value for the Quest procedure.
+        """
 
-	def quest_set_next_test_value(self):
+        if self.var.test_value_method == u'quantile':
+            self.experiment.quest_test_value = self.experiment.quest.quantile
+        elif self.var.test_value_method == u'mean':
+            self.experiment.quest_test_value = self.experiment.quest.mean
+        elif self.var.test_value_method == u'mode':
+            self.experiment.quest_test_value = self.experiment.quest.mode
+        else:
+            raise osexception(
+                u'Unknown test_value_method \'%s\' in quest_staircase_init'
+                % self.var.test_value_method)
+        test_value = max(self.var.min_test_value, min(
+            self.var.max_test_value, self.experiment.quest_test_value()))
+        oslogger.debug(u'quest_test_value = %s' % test_value)
+        self.experiment.var.quest_test_value = test_value
+        self.experiment.var.set(self.var.var_test_value, test_value)
 
-		"""
-		desc:
-			Sets the next test value for the Quest procedure.
-		"""
+    def prepare(self):
+        """
+        desc:
+                Prepares the plug-in.
+        """
 
-		if self.var.test_value_method == u'quantile':
-			self.experiment.quest_test_value = self.experiment.quest.quantile
-		elif self.var.test_value_method == u'mean':
-			self.experiment.quest_test_value = self.experiment.quest.mean
-		elif self.var.test_value_method == u'mode':
-			self.experiment.quest_test_value = self.experiment.quest.mode
-		else:
-			raise osexception(
-				u'Unknown test_value_method \'%s\' in quest_staircase_init' \
-				% self.var.test_value_method)
-		test_value = max(self.var.min_test_value, min(
-			self.var.max_test_value, self.experiment.quest_test_value()))
-		oslogger.debug(u'quest_test_value = %s' % test_value)
-		self.experiment.var.quest_test_value = test_value
-		self.experiment.var.set(self.var.var_test_value, test_value)
+        self.experiment.quest = Quest.QuestObject(self.var.t_guess,
+                                                  self.var.t_guess_sd, self.var.p_threshold, self.var.beta,
+                                                  self.var.delta, self.var.gamma)
+        self.experiment.quest_set_next_test_value = \
+            self.quest_set_next_test_value
+        self.experiment.quest_set_next_test_value()
 
-	def prepare(self):
+    def var_info(self):
+        """
+        desc:
+                Gives a list of dictionaries with variable descriptions.
 
-		"""
-		desc:
-			Prepares the plug-in.
-		"""
+        returns:
+                desc:	A list of (name, description) tuples.
+                type:	list
+        """
 
-		self.experiment.quest = Quest.QuestObject(self.var.t_guess,
-			self.var.t_guess_sd, self.var.p_threshold, self.var.beta,
-			self.var.delta, self.var.gamma)
-		self.experiment.quest_set_next_test_value = \
-			self.quest_set_next_test_value
-		self.experiment.quest_set_next_test_value()
+        return item.var_info(self) + [(u'quest_test_value',
+                                       u'(Determined by Quest procedure)')]
 
-	def var_info(self):
-
-		"""
-		desc:
-			Gives a list of dictionaries with variable descriptions.
-
-		returns:
-			desc:	A list of (name, description) tuples.
-			type:	list
-		"""
-
-		return item.var_info(self) + [(u'quest_test_value',
-			u'(Determined by Quest procedure)')]
 
 class qtquest_staircase_init(quest_staircase_init, qtautoplugin):
 
-	"""
-	desc:
-		The GUI part of the plug-in. Controls are defined in info.json.
-	"""
+    """
+    desc:
+            The GUI part of the plug-in. Controls are defined in info.json.
+    """
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                name:		The name of the plug-in.
+                experiment:	The experiment object.
 
-		arguments:
-			name:		The name of the plug-in.
-			experiment:	The experiment object.
+        keywords:
+                script:		A definition script.
+        """
 
-		keywords:
-			script:		A definition script.
-		"""
-
-		quest_staircase_init.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        quest_staircase_init.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

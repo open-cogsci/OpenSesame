@@ -24,4 +24,4 @@ from openexp._canvas._polygon.xpyriment import Xpyriment as XpyrimentPolygon
 
 class Xpyriment(XpyrimentPolygon, Arrow):
 
-	pass
+    pass

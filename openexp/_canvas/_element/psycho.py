@@ -24,77 +24,76 @@ from openexp._canvas import canvas
 
 class PsychoElement(object):
 
-	"""
-	desc:
-		Together with Element, PsychoElement is the base object for all psycho
-		sketchpad elements.
-	"""
+    """
+    desc:
+            Together with Element, PsychoElement is the base object for all psycho
+            sketchpad elements.
+    """
 
-	@property
-	def win(self):
-		return self._canvas.experiment.window
+    @property
+    def win(self):
+        return self._canvas.experiment.window
 
-	def show(self):
+    def show(self):
 
-		if self.visible:
-			self._stim.draw()
+        if self.visible:
+            self._stim.draw()
 
-	def _on_attribute_change(self, **kwargs):
+    def _on_attribute_change(self, **kwargs):
 
-		if self._canvas.auto_prepare:
-			self.prepare()
+        if self._canvas.auto_prepare:
+            self.prepare()
 
-	def _mask(self, env, size, stdev):
+    def _mask(self, env, size, stdev):
+        """
+        visible: False
 
-		"""
-		visible: False
+        desc:
+                Generates a PsychoPy mask for Gabor and NoisePatch stimuli.
 
-		desc:
-			Generates a PsychoPy mask for Gabor and NoisePatch stimuli.
+        arguments:
+                env:
+                        desc:	The envelope.
+                        type:	str
+                size:
+                        desc:	The stimulus size.
+                        type:	int
+                stdev:
+                        desc:	The standard deviation of the mask if the envelope is
+                                        gaussian.
+                        type:	int
 
-		arguments:
-			env:
-				desc:	The envelope.
-				type:	str
-			size:
-				desc:	The stimulus size.
-				type:	int
-			stdev:
-				desc:	The standard deviation of the mask if the envelope is
-						gaussian.
-				type:	int
+        returns:
+                desc:	A PsychoPy mask, which is a numpy array.
+                type:	ndarray
+        """
 
-		returns:
-			desc:	A PsychoPy mask, which is a numpy array.
-			type:	ndarray
-		"""
-
-		# Get the smallest power-of-two that is larger than or equal to the
-		# given size
-		size = int(np.ceil(np.sqrt(size))**2)
-		# Create a PsychoPy mask
-		env = canvas._match_env(env)
-		if env == u'c':
-			return u'circle', size
-		if env == u'g':
-			return u'gauss', 6 * stdev
-		if env == u'r':
-			return u'None', size
-		if env == u'l':
-			_env = np.zeros([size, size])
-			for x in range(size):
-				for y in range(size):
-					r = np.sqrt((x-size/2)**2+(y-size/2)**2)
-					_env[x, y] = (max(0, (0.5*size-r) / (0.5*size))-0.5)*2
-			return _env, size
-		raise ValueError('Invalid mask')
+        # Get the smallest power-of-two that is larger than or equal to the
+        # given size
+        size = int(np.ceil(np.sqrt(size))**2)
+        # Create a PsychoPy mask
+        env = canvas._match_env(env)
+        if env == u'c':
+            return u'circle', size
+        if env == u'g':
+            return u'gauss', 6 * stdev
+        if env == u'r':
+            return u'None', size
+        if env == u'l':
+            _env = np.zeros([size, size])
+            for x in range(size):
+                for y in range(size):
+                    r = np.sqrt((x-size/2)**2+(y-size/2)**2)
+                    _env[x, y] = (max(0, (0.5*size-r) / (0.5*size))-0.5)*2
+            return _env, size
+        raise ValueError('Invalid mask')
 
 
 class RotatingElement(object):
 
-	def _on_attribute_change(self, **kwargs):
+    def _on_attribute_change(self, **kwargs):
 
-		if u'rotation' in kwargs:
-			self._stim.ori = kwargs.pop(u'rotation')
-		if kwargs:
-			super(RotatingElement, self)._on_attribute_change(**kwargs)
+        if u'rotation' in kwargs:
+            self._stim.ori = kwargs.pop(u'rotation')
+        if kwargs:
+            super(RotatingElement, self)._on_attribute_change(**kwargs)

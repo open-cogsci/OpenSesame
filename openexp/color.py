@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -22,25 +22,24 @@ from openexp import backend
 
 
 def Color(experiment, *arglist, **kwdict):
+    """
+    desc:
+            A factory that returns a back-end specific color object.
 
-	"""
-	desc:
-		A factory that returns a back-end specific color object.
+    arguments:
+            experiment:
+                    desc:	The experiment object.
+                    type:	experiment
 
-	arguments:
-		experiment:
-			desc:	The experiment object.
-			type:	experiment
+    argument-list:
+            arglist:	See color.__init__().
 
-	argument-list:
-		arglist:	See color.__init__().
+    keyword-dict:
+            kwdict:		See color.__init__().
+    """
 
-	keyword-dict:
-		kwdict:		See color.__init__().
-	"""
-
-	cls = backend.get_backend_class(experiment, u'color')
-	return cls(experiment, *arglist, **kwdict)
+    cls = backend.get_backend_class(experiment, u'color')
+    return cls(experiment, *arglist, **kwdict)
 
 
 # Non PEP-8 alias for backwards compatibility

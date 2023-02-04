@@ -25,8 +25,8 @@ import pygame
 
 class Legacy(LegacyElement, Polygon):
 
-	def prepare(self):
+    def prepare(self):
 
-		pygame.draw.polygon(self.surface, self.color.backend_color,
-			[self.to_xy(x, y) for x, y in self.vertices],
-			0 if self.fill else self.penwidth)
+        pygame.draw.polygon(self.surface, self.color.backend_color,
+                            [self.to_xy(x, y) for x, y in self.vertices],
+                            0 if self.fill else self.penwidth)

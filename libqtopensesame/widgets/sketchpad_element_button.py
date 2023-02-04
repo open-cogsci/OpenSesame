@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,47 +23,46 @@ from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'sketchpad', category=u'item')
 
+
 class sketchpad_element_button(base_subcomponent, QtWidgets.QPushButton):
 
-	"""
-	desc:
-		A element-tool button for the sketchpad widget.
-	"""
+    """
+    desc:
+            A element-tool button for the sketchpad widget.
+    """
 
-	def __init__(self, sketchpad_widget, element):
+    def __init__(self, sketchpad_widget, element):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                sketchpad_widget:
+                        type:	sketchpad-widget
+                element:
+                        type:	base_element
+        """
 
-		arguments:
-			sketchpad_widget:
-				type:	sketchpad-widget
-			element:
-				type:	base_element
-		"""
+        super(sketchpad_element_button, self).__init__(sketchpad_widget)
+        self.element = element
+        self.sketchpad_widget = sketchpad_widget
+        self.setup(sketchpad_widget)
+        self.setFlat(True)
+        self.setCheckable(True)
+        self.setIcon(self.theme.qicon(u'os-%s' % self.name))
+        self.setToolTip(_(u'Draw %s element') % self.name)
+        self.clicked.connect(self.select)
 
-		super(sketchpad_element_button, self).__init__(sketchpad_widget)
-		self.element = element
-		self.sketchpad_widget = sketchpad_widget
-		self.setup(sketchpad_widget)
-		self.setFlat(True)
-		self.setCheckable(True)
-		self.setIcon(self.theme.qicon(u'os-%s' % self.name))
-		self.setToolTip(_(u'Draw %s element') % self.name)
-		self.clicked.connect(self.select)
+    def select(self, checked):
+        """
+        desc:
+                Select this element tool.
+        """
 
-	def select(self, checked):
+        self.sketchpad_widget.unselect_all_tools()
+        self.setChecked(True)
+        self.sketchpad_widget.select_element_tool(self.element)
 
-		"""
-		desc:
-			Select this element tool.
-		"""
-
-		self.sketchpad_widget.unselect_all_tools()
-		self.setChecked(True)
-		self.sketchpad_widget.select_element_tool(self.element)
-
-	@property
-	def name(self):
-		return self.element.__name__
+    @property
+    def name(self):
+        return self.element.__name__

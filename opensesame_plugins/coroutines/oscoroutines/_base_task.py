@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -20,123 +20,118 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception, AbortCoroutines
 
+
 class base_task(object):
 
-	"""
-	desc:
-		A task controls the coroutine for one item.
-	"""
+    """
+    desc:
+            A task controls the coroutine for one item.
+    """
 
-	ALIVE = 0
-	DEAD = 1
-	ABORT = 2
+    ALIVE = 0
+    DEAD = 1
+    ABORT = 2
 
-	def __init__(self, coroutines, start_time, end_time, abort_on_end=False):
+    def __init__(self, coroutines, start_time, end_time, abort_on_end=False):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                start_time:
+                        desc:	The start-time of the coroutine.
+                        type:	int
+                end_time:
+                        desc:	The end-time of the coroutine.
+                        type:	int
 
-		arguments:
-			start_time:
-				desc:	The start-time of the coroutine.
-				type:	int
-			end_time:
-				desc:	The end-time of the coroutine.
-				type:	int
+        keywords:
+                abort_on_end:
+                        desc:	Indicates whetehr an ABORT signal should be given when
+                                        the task ends.
+                        type:	bool`
+        """
 
-		keywords:
-			abort_on_end:
-				desc:	Indicates whetehr an ABORT signal should be given when
-						the task ends.
-				type:	bool`
-		"""
+        if not (isinstance(start_time, (int, float)) and start_time >= 0) or \
+                not (isinstance(end_time, (int, float)) and end_time >= start_time):
+            raise osexception(
+                (u'Start (now: %s) and end (now: %s) time need to be '
+                 u'non-negative numeric values and end time needs to be equal to '
+                 u' or higher than start time') % (start_time, end_time))
+        self.start_time = start_time
+        self.end_time = end_time
+        self.coroutines = coroutines
+        self._abort_on_end = abort_on_end
 
-		if not (isinstance(start_time, (int, float)) and start_time >= 0) or \
-			not (isinstance(end_time, (int, float)) and end_time >= start_time):
-			raise osexception(
-				(u'Start (now: %s) and end (now: %s) time need to be '
-				u'non-negative numeric values and end time needs to be equal to '
-				u' or higher than start time') % (start_time, end_time))
-		self.start_time = start_time
-		self.end_time = end_time
-		self.coroutines = coroutines
-		self._abort_on_end = abort_on_end
+    def started(self, dt):
+        """
+        arguments:
+                dt:
+                        desc:	The current time relative to onset of the coroutines.
+                        type:	int
 
-	def started(self, dt):
+        returns:
+                desc:	True if the current item is started, False otherwise.
+                type:	bool
+        """
 
-		"""
-		arguments:
-			dt:
-				desc:	The current time relative to onset of the coroutines.
-				type:	int
+        return dt >= self.start_time
 
-		returns:
-			desc:	True if the current item is started, False otherwise.
-			type:	bool
-		"""
+    def stopped(self, dt):
+        """
+        desc:
+                Checks whether an item is stopped, and sends the stop signal to the
+                item if it should be stopped.
 
-		return dt >= self.start_time
+        arguments:
+                dt:
+                        desc:	The current time relative to onset of the coroutines.
+                        type:	int
 
-	def stopped(self, dt):
+        returns:
+                desc:	True if the current item is started, False otherwise.
+                type:	bool
+        """
 
-		"""
-		desc:
-			Checks whether an item is stopped, and sends the stop signal to the
-			item if it should be stopped.
+        if dt < self.end_time:
+            return False
+        try:
+            self.coroutine.send(False)
+        except StopIteration:
+            self.coroutines.event('stopped %s' % self.coroutine)
+        return True
 
-		arguments:
-			dt:
-				desc:	The current time relative to onset of the coroutines.
-				type:	int
+    def kill(self):
+        """
+        desc:
+                Sends the stop signal to an item.
+        """
 
-		returns:
-			desc:	True if the current item is started, False otherwise.
-			type:	bool
-		"""
+        try:
+            self.coroutine.send(False)
+        except StopIteration:
+            self.coroutines.event('killed %s' % self.coroutine)
 
-		if dt < self.end_time:
-			return False
-		try:
-			self.coroutine.send(False)
-		except StopIteration:
-			self.coroutines.event('stopped %s' % self.coroutine)
-		return True
+    def launch(self):
+        """
+        desc:
+                Launches an item. All items are launched at coroutine start.
+        """
 
-	def kill(self):
+        raise NotImplementedError()
 
-		"""
-		desc:
-			Sends the stop signal to an item.
-		"""
+    def step(self):
+        """
+        desc:
+                Lets the item yield one cycle.
+        """
 
-		try:
-			self.coroutine.send(False)
-		except StopIteration:
-			self.coroutines.event('killed %s' % self.coroutine)
-
-	def launch(self):
-
-		"""
-		desc:
-			Launches an item. All items are launched at coroutine start.
-		"""
-
-		raise NotImplementedError()
-
-	def step(self):
-
-		"""
-		desc:
-			Lets the item yield one cycle.
-		"""
-
-		try:
-			if self.coroutine.send(True) is False:
-				return self.ABORT
-		except AbortCoroutines:
-			return self.ABORT
-		except StopIteration:
-			self.coroutines.event('died %s' % self.coroutine)
-			return self.ABORT if self._abort_on_end else self.DEAD
-		return self.ALIVE
+        try:
+            if self.coroutine.send(True) is False:
+                return self.ABORT
+        except AbortCoroutines:
+            return self.ABORT
+        except StopIteration:
+            self.coroutines.event('died %s' % self.coroutine)
+            return self.ABORT if self._abort_on_end else self.DEAD
+        return self.ALIVE

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -20,14 +20,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qtpy import QtGui, QtCore, QtWidgets
 
+
 class shortcut(QtWidgets.QShortcut):
 
-	def __init__(self, parent, key_sequence, target,
-		_global=False):
+    def __init__(self, parent, key_sequence, target,
+                 _global=False):
 
-		if _global:
-			context = QtCore.Qt.ApplicationShortcut
-		else:
-			context = QtCore.Qt.WidgetWithChildrenShortcut
-		super(shortcut, self).__init__(QtGui.QKeySequence(key_sequence), parent,
-			target, context=context)
+        if _global:
+            context = QtCore.Qt.ApplicationShortcut
+        else:
+            context = QtCore.Qt.WidgetWithChildrenShortcut
+        super(shortcut, self).__init__(QtGui.QKeySequence(key_sequence), parent,
+                                       target, context=context)

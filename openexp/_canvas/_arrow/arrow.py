@@ -24,59 +24,58 @@ from openexp._canvas._polygon.polygon import Polygon
 
 class Arrow(Polygon):
 
-	def __init__(self, canvas, sx, sy, ex, ey, body_length=0.8, body_width=.5,
-		head_width=30, **properties):
+    def __init__(self, canvas, sx, sy, ex, ey, body_length=0.8, body_width=.5,
+                 head_width=30, **properties):
 
-		self._create_property('sx')
-		self._create_property('sy')
-		self._create_property('ex')
-		self._create_property('ey')
-		self._create_property('body_length')
-		self._create_property('body_width')
-		self._create_property('head_width')
-		properties = properties.copy()
-		properties.update({
-			'sx': sx,
-			'sy': sy,
-			'ex': ex,
-			'ey': ey,
-			'body_length': body_length,
-			'body_width': body_width,
-			'head_width': head_width,
-		})
-		Polygon.__init__(
-			self,
-			canvas,
-			self._shape(sx, sy, ex, ey, body_length, body_width, head_width),
-			**properties
-		)
+        self._create_property('sx')
+        self._create_property('sy')
+        self._create_property('ex')
+        self._create_property('ey')
+        self._create_property('body_length')
+        self._create_property('body_width')
+        self._create_property('head_width')
+        properties = properties.copy()
+        properties.update({
+            'sx': sx,
+            'sy': sy,
+            'ex': ex,
+            'ey': ey,
+            'body_length': body_length,
+            'body_width': body_width,
+            'head_width': head_width,
+        })
+        Polygon.__init__(
+            self,
+            canvas,
+            self._shape(sx, sy, ex, ey, body_length, body_width, head_width),
+            **properties
+        )
 
-	@staticmethod
-	def _shape(sx, sy, ex, ey, body_length, body_width, head_width):
+    @staticmethod
+    def _shape(sx, sy, ex, ey, body_length, body_width, head_width):
+        """
+        returns:
+                Returns a list of (x, y) tuples that specify an arrow shape.
+        """
 
-		"""
-		returns:
-			Returns a list of (x, y) tuples that specify an arrow shape.
-		"""
-
-		# length
-		d = math.sqrt((ey-sy)**2 + (sx-ex)**2)
-		# direction
-		angle = math.atan2(ey-sy, ex-sx)
-		_head_width = (1-body_width)/2.0
-		body_width = body_width/2.0
-		# calculate coordinates
-		p4 = (ex, ey)
-		p1 = (sx +body_width * head_width * math.cos(angle - math.pi/2),
-			sy + body_width * head_width * math.sin(angle - math.pi/2))
-		p2 = (p1[0] + body_length*math.cos(angle) * d,
-			p1[1] + body_length * math.sin(angle) * d)
-		p3 = (p2[0]+_head_width * head_width * math.cos(angle-math.pi/2),
-			p2[1] + _head_width * head_width * math.sin(angle-math.pi/2))
-		p7 = (sx + body_width * head_width*math.cos(angle + math.pi/2),
-			sy + body_width * head_width*math.sin(angle + math.pi/2))
-		p6 = (p7[0] + body_length * math.cos(angle) * d,
-			p7[1] + body_length * math.sin(angle) * d)
-		p5 = (p6[0]+_head_width * head_width * math.cos(angle+math.pi/2),
-			p6[1]+_head_width * head_width * math.sin(angle+math.pi/2))
-		return [p1, p2, p3, p4, p5, p6, p7]
+        # length
+        d = math.sqrt((ey-sy)**2 + (sx-ex)**2)
+        # direction
+        angle = math.atan2(ey-sy, ex-sx)
+        _head_width = (1-body_width)/2.0
+        body_width = body_width/2.0
+        # calculate coordinates
+        p4 = (ex, ey)
+        p1 = (sx + body_width * head_width * math.cos(angle - math.pi/2),
+              sy + body_width * head_width * math.sin(angle - math.pi/2))
+        p2 = (p1[0] + body_length*math.cos(angle) * d,
+              p1[1] + body_length * math.sin(angle) * d)
+        p3 = (p2[0]+_head_width * head_width * math.cos(angle-math.pi/2),
+              p2[1] + _head_width * head_width * math.sin(angle-math.pi/2))
+        p7 = (sx + body_width * head_width*math.cos(angle + math.pi/2),
+              sy + body_width * head_width*math.sin(angle + math.pi/2))
+        p6 = (p7[0] + body_length * math.cos(angle) * d,
+              p7[1] + body_length * math.sin(angle) * d)
+        p5 = (p6[0]+_head_width * head_width * math.cos(angle+math.pi/2),
+              p6[1]+_head_width * head_width * math.sin(angle+math.pi/2))
+        return [p1, p2, p3, p4, p5, p6, p7]

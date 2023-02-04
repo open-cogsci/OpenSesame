@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -22,6 +22,7 @@ from libopensesame.py3compat import *
 from qtpy import QtWidgets, QtCore
 from libqtopensesame.widgets.base_widget import base_widget
 
+
 class sketchpad_graphics_view(QtWidgets.QGraphicsView, base_widget):
 
-	pass
+    pass

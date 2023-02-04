@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -21,32 +21,33 @@ from libopensesame.py3compat import *
 from qtpy import QtGui
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
+
 class base_validator(base_subcomponent, QtGui.QValidator):
 
-	"""
-	desc:
-		A base class for input validators.
-	"""
+    """
+    desc:
+            A base class for input validators.
+    """
 
-	def __init__(self, main_window, default):
+    def __init__(self, main_window, default):
 
-		self.default = default
-		main_window = self.get_main_window(main_window)
-		super(base_validator, self).__init__(main_window)
-		self.setup(main_window)
+        self.default = default
+        main_window = self.get_main_window(main_window)
+        super(base_validator, self).__init__(main_window)
+        self.setup(main_window)
 
-	def is_valid(self, val):
+    def is_valid(self, val):
 
-		return True
+        return True
 
-	def validate(self, val, pos):
+    def validate(self, val, pos):
 
-		if self.is_valid(val):
-			return self.Acceptable, val, pos
-		return self.Intermediate, val, pos
+        if self.is_valid(val):
+            return self.Acceptable, val, pos
+        return self.Intermediate, val, pos
 
-	def fixup(self, val):
+    def fixup(self, val):
 
-		if not self.is_valid(val):
-			return self.default
-		return val
+        if not self.is_valid(val):
+            return self.default
+        return val

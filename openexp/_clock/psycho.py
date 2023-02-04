@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,18 +24,18 @@ from psychopy import core
 
 class Psycho(Clock):
 
-	"""
-	desc:
-		For docstrings, see openexp._clock.clock.
-	"""
+    """
+    desc:
+            For docstrings, see openexp._clock.clock.
+    """
 
-	def time(self):
+    def time(self):
 
-		return 1000.*core.getTime()
+        return 1000.*core.getTime()
 
-	def sleep(self, ms):
+    def sleep(self, ms):
 
-		core.wait(.001*ms)
+        core.wait(.001*ms)
 
 
 # Non PEP-8 alias for backwards compatibility

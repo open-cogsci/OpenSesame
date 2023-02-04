@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,54 +24,51 @@ from libqtopensesame.misc.base_subcomponent import base_subcomponent
 
 class qtitem_splitter(base_subcomponent, QtWidgets.QSplitter):
 
-	"""
-	desc:
-		Implements a splitter for the edit and script view in an item tab. This
-		custom is mostly necessary, because the default QSplitter.sizeHint()
-		is too large.
-	"""
+    """
+    desc:
+            Implements a splitter for the edit and script view in an item tab. This
+            custom is mostly necessary, because the default QSplitter.sizeHint()
+            is too large.
+    """
 
-	def __init__(self, item):
+    def __init__(self, item):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        item:
+                desc:	The item.
+                type:	qtitem
+        """
 
-		item:
-			desc:	The item.
-			type:	qtitem
-		"""
+        super(qtitem_splitter, self).__init__(
+            QtCore.Qt.Vertical,
+            item.main_window
+        )
+        self.item = item
+        self.setup(item.main_window)
+        self.addWidget(self.item._edit_widget)
+        self.addWidget(self.item._script_frame)
+        self.splitterMoved.connect(self._on_splitter_moved)
 
-		super(qtitem_splitter, self).__init__(
-			QtCore.Qt.Vertical,
-			item.main_window
-		)
-		self.item = item
-		self.setup(item.main_window)
-		self.addWidget(self.item._edit_widget)
-		self.addWidget(self.item._script_frame)
-		self.splitterMoved.connect(self._on_splitter_moved)
+    def _on_splitter_moved(self, pos, index):
 
-	def _on_splitter_moved(self, pos, index):
+        self.splitterMoved.disconnect()
+        if self.item._script_widget is None:
+            self.item.init_script_widget()
 
-		self.splitterMoved.disconnect()
-		if self.item._script_widget is None:
-			self.item.init_script_widget()
+    def minimumSizeHint(self):
+        """
+        returns:
+                type:	QSize
+        """
 
-	def minimumSizeHint(self):
+        return QtCore.QSize(100, 100)
 
-		"""
-		returns:
-			type:	QSize
-		"""
+    def sizeHint(self):
+        """
+        returns:
+                type:	QSize
+        """
 
-		return QtCore.QSize(100, 100)
-
-	def sizeHint(self):
-
-		"""
-		returns:
-			type:	QSize
-		"""
-
-		return QtCore.QSize(100, 100)
+        return QtCore.QSize(100, 100)

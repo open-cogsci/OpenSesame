@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,63 +24,63 @@ from openexp._mouse.legacy import Legacy
 from libopensesame.exceptions import osexception
 from openexp.backend import configurable
 try:
-	import android
+    import android
 except ImportError:
-	android = None
+    android = None
 
 
 class Droid(Legacy):
 
-	"""
-	desc:
-		This is a mouse backend built on top of PyGame, adapted for android.
-		For function specifications and docstrings, see
-		`openexp._mouse.mouse`.
-	"""
+    """
+    desc:
+            This is a mouse backend built on top of PyGame, adapted for android.
+            For function specifications and docstrings, see
+            `openexp._mouse.mouse`.
+    """
 
-	@configurable
-	def get_click(self):
+    @configurable
+    def get_click(self):
 
-		if android is None:
-			pygame.mouse.set_visible(self.visible)
-		buttonlist = self.buttonlist
-		timeout = self.timeout
-		enable_escape = self.experiment.var.get(u'enable_escape', u'no',
-			[u'yes', u'no']) == u'yes'
-		start_time = pygame.time.get_ticks()
-		time = start_time
-		while True:
-			time = pygame.time.get_ticks()
-			# Process the input
-			for event in pygame.event.get():
-				if event.type == KEYDOWN:
-					if event.key == pygame.K_ESCAPE:
-						self.experiment.pause()
-						continue
-					pygame.event.post(event)
-				if event.type == MOUSEBUTTONDOWN:
-					# Check escape sequence. If the top-left and top-right
-					# corner are clicked successively within 2000ms, the
-					# experiment is aborted
-					if enable_escape and event.pos[0] < 64 and event.pos[1] \
-						< 64:
-						_time = pygame.time.get_ticks()
-						while pygame.time.get_ticks() - _time < 2000:
-							for event in pygame.event.get():
-								if event.type == MOUSEBUTTONDOWN:
-									if event.pos[0] > \
-										self.experiment.var.width-64 and \
-										event.pos[1] < 64:
-										raise osexception(
-											u"The escape sequence was clicked/ tapped")
-					if buttonlist is None or event.button in buttonlist:
-						return event.button, self.from_xy(event.pos), time
-			if timeout is not None and time-start_time >= timeout:
-				break
-			# Allow Android interrupt
-			if android is not None and android.check_pause():
-				android.wait_for_resume()
-		return None, None, time
+        if android is None:
+            pygame.mouse.set_visible(self.visible)
+        buttonlist = self.buttonlist
+        timeout = self.timeout
+        enable_escape = self.experiment.var.get(u'enable_escape', u'no',
+                                                [u'yes', u'no']) == u'yes'
+        start_time = pygame.time.get_ticks()
+        time = start_time
+        while True:
+            time = pygame.time.get_ticks()
+            # Process the input
+            for event in pygame.event.get():
+                if event.type == KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self.experiment.pause()
+                        continue
+                    pygame.event.post(event)
+                if event.type == MOUSEBUTTONDOWN:
+                    # Check escape sequence. If the top-left and top-right
+                    # corner are clicked successively within 2000ms, the
+                    # experiment is aborted
+                    if enable_escape and event.pos[0] < 64 and event.pos[1] \
+                            < 64:
+                        _time = pygame.time.get_ticks()
+                        while pygame.time.get_ticks() - _time < 2000:
+                            for event in pygame.event.get():
+                                if event.type == MOUSEBUTTONDOWN:
+                                    if event.pos[0] > \
+                                            self.experiment.var.width-64 and \
+                                            event.pos[1] < 64:
+                                        raise osexception(
+                                            u"The escape sequence was clicked/ tapped")
+                    if buttonlist is None or event.button in buttonlist:
+                        return event.button, self.from_xy(event.pos), time
+            if timeout is not None and time-start_time >= timeout:
+                break
+            # Allow Android interrupt
+            if android is not None and android.check_pause():
+                android.wait_for_resume()
+        return None, None, time
 
 
 # Non PEP-8 alias for backwards compatibility

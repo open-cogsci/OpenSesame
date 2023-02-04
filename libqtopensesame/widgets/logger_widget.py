@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,111 +24,108 @@ from libqtopensesame.misc.base_draggable import base_draggable
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'logger', category=u'item')
 
+
 class remove_custom_var_button(QtWidgets.QPushButton):
 
-	def __init__(self, logger_widget, icon, var):
+    def __init__(self, logger_widget, icon, var):
 
-		super(remove_custom_var_button, self).__init__(icon, u'')
-		self.logger_widget = logger_widget
-		self.setFlat(True)
-		self.var = var
-		self.clicked.connect(self.remove)
+        super(remove_custom_var_button, self).__init__(icon, u'')
+        self.logger_widget = logger_widget
+        self.setFlat(True)
+        self.var = var
+        self.clicked.connect(self.remove)
 
-	def remove(self):
+    def remove(self):
 
-		self.logger_widget.remove_custom_variable(self.var)
+        self.logger_widget.remove_custom_variable(self.var)
+
 
 class logger_widget(base_widget, base_draggable):
 
-	"""
-	desc:
-		The logger widget.
-	"""
+    """
+    desc:
+            The logger widget.
+    """
 
-	def __init__(self, logger):
+    def __init__(self, logger):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                sketchpad:
+                        desc:	A logger object.
+                        type:	logger
+        """
 
-		arguments:
-			sketchpad:
-				desc:	A logger object.
-				type:	logger
-		"""
+        super(logger_widget, self).__init__(logger.main_window,
+                                            ui=u'widgets.logger')
+        self.logger = logger
+        self.checkboxes = []
+        self.ui.table_var.setColumnWidth(0, 32)
+        self.ui.table_var.setColumnWidth(1, 256)
+        self.ui.button_add_custom_variable.clicked.connect(
+            self.add_custom_variable)
+        self.set_supported_drop_types([u'variable'])
 
-		super(logger_widget, self).__init__(logger.main_window,
-			ui=u'widgets.logger')
-		self.logger = logger
-		self.checkboxes = []
-		self.ui.table_var.setColumnWidth(0, 32)
-		self.ui.table_var.setColumnWidth(1, 256)
-		self.ui.button_add_custom_variable.clicked.connect(
-			self.add_custom_variable)
-		self.set_supported_drop_types([u'variable'])
+    def add_custom_variable(self):
+        """
+        desc:
+                Provides a simple dialog for the user to add a custom variable.
+        """
 
-	def add_custom_variable(self):
+        name = self.text_input(_(u'Add custom variable'),
+                               message=_(u'Which variable do you wish to log?'))
+        if name is None:
+            return
+        if not self.experiment.syntax.valid_var_name(name):
+            self.notify(_(u'"%s" is not a valid variable name!' % name))
+            return
+        if name not in self.logger.logvars:
+            self.logger.logvars.append(name)
+        self.logger.update()
 
-		"""
-		desc:
-			Provides a simple dialog for the user to add a custom variable.
-		"""
+    def remove_custom_variable(self, var):
+        """
+        desc:
+                Removes an entry from the custom variable list.
 
-		name = self.text_input(_(u'Add custom variable'),
-			message=_(u'Which variable do you wish to log?'))
-		if name is None:
-			return
-		if not self.experiment.syntax.valid_var_name(name):
-			self.notify(_(u'"%s" is not a valid variable name!' % name))
-			return
-		if name not in self.logger.logvars:
-			self.logger.logvars.append(name)
-		self.logger.update()
+        arguments:
+                var:	The variable to remove.
+        """
 
-	def remove_custom_variable(self, var):
+        if var in self.logger.logvars:
+            self.logger.logvars.remove(var)
+        self.update()
+        self.logger.update()
 
-		"""
-		desc:
-			Removes an entry from the custom variable list.
+    def update(self):
+        """
+        desc:
+                Fills the table with variables, makes a selection, and disables/
+                enables the table.
+        """
 
-		arguments:
-			var:	The variable to remove.
-		"""
+        d = self.experiment.var.inspect()
+        for row, var in enumerate(self.logger.logvars):
+            button = remove_custom_var_button(self,
+                                              self.logger.theme.qicon(u'list-remove'), var)
+            self.table_var.insertRow(row)
+            self.table_var.setCellWidget(row, 0, button)
+            self.table_var.setCellWidget(row, 1, QtWidgets.QLabel(var))
+            if var in d:
+                source = u','.join(d[var][u'source'])
+            else:
+                source = _(u'custom')
+            self.table_var.setCellWidget(row, 2, QtWidgets.QLabel(source))
+        self.table_var.setRowCount(len(self.logger.logvars))
 
-		if var in self.logger.logvars:
-			self.logger.logvars.remove(var)
-		self.update()
-		self.logger.update()
+    def accept_drop(self, data):
+        """See base_widget."""
 
-	def update(self):
-
-		"""
-		desc:
-			Fills the table with variables, makes a selection, and disables/
-			enables the table.
-		"""
-
-		d = self.experiment.var.inspect()
-		for row, var in enumerate(self.logger.logvars):
-			button = remove_custom_var_button(self,
-				self.logger.theme.qicon(u'list-remove'), var)
-			self.table_var.insertRow(row)
-			self.table_var.setCellWidget(row, 0, button)
-			self.table_var.setCellWidget(row, 1, QtWidgets.QLabel(var))
-			if var in d:
-				source = u','.join(d[var][u'source'])
-			else:
-				source = _(u'custom')
-			self.table_var.setCellWidget(row, 2, QtWidgets.QLabel(source))
-		self.table_var.setRowCount(len(self.logger.logvars))
-
-	def accept_drop(self, data):
-
-		"""See base_widget."""
-
-		name = data[u'variable']
-		if name in self.logger.logvars:
-			return
-		self.logger.logvars.append(name)
-		self.update()
-		self.logger.update()
+        name = data[u'variable']
+        if name in self.logger.logvars:
+            return
+        self.logger.logvars.append(name)
+        self.update()
+        self.logger.update()

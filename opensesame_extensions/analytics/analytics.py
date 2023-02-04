@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -47,27 +47,28 @@ HTML = u'''<!DOCTYPE html>
 
 class analytics(base_extension):
 
-	"""
-	desc:
-		Sends a ping to Google Analytics when OpenSesame is started.
-	"""
+    """
+    desc:
+            Sends a ping to Google Analytics when OpenSesame is started.
+    """
 
-	def event_startup(self):
+    def event_startup(self):
 
-		wv = WebView(self.main_window)
-		wv.setHtml(
-			HTML,
-			QtCore.QUrl(
-				u'http://opensesame.app.cogsci.nl/{}/{}'.format(
-					self.main_window.mode,
-					metadata.__version__)
-				)
-		)
-		wv.hide()
-		if not QtNetwork.QNetworkConfigurationManager().isOnline() or \
-			not cfg.analytics_show_notification:
-			return
-		self.extension_manager.fire(u'notify',
-			message=_('Anonymous usage data is collected. You can disable this by disabling the <i>analytics</i> extension.'),
-			category=u'info', timeout=10000, buttontext=_(u'Got it!'))
-		cfg.analytics_show_notification = False
+        wv = WebView(self.main_window)
+        wv.setHtml(
+            HTML,
+            QtCore.QUrl(
+                u'http://opensesame.app.cogsci.nl/{}/{}'.format(
+                    self.main_window.mode,
+                    metadata.__version__)
+            )
+        )
+        wv.hide()
+        if not QtNetwork.QNetworkConfigurationManager().isOnline() or \
+                not cfg.analytics_show_notification:
+            return
+        self.extension_manager.fire(u'notify',
+                                    message=_(
+                                        'Anonymous usage data is collected. You can disable this by disabling the <i>analytics</i> extension.'),
+                                    category=u'info', timeout=10000, buttontext=_(u'Got it!'))
+        cfg.analytics_show_notification = False

@@ -23,29 +23,62 @@ from openexp import backend
 
 class ElementFactory(object):
 
-	def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
 
-		self._args = args
-		self._kwargs = kwargs
+        self._args = args
+        self._kwargs = kwargs
 
-	def construct(self, canvas):
+    def construct(self, canvas):
 
-		bck = backend.backend_guess(canvas.experiment, u'canvas')
-		mod = __import__('openexp._canvas._%s.%s' % (self.mod, bck),
-			fromlist=['dummy'])
-		cls = getattr(mod, bck.capitalize())
-		return cls(canvas, *self._args, **self._kwargs)
+        bck = backend.backend_guess(canvas.experiment, u'canvas')
+        mod = __import__('openexp._canvas._%s.%s' % (self.mod, bck),
+                         fromlist=['dummy'])
+        cls = getattr(mod, bck.capitalize())
+        return cls(canvas, *self._args, **self._kwargs)
 
 
-class Line(ElementFactory): mod = 'line'
-class Rect(ElementFactory): mod = 'rect'
-class Ellipse(ElementFactory): mod = 'ellipse'
-class Circle(ElementFactory): mod = 'circle'
-class FixDot(ElementFactory): mod = 'fixdot'
-class Polygon(ElementFactory): mod = 'polygon'
-class Image(ElementFactory): mod = 'image'
-class Gabor(ElementFactory): mod = 'gabor'
-class NoisePatch(ElementFactory): mod = 'noise_patch'
-class RichText(ElementFactory): mod = 'richtext'
-class Arrow(ElementFactory): mod = 'arrow'
+class Line(ElementFactory):
+    mod = 'line'
+
+
+class Rect(ElementFactory):
+    mod = 'rect'
+
+
+class Ellipse(ElementFactory):
+    mod = 'ellipse'
+
+
+class Circle(ElementFactory):
+    mod = 'circle'
+
+
+class FixDot(ElementFactory):
+    mod = 'fixdot'
+
+
+class Polygon(ElementFactory):
+    mod = 'polygon'
+
+
+class Image(ElementFactory):
+    mod = 'image'
+
+
+class Gabor(ElementFactory):
+    mod = 'gabor'
+
+
+class NoisePatch(ElementFactory):
+    mod = 'noise_patch'
+
+
+class RichText(ElementFactory):
+    mod = 'richtext'
+
+
+class Arrow(ElementFactory):
+    mod = 'arrow'
+
+
 Text = RichText

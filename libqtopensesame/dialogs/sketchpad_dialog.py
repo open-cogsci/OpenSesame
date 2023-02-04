@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,40 +23,40 @@ from qtpy import QtCore, QtWidgets
 from libqtopensesame.dialogs.base_dialog import base_dialog
 from libqtopensesame.widgets import sketchpad_widget
 
+
 class sketchpad_dialog(base_dialog):
 
-	"""
-	desc:
-		The pop-out version of the sketchpad_widget.
-	"""
+    """
+    desc:
+            The pop-out version of the sketchpad_widget.
+    """
 
-	def __init__(self, main_window, sketchpad):
+    def __init__(self, main_window, sketchpad):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:	A qtopensesame object.
+                sketchpad:		A sketchpad object.
+        """
 
-		arguments:
-			main_window:	A qtopensesame object.
-			sketchpad:		A sketchpad object.
-		"""
-
-		super(sketchpad_dialog, self).__init__(main_window, flags= \
-			QtCore.Qt.WindowMinMaxButtonsHint | QtCore.Qt.WindowCloseButtonHint)
-		self.sketchpad = sketchpad
-		self.tools_widget = sketchpad_widget.sketchpad_widget(self.sketchpad,
-			parent=self, embed=False)
-		self.close_button = QtWidgets.QPushButton(self.theme.qicon(u"close"),
-			u"Close")
-		self.close_button.setIconSize(QtCore.QSize(16,16))
-		self.close_button.clicked.connect(self.accept)
-		self.hbox = QtWidgets.QHBoxLayout()
-		self.hbox.addStretch()
-		self.hbox.addWidget(self.close_button)
-		self.hbox.setContentsMargins(0, 0, 0, 0)
-		self.hbox_widget = QtWidgets.QWidget()
-		self.hbox_widget.setLayout(self.hbox)
-		self.vbox = QtWidgets.QVBoxLayout()
-		self.vbox.addWidget(self.tools_widget)
-		self.vbox.addWidget(self.hbox_widget)
-		self.setLayout(self.vbox)
+        super(sketchpad_dialog, self).__init__(
+            main_window, flags=QtCore.Qt.WindowMinMaxButtonsHint | QtCore.Qt.WindowCloseButtonHint)
+        self.sketchpad = sketchpad
+        self.tools_widget = sketchpad_widget.sketchpad_widget(self.sketchpad,
+                                                              parent=self, embed=False)
+        self.close_button = QtWidgets.QPushButton(self.theme.qicon(u"close"),
+                                                  u"Close")
+        self.close_button.setIconSize(QtCore.QSize(16, 16))
+        self.close_button.clicked.connect(self.accept)
+        self.hbox = QtWidgets.QHBoxLayout()
+        self.hbox.addStretch()
+        self.hbox.addWidget(self.close_button)
+        self.hbox.setContentsMargins(0, 0, 0, 0)
+        self.hbox_widget = QtWidgets.QWidget()
+        self.hbox_widget.setLayout(self.hbox)
+        self.vbox = QtWidgets.QVBoxLayout()
+        self.vbox.addWidget(self.tools_widget)
+        self.vbox.addWidget(self.hbox_widget)
+        self.setLayout(self.vbox)

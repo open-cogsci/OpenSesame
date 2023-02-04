@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,58 +24,58 @@ from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_unused_items_item', category=u'core')
 
+
 class tree_unused_items_item(tree_base_item):
 
-	"""
-	desc:
-		Corresponds to the unused-items widget in the overview area.
-	"""
+    """
+    desc:
+            Corresponds to the unused-items widget in the overview area.
+    """
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:
+                        desc:	The main-window object.
+                        type:	qtopensesame
+        """
 
-		arguments:
-			main_window:
-				desc:	The main-window object.
-				type:	qtopensesame
-		"""
+        super(tree_unused_items_item, self).__init__()
+        self.setup(main_window)
+        self.setIcon(0, self.theme.qicon(u'unused'))
+        self.setToolTip(0, _(u'Unused items'))
+        self._droppable = True
+        self._draggable = False
+        self.name = u'__unused__'
+        i = 0
+        for item_name in self.experiment.items.unused():
+            self.experiment.items[item_name].build_item_tree(self, max_depth=1)
+            i += 1
+        self.setText(0, _(u'Unused items') + u' (%s)' % i)
 
-		super(tree_unused_items_item, self).__init__()
-		self.setup(main_window)
-		self.setIcon(0, self.theme.qicon(u'unused'))
-		self.setToolTip(0, _(u'Unused items'))
-		self._droppable = True
-		self._draggable = False
-		self.name = u'__unused__'
-		i = 0
-		for item_name in self.experiment.items.unused():
-			self.experiment.items[item_name].build_item_tree(self, max_depth=1)
-			i += 1
-		self.setText(0, _(u'Unused items') + u' (%s)' % i)
+    def droppable(self, data):
 
-	def droppable(self, data):
+        return drag_and_drop.matches(data, [u'item-existing']) and \
+            data[u'application-id'] == self.main_window._id()
 
-		return drag_and_drop.matches(data, [u'item-existing']) and \
-			data[u'application-id'] == self.main_window._id()
+    def drop_hint(self):
 
-	def drop_hint(self):
+        return _(u'Move to unused items')
 
-		return _(u'Move to unused items')
+    def open_tab(self):
 
-	def open_tab(self):
+        self.main_window.tabwidget.open_unused()
 
-		self.main_window.tabwidget.open_unused()
+    def ancestry(self):
 
-	def ancestry(self):
+        return u'__unused__', u'__unused__:0'
 
-		return u'__unused__', u'__unused__:0'
+    def show_context_menu(self, pos):
 
-	def show_context_menu(self, pos):
-
-		from libqtopensesame.widgets.unused_items_context_menu import \
-			unused_items_context_menu
-		menu = unused_items_context_menu(self.main_window, self)
-		menu.popup(pos)
+        from libqtopensesame.widgets.unused_items_context_menu import \
+            unused_items_context_menu
+        menu = unused_items_context_menu(self.main_window, self)
+        menu.popup(pos)

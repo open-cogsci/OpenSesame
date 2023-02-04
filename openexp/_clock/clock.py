@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -22,162 +22,157 @@ from libopensesame.py3compat import *
 
 class Clock(object):
 
-	"""
-	desc: |
-		The `clock` object offers basic time functions. A `clock` object is
-		created automatically when the experiment starts.
+    """
+    desc: |
+            The `clock` object offers basic time functions. A `clock` object is
+            created automatically when the experiment starts.
 
-		__Example__:
+            __Example__:
 
-		~~~ .python
-		# Get the timestamp before and after sleeping for 1000 ms
-		t0 = clock.time()
-		clock.sleep(1000)
-		t1 = clock.time()
-		time_passed = t1 - t0
-		print(u'This should be 1000: %s' % time_passed)
-		~~~
+            ~~~ .python
+            # Get the timestamp before and after sleeping for 1000 ms
+            t0 = clock.time()
+            clock.sleep(1000)
+            t1 = clock.time()
+            time_passed = t1 - t0
+            print(u'This should be 1000: %s' % time_passed)
+            ~~~
 
-		[TOC]
-	"""
+            [TOC]
+    """
 
-	def __init__(self, experiment):
+    def __init__(self, experiment):
+        """
+        visible: False
 
-		"""
-		visible: False
+        desc:
+                Constructor to create a new `clock` object. You do not generally
+                call this constructor directly, because a `clock` object is created
+                automatically when the experiment is launched.
 
-		desc:
-			Constructor to create a new `clock` object. You do not generally
-			call this constructor directly, because a `clock` object is created
-			automatically when the experiment is launched.
+        arguments:
+                experiment:
+                        desc:	The experiment object.
+                        type:	experiment
+        """
 
-		arguments:
-			experiment:
-				desc:	The experiment object.
-				type:	experiment
-		"""
+        self._last_tick = None
+        self.experiment = experiment
 
-		self._last_tick = None
-		self.experiment = experiment
+    def time(self):
+        """
+        desc:
+                Gives a current timestamp in milliseconds. The absolute meaning of
+                the timestamp (i.e. when it was 0) depends on the backend.
 
-	def time(self):
+        returns:
+                desc:	A timestamp.
+                type:	float
 
-		"""
-		desc:
-			Gives a current timestamp in milliseconds. The absolute meaning of
-			the timestamp (i.e. when it was 0) depends on the backend.
+        example: |
+                t = clock.time()
+                print(u'The current time is %f' % t)
+        """
 
-		returns:
-			desc:	A timestamp.
-			type:	float
+        raise NotImplementedError()
 
-		example: |
-			t = clock.time()
-			print(u'The current time is %f' % t)
-		"""
+    def sleep(self, ms):
+        """
+        desc:
+                Sleeps (pauses) for a period.
 
-		raise NotImplementedError()
+        arguments:
+                ms:
+                        desc:	The number of milliseconds to sleep for.
+                        type:	[int, float]
 
-	def sleep(self, ms):
+        example: |
+                # Create two canvas objects ...
+                my_canvas1 = Canvas()
+                my_canvas1.text(u'1')
+                my_canvas2 = Canvas()
+                my_canvas2.text(u'2')
+                # ... and show them with 1 s in between
+                my_canvas1.show()
+                clock.sleep(1000)
+                my_canvas2.show()
+        """
 
-		"""
-		desc:
-			Sleeps (pauses) for a period.
+        raise NotImplementedError()
 
-		arguments:
-			ms:
-				desc:	The number of milliseconds to sleep for.
-				type:	[int, float]
+    def loop_for(self, ms, throttle=None, t0=None):
+        """
+        desc: |
+                *New in v3.2.0*
 
-		example: |
-			# Create two canvas objects ...
-			my_canvas1 = Canvas()
-			my_canvas1.text(u'1')
-			my_canvas2 = Canvas()
-			my_canvas2.text(u'2')
-			# ... and show them with 1 s in between
-			my_canvas1.show()
-			clock.sleep(1000)
-			my_canvas2.show()
-		"""
+                An iterator that loops for a fixed time.
 
-		raise NotImplementedError()
+        arguments:
+                ms:
+                        desc:	The number of milliseconds to loop for.
+                        type:	[int. float]
 
-	def loop_for(self, ms, throttle=None, t0=None):
+        keywords:
+                throttle:
+                        desc:	A period to sleep for in between each iteration.
+                        type:	[NoneType, float, int]
+                t0:
+                        desc:	A starting time. If `None`, the starting time is the
+                                        moment at which the iteration starts.
+                        type:	[NoneType, float, int]
 
-		"""
-		desc: |
-			*New in v3.2.0*
+        returns:
+                desc:	An Iterator over times in milliseconds that have passed
+                                since `t0`.
 
-			An iterator that loops for a fixed time.
+        example: |
+                for ms in clock.loop_for(100, throttle=10):
+                        print(ms)
+        """
 
-		arguments:
-			ms:
-				desc:	The number of milliseconds to loop for.
-				type:	[int. float]
+        if t0 is None:
+            t0 = self.time()
+        while True:
+            dt = self.time() - t0
+            if dt >= ms:
+                break
+            yield dt
+            if throttle is not None:
+                self.sleep(throttle)
 
-		keywords:
-			throttle:
-				desc:	A period to sleep for in between each iteration.
-				type:	[NoneType, float, int]
-			t0:
-				desc:	A starting time. If `None`, the starting time is the
-						moment at which the iteration starts.
-				type:	[NoneType, float, int]
+    def once_in_a_while(self, ms=1000):
+        """
+        desc: |
+                *New in v3.2.0*
 
-		returns:
-			desc:	An Iterator over times in milliseconds that have passed
-					since `t0`.
+                Periodically returns `True`. This is mostly useful for executing
+                code (e.g. within a `for` loop) that should only be executed once
+                in a while.
 
-		example: |
-			for ms in clock.loop_for(100, throttle=10):
-				print(ms)
-		"""
+        keywords:
+                ms:
+                        desc:	The minimum waiting period.
+                        type:	[int, float]
 
-		if t0 is None:
-			t0 = self.time()
-		while True:
-			dt = self.time() - t0
-			if dt >= ms:
-				break
-			yield dt
-			if throttle is not None:
-				self.sleep(throttle)
+        returns:
+                desc: 	|
+                                `True` after (at least) the minimum waiting period has
+                                passed since the last call to `Clock.once_in_a_while()`, or
+                                `False` otherwise.
+                type:	bool
 
-	def once_in_a_while(self, ms=1000):
+        example: |
+                for i in range(1000000):
+                        if clock.once_in_a_while(ms=50):
+                                # Execute this code only once every 50 ms
+                                print(clock.time())
+        """
 
-		"""
-		desc: |
-			*New in v3.2.0*
-
-			Periodically returns `True`. This is mostly useful for executing
-			code (e.g. within a `for` loop) that should only be executed once
-			in a while.
-
-		keywords:
-			ms:
-				desc:	The minimum waiting period.
-				type:	[int, float]
-
-		returns:
-			desc: 	|
-					`True` after (at least) the minimum waiting period has
-					passed since the last call to `Clock.once_in_a_while()`, or
-					`False` otherwise.
-			type:	bool
-
-		example: |
-			for i in range(1000000):
-				if clock.once_in_a_while(ms=50):
-					# Execute this code only once every 50 ms
-					print(clock.time())
-		"""
-
-		now = self.time()
-		if self._last_tick is not None and now - self._last_tick < ms:
-			return False
-		self._last_tick = now
-		return True
+        now = self.time()
+        if self._last_tick is not None and now - self._last_tick < ms:
+            return False
+        self._last_tick = now
+        return True
 
 
 # Non PEP-8 alias for backwards compatibility

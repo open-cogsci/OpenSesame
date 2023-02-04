@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,65 +23,62 @@ from libqtopensesame.widgets.header_widget import header_widget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'general_header_widget', category=u'core')
 
+
 class general_header_widget(header_widget):
 
-	"""
-	desc:
-		The widget containing the clickable title and description of the
-		experiment.
-	"""
+    """
+    desc:
+            The widget containing the clickable title and description of the
+            experiment.
+    """
 
-	def __init__(self, general_tab, main_window):
+    def __init__(self, general_tab, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                general_tab:	A general_properties object.
+                main_window:	A qtopensesame object.
+        """
 
-		arguments:
-			general_tab:	A general_properties object.
-			main_window:	A qtopensesame object.
-		"""
+        header_widget.__init__(self, main_window.experiment)
+        self.general_tab = general_tab
 
-		header_widget.__init__(self, main_window.experiment)
-		self.general_tab = general_tab
+    def refresh(self):
+        """
+        desc:
+                Updates the header so that it's content match the item.
+        """
 
-	def refresh(self):
+        self.set_name(self.experiment.var.title)
+        self.set_desc(self.experiment.var.description)
 
-		"""
-		desc:
-			Updates the header so that it's content match the item.
-		"""
+    def apply_name(self):
+        """
+        desc:
+                Applies the name change and revert the edit control back to the
+                static label.
+        """
 
-		self.set_name(self.experiment.var.title)
-		self.set_desc(self.experiment.var.description)
+        if self.label_name.isVisible():
+            return
+        self.label_name.show()
+        self.label_type.show()
+        self.edit_name.hide()
+        self.general_tab.apply_changes()
+        self.refresh()
 
-	def apply_name(self):
+    def apply_desc(self):
+        """
+        desc:
+                Applies the description change and revert the edit back to the
+                label.
+        """
 
-		"""
-		desc:
-			Applies the name change and revert the edit control back to the
-			static label.
-		"""
-
-		if self.label_name.isVisible():
-			return
-		self.label_name.show()
-		self.label_type.show()
-		self.edit_name.hide()
-		self.general_tab.apply_changes()
-		self.refresh()
-
-	def apply_desc(self):
-
-		"""
-		desc:
-			Applies the description change and revert the edit back to the
-			label.
-		"""
-
-		if self.label_desc.isVisible():
-			return
-		self.label_desc.show()
-		self.edit_desc.hide()
-		self.general_tab.apply_changes()
-		self.refresh()
+        if self.label_desc.isVisible():
+            return
+        self.label_desc.show()
+        self.edit_desc.hide()
+        self.general_tab.apply_changes()
+        self.refresh()

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,31 +24,31 @@ from libqtopensesame.extensions import base_extension
 
 class restore_ui_elements(base_extension):
 
-	"""
-	desc:
-		Restores key UI elements when they have been accidentally hidden.
-	"""
+    """
+    desc:
+            Restores key UI elements when they have been accidentally hidden.
+    """
 
-	@base_extension.as_thread(1000)
-	def event_startup(self):
-		
-		if (
-			self.main_window.toolbar_items.isVisible() and
-			(self.menubar.isVisible() or self.toolbar.isVisible()) and
-			self.main_window.dock_overview.isVisible()
-		):
-			return
-		oslogger.debug('some key ui elements are hidden')
-		from libqtopensesame._input.confirmation import confirmation
-		if not confirmation(
-			self.main_window,
-			_('Some important elements of the user interface have been hidden. Do you want to show them again?'),
-			title=_('Restore user interface'),
-			default='yes'
-		).show():
-			return
-		oslogger.debug('showing key ui elements')
-		self.main_window.toolbar_items.setVisible(True)
-		self.menubar.setVisible(True)
-		self.toolbar.setVisible(True)
-		self.main_window.dock_overview.setVisible(True)
+    @base_extension.as_thread(1000)
+    def event_startup(self):
+
+        if (
+                self.main_window.toolbar_items.isVisible() and
+                (self.menubar.isVisible() or self.toolbar.isVisible()) and
+                self.main_window.dock_overview.isVisible()
+        ):
+            return
+        oslogger.debug('some key ui elements are hidden')
+        from libqtopensesame._input.confirmation import confirmation
+        if not confirmation(
+                self.main_window,
+                _('Some important elements of the user interface have been hidden. Do you want to show them again?'),
+                title=_('Restore user interface'),
+                default='yes'
+        ).show():
+            return
+        oslogger.debug('showing key ui elements')
+        self.main_window.toolbar_items.setVisible(True)
+        self.menubar.setVisible(True)
+        self.toolbar.setVisible(True)
+        self.main_window.dock_overview.setVisible(True)

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -22,38 +22,38 @@ from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.widgets.tree_append_menu import tree_append_menu
 from qtpy import QtWidgets
 
+
 class tree_append_button(base_subcomponent, QtWidgets.QPushButton):
 
-	"""
-	desc:
-		An append item menu that appears below the tree structure of sequence
-		items.
-	"""
+    """
+    desc:
+            An append item menu that appears below the tree structure of sequence
+            items.
+    """
 
-	def setup(self, main_window):
+    def setup(self, main_window):
 
-		super(tree_append_button, self).setup(main_window)
-		self.setIcon(self.main_window.theme.qicon(u'list-add'))
-		self.tree_overview = self.parent()
-		self.append_menu = tree_append_menu(self.tree_overview)
-		self.setMenu(self.append_menu)
-		self.setFlat(True)
-		self.adjustSize()
+        super(tree_append_button, self).setup(main_window)
+        self.setIcon(self.main_window.theme.qicon(u'list-add'))
+        self.tree_overview = self.parent()
+        self.append_menu = tree_append_menu(self.tree_overview)
+        self.setMenu(self.append_menu)
+        self.setFlat(True)
+        self.adjustSize()
 
-	def set_position(self):
+    def set_position(self):
+        """
+        desc:
+                Places the button right below the last item.
+        """
 
-		"""
-		desc:
-			Places the button right below the last item.
-		"""
-
-		last_item = self.tree_overview.topLevelItem(0)
-		while self.tree_overview.itemBelow(last_item) is not None:
-			last_item = self.tree_overview.itemBelow(last_item)
-		index = self.tree_overview.indexFromItem(last_item)
-		rect = self.tree_overview.visualRect(index)
-		rect.moveTop(int(rect.top() + 1.75*rect.height()))
-		rect.moveLeft(4)
-		geom = self.geometry()
-		geom.moveTopLeft(rect.bottomLeft())
-		self.setGeometry(geom)
+        last_item = self.tree_overview.topLevelItem(0)
+        while self.tree_overview.itemBelow(last_item) is not None:
+            last_item = self.tree_overview.itemBelow(last_item)
+        index = self.tree_overview.indexFromItem(last_item)
+        rect = self.tree_overview.visualRect(index)
+        rect.moveTop(int(rect.top() + 1.75*rect.height()))
+        rect.moveLeft(4)
+        geom = self.geometry()
+        geom.moveTopLeft(rect.bottomLeft())
+        self.setGeometry(geom)

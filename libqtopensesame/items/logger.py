@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,50 +24,48 @@ from libqtopensesame.widgets.logger_widget import logger_widget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'logger', category=u'item')
 
+
 class logger(logger_runtime, qtplugin):
 
-	"""
-	desc:
-		GUI controls for the logger item.
-	"""
+    """
+    desc:
+            GUI controls for the logger item.
+    """
 
-	description = _(u'Logs experimental data')
-	help_url = u'manual/logging'
-	lazy_init = True
+    description = _(u'Logs experimental data')
+    help_url = u'manual/logging'
+    lazy_init = True
 
-	def __init__(self, name, experiment, string=None):
+    def __init__(self, name, experiment, string=None):
+        """See item."""
 
-		"""See item."""
+        logger_runtime.__init__(self, name, experiment, string)
+        qtplugin.__init__(self)
 
-		logger_runtime.__init__(self, name, experiment, string)
-		qtplugin.__init__(self)
+    def init_edit_widget(self):
+        """See qtitem."""
 
-	def init_edit_widget(self):
+        super(logger, self).init_edit_widget(stretch=False)
+        self.logger_widget = logger_widget(self)
+        self.add_widget(self.logger_widget)
+        self.auto_add_widget(self.logger_widget.ui.checkbox_auto_log,
+                             u'auto_log')
 
-		"""See qtitem."""
+    def edit_widget(self):
+        """See qtitem."""
 
-		super(logger, self).init_edit_widget(stretch=False)
-		self.logger_widget = logger_widget(self)
-		self.add_widget(self.logger_widget)
-		self.auto_add_widget(self.logger_widget.ui.checkbox_auto_log,
-			u'auto_log')
+        super(logger, self).edit_widget()
+        for item in self.experiment.items.values():
+            if item.item_type == self.item_type and item is not self:
+                self.extension_manager.fire(u'notify',
+                                            message=_(
+                                                u'You have multiple unlinked loggers. This can lead to messy log files.'),
+                                            category=u'warning')
+                break
+        self.logger_widget.update()
 
-	def edit_widget(self):
+    def apply_edit_changes(self):
+        """See qtitem."""
 
-		"""See qtitem."""
-
-		super(logger, self).edit_widget()
-		for item in self.experiment.items.values():
-			if item.item_type == self.item_type and item is not self:
-				self.extension_manager.fire(u'notify',
-					message=_(u'You have multiple unlinked loggers. This can lead to messy log files.'),
-					category=u'warning')
-				break
-		self.logger_widget.update()
-
-	def apply_edit_changes(self):
-
-		"""See qtitem."""
-
-		super(logger, self).apply_edit_changes()
-		self.logger_widget.update()
+        super(logger, self).apply_edit_changes()
+        self.logger_widget.update()

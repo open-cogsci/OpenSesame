@@ -24,4 +24,4 @@ from openexp._canvas._ellipse.legacy import Legacy as LegacyEllipse
 
 class Legacy(LegacyEllipse, Circle):
 
-	pass
+    pass

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of openexp.
@@ -29,4 +29,4 @@ from libqtopensesame.sketchpad_elements._noise import noise
 from libqtopensesame.sketchpad_elements._textline import textline
 from libqtopensesame.sketchpad_elements._rect import rect
 elements = [textline, image, fixdot, line, arrow, rect, circle, ellipse, gabor,
-	noise]
+            noise]

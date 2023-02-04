@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -20,36 +20,33 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame import sketchpad
 
+
 class feedback(sketchpad.sketchpad):
 
-	description = u'Provides feedback to the participant'
+    description = u'Provides feedback to the participant'
 
-	def reset(self):
+    def reset(self):
+        """See item."""
 
-		"""See item."""
+        super(feedback, self).reset()
+        self.var.reset_variables = u'yes'
 
-		super(feedback, self).reset()
-		self.var.reset_variables = u'yes'
+    def prepare(self):
+        """Prepares the item."""
 
-	def prepare(self):
+        pass
 
-		"""Prepares the item."""
+    def run(self):
+        """Runs the item."""
 
-		pass
+        sketchpad.sketchpad.prepare(self)
+        sketchpad.sketchpad.run(self)
+        if self.var.reset_variables == u'yes':
+            self.experiment.reset_feedback()
 
-	def run(self):
+    def coroutine(self):
+        """See coroutines plug-in."""
 
-		"""Runs the item."""
-
-		sketchpad.sketchpad.prepare(self)
-		sketchpad.sketchpad.run(self)
-		if self.var.reset_variables == u'yes':
-			self.experiment.reset_feedback()
-
-	def coroutine(self):
-
-		"""See coroutines plug-in."""
-
-		sketchpad.sketchpad.prepare(self)
-		yield
-		self.set_item_onset(self.canvas.show())
+        sketchpad.sketchpad.prepare(self)
+        yield
+        self.set_item_onset(self.canvas.show())

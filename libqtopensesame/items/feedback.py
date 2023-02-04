@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,22 +24,23 @@ from libqtopensesame.items.feedpad import feedpad
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'feeback', category=u'item')
 
+
 class feedback(feedpad, qtplugin, feedback_runtime):
 
-	"""
-	desc:
-		The feedback controls are implemented in feedpad.
-	"""
+    """
+    desc:
+            The feedback controls are implemented in feedpad.
+    """
 
-	description = _(u'Provides feedback to the participant')
+    description = _(u'Provides feedback to the participant')
 
-	def __init__(self, name, experiment, string=None):
+    def __init__(self, name, experiment, string=None):
 
-		feedback_runtime.__init__(self, name, experiment, string)
-		qtplugin.__init__(self)
+        feedback_runtime.__init__(self, name, experiment, string)
+        qtplugin.__init__(self)
 
-	def init_edit_widget(self):
+    def init_edit_widget(self):
 
-		feedpad.init_edit_widget(self)
-		self.auto_add_widget(self.sketchpad_widget.ui.checkbox_reset_variables,
-			u'reset_variables')
+        feedpad.init_edit_widget(self)
+        self.auto_add_widget(self.sketchpad_widget.ui.checkbox_reset_variables,
+                             u'reset_variables')

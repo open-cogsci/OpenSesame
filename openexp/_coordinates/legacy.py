@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,28 +23,28 @@ from openexp._coordinates.coordinates import Coordinates
 
 class Legacy(Coordinates):
 
-	"""
-	desc:
-		For function specifications and docstrings, see
-		`openexp._coordinates.coordinates`.
-	"""
+    """
+    desc:
+            For function specifications and docstrings, see
+            `openexp._coordinates.coordinates`.
+    """
 
-	def to_xy(self, x, y=None):
+    def to_xy(self, x, y=None):
 
-		if isinstance(x, tuple):
-			x, y = x
-		x, y = self.none_to_center(x, y)
-		if not self.uniform_coordinates:
-			return x, y
-		return x + self._xcenter, y + self._ycenter
+        if isinstance(x, tuple):
+            x, y = x
+        x, y = self.none_to_center(x, y)
+        if not self.uniform_coordinates:
+            return x, y
+        return x + self._xcenter, y + self._ycenter
 
-	def from_xy(self, x, y=None):
+    def from_xy(self, x, y=None):
 
-		if isinstance(x, tuple):
-			x, y = x
-		if not self.uniform_coordinates:
-			return x, y
-		return x - self._xcenter, y - self._ycenter
+        if isinstance(x, tuple):
+            x, y = x
+        if not self.uniform_coordinates:
+            return x, y
+        return x - self._xcenter, y - self._ycenter
 
 
 # Non PEP-8 alias for backwards compatibility

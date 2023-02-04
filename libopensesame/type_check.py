@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -21,36 +21,36 @@ from libopensesame.py3compat import *
 
 from libopensesame.exceptions import osexception
 
+
 def float_list(l, desc, min_len=None, max_len=None):
-	
-	"""
-	Converts a variable to a list of floats if possible.
-	
-	Arguments:
-	a		--	The variable to convert.
-	desc	--	A description to clarify the osexception.
-	
-	Keyword arguments:
-	min_len	--	The minimum length of the list. (default=None)
-	max_len	--	The maximum length of the list. (default=None)
-	
-	Raises:
-	A osexception if the variable could not be converted.
-	
-	Returns:
-	A list of floats.
-	"""
-		
-	try:
-		l = list(l)
-	except:
-		raise osexception( \
-			u'Expecting a list or compatible type not "%s" for "%s"' % (l, \
-				desc))
-	if min_len is not None and len(l) < min_len:
-		raise osexception( \
-			u'Expecting a list of at least %d items for "%s"' % (min_len, desc))
-	if max_len is not None and len(l) > max_len:
-		raise osexception( \
-			u'Expecting a list of at most %d items for "%s"' % (max_len, desc))
-	return l
+    """
+    Converts a variable to a list of floats if possible.
+
+    Arguments:
+    a		--	The variable to convert.
+    desc	--	A description to clarify the osexception.
+
+    Keyword arguments:
+    min_len	--	The minimum length of the list. (default=None)
+    max_len	--	The maximum length of the list. (default=None)
+
+    Raises:
+    A osexception if the variable could not be converted.
+
+    Returns:
+    A list of floats.
+    """
+
+    try:
+        l = list(l)
+    except:
+        raise osexception(
+            u'Expecting a list or compatible type not "%s" for "%s"' % (l,
+                                                                        desc))
+    if min_len is not None and len(l) < min_len:
+        raise osexception(
+            u'Expecting a list of at least %d items for "%s"' % (min_len, desc))
+    if max_len is not None and len(l) > max_len:
+        raise osexception(
+            u'Expecting a list of at most %d items for "%s"' % (max_len, desc))
+    return l

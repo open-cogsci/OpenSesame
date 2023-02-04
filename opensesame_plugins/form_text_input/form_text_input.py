@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -36,47 +36,46 @@ widget 0 2 1 1 text_input return_accepts=yes focus=yes var=[form_var] stub=""
 
 class form_text_input(form_base.form_base):
 
-	initial_view = u'controls'
+    initial_view = u'controls'
 
-	def __init__(self, name, experiment, string=None):
+    def __init__(self, name, experiment, string=None):
+        """
+        Constructor.
 
-		"""
-		Constructor.
+        Arguments:
+        name		--	The name of the item.
+        experiment	--	The experiment instance.
 
-		Arguments:
-		name		--	The name of the item.
-		experiment	--	The experiment instance.
+        Keyword arguments:
+        string		--	A definition string. (default=None)
+        """
 
-		Keyword arguments:
-		string		--	A definition string. (default=None)
-		"""
+        if string is None or string.strip() == u'':
+            string = default_script
 
-		if string is None or string.strip() == u'':
-			string = default_script
+        # Due to dynamic loading, we need to implement this super() hack. See
+        # <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
+        self.super_form_text_input = super(form_text_input, self)
+        self.super_form_text_input.__init__(name, experiment, string,
+                                            item_type=u'form_text_input',
+                                            description=u'A simple text input form')
 
-		# Due to dynamic loading, we need to implement this super() hack. See
-		# <http://thingspython.wordpress.com/2010/09/27/another-super-wrinkle-raising-typeerror/>
-		self.super_form_text_input = super(form_text_input, self)
-		self.super_form_text_input.__init__(name, experiment, string,
-			item_type=u'form_text_input',
-			description=u'A simple text input form')
+    def var_info(self):
+        """
+        Returns a list of dictionaries with variable descriptions.
 
-	def var_info(self):
+        Returns:
+        A list of (name, description) tuples.
+        """
 
-		"""
-		Returns a list of dictionaries with variable descriptions.
+        return self.super_form_text_input.var_info() + \
+            [(self.var.get(u'form_var', _eval=False, default=u''),
+              u'[Depends on response]')]
 
-		Returns:
-		A list of (name, description) tuples.
-		"""
-
-		return self.super_form_text_input.var_info() + \
-			[(self.var.get(u'form_var', _eval=False, default=u''),
-			u'[Depends on response]')]
 
 class qtform_text_input(form_text_input, qtautoplugin):
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
 
-		form_text_input.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        form_text_input.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

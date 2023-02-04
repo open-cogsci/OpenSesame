@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,26 +24,26 @@ from libqtopensesame.items.feedpad import feedpad
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'sketchpad', category=u'item')
 
+
 class sketchpad(feedpad, qtplugin, sketchpad_runtime):
 
-	"""
-	desc:
-		The sketchpad controls are implemented in feedpad.
-	"""
+    """
+    desc:
+            The sketchpad controls are implemented in feedpad.
+    """
 
-	description = _(u'Displays stimuli')
+    description = _(u'Displays stimuli')
 
-	def __init__(self, name, experiment, string=None):
+    def __init__(self, name, experiment, string=None):
 
-		sketchpad_runtime.__init__(self, name, experiment, string)
-		qtplugin.__init__(self)
+        sketchpad_runtime.__init__(self, name, experiment, string)
+        qtplugin.__init__(self)
 
-	def init_edit_widget(self):
+    def init_edit_widget(self):
+        """
+        desc:
+                Initializes the widget.
+        """
 
-		"""
-		desc:
-			Initializes the widget.
-		"""
-
-		feedpad.init_edit_widget(self)
-		self.sketchpad_widget.ui.widget_settings_reset_variables.hide()
+        feedpad.init_edit_widget(self)
+        self.sketchpad_widget.ui.widget_settings_reset_variables.hide()

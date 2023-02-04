@@ -25,14 +25,14 @@ from psychopy import visual
 
 class Psycho(PsychoElement, Polygon):
 
-	def prepare(self):
+    def prepare(self):
 
-		self._stim = visual.ShapeStim(
-			self.win,
-			lineWidth=self.penwidth,
-			vertices=[self.to_xy(x, y) for x, y in self.vertices],
-			lineColor=self.color.backend_color,
-			closeShape=True,
-			fillColor=self.color.backend_color if self.fill else None,
-			interpolate=False
-		)
+        self._stim = visual.ShapeStim(
+            self.win,
+            lineWidth=self.penwidth,
+            vertices=[self.to_xy(x, y) for x, y in self.vertices],
+            lineColor=self.color.backend_color,
+            closeShape=True,
+            fillColor=self.color.backend_color if self.fill else None,
+            interpolate=False
+        )

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -27,45 +27,43 @@ _ = translation_context(u'opensesame_3_notifications', category=u'extension')
 
 class opensesame_3_notifications(base_extension):
 
-	"""
-	desc:
-		Provides tips for new users of OpenSesame 3.
-	"""
+    """
+    desc:
+            Provides tips for new users of OpenSesame 3.
+    """
 
-	def event_os3n_dismiss_old_experiment(self):
+    def event_os3n_dismiss_old_experiment(self):
+        """
+        desc:
+                Permanently disables the old-experiment tab.
+        """
 
-		"""
-		desc:
-			Permanently disables the old-experiment tab.
-		"""
+        cfg.os3n_old_experiment_notification = False
+        self.main_window.tabwidget.close_current()
 
-		cfg.os3n_old_experiment_notification = False
-		self.main_window.tabwidget.close_current()
+    def event_open_experiment(self, path):
+        """
+        desc:
+                Opens a notification tab when opening an experiment that was created
+                with an older version of OpenSesame.
 
-	def event_open_experiment(self, path):
+        arguments:
+                path:
+                        desc:	The full path of the experiment file.
+                        type:	unicode
+        """
 
-		"""
-		desc:
-			Opens a notification tab when opening an experiment that was created
-			with an older version of OpenSesame.
-
-		arguments:
-			path:
-				desc:	The full path of the experiment file.
-				type:	unicode
-		"""
-
-		exp_api = self.experiment.front_matter[u'API']
-		# If the major API of the experiment is the same, and the minor API is
-		# the same or older
-		if exp_api.version[0] == metadata.api.version[0] and \
-			exp_api.version[1] <= metadata.api.version[1]:
-			return
-		self.main_window.current_path = None
-		self.main_window.window_message(u'New experiment')
-		self.main_window.set_unsaved(True)
-		if not cfg.os3n_old_experiment_notification:
-			return
-		src = u'old-experiment.md' if exp_api < metadata.api \
-			else u'new-experiment.md'
-		self.tabwidget.open_markdown(self.ext_resource(src))
+        exp_api = self.experiment.front_matter[u'API']
+        # If the major API of the experiment is the same, and the minor API is
+        # the same or older
+        if exp_api.version[0] == metadata.api.version[0] and \
+                exp_api.version[1] <= metadata.api.version[1]:
+            return
+        self.main_window.current_path = None
+        self.main_window.window_message(u'New experiment')
+        self.main_window.set_unsaved(True)
+        if not cfg.os3n_old_experiment_notification:
+            return
+        src = u'old-experiment.md' if exp_api < metadata.api \
+            else u'new-experiment.md'
+        self.tabwidget.open_markdown(self.ext_resource(src))

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -21,24 +21,25 @@ from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.validators._base_validator import base_validator
 
+
 class duration_validator(base_validator):
 
-	"""
-	desc:
-		A validator for durations.
-	"""
+    """
+    desc:
+            A validator for durations.
+    """
 
-	def __init__(self, main_window, default=u'keypress'):
+    def __init__(self, main_window, default=u'keypress'):
 
-		super(duration_validator, self).__init__(main_window, default=default)
+        super(duration_validator, self).__init__(main_window, default=default)
 
-	def is_valid(self, val):
+    def is_valid(self, val):
 
-		if val in [u'keypress', u'mouseclick', u'sound'] \
-			or self.experiment.varref(val):
-			return True
-		try:
-			int(val)
-			return True
-		except:
-			return False
+        if val in [u'keypress', u'mouseclick', u'sound'] \
+                or self.experiment.varref(val):
+            return True
+        try:
+            int(val)
+            return True
+        except:
+            return False

@@ -25,41 +25,41 @@ from openexp.canvas_elements import Line, Ellipse
 
 class FixDot(Group):
 
-	def __init__(self, canvas, x=None, y=None, style=u'default', **properties):
+    def __init__(self, canvas, x=None, y=None, style=u'default', **properties):
 
-		if x is None:
-			x = 0 if canvas.uniform_coordinates else canvas._width/2
-		if y is None:
-			y = 0 if canvas.uniform_coordinates else canvas._height/2
-		h = 2
-		if u'large' in style:
-			s = 16
-		elif u'medium' in style or style == u'default':
-			s = 8
-		elif u'small' in style:
-			s = 4
-		else:
-			raise osexception(u'Unknown style: %s' % self.style)
-		if u'open' in style or style == u'default':
-			elements = [
-				Ellipse(x-s, y-s, 2*s, 2*s, fill=True, **properties) \
-					.construct(canvas),
-				Ellipse(x-h, y-h, 2*h, 2*h, fill=True,
-					color=canvas.background_color.colorspec,
-					**{key : val for key, val in properties.items() \
-					if key != u'color'}).construct(canvas)
-				]
-		elif u'filled' in style:
-			elements = [Ellipse(
-				x-s, y-s, 2*s, 2*s, fill=True, **properties)\
-				.construct(canvas)]
-		elif u'cross' in style:
-			elements = [
-				Line(x, y-s, x, y+s, **properties).construct(canvas),
-				Line(x-s, y, x+s, y, **properties).construct(canvas)
-				]
-		else:
-			raise osexception(u'Unknown style: %s' % self.style)
-		properties = properties.copy()
-		properties.update({ 'x' : x, 'y' : y, u'style' : style })
-		Group.__init__(self, canvas, elements, **properties)
+        if x is None:
+            x = 0 if canvas.uniform_coordinates else canvas._width/2
+        if y is None:
+            y = 0 if canvas.uniform_coordinates else canvas._height/2
+        h = 2
+        if u'large' in style:
+            s = 16
+        elif u'medium' in style or style == u'default':
+            s = 8
+        elif u'small' in style:
+            s = 4
+        else:
+            raise osexception(u'Unknown style: %s' % self.style)
+        if u'open' in style or style == u'default':
+            elements = [
+                Ellipse(x-s, y-s, 2*s, 2*s, fill=True, **properties)
+                .construct(canvas),
+                Ellipse(x-h, y-h, 2*h, 2*h, fill=True,
+                        color=canvas.background_color.colorspec,
+                        **{key: val for key, val in properties.items()
+                           if key != u'color'}).construct(canvas)
+            ]
+        elif u'filled' in style:
+            elements = [Ellipse(
+                x-s, y-s, 2*s, 2*s, fill=True, **properties)
+                .construct(canvas)]
+        elif u'cross' in style:
+            elements = [
+                Line(x, y-s, x, y+s, **properties).construct(canvas),
+                Line(x-s, y, x+s, y, **properties).construct(canvas)
+            ]
+        else:
+            raise osexception(u'Unknown style: %s' % self.style)
+        properties = properties.copy()
+        properties.update({'x': x, 'y': y, u'style': style})
+        Group.__init__(self, canvas, elements, **properties)

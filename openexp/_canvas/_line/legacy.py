@@ -25,8 +25,9 @@ import pygame
 
 class Legacy(LegacyElement, Line):
 
-	def prepare(self):
+    def prepare(self):
 
-		pygame.draw.line(self.surface, self.color.backend_color,
-			self.to_xy(self.sx, self.sy), self.to_xy(self.ex, self.ey),
-			self.penwidth)
+        pygame.draw.line(self.surface, self.color.backend_color,
+                         self.to_xy(self.sx, self.sy), self.to_xy(
+                             self.ex, self.ey),
+                         self.penwidth)

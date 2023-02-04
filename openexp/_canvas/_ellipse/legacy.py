@@ -25,45 +25,45 @@ import pygame
 
 class Legacy(LegacyElement, Ellipse):
 
-	def prepare(self):
+    def prepare(self):
 
-		x = int(self.x)
-		y = int(self.y)
-		w = int(self.w)
-		h = int(self.h)
-		x, y = self.to_xy(x, y)
-		if self.fill:
-			pygame.draw.ellipse(self.surface, self.color.backend_color,
-				(x, y, w, h), 0)
-			return
-		# Use experyiment's method to draw ellipses with a transparent
-		# interior by using the transparent colorkey method. This involves
-		# some trickery by making a separate surface of which a certain color
-		# is designated as transparent and draw the ellipse on there first.
-		# When being blit onto another surface, this transparent color
-		# (e.g. the ellipses interior is not blitted with the rest.
-		line_width = self.penwidth
-		size = (w, h)
-		surface = pygame.surface.Surface(
-			[p + line_width for p in size],
-			pygame.SRCALPHA).convert_alpha()
-		pygame.draw.ellipse(surface, (0, 0, 0), pygame.Rect(
-			(0, 0),
-			[p + line_width for p in size]))
-		tmp = pygame.surface.Surface(
-			[p - line_width for p in size])
-		tmp.fill([0, 0, 0])
-		tmp.set_colorkey([255, 255, 255])
-		hole = pygame.surface.Surface(
-			[p - line_width for p in size],
-			pygame.SRCALPHA).convert_alpha()
-		pygame.draw.ellipse(tmp, (255, 255, 255), pygame.Rect(
-			(0, 0), [p - line_width for p in size]))
-		hole.blit(tmp, (0, 0))
-		surface.blit(hole, (line_width, line_width),
-			special_flags=pygame.BLEND_RGBA_MIN)
-		surface.fill(self.color.backend_color,
-			special_flags=pygame.BLEND_RGB_MAX)
-		# The line_width affects the temp's surface size, so use it to correct the
-		# positioning when blitting.
-		self.surface.blit(surface, (x-line_width/2, y-line_width/2) )
+        x = int(self.x)
+        y = int(self.y)
+        w = int(self.w)
+        h = int(self.h)
+        x, y = self.to_xy(x, y)
+        if self.fill:
+            pygame.draw.ellipse(self.surface, self.color.backend_color,
+                                (x, y, w, h), 0)
+            return
+        # Use experyiment's method to draw ellipses with a transparent
+        # interior by using the transparent colorkey method. This involves
+        # some trickery by making a separate surface of which a certain color
+        # is designated as transparent and draw the ellipse on there first.
+        # When being blit onto another surface, this transparent color
+        # (e.g. the ellipses interior is not blitted with the rest.
+        line_width = self.penwidth
+        size = (w, h)
+        surface = pygame.surface.Surface(
+            [p + line_width for p in size],
+            pygame.SRCALPHA).convert_alpha()
+        pygame.draw.ellipse(surface, (0, 0, 0), pygame.Rect(
+            (0, 0),
+            [p + line_width for p in size]))
+        tmp = pygame.surface.Surface(
+            [p - line_width for p in size])
+        tmp.fill([0, 0, 0])
+        tmp.set_colorkey([255, 255, 255])
+        hole = pygame.surface.Surface(
+            [p - line_width for p in size],
+            pygame.SRCALPHA).convert_alpha()
+        pygame.draw.ellipse(tmp, (255, 255, 255), pygame.Rect(
+            (0, 0), [p - line_width for p in size]))
+        hole.blit(tmp, (0, 0))
+        surface.blit(hole, (line_width, line_width),
+                     special_flags=pygame.BLEND_RGBA_MIN)
+        surface.fill(self.color.backend_color,
+                     special_flags=pygame.BLEND_RGB_MAX)
+        # The line_width affects the temp's surface size, so use it to correct the
+        # positioning when blitting.
+        self.surface.blit(surface, (x-line_width/2, y-line_width/2))

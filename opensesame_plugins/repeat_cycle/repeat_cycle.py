@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -21,53 +21,51 @@ from libopensesame.py3compat import *
 from libopensesame import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 
+
 class repeat_cycle(item.item):
 
-	"""
-	desc:
-		A plug-in to repeat a loop's cycle by setting the `repeat_cycle`
-		experimental variable to 1.
-	"""
+    """
+    desc:
+            A plug-in to repeat a loop's cycle by setting the `repeat_cycle`
+            experimental variable to 1.
+    """
 
+    description = u"Optionally repeat a cycle from a loop"
 
-	description = u"Optionally repeat a cycle from a loop"
+    def reset(self):
+        """
+        desc:
+                Initialize the plug-in.
+        """
 
-	def reset(self):
+        self.var.condition = u'never'
 
-		"""
-		desc:
-			Initialize the plug-in.
-		"""
+    def prepare(self):
+        """
+        desc:
+                Prepare the item.
+        """
 
-		self.var.condition = u'never'
+        item.item.prepare(self)
+        self._condition = self.syntax.compile_cond(self.var.get(u'condition',
+                                                                _eval=False))
+        return True
 
-	def prepare(self):
+    def run(self):
+        """
+        desc:
+                Run the item.
+        """
 
-		"""
-		desc:
-			Prepare the item.
-		"""
+        if self.python_workspace._eval(self._condition):
+            self.experiment.var.repeat_cycle = 1
+        return True
 
-		item.item.prepare(self)
-		self._condition = self.syntax.compile_cond(self.var.get(u'condition',
-			_eval=False))
-		return True
-
-	def run(self):
-
-		"""
-		desc:
-			Run the item.
-		"""
-
-		if self.python_workspace._eval(self._condition):
-			self.experiment.var.repeat_cycle = 1
-		return True
 
 class qtrepeat_cycle(repeat_cycle, qtautoplugin):
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
 
-		# Call parent constructors.
-		repeat_cycle.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        # Call parent constructors.
+        repeat_cycle.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

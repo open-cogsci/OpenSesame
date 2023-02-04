@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of openexp.
@@ -22,40 +22,40 @@ from libqtopensesame.dialogs.gabor_settings import gabor_settings
 from libqtopensesame.sketchpad_elements._base_element import base_element
 from libopensesame.sketchpad_elements import gabor as gabor_runtime
 
+
 class gabor(base_element, gabor_runtime):
 
-	"""
-	desc:
-		A gabor element.
+    """
+    desc:
+            A gabor element.
 
-		See base_element for docstrings and function descriptions.
-	"""
+            See base_element for docstrings and function descriptions.
+    """
 
-	def show_edit_dialog(self):
+    def show_edit_dialog(self):
+        """
+        desc:
+                The show-edit dialog for the gabor shows the settings dialog.
+        """
 
-		"""
-		desc:
-			The show-edit dialog for the gabor shows the settings dialog.
-		"""
+        d = gabor_settings(self.sketchpad._edit_widget)
+        d.set_properties(self.properties)
+        properties = d.get_properties()
+        if properties is None:
+            return
+        self.properties.update(properties)
+        self.sketchpad.draw()
 
-		d = gabor_settings(self.sketchpad._edit_widget)
-		d.set_properties(self.properties)
-		properties = d.get_properties()
-		if properties is None:
-			return
-		self.properties.update(properties)
-		self.sketchpad.draw()
+    @classmethod
+    def mouse_press(cls, sketchpad, pos):
 
-	@classmethod
-	def mouse_press(cls, sketchpad, pos):
-
-		d = gabor_settings(sketchpad._edit_widget)
-		properties = d.get_properties()
-		if properties is None:
-			return
-		properties.update({
-				u'x':			pos[0],
-				u'y':			pos[1],
-				u'show_if' : 	sketchpad.current_show_if()
-			})
-		return gabor(sketchpad, properties=properties)
+        d = gabor_settings(sketchpad._edit_widget)
+        properties = d.get_properties()
+        if properties is None:
+            return
+        properties.update({
+            u'x':			pos[0],
+            u'y':			pos[1],
+            u'show_if': 	sketchpad.current_show_if()
+        })
+        return gabor(sketchpad, properties=properties)

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -21,18 +21,20 @@ from libopensesame.py3compat import *
 from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 
+
 class notepad(item):
 
-	"""Notepad plug-in"""
+    """Notepad plug-in"""
 
-	description = \
-			u'A simple notepad to document your experiment. This plug-in does nothing.'
+    description = \
+        u'A simple notepad to document your experiment. This plug-in does nothing.'
+
 
 class qtnotepad(notepad, qtautoplugin):
 
-	"""Notepad plug-in GUI"""
+    """Notepad plug-in GUI"""
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
 
-		notepad.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        notepad.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

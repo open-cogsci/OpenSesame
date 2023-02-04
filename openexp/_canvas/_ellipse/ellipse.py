@@ -23,26 +23,26 @@ from openexp._canvas._element.element import Element
 
 class Ellipse(Element):
 
-	def __init__(self, canvas, x, y, w, h, **properties):
+    def __init__(self, canvas, x, y, w, h, **properties):
 
-		properties = properties.copy()
-		x, y, w, h = self._rect(x, y, w, h)
-		properties.update({ 'x' : x, 'y' : y, 'w' : w, 'h' : h })
-		Element.__init__(self, canvas, **properties)
+        properties = properties.copy()
+        x, y, w, h = self._rect(x, y, w, h)
+        properties.update({'x': x, 'y': y, 'w': w, 'h': h})
+        Element.__init__(self, canvas, **properties)
 
-	@property
-	def rect(self):
+    @property
+    def rect(self):
 
-		return self.x, self.y, self.w, self.h
+        return self.x, self.y, self.w, self.h
 
-	def __contains__(self, xy):
+    def __contains__(self, xy):
 
-		# Source: https://math.stackexchange.com/questions/76457/
-		# check-if-a-point-is-within-an-ellipse
-		rx = 1. * self.w / 2
-		ry = 1. * self.h / 2
-		h = self.x + rx
-		k = self.y + ry
-		x, y = xy
-		d = (x - h)**2 / rx**2 + (y - k)**2 / ry**2
-		return d <= 1
+        # Source: https://math.stackexchange.com/questions/76457/
+        # check-if-a-point-is-within-an-ellipse
+        rx = 1. * self.w / 2
+        ry = 1. * self.h / 2
+        h = self.x + rx
+        k = self.y + ry
+        x, y = xy
+        d = (x - h)**2 / rx**2 + (y - k)**2 / ry**2
+        return d <= 1

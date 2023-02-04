@@ -26,20 +26,20 @@ from expyriment.misc.geometry import points2vertices, XYPoint
 
 class Xpyriment(XpyrimentElement, Polygon):
 
-	def prepare(self):
+    def prepare(self):
 
-		left = min(x for x, y in self.vertices)
-		right = max(x for x, y in self.vertices)
-		top = min(y for x, y in self.vertices)
-		bottom = max(y for x, y in self.vertices)
-		pos = left + (right-left)//2, top + (bottom-top)//2
-		self._stim = Shape(
-			line_width=0 if self.fill else self.penwidth,
-			position=self.to_xy(pos),
-			colour=self.color.backend_color,
-			anti_aliasing=self.ANTI_ALIAS
-		)
-		self._stim.add_vertices(points2vertices(
-			[XYPoint(xy=self.to_xy(x, y)) for x, y in self.vertices]
-		))
-		self._stim.preload()
+        left = min(x for x, y in self.vertices)
+        right = max(x for x, y in self.vertices)
+        top = min(y for x, y in self.vertices)
+        bottom = max(y for x, y in self.vertices)
+        pos = left + (right-left)//2, top + (bottom-top)//2
+        self._stim = Shape(
+            line_width=0 if self.fill else self.penwidth,
+            position=self.to_xy(pos),
+            colour=self.color.backend_color,
+            anti_aliasing=self.ANTI_ALIAS
+        )
+        self._stim.add_vertices(points2vertices(
+            [XYPoint(xy=self.to_xy(x, y)) for x, y in self.vertices]
+        ))
+        self._stim.preload()

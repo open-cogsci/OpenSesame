@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -31,106 +31,102 @@ _ = translation_context(u'toolbar_items', category=u'core')
 
 class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
 
-	"""
-	desc:
-		The item toolbar, which allows you to insert items into the experiment
-		through drag and drop.
-	"""
+    """
+    desc:
+            The item toolbar, which allows you to insert items into the experiment
+            through drag and drop.
+    """
 
-	def __init__(self, parent):
+    def __init__(self, parent):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                parent:
+                        desc:	The parent.
+                        type:	QWidget
+        """
 
-		arguments:
-			parent:
-				desc:	The parent.
-				type:	QWidget
-		"""
+        super(toolbar_items, self).__init__(parent)
+        self.setup(parent)
+        self.orientationChanged.connect(self.build)
+        for child in self.children():
+            if isinstance(child, QtWidgets.QToolButton):
+                self._expand_button = child
+                break
 
-		super(toolbar_items, self).__init__(parent)
-		self.setup(parent)
-		self.orientationChanged.connect(self.build)
-		for child in self.children():
-			if isinstance(child, QtWidgets.QToolButton):
-				self._expand_button = child
-				break
+    def add_content(self, content):
+        """
+        desc:
+                Add double rows of content to the toolbar.
 
-	def add_content(self, content):
+        arguments:
+                content:
+                        desc:	A list of content widgets.
+                        type:	list
+        """
 
-		"""
-		desc:
-			Add double rows of content to the toolbar.
+        for i, c in enumerate(content):
+            if not i % 2:
+                if i > 0:
+                    self.addWidget(w)
+                if self.orientation() == QtCore.Qt.Horizontal:
+                    l = QtWidgets.QVBoxLayout()
+                    l.setContentsMargins(6, 6, 6, 6)
+                else:
+                    l = QtWidgets.QHBoxLayout()
+                    l.setContentsMargins(6, 6, 6, 6)
+                l.setSpacing(12)
+                w = QtWidgets.QWidget()
+                w.setLayout(l)
+            l.addWidget(c)
+        if not i % 2:
+            l.addStretch()
+        self.addWidget(w)
 
-		arguments:
-			content:
-				desc:	A list of content widgets.
-				type:	list
-		"""
+    def build(self):
+        """
+        desc:
+                Populates the toolbar with items.
+        """
 
-		for i, c in enumerate(content):
-			if not i % 2:
-				if i > 0:
-					self.addWidget(w)
-				if self.orientation() == QtCore.Qt.Horizontal:
-					l = QtWidgets.QVBoxLayout()
-					l.setContentsMargins(6,6,6,6)
-				else:
-					l = QtWidgets.QHBoxLayout()
-					l.setContentsMargins(6,6,6,6)
-				l.setSpacing(12)
-				w = QtWidgets.QWidget()
-				w.setLayout(l)
-			l.addWidget(c)
-		if not i % 2:
-			l.addStretch()
-		self.addWidget(w)
+        # This function is called first when no experiment has been loaded yet.
+        try:
+            self.experiment
+        except:
+            return
+        self.clear()
+        if self.orientation() == QtCore.Qt.Vertical:
+            self.addWidget(toolbar_items_label(self, _(u'Commonly used')))
+        # Add the core items
+        self.add_content([toolbar_items_item(self, item)
+                          for item in self.experiment.core_items])
+        # Create a dictionary of plugins by category. We also maintain a list
+        # to preserve the order of the categories.
+        cat_dict = OrderedDict()
+        for plugin in plugins.list_plugins(mode=self.main_window.mode):
+            cat = plugins.plugin_category(plugin)
+            if cat not in cat_dict:
+                cat_dict[cat] = []
+            cat_dict[cat].append(plugin)
+        # Add the plugins
+        for cat, cat_plugins in cat_dict.items():
+            self.addSeparator()
+            if self.orientation() == QtCore.Qt.Vertical:
+                self.addWidget(toolbar_items_label(self, cat))
+            content = []
+            for plugin in cat_plugins:
+                oslogger.debug(u"adding plugin '%s'" % plugin)
+                pixmap = self.theme.qpixmap(plugins.plugin_icon_large(plugin))
+                content.append(toolbar_items_item(self, plugin, pixmap))
+            self.add_content(content)
 
-	def build(self):
+    def collapse(self):
+        """
+        desc:
+                Collapses the item toolbar if is was expanded.
+        """
 
-		"""
-		desc:
-			Populates the toolbar with items.
-		"""
-
-		# This function is called first when no experiment has been loaded yet.
-		try:
-			self.experiment
-		except:
-			return
-		self.clear()
-		if self.orientation() == QtCore.Qt.Vertical:
-			self.addWidget(toolbar_items_label(self, _(u'Commonly used')))
-		# Add the core items
-		self.add_content([toolbar_items_item(self, item) \
-			for item in self.experiment.core_items])
-		# Create a dictionary of plugins by category. We also maintain a list
-		# to preserve the order of the categories.
-		cat_dict = OrderedDict()
-		for plugin in plugins.list_plugins(mode=self.main_window.mode):
-			cat = plugins.plugin_category(plugin)
-			if cat not in cat_dict:
-				cat_dict[cat] = []
-			cat_dict[cat].append(plugin)
-		# Add the plugins
-		for cat, cat_plugins in cat_dict.items():
-			self.addSeparator()
-			if self.orientation() == QtCore.Qt.Vertical:
-				self.addWidget(toolbar_items_label(self, cat))
-			content = []
-			for plugin in cat_plugins:
-				oslogger.debug(u"adding plugin '%s'" % plugin)
-				pixmap = self.theme.qpixmap(plugins.plugin_icon_large(plugin))
-				content.append(toolbar_items_item(self, plugin, pixmap))
-			self.add_content(content)
-
-	def collapse(self):
-
-		"""
-		desc:
-			Collapses the item toolbar if is was expanded.
-		"""
-
-		if self._expand_button.isChecked():
-			self._expand_button.click()
+        if self._expand_button.isChecked():
+            self._expand_button.click()

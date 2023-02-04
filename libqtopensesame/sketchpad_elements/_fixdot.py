@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of openexp.
@@ -21,27 +21,28 @@ from libopensesame.py3compat import *
 from libqtopensesame.sketchpad_elements._base_element import base_element
 from libopensesame.sketchpad_elements import fixdot as fixdot_runtime
 
+
 class fixdot(base_element, fixdot_runtime):
 
-	"""
-	desc:
-		A fixdot element.
+    """
+    desc:
+            A fixdot element.
 
-		See base_element for docstrings and function descriptions.
-	"""
+            See base_element for docstrings and function descriptions.
+    """
 
-	@classmethod
-	def mouse_press(cls, sketchpad, pos):
+    @classmethod
+    def mouse_press(cls, sketchpad, pos):
 
-		properties = {
-				u'x':		pos[0],
-				u'y':		pos[1],
-				u'color': 	sketchpad.current_color(),
-				u'show_if'	: sketchpad.current_show_if()
-			}
-		e = fixdot(sketchpad, properties=properties)
-		return e
+        properties = {
+            u'x':		pos[0],
+            u'y':		pos[1],
+            u'color': 	sketchpad.current_color(),
+            u'show_if': sketchpad.current_show_if()
+        }
+        e = fixdot(sketchpad, properties=properties)
+        return e
 
-	@staticmethod
-	def requires_color():
-		return True
+    @staticmethod
+    def requires_color():
+        return True

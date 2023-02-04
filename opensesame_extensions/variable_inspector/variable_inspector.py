@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -25,110 +25,106 @@ from qtpy import QtCore, QtGui, QtWidgets
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'variable_inspector', category=u'extension')
 
+
 class variable_inspector(base_extension):
 
-	"""
-	desc:
-		A variable inspector.
-	"""
+    """
+    desc:
+            A variable inspector.
+    """
 
-	def event_startup(self):
+    def event_startup(self):
+        """
+        desc:
+                Initializes the variable inspector dock widget.
+        """
 
-		"""
-		desc:
-			Initializes the variable inspector dock widget.
-		"""
+        self.need_refresh = False
+        self.dock_widget = variable_inspector_dockwidget(
+            self.main_window, self)
+        self.dock_widget.visibilityChanged.connect(self.set_visible)
+        self.main_window.addDockWidget(
+            QtCore.Qt.RightDockWidgetArea,
+            self.dock_widget
+        )
+        self.set_visible(cfg.variable_inspector_visible)
+        self.shortcut_focus = QtWidgets.QShortcut(QtGui.QKeySequence(
+            cfg.variable_inspector_focus_shortcut), self.main_window,
+            self.focus, context=QtCore.Qt.ApplicationShortcut)
 
-		self.need_refresh = False
-		self.dock_widget = variable_inspector_dockwidget(self.main_window, self)
-		self.dock_widget.visibilityChanged.connect(self.set_visible)
-		self.main_window.addDockWidget(
-			QtCore.Qt.RightDockWidgetArea,
-			self.dock_widget
-		)
-		self.set_visible(cfg.variable_inspector_visible)
-		self.shortcut_focus = QtWidgets.QShortcut(QtGui.QKeySequence(
-			cfg.variable_inspector_focus_shortcut), self.main_window,
-			self.focus, context=QtCore.Qt.ApplicationShortcut)
+    def focus(self):
+        """
+        desc:
+                Makes the dock visible and sets the focus to the filter box.
+        """
 
-	def focus(self):
+        self.set_visible(True)
+        self.dock_widget.widget().focus()
 
-		"""
-		desc:
-			Makes the dock visible and sets the focus to the filter box.
-		"""
+    def open_help(self):
+        """
+        desc:
+                Opens the help tab.
+        """
 
-		self.set_visible(True)
-		self.dock_widget.widget().focus()
+        self.tabwidget.open_osdoc('manual/variables')
 
-	def open_help(self):
+    def set_visible(self, visible):
+        """
+        desc:
+                Sets the visibility of the dock widget.
 
-		"""
-		desc:
-			Opens the help tab.
-		"""
+        arguments:
+                visible:
+                        type:	bool
+        """
 
-		self.tabwidget.open_osdoc('manual/variables')
+        cfg.variable_inspector_visible = visible
+        self.set_checked(visible)
+        if visible:
+            if self.need_refresh:
+                self.dock_widget.widget().refresh()
+                self.need_refresh = False
+            self.dock_widget.show()
+            self.dock_widget.widget().focus()
+        else:
+            self.dock_widget.hide()
 
-	def set_visible(self, visible):
+    def activate(self):
+        """
+        desc:
+                Toggles the visibility of the dock widget.
+        """
 
-		"""
-		desc:
-			Sets the visibility of the dock widget.
+        self.set_visible(not cfg.variable_inspector_visible)
 
-		arguments:
-			visible:
-				type:	bool
-		"""
+    def refresh(self):
+        """
+        desc:
+                Refreshes the variable inspector.
+        """
 
-		cfg.variable_inspector_visible = visible
-		self.set_checked(visible)
-		if visible:
-			if self.need_refresh:
-				self.dock_widget.widget().refresh()
-				self.need_refresh = False
-			self.dock_widget.show()
-			self.dock_widget.widget().focus()
-		else:
-			self.dock_widget.hide()
+        if self.dock_widget.isVisible():
+            self.dock_widget.widget().refresh()
+            self.need_refresh = False
+        else:
+            self.need_refresh = True
 
-	def activate(self):
+    # The following events all refresh the variable inspector
 
-		"""
-		desc:
-			Toggles the visibility of the dock widget.
-		"""
+    def event_heartbeat(self):
+        self.refresh()
 
-		self.set_visible(not cfg.variable_inspector_visible)
+    def event_change_item(self, name):
+        self.refresh()
 
-	def refresh(self):
+    def event_pause_experiment(self):
+        self.refresh()
 
-		"""
-		desc:
-			Refreshes the variable inspector.
-		"""
+    def event_set_workspace_globals(self, global_dict):
+        self.dock_widget.widget().set_workspace_globals(global_dict)
+        self.refresh()
 
-		if self.dock_widget.isVisible():
-			self.dock_widget.widget().refresh()
-			self.need_refresh = False
-		else:
-			self.need_refresh = True
-
-	# The following events all refresh the variable inspector
-
-	def event_heartbeat(self):
-		self.refresh()
-
-	def event_change_item(self, name):
-		self.refresh()
-
-	def event_pause_experiment(self):
-		self.refresh()
-
-	def event_set_workspace_globals(self, global_dict):
-		self.dock_widget.widget().set_workspace_globals(global_dict)
-		self.refresh()
-
-	def event_open_experiment(self, path):
-		self.dock_widget.widget().set_workspace_globals({})
-		self.refresh()
+    def event_open_experiment(self, path):
+        self.dock_widget.widget().set_workspace_globals({})
+        self.refresh()

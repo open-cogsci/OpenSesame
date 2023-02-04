@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -29,9 +29,9 @@ main_version = u'.'.join([str(i) for i in strict_version.version])
 major_version = u'.'.join([str(i) for i in strict_version.version[:-1]])
 # The version following the debian convention: e.g. 3.0.0~a1
 if strict_version.prerelease is None:
-	deb_version = main_version
+    deb_version = main_version
 else:
-	deb_version = main_version + u'+%s%d' % strict_version.prerelease
+    deb_version = main_version + u'+%s%d' % strict_version.prerelease
 python_version = u'%d.%d.%d' % sys.version_info[:3]
 codename = u'Lentiform Loewenfeld'
 channel = u'dev'

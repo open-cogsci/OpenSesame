@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -21,37 +21,36 @@ from libopensesame.py3compat import *
 
 from libqtopensesame.extensions import base_extension
 
+
 class plugin_manager(base_extension):
 
-	"""
-	desc:
-		Manages plug-ins and extensions
-	"""
+    """
+    desc:
+            Manages plug-ins and extensions
+    """
 
-	def event_startup(self):
+    def event_startup(self):
 
-		self._widget = None
+        self._widget = None
 
-	def activate(self):
+    def activate(self):
+        """
+        desc:
+                Open the plug-in manager tab, or switch to it if already open.
+        """
 
-		"""
-		desc:
-			Open the plug-in manager tab, or switch to it if already open.
-		"""
+        self.tabwidget.add(self.widget(), self.icon(), self.label())
 
-		self.tabwidget.add(self.widget(), self.icon(), self.label())
+    def widget(self):
+        """
+        returns:
+                desc:	The widget to be used in the tab widget.
+                type:	QWidget
+        """
 
-	def widget(self):
-
-		"""
-		returns:
-			desc:	The widget to be used in the tab widget.
-			type:	QWidget
-		"""
-
-		if self._widget is None:
-			self.set_busy()
-			from plugin_manager_widget import plugin_manager_widget
-			self._widget = plugin_manager_widget(self.main_window)
-			self.set_busy(False)
-		return self._widget
+        if self._widget is None:
+            self.set_busy()
+            from plugin_manager_widget import plugin_manager_widget
+            self._widget = plugin_manager_widget(self.main_window)
+            self.set_busy(False)
+        return self._widget

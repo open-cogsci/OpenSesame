@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -26,119 +26,113 @@ _ = translation_context(u'color_edit', category=u'core')
 
 class color_edit(base_widget):
 
-	"""
-	desc:
-		A colorpicker widget that emulates a QLineEdit.
-	"""
+    """
+    desc:
+            A colorpicker widget that emulates a QLineEdit.
+    """
 
-	textChanged = QtCore.Signal('QString')
-	textEdited = QtCore.Signal('QString')
+    textChanged = QtCore.Signal('QString')
+    textEdited = QtCore.Signal('QString')
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:
+                        desc:	The main-window object.
+                        type:	qtopensesame
+        """
 
-		arguments:
-			main_window:
-				desc:	The main-window object.
-				type:	qtopensesame
-		"""
+        super(color_edit, self).__init__(main_window)
+        self.edit = QtWidgets.QLineEdit()
+        self._parent = None
+        self.edit.setSizePolicy(QtWidgets.QSizePolicy.Minimum,
+                                QtWidgets.QSizePolicy.Minimum)
+        self.edit.editingFinished.connect(self.apply)
+        self.editingFinished = self.edit.editingFinished
+        self.button = QtWidgets.QPushButton()
+        self.button.setIconSize(QtCore.QSize(16, 16))
+        self.button.clicked.connect(self.colorpicker)
+        layout = QtWidgets.QHBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.addWidget(self.edit)
+        layout.addWidget(self.button)
+        self.setLayout(layout)
 
-		super(color_edit, self).__init__(main_window)
-		self.edit = QtWidgets.QLineEdit()
-		self._parent = None
-		self.edit.setSizePolicy(QtWidgets.QSizePolicy.Minimum,
-			QtWidgets.QSizePolicy.Minimum)
-		self.edit.editingFinished.connect(self.apply)
-		self.editingFinished = self.edit.editingFinished
-		self.button = QtWidgets.QPushButton()
-		self.button.setIconSize(QtCore.QSize(16,16))
-		self.button.clicked.connect(self.colorpicker)
-		layout = QtWidgets.QHBoxLayout()
-		layout.setContentsMargins(0,0,0,0)
-		layout.addWidget(self.edit)
-		layout.addWidget(self.button)
-		self.setLayout(layout)
+    def colorpicker(self):
+        """
+        desc:
+                Picks a color with the colorpicker dialog.
+        """
 
-	def colorpicker(self):
+        _color = QtWidgets.QColorDialog.getColor(QtGui.QColor(u'white'),
+                                                 self._parent, _(u'Pick a color'))
+        if not _color.isValid():
+            return
+        self.setText(_color.name())
+        self.apply()
 
-		"""
-		desc:
-			Picks a color with the colorpicker dialog.
-		"""
+    def text(self):
+        """
+        desc:
+                Gets text (emulate QLineEdit behavior).
 
-		_color = QtWidgets.QColorDialog.getColor(QtGui.QColor(u'white'),
-			self._parent, _(u'Pick a color'))
-		if not _color.isValid():
-			return
-		self.setText(_color.name())
-		self.apply()
+        returns:
+                desc:	A color text.
+                type:	QString
+        """
 
-	def text(self):
+        return self.edit.text()
 
-		"""
-		desc:
-			Gets text (emulate QLineEdit behavior).
+    def setText(self, s):
+        """
+        dsc:
+                Sets text (emulate QLineEdit behavior).
 
-		returns:
-			desc:	A color text.
-			type:	QString
-		"""
+        arguments:
+                s:
+                        desc:	Text.
+                        type:	unicode
+        """
 
-		return self.edit.text()
+        self.edit.setText(safe_decode(s))
 
-	def setText(self, s):
+    def apply(self):
+        """
+        desc:
+                Emits a 'set_color' signal to indicate that a color has been picked.
+        """
 
-		"""
-		dsc:
-			Sets text (emulate QLineEdit behavior).
+        self.textChanged.emit(self.text())
+        self.textEdited.emit(self.text())
 
-		arguments:
-			s:
-				desc:	Text.
-				type:	unicode
-		"""
+    def initialize(self, experiment=None, color=None, parent=None):
+        """
+        desc:
+                Initializes the widget. This is necessary to apply the theme and
+                give the fields initial values.
 
-		self.edit.setText(safe_decode(s))
+        keywords:
+                experiment:
+                        desc:	The experiment object or None if it is already available
+                                        via the base_component property.
+                        type:	[experiment, NoneType]
+                color:
+                        color:	An initial color or None to start with experiment
+                                        foreground.
+                        type:	[unicode, NoneType]
+                parent:	A parent QWidget.
+        """
 
-	def apply(self):
-
-		"""
-		desc:
-			Emits a 'set_color' signal to indicate that a color has been picked.
-		"""
-
-		self.textChanged.emit(self.text())
-		self.textEdited.emit(self.text())
-
-	def initialize(self, experiment=None, color=None, parent=None):
-
-		"""
-		desc:
-			Initializes the widget. This is necessary to apply the theme and
-			give the fields initial values.
-
-		keywords:
-			experiment:
-				desc:	The experiment object or None if it is already available
-						via the base_component property.
-				type:	[experiment, NoneType]
-			color:
-				color:	An initial color or None to start with experiment
-						foreground.
-				type:	[unicode, NoneType]
-			parent:	A parent QWidget.
-		"""
-
-		if parent is not None:
-			self._parent = parent
-		else:
-			self._parent = self.main_window
-		if experiment is None:
-			experiment = self.experiment
-		if color is None:
-			color = experiment.var.get(u'foreground', _eval=False)
-		self.setText(color)
-		self.button.setIcon(self.theme.qicon(u'os-color-picker'))
+        if parent is not None:
+            self._parent = parent
+        else:
+            self._parent = self.main_window
+        if experiment is None:
+            experiment = self.experiment
+        if color is None:
+            color = experiment.var.get(u'foreground', _eval=False)
+        self.setText(color)
+        self.button.setIcon(self.theme.qicon(u'os-color-picker'))

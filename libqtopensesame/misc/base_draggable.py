@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -21,77 +21,75 @@ from libopensesame.py3compat import *
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_component import base_component
 
+
 class base_draggable(object):
 
-	"""
-	desc:
-		A base class for components that support drag and drop.
-	"""
+    """
+    desc:
+            A base class for components that support drag and drop.
+    """
 
-	def set_supported_drop_types(self, types=None):
+    def set_supported_drop_types(self, types=None):
 
-		if not hasattr(self, u'setAcceptDrops'):
-			raise osexception(u'Object does not support drops')
-		if types is None:
-			self.setAcceptDrops(False)
-			self.supported_drop_types = None
-			return
-		self.setAcceptDrops(True)
-		self.supported_drop_types = types
+        if not hasattr(self, u'setAcceptDrops'):
+            raise osexception(u'Object does not support drops')
+        if types is None:
+            self.setAcceptDrops(False)
+            self.supported_drop_types = None
+            return
+        self.setAcceptDrops(True)
+        self.supported_drop_types = types
 
-	def dragEnterEvent(self, e):
+    def dragEnterEvent(self, e):
+        """
+        desc:
+                Handles drag-enter events to see if they are supported
 
-		"""
-		desc:
-			Handles drag-enter events to see if they are supported
+        arguments:
+                e:
+                        desc:	A drag-enter event.
+                        type:	QDragEnterEvent
+        """
 
-		arguments:
-			e:
-				desc:	A drag-enter event.
-				type:	QDragEnterEvent
-		"""
+        if not hasattr(self, u'supported_drop_types'):
+            e.ignore()
+            return
+        data = drag_and_drop.receive(e)
+        if drag_and_drop.matches(data, self.supported_drop_types):
+            e.accept()
+        else:
+            e.ignore()
 
-		if not hasattr(self, u'supported_drop_types'):
-			e.ignore()
-			return
-		data = drag_and_drop.receive(e)
-		if drag_and_drop.matches(data, self.supported_drop_types):
-			e.accept()
-		else:
-			e.ignore()
+    def dropEvent(self, e):
+        """
+        desc:
+                Handles drop events and accepts them if supported.
 
-	def dropEvent(self, e):
+        arguments:
+                e:
+                        desc:	A drop event.
+                        type:	QDropEvent
+        """
 
-		"""
-		desc:
-			Handles drop events and accepts them if supported.
+        if not hasattr(self, u'supported_drop_types'):
+            e.ignore()
+            return
+        data = drag_and_drop.receive(e)
+        if drag_and_drop.matches(data, self.supported_drop_types):
+            e.accept()
+            self.accept_drop(data)
+        else:
+            e.ignore()
 
-		arguments:
-			e:
-				desc:	A drop event.
-				type:	QDropEvent
-		"""
+    def accept_drop(self, data):
+        """
+        desc:
+                Is called after a supported drop type. Should be re-implemented.
 
-		if not hasattr(self, u'supported_drop_types'):
-			e.ignore()
-			return
-		data = drag_and_drop.receive(e)
-		if drag_and_drop.matches(data, self.supported_drop_types):
-			e.accept()
-			self.accept_drop(data)
-		else:
-			e.ignore()
+        arguments:
+                data:
+                        desc:	The drop data.
+                        type:	dict
+        """
 
-	def accept_drop(self, data):
-
-		"""
-		desc:
-			Is called after a supported drop type. Should be re-implemented.
-
-		arguments:
-			data:
-				desc:	The drop data.
-				type:	dict
-		"""
-
-		pass
+        pass

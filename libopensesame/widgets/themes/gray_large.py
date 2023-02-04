@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,16 +23,17 @@ import os
 from libopensesame.widgets.themes.gray import gray
 from libopensesame.widgets.themes.plain import plain
 
+
 class gray_large(gray):
 
-	def __init__(self, form):
+    def __init__(self, form):
 
-		plain.__init__(self, form)
-		self.box_checked_image = self.form.experiment.resource(os.path.join(
-			'widgets', 'gray', 'box-checked-large.png'))
-		self.box_unchecked_image = self.form.experiment.resource(os.path.join(
-			'widgets', 'gray', 'box-unchecked-large.png'))
+        plain.__init__(self, form)
+        self.box_checked_image = self.form.experiment.resource(os.path.join(
+            'widgets', 'gray', 'box-checked-large.png'))
+        self.box_unchecked_image = self.form.experiment.resource(os.path.join(
+            'widgets', 'gray', 'box-unchecked-large.png'))
 
-	def box_size(self):
+    def box_size(self):
 
-		return 32
+        return 32

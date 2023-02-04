@@ -25,14 +25,14 @@ from psychopy import visual
 
 class Psycho(PsychoElement, Rect):
 
-	def prepare(self):
+    def prepare(self):
 
-		self._stim = visual.Rect(
-			self.win,
-			pos=self.to_xy(self.x+self.w//2, self.y+self.h//2),
-			width=self.w,
-			height=self.h,
-			lineWidth=self.penwidth,
-			lineColor=self.color.backend_color,
-			fillColor=None if not self.fill else self.color.backend_color
-			)
+        self._stim = visual.Rect(
+            self.win,
+            pos=self.to_xy(self.x+self.w//2, self.y+self.h//2),
+            width=self.w,
+            height=self.h,
+            lineWidth=self.penwidth,
+            lineColor=self.color.backend_color,
+            fillColor=None if not self.fill else self.color.backend_color
+        )

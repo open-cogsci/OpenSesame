@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -22,38 +22,38 @@ import os
 import xml.etree.ElementTree as ET
 
 for ts in os.listdir('resources/ts'):
-	if not ts.endswith('.ts'):
-		continue
-	print 'Checking %s' % ts
-	tree = ET.parse('resources/ts/%s' % ts)
-	root = tree.getroot()
-	nTotal = 0
-	nObsolete = 0
-	nUnfinished = 0
-	for context in root:
-		for msg in context:
-			if len(msg) == 0:
-				continue
-			src = None
-			tra = None
-			for i in msg:
-				if i.tag == u'source':
-					src = i.text
-					nTotal += 1
-				elif i.tag == u'translation':
-					if u'type' in i.attrib:
-						if i.attrib[u'type'] == u'unfinished':
-							nUnfinished += 1
-						elif i.attrib[u'type'] == u'obsolete':
-							nObsolete += 1
-						else:
-							tra = i.text
-			if tra is None:
-				continue
-			if src.count('%s') != tra.count('%s') or src.count('%d') != \
-				tra.count('%d') or src.count('%f') != tra.count('%f'):
-				print '*** Wildcard mismatch!'
-				print '\t', src
-				print '\t', tra
-	print 'Total: %d, Unfinished: %d, Obsolete: %d\n' % (nTotal, nUnfinished,
-		nObsolete)
+    if not ts.endswith('.ts'):
+        continue
+    print 'Checking %s' % ts
+    tree = ET.parse('resources/ts/%s' % ts)
+    root = tree.getroot()
+    nTotal = 0
+    nObsolete = 0
+    nUnfinished = 0
+    for context in root:
+        for msg in context:
+            if len(msg) == 0:
+                continue
+            src = None
+            tra = None
+            for i in msg:
+                if i.tag == u'source':
+                    src = i.text
+                    nTotal += 1
+                elif i.tag == u'translation':
+                    if u'type' in i.attrib:
+                        if i.attrib[u'type'] == u'unfinished':
+                            nUnfinished += 1
+                        elif i.attrib[u'type'] == u'obsolete':
+                            nObsolete += 1
+                        else:
+                            tra = i.text
+            if tra is None:
+                continue
+            if src.count('%s') != tra.count('%s') or src.count('%d') != \
+                    tra.count('%d') or src.count('%f') != tra.count('%f'):
+                print '*** Wildcard mismatch!'
+                print '\t', src
+                print '\t', tra
+    print 'Total: %d, Unfinished: %d, Obsolete: %d\n' % (nTotal, nUnfinished,
+                                                         nObsolete)

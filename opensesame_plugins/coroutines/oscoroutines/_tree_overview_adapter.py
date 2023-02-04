@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -20,62 +20,61 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libqtopensesame.widgets.tree_overview import tree_overview
 
+
 class tree_overview_adapter(tree_overview):
 
-	"""
-	desc:
-		Extends the tree overview so that it treats coroutines as sequences,
-		and supports start and end times.
-	"""
+    """
+    desc:
+            Extends the tree overview so that it treats coroutines as sequences,
+            and supports start and end times.
+    """
 
-	def __init__(self, coroutines, main_window, overview_mode=True):
+    def __init__(self, coroutines, main_window, overview_mode=True):
+        """See tree_overview."""
 
-		"""See tree_overview."""
+        self.coroutines = coroutines
+        super(tree_overview_adapter, self).__init__(main_window,
+                                                    overview_mode=overview_mode)
 
-		self.coroutines = coroutines
-		super(tree_overview_adapter, self).__init__(main_window,
-			overview_mode=overview_mode)
+    def text_edited(self, treeitem, col):
+        """See tree_overview."""
 
-	def text_edited(self, treeitem, col):
-
-		"""See tree_overview."""
-
-		# Renames and run-if edits are handled by the original tree overview,
-		# which needs to be tricked into thinking that the coroutines item is
-		# a sequence.
-		if col in (0, 1):
-			self.coroutines.item_type = u'sequence'
-			super(tree_overview_adapter, self).text_edited(treeitem, col)
-			self.coroutines.item_type = u'coroutines'
-			return
-		# Don't allow editing the times of the top-level coroutines
-		if treeitem.parent() is None:
-			self.itemChanged.disconnect()
-			treeitem.setText(col, u'')
-			self.itemChanged.connect(self.text_edited)
-			return
-		# Change the start/ end time
-		parent_item_name, ancestry = treeitem.ancestry()
-		parent_item_name, index = self.parent_from_ancestry(ancestry)
-		_time = treeitem.text(col).strip()
-		if _time == u'':
-			_time = 0
-		item_name, start_time, end_time, cond = self.coroutines.schedule[index]
-		if col == 2:
-			start_time = _time
-		elif col == 3:
-			# In the GUI one-shot coroutines are not associated with an
-			# end time. In the runtime, their end time is equal to the start
-			# time.
-			if self.coroutines.is_oneshot_coroutine(item_name):
-				_time = u''
-				end_time = start_time
-			else:
-				end_time = _time
-		else:
-			raise TypeError(u'col should be in 0-3 range')
-		self.coroutines.schedule[index] = item_name, start_time, end_time, cond
-		self.itemChanged.disconnect()
-		treeitem.setText(col, str(_time))
-		self.itemChanged.connect(self.text_edited)
-		self.text_change.emit()
+        # Renames and run-if edits are handled by the original tree overview,
+        # which needs to be tricked into thinking that the coroutines item is
+        # a sequence.
+        if col in (0, 1):
+            self.coroutines.item_type = u'sequence'
+            super(tree_overview_adapter, self).text_edited(treeitem, col)
+            self.coroutines.item_type = u'coroutines'
+            return
+        # Don't allow editing the times of the top-level coroutines
+        if treeitem.parent() is None:
+            self.itemChanged.disconnect()
+            treeitem.setText(col, u'')
+            self.itemChanged.connect(self.text_edited)
+            return
+        # Change the start/ end time
+        parent_item_name, ancestry = treeitem.ancestry()
+        parent_item_name, index = self.parent_from_ancestry(ancestry)
+        _time = treeitem.text(col).strip()
+        if _time == u'':
+            _time = 0
+        item_name, start_time, end_time, cond = self.coroutines.schedule[index]
+        if col == 2:
+            start_time = _time
+        elif col == 3:
+            # In the GUI one-shot coroutines are not associated with an
+            # end time. In the runtime, their end time is equal to the start
+            # time.
+            if self.coroutines.is_oneshot_coroutine(item_name):
+                _time = u''
+                end_time = start_time
+            else:
+                end_time = _time
+        else:
+            raise TypeError(u'col should be in 0-3 range')
+        self.coroutines.schedule[index] = item_name, start_time, end_time, cond
+        self.itemChanged.disconnect()
+        treeitem.setText(col, str(_time))
+        self.itemChanged.connect(self.text_edited)
+        self.text_change.emit()

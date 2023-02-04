@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of openexp.
@@ -26,97 +26,96 @@ from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'sketchpad', category=u'item')
 
+
 class textline(base_element, textline_runtime):
 
-	"""
-	desc:
-		A textline element.
+    """
+    desc:
+            A textline element.
 
-		See base_element for docstrings and function descriptions.
-	"""
+            See base_element for docstrings and function descriptions.
+    """
 
-	def show_edit_dialog(self):
+    def show_edit_dialog(self):
+        """
+        desc:
+                The show-edit dialog for the textline only edits the text, not the
+                full element script.
+        """
 
-		"""
-		desc:
-			The show-edit dialog for the textline only edits the text, not the
-			full element script.
-		"""
+        text = self.experiment.text_input(
+            _(u'Edit text'),
+            message=_(u'Please enter a text for the textline'),
+            content=safe_decode(self.properties[u'text']).replace(
+                u'<br />',
+                u'\n'
+            ),
+            parent=self.sketchpad._edit_widget
+        )
+        if text is None:
+            return
+        self.properties[u'text'] = self.clean_text(text)
+        self.sketchpad.draw()
 
-		text = self.experiment.text_input(
-			_(u'Edit text'),
-			message=_(u'Please enter a text for the textline'),
-			content=safe_decode(self.properties[u'text']).replace(
-				u'<br />',
-				u'\n'
-			),
-			parent=self.sketchpad._edit_widget
-		)
-		if text is None:
-			return
-		self.properties[u'text'] = self.clean_text(text)
-		self.sketchpad.draw()
+    @classmethod
+    def mouse_press(cls, sketchpad, pos):
 
-	@classmethod
-	def mouse_press(cls, sketchpad, pos):
+        text = sketchpad.experiment.text_input(title=_(u'New textline'),
+                                               message=_(u'Enter text'),
+                                               parent=sketchpad._edit_widget)
+        if text is None:
+            return None
+        properties = {
+            u'x':			pos[0],
+            u'y':			pos[1],
+            u'text':		cls.clean_text(text, escape=True),
+            u'color': 		sketchpad.current_color(),
+            u'center': 		sketchpad.current_center(),
+            u'font_family': sketchpad.current_font_family(),
+            u'font_size': 	sketchpad.current_font_size(),
+            u'font_bold': 	sketchpad.current_font_bold(),
+            u'font_italic': sketchpad.current_font_italic(),
+            u'html':		sketchpad.current_html(),
+            u'show_if': 	sketchpad.current_show_if()
+        }
+        return textline(sketchpad, properties=properties)
 
-		text = sketchpad.experiment.text_input(title=_(u'New textline'),
-			message=_(u'Enter text'),
-			parent=sketchpad._edit_widget)
-		if text is None:
-			return None
-		properties = {
-				u'x':			pos[0],
-				u'y':			pos[1],
-				u'text':		cls.clean_text(text, escape=True),
-				u'color': 		sketchpad.current_color(),
-				u'center': 		sketchpad.current_center(),
-				u'font_family': sketchpad.current_font_family(),
-				u'font_size': 	sketchpad.current_font_size(),
-				u'font_bold': 	sketchpad.current_font_bold(),
-				u'font_italic': sketchpad.current_font_italic(),
-				u'html':		sketchpad.current_html(),
-				u'show_if' : 	sketchpad.current_show_if()
-			}
-		return textline(sketchpad, properties=properties)
+    @staticmethod
+    def clean_text(text, escape=False):
+        """
+        desc:
+                Cleans text by removing quotes and converting newlines to <br />
+                tags.
 
-	@staticmethod
-	def clean_text(text, escape=False):
+        arguments:
+                text:	The text to clean.
+                type:	[str, unicode, QString]
 
-		"""
-		desc:
-			Cleans text by removing quotes and converting newlines to <br />
-			tags.
+        keywords:
+                escape:	Indicates whether slashes should be escaped.
+                type:	bool
 
-		arguments:
-			text:	The text to clean.
-			type:	[str, unicode, QString]
+        returns:
+                desc:	Clean text.
+                type:	unicode
+        """
 
-		keywords:
-			escape:	Indicates whether slashes should be escaped.
-			type:	bool
+        text = str(text)
+        text = text.replace(os.linesep, u'<br />')
+        text = text.replace(u'\n', u'<br />')
+        text = text.replace(u'"', u'')
+        if escape:
+            text = text.replace(u'\\', u'\\\\')
+        return text
 
-		returns:
-			desc:	Clean text.
-			type:	unicode
-		"""
+    @staticmethod
+    def requires_text():
+        return True
 
-		text = str(text)
-		text = text.replace(os.linesep, u'<br />')
-		text = text.replace(u'\n', u'<br />')
-		text = text.replace(u'"', u'')
-		if escape:
-			text = text.replace(u'\\', u'\\\\')
-		return text
+    @staticmethod
+    def requires_color():
+        return True
 
-	@staticmethod
-	def requires_text():
-		return True
-
-	@staticmethod
-	def requires_color():
-		return True
-
-	@staticmethod
-	def requires_center():
-		return True
+    @staticmethod
+    def requires_center():
+        return True

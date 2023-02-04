@@ -23,4 +23,4 @@ from openexp._canvas._fixdot.fixdot import FixDot
 
 class Legacy(FixDot):
 
-	pass
+    pass

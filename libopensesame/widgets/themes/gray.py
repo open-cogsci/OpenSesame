@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -26,31 +26,31 @@ from openexp._canvas._element.group import Group
 
 class gray(plain):
 
-	def __init__(self, form):
+    def __init__(self, form):
 
-		plain.__init__(self, form)
-		self.box_checked_image = self.form.experiment.resource(os.path.join(
-			u'widgets', u'gray', u'box-checked.png'))
-		self.box_unchecked_image = self.form.experiment.resource(os.path.join(
-			u'widgets', u'gray', u'box-unchecked.png'))
+        plain.__init__(self, form)
+        self.box_checked_image = self.form.experiment.resource(os.path.join(
+            u'widgets', u'gray', u'box-checked.png'))
+        self.box_unchecked_image = self.form.experiment.resource(os.path.join(
+            u'widgets', u'gray', u'box-unchecked.png'))
 
-	def box(self, x, y, checked=False):
+    def box(self, x, y, checked=False):
 
-		return Image(
-			self.box_checked_image if checked else self.box_unchecked_image,
-			center=False, x=x, y=y).construct(self.canvas)
+        return Image(
+            self.box_checked_image if checked else self.box_unchecked_image,
+            center=False, x=x, y=y).construct(self.canvas)
 
-	def frame(self, x, y, w, h, style=u'normal'):
+    def frame(self, x, y, w, h, style=u'normal'):
 
-		elements = [
-			Line(x+1, y+1, x+w-2, y+1, color=u'#babdb6'),
-			Line(x+1, y+1, x+1, y+h-2, color=u'#babdb6'),
-			Line(x+1, y+h-2, x+w-2, y+h-2, color=u'#555753'),
-			Line(x+w-2, y+1, x+w-2, y+h-2, color=u'#555753')
-			]
-		if style in (u'active', u'normal'):
-			elements.insert(0, Rect(x, y, w, h, color=u'#2e3436'))
-		if style == u'normal':
-			elements.append(
-				Rect(x+2, y+2, w-4, h-4, color=u'#888a85', fill=True))
-		return Group(self.canvas, elements)
+        elements = [
+            Line(x+1, y+1, x+w-2, y+1, color=u'#babdb6'),
+            Line(x+1, y+1, x+1, y+h-2, color=u'#babdb6'),
+            Line(x+1, y+h-2, x+w-2, y+h-2, color=u'#555753'),
+            Line(x+w-2, y+1, x+w-2, y+h-2, color=u'#555753')
+        ]
+        if style in (u'active', u'normal'):
+            elements.insert(0, Rect(x, y, w, h, color=u'#2e3436'))
+        if style == u'normal':
+            elements.append(
+                Rect(x+2, y+2, w-4, h-4, color=u'#888a85', fill=True))
+        return Group(self.canvas, elements)

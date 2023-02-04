@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,47 +24,47 @@ from openexp._coordinates.coordinates import Coordinates
 
 class Xpyriment(Coordinates):
 
-	"""
-	desc:
-		For function specifications and docstrings, see
-		`openexp._coordinates.coordinates`.
-	"""
+    """
+    desc:
+            For function specifications and docstrings, see
+            `openexp._coordinates.coordinates`.
+    """
 
-	def __init__(self):
+    def __init__(self):
 
-		Coordinates.__init__(self)
-		self._xwcenter = self.experiment.expyriment.screen.window_size[0]/2
-		self._ywcenter = self.experiment.expyriment.screen.window_size[1]/2
+        Coordinates.__init__(self)
+        self._xwcenter = self.experiment.expyriment.screen.window_size[0]/2
+        self._ywcenter = self.experiment.expyriment.screen.window_size[1]/2
 
-	def to_xy(self, x, y=None):
+    def to_xy(self, x, y=None):
 
-		if isinstance(x, tuple):
-			x, y = x
-		x, y = self.none_to_center(x, y)
-		if self._canvas_dev:
-			# For expyriment, 0,0 is the display center and positive y
-			# coordinates are up.
-			if self.uniform_coordinates:
-				return x, -y
-			return x - self._xcenter, self._ycenter - y
-		if self._mouse_dev:
-			# The mouse is centered on the top-left, but we need to take into
-			# account that the display is padded in fullscreen mode.
-			if self.uniform_coordinates:
-				return x + self._xwcenter, y + self._ywcenter
-			return x + self._xwcenter - self._xcenter, \
-				y + self._ywcenter - self._ycenter
+        if isinstance(x, tuple):
+            x, y = x
+        x, y = self.none_to_center(x, y)
+        if self._canvas_dev:
+            # For expyriment, 0,0 is the display center and positive y
+            # coordinates are up.
+            if self.uniform_coordinates:
+                return x, -y
+            return x - self._xcenter, self._ycenter - y
+        if self._mouse_dev:
+            # The mouse is centered on the top-left, but we need to take into
+            # account that the display is padded in fullscreen mode.
+            if self.uniform_coordinates:
+                return x + self._xwcenter, y + self._ywcenter
+            return x + self._xwcenter - self._xcenter, \
+                y + self._ywcenter - self._ycenter
 
-	def from_xy(self, x, y=None):
+    def from_xy(self, x, y=None):
 
-		if isinstance(x, tuple):
-			x, y = x
-		if not self._mouse_dev:
-			raise osexception(u'Only mouse supported')
-		if self.uniform_coordinates:
-			return x - self._xwcenter, y - self._ywcenter
-		return x - self._xwcenter + self._xcenter, \
-			y - self._ywcenter + self._ycenter
+        if isinstance(x, tuple):
+            x, y = x
+        if not self._mouse_dev:
+            raise osexception(u'Only mouse supported')
+        if self.uniform_coordinates:
+            return x - self._xwcenter, y - self._ywcenter
+        return x - self._xwcenter + self._xcenter, \
+            y - self._ywcenter + self._ycenter
 
 
 # Non PEP-8 alias for backwards compatibility

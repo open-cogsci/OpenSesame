@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -22,23 +22,24 @@ from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.validators._base_validator import base_validator
 
+
 class timeout_validator(base_validator):
 
-	"""
-	desc:
-		A validator for timeout values.
-	"""
+    """
+    desc:
+            A validator for timeout values.
+    """
 
-	def __init__(self, main_window, default=u'infinite'):
+    def __init__(self, main_window, default=u'infinite'):
 
-		super(timeout_validator, self).__init__(main_window, default=default)
+        super(timeout_validator, self).__init__(main_window, default=default)
 
-	def is_valid(self, val):
+    def is_valid(self, val):
 
-		if val == u'infinite' or self.experiment.varref(val):
-			return True
-		try:
-			int(val)
-			return True
-		except:
-			return False
+        if val == u'infinite' or self.experiment.varref(val):
+            return True
+        try:
+            int(val)
+            return True
+        except:
+            return False

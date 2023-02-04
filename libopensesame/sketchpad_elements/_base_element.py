@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of openexp.
@@ -23,244 +23,234 @@ from libopensesame.exceptions import osexception
 
 class base_element(object):
 
-	"""
-	desc:
-		A base class from which all sketchpad elements are derived.
-	"""
+    """
+    desc:
+            A base class from which all sketchpad elements are derived.
+    """
 
+    def __init__(self, sketchpad, string, defaults=[]):
+        """
+        desc:
+                Constructor.
 
-	def __init__(self, sketchpad, string, defaults=[]):
+        arguments:
+                sketchpad:		A sketchpad object.
+                string:			A definition string.
 
-		"""
-		desc:
-			Constructor.
+        keywords:
+                defaults:		A list with (name, default_value) tuples for all
+                                                keywords.
+        """
 
-		arguments:
-			sketchpad:		A sketchpad object.
-			string:			A definition string.
+        self._type = self.__class__.__name__
+        # These keywords provide compatibility with older versions of
+        # OpenSesame. `only_keywords` specifies whether all parameters should be
+        # written as keywords, which will prevent < 2.9.0 from reading the
+        # sketchpad elements. If not, keywords with a None default will be
+        # written value-only style. `fix_coordinates` specifies whether
+        # coordinates should be translated to top-left = 0,0.
+        self.only_keywords = False
+        self.fix_coordinates = sketchpad.var.uniform_coordinates != u'yes'
+        self.defaults = defaults + [
+            (u'z_index', 0),
+            (u'show_if', u'always'),
+            (u'name', u'')
+        ]
+        self.sketchpad = sketchpad
+        self.var = self.sketchpad.var
+        self.from_string(string)
 
-		keywords:
-			defaults:		A list with (name, default_value) tuples for all
-							keywords.
-		"""
+    @property
+    def element_name(self):
 
-		self._type = self.__class__.__name__
-		# These keywords provide compatibility with older versions of
-		# OpenSesame. `only_keywords` specifies whether all parameters should be
-		# written as keywords, which will prevent < 2.9.0 from reading the
-		# sketchpad elements. If not, keywords with a None default will be
-		# written value-only style. `fix_coordinates` specifies whether
-		# coordinates should be translated to top-left = 0,0.
-		self.only_keywords = False
-		self.fix_coordinates = sketchpad.var.uniform_coordinates!=u'yes'
-		self.defaults = defaults + [
-			(u'z_index', 0),
-			(u'show_if', u'always'),
-			(u'name', u'')
-			]
-		self.sketchpad = sketchpad
-		self.var = self.sketchpad.var
-		self.from_string(string)
+        p = self.eval_properties()
+        if not p[u'name']:
+            return None
+        return p[u'name']
 
-	@property
-	def element_name(self):
+    @property
+    def canvas(self): return self.sketchpad.canvas
 
-		p = self.eval_properties()
-		if not p[u'name']:
-			return None
-		return p[u'name']
+    @property
+    def pool(self): return self.sketchpad.experiment.pool
 
-	@property
-	def canvas(self): return self.sketchpad.canvas
+    @property
+    def name(self): return self.sketchpad.name
 
-	@property
-	def pool(self): return self.sketchpad.experiment.pool
+    @property
+    def syntax(self): return self.sketchpad.syntax
 
-	@property
-	def name(self): return self.sketchpad.name
+    @property
+    def experiment(self): return self.sketchpad.experiment
 
-	@property
-	def syntax(self): return self.sketchpad.syntax
+    @property
+    def z_index(self):
+        """
+        desc:
+                Determines the drawing order of the elements. Elements with a
+                higher z-index are drawn first, so they are at the bottom of the
+                stack.
+        returns:
+                A z-index.
+        """
 
-	@property
-	def experiment(self): return self.sketchpad.experiment
+        return self.properties[u'z_index']
 
-	@property
-	def z_index(self):
+    def draw(self):
+        """
+        desc:
+                Draws the element to the canvas of the sketchpad.
+        """
 
-		"""
-		desc:
-			Determines the drawing order of the elements. Elements with a
-			higher z-index are drawn first, so they are at the bottom of the
-			stack.
-		returns:
-			A z-index.
-		"""
+        pass
 
-		return self.properties[u'z_index']
+    def from_string(self, s):
+        """
+        desc:
+                Parse a definition string for the element.
 
-	def draw(self):
+        arguments:
+                s:		A definition string.
+        """
 
-		"""
-		desc:
-			Draws the element to the canvas of the sketchpad.
-		"""
+        cmd, arglist, kwdict = self.syntax.parse_cmd(s)
+        if cmd != u'draw' or len(arglist) == 0 or arglist[0] != self._type:
+            raise osexception(
+                u'Invalid sketchpad-element definition: \'%s\'' % s)
+        # First load the default values
+        self.properties = {}
+        for var, val in self.defaults:
+            self.properties[var] = val
+        # Parse the argument list. This is the old way, in which arguments where
+        # passed by order.
+        for i, val in enumerate(arglist[1:]):
+            var = self.defaults[i][0]
+            self.properties[var] = val
+        # Now parse keywords
+        self.properties.update(kwdict)
+        # Check if all values that need to be specified have indeed been
+        # specified.
+        for var, val in self.properties.items():
+            if val is None:
+                raise osexception(
+                    (u'Required keyword \'%s\' has not been specified in '
+                     u'sketchpad element \'%s\' in item \'%s\'') % (var,
+                                                                    self._type, self.name))
+        # Check if no non-existing keywords have been specified
+        for var in self.properties.keys():
+            valid = False
+            for _var, _val in self.defaults:
+                if _var == var:
+                    valid = True
+                    break
+            if not valid:
+                raise osexception(
+                    (u'The keyword \'%s\' is not applicable to '
+                     u'sketchpad element \'%s\' in item \'%s\'') % (var,
+                                                                    self._type, self.name))
 
-		pass
+    def valid_keyword(self, keyword):
+        """
+        desc:
+                Checks whether a particular keyword is valid for this element.
 
-	def from_string(self, s):
+        arguments:
+                keyword:	A keyword.
+                type:		unicode
 
-		"""
-		desc:
-			Parse a definition string for the element.
+        returns:
+                desc:		True if keyword is valid.
+                type:		bool
+        """
 
-		arguments:
-			s:		A definition string.
-		"""
+        for var, val in self.defaults:
+            if var == keyword:
+                return True
+        return False
 
-		cmd, arglist, kwdict = self.syntax.parse_cmd(s)
-		if cmd != u'draw' or len(arglist) == 0 or arglist[0] != self._type:
-			raise osexception(
-				u'Invalid sketchpad-element definition: \'%s\'' % s)
-		# First load the default values
-		self.properties = {}
-		for var, val in self.defaults:
-			self.properties[var] = val
-		# Parse the argument list. This is the old way, in which arguments where
-		# passed by order.
-		for i, val in enumerate(arglist[1:]):
-			var = self.defaults[i][0]
-			self.properties[var] = val
-		# Now parse keywords
-		self.properties.update(kwdict)
-		# Check if all values that need to be specified have indeed been
-		# specified.
-		for var, val in self.properties.items():
-			if val is None:
-				raise osexception(
-					(u'Required keyword \'%s\' has not been specified in '
-					u'sketchpad element \'%s\' in item \'%s\'') % (var,
-					self._type, self.name))
-		# Check if no non-existing keywords have been specified
-		for var in self.properties.keys():
-			valid = False
-			for _var, _val in self.defaults:
-				if _var == var:
-					valid = True
-					break
-			if not valid:
-				raise osexception(
-					(u'The keyword \'%s\' is not applicable to '
-					u'sketchpad element \'%s\' in item \'%s\'') % (var,
-					self._type, self.name))
+    def escape(self, val, quote=True):
+        """
+        desc:
+                Escapes and optionally quotes a value so that it can be safely
+                inserted into a definition string. Everything except unicode is
+                returned as is.
 
-	def valid_keyword(self, keyword):
+        arguments:
+                val:
+                        desc:	The value to escape.
+                        type:	[unicode, float, int]
+                quote:
+                        desc:	Indicates whether unicode strings should be quoted
+                                        with double quotes.
+                        type:	bool
 
-		"""
-		desc:
-			Checks whether a particular keyword is valid for this element.
+        returns:
+                desc:		A value that can be safely inserted into a definiton
+                                        string.
+                type:		[unicode, int, float]
+        """
 
-		arguments:
-			keyword:	A keyword.
-			type:		unicode
+        if not isinstance(val, basestring):
+            return val
+        val = val.replace(u'\\', u'\\\\')
+        val = val.replace(u'"', u'\\"')
+        if quote:
+            val = u'"%s"' % val
+        return val
 
-		returns:
-			desc:		True if keyword is valid.
-			type:		bool
-		"""
+    def to_string(self):
+        """
+        desc:
+                Generates a string representation of the element.
 
-		for var, val in self.defaults:
-			if var == keyword:
-				return True
-		return False
+        returns:
+                desc:	A string representation.
+                type:	unicode
+        """
 
-	def escape(self, val, quote=True):
+        return self.syntax.create_cmd(u'draw', [self._type],
+                                      {var: val for var, val in self.properties.items()
+                                       if var != u'name' or val}
+                                      )
 
-		"""
-		desc:
-			Escapes and optionally quotes a value so that it can be safely
-			inserted into a definition string. Everything except unicode is
-			returned as is.
+    def eval_properties(self):
+        """
+        desc:
+                Evaluates all properties.
 
-		arguments:
-			val:
-				desc:	The value to escape.
-				type:	[unicode, float, int]
-			quote:
-				desc:	Indicates whether unicode strings should be quoted
-						with double quotes.
-				type:	bool
+        returns:
+                A new property dictionary.
+        """
 
-		returns:
-			desc:		A value that can be safely inserted into a definiton
-						string.
-			type:		[unicode, int, float]
-		"""
+        properties = {}
+        xc = self.var.width/2
+        yc = self.var.height/2
+        for var, val in self.properties.items():
+            if var == u'text':
+                round_float = True
+            else:
+                round_float = False
+            val = self.sketchpad.syntax.auto_type(
+                self.sketchpad.syntax.eval_text(val, round_float=round_float))
+            if self.fix_coordinates and type(val) in (int, float):
+                if var in [u'x', u'x1', u'x2']:
+                    val += xc
+                if var in [u'y', u'y1', u'y2']:
+                    val += yc
+            properties[var] = val
+        return properties
 
-		if not isinstance(val, basestring):
-			return val
-		val = val.replace(u'\\', u'\\\\')
-		val = val.replace(u'"', u'\\"')
-		if quote:
-			val = u'"%s"' % val
-		return val
+    def is_shown(self):
+        """
+        desc:
+                Determines whether the element should be shown, based on the
+                show-if statement.
 
-	def to_string(self):
+        returns:
+                desc:	A bool indicating whether the element should be shown.
+                type:	bool
+        """
 
-		"""
-		desc:
-			Generates a string representation of the element.
-
-		returns:
-			desc:	A string representation.
-			type:	unicode
-		"""
-
-		return self.syntax.create_cmd(u'draw', [self._type],
-			{var : val for var, val in self.properties.items()
-			if var != u'name' or val}
-		)
-
-	def eval_properties(self):
-
-		"""
-		desc:
-			Evaluates all properties.
-
-		returns:
-			A new property dictionary.
-		"""
-
-		properties = {}
-		xc = self.var.width/2
-		yc = self.var.height/2
-		for var, val in self.properties.items():
-			if var == u'text':
-				round_float = True
-			else:
-				round_float = False
-			val = self.sketchpad.syntax.auto_type(
-				self.sketchpad.syntax.eval_text(val, round_float=round_float))
-			if self.fix_coordinates and type(val) in (int, float):
-				if var in [u'x', u'x1', u'x2']:
-					val += xc
-				if var in [u'y', u'y1', u'y2']:
-					val += yc
-			properties[var] = val
-		return properties
-
-	def is_shown(self):
-
-		"""
-		desc:
-			Determines whether the element should be shown, based on the
-			show-if statement.
-
-		returns:
-			desc:	A bool indicating whether the element should be shown.
-			type:	bool
-		"""
-
-		self.experiment.python_workspace[u'self'] = self.sketchpad
-		return self.experiment.python_workspace._eval(
-			self.experiment.syntax.compile_cond(self.properties[u'show_if']))
+        self.experiment.python_workspace[u'self'] = self.sketchpad
+        return self.experiment.python_workspace._eval(
+            self.experiment.syntax.compile_cond(self.properties[u'show_if']))

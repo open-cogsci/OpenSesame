@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -28,79 +28,79 @@ _ = translation_context(u'pyqode_manager', category=u'extension')
 
 class ConvertIndentationMode(api.Mode):
 
-	"""Comments/uncomments a set of lines using Ctrl+/.
-	"""
+    """Comments/uncomments a set of lines using Ctrl+/.
+    """
 
-	def __init__(self):
+    def __init__(self):
 
-		super(ConvertIndentationMode, self).__init__()
-		self._action_tabs_to_spaces = QtWidgets.QAction(
-			_('Convert tabs to spaces'),
-			self.editor
-		)
-		self._action_spaces_to_tabs = QtWidgets.QAction(
-			_('Convert spaces to tabs'),
-			self.editor
-		)
+        super(ConvertIndentationMode, self).__init__()
+        self._action_tabs_to_spaces = QtWidgets.QAction(
+            _('Convert tabs to spaces'),
+            self.editor
+        )
+        self._action_spaces_to_tabs = QtWidgets.QAction(
+            _('Convert spaces to tabs'),
+            self.editor
+        )
 
-	def on_state_changed(self, state):
+    def on_state_changed(self, state):
+        """
+        Called when the mode is activated/deactivated
+        """
 
-		"""
-		Called when the mode is activated/deactivated
-		"""
+        if state:
+            self._action_spaces_to_tabs.triggered.connect(self._spaces_to_tabs)
+            self.editor.add_action(
+                self._action_spaces_to_tabs,
+                sub_menu='Python'
+            )
+            self._action_tabs_to_spaces.triggered.connect(self._tabs_to_spaces)
+            self.editor.add_action(
+                self._action_tabs_to_spaces,
+                sub_menu='Python'
+            )
+        else:
+            self.editor.remove_action(
+                self._action_spaces_to_tabs,
+                sub_menu='Python'
+            )
+            self._action_spaces_to_tabs.triggered.disconnect(
+                self._spaces_to_tabs
+            )
+            self.editor.remove_action(
+                self._action_tabs_to_spaces,
+                sub_menu='Python'
+            )
+            self._action_tabs_to_spaces.triggered.disconnect(
+                self._tabs_to_spaces
+            )
 
-		if state:
-			self._action_spaces_to_tabs.triggered.connect(self._spaces_to_tabs)
-			self.editor.add_action(
-				self._action_spaces_to_tabs,
-				sub_menu='Python'
-			)
-			self._action_tabs_to_spaces.triggered.connect(self._tabs_to_spaces)
-			self.editor.add_action(
-				self._action_tabs_to_spaces,
-				sub_menu='Python'
-			)
-		else:
-			self.editor.remove_action(
-				self._action_spaces_to_tabs,
-				sub_menu='Python'
-			)
-			self._action_spaces_to_tabs.triggered.disconnect(
-				self._spaces_to_tabs
-			)
-			self.editor.remove_action(
-				self._action_tabs_to_spaces,
-				sub_menu='Python'
-			)
-			self._action_tabs_to_spaces.triggered.disconnect(
-				self._tabs_to_spaces
-			)
+    def _spaces_to_tabs(self):
 
-	def _spaces_to_tabs(self):
+        code = self.editor.toPlainText()
+        while True:
+            match = re.search(
+                u'((?<=\n){indent}+)|(\A{indent}+)'.format(
+                    indent=u' ' * cfg.pyqode_tab_length
+                ),
+                code
+            )
+            if not match:
+                break
+            space_indent = u'\t' * \
+                (len(match.group()) // cfg.pyqode_tab_length)
+            code = code[:match.start()] + space_indent + code[match.end():]
+        self.editor.setPlainText(code)
+        self.editor.document().setModified(True)
 
-		code = self.editor.toPlainText()
-		while True:
-			match = re.search(
-				u'((?<=\n){indent}+)|(\A{indent}+)'.format(
-					indent=u' ' * cfg.pyqode_tab_length
-				),
-				code
-			)
-			if not match:
-				break
-			space_indent = u'\t' * (len(match.group()) // cfg.pyqode_tab_length)
-			code = code[:match.start()] + space_indent + code[match.end():]
-		self.editor.setPlainText(code)
-		self.editor.document().setModified(True)
+    def _tabs_to_spaces(self):
 
-	def _tabs_to_spaces(self):
-
-		code = self.editor.toPlainText()
-		while True:
-			match = re.search(u'((?<=\n)\t+)|(\A\t+)', code)
-			if not match:
-				break
-			space_indent = u' ' * len(match.group()) * cfg.pyqode_tab_length
-			code = code[:match.start()] + space_indent + code[match.end():]
-		self.editor.setPlainText(code)
-		self.editor.document().setModified(True)
+        code = self.editor.toPlainText()
+        while True:
+            match = re.search(u'((?<=\n)\t+)|(\A\t+)', code)
+            if not match:
+                break
+            space_indent = u' ' * len(match.group()) * cfg.pyqode_tab_length
+            code = code[:match.start()] + space_indent + code[match.end():]
+        self.editor.setPlainText(code)
+        self.editor.document().setModified(True)

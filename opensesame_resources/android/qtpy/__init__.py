@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -15,13 +15,13 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
-""" 
+"""
 
+from libqtopensesame.misc import dummy
+from libopensesame import debug
+import sys
 import os
 os.environ['QT_API'] = 'pyqt'
-import sys
-from libopensesame import debug
-from libqtopensesame.misc import dummy
 debug.msg('using dummy qtpy')
 sys.modules['libqtopensesame.items.qtplugin'] = dummy
 sys.modules['libqtopensesame.items.qtautoplugin'] = dummy

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -22,60 +22,59 @@ from libopensesame.py3compat import *
 from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
 
+
 class quest_staircase_next(item):
 
-	"""
-	desc:
-		Process a response and adjust staircase level.
-	"""
+    """
+    desc:
+            Process a response and adjust staircase level.
+    """
 
-	description = u'Updates the Quest test value based on a response'
+    description = u'Updates the Quest test value based on a response'
 
-	def reset(self):
+    def reset(self):
+        """
+        desc:
+                Initialize default variables.
+        """
 
-		"""
-		desc:
-			Initialize default variables.
-		"""
+        self.var.response_var = u'correct'
 
-		self.var.response_var = u'correct'
+    def run(self):
+        """
+        desc:
+                Run phase for plug-in.
+        """
 
-	def run(self):
+        resp = self.var.get(self.var.response_var)
+        try:
+            resp = int(resp)
+        except:
+            # Don't process non-float responses
+            return
+        self.experiment.quest.update(self.var.quest_test_value, resp)
+        self.experiment.quest_set_next_test_value()
 
-		"""
-		desc:
-			Run phase for plug-in.
-		"""
-
-		resp = self.var.get(self.var.response_var)
-		try:
-			resp = int(resp)
-		except:
-			# Don't process non-float responses
-			return
-		self.experiment.quest.update(self.var.quest_test_value, resp)
-		self.experiment.quest_set_next_test_value()
 
 class qtquest_staircase_next(quest_staircase_next, qtautoplugin):
 
-	"""
-	desc:
-		The GUI part of the plug-in. Controls are defined in info.json.
-	"""
+    """
+    desc:
+            The GUI part of the plug-in. Controls are defined in info.json.
+    """
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                name:		The name of the plug-in.
+                experiment:	The experiment object.
 
-		arguments:
-			name:		The name of the plug-in.
-			experiment:	The experiment object.
+        keywords:
+                script:		A definition script.
+        """
 
-		keywords:
-			script:		A definition script.
-		"""
-
-		quest_staircase_next.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        quest_staircase_next.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

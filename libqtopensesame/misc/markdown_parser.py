@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,61 +24,61 @@ import re
 import os
 from libopensesame.oslogging import oslogger
 try:
-	import markdown
-	from markdown.extensions import attr_list, extra, toc
+    import markdown
+    from markdown.extensions import attr_list, extra, toc
 except ImportError:
-	oslogger.error(u'Unable to import markdown, proceeding without markdown')
-	markdown = None
+    oslogger.error(u'Unable to import markdown, proceeding without markdown')
+    markdown = None
 try:
-	from pygments import highlight
-	if py3:
-		from pygments.lexers import Python3TracebackLexer as TracebackLexer
-		from pygments.lexers import Python3Lexer as PythonLexer
-	else:
-		from pygments.lexers import PythonTracebackLexer as TracebackLexer
-		from pygments.lexers import PythonLexer as PythonLexer
-	from pygments.formatters import HtmlFormatter
+    from pygments import highlight
+    if py3:
+        from pygments.lexers import Python3TracebackLexer as TracebackLexer
+        from pygments.lexers import Python3Lexer as PythonLexer
+    else:
+        from pygments.lexers import PythonTracebackLexer as TracebackLexer
+        from pygments.lexers import PythonLexer as PythonLexer
+    from pygments.formatters import HtmlFormatter
 except:
-	highlight = None
+    highlight = None
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'markdown', category=u'core')
 
+
 class markdown_parser(base_subcomponent):
 
-	"""
-	desc:
-		A Markdown parser with syntax highlighting.
-	"""
+    """
+    desc:
+            A Markdown parser with syntax highlighting.
+    """
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:	The main-window object.
+        """
 
-		arguments:
-			main_window:	The main-window object.
-		"""
-
-		self.setup(main_window)
-		self.css = u'<style type="text/css">'
-		with safe_open(self.main_window.theme.resource(u'markdown.css')) as fd:
-			self.css += fd.read() % {u'background_image' : \
-				os.path.abspath(self.main_window.theme.resource(
-				u'background.png'))}
-		if highlight is not None:
-			self.traceback_lexer = TracebackLexer()
-			self.python_lexer = PythonLexer()
-			self.html_formatter = HtmlFormatter()
-			self.css += self.html_formatter.get_style_defs(u'.highlight')
-			self.re_script = re.compile(
-				r'^~~~\s*.(?P<syntax>\w+)(?P<script>.*?)^~~~', re.S | re.M)
-		self.css += u'</style><link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">'
-		if markdown is not None:
-			self.ext = [attr_list.AttrListExtension(), extra.ExtraExtension(),
-				toc.TocExtension(title=u'Overview'),
-				u'markdown.extensions.tables']
-		self.footer = u'''
+        self.setup(main_window)
+        self.css = u'<style type="text/css">'
+        with safe_open(self.main_window.theme.resource(u'markdown.css')) as fd:
+            self.css += fd.read() % {u'background_image':
+                                     os.path.abspath(self.main_window.theme.resource(
+                                         u'background.png'))}
+        if highlight is not None:
+            self.traceback_lexer = TracebackLexer()
+            self.python_lexer = PythonLexer()
+            self.html_formatter = HtmlFormatter()
+            self.css += self.html_formatter.get_style_defs(u'.highlight')
+            self.re_script = re.compile(
+                r'^~~~\s*.(?P<syntax>\w+)(?P<script>.*?)^~~~', re.S | re.M)
+        self.css += u'</style><link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">'
+        if markdown is not None:
+            self.ext = [attr_list.AttrListExtension(), extra.ExtraExtension(),
+                        toc.TocExtension(title=u'Overview'),
+                        u'markdown.extensions.tables']
+        self.footer = u'''
 <p>
 <a class="dismiss-button" href="opensesame://action.close_current_tab">%s</a>
 </p>
@@ -89,64 +89,62 @@ Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-202
 </div>
 ''' % (_(u'Dismiss this message'), metadata.identity)
 
-	def highlight(self, md):
+    def highlight(self, md):
+        """
+        desc:
+                Replaces ~~~ blocks with syntax-highlighted HTML code.
 
-		"""
-		desc:
-			Replaces ~~~ blocks with syntax-highlighted HTML code.
+        arguments:
+                md:
+                        desc:	A Markdown  string.
+                        type:	str
 
-		arguments:
-			md:
-				desc:	A Markdown  string.
-				type:	str
+        returns:
+                desc:	A Markdown  string.
+                type:	str
+        """
 
-		returns:
-			desc:	A Markdown  string.
-			type:	str
-		"""
+        if highlight is None:
+            return md
+        while True:
+            m = re.search(self.re_script, md)
+            if m is None:
+                break
+            orig = m.group()
+            syntax = m.group(u'syntax')
+            script = m.group(u'script')
+            if syntax == u'traceback':
+                lexer = self.traceback_lexer
+            elif syntax == u'python':
+                lexer = self.python_lexer
+            else:
+                md = md.replace(orig, u'<code>%s</code>\n' % script)
+                continue
+            new = highlight(script, lexer, self.html_formatter)
+            md = md.replace(orig, new)
+        return md
 
-		if highlight is None:
-			return md
-		while True:
-			m = re.search(self.re_script, md)
-			if m is None:
-				break
-			orig = m.group()
-			syntax = m.group(u'syntax')
-			script = m.group(u'script')
-			if syntax == u'traceback':
-				lexer = self.traceback_lexer
-			elif syntax == u'python':
-				lexer = self.python_lexer
-			else:
-				md = md.replace(orig, u'<code>%s</code>\n' % script)
-				continue
-			new = highlight(script, lexer, self.html_formatter)
-			md = md.replace(orig, new)
-		return md
+    def to_html(self, md):
+        """
+        desc:
+                Converts Markdown to HTML.
 
-	def to_html(self, md):
+        arguments:
+                md:
+                        desc:	A Markdown  string.
+                        type:	str
 
-		"""
-		desc:
-			Converts Markdown to HTML.
+        returns:
+                desc:	A Markdown  string.
+                type:	str
+        """
 
-		arguments:
-			md:
-				desc:	A Markdown  string.
-				type:	str
-
-		returns:
-			desc:	A Markdown  string.
-			type:	str
-		"""
-
-		md = self.highlight(md)
-		if markdown is None:
-			return u'<pre>%s</pre>' % md
-		html = markdown.markdown(md, extensions=self.ext, errors=u'ignore') \
-			+ self.css + self.footer
-		if html.startswith(u'<p>title:'):
-			title, body = tuple(html.split(u'\n', 1))
-			html = u'<h1>%s</h1>\n\n%s' % (title[9:-4], body)
-		return html
+        md = self.highlight(md)
+        if markdown is None:
+            return u'<pre>%s</pre>' % md
+        html = markdown.markdown(md, extensions=self.ext, errors=u'ignore') \
+            + self.css + self.footer
+        if html.startswith(u'<p>title:'):
+            title, body = tuple(html.split(u'\n', 1))
+            html = u'<h1>%s</h1>\n\n%s' % (title[9:-4], body)
+        return html

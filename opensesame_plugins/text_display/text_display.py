@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of opensesame.
@@ -25,15 +25,17 @@ from libqtopensesame.items.qtautoplugin import qtautoplugin
 import openexp.canvas
 import os.path
 
+
 class text_display(item, generic_response):
 
-	pass
+    pass
+
 
 class qttext_display(text_display, qtautoplugin):
 
-	"""Automatic GUI class."""
+    """Automatic GUI class."""
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
 
-		text_display.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        text_display.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

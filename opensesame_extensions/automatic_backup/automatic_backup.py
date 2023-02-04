@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -31,107 +31,102 @@ _ = translation_context(u'automatic_backup', category=u'extension')
 
 class automatic_backup(base_extension):
 
-	"""
-	desc:
-		An extension that periodically saves the experiment.
-	"""
+    """
+    desc:
+            An extension that periodically saves the experiment.
+    """
 
-	def activate(self):
+    def activate(self):
+        """
+        desc:
+                Opens the autosave folder.
+        """
 
-		"""
-		desc:
-			Opens the autosave folder.
-		"""
+        if os.name == u"nt":
+            os.startfile(self.autosave_folder)
+        elif os.name == u"posix":
+            misc.open_url(self.autosave_folder)
 
-		if os.name == u"nt":
-			os.startfile(self.autosave_folder)
-		elif os.name == u"posix":
-			misc.open_url(self.autosave_folder)
+    def event_startup(self):
+        """
+        desc:
+                Initializes the extension on OpenSesame startup.
+        """
 
-	def event_startup(self):
+        # Create the autosave folder if it doesn't exist yet
+        if not os.path.exists(os.path.join(self.main_window.home_folder,
+                                           u".opensesame", u"backup")):
+            os.mkdir(os.path.join(self.main_window.home_folder, u".opensesame",
+                                  u"backup"))
+        self.autosave_folder = os.path.join(self.main_window.home_folder,
+                                            u".opensesame", u"backup")
 
-		"""
-		desc:
-			Initializes the extension on OpenSesame startup.
-		"""
+        # Remove expired backups
+        for path in os.listdir(self.autosave_folder):
+            _path = os.path.join(self.autosave_folder, path)
+            t = os.path.getctime(_path)
+            age = (time.time() - t)/(60*60*24)
+            if age > cfg.autosave_max_age:
+                oslogger.debug(u"removing '%s'" % path)
+                try:
+                    os.remove(_path)
+                except:
+                    oslogger.error(u"failed to remove '%s'" % path)
 
-		# Create the autosave folder if it doesn't exist yet
-		if not os.path.exists(os.path.join(self.main_window.home_folder,
-			u".opensesame", u"backup")):
-			os.mkdir(os.path.join(self.main_window.home_folder, u".opensesame",
-				u"backup"))
-		self.autosave_folder = os.path.join(self.main_window.home_folder,
-			u".opensesame", u"backup")
+        self.start_autosave_timer()
 
-		# Remove expired backups
-		for path in os.listdir(self.autosave_folder):
-			_path = os.path.join(self.autosave_folder, path)
-			t = os.path.getctime(_path)
-			age = (time.time() - t)/(60*60*24)
-			if age > cfg.autosave_max_age:
-				oslogger.debug(u"removing '%s'" % path)
-				try:
-					os.remove(_path)
-				except:
-					oslogger.error(u"failed to remove '%s'" % path)
+    def event_run_experiment(self, fullscreen):
+        """
+        desc:
+                Suspend autosave timer when the experiment starts.
+        """
 
-		self.start_autosave_timer()
+        if self.autosave_timer is not None:
+            oslogger.debug(u"stopping autosave timer")
+            self.autosave_timer.stop()
 
-	def event_run_experiment(self, fullscreen):
+    def event_end_experiment(self, ret_val):
+        """
+        desc:
+                Resume autosave timer when the experiment ends.
+        """
 
-		"""
-		desc:
-			Suspend autosave timer when the experiment starts.
-		"""
+        if self.autosave_timer is not None:
+            oslogger.debug(u"resuming autosave timer")
+            self.autosave_timer.start()
 
-		if self.autosave_timer is not None:
-			oslogger.debug(u"stopping autosave timer")
-			self.autosave_timer.stop()
+    def start_autosave_timer(self):
+        """
+        desc:
+                Starts the autosave timer.
+        """
 
-	def event_end_experiment(self, ret_val):
+        if cfg.autosave_interval > 0:
+            oslogger.debug(u"autosave interval = %d ms" %
+                           cfg.autosave_interval)
+            self.autosave_timer = QtCore.QTimer()
+            self.autosave_timer.setInterval(cfg.autosave_interval)
+            self.autosave_timer.setSingleShot(True)
+            self.autosave_timer.timeout.connect(self.autosave)
+            self.autosave_timer.start()
+        else:
+            oslogger.debug(u"autosave disabled")
+            self.autosave_timer = None
 
-		"""
-		desc:
-			Resume autosave timer when the experiment ends.
-		"""
+    def autosave(self):
+        """
+        desc:
+                Autosave the experiment if there are unsaved changes.
+        """
 
-		if self.autosave_timer is not None:
-			oslogger.debug(u"resuming autosave timer")
-			self.autosave_timer.start()
-
-	def start_autosave_timer(self):
-
-		"""
-		desc:
-			Starts the autosave timer.
-		"""
-
-		if cfg.autosave_interval > 0:
-			oslogger.debug(u"autosave interval = %d ms" % cfg.autosave_interval)
-			self.autosave_timer = QtCore.QTimer()
-			self.autosave_timer.setInterval(cfg.autosave_interval)
-			self.autosave_timer.setSingleShot(True)
-			self.autosave_timer.timeout.connect(self.autosave)
-			self.autosave_timer.start()
-		else:
-			oslogger.debug(u"autosave disabled")
-			self.autosave_timer = None
-
-	def autosave(self):
-
-		"""
-		desc:
-			Autosave the experiment if there are unsaved changes.
-		"""
-
-		if self.main_window.unsaved_changes:
-			path = os.path.join(self.autosave_folder,
-				u'%s.osexp' % str(time.ctime()).replace(u':',
-				u'_'))
-			try:
-				self.main_window.get_ready()
-				self.experiment.save(path, overwrite=True, update_path=False)
-				oslogger.debug(u"saving backup as %s" % path)
-			except:
-				pass
-		self.start_autosave_timer()
+        if self.main_window.unsaved_changes:
+            path = os.path.join(self.autosave_folder,
+                                u'%s.osexp' % str(time.ctime()).replace(u':',
+                                                                        u'_'))
+            try:
+                self.main_window.get_ready()
+                self.experiment.save(path, overwrite=True, update_path=False)
+                oslogger.debug(u"saving backup as %s" % path)
+            except:
+                pass
+        self.start_autosave_timer()

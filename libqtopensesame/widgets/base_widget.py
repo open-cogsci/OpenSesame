@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,34 +24,33 @@ from qtpy import QtWidgets
 
 class base_widget(QtWidgets.QWidget, base_subcomponent):
 
-	"""
-	desc:
-		A base class for widgets.
-	"""
+    """
+    desc:
+            A base class for widgets.
+    """
 
-	def __init__(self, main_window, ui=None, *arglist, **kwdict):
+    def __init__(self, main_window, ui=None, *arglist, **kwdict):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:	A qtopensesame object.
 
-		arguments:
-			main_window:	A qtopensesame object.
+        keywords:
+                ui:
+                                                An id for a user-interface file, for example
+                                                'dialogs.quick_switcher'.
 
-		keywords:
-			ui:
-							An id for a user-interface file, for example
-							'dialogs.quick_switcher'.
+        argument-list:
+        *arglist:			A list of arguments to be passed onto QDialog.
 
-		argument-list:
-		*arglist:			A list of arguments to be passed onto QDialog.
+        keyword-dict:
+        *kwdict:			A dict of keywords to be passed onto QDialog.
+        """
 
-		keyword-dict:
-		*kwdict:			A dict of keywords to be passed onto QDialog.
-		"""
-
-		super(base_widget, self).__init__(main_window, *arglist, **kwdict)
-		self.setup(main_window, ui=ui)
+        super(base_widget, self).__init__(main_window, *arglist, **kwdict)
+        self.setup(main_window, ui=ui)
 
 
 # PEP8 alias

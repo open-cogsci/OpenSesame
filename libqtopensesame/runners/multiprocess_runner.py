@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -30,137 +30,133 @@ JOIN_TIMEOUT = 3  # Seconds to wait for the process to end cleanly
 
 class multiprocess_runner(base_runner):
 
-	"""Runs an experiment in another process using multiprocessing."""
+    """Runs an experiment in another process using multiprocessing."""
 
-	supports_kill = True
+    supports_kill = True
 
-	def execute(self):
+    def execute(self):
+        """See base_runner.execute()."""
 
-		"""See base_runner.execute()."""
+        import platform
+        if platform.system() == 'Darwin' and sys.version_info < (3, 4):
+            # In OS X the multiprocessing module is horribly broken,
+            # for python 2.7 but a fixed version has been released
+            # as the 'billiard' module
+            import billiard as multiprocessing
+        else:
+            import multiprocessing
 
-		import platform
-		if platform.system() == 'Darwin' and sys.version_info < (3, 4):
-				# In OS X the multiprocessing module is horribly broken,
-				# for python 2.7 but a fixed version has been released
-				# as the 'billiard' module
-				import billiard as multiprocessing
-		else:
-			import multiprocessing
+        from libqtopensesame.misc import process, _
 
-		from libqtopensesame.misc import process, _
+        self._workspace_globals = {}
+        self.channel = multiprocessing.Queue()
+        try:
+            self.exp_process = process.ExperimentProcess(
+                self.experiment,
+                self.channel
+            )
+        except Exception as e:
+            return osexception(
+                _(u'Failed to initialize experiment process'),
+                exception=e
+            )
+        self.console.set_workspace_globals({u'process': self.exp_process})
+        # Start process!
+        self.exp_process.start()
+        # Wait for experiment to finish.
+        # Listen for incoming messages in the meantime.
+        finished = False
+        while self.exp_process.is_alive() or not self.channel.empty():
+            # We need to process the GUI. To make the GUI feel more responsive
+            # during pauses, we refresh the GUI more often when paused.
+            QtWidgets.QApplication.processEvents()
+            if self.paused:
+                for i in range(25):
+                    time.sleep(.01)
+                    QtWidgets.QApplication.processEvents()
+            # Wait for messages. Will throw Exception if no message is received
+            # before timeout.
+            try:
+                msg = self.channel.get(True, 0.05)
+            except Exception:
+                continue
+            if isinstance(msg, basestring):
+                sys.stdout.write(safe_decode(msg, errors=u'ignore'))
+                continue
+            # Capture exceptions
+            if isinstance(msg, Exception):
+                self.exp_process.join(JOIN_TIMEOUT)
+                try:
+                    self.exp_process.close()
+                except AttributeError:
+                    # Process.close() was introduced only in Python 3.7
+                    pass
+                except ValueError:
+                    # This happens when the join times out. Then we forcibly
+                    # terminate the process.
+                    self.exp_process.terminate()
+                    oslogger.warning(
+                        'experiment process was forcibly terminated'
+                    )
+                return msg
+            # The workspace globals are sent as a dict. A special __pause__ key
+            # indicates whether the experiment should be paused or resumed.
+            if isinstance(msg, dict):
+                self._workspace_globals = msg
+                if u'__kill__' in msg:
+                    self.exp_process.kill()
+                if u'__heartbeat__' in msg:
+                    self.main_window.extension_manager.fire(
+                        u'set_workspace_globals',
+                        global_dict=msg
+                    )
+                    self.main_window.extension_manager.fire(u'heartbeat')
+                elif u'__pause__' in msg:
+                    if msg[u'__pause__']:
+                        self.pause()
+                    else:
+                        self.resume()
+                elif u'__finished__' in msg:
+                    finished = True
+                continue
+            # Anything that is not a string, not an Exception, and not None is
+            # unexpected
+            return osexception(
+                u"Illegal message type received from child process: %s (%s)"
+                % (msg, type(msg))
+            )
+        self.exp_process.join(JOIN_TIMEOUT)
+        try:
+            self.exp_process.close()
+        except AttributeError:
+            # Process.close() was introduced only in Python 3.7
+            pass
+        except ValueError:
+            # This happens when the join times out. Then we forcibly
+            # terminate the process.
+            self.exp_process.terminate()
+            oslogger.warning('experiment process was forcibly terminated')
+        if finished:
+            return
+        if self.exp_process.killed:
+            return osexception(u'The experiment process was killed.')
+        return osexception(
+            u'Python seems to have crashed. This should not happen. If Python '
+            u'crashes often, please report it on the OpenSesame forum.'
+        )
 
-		self._workspace_globals = {}
-		self.channel = multiprocessing.Queue()
-		try:
-			self.exp_process = process.ExperimentProcess(
-				self.experiment,
-				self.channel
-			)
-		except Exception as e:
-			return osexception(
-				_(u'Failed to initialize experiment process'),
-				exception=e
-			)
-		self.console.set_workspace_globals({u'process': self.exp_process})
-		# Start process!
-		self.exp_process.start()
-		# Wait for experiment to finish.
-		# Listen for incoming messages in the meantime.
-		finished = False
-		while self.exp_process.is_alive() or not self.channel.empty():
-			# We need to process the GUI. To make the GUI feel more responsive
-			# during pauses, we refresh the GUI more often when paused.
-			QtWidgets.QApplication.processEvents()
-			if self.paused:
-				for i in range(25):
-					time.sleep(.01)
-					QtWidgets.QApplication.processEvents()
-			# Wait for messages. Will throw Exception if no message is received
-			# before timeout.
-			try:
-				msg = self.channel.get(True, 0.05)
-			except Exception:
-				continue
-			if isinstance(msg, basestring):
-				sys.stdout.write(safe_decode(msg, errors=u'ignore'))
-				continue
-			# Capture exceptions
-			if isinstance(msg, Exception):
-				self.exp_process.join(JOIN_TIMEOUT)
-				try:
-					self.exp_process.close()
-				except AttributeError:
-					# Process.close() was introduced only in Python 3.7
-					pass
-				except ValueError:
-					# This happens when the join times out. Then we forcibly
-					# terminate the process.
-					self.exp_process.terminate()
-					oslogger.warning(
-						'experiment process was forcibly terminated'
-					)
-				return msg
-			# The workspace globals are sent as a dict. A special __pause__ key
-			# indicates whether the experiment should be paused or resumed.
-			if isinstance(msg, dict):
-				self._workspace_globals = msg
-				if u'__kill__' in msg:
-					self.exp_process.kill()
-				if u'__heartbeat__' in msg:
-					self.main_window.extension_manager.fire(
-						u'set_workspace_globals',
-						global_dict=msg
-					)
-					self.main_window.extension_manager.fire(u'heartbeat')
-				elif u'__pause__' in msg:
-					if msg[u'__pause__']:
-						self.pause()
-					else:
-						self.resume()
-				elif u'__finished__' in msg:
-					finished = True
-				continue
-			# Anything that is not a string, not an Exception, and not None is
-			# unexpected
-			return osexception(
-				u"Illegal message type received from child process: %s (%s)"
-				% (msg, type(msg))
-			)
-		self.exp_process.join(JOIN_TIMEOUT)
-		try:
-			self.exp_process.close()
-		except AttributeError:
-			# Process.close() was introduced only in Python 3.7
-			pass
-		except ValueError:
-			# This happens when the join times out. Then we forcibly
-			# terminate the process.
-			self.exp_process.terminate()
-			oslogger.warning('experiment process was forcibly terminated')
-		if finished:
-			return
-		if self.exp_process.killed:
-			return osexception(u'The experiment process was killed.')
-		return osexception(
-			u'Python seems to have crashed. This should not happen. If Python '
-			u'crashes often, please report it on the OpenSesame forum.'
-		)
+    def kill(self):
+        """See base_runner."""
 
-	def kill(self):
+        self.exp_process.kill()
 
-		"""See base_runner."""
+    def workspace_globals(self):
+        """See base_runner."""
 
-		self.exp_process.kill()
+        return self._workspace_globals
 
-	def workspace_globals(self):
+    @staticmethod
+    def has_heartbeat():
+        """See base_runner."""
 
-		"""See base_runner."""
-
-		return self._workspace_globals
-
-	@staticmethod
-	def has_heartbeat():
-
-		"""See base_runner."""
-
-		return True
+        return True

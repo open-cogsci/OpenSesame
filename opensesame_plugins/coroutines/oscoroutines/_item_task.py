@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -25,54 +25,52 @@ from libopensesame.item_stack import item_stack_singleton
 
 class item_task(base_task):
 
-	"""
-	desc:
-		A task controls the coroutine for one item.
-	"""
+    """
+    desc:
+            A task controls the coroutine for one item.
+    """
 
-	def __init__(self, coroutines, _item, start_time, end_time,
-		abort_on_end=False):
+    def __init__(self, coroutines, _item, start_time, end_time,
+                 abort_on_end=False):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                item:
+                        desc:	An item object.
+                        type:	item
+        """
 
-		arguments:
-			item:
-				desc:	An item object.
-				type:	item
-		"""
+        if not hasattr(_item, u'coroutine'):
+            raise osexception(
+                u'%s not supported by coroutines' % _item.item_type)
+        self._item = _item
+        base_task.__init__(self, coroutines, start_time,
+                           end_time, abort_on_end)
+        self.coroutines.event(u'initialize %s' % _item.coroutine)
 
-		if not hasattr(_item, u'coroutine'):
-			raise osexception(
-				u'%s not supported by coroutines' % _item.item_type)
-		self._item = _item
-		base_task.__init__(self, coroutines, start_time, end_time, abort_on_end)
-		self.coroutines.event(u'initialize %s' % _item.coroutine)
+    def step(self):
+        """See base_task."""
 
-	def step(self):
+        item_stack_singleton.push(self._item.name, u'coroutines_step')
+        retval = base_task.step(self)
+        item_stack_singleton.pop()
+        return retval
 
-		"""See base_task."""
+    def launch(self):
+        """See base_task."""
 
-		item_stack_singleton.push(self._item.name, u'coroutines_step')
-		retval = base_task.step(self)
-		item_stack_singleton.pop()
-		return retval
-
-	def launch(self):
-
-		"""See base_task."""
-
-		item_stack_singleton.push(self._item.name, u'coroutines_prepare')
-		self._item.prepare()
-		item_stack_singleton.pop()
-		# New-style coroutines take a coroutines keyword, which is used to
-		# communicate the coroutines item. Old-style coroutines do not.
-		try:
-			self.coroutine = self._item.coroutine(coroutines=self.coroutines)
-		except TypeError:
-			self.coroutine = self._item.coroutine()
-		self.coroutines.event('launch %s' % self._item)
-		item_stack_singleton.push(self._item.name, u'coroutines_launch')
-		self.coroutine.send(None)
-		item_stack_singleton.pop()
+        item_stack_singleton.push(self._item.name, u'coroutines_prepare')
+        self._item.prepare()
+        item_stack_singleton.pop()
+        # New-style coroutines take a coroutines keyword, which is used to
+        # communicate the coroutines item. Old-style coroutines do not.
+        try:
+            self.coroutine = self._item.coroutine(coroutines=self.coroutines)
+        except TypeError:
+            self.coroutine = self._item.coroutine()
+        self.coroutines.event('launch %s' % self._item)
+        item_stack_singleton.push(self._item.name, u'coroutines_launch')
+        self.coroutine.send(None)
+        item_stack_singleton.pop()

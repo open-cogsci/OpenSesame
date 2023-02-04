@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,34 +23,34 @@ from libopensesame import plugins
 from libqtopensesame.widgets.base_widget import base_widget
 from plugin_manager_widget._plugin_widget import plugin_widget
 
+
 class plugin_manager_widget(base_widget):
 
-	"""
-	desc:
-		A list of plugins.
-	"""
+    """
+    desc:
+            A list of plugins.
+    """
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:	The main-window object.
+        """
 
-		arguments:
-			main_window:	The main-window object.
-		"""
-
-		super(plugin_manager_widget, self).__init__(main_window,
-			ui=u'extensions.plugin_manager.plugin_manager')
-		self.plugin_list = plugins.list_plugins(
-			filter_disabled=False,
-			mode=main_window.mode,
-			_type=u'plugins'
-		) + plugins.list_plugins(
-			mode=main_window.mode,
-			filter_disabled=False,
-			_type=u'extensions'
-		)
-		for plugin in sorted(self.plugin_list):
-			w = plugin_widget(plugin, main_window)
-			self.ui.layout_container.addWidget(w)
+        super(plugin_manager_widget, self).__init__(main_window,
+                                                    ui=u'extensions.plugin_manager.plugin_manager')
+        self.plugin_list = plugins.list_plugins(
+            filter_disabled=False,
+            mode=main_window.mode,
+            _type=u'plugins'
+        ) + plugins.list_plugins(
+            mode=main_window.mode,
+            filter_disabled=False,
+            _type=u'extensions'
+        )
+        for plugin in sorted(self.plugin_list):
+            w = plugin_widget(plugin, main_window)
+            self.ui.layout_container.addWidget(w)

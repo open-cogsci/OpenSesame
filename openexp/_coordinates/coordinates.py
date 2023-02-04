@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -25,120 +25,116 @@ from libopensesame.exceptions import osexception
 
 class Coordinates(object):
 
-	"""
-	desc:
-		A base class for classes that need to perform coordinate conversions.
-	"""
+    """
+    desc:
+            A base class for classes that need to perform coordinate conversions.
+    """
 
-	def __init__(self):
+    def __init__(self):
+        """
+        desc:
+                Constructor.
+        """
 
-		"""
-		desc:
-			Constructor.
-		"""
+        self.uniform_coordinates = \
+            self.experiment.var.uniform_coordinates == u'yes'
+        self._width = self.experiment.var.width
+        self._height = self.experiment.var.height
+        self._xcenter = self._width/2
+        self._ycenter = self._height/2
+        if self.uniform_coordinates:
+            self._bottom = self._ycenter
+            self._top = -self._ycenter
+            self._left = -self._xcenter
+            self._right = self._xcenter
+        else:
+            self._top = self._left = 0
+            self._bottom = self._height
+            self._right = self._width
+        self._mouse_dev = isinstance(self, Mouse)
+        self._canvas_dev = isinstance(self, Canvas)
+        if not self._mouse_dev and not self._canvas_dev:
+            raise osexception(
+                u'coordinates class should be coparent with canvas or mouse class')
 
-		self.uniform_coordinates = \
-			self.experiment.var.uniform_coordinates==u'yes'
-		self._width = self.experiment.var.width
-		self._height = self.experiment.var.height
-		self._xcenter = self._width/2
-		self._ycenter = self._height/2
-		if self.uniform_coordinates:
-			self._bottom = self._ycenter
-			self._top = -self._ycenter
-			self._left = -self._xcenter
-			self._right = self._xcenter
-		else:
-			self._top = self._left = 0
-			self._bottom = self._height
-			self._right = self._width
-		self._mouse_dev = isinstance(self, Mouse)
-		self._canvas_dev = isinstance(self, Canvas)
-		if not self._mouse_dev and not self._canvas_dev:
-			raise osexception(
-				u'coordinates class should be coparent with canvas or mouse class')
+    def none_to_center(self, x, y):
+        """
+        desc:
+                Interpretes None coordinates as the display center.
 
-	def none_to_center(self, x, y):
+        arguments:
+                x:
+                        desc:	An X coordinate.
+                        type:	[int, float, NoneType]
+                y:
+                        desc:	A Y coordinate.
+                        type:	[int, float, NoneType]
 
-		"""
-		desc:
-			Interpretes None coordinates as the display center.
+        returns:
+                desc:	An (x, y) coordinate tuple.
+                type:	tuple
+        """
 
-		arguments:
-			x:
-				desc:	An X coordinate.
-				type:	[int, float, NoneType]
-			y:
-				desc:	A Y coordinate.
-				type:	[int, float, NoneType]
+        if x is None:
+            if not self.uniform_coordinates:
+                x = self._xcenter
+            else:
+                x = 0
+        if y is None:
+            if not self.uniform_coordinates:
+                y = self._ycenter
+            else:
+                y = 0
+        return x, y
 
-		returns:
-			desc:	An (x, y) coordinate tuple.
-			type:	tuple
-		"""
+    def to_xy(self, x, y=None):
+        """
+        desc:
+                Converts coordinates from the OpenSesame reference frame to the
+                back-end specific reference frame. `None` values are taken as the
+                display center.
 
-		if x is None:
-			if not self.uniform_coordinates:
-				x = self._xcenter
-			else:
-				x = 0
-		if y is None:
-			if not self.uniform_coordinates:
-				y = self._ycenter
-			else:
-				y = 0
-		return x, y
+        arguments:
+                x:
+                        desc:	An x coordinate, or an (x,y) tuple.
+                        type:	[float, int, NoneType, tuple]
 
-	def to_xy(self, x, y=None):
+        keywords:
+                y:
+                        desc:	A y coordinate. Only applicable if x was not a tuple.
+                        type:	[float, int, NoneType]
 
-		"""
-		desc:
-			Converts coordinates from the OpenSesame reference frame to the
-			back-end specific reference frame. `None` values are taken as the
-			display center.
+        returns:
+                desc:	An (x, y) coordinate tuple in the back-end specific
+                                reference frame.
+                type:	tuple
+        """
 
-		arguments:
-			x:
-				desc:	An x coordinate, or an (x,y) tuple.
-				type:	[float, int, NoneType, tuple]
+        raise NotImplementedError()
 
-		keywords:
-			y:
-				desc:	A y coordinate. Only applicable if x was not a tuple.
-				type:	[float, int, NoneType]
+    def from_xy(self, x, y=None):
+        """
+        desc:
+                Converts coordinates from the back-end specific reference frame to
+                the OpenSesame reference frame.
 
-		returns:
-			desc:	An (x, y) coordinate tuple in the back-end specific
-					reference frame.
-			type:	tuple
-		"""
+        arguments:
+                x:
+                        desc:	An x coordinate, or an (x,y) tuple.
+                        type:	[float, int, tuple]
 
-		raise NotImplementedError()
+        keywords:
+                y:
+                        desc:	A y coordinate. Only applicable if x was not a tuple.
+                        type:	[float, int, NoneType]
 
-	def from_xy(self, x, y=None):
+        returns:
+                desc:	An (x, y) coordinate tuple in the OpenSesame reference
+                                frame.
+                type:	tuple
+        """
 
-		"""
-		desc:
-			Converts coordinates from the back-end specific reference frame to
-			the OpenSesame reference frame.
-
-		arguments:
-			x:
-				desc:	An x coordinate, or an (x,y) tuple.
-				type:	[float, int, tuple]
-
-		keywords:
-			y:
-				desc:	A y coordinate. Only applicable if x was not a tuple.
-				type:	[float, int, NoneType]
-
-		returns:
-			desc:	An (x, y) coordinate tuple in the OpenSesame reference
-					frame.
-			type:	tuple
-		"""
-
-		raise NotImplementedError()
+        raise NotImplementedError()
 
 
 # Non PEP-8 alias for backwards compatibility

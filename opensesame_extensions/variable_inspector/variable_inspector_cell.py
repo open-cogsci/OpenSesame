@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -20,45 +20,45 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtGui, QtWidgets
 
+
 class variable_inspector_cell(QtWidgets.QTableWidgetItem):
 
-	"""
-	desc:
-		A cell for the variable-inspector table.
-	"""
+    """
+    desc:
+            A cell for the variable-inspector table.
+    """
 
-	def __init__(self, text, info):
+    def __init__(self, text, info):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                text:
+                        desc:	The cell text.
+                        type:	str
+                info:
+                        desc:	Variable info as returned by var_store.inspect().
+                        type:	dict
+        """
 
-		arguments:
-			text:
-				desc:	The cell text.
-				type:	str
-			info:
-				desc:	Variable info as returned by var_store.inspect().
-				type:	dict
-		"""
-
-		a = QtCore.Qt.AlignLeft
-		f = QtGui.QFont()
-		if info[u'alive']:
-			f.setBold(True)
-		if not isinstance(text, basestring):
-			try:
-				len(text)
-			except TypeError:
-				if text is None:
-					text = u''
-				elif isinstance(text, int) or isinstance(text, float):
-					text = str(text)
-					a = QtCore.Qt.AlignRight
-				else:
-					text = safe_decode(text, errors=u'ignore')
-			else:
-				text = u','.join([safe_decode(s) for s in text])
-		QtWidgets.QTableWidgetItem.__init__(self, text)
-		self.setFont(f)
-		self.setTextAlignment(a)
+        a = QtCore.Qt.AlignLeft
+        f = QtGui.QFont()
+        if info[u'alive']:
+            f.setBold(True)
+        if not isinstance(text, basestring):
+            try:
+                len(text)
+            except TypeError:
+                if text is None:
+                    text = u''
+                elif isinstance(text, int) or isinstance(text, float):
+                    text = str(text)
+                    a = QtCore.Qt.AlignRight
+                else:
+                    text = safe_decode(text, errors=u'ignore')
+            else:
+                text = u','.join([safe_decode(s) for s in text])
+        QtWidgets.QTableWidgetItem.__init__(self, text)
+        self.setFont(f)
+        self.setTextAlignment(a)

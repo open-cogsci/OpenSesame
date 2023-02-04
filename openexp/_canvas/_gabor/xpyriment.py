@@ -27,20 +27,20 @@ from expyriment.stimuli._visual import Visual
 
 class Xpyriment(XpyrimentElement, Gabor):
 
-	def prepare(self):
+    def prepare(self):
 
-		im = canvas._gabor(
-			self.orient,
-			self.freq,
-			self.env,
-			self.size,
-			self.stdev,
-			self.phase,
-			self.col1,
-			self.col2,
-			self.bgmode
-		)
-		surface = pygame.image.fromstring(im.tobytes(), im.size, u'RGB')
-		self._stim = Visual(position=self.to_xy(self.x, self.y))
-		self._stim.set_surface(surface)
-		self._stim.preload()
+        im = canvas._gabor(
+            self.orient,
+            self.freq,
+            self.env,
+            self.size,
+            self.stdev,
+            self.phase,
+            self.col1,
+            self.col2,
+            self.bgmode
+        )
+        surface = pygame.image.fromstring(im.tobytes(), im.size, u'RGB')
+        self._stim = Visual(position=self.to_xy(self.x, self.y))
+        self._stim.set_surface(surface)
+        self._stim.preload()

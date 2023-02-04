@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,78 +24,75 @@ from libopensesame.py3compat import *
 
 class gabor_settings(patch_settings):
 
-	"""
-	desc:
-		A gabor settings dialog.
-	"""
+    """
+    desc:
+            A gabor settings dialog.
+    """
 
-	def ui_file(self):
+    def ui_file(self):
+        """
+        returns:
+                desc:	The ui file.
+                type:	unicode
+        """
 
-		"""
-		returns:
-			desc:	The ui file.
-			type:	unicode
-		"""
+        return u'dialogs.gabor_settings'
 
-		return u'dialogs.gabor_settings'
+    def get_properties(self):
+        """
+        desc:
+                Gets the Gabor properties.
 
-	def get_properties(self):
+        returns:
+                desc:	A dictionary with properties.
+                type:	dict
+        """
 
-		"""
-		desc:
-			Gets the Gabor properties.
+        if self.exec_() != QtWidgets.QDialog.Accepted:
+            return None
 
-		returns:
-			desc:	A dictionary with properties.
-			type:	dict
-		"""
+        properties = self._spinbox_properties(
+            u'orient',
+            u'freq',
+            u'size',
+            u'stdev',
+            u'phase'
+        )
+        properties.update(self._combobox_properties(
+            (u'env', self.env_map),
+            (u'bgmode', self.bgmode_map)
+        ))
+        properties[u'color1'] = self.ui.edit_color1.text()
+        properties[u'color2'] = self.ui.edit_color2.text()
+        return properties
 
-		if self.exec_() != QtWidgets.QDialog.Accepted:
-			return None
+    def set_properties(self, properties):
+        """
+        desc:
+                Fills the dialog controls based on a properties dictionary.
 
-		properties = self._spinbox_properties(
-			u'orient',
-			u'freq',
-			u'size',
-			u'stdev',
-			u'phase'
-		)
-		properties.update(self._combobox_properties(
-			(u'env', self.env_map),
-			(u'bgmode', self.bgmode_map)
-		))
-		properties[u'color1'] = self.ui.edit_color1.text()
-		properties[u'color2'] = self.ui.edit_color2.text()
-		return properties
+        arguments:
+                properties:
+                        desc:	A properties dictionary.
+                        type:	dict
+        """
 
-	def set_properties(self, properties):
-
-		"""
-		desc:
-			Fills the dialog controls based on a properties dictionary.
-
-		arguments:
-			properties:
-				desc:	A properties dictionary.
-				type:	dict
-		"""
-
-		self._set_spinbox(self.ui.spinbox_orient, u'orient', properties)
-		self._set_spinbox(self.ui.spinbox_size, u'size', properties)
-		self._set_spinbox(self.ui.spinbox_stdev, u'stdev', properties)
-		self._set_spinbox(self.ui.spinbox_freq, u'freq', properties)
-		self._set_spinbox(self.ui.spinbox_phase, u'phase', properties)
-		self.ui.edit_color1.setText(properties[u'color1'])
-		self.ui.edit_color2.setText(properties[u'color2'])
-		self._set_combobox(
-			self.env_map,
-			self.ui.combobox_env,
-			u'env',
-			properties
-		)
-		self._set_combobox(
-			self.bgmode_map,
-			self.ui.combobox_bgmode,
-			u'bgmode',
-			properties
-		)
+        self._set_spinbox(self.ui.spinbox_orient, u'orient', properties)
+        self._set_spinbox(self.ui.spinbox_size, u'size', properties)
+        self._set_spinbox(self.ui.spinbox_stdev, u'stdev', properties)
+        self._set_spinbox(self.ui.spinbox_freq, u'freq', properties)
+        self._set_spinbox(self.ui.spinbox_phase, u'phase', properties)
+        self.ui.edit_color1.setText(properties[u'color1'])
+        self.ui.edit_color2.setText(properties[u'color2'])
+        self._set_combobox(
+            self.env_map,
+            self.ui.combobox_env,
+            u'env',
+            properties
+        )
+        self._set_combobox(
+            self.bgmode_map,
+            self.ui.combobox_bgmode,
+            u'bgmode',
+            properties
+        )

@@ -25,23 +25,22 @@ _ = translation_context(u'system_check', category=u'extension')
 
 class system_check(base_extension):
 
-	def event_startup(self):
+    def event_startup(self):
+        """
+        desc:
+                Performs several checks when OpenSesame is started. For now, it only
+                checks whether the display is scaled or not, and if so, provides a
+                warning because this may affect how stimuli look during the
+                experiment.
+        """
 
-		"""
-		desc:
-			Performs several checks when OpenSesame is started. For now, it only
-			checks whether the display is scaled or not, and if so, provides a
-			warning because this may affect how stimuli look during the
-			experiment.
-		"""
-
-		if display.display_scaling != 1:
-			self.extension_manager.fire(
-				u'notify',
-				message=_(
-					u'Display scaling is set to %d%% by the operating system. '
-					u'This may affect the appearance of your experiment.'
-				) % (100*display.display_scaling),
-				category=u'warning',
-				timeout=5000
-			)
+        if display.display_scaling != 1:
+            self.extension_manager.fire(
+                u'notify',
+                message=_(
+                    u'Display scaling is set to %d%% by the operating system. '
+                    u'This may affect the appearance of your experiment.'
+                ) % (100*display.display_scaling),
+                category=u'warning',
+                timeout=5000
+            )

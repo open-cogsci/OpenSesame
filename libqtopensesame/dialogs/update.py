@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,36 +23,35 @@ from qtpy import QtCore, QtWidgets
 from libqtopensesame.dialogs.base_dialog import base_dialog
 from libqtopensesame.misc.config import cfg
 
+
 class update(base_dialog):
 
-	"""
-	desc:
-		A simple text-input dialog.
-	"""
+    """
+    desc:
+            A simple text-input dialog.
+    """
 
-	def __init__(self, main_window, msg=None):
+    def __init__(self, main_window, msg=None):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:	The main window object.
+                msg:			A text message.
+        """
 
-		arguments:
-			main_window:	The main window object.
-			msg:			A text message.
-		"""
+        super(update, self).__init__(main_window, ui=u'dialogs.update_dialog')
+        self.ui.textedit_notification.setHtml(msg)
+        self.adjustSize()
 
-		super(update, self).__init__(main_window, ui=u'dialogs.update_dialog')
-		self.ui.textedit_notification.setHtml(msg)
-		self.adjustSize()
+    def exec_(self):
+        """
+        desc:
+                Executes the dialog.
+        """
 
-	def exec_(self):
-
-		"""
-		desc:
-			Executes the dialog.
-		"""
-
-		self.ui.checkbox_auto_check_update.setChecked(cfg.auto_update_check)
-		super(update, self).exec_()
-		cfg.auto_update_check = self.ui.checkbox_auto_check_update.isChecked()
-		self.main_window.update_preferences_tab()
+        self.ui.checkbox_auto_check_update.setChecked(cfg.auto_update_check)
+        super(update, self).exec_()
+        cfg.auto_update_check = self.ui.checkbox_auto_check_update.isChecked()
+        self.main_window.update_preferences_tab()

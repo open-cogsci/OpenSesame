@@ -25,25 +25,25 @@ from expyriment.stimuli import Picture
 
 class Xpyriment(XpyrimentElement, Image):
 
-	def prepare(self):
+    def prepare(self):
 
-		self._stim = Picture(filename=safe_decode(self.fname))
-		if self.rotation is not None and self.rotation != 0:
-			w1, h1 = self._stim.surface_size
-			self._stim.rotate(-self.rotation)
-			w2, h2 = self._stim.surface_size
-			dx = (w2-w1)/2
-			dy = (h2-h1)/2
-		else:
-			dx = dy = 0
-		if self.scale is not None:
-			self._stim.scale((self.scale, self.scale))
-			dx *= self.scale
-			dy *= self.scale
-		x, y = self.to_xy(self.x, self.y)
-		if not self.center:
-			w, h = self._stim.surface_size
-			x += w//2-dx
-			y -= h//2-dy
-		self._stim.reposition((x, y))
-		self._stim.preload()
+        self._stim = Picture(filename=safe_decode(self.fname))
+        if self.rotation is not None and self.rotation != 0:
+            w1, h1 = self._stim.surface_size
+            self._stim.rotate(-self.rotation)
+            w2, h2 = self._stim.surface_size
+            dx = (w2-w1)/2
+            dy = (h2-h1)/2
+        else:
+            dx = dy = 0
+        if self.scale is not None:
+            self._stim.scale((self.scale, self.scale))
+            dx *= self.scale
+            dy *= self.scale
+        x, y = self.to_xy(self.x, self.y)
+        if not self.center:
+            w, h = self._stim.surface_size
+            x += w//2-dx
+            y -= h//2-dy
+        self._stim.reposition((x, y))
+        self._stim.preload()

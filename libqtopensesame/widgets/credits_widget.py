@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,49 +23,46 @@ from libqtopensesame.widgets.base_widget import base_widget
 from libopensesame.py3compat import *
 from qtpy import QtWidgets, QtCore
 
+
 class credits_widget(base_widget):
 
-	"""
-	desc:
-		A credits window, embedded in the start-new widget.
-	"""
+    """
+    desc:
+            A credits window, embedded in the start-new widget.
+    """
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        keywords:
+                main_window:	A qtopensesame object.
+        """
 
-		keywords:
-			main_window:	A qtopensesame object.
-		"""
+        super(credits_widget, self).__init__(main_window,
+                                             ui=u'widgets.credits_widget')
+        self.ui.label_opensesame.setText(self.ui.label_opensesame.text() % {
+            u'version': metadata.__version__,
+            u'codename': metadata.codename,
+            u'channel': metadata.channel,
+            u'python_version': metadata.python_version
+        })
+        self.ui.label_website.mousePressEvent = self.open_website
+        self.ui.label_facebook.mousePressEvent = self.open_facebook
+        self.ui.label_twitter.mousePressEvent = self.open_twitter
 
-		super(credits_widget, self).__init__(main_window,
-			ui=u'widgets.credits_widget')
-		self.ui.label_opensesame.setText(self.ui.label_opensesame.text() % {
-			u'version' : metadata.__version__,
-			u'codename' : metadata.codename,
-			u'channel' : metadata.channel,
-			u'python_version' : metadata.python_version
-			})
-		self.ui.label_website.mousePressEvent = self.open_website
-		self.ui.label_facebook.mousePressEvent = self.open_facebook
-		self.ui.label_twitter.mousePressEvent = self.open_twitter
+    def open_website(self, dummy=None):
+        """Open the main website"""
 
-	def open_website(self, dummy=None):
+        misc.open_url(cfg.url_website)
 
-		"""Open the main website"""
+    def open_facebook(self, dummy=None):
+        """Open Facebook page"""
 
-		misc.open_url(cfg.url_website)
+        misc.open_url(cfg.url_facebook)
 
-	def open_facebook(self, dummy=None):
+    def open_twitter(self, dummy=None):
+        """Open Twitter page"""
 
-		"""Open Facebook page"""
-
-		misc.open_url(cfg.url_facebook)
-
-	def open_twitter(self, dummy=None):
-
-		"""Open Twitter page"""
-
-		misc.open_url(cfg.url_twitter)
+        misc.open_url(cfg.url_twitter)

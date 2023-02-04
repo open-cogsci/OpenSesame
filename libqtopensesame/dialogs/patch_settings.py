@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,163 +23,154 @@ from libqtopensesame.dialogs.base_dialog import base_dialog
 
 class patch_settings(base_dialog):
 
-	"""
-	desc:
-		A patch settings dialog, inherited by the gabor and noise settings.
-	"""
+    """
+    desc:
+            A patch settings dialog, inherited by the gabor and noise settings.
+    """
 
-	# Maps the GUI names onto valid keyword values
-	env_map = {
-		u'gaussian'						: u'gaussian',
-		u'linear'						: u'linear',
-		u'circular (sharp edge)'		: u'circular',
-		u'rectangular (no envelope)'	: u'rectangular',
-	}
-	bgmode_map = {
-		u'Color average'				: u'avg',
-		u'Color 2'						: u'col2',
-	}
+    # Maps the GUI names onto valid keyword values
+    env_map = {
+        u'gaussian': u'gaussian',
+        u'linear': u'linear',
+        u'circular (sharp edge)': u'circular',
+        u'rectangular (no envelope)': u'rectangular',
+    }
+    bgmode_map = {
+        u'Color average': u'avg',
+        u'Color 2': u'col2',
+    }
 
-	def __init__(self, main_window):
+    def __init__(self, main_window):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:	The main window object.
+        """
 
-		arguments:
-			main_window:	The main window object.
-		"""
+        super(patch_settings, self).__init__(main_window, ui=self.ui_file())
+        self.ui.combobox_env.currentIndexChanged.connect(self.apply_env)
+        self.ui.edit_color1.initialize()
+        self.ui.edit_color2.initialize(color=self.experiment.var.background)
+        self.ui.apply_env()
 
-		super(patch_settings, self).__init__(main_window, ui=self.ui_file())
-		self.ui.combobox_env.currentIndexChanged.connect(self.apply_env)
-		self.ui.edit_color1.initialize()
-		self.ui.edit_color2.initialize(color=self.experiment.var.background)
-		self.ui.apply_env()
+    def ui_file(self):
+        """
+        returns:
+                desc:	The ui file.
+                type:	unicode
+        """
 
-	def ui_file(self):
+        raise NotImplementedError()
 
-		"""
-		returns:
-			desc:	The ui file.
-			type:	unicode
-		"""
+    def apply_env(self):
+        """
+        desc:
+                Enables/ disables the stdev control based on the env combobox.
+        """
 
-		raise NotImplementedError()
+        self.ui.spinbox_stdev.setEnabled(
+            self.ui.combobox_env.currentText() == u'gaussian')
 
-	def apply_env(self):
+    def get_properties(self):
+        """
+        desc:
+                Gets the Gabor properties.
 
-		"""
-		desc:
-			Enables/ disables the stdev control based on the env combobox.
-		"""
+        returns:
+                desc:	A dictionary with properties.
+                type:	dict
+        """
 
-		self.ui.spinbox_stdev.setEnabled(
-			self.ui.combobox_env.currentText() == u'gaussian')
+        raise NotImplementedError()
 
-	def get_properties(self):
+    def set_properties(self, properties):
+        """
+        desc:
+                Fills the dialog controls based on a properties dictionary.
 
-		"""
-		desc:
-			Gets the Gabor properties.
+        arguments:
+                properties:
+                        desc:	A properties dictionary.
+                        type:	dict
+        """
 
-		returns:
-			desc:	A dictionary with properties.
-			type:	dict
-		"""
+        raise NotImplementedError()
 
-		raise NotImplementedError()
+    def _spinbox_properties(self, *spinbox_vars):
+        """
+        desc:
+                Gets the properties of all enabled spinboxes.
 
-	def set_properties(self, properties):
+        argument-list:
+                spinbox_vars:	A list of variables that are defined through spinbox
+                                                widgets.
 
-		"""
-		desc:
-			Fills the dialog controls based on a properties dictionary.
+        returns:
+                A dictionary with (var, value) mappings
+        """
 
-		arguments:
-			properties:
-				desc:	A properties dictionary.
-				type:	dict
-		"""
+        return {
+            var: getattr(self.ui, u'spinbox_%s' % var).value()
+            for var in spinbox_vars
+            if getattr(self.ui, u'spinbox_%s' % var).isEnabled()
+        }
 
-		raise NotImplementedError()
+    def _combobox_properties(self, *combobox_vars):
+        """
+        desc:
+                Gets the properties of all enabled comboboxes.
 
-	def _spinbox_properties(self, *spinbox_vars):
+        argument-list:
+                combobox_vars:	A list of (var, options) tuples of variables that
+                                                are defined through combobox widgets.
 
-		"""
-		desc:
-			Gets the properties of all enabled spinboxes.
+        returns:
+                A dictionary with (var, value) mappings
+        """
 
-		argument-list:
-			spinbox_vars:	A list of variables that are defined through spinbox
-							widgets.
+        return {
+            var: options[getattr(self.ui, u'combobox_%s' % var).currentText()]
+            for var, options in combobox_vars
+            if getattr(self.ui, u'combobox_%s' % var).isEnabled()
+        }
 
-		returns:
-			A dictionary with (var, value) mappings
-		"""
+    def _set_spinbox(self, spinbox, var, properties):
+        """
+        desc:
+                Safely sets a spinbox based on a variable, or disables the spinbox
+                if the value is not numeric.
 
-		return {
-			var: getattr(self.ui, u'spinbox_%s' % var).value()
-			for var in spinbox_vars
-			if getattr(self.ui, u'spinbox_%s' % var).isEnabled()
-		}
+        desc:
+                spinbox:	A QSpinBox
+                var:		A variable name
+                properties:	A properties dict
+        """
 
-	def _combobox_properties(self, *combobox_vars):
+        if isinstance(properties[var], (int, float)):
+            spinbox.setEnabled(True)
+            spinbox.setValue(properties[var])
+        else:
+            spinbox.setEnabled(False)
 
-		"""
-		desc:
-			Gets the properties of all enabled comboboxes.
+    def _set_combobox(self, options, combobox, var, properties):
+        """
+        desc:
+                Safely sets a combobox based on a variable, or disables the combobox
+                if the value is not among the combobox options.
 
-		argument-list:
-			combobox_vars:	A list of (var, options) tuples of variables that
-							are defined through combobox widgets.
+        arguments:
+                options:	A dictionary with options
+                combobox:	QComboBox
+                var:		A variable name
+                properties:	A properties dict
+        """
 
-		returns:
-			A dictionary with (var, value) mappings
-		"""
-
-		return {
-			var: options[getattr(self.ui, u'combobox_%s' % var).currentText()]
-			for var, options in combobox_vars
-			if getattr(self.ui, u'combobox_%s' % var).isEnabled()
-		}
-
-	def _set_spinbox(self, spinbox, var, properties):
-
-		"""
-		desc:
-			Safely sets a spinbox based on a variable, or disables the spinbox
-			if the value is not numeric.
-
-		desc:
-			spinbox:	A QSpinBox
-			var:		A variable name
-			properties:	A properties dict
-		"""
-
-		if isinstance(properties[var], (int, float)):
-			spinbox.setEnabled(True)
-			spinbox.setValue(properties[var])
-		else:
-			spinbox.setEnabled(False)
-
-	def _set_combobox(self, options, combobox, var, properties):
-
-		"""
-		desc:
-			Safely sets a combobox based on a variable, or disables the combobox
-			if the value is not among the combobox options.
-
-		arguments:
-			options:	A dictionary with options
-			combobox:	QComboBox
-			var:		A variable name
-			properties:	A properties dict
-		"""
-
-		for key, val in options.items():
-			if val == properties[var]:
-				i = combobox.findText(key)
-				combobox.setCurrentIndex(i)
-				combobox.setEnabled(True)
-				return
-		combobox.setEnabled(False)
+        for key, val in options.items():
+            if val == properties[var]:
+                i = combobox.findText(key)
+                combobox.setCurrentIndex(i)
+                combobox.setEnabled(True)
+                return
+        combobox.setEnabled(False)

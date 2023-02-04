@@ -24,4 +24,4 @@ from openexp._canvas._ellipse.xpyriment import Xpyriment as XpyrimentEllipse
 
 class Xpyriment(XpyrimentEllipse, Circle):
 
-	pass
+    pass

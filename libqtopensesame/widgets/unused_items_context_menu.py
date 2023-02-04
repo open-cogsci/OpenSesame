@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -26,43 +26,41 @@ _ = translation_context(u'unused_widget', category=u'core')
 
 class unused_items_context_menu(base_subcomponent, QtWidgets.QMenu):
 
-	"""
-	desc:
-		Provides a context menu for the unused items bin.
-	"""
+    """
+    desc:
+            Provides a context menu for the unused items bin.
+    """
 
-	def __init__(self, main_window, treeitem):
+    def __init__(self, main_window, treeitem):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                main_window:
+                        desc:	The main-window object.
+                        type:	qtopensesame
+                treeitem:
+                        desc:	The tree item.
+                        type:	tree_item_item
+        """
 
-		arguments:
-			main_window:
-				desc:	The main-window object.
-				type:	qtopensesame
-			treeitem:
-				desc:	The tree item.
-				type:	tree_item_item
-		"""
+        super(unused_items_context_menu, self).__init__(main_window)
+        self.setup(main_window)
+        a = self.addAction(
+            self.theme.qicon(u'purge'),
+            _(u'Permanently delete unused items'),
+            self.purge_unused
+        )
+        a.setDisabled(not self.experiment.items.unused())
 
-		super(unused_items_context_menu, self).__init__(main_window)
-		self.setup(main_window)
-		a = self.addAction(
-			self.theme.qicon(u'purge'),
-			_(u'Permanently delete unused items'),
-			self.purge_unused
-		)
-		a.setDisabled(not self.experiment.items.unused())
+    def purge_unused(self):
+        """
+        desc:
+                Purges unused items.
+        """
 
-	def purge_unused(self):
-
-		"""
-		desc:
-			Purges unused items.
-		"""
-
-		self.tabwidget.open_unused()
-		w = self.tabwidget.get_widget(u'__unused__')
-		w.purge_unused()
-		w.on_activate()
+        self.tabwidget.open_unused()
+        w = self.tabwidget.get_widget(u'__unused__')
+        w.purge_unused()
+        w.on_activate()

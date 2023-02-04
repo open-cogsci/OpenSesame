@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -22,219 +22,208 @@ from libopensesame.py3compat import *
 
 class basejoystick(object):
 
-	"""
-	desc: |
-		If you insert the JOYSTICK plugin at the start of your experiment, a
-		JOYSTICK object automatically becomes part of the experiment object
-		and can be used within an inline_script item as JOYSTICK.
+    """
+    desc: |
+            If you insert the JOYSTICK plugin at the start of your experiment, a
+            JOYSTICK object automatically becomes part of the experiment object
+            and can be used within an inline_script item as JOYSTICK.
 
-		%--
-		constant:
-			arg_joybuttonlist: |
-				A list of buttons that are accepted or `None` to accept all
-				buttons.
-			arg_timeout: |
-				A timeout value in milliseconds or `None` for no timeout.
-		--%
+            %--
+            constant:
+                    arg_joybuttonlist: |
+                            A list of buttons that are accepted or `None` to accept all
+                            buttons.
+                    arg_timeout: |
+                            A timeout value in milliseconds or `None` for no timeout.
+            --%
 
-		[TOC]
-	"""
+            [TOC]
+    """
 
+    def __init__(self, experiment, device=0, joybuttonlist=None, timeout=None):
+        """
+        desc:
+                Intializes the joystick object.
 
-	def __init__(self, experiment, device=0, joybuttonlist=None, timeout=None):
+        arguments:
+                experiment:
+                        desc:	An Opensesame experiment.
+                        type:	experiment
 
-		"""
-		desc:
-			Intializes the joystick object.
+        keywords:
+                device:
+                        desc:	The joystick device number.
+                        type:	int
+                joybuttonlist:
+                        desc:	"%arg_joybuttonlist"
+                        type:	[list, NoneType]
+                timeout:
+                        desc:	"%arg_timeout"
+                        type:	[int, float, NoneType]
+        """
 
-		arguments:
-			experiment:
-				desc:	An Opensesame experiment.
-				type:	experiment
+        raise NotImplementedError()
 
-		keywords:
-			device:
-				desc:	The joystick device number.
-				type:	int
-			joybuttonlist:
-				desc:	"%arg_joybuttonlist"
-				type:	[list, NoneType]
-			timeout:
-				desc:	"%arg_timeout"
-				type:	[int, float, NoneType]
-		"""
+    def set_joybuttonlist(self, joybuttonlist=None):
+        """
+        desc:
+                Sets a list of accepted buttons.
 
-		raise NotImplementedError()
+        keywords:
+                joybuttonlist:
+                        desc:	"%arg_joybuttonlist"
+                        type:	[list, NoneType]
+        """
 
-	def set_joybuttonlist(self, joybuttonlist=None):
+        if joybuttonlist is None or joybuttonlist == []:
+            self._joybuttonlist = None
+        else:
+            self._joybuttonlist = []
+            for joybutton in joybuttonlist:
+                self._joybuttonlist.append(joybutton)
 
-		"""
-		desc:
-			Sets a list of accepted buttons.
+    def set_timeout(self, timeout=None):
+        """
+        desc:
+                Sets a timeout.
 
-		keywords:
-			joybuttonlist:
-				desc:	"%arg_joybuttonlist"
-				type:	[list, NoneType]
-		"""
+        keywords:
+                timeout:
+                        desc:	"%arg_timeout"
+                        type:	[int, float, NoneType]
+        """
 
-		if joybuttonlist is None or joybuttonlist == []:
-			self._joybuttonlist = None
-		else:
-			self._joybuttonlist = []
-			for joybutton in joybuttonlist:
-				self._joybuttonlist.append(joybutton)
+        self.timeout = timeout
 
-	def set_timeout(self, timeout=None):
+    def get_joybutton(self, joybuttonlist=None, timeout=None):
+        """
+        desc:
+                Collects joystick button input.
 
-		"""
-		desc:
-			Sets a timeout.
+        keywords:
+                joybuttonlist:
+                        desc:	A list of buttons that are accepted or `None` to
+                                        default joybuttonlist.
+                        type:	[list, NoneType]
+                timeout:
+                        desc:	A timeout value in milliseconds or `None` to use default
+                                        timeout.
+                        type:	[int, float, NoneType]
 
-		keywords:
-			timeout:
-				desc:	"%arg_timeout"
-				type:	[int, float, NoneType]
-		"""
+        returns:
+                desc: 	A (joybutton, timestamp) tuple. The joybutton is `None` if a
+                                timeout occurs.
+                type:	tuple
+        """
 
-		self.timeout = timeout
+        raise NotImplementedError()
 
-	def get_joybutton(self, joybuttonlist=None, timeout=None):
+    def get_joyaxes(self, timeout=None):
+        """
+        desc:
+                Waits for joystick axes movement.
 
-		"""
-		desc:
-			Collects joystick button input.
+        keywords:
+                timeout:
+                        desc:	A timeout value in milliseconds or `None` to use default
+                                        timeout.
+                        type:	[int, float, NoneType]
 
-		keywords:
-			joybuttonlist:
-				desc:	A list of buttons that are accepted or `None` to
-						default joybuttonlist.
-				type:	[list, NoneType]
-			timeout:
-				desc:	A timeout value in milliseconds or `None` to use default
-						timeout.
-				type:	[int, float, NoneType]
+        returns:
+                desc:	A `(position, timestamp)` tuple. `position` is `None` if a
+                                timeout occurs. Otherwise, `position` is an `(x, y, z)`
+                                tuple.
+                type:	tuple
+        """
 
-		returns:
-			desc: 	A (joybutton, timestamp) tuple. The joybutton is `None` if a
-					timeout occurs.
-			type:	tuple
-		"""
+        raise NotImplementedError()
 
-		raise NotImplementedError()
+    def get_joyballs(self, timeout=None):
+        """
+        desc:
+                Waits for joystick trackball movement.
 
-	def get_joyaxes(self, timeout=None):
+        keywords:
+                timeout:
+                        desc:	A timeout value in milliseconds or `None` to use default
+                                        timeout.
+                        type:	[int, float, NoneType]
 
-		"""
-		desc:
-			Waits for joystick axes movement.
+        returns:
+                desc:	A `(position, timestamp)` tuple. The position is `None` if
+                                a timeout occurs.
+                type:	tuple
+        """
 
-		keywords:
-			timeout:
-				desc:	A timeout value in milliseconds or `None` to use default
-						timeout.
-				type:	[int, float, NoneType]
+        raise NotImplementedError()
 
-		returns:
-			desc:	A `(position, timestamp)` tuple. `position` is `None` if a
-					timeout occurs. Otherwise, `position` is an `(x, y, z)`
-					tuple.
-			type:	tuple
-		"""
+    def get_joyhats(self, timeout=None):
+        """
+        desc:
+                Waits for joystick hat movement.
 
-		raise NotImplementedError()
+        keywords:
+                timeout:
+                        desc:	A timeout value in milliseconds or `None` to use default
+                                        timeout.
+                        type:	[int, float, NoneType]
 
-	def get_joyballs(self, timeout=None):
+        returns:
+                desc:	A `(position, timestamp)` tuple. `position` is `None` if a
+                                timeout occurs. Otherwise, `position` is an `(x, y)` tuple.
+                type:	tuple
+        """
 
-		"""
-		desc:
-			Waits for joystick trackball movement.
+        raise NotImplementedError()
 
-		keywords:
-			timeout:
-				desc:	A timeout value in milliseconds or `None` to use default
-						timeout.
-				type:	[int, float, NoneType]
+    def get_joyinput(self, joybuttonlist=None, timeout=None):
+        """
+        desc:
+                Waits for any joystick input (buttons, axes, hats or balls).
 
-		returns:
-			desc:	A `(position, timestamp)` tuple. The position is `None` if
-					a timeout occurs.
-			type:	tuple
-		"""
+        keywords:
+                joybuttonlist:
+                        desc:	A list of buttons that are accepted or `None` to
+                                        default joybuttonlist.
+                        type:	[list, NoneType]
+                timeout:
+                        desc:	A timeout value in milliseconds or `None` to use default
+                                        timeout.
+                        type:	[int, float, NoneType]
 
-		raise NotImplementedError()
+        returns:
+                desc:	A (event, value, timestamp) tuple. The value is `None` if a
+                                timeout occurs. `event` is one of `None`, 'joybuttonpress',
+                                'joyballmotion', 'joyaxismotion', or 'joyhatmotion'
+                type:	tuple
+        """
 
-	def get_joyhats(self, timeout=None):
+        raise NotImplementedError()
 
-		"""
-		desc:
-			Waits for joystick hat movement.
+    def input_options(self):
+        """
+        desc:
+                Generates a list with the number of available buttons, axes, balls
+                and hats.
 
-		keywords:
-			timeout:
-				desc:	A timeout value in milliseconds or `None` to use default
-						timeout.
-				type:	[int, float, NoneType]
+        returns:
+                desc:	|
+                                A list with number of inputs as: [buttons, axes, balls,
+                                hats].
+                type:	list
+        """
 
-		returns:
-			desc:	A `(position, timestamp)` tuple. `position` is `None` if a
-					timeout occurs. Otherwise, `position` is an `(x, y)` tuple.
-			type:	tuple
-		"""
+        raise NotImplementedError()
 
-		raise NotImplementedError()
+    def flush(self):
+        """
+        desc:
+                Clears all pending input, not limited to the joystick.
 
-	def get_joyinput(self, joybuttonlist=None, timeout=None):
+        returns:
+                desc:	True if joyinput was pending (i.e., if there was something
+                                to flush) and False otherwise.
+                type:	bool
+        """
 
-		"""
-		desc:
-			Waits for any joystick input (buttons, axes, hats or balls).
-
-		keywords:
-			joybuttonlist:
-				desc:	A list of buttons that are accepted or `None` to
-						default joybuttonlist.
-				type:	[list, NoneType]
-			timeout:
-				desc:	A timeout value in milliseconds or `None` to use default
-						timeout.
-				type:	[int, float, NoneType]
-
-		returns:
-			desc:	A (event, value, timestamp) tuple. The value is `None` if a
-					timeout occurs. `event` is one of `None`, 'joybuttonpress',
-					'joyballmotion', 'joyaxismotion', or 'joyhatmotion'
-			type:	tuple
-		"""
-
-		raise NotImplementedError()
-
-	def input_options(self):
-
-		"""
-		desc:
-			Generates a list with the number of available buttons, axes, balls
-			and hats.
-
-		returns:
-			desc:	|
-					A list with number of inputs as: [buttons, axes, balls,
-					hats].
-			type:	list
-		"""
-
-		raise NotImplementedError()
-
-	def flush(self):
-
-		"""
-		desc:
-			Clears all pending input, not limited to the joystick.
-
-		returns:
-			desc:	True if joyinput was pending (i.e., if there was something
-					to flush) and False otherwise.
-			type:	bool
-		"""
-
-		raise NotImplementedError()
+        raise NotImplementedError()

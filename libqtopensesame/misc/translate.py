@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -38,31 +38,31 @@ import os
 from libopensesame.py3compat import *
 from qtpy.QtCore import QCoreApplication
 
+
 def translation_context(name, category=u'core'):
+    """
+    desc:
+            A factory that generates a translation method with a fixed context.
 
-	"""
-	desc:
-		A factory that generates a translation method with a fixed context.
+    arguments:
+            name:
+                    desc:	The name to use for the context.
+                    type:	str
 
-	arguments:
-		name:
-			desc:	The name to use for the context.
-			type:	str
+    keywords:
+            name:
+                    desc:	The category to use for the context.
+                    type:	str
 
-	keywords:
-		name:
-			desc:	The category to use for the context.
-			type:	str
+    returns:
+            desc:	A translation function.
+            type:	FunctionType
+    """
 
-	returns:
-		desc:	A translation function.
-		type:	FunctionType
-	"""
-
-	_context = u'%s_%s' % (category, name)
-	if os.environ[u'QT_API'] == u'pyqt5':
-		# PyQt5 3 doesn't require an encoding
-		return lambda s, context=None: QCoreApplication.translate(_context,
-			s)
-	return lambda s, context=None: QCoreApplication.translate(_context, s,
-		encoding=QCoreApplication.UnicodeUTF8)
+    _context = u'%s_%s' % (category, name)
+    if os.environ[u'QT_API'] == u'pyqt5':
+        # PyQt5 3 doesn't require an encoding
+        return lambda s, context=None: QCoreApplication.translate(_context,
+                                                                  s)
+    return lambda s, context=None: QCoreApplication.translate(_context, s,
+                                                              encoding=QCoreApplication.UnicodeUTF8)

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of openexp.
@@ -21,56 +21,57 @@ from libopensesame.py3compat import *
 from libqtopensesame.sketchpad_elements._base_line_arrow import base_line_arrow
 from libopensesame.sketchpad_elements import arrow as arrow_runtime
 
+
 class arrow(base_line_arrow, arrow_runtime):
 
-	"""
-	desc:
-		An arrow element.
+    """
+    desc:
+            An arrow element.
 
-		See base_element for docstrings and function descriptions.
-	"""
+            See base_element for docstrings and function descriptions.
+    """
 
-	@classmethod
-	def mouse_release(cls, sketchpad, pos):
+    @classmethod
+    def mouse_release(cls, sketchpad, pos):
 
-		if cls.pos_start is None:
-			return
-		dx = pos[0] - cls.pos_start[0]
-		dy = pos[1] - cls.pos_start[1]
-		if abs(dx) < 1 and abs(dy) < 1:
-			cls.pos_start = None
-			sketchpad.canvas.removeItem(cls.preview)
-			return
-		properties = {
-				u'x1':					cls.pos_start[0],
-				u'y1':					cls.pos_start[1],
-				u'x2':					pos[0],
-				u'y2':					pos[1],
-				u'color': 				sketchpad.current_color(),
-				u'penwidth'	: 			sketchpad.current_penwidth(),
-				u'arrow_head_width':	sketchpad.current_arrow_head_width(),
-				u'arrow_body_width':	sketchpad.current_arrow_body_width(),
-				u'arrow_body_length':	sketchpad.current_arrow_body_length(),
-				u'fill':				sketchpad.current_fill(),
-				u'show_if':				sketchpad.current_show_if()
-			}
-		e = arrow(sketchpad, properties=properties)
-		cls.pos_start = None
-		sketchpad.canvas.removeItem(cls.preview)
-		return e
+        if cls.pos_start is None:
+            return
+        dx = pos[0] - cls.pos_start[0]
+        dy = pos[1] - cls.pos_start[1]
+        if abs(dx) < 1 and abs(dy) < 1:
+            cls.pos_start = None
+            sketchpad.canvas.removeItem(cls.preview)
+            return
+        properties = {
+            u'x1':					cls.pos_start[0],
+            u'y1':					cls.pos_start[1],
+            u'x2':					pos[0],
+            u'y2':					pos[1],
+            u'color': 				sketchpad.current_color(),
+            u'penwidth': 			sketchpad.current_penwidth(),
+            u'arrow_head_width':	sketchpad.current_arrow_head_width(),
+            u'arrow_body_width':	sketchpad.current_arrow_body_width(),
+            u'arrow_body_length':	sketchpad.current_arrow_body_length(),
+            u'fill':				sketchpad.current_fill(),
+            u'show_if':				sketchpad.current_show_if()
+        }
+        e = arrow(sketchpad, properties=properties)
+        cls.pos_start = None
+        sketchpad.canvas.removeItem(cls.preview)
+        return e
 
-	@staticmethod
-	def requires_arrow_head_width():
-		return True
+    @staticmethod
+    def requires_arrow_head_width():
+        return True
 
-	@staticmethod
-	def requires_arrow_body_width():
-		return True
+    @staticmethod
+    def requires_arrow_body_width():
+        return True
 
-	@staticmethod
-	def requires_arrow_body_length():
-		return True
+    @staticmethod
+    def requires_arrow_body_length():
+        return True
 
-	@staticmethod
-	def requires_fill():
-		return True
+    @staticmethod
+    def requires_fill():
+        return True

@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -33,62 +33,64 @@ import sys
 stack_lvl = 0
 msg_nr = 0
 
+
 def indent(d=1):
 
-	global stack_lvl
-	stack_lvl += d
+    global stack_lvl
+    stack_lvl += d
+
 
 def _msg(msg=u'', reason=None):
+    """
+    desc:
+            Prints a debugging message. Respects the --debug and --stack parameters.
 
-	"""
-	desc:
-		Prints a debugging message. Respects the --debug and --stack parameters.
+    keywords:
+            msg:	A debug message.
+            reason:	A reason for the message.
+    """
 
-	keywords:
-		msg:	A debug message.
-		reason:	A reason for the message.
-	"""
+    global stack, max_stack, msg_nr
+    if reason is not None:
+        msg = u'[%s] %s' % (reason, msg)
+    # The terminal may not like anything but plain ASCII
+    if not isinstance(msg, basestring):
+        msg = str(msg)
+    msg = safe_encode(msg, enc=u'ascii', errors=u'ignore')
+    try:
+        print(u'%.6d %s%s' % (msg_nr, u'| '*stack_lvl, msg))
+    except:
+        # This should not happen!
+        print(u'%.6d %sFailed to print message' % (msg_nr, u'| '*stack_lvl))
+    msg_nr += 1
 
-	global stack, max_stack, msg_nr
-	if reason is not None:
-		msg = u'[%s] %s' % (reason, msg)
-	# The terminal may not like anything but plain ASCII
-	if not isinstance(msg, basestring):
-		msg = str(msg)
-	msg = safe_encode(msg, enc=u'ascii', errors=u'ignore')
-	try:
-		print(u'%.6d %s%s' % (msg_nr, u'| '*stack_lvl, msg))
-	except:
-		# This should not happen!
-		print(u'%.6d %sFailed to print message' % (msg_nr, u'| '*stack_lvl))
-	msg_nr += 1
 
 def _print(msg):
+    """
+    desc:
+            Prints a message to the standard output, just like the normal `print`
+            statement/ function. This is necessary to capture encoding errors while
+            printing.
 
-	"""
-	desc:
-		Prints a message to the standard output, just like the normal `print`
-		statement/ function. This is necessary to capture encoding errors while
-		printing.
+    arguments:
+            msg:
+                    desc:	A message to print.
+                    type:	[unicode, str]
+    """
 
-	arguments:
-		msg:
-			desc:	A message to print.
-			type:	[unicode, str]
-	"""
+    try:
+        print(msg)
+    except:
+        if isinstance(msg, bytes):
+            print(safe_decode(msg, enc=u'ascii', errors=u'ignore'))
+        elif isinstance(msg, str):
+            print(safe_encode(msg, enc=u'ascii', errors=u'ignore'))
 
-	try:
-		print(msg)
-	except:
-		if isinstance(msg, bytes):
-			print(safe_decode(msg, enc=u'ascii', errors=u'ignore'))
-		elif isinstance(msg, str):
-			print(safe_encode(msg, enc=u'ascii', errors=u'ignore'))
 
 enabled = '--debug' in sys.argv or '-d' in sys.argv
 if enabled:
-	msg = _msg
+    msg = _msg
 else:
-	# Replace the message function with a dummy function to turn off debugging
-	# output
-	msg = lambda msg=None, reason=None: None
+    # Replace the message function with a dummy function to turn off debugging
+    # output
+    def msg(msg=None, reason=None): return None

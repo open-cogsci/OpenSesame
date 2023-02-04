@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -47,55 +47,56 @@ toc:
 plugin_msg = u"\n<div class='page-notification'>This is a plug-in and may not be installed by default. For plug-in installation instructions, see <a href='/plug-ins/installation'>here</a>.</div>\n"
 
 exclude_list = [u'general.md', u'variables.md', u'stdout.md', u'missing.md',
-	u'auto_example.md', u'remote_logger.md', u'pool.md', u'video_player.md']
+                u'auto_example.md', u'remote_logger.md', u'pool.md', u'video_player.md']
+
 
 def collect(folder):
+    """
+    Recursively collects a list of Markdown help files from a specified folder.
 
-	"""
-	Recursively collects a list of Markdown help files from a specified folder.
+    Arguments:
+    folder		--	The source folder.
 
-	Arguments:
-	folder		--	The source folder.
+    Returns:
+    A list of path names of help files.
+    """
 
-	Returns:
-	A list of path names of help files.
-	"""
+    src = []
+    for fname in os.listdir(folder):
+        path = os.path.join(folder, fname)
+        if os.path.isdir(path):
+            print('Entering %s' % path)
+            src += collect(path)
+            continue
+        if fname in exclude_list or not fname.endswith(u'.md'):
+            continue
+        print('Adding %s' % path)
+        src.append(path)
+    return sorted(src)
 
-	src = []
-	for fname in os.listdir(folder):
-		path = os.path.join(folder, fname)
-		if os.path.isdir(path):
-			print('Entering %s' % path)
-			src += collect(path)
-			continue
-		if fname in exclude_list or not fname.endswith(u'.md'):
-			continue
-		print('Adding %s' % path)
-		src.append(path)
-	return sorted(src)
 
 def helpify(folder, msg=u''):
+    """
+    Recursively builds a help page from Markdown help files in a source folder.
 
-	"""
-	Recursively builds a help page from Markdown help files in a source folder.
+    Arguments:
+    folder		--	The source folder.
 
-	Arguments:
-	folder		--	The source folder.
+    Keyword arguments:
+    msg			--	An informative message to include after each help file.
 
-	Keyword arguments:
-	msg			--	An informative message to include after each help file.
+    Returns:
+    A help page.
+    """
 
-	Returns:
-	A help page.
-	"""
+    src = collect(folder)
+    md = u''
+    for path in src:
+        _md = u'\n' + msg + open(path).read().decode(u'utf-8') + u'\n<hr />\n'
+        _md = _md.replace(u'\n#', u'\n###')
+        md += _md
+    return md
 
-	src = collect(folder)
-	md = u''
-	for path in src:
-		_md = u'\n' + msg + open(path).read().decode(u'utf-8') + u'\n<hr />\n'
-		_md = _md.replace(u'\n#', u'\n###')
-		md += _md
-	return md
 
 md = md % (helpify(u'help'), helpify(u'plugins', plugin_msg))
 html = build.HTML(md, standalone=False)

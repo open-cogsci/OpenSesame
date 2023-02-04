@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -21,5 +21,3 @@ from libopensesame.py3compat import *
 
 __author__ = "Sebastiaan Mathot"
 __license__ = "GPLv3"
-
-

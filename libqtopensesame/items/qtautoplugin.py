@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -27,151 +27,149 @@ from libopensesame.exceptions import osexception
 
 _ = translation_context(u'qtautoplugin', category=u'core')
 
+
 class qtautoplugin(qtplugin):
 
-	"""A class that processes auto-plugins defined in a YAML file"""
+    """A class that processes auto-plugins defined in a YAML file"""
 
-	def __init__(self, plugin_file):
+    def __init__(self, plugin_file):
 
-		qtplugin.__init__(self, plugin_file)
+        qtplugin.__init__(self, plugin_file)
 
-	def init_edit_widget(self):
+    def init_edit_widget(self):
+        """Construct the GUI controls based on info.yaml"""
 
-		"""Construct the GUI controls based on info.yaml"""
+        qtplugin.init_edit_widget(self, False)
+        item_type_translate = translation_context(self.item_type,
+                                                  category=u'plugin')
+        self.info = plugins.plugin_properties(self.item_type, _type=u'plugins')
+        # Process the help url, if specified
+        if u'help' in self.info:
+            self.help_url = self.info[u'help']
+        # Some options are required. Which options are requires depends on the
+        # specific widget.
+        required = [
+            ([u'checkbox', u'color_edit', u'combobox', u'editor', u'filepool',
+              u'line_edit', u'spinbox', u'text'], [u'label']),
+            ([u'checkbox', u'color_edit', u'combobox', u'editor', u'filepool',
+              u'line_edit', u'spinbox'], [u'var']),
+            ([u'spinbox', u'slider'], [u'min_val', u'max_val']),
+            ([u'combobox'], [u'options']),
+        ]
+        # Keywords are optional parameters that are set to some default if they
+        # are not specified.
+        keywords = {
+            u'info': None,
+            u'min_width': None,
+            u'prefix': u'',
+            u'suffix': u'',
+            u'left_label': u'min.',
+            u'right_label': u'max.',
+            u'syntax': False,
+            u'language': 'python'
+        }
+        # This indicates whether we should pad the controls with a stretch at
+        # the end.
+        need_stretch = True
+        for c in self.info[u'controls']:
+            # Check whether all required options have been specified
+            if u'type' not in c:
+                raise osexception(
+                    _(u'You must specify "type" for %s controls in info.yaml')
+                    % option)
+            for types, options in required:
+                if c[u'type'] in types:
+                    for option in options:
+                        if option not in c:
+                            raise osexception(
+                                _(u'You must specify "%s" for %s controls in info.yaml')
+                                % (option, c[u'type']))
+            if u'var' in c and not self.syntax.valid_var_name(c[u'var']):
+                raise osexception(
+                    _(u'Invalid variable name (%s) specified in %s plugin info') %
+                    (c[u'var'], self.item_type))
+            # Set missing keywords to None
+            for keyword, default in keywords.items():
+                if keyword not in c:
+                    c[keyword] = default
+            # Translate translatable fields
+            c[u'label'] = item_type_translate(c[u'label'])
+            if c[u'info'] is not None:
+                c[u'info'] = item_type_translate(c[u'info'])
+            # Parse checkbox
+            if c[u'type'] == u'checkbox':
+                widget = self.add_checkbox_control(c[u'var'], c[u'label'],
+                                                   info=c[u'info'])
+            # Parse color_edit
+            elif c[u'type'] == u'color_edit':
+                widget = self.add_color_edit_control(c[u'var'], c[u'label'],
+                                                     info=c[u'info'], min_width=c[u'min_width'])
+            # Parse combobox
+            elif c[u'type'] == u'combobox':
+                widget = self.add_combobox_control(c[u'var'], c[u'label'],
+                                                   c[u'options'], info=c[u'info'])
+            # Parse editor
+            elif c[u'type'] == u'editor':
+                widget = self.add_editor_control(c[u'var'], c[u'label'],
+                                                 syntax=c[u'syntax'], language=c[u'language'])
+                need_stretch = False
+            # Parse filepool
+            elif c[u'type'] == u'filepool':
+                widget = self.add_filepool_control(c[u'var'], c[u'label'],
+                                                   info=c[u'info'])
+            # Parse line_edit
+            elif c[u'type'] == u'line_edit':
+                widget = self.add_line_edit_control(c[u'var'], c[u'label'],
+                                                    info=c[u'info'], min_width=c[u'min_width'])
+            # Parse spinbox
+            elif c[u'type'] == u'spinbox':
+                widget = self.add_spinbox_control(c[u'var'], c[u'label'],
+                                                  c[u'min_val'], c[u'max_val'], prefix=c[u'prefix'],
+                                                  suffix=c[u'suffix'], info=c[u'info'])
+            # Parse slider
+            elif c[u'type'] == u'slider':
+                widget = self.add_slider_control(c[u'var'], c[u'label'],
+                                                 c[u'min_val'], c[u'max_val'], left_label=c[u'left_label'],
+                                                 right_label=c[u'right_label'], info=c[u'info'])
+            # Parse text
+            elif c[u'type'] == u'text':
+                widget = self.add_text(c[u'label'])
+            else:
+                raise Exception(_(u'"%s" is not a valid qtautoplugin control')
+                                % controls[u'type'])
+            # Add an optional validator
+            if u'validator' in c:
+                try:
+                    validator = getattr(validators,
+                                        u'%s_validator' % c[u'validator'])
+                except:
+                    raise osexception(
+                        u'Invalid validator: %s' % c[u'validator'])
+                widget.setValidator(validator(self.main_window))
+            # Add the widget as an item property when the 'name' option is
+            # specified.
+            if u'name' in c:
+                if hasattr(self, c[u'name']):
+                    raise Exception(_(u'Name "%s" is already taken in qtautoplugin control')
+                                    % c[u'name'])
+                setattr(self, c[u'name'], widget)
+        if need_stretch:
+            self.add_stretch()
 
-		qtplugin.init_edit_widget(self, False)
-		item_type_translate = translation_context(self.item_type,
-			category=u'plugin')
-		self.info = plugins.plugin_properties(self.item_type, _type=u'plugins')
-		# Process the help url, if specified
-		if u'help' in self.info:
-			self.help_url = self.info[u'help']
-		# Some options are required. Which options are requires depends on the
-		# specific widget.
-		required  = [
-			([u'checkbox', u'color_edit', u'combobox', u'editor', u'filepool', \
-				u'line_edit', u'spinbox', u'text'], [u'label']),
-			([u'checkbox', u'color_edit', u'combobox', u'editor', u'filepool', \
-				u'line_edit', u'spinbox'], [u'var']),
-			([u'spinbox', u'slider'], [u'min_val', u'max_val']),
-			([u'combobox'], [u'options']),
-			]
-		# Keywords are optional parameters that are set to some default if they
-		# are not specified.
-		keywords = {
-			u'info' : None,
-			u'min_width' : None,
-			u'prefix' : u'',
-			u'suffix' : u'',
-			u'left_label' : u'min.',
-			u'right_label' : u'max.',
-			u'syntax' : False,
-			u'language': 'python'
-		}
-		# This indicates whether we should pad the controls with a stretch at
-		# the end.
-		need_stretch = True
-		for c in self.info[u'controls']:
-			# Check whether all required options have been specified
-			if u'type' not in c:
-				raise osexception(
-					_(u'You must specify "type" for %s controls in info.yaml') \
-					% option)
-			for types, options in required:
-				if c[u'type'] in types:
-					for option in options:
-						if option not in c:
-							raise osexception(
-								_(u'You must specify "%s" for %s controls in info.yaml') \
-								% (option, c[u'type']))
-			if u'var' in c and not self.syntax.valid_var_name(c[u'var']):
-				raise osexception(
-					_(u'Invalid variable name (%s) specified in %s plugin info') %
-					(c[u'var'], self.item_type))
-			# Set missing keywords to None
-			for keyword, default in keywords.items():
-				if keyword not in c:
-					c[keyword] = default
-			# Translate translatable fields
-			c[u'label'] = item_type_translate(c[u'label'])
-			if c[u'info'] is not None:
-				c[u'info'] = item_type_translate(c[u'info'])
-			# Parse checkbox
-			if c[u'type'] == u'checkbox':
-				widget = self.add_checkbox_control(c[u'var'], c[u'label'],
-					info=c[u'info'])
-			# Parse color_edit
-			elif c[u'type'] == u'color_edit':
-				widget = self.add_color_edit_control(c[u'var'], c[u'label'],
-					info=c[u'info'], min_width=c[u'min_width'])
-			# Parse combobox
-			elif c[u'type'] == u'combobox':
-				widget = self.add_combobox_control(c[u'var'], c[u'label'],
-					c[u'options'], info=c[u'info'])
-			# Parse editor
-			elif c[u'type'] == u'editor':
-				widget = self.add_editor_control(c[u'var'], c[u'label'],
-					syntax=c[u'syntax'], language=c[u'language'])
-				need_stretch = False
-			# Parse filepool
-			elif c[u'type'] == u'filepool':
-				widget = self.add_filepool_control(c[u'var'], c[u'label'],
-					info=c[u'info'])
-			# Parse line_edit
-			elif c[u'type'] == u'line_edit':
-				widget = self.add_line_edit_control(c[u'var'], c[u'label'],
-					info=c[u'info'], min_width=c[u'min_width'])
-			# Parse spinbox
-			elif c[u'type'] == u'spinbox':
-				widget = self.add_spinbox_control(c[u'var'], c[u'label'],
-					c[u'min_val'], c[u'max_val'], prefix=c[u'prefix'],
-					suffix=c[u'suffix'], info=c[u'info'])
-			# Parse slider
-			elif c[u'type'] == u'slider':
-				widget = self.add_slider_control(c[u'var'], c[u'label'],
-					c[u'min_val'], c[u'max_val'], left_label=c[u'left_label'],
-					right_label=c[u'right_label'], info=c[u'info'])
-			# Parse text
-			elif c[u'type'] == u'text':
-				widget = self.add_text(c[u'label'])
-			else:
-				raise Exception(_(u'"%s" is not a valid qtautoplugin control') \
-					% controls[u'type'])
-			# Add an optional validator
-			if u'validator' in c:
-				try:
-					validator = getattr(validators,
-						u'%s_validator' % c[u'validator'])
-				except:
-					raise osexception(
-						u'Invalid validator: %s' % c[u'validator'])
-				widget.setValidator(validator(self.main_window))
-			# Add the widget as an item property when the 'name' option is
-			# specified.
-			if u'name' in c:
-				if hasattr(self, c[u'name']):
-					raise Exception(_(u'Name "%s" is already taken in qtautoplugin control') \
-						% c[u'name'])
-				setattr(self, c[u'name'], widget)
-		if need_stretch:
-			self.add_stretch()
+    def apply_edit_changes(self):
+        """Applies the controls. I.e. sets the variables from the controls."""
 
-	def apply_edit_changes(self):
+        if not qtplugin.apply_edit_changes(self) or self.lock:
+            return False
+        return True
 
-		"""Applies the controls. I.e. sets the variables from the controls."""
+    def edit_widget(self):
+        """Sets the controls based on the variables."""
 
-		if not qtplugin.apply_edit_changes(self) or self.lock:
-			return False
-		return True
-
-	def edit_widget(self):
-
-		"""Sets the controls based on the variables."""
-
-		self.lock = True
-		qtplugin.edit_widget(self)
-		self.lock = False
-		return self._edit_widget
+        self.lock = True
+        qtplugin.edit_widget(self)
+        self.lock = False
+        return self._edit_widget
 
 
 QtAutoPlugin = qtautoplugin

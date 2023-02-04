@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -23,23 +23,22 @@ from libopensesame import plugins
 
 
 def libjoystick(experiment, **kwargs):
+    """
+    desc:
+            A factory that returns a back-end specific joystick module.
 
-	"""
-	desc:
-		A factory that returns a back-end specific joystick module.
+    arguments:
+            experiment:		The experiment object.
 
-	arguments:
-		experiment:		The experiment object.
+    keyword-dict:
+            kwargs:			Keyords to be passed on the joystick init.
+    """
 
-	keyword-dict:
-		kwargs:			Keyords to be passed on the joystick init.
-	"""
-
-	if experiment.var.canvas_backend == u'psycho':
-		raise osexception(
-			u'The joystick plug-in does not yet support the psycho back-end'
-		)
-	backend = u'legacy'
-	cls = plugins.load_cls(__file__, cls=backend, mod=backend,
-		pkg=u'_libjoystick')
-	return cls(experiment, **kwargs)
+    if experiment.var.canvas_backend == u'psycho':
+        raise osexception(
+            u'The joystick plug-in does not yet support the psycho back-end'
+        )
+    backend = u'legacy'
+    cls = plugins.load_cls(__file__, cls=backend, mod=backend,
+                           pkg=u'_libjoystick')
+    return cls(experiment, **kwargs)

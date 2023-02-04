@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -24,41 +24,41 @@ from libqtopensesame.validators import duration_validator
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'sampler', category=u'item')
 
+
 class sampler(sampler_runtime, qtplugin):
 
-	"""
-	desc:
-		GUI controls for the sampler item.
-	"""
+    """
+    desc:
+            GUI controls for the sampler item.
+    """
 
-	description = _(u'Plays a sound file in .wav or .ogg format')
-	help_url = u'manual/stimuli/sound'
-	lazy_init = True
+    description = _(u'Plays a sound file in .wav or .ogg format')
+    help_url = u'manual/stimuli/sound'
+    lazy_init = True
 
-	def __init__(self, name, experiment, string=None):
+    def __init__(self, name, experiment, string=None):
+        """See item."""
 
-		"""See item."""
+        sampler_runtime.__init__(self, name, experiment, string)
+        qtplugin.__init__(self)
 
-		sampler_runtime.__init__(self, name, experiment, string)
-		qtplugin.__init__(self)
+    def init_edit_widget(self):
+        """See qtitem."""
 
-	def init_edit_widget(self):
-
-		"""See qtitem."""
-
-		qtplugin.init_edit_widget(self)
-		self.add_filepool_control(u'sample', _(u'Sound file'),
-			info=_(u'In .ogg or .wav format'))
-		self.add_doublespinbox_control(u'volume', _(u'Volume'),
-			min_val=0, max_val=1, suffix=_(u' x original'))
-		self.add_line_edit_control(u'pan', _(u'Panning'),
-			info=_(u'Positive values toward the right; "left" or "right" for full panning'))
-		self.add_doublespinbox_control(u'pitch', _(u'Pitch'), min_val=0,
-			max_val=1000, suffix=_(u' x original'))
-		self.add_spinbox_control(u'stop_after', _(u'Stop after'),
-			min_val=0, max_val=10000000, suffix=_(u' ms'))
-		self.add_spinbox_control(u'fade_in', _(u'Fade in'),
-			min_val=0, max_val=10000000, suffix=_(u' ms'))
-		self.add_line_edit_control(u'duration', _(u'Duration'),
-			info=_(u'In milliseconds, "sound", "keypress", or "mouseclick"'),
-			validator=duration_validator(self, default=u'sound'))
+        qtplugin.init_edit_widget(self)
+        self.add_filepool_control(u'sample', _(u'Sound file'),
+                                  info=_(u'In .ogg or .wav format'))
+        self.add_doublespinbox_control(u'volume', _(u'Volume'),
+                                       min_val=0, max_val=1, suffix=_(u' x original'))
+        self.add_line_edit_control(u'pan', _(u'Panning'),
+                                   info=_(u'Positive values toward the right; "left" or "right" for full panning'))
+        self.add_doublespinbox_control(u'pitch', _(u'Pitch'), min_val=0,
+                                       max_val=1000, suffix=_(u' x original'))
+        self.add_spinbox_control(u'stop_after', _(u'Stop after'),
+                                 min_val=0, max_val=10000000, suffix=_(u' ms'))
+        self.add_spinbox_control(u'fade_in', _(u'Fade in'),
+                                 min_val=0, max_val=10000000, suffix=_(u' ms'))
+        self.add_line_edit_control(u'duration', _(u'Duration'),
+                                   info=_(
+                                       u'In milliseconds, "sound", "keypress", or "mouseclick"'),
+                                   validator=duration_validator(self, default=u'sound'))

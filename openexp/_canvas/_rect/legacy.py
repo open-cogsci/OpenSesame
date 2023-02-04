@@ -25,8 +25,8 @@ import pygame
 
 class Legacy(LegacyElement, Rect):
 
-	def prepare(self):
+    def prepare(self):
 
-		x, y = self.to_xy(self.x, self.y)
-		pygame.draw.rect(self.surface, self.color.backend_color,
-			(x, y, self.w, self.h), 0 if self.fill else self.penwidth)
+        x, y = self.to_xy(self.x, self.y)
+        pygame.draw.rect(self.surface, self.color.backend_color,
+                         (x, y, self.w, self.h), 0 if self.fill else self.penwidth)

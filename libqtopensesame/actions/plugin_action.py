@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -25,34 +25,33 @@ __license__ = "GPLv3"
 from qtpy import QtWidgets
 from libopensesame import plugins
 
+
 class plugin_action(QtWidgets.QAction):
 
-	"""Menu action for a plugin"""
+    """Menu action for a plugin"""
 
-	def __init__(self, main_window, menu, plugin):
+    def __init__(self, main_window, menu, plugin):
+        """
+        Constructor
 
-		"""
-		Constructor
+        Arguments:
+        main_window -- the main window
+        menu -- the menu into which the action should be inserted
+        plugin -- the name of the plugin
+        """
 
-		Arguments:
-		main_window -- the main window
-		menu -- the menu into which the action should be inserted
-		plugin -- the name of the plugin
-		"""
+        self.main_window = main_window
+        icon = QtGui.QIcon(plugins.plugin_icon_large(plugin))
+        self.plugin = plugin
+        QtWidgets.QAction.__init__(self, icon, "Add %s" % plugin, menu)
+        self.triggered.connect(self.add_plugin)
 
-		self.main_window = main_window
-		icon = QtGui.QIcon(plugins.plugin_icon_large(plugin))
-		self.plugin = plugin
-		QtWidgets.QAction.__init__(self, icon, "Add %s" % plugin, menu)
-		self.triggered.connect(self.add_plugin)
+    def add_plugin(self, dummy=None):
+        """
+        Start a drag to add the plugin to the experiment
 
-	def add_plugin(self, dummy = None):
+        Keyword arguments:
+        dummy -- a dummy argument passed by the signal handler (default=None)
+        """
 
-		"""
-		Start a drag to add the plugin to the experiment
-
-		Keyword arguments:
-		dummy -- a dummy argument passed by the signal handler (default=None)
-		"""
-
-		self.main_window.drag_item(self.plugin)
+        self.main_window.drag_item(self.plugin)

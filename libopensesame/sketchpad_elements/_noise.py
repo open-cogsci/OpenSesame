@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -21,45 +21,44 @@ from libopensesame.py3compat import *
 
 from libopensesame.sketchpad_elements._base_element import base_element
 
+
 class noise(base_element):
 
-	"""
-	desc:
-		A gabor-patch element for the sketchpad.
-	"""
+    """
+    desc:
+            A gabor-patch element for the sketchpad.
+    """
 
-	def __init__(self, sketchpad, string):
+    def __init__(self, sketchpad, string):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                sketchpad:		A sketchpad object.
+                string:			A definition string.
+        """
 
-		arguments:
-			sketchpad:		A sketchpad object.
-			string:			A definition string.
-		"""
+        defaults = [
+            (u'x',		None),
+            (u'y',		None),
+            (u'env',	u'gaussian'),
+            (u'size', 	96),
+            (u'stdev',	12),
+            (u'color1',	u'white'),
+            (u'color2', u'black'),
+            (u'bgmode',	u'avg')
+        ]
+        super(noise, self).__init__(sketchpad, string, defaults=defaults)
 
-		defaults = [
-			(u'x',		None),
-			(u'y',		None),
-			(u'env',	u'gaussian'),
-			(u'size', 	96),
-			(u'stdev',	12),
-			(u'color1',	u'white'),
-			(u'color2', u'black'),
-			(u'bgmode',	u'avg')
-			]
-		super(noise, self).__init__(sketchpad, string, defaults=defaults)
+    def draw(self):
+        """
+        desc:
+                Draws the element to the canvas of the sketchpad.
+        """
 
-	def draw(self):
-
-		"""
-		desc:
-			Draws the element to the canvas of the sketchpad.
-		"""
-
-		properties = self.eval_properties()
-		return self.canvas.noise_patch(properties[u'x'], properties[u'y'],
-			env=properties[u'env'], size=properties[u'size'],
-			stdev=properties[u'stdev'], col1=properties[u'color1'],
-			col2=properties[u'color2'], bgmode=properties[u'bgmode'])
+        properties = self.eval_properties()
+        return self.canvas.noise_patch(properties[u'x'], properties[u'y'],
+                                       env=properties[u'env'], size=properties[u'size'],
+                                       stdev=properties[u'stdev'], col1=properties[u'color1'],
+                                       col2=properties[u'color2'], bgmode=properties[u'bgmode'])

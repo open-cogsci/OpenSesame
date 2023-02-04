@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -27,126 +27,119 @@ import libsrbox
 
 class srbox(base_response_item):
 
-	"""
-	desc:
-		A plug-in for using the serial response box.
-	"""
+    """
+    desc:
+            A plug-in for using the serial response box.
+    """
 
-	process_feedback = True
+    process_feedback = True
 
-	def reset(self):
+    def reset(self):
+        """See item."""
 
-		"""See item."""
+        self.var.timeout = u'infinite'
+        self.var.lights = u''
+        self.var.dev = u'autodetect'
+        self.var._dummy = u'no'
+        self.var.require_state_change = u'no'
 
-		self.var.timeout = u'infinite'
-		self.var.lights = u''
-		self.var.dev = u'autodetect'
-		self.var._dummy = u'no'
-		self.var.require_state_change = u'no'
+    def validate_response(self, response):
+        """See base_response_item."""
 
-	def validate_response(self, response):
+        try:
+            response = int(response)
+        except (ValueError, TypeError):
+            return False
+        return 0 <= response <= 255
 
-		"""See base_response_item."""
+    def process_response(self, response_args):
+        """See base_response_item."""
 
-		try:
-			response = int(response)
-		except (ValueError, TypeError):
-			return False
-		return 0 <= response <= 255
+        response, t1 = response_args
+        if isinstance(response, list):
+            response = response[0]
+        base_response_item.process_response(self, (safe_decode(response), t1))
 
-	def process_response(self, response_args):
+    def _get_button_press(self):
+        """
+        desc:
+                Calls srbox.get_button_press() with the correct arguments.
+        """
 
-		"""See base_response_item."""
+        return self.experiment.srbox.get_button_press(
+            allowed_buttons=self._allowed_responses,
+            timeout=self._timeout,
+            require_state_change=self._require_state_change
+        )
 
-		response, t1 = response_args
-		if isinstance(response, list):
-			response = response[0]
-		base_response_item.process_response(self, (safe_decode(response), t1))
+    def prepare_response_func(self):
+        """See base_response_item."""
 
-	def _get_button_press(self):
+        self._keyboard = keyboard(
+            self.experiment,
+            keylist=self._allowed_responses,
+            timeout=self._timeout
+        )
+        if self.var._dummy == u'yes':
+            return self._keyboard.get_key
+        # Prepare the device string
+        dev = self.var.dev
+        if dev == u"autodetect":
+            dev = None
+        # Dynamically create an srbox instance
+        if not hasattr(self.experiment, "srbox"):
+            self.experiment.srbox = libsrbox.libsrbox(self.experiment, dev)
+            self.experiment.cleanup_functions.append(self.close)
+            self.python_workspace[u'srbox'] = self.experiment.srbox
+        # Prepare the light byte
+        s = "010"  # Control string
+        for i in range(5):
+            if str(5 - i) in str(self.var.lights):
+                s += "1"
+            else:
+                s += "0"
+        self._lights = chr(int(s, 2))
+        oslogger.debug(u"lights string set to %s (%s)" % (s, self.var.lights))
+        if self._allowed_responses is not None:
+            self._allowed_responses = [int(r) for r in self._allowed_responses]
+        self._require_state_change = self.var.require_state_change == u'yes'
+        return self._get_button_press
 
-		"""
-		desc:
-			Calls srbox.get_button_press() with the correct arguments.
-		"""
+    def run(self):
+        """See item."""
 
-		return self.experiment.srbox.get_button_press(
-			allowed_buttons=self._allowed_responses,
-			timeout=self._timeout,
-			require_state_change=self._require_state_change
-		)
+        self._keyboard.flush()
+        if self.var._dummy != u'yes':
+            self.experiment.srbox.start()
+        base_response_item.run(self)
+        if self.var._dummy != u'yes':
+            self.experiment.srbox.stop()
 
-	def prepare_response_func(self):
+    def close(self):
+        """
+        desc:
+                Neatly close the connection to the srbox.
+        """
 
-		"""See base_response_item."""
-
-		self._keyboard = keyboard(
-			self.experiment,
-			keylist=self._allowed_responses,
-			timeout=self._timeout
-		)
-		if self.var._dummy == u'yes':
-			return self._keyboard.get_key
-		# Prepare the device string
-		dev = self.var.dev
-		if dev == u"autodetect":
-			dev = None
-		# Dynamically create an srbox instance
-		if not hasattr(self.experiment, "srbox"):
-			self.experiment.srbox = libsrbox.libsrbox(self.experiment, dev)
-			self.experiment.cleanup_functions.append(self.close)
-			self.python_workspace[u'srbox'] = self.experiment.srbox
-		# Prepare the light byte
-		s = "010"  # Control string
-		for i in range(5):
-			if str(5 - i) in str(self.var.lights):
-				s += "1"
-			else:
-				s += "0"
-		self._lights = chr(int(s, 2))
-		oslogger.debug(u"lights string set to %s (%s)" % (s, self.var.lights))
-		if self._allowed_responses is not None:
-			self._allowed_responses = [int(r) for r in self._allowed_responses]
-		self._require_state_change = self.var.require_state_change == u'yes'
-		return self._get_button_press
-
-	def run(self):
-
-		"""See item."""
-
-		self._keyboard.flush()
-		if self.var._dummy != u'yes':
-			self.experiment.srbox.start()
-		base_response_item.run(self)
-		if self.var._dummy != u'yes':
-			self.experiment.srbox.stop()
-
-	def close(self):
-
-		"""
-		desc:
-			Neatly close the connection to the srbox.
-		"""
-
-		if (
-			not hasattr(self.experiment, "srbox") or
-			self.experiment.srbox is None
-		):
-			oslogger.debug("no active srbox")
-			return
-		try:
-			self.experiment.srbox.close()
-			self.experiment.srbox = None
-			oslogger.debug("srbox closed")
-		except Exception as e:
-			oslogger.error("failed to close srbox")
+        if (
+                not hasattr(self.experiment, "srbox") or
+                self.experiment.srbox is None
+        ):
+            oslogger.debug("no active srbox")
+            return
+        try:
+            self.experiment.srbox.close()
+            self.experiment.srbox = None
+            oslogger.debug("srbox closed")
+        except Exception as e:
+            oslogger.error("failed to close srbox")
 
 
 class qtsrbox(srbox, qtautoplugin):
 
-	help_url = u'manual/response/srbox'
+    help_url = u'manual/response/srbox'
 
-	def __init__(self, name, experiment, script=None):
+    def __init__(self, name, experiment, script=None):
 
-		srbox.__init__(self, name, experiment, script)
-		qtautoplugin.__init__(self, __file__)
+        srbox.__init__(self, name, experiment, script)
+        qtautoplugin.__init__(self, __file__)

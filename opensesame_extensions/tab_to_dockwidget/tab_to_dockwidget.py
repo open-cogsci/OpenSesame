@@ -25,170 +25,158 @@ from qtpy import QtCore
 
 class tab_to_dockwidget(base_extension):
 
-	"""
-	desc:
-		This extensions turns tabs into standalone dockwidgets, so that you can
-		see multiple things side by side.
-	"""
+    """
+    desc:
+            This extensions turns tabs into standalone dockwidgets, so that you can
+            see multiple things side by side.
+    """
 
-	def event_startup(self):
+    def event_startup(self):
+        """
+        desc:
+                During initialization we monkey-patch the tabwidget so that it also
+                manages dockwidgets.
+        """
 
-		"""
-		desc:
-			During initialization we monkey-patch the tabwidget so that it also
-			manages dockwidgets.
-		"""
+        self._docktabs = {}
+        self.overview_area.structure_change.connect(self.update_all)
+        self.tabwidget.add = self._add_tab(self.tabwidget.add)
+        self.tabwidget.remove = self._remove_tab(self.tabwidget.remove)
+        self.tabwidget.close_all = self._close_all_tabs(
+            self.tabwidget.close_all)
 
-		self._docktabs = {}
-		self.overview_area.structure_change.connect(self.update_all)
-		self.tabwidget.add = self._add_tab(self.tabwidget.add)
-		self.tabwidget.remove = self._remove_tab(self.tabwidget.remove)
-		self.tabwidget.close_all = self._close_all_tabs(self.tabwidget.close_all)
+    def event_run_experiment(self, fullscreen):
+        """
+        desc:
+                Disable all docked item controls when running the experiment.
+        """
 
-	def event_run_experiment(self, fullscreen):
+        for docktab in self._docktabs.values():
+            docktab.setEnabled(False)
 
-		"""
-		desc:
-			Disable all docked item controls when running the experiment.
-		"""
+    def event_end_experiment(self, ret_val):
+        """
+        desc:
+                Re-enable all docked item controls when the experiment is done.
+        """
 
-		for docktab in self._docktabs.values():
-			docktab.setEnabled(False)
+        for docktab in self._docktabs.values():
+            docktab.setEnabled(True)
 
-	def event_end_experiment(self, ret_val):
+    def update_all(self):
+        """
+        desc:
+                Update all item controls.
+        """
 
-		"""
-		desc:
-			Re-enable all docked item controls when the experiment is done.
-		"""
+        for docktab in self._docktabs.values():
+            docktab.update()
 
-		for docktab in self._docktabs.values():
-			docktab.setEnabled(True)
+    def event_rename_item(self, from_name, to_name):
+        """
+        desc:
+                Change the dockwidget titles on item rename, and allow items to
+                update in response to renames.
+        """
 
-	def update_all(self):
+        for docktab in self._docktabs.values():
+            docktab.rename(from_name, to_name)
 
-		"""
-		desc:
-			Update all item controls.
-		"""
+    def event_new_item(self, name, _type):
+        """
+        desc:
+                Allow items to update in response to new items.
+        """
 
-		for docktab in self._docktabs.values():
-			docktab.update()
+        self.update_all()
 
-	def event_rename_item(self, from_name, to_name):
+    def event_delete_item(self, name):
+        """
+        desc:
+                Allow items to update in response to item deletions.
+        """
 
-		"""
-		desc:
-			Change the dockwidget titles on item rename, and allow items to
-			update in response to renames.
-		"""
+        for docktab in self._docktabs.values():
+            docktab.delete(name)
 
-		for docktab in self._docktabs.values():
-			docktab.rename(from_name, to_name)
+    def provide_item_in_dockwidget(self, name):
+        """
+        desc:
+                Checks whether an item (by name) is currently shown as a
+                dockwidget.
+        """
 
-	def event_new_item(self, name, _type):
+        if name not in self.item_store:
+            return False
+        return self.item_store[name].widget() in self._docktabs
 
-		"""
-		desc:
-			Allow items to update in response to new items.
-		"""
+    def activate(self):
+        """
+        desc:
+                Turns the currently visible tab (if any) into a dockwidget.
+        """
 
-		self.update_all()
+        widget = self.tabwidget.currentWidget()
+        if widget is None:
+            return
+        name = self.tabwidget.tabText(self.tabwidget.currentIndex())
+        self.tabwidget.remove(widget)
+        docktab = DockTab(self, widget, name)
+        self._docktabs[widget] = docktab
+        self.main_window.addDockWidget(QtCore.Qt.RightDockWidgetArea, docktab)
 
-	def event_delete_item(self, name):
+    def remove_widget(self, widget):
+        """
+        desc:
+                Removes a docked widget.
+        """
 
-		"""
-		desc:
-			Allow items to update in response to item deletions.
-		"""
+        if widget in self._docktabs:
+            del self._docktabs[widget]
 
-		for docktab in self._docktabs.values():
-			docktab.delete(name)
-			
-	def provide_item_in_dockwidget(self, name):
-		
-		"""
-		desc:
-			Checks whether an item (by name) is currently shown as a
-			dockwidget.
-		"""
-		
-		if name not in self.item_store:
-			return False
-		return self.item_store[name].widget() in self._docktabs
+    def _close_all_tabs(self, fnc):
+        """
+        desc:
+                Decorates tabwidget.close_all()
+        """
 
-	def activate(self):
+        def inner(*args, **kwargs):
 
-		"""
-		desc:
-			Turns the currently visible tab (if any) into a dockwidget.
-		"""
+            while self._docktabs:
+                widget, docktab = self._docktabs.popitem()
+                docktab.close()
+            return fnc(*args, **kwargs)
 
-		widget = self.tabwidget.currentWidget()
-		if widget is None:
-			return
-		name = self.tabwidget.tabText(self.tabwidget.currentIndex())
-		self.tabwidget.remove(widget)
-		docktab = DockTab(self, widget, name)
-		self._docktabs[widget] = docktab
-		self.main_window.addDockWidget(QtCore.Qt.RightDockWidgetArea, docktab)
+        return inner
 
-	def remove_widget(self, widget):
+    def _add_tab(self, fnc):
+        """
+        desc:
+                Decorates tabwidget.add()
+        """
 
-		"""
-		desc:
-			Removes a docked widget.
-		"""
+        def inner(widget, *args, **kwargs):
 
-		if widget in self._docktabs:
-			del self._docktabs[widget]
+            if widget in self._docktabs:
+                if hasattr(widget, u'set_focus'):
+                    widget.set_focus()
+                return
+            return fnc(widget, *args, **kwargs)
 
-	def _close_all_tabs(self, fnc):
+        return inner
 
-		"""
-		desc:
-			Decorates tabwidget.close_all()
-		"""
+    def _remove_tab(self, fnc):
+        """
+        desc:
+                Decorates tabwidget.remove()
+        """
 
-		def inner(*args, **kwargs):
+        def inner(widget, *args, **kwargs):
 
-			while self._docktabs:
-				widget, docktab = self._docktabs.popitem()
-				docktab.close()
-			return fnc(*args, **kwargs)
+            if widget in self._docktabs:
+                docktab = self._docktabs.pop(widget)
+                docktab.close()
+                return
+            return fnc(widget, *args, **kwargs)
 
-		return inner
-
-	def _add_tab(self, fnc):
-
-		"""
-		desc:
-			Decorates tabwidget.add()
-		"""
-
-		def inner(widget, *args, **kwargs):
-
-			if widget in self._docktabs:
-				if hasattr(widget, u'set_focus'):
-					widget.set_focus()
-				return
-			return fnc(widget, *args, **kwargs)
-
-		return inner
-
-	def _remove_tab(self, fnc):
-
-		"""
-		desc:
-			Decorates tabwidget.remove()
-		"""
-
-		def inner(widget, *args, **kwargs):
-
-			if widget in self._docktabs:
-				docktab = self._docktabs.pop(widget)
-				docktab.close()
-				return
-			return fnc(widget, *args, **kwargs)
-
-		return inner
+        return inner

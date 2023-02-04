@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -20,8 +20,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.syntax import syntax
 
+
 class qtsyntax(syntax):
 
-	def eval_text(self, txt, round_float=False):
+    def eval_text(self, txt, round_float=False):
 
-		return txt
+        return txt

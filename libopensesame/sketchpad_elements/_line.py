@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -21,43 +21,42 @@ from libopensesame.py3compat import *
 
 from libopensesame.sketchpad_elements._base_element import base_element
 
+
 class line(base_element):
 
-	"""
-	desc:
-		A line element for the sketchpad.
-	"""
+    """
+    desc:
+            A line element for the sketchpad.
+    """
 
-	def __init__(self, sketchpad, string):
+    def __init__(self, sketchpad, string):
+        """
+        desc:
+                Constructor.
 
-		"""
-		desc:
-			Constructor.
+        arguments:
+                sketchpad:		A sketchpad object.
+                string:			A definition string.
+        """
 
-		arguments:
-			sketchpad:		A sketchpad object.
-			string:			A definition string.
-		"""
+        defaults = [
+            (u'x1', None),
+            (u'y1', None),
+            (u'x2', None),
+            (u'y2', None),
+            (u'color', sketchpad.var.get(u'foreground')),
+            (u'penwidth', 1),
+        ]
+        super(line, self).__init__(sketchpad, string, defaults=defaults)
 
-		defaults = [
-			(u'x1'		, None),
-			(u'y1'		, None),
-			(u'x2'		, None),
-			(u'y2'		, None),
-			(u'color'	, sketchpad.var.get(u'foreground')),
-			(u'penwidth', 1),
-			]
-		super(line, self).__init__(sketchpad, string, defaults=defaults)
+    def draw(self):
+        """
+        desc:
+                Draws the element to the canvas of the sketchpad.
+        """
 
-	def draw(self):
-
-		"""
-		desc:
-			Draws the element to the canvas of the sketchpad.
-		"""
-
-		properties = self.eval_properties()
-		return self.canvas.line(properties[u'x1'], properties[u'y1'],
-			properties[u'x2'], properties[u'y2'],
-			color=properties[u'color'],
-			penwidth=properties[u'penwidth'])
+        properties = self.eval_properties()
+        return self.canvas.line(properties[u'x1'], properties[u'y1'],
+                                properties[u'x2'], properties[u'y2'],
+                                color=properties[u'color'],
+                                penwidth=properties[u'penwidth'])

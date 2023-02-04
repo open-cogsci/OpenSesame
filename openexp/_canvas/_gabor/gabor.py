@@ -23,14 +23,14 @@ from openexp._canvas._element.element import Element
 
 class Gabor(Element):
 
-	def __init__(self, canvas, x=0, y=0, orient=0, freq=.05, env=u'gaussian',
-		size=96, stdev=12, phase=0, col1=u'white', col2=u'black',
-		bgmode=u'avg'):
+    def __init__(self, canvas, x=0, y=0, orient=0, freq=.05, env=u'gaussian',
+                 size=96, stdev=12, phase=0, col1=u'white', col2=u'black',
+                 bgmode=u'avg'):
 
-		Element.__init__(self, canvas, x=x, y=y, orient=orient, freq=freq,
-			env=env, size=size, stdev=stdev, phase=phase, col1=col1,
-			col2=col2, bgmode=bgmode)
+        Element.__init__(self, canvas, x=x, y=y, orient=orient, freq=freq,
+                         env=env, size=size, stdev=stdev, phase=phase, col1=col1,
+                         col2=col2, bgmode=bgmode)
 
-	@property
-	def rect(self):
-		return self.x-self.size//2, self.y-self.size//2, self.size, self.size
+    @property
+    def rect(self):
+        return self.x-self.size//2, self.y-self.size//2, self.size, self.size

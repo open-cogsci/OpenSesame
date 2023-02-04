@@ -1,4 +1,4 @@
-#-*- coding:utf-8 -*-
+# -*- coding:utf-8 -*-
 
 """
 This file is part of OpenSesame.
@@ -25,22 +25,22 @@ _ = translation_context(u'quick_switcher', category=u'extension')
 
 class quick_switcher(base_extension):
 
-	"""
-	desc:
-		The quick-switcher allows you to quickly navigate to items.
-	"""
+    """
+    desc:
+            The quick-switcher allows you to quickly navigate to items.
+    """
 
-	def activate(self):
+    def activate(self):
 
-		haystack = []
-		for item in self.experiment.items.values():
-			haystack.append((
-				u'{} ({})'.format(item.name, item.item_type),
-				item,
-				item.open_tab
-			))
-		self.extension_manager.fire(
-			u'quick_select',
-			haystack=haystack,
-			placeholder_text=_(u'Search items …')
-		)
+        haystack = []
+        for item in self.experiment.items.values():
+            haystack.append((
+                u'{} ({})'.format(item.name, item.item_type),
+                item,
+                item.open_tab
+            ))
+        self.extension_manager.fire(
+            u'quick_select',
+            haystack=haystack,
+            placeholder_text=_(u'Search items …')
+        )
