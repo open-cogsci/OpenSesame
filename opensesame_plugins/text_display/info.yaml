@@ -1,8 +1,0 @@
-category: Visual stimuli
-disabled: true
-controls:
-  - type: text
-    label: >
-      <b>Warning:</b> The text_display plug-in has been removed.
-      Please use a different way to present text, as described on
-      <a href="http://osdoc.cogsci.nl/usage/text">http://osdoc.cogsci.nl/usage/text</a>.
