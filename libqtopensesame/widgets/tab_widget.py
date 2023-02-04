@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame import debug, metadata, misc
+from libopensesame import metadata, misc
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.tab_bar import TabBar

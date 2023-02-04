@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtGui, QtWidgets
-from libopensesame import debug
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.translate import translation_context

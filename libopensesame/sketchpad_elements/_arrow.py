@@ -18,25 +18,24 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.sketchpad_elements._base_element import BaseElement
 
-from libopensesame.sketchpad_elements._base_element import base_element
 
-
-class arrow(base_element):
+class Arrow(BaseElement):
 
     """
     desc:
-            An arrow element for the sketchpad.
+        An arrow element for the sketchpad.
     """
 
     def __init__(self, sketchpad, string):
         """
         desc:
-                Constructor.
+            Constructor.
 
         arguments:
-                sketchpad:		A sketchpad object.
-                string:			A definition string.
+            sketchpad: A sketchpad object.
+            string: A definition string.
         """
 
         defaults = [
@@ -51,7 +50,7 @@ class arrow(base_element):
             (u'penwidth', 1),
             (u'fill', True),
         ]
-        super(arrow, self).__init__(sketchpad, string, defaults=defaults)
+        super().__init__(sketchpad, string, defaults=defaults)
 
     def draw(self):
         """
@@ -68,3 +67,7 @@ class arrow(base_element):
                                  body_width=properties[u'arrow_body_width'],
                                  body_length=properties[u'arrow_body_length'],
                                  fill=properties[u'fill'])
+
+
+# Alias for backwards compatibility
+arrow = Arrow

@@ -18,10 +18,11 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.misc import snake_case
 from libopensesame.exceptions import osexception
 
 
-class base_element(object):
+class BaseElement(object):
 
     """
     desc:
@@ -42,7 +43,7 @@ class base_element(object):
                                                 keywords.
         """
 
-        self._type = self.__class__.__name__
+        self._type = snake_case(self.__class__.__name__)
         # These keywords provide compatibility with older versions of
         # OpenSesame. `only_keywords` specifies whether all parameters should be
         # written as keywords, which will prevent < 2.9.0 from reading the
@@ -254,3 +255,7 @@ class base_element(object):
         self.experiment.python_workspace[u'self'] = self.sketchpad
         return self.experiment.python_workspace._eval(
             self.experiment.syntax.compile_cond(self.properties[u'show_if']))
+
+
+# Alias for backwards compatibility
+base_element = BaseElement

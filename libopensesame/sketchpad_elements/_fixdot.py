@@ -18,11 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.sketchpad_elements._base_element import base_element
-from openexp.canvas_elements import FixDot
+from libopensesame.sketchpad_elements._base_element import BaseElement
 
 
-class fixdot(base_element):
+class Fixdot(BaseElement):
 
     """
     desc:
@@ -45,7 +44,7 @@ class fixdot(base_element):
             (u'color', sketchpad.var.get(u'foreground')),
             (u'style', u'default'),
         ]
-        super(fixdot, self).__init__(sketchpad, string, defaults=defaults)
+        super().__init__(sketchpad, string, defaults=defaults)
 
     def draw(self):
         """
@@ -55,4 +54,8 @@ class fixdot(base_element):
 
         properties = self.eval_properties()
         return self.canvas.fixdot(properties[u'x'], properties[u'y'],
-                                  style=properties[u'style'], color=properties[u'color'])
+                                  style=properties[u'style'],
+                                  color=properties[u'color'])
+
+# Alias for backwards compatibility
+fixdot = Fixdot

@@ -16,12 +16,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import warnings
 
 
-class base_python_workspace(object):
+class BasePythonWorkspace(object):
 
     """
     desc:
@@ -171,3 +170,7 @@ class base_python_workspace(object):
     @property
     def copy(self):
         return self._globals.copy
+
+
+# Alias for backwards compatibility
+base_python_workspace = BasePythonWorkspace

@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-import threading
+from threading import Thread, Lock
 import time
 
 
-class heartbeat(threading.Thread):
+class Heartbeat(Thread):
 
     """
     desc:
@@ -46,10 +46,10 @@ class heartbeat(threading.Thread):
                         type:	[float, int]
         """
 
-        super(heartbeat, self).__init__()
+        super().__init__()
         self.exp = exp
         self.interval = interval
-        self.lock = threading.Lock()
+        self.lock = Lock()
 
     def run(self):
         """
@@ -70,3 +70,7 @@ class heartbeat(threading.Thread):
         self.lock.acquire()
         self.exp.transmit_workspace(__heartbeat__=True)
         self.lock.release()
+
+
+# Alias for backwards compatibility
+heartbeat = Heartbeat

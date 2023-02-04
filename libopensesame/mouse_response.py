@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libopensesame.base_response_item import base_response_item
+from libopensesame.base_response_item import BaseResponseItem
 from openexp._canvas.canvas import Canvas
-from openexp.mouse import mouse
+from openexp.mouse import Mouse
 
 
-class mouse_response_mixin(object):
+class MouseResponseMixin(object):
 
     """
     desc:
@@ -61,7 +61,7 @@ class mouse_response_mixin(object):
             buttonlist = None
         else:
             buttonlist = [self.button_code(r) for r in self._allowed_responses]
-        self._mouse = mouse(
+        self._mouse = Mouse(
             self.experiment,
             timeout=self._timeout,
             buttonlist=buttonlist
@@ -103,10 +103,10 @@ class mouse_response_mixin(object):
             )
         else:
             self.experiment.var.cursor_roi = u'undefined'
-        base_response_item.process_response(self, (response, t1))
+        super().process_response((response, t1))
 
 
-class mouse_response(mouse_response_mixin, base_response_item):
+class MouseResponse(MouseResponseMixin, BaseResponseItem):
 
     """
     desc:
@@ -145,7 +145,7 @@ class mouse_response(mouse_response_mixin, base_response_item):
     def prepare(self):
         """See item."""
 
-        base_response_item.prepare(self)
+        super().prepare()
         self._flush = self.var.flush == u'yes'
 
     def run(self):
@@ -156,7 +156,7 @@ class mouse_response(mouse_response_mixin, base_response_item):
         # Show cursor if necessary
         if self.var.show_cursor == u'yes':
             self._mouse.visible = True
-        base_response_item.run(self)
+        super().run()
         self._mouse.visible = False
 
     def coroutine(self):
@@ -181,8 +181,13 @@ class mouse_response(mouse_response_mixin, base_response_item):
     def var_info(self):
         """See item."""
 
-        return base_response_item.var_info(self) + [
+        return super().var_info() + [
             (u'cursor_x', u'[Depends on response]'),
             (u'cursor_y', u'[Depends on response]'),
             (u'cursor_roi', u'[Depends on response]')
         ]
+
+
+# Alias for backwards compatibility
+mouse_response = MouseResponse
+mouse_response_mixin = MouseResponseMixin

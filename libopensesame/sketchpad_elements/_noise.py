@@ -18,11 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.sketchpad_elements._base_element import BaseElement
 
-from libopensesame.sketchpad_elements._base_element import base_element
 
-
-class noise(base_element):
+class Noise(BaseElement):
 
     """
     desc:
@@ -49,7 +48,7 @@ class noise(base_element):
             (u'color2', u'black'),
             (u'bgmode',	u'avg')
         ]
-        super(noise, self).__init__(sketchpad, string, defaults=defaults)
+        super().__init__(sketchpad, string, defaults=defaults)
 
     def draw(self):
         """
@@ -59,6 +58,13 @@ class noise(base_element):
 
         properties = self.eval_properties()
         return self.canvas.noise_patch(properties[u'x'], properties[u'y'],
-                                       env=properties[u'env'], size=properties[u'size'],
-                                       stdev=properties[u'stdev'], col1=properties[u'color1'],
-                                       col2=properties[u'color2'], bgmode=properties[u'bgmode'])
+                                       env=properties[u'env'],
+                                       size=properties[u'size'],
+                                       stdev=properties[u'stdev'],
+                                       col1=properties[u'color1'],
+                                       col2=properties[u'color2'],
+                                       bgmode=properties[u'bgmode'])
+
+
+# Alias for backwards compatibility
+noise = Noise

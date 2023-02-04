@@ -18,10 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.sketchpad_elements._base_element import base_element
+from libopensesame.sketchpad_elements._base_element import BaseElement
 
 
-class image(base_element):
+class Image(BaseElement):
 
     """
     desc:
@@ -46,7 +46,7 @@ class image(base_element):
             (u'rotation', 0),
             (u'center', 1),
         ]
-        super(image, self).__init__(sketchpad, string, defaults=defaults)
+        super().__init__(sketchpad, string, defaults=defaults)
 
     def draw(self):
         """
@@ -74,8 +74,12 @@ class image(base_element):
         # it is left on 0 (i.e. no rotation). This is necessary for sketchpads
         # to be parse-able in 3.1.X.
         return self.syntax.create_cmd(u'draw', [self._type],
-                                      {
-            var: val for var, val in self.properties.items()
-            if var not in (u'name', u'rotation') or val
-        }
+            {
+                var: val for var, val in self.properties.items()
+                if var not in (u'name', u'rotation') or val
+            }
         )
+
+
+# Alias for backwards compatibility
+image = Image

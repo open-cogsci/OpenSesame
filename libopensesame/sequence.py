@@ -20,12 +20,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 from libopensesame.exceptions import osexception
-from libopensesame import item
+from libopensesame.item import Item
 import gc
-import openexp.keyboard
+from openexp.keyboard import Keyboard
 
 
-class sequence(item.item):
+class Sequence(Item):
 
     """The sequence item"""
 
@@ -104,10 +104,11 @@ class sequence(item.item):
     def prepare(self):
         """Prepares the sequence."""
 
-        item.item.prepare(self)
+        super().prepare()
         if self.var.flush_keyboard == u'yes':
-            # Create a keyboard to flush responses at the start of the run phase
-            self._keyboard = openexp.keyboard.keyboard(self.experiment)
+            # Create a keyboard to flush responses at the start of the run
+            # phase
+            self._keyboard = Keyboard(self.experiment)
         else:
             self._keyboard = None
         self._items = []
@@ -127,7 +128,11 @@ class sequence(item.item):
         A definition string.
         """
 
-        s = item.item.to_string(self, self.item_type)
+        s = super().to_string(self.item_type)
         for _item, cond in self.items:
             s += u'\t' + self.syntax.create_cmd(u'run', [_item, cond]) + u'\n'
         return s
+
+
+# Alias for backwards compatibility
+sequence = Sequence

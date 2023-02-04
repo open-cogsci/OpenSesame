@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libopensesame.base_response_item import base_response_item
-from libopensesame.sampler import sampler
-from openexp.synth import synth as openexp_synth
+from libopensesame.base_response_item import BaseResponseItem
+from libopensesame.sampler import Sampler
+from openexp.synth import Synth as OpenExpSynth
 
 
-class synth(sampler):
+class Synth(Sampler):
 
     """
     desc:
@@ -49,11 +49,13 @@ class synth(sampler):
     def prepare(self):
         """Prepares for playback."""
 
-        base_response_item.prepare(self)
+        BaseResponseItem.prepare(self)
         try:
-            self.sampler = openexp_synth(self.experiment, osc=self.var.osc,
-                                         freq=self.var.freq, length=self.var.length,
-                                         attack=self.var.attack, decay=self.var.decay)
+            self.sampler = OpenExpSynth(self.experiment, osc=self.var.osc,
+                                        freq=self.var.freq,
+                                        length=self.var.length,
+                                        attack=self.var.attack,
+                                        decay=self.var.decay)
         except Exception as e:
             raise osexception(u'Failed to generate sound', exception=e)
         pan = self.var.pan
@@ -64,3 +66,7 @@ class synth(sampler):
         self.sampler.pan = pan
         self.sampler.volume = self.var.volume
         self.sampler.block = self.var.duration == u'sound'
+
+
+# Alias for backwards compatibility
+synth = Synth

@@ -19,13 +19,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libopensesame import item
+from libopensesame.item import Item
 from datamatrix import operations, DataMatrix, functional
 from pseudorandom import Enforce, MaxRep, MinDist
-import openexp.keyboard
+from openexp.keyboard import Keyboard
 
 
-class loop(item.item):
+class Loop(Item):
 
     """A loop item runs a single other item multiple times"""
 
@@ -138,7 +138,7 @@ class loop(item.item):
         # Older versions of OpenSesame use an explicit cycles variable, so we
         # set this here for backwards compatibility.
         self.var.cycles = len(self.dm)
-        s = item.item.to_string(self)
+        s = super().to_string()
         for i, row in enumerate(self.dm):
             for name, val in row:
                 s += u'\t%s\n' % \
@@ -312,7 +312,7 @@ class loop(item.item):
     def prepare(self):
         """See item."""
 
-        item.item.prepare(self)
+        super().prepare()
         # Deprecation errors. The direct reference to __vars__ prevents a lookup
         # in the parent var store.
         if (u'skip' in self.var.__vars__ and self.var.skip != 0) \
@@ -335,7 +335,7 @@ class loop(item.item):
         else:
             self._break_if = None
         # Create a keyboard to flush responses between cycles
-        self._keyboard = openexp.keyboard.keyboard(self.experiment)
+        self._keyboard = Keyboard(self.experiment)
         # Make sure the item to run exists
         if self._item not in self.experiment.items:
             raise osexception(
@@ -450,8 +450,12 @@ class loop(item.item):
     def var_info(self):
         """See item."""
 
-        return item.item.var_info(self) + (
+        return super().var_info() + (
             self._var_info_table()
             if self.var.source == u'table'
             else self._var_info_file()
         )
+
+
+# Alias for backwards compatibility
+loop = Loop

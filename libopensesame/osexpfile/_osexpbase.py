@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 
-class osexpbase(object):
+class OSExpBase(object):
 
     def __init__(self, exp):
 

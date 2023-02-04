@@ -18,8 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.misc import snake_case
 from libopensesame import plugins
-from libopensesame.cistr import cistr
+from libopensesame.cistr import CIStr
 from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 from libopensesame.item_stack import item_stack_singleton
@@ -32,39 +33,39 @@ INVALID_NAMES = [
 ]
 
 
-class item_store(object):
+class ItemStore(object):
 
     """
     desc: |
-            The `items` object provides dict-like access to the items. It's mainly
-            useful for programatically executing items.
+        The `items` object provides dict-like access to the items. It's mainly
+        useful for programatically executing items.
 
-            An `items` object is created automatically when the experiment starts.
+        An `items` object is created automatically when the experiment starts.
 
-            In addition to the functions listed below, the following semantics are
-            supported:
+        In addition to the functions listed below, the following semantics are
+        supported:
 
-            __Example__:
+        __Example__:
 
-            ~~~ .python
-            # Programmatically prepare and run a sketchpad item.
-            items.execute(u'my_sketchpad')
-            # Check if an item exists
-            if u'my_sketchpad' in items:
-                    print(u'my_sketchpad exists')
-            # Delete an item
-            del items[u'my_sketchpad']
-            # Walk through all item names
-            for item_name in items:
-                    print(item_name)
-            ~~~
+        ~~~ .python
+        # Programmatically prepare and run a sketchpad item.
+        items.execute(u'my_sketchpad')
+        # Check if an item exists
+        if u'my_sketchpad' in items:
+                print(u'my_sketchpad exists')
+        # Delete an item
+        del items[u'my_sketchpad']
+        # Walk through all item names
+        for item_name in items:
+                print(item_name)
+        ~~~
 
-            [TOC]
+        [TOC]
     """
 
     built_in_types = [u'sequence', u'loop', u'sketchpad', u'feedback',
-                      u'keyboard_response', u'mouse_response', u'sampler', u'synth',
-                      u'inline_script', u'logger']
+                      u'keyboard_response', u'mouse_response', u'sampler',
+                      u'synth', u'inline_script', u'logger']
 
     def __init__(self, experiment):
         """
@@ -141,73 +142,59 @@ class item_store(object):
     def new(self, _type, name=None, script=None, allow_rename=True):
         """
         desc:
-                Creates a new item.
+            Creates a new item.
 
         arguments:
-                _type:
-                        desc:	The item type.
-                        type:	unicode
+            _type:
+                desc: The item type.
+                type: unicode
 
         keywords:
-                name:
-                        desc:	The item name, or None to choose a unique name based
-                                        on the item type.
-                        type:	[unicode, NoneType]
-                script:
-                        desc:	A definition script, or None to start with a blank item.
-                        type:	[unicode, NoneType]
-                allow_rename:
-                        desc:	Indicates whether OpenSesame can use a different name
-                                        from the one that is provided as `name` to avoid
-                                        duplicate names etc.
-                        type:	bool
+            name:
+                desc: The item name, or None to choose a unique name based
+                      on the item type.
+                type: [unicode, NoneType]
+            script:
+                desc: A definition script, or None to start with a blank item.
+                type: [unicode, NoneType]
+            allow_rename:
+                desc: Indicates whether OpenSesame can use a different name
+                      from the one that is provided as `name` to avoid
+                      duplicate names etc.
+                type: bool
 
         returns:
-                desc:	The newly generated item.
-                type:	item
+                desc: The newly generated item.
+                type: item
 
         example: |
-                items.new(u'sketchpad', name=u'my_sketchpad')
-                items[u'my_sketchpad'].prepare()
-                items[u'my_sketchpad'].run()
+                items.new('sketchpad', name='my_sketchpad')
+                items['my_sketchpad'].prepare()
+                items['my_sketchpad'].run()
         """
-
-        oslogger.debug(u'creating %s' % _type)
+        oslogger.debug('creating %s' % _type)
         if allow_rename:
             name = self.valid_name(_type, suggestion=name)
         else:
-            name = cistr(name)
+            name = CIStr(name)
         if plugins.is_plugin(_type):
             # Load a plug-in
             try:
-                item = plugins.load_plugin(
-                    _type, name, self.experiment, script,
-                    self.experiment.item_prefix()
-                )
+                item = plugins.load_plugin(_type, name, self.experiment,
+                                           script,
+                                           self.experiment.item_prefix())
             except Exception as e:
-                raise osexception(
-                    u"Failed to load plugin '%s'" % _type,
-                    exception=e
-                )
+                raise osexception(u"Failed to load plugin '%s'" % _type,
+                                  exception=e)
             self.__items__[name] = item
-        else:
-            # Load one of the core items
-            oslogger.debug(
-                u"loading core item '%s' from '%s'" % (
-                    _type,
-                    self.experiment.module_container()
-                )
-            )
-            item_module = __import__(
-                u'%s.%s' % (
-                    self.experiment.module_container(),
-                    _type
-                ),
-                fromlist=[u'dummy']
-            )
-            item_class = getattr(item_module, _type)
-            item = item_class(name, self.experiment, script)
-            self.__items__[name] = item
+            return item
+        # Load one of the core items
+        oslogger.debug(u"loading core item '%s' from '%s'" % (
+            _type, self.experiment.module_container()))
+        item_module = __import__(self.item_module(_type), fromlist=[u'dummy'])
+        item_class = getattr(item_module, _type)
+        item = item_class(name, self.experiment, script)
+        self.__items__[name] = item
         return item
 
     def valid_name(self, item_type, suggestion=None):
@@ -253,7 +240,7 @@ class item_store(object):
         while _name in invalid_names:
             _name = u'%s_%d' % (name, i)
             i += 1
-        return cistr(_name)
+        return CIStr(_name)
 
     def _type(self, name):
         """
@@ -276,7 +263,11 @@ class item_store(object):
         if name not in self:
             return None
         return self[name].item_type
-
+    
+    def item_module(self, item_type):
+        
+        return f'{self.experiment.module_container()}.{snake_case(item_type)}'
+        
     # The properties below emulate a dict interface.
 
     @property
@@ -315,18 +306,22 @@ class item_store(object):
 
     def __contains__(self, name):
 
-        if not isinstance(name, cistr):
+        if not isinstance(name, CIStr):
             try:
-                name = cistr(name)
+                name = CIStr(name)
             except AttributeError:
                 return False
         return name in self.__items__
 
     def __getitem__(self, name):
 
-        if not isinstance(name, cistr):
-            name = cistr(name)
+        if not isinstance(name, CIStr):
+            name = CIStr(name)
         try:
             return self.__items__[name]
         except KeyError:
             raise osexception(u'No item named "%s"' % name)
+
+
+# Alias for backwards compatibility
+item_store = ItemStore

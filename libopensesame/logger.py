@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame import item
+from libopensesame.item import Item
 from libopensesame.exceptions import osexception
 
 
-class logger(item.item):
+class Logger(Item):
 
     """
     desc:
@@ -81,8 +81,12 @@ class logger(item.item):
     def to_string(self):
         """See item."""
 
-        s = item.item.to_string(self, u'logger')
+        s = super().to_string('logger')
         for logvar in self.logvars:
             s += u'\t' + self.experiment.syntax.create_cmd(
                 u'log', [logvar]) + u'\n'
         return s
+
+
+# Alias for backwards compatibility
+logger = Logger

@@ -21,14 +21,14 @@ from libopensesame.py3compat import *
 import operator
 
 
-class cistr(str):
+class CIStr(str):
 
     """
     desc:
-            A class for case-insensitive string comparisons. This is used to speed
-            up the item store, which gets a lot of look ups for item names. This is
-            not a full emulation of the str protocol, only those parts that are used
-            by the item store.
+        A class for case-insensitive string comparisons. This is used to speed
+        up the item store, which gets a lot of look ups for item names. This is
+        not a full emulation of the str protocol, only those parts that are used
+        by the item store.
     """
 
     def __init__(self, s):
@@ -61,3 +61,7 @@ class cistr(str):
     def __hash__(self):
 
         return self._hash
+
+
+# Alias for backwards compatibility
+cistr = CIStr

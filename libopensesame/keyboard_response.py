@@ -19,11 +19,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libopensesame.base_response_item import base_response_item
-from openexp.keyboard import keyboard
+from libopensesame.base_response_item import BaseResponseItem
+from openexp.keyboard import Keyboard
 
 
-class keyboard_response_mixin(object):
+class KeyboardResponseMixin(object):
 
     """
     desc:
@@ -34,7 +34,7 @@ class keyboard_response_mixin(object):
     def prepare_response_func(self):
         """See base_response_item."""
 
-        self._keyboard = keyboard(self.experiment, timeout=self._timeout,
+        self._keyboard = Keyboard(self.experiment, timeout=self._timeout,
                                   keylist=self._allowed_responses)
         if self.var.get(u'event_type', default=u'keypress') == u'keypress':
             return self._keyboard.get_key
@@ -43,7 +43,7 @@ class keyboard_response_mixin(object):
         raise osexception(u'event_type should be "keypress" or "keyrelease"')
 
 
-class keyboard_response(keyboard_response_mixin, base_response_item):
+class KeyboardResponse(KeyboardResponseMixin, BaseResponseItem):
 
     """
     desc:
@@ -66,7 +66,7 @@ class keyboard_response(keyboard_response_mixin, base_response_item):
     def prepare(self):
         """See item."""
 
-        base_response_item.prepare(self)
+        super().prepare()
         self._flush = self.var.flush == u'yes'
 
     def response_matches(self, test, ref):
@@ -79,7 +79,7 @@ class keyboard_response(keyboard_response_mixin, base_response_item):
 
         if self._flush:
             self._keyboard.flush()
-        base_response_item.run(self)
+        super().run()
 
     def coroutine(self):
         """See coroutines plug-in."""
@@ -96,3 +96,8 @@ class keyboard_response(keyboard_response_mixin, base_response_item):
                 break
             alive = yield
         self.process_response((key, time))
+
+
+# Alias for backwards compatibility
+keyboard_response = KeyboardResponse
+keyboard_response_mixin = KeyboardResponseMixin

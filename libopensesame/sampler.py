@@ -19,15 +19,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from openexp.sampler import sampler as openexp_sampler
-from libopensesame.item import item
-from libopensesame.base_response_item import base_response_item
-from libopensesame.keyboard_response import keyboard_response_mixin
-from libopensesame.mouse_response import mouse_response_mixin
+from openexp.sampler import Sampler as OpenExpSampler
+from libopensesame.item import Item
+from libopensesame.base_response_item import BaseResponseItem
+from libopensesame.keyboard_response import KeyboardResponseMixin
+from libopensesame.mouse_response import MouseResponseMixin
 
 
-class sampler(base_response_item, keyboard_response_mixin,
-              mouse_response_mixin):
+class Sampler(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
     """
     desc:
@@ -52,9 +51,9 @@ class sampler(base_response_item, keyboard_response_mixin,
         """See base_response_item."""
 
         if self.var.duration == u'mouseclick':
-            mouse_response_mixin.process_response(self, response_args)
+            MouseResponseMixin.process_response(self, response_args)
             return
-        base_response_item.process_response(self, response_args)
+        super().process_response(response_args)
 
     def prepare_response_func(self):
         """See base_response_item."""
@@ -62,9 +61,9 @@ class sampler(base_response_item, keyboard_response_mixin,
         if isinstance(self.var.duration, (int, float)):
             return self._prepare_sleep_func(self.var.duration)
         if self.var.duration == u'keypress':
-            return keyboard_response_mixin.prepare_response_func(self)
+            return KeyboardResponseMixin.prepare_response_func(self)
         if self.var.duration == u'mouseclick':
-            return mouse_response_mixin.prepare_response_func(self)
+            return MouseResponseMixin.prepare_response_func(self)
         if self.var.duration == u'sound':
             return lambda: None
         raise osexception(u'Invalid duration: %s' % self.var.duration)
@@ -72,13 +71,13 @@ class sampler(base_response_item, keyboard_response_mixin,
     def prepare(self):
         """See item."""
 
-        base_response_item.prepare(self)
+        super().prepare()
         if safe_decode(self.var.sample).strip() == u'':
             raise osexception(
                 u'No sample has been specified in sampler "%s"' % self.name)
         sample = self.experiment.pool[self.var.sample]
         try:
-            self.sampler = openexp_sampler(self.experiment, sample)
+            self.sampler = OpenExpSampler(self.experiment, sample)
         except Exception as e:
             raise osexception(u'Failed to load sample: %s' % sample,
                               exception=e)
@@ -99,7 +98,7 @@ class sampler(base_response_item, keyboard_response_mixin,
 
         self._t0 = self.set_item_onset()
         self.sampler.play()
-        base_response_item.run(self)
+        super().run()
 
     def coroutine(self):
         """See coroutines plug-in."""
@@ -114,5 +113,9 @@ class sampler(base_response_item, keyboard_response_mixin,
 
         if self.var.get(u'duration', _eval=False, default=u'') in \
                 [u'keypress', u'mouseclick']:
-            return base_response_item.var_info(self)
-        return item.var_info(self)
+            return super().var_info()
+        return Item.var_info(self)
+
+
+# Alias for backwards compatibility
+sampler = Sampler

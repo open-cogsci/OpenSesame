@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.item import item
+from libopensesame.item import Item
 from libopensesame.exceptions import osexception
 
 
-class base_response_item(item):
+class BaseResponseItem(Item):
 
     """
     desc:
@@ -106,7 +106,7 @@ class base_response_item(item):
     def prepare(self):
         """See item."""
 
-        item.prepare(self)
+        super().prepare()
         self._timeout = self._prepare_timeout()
         self._allowed_responses = self._prepare_responses(u'allowed_responses')
         self._correct_responses = self._prepare_responses(u'correct_response')
@@ -116,7 +116,7 @@ class base_response_item(item):
     def run(self):
         """See item."""
 
-        item.run(self)
+        super().run()
         if self._t0 is None:
             self._t0 = self.set_item_onset()
         retval = self._collect_response()
@@ -139,7 +139,7 @@ class base_response_item(item):
             l.append((u"avg_rt", u"[Depends on response]"))
             l.append((u"accuracy", u"[Depends on response]"))
             l.append((u"acc", u"[Depends on response]"))
-        return item.var_info(self) + l
+        return super().var_info() + l
 
     # Private functions
 
@@ -221,3 +221,7 @@ class base_response_item(item):
         if self.var.duration > 0:
             return lambda: self.clock.sleep(self.var.duration)
         raise osexception(u'Duration should not be negative')
+
+
+# Alias for backwards compatibility
+base_response_item = BaseResponseItem

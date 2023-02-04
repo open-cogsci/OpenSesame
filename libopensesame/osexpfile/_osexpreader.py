@@ -21,10 +21,10 @@ from libopensesame.py3compat import *
 import os
 import tarfile
 from libopensesame import misc
-from libopensesame.osexpfile import osexpbase
+from libopensesame.osexpfile import OSExpBase
 
 
-class osexpreader(osexpbase):
+class OSExpReader(OSExpBase):
 
     """
     desc:
@@ -48,7 +48,7 @@ class osexpreader(osexpbase):
                         type:	str
         """
 
-        osexpbase.__init__(self, exp)
+        super().__init__(exp)
         self._src = safe_decode(src)
         if self.format == u'script':
             self._read_script()

@@ -18,6 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.osexpfile._osexpbase import osexpbase
-from libopensesame.osexpfile._osexpreader import osexpreader
-from libopensesame.osexpfile._osexpwriter import osexpwriter
+from libopensesame.osexpfile._osexpbase import OSExpBase
+from libopensesame.osexpfile._osexpreader import OSExpReader
+from libopensesame.osexpfile._osexpwriter import OSExpWriter
+
+# Alias for backwards compatibility
+osexpreader = OSExpReader
+osexpwriter = OSExpWriter

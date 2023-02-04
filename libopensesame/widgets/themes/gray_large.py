@@ -18,17 +18,16 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 import os
-from libopensesame.widgets.themes.gray import gray
-from libopensesame.widgets.themes.plain import plain
+from libopensesame.widgets.themes.gray import Gray
+from libopensesame.widgets.themes.plain import Plain
 
 
-class gray_large(gray):
+class GrayLarge(gray):
 
     def __init__(self, form):
 
-        plain.__init__(self, form)
+        Plain.__init__(self, form)
         self.box_checked_image = self.form.experiment.resource(os.path.join(
             'widgets', 'gray', 'box-checked-large.png'))
         self.box_unchecked_image = self.form.experiment.resource(os.path.join(
@@ -37,3 +36,7 @@ class gray_large(gray):
     def box_size(self):
 
         return 32
+
+
+# Alias for backwards compatibility
+gray_large = GrayLarge

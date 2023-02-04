@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 
-class item_stack(object):
+class ItemStack(object):
 
     """
     desc:
@@ -78,4 +78,4 @@ class item_stack(object):
 
 
 # Create a single instance of the stack
-item_stack_singleton = item_stack()
+item_stack_singleton = ItemStack()

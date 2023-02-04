@@ -18,11 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.sketchpad_elements._base_element import BaseElement
 
-from libopensesame.sketchpad_elements._base_element import base_element
 
-
-class gabor(base_element):
+class Gabor(BaseElement):
 
     """
     desc:
@@ -52,7 +51,7 @@ class gabor(base_element):
             (u'color2', u'black'),
             (u'bgmode',	u'avg')
         ]
-        super(gabor, self).__init__(sketchpad, string, defaults=defaults)
+        super().__init__(sketchpad, string, defaults=defaults)
 
     def draw(self):
         """
@@ -67,3 +66,7 @@ class gabor(base_element):
                                  stdev=properties[u'stdev'], phase=properties[u'phase'],
                                  col1=properties[u'color1'], col2=properties[u'color2'],
                                  bgmode=properties[u'bgmode'])
+
+
+# Alias for backwards compatibility
+gabor = Gabor

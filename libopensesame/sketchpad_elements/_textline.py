@@ -18,11 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.sketchpad_elements._base_element import BaseElement
 
-from libopensesame.sketchpad_elements._base_element import base_element
 
-
-class textline(base_element):
+class Textline(BaseElement):
 
     """
     desc:
@@ -51,7 +50,7 @@ class textline(base_element):
             (u'font_italic', sketchpad.var.get(u'font_italic')),
             (u'html', u'yes'),
         ]
-        super(textline, self).__init__(sketchpad, string, defaults=defaults)
+        super().__init__(sketchpad, string, defaults=defaults)
 
     def draw(self):
         """
@@ -69,3 +68,7 @@ class textline(base_element):
                                 font_size=properties[u'font_size'],
                                 font_italic=properties[u'font_italic'] == 'yes',
                                 font_bold=properties[u'font_bold'] == 'yes')
+
+
+# Alias for backwards compatibility
+textline = Textline

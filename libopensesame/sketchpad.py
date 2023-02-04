@@ -19,16 +19,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame import sketchpad_elements
+from libopensesame.item import Item
 from libopensesame.exceptions import osexception
-from libopensesame.item import item
-from libopensesame.base_response_item import base_response_item
-from libopensesame.keyboard_response import keyboard_response_mixin
-from libopensesame.mouse_response import mouse_response_mixin
-from openexp.canvas import canvas
+from libopensesame.base_response_item import BaseResponseItem
+from libopensesame.keyboard_response import KeyboardResponseMixin
+from libopensesame.mouse_response import MouseResponseMixin
+from openexp.canvas import Canvas
 
 
-class sketchpad(base_response_item, keyboard_response_mixin,
-                mouse_response_mixin):
+class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
     """
     desc:
@@ -91,9 +90,9 @@ class sketchpad(base_response_item, keyboard_response_mixin,
         """See base_response_item."""
 
         if self.var.duration == u'mouseclick':
-            mouse_response_mixin.process_response(self, response_args)
+            MouseResponseMixin.process_response(self, response_args)
             return
-        base_response_item.process_response(self, response_args)
+        super().process_response(response_args)
 
     def prepare_response_func(self):
         """See base_response_item."""
@@ -103,10 +102,10 @@ class sketchpad(base_response_item, keyboard_response_mixin,
             return self._prepare_sleep_func(self.var.duration)
         if self.var.duration == u'keypress':
             self._flush = lambda: self._keyboard.flush()
-            return keyboard_response_mixin.prepare_response_func(self)
+            return KeyboardResponseMixin.prepare_response_func(self)
         if self.var.duration == u'mouseclick':
             self._flush = lambda: self._mouse.flush()
-            return mouse_response_mixin.prepare_response_func(self)
+            return MouseResponseMixin.prepare_response_func(self)
         raise osexception(u'Invalid duration: %s' % self.var.duration)
 
     def _elements(self):
@@ -129,26 +128,21 @@ class sketchpad(base_response_item, keyboard_response_mixin,
     def prepare(self):
         """See item."""
 
-        base_response_item.prepare(self)
-        self.canvas = canvas(
-            self.experiment,
-            color=self.var.foreground,
-            background_color=self.var.background
-        )
+        super().prepare()
+        self.canvas = Canvas(self.experiment, color=self.var.foreground,
+                             background_color=self.var.background)
         with self.canvas:
             for element in self._elements():
                 temp_name = element.draw()
                 if element.element_name is not None:
-                    self.canvas.rename_element(
-                        temp_name, element.element_name
-                    )
+                    self.canvas.rename_element(temp_name, element.element_name)
 
     def run(self):
         """See item."""
 
         self._t0 = self.set_item_onset(self.canvas.show())
         self._flush()
-        base_response_item.run(self)
+        super().run()
 
     def coroutine(self):
         """See coroutines plug-in."""
@@ -159,7 +153,7 @@ class sketchpad(base_response_item, keyboard_response_mixin,
     def to_string(self):
         """See item."""
 
-        s = base_response_item.to_string(self)
+        s = super().to_string()
         for element in self.elements:
             s += u'\t%s\n' % element.to_string()
         return s
@@ -169,5 +163,9 @@ class sketchpad(base_response_item, keyboard_response_mixin,
 
         if self.var.get(u'duration', _eval=False, default=u'') in \
                 [u'keypress', u'mouseclick']:
-            return base_response_item.var_info(self)
-        return item.var_info(self)
+            return super().var_info()
+        return Item.var_info(self)
+
+
+# Alias for backwards compatibility
+sketchpad = Sketchpad

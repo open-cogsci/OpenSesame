@@ -22,11 +22,11 @@ import os
 import tarfile
 import tempfile
 import shutil
-from libopensesame.osexpfile import osexpbase
+from libopensesame.osexpfile import OSExpBase
 from libopensesame.oslogging import oslogger
 
 
-class osexpwriter(osexpbase):
+class OSExpWriter(OSExpBase):
 
     """
     desc:
@@ -48,7 +48,7 @@ class osexpwriter(osexpbase):
                         type:	str
         """
 
-        osexpbase.__init__(self, exp)
+        super().__init__(exp)
         self._path = path
         self._experiment_path = os.path.dirname(path)
         if self.format == 'scriptfile':

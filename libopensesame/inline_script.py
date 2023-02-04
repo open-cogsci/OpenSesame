@@ -20,8 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import warnings
 import re
-from libopensesame import item
-from openexp import canvas
+from libopensesame.item import Item
 from libopensesame.exceptions import osexception, AbortCoroutines
 
 extract_old_style = re.compile(
@@ -29,7 +28,7 @@ extract_old_style = re.compile(
 extract_new_style = re.compile(r'var.([_a-zA-Z]+[_a-zA-Z0-9]*)\s*=')
 
 
-class inline_script(item.item):
+class InlineScript(Item):
 
     """
     desc: |
@@ -53,12 +52,12 @@ class inline_script(item.item):
     def prepare(self):
         """
         desc:
-                Executes the prepare script. The code that you enter in the
-                'prepare' tab of an inline_script item in the GUI is used as a body
-                for this function.
+            Executes the prepare script. The code that you enter in the
+            'prepare' tab of an inline_script item in the GUI is used as a body
+            for this function.
         """
 
-        item.item.prepare(self)
+        super().prepare()
         # 'self' must always be registered, otherwise we get confusions between
         # the various inline_script items.
         self.workspace[u'self'] = self
@@ -101,9 +100,9 @@ class inline_script(item.item):
     def run(self):
         """
         desc:
-                Executes the run script. The code that you enter in the 'run' tab of
-                an inline_script item in the GUI is used as a body for this
-                function.
+            Executes the run script. The code that you enter in the 'run' tab of
+            an inline_script item in the GUI is used as a body for this
+            function.
         """
 
         self.set_item_onset()
@@ -154,7 +153,7 @@ class inline_script(item.item):
                 A list of (variable, description) tuples.
         """
 
-        l = item.item.var_info(self)
+        l = super().var_info()
         script = (
             self.var.get(u'_prepare', _eval=False, default=u'')
             + self.var.get(u'_run', _eval=False, default=u'')
@@ -165,26 +164,6 @@ class inline_script(item.item):
             l.append((var, None))
         return l
 
-    def copy_sketchpad(self, sketchpad_name):
-        """
-        desc:
-                Deprecated function.
-        """
 
-        warnings.warn(u'self.copy_sketchpad() is deprecated. '
-                      'Use copy_sketchpad() instead.',
-                      DeprecationWarning)
-        c = self.offline_canvas()
-        c.copy(self.experiment.items[sketchpad_name].canvas)
-        return c
-
-    def offline_canvas(self, auto_prepare=True):
-        """
-        desc:
-                Deprecated function.
-        """
-
-        warnings.warn(u'self.offline_canvas() is deprecated. '
-                      'Use canvas() instead.', DeprecationWarning)
-        return canvas.canvas(self.experiment, auto_prepare=auto_prepare,
-                             background_color=self.var.background, color=self.var.foreground)
+# Alias for backwards compatibility
+inline_script = InlineScript

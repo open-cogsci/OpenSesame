@@ -19,16 +19,16 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import os
-from libopensesame.widgets.themes.plain import plain
+from libopensesame.widgets.themes.plain import Plain
 from openexp.canvas_elements import Rect, Line, Image
 from openexp._canvas._element.group import Group
 
 
-class gray(plain):
+class Gray(Plain):
 
     def __init__(self, form):
 
-        plain.__init__(self, form)
+        super().__init__(form)
         self.box_checked_image = self.form.experiment.resource(os.path.join(
             u'widgets', u'gray', u'box-checked.png'))
         self.box_unchecked_image = self.form.experiment.resource(os.path.join(
@@ -54,3 +54,7 @@ class gray(plain):
             elements.append(
                 Rect(x+2, y+2, w-4, h-4, color=u'#888a85', fill=True))
         return Group(self.canvas, elements)
+
+
+# Alias for backwards compatibility
+gray = Gray

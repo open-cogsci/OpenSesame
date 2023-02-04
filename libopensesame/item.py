@@ -24,7 +24,7 @@ from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
 
 
-class item(object):
+class Item(object):
 
     """Abstract class that serves as the basis for all OpenSesame items."""
 
@@ -205,18 +205,6 @@ class item(object):
             return True
         return False
 
-    def set_response(self, response=None, response_time=None, correct=None):
-        """
-        desc:
-                Deprecated by response store.
-        """
-
-        warnings.warn(
-            u'set_response() has been deprecated. Use responses object instead.',
-            DeprecationWarning)
-        self.responses.add(response=response, response_time=response_time,
-                           correct=correct)
-
     def __getattr__(self, var):
 
         if var in self.var.__vars__:
@@ -362,36 +350,6 @@ class item(object):
                 u'(%s, %s) is not a valid resolution' % (w, h))
         return w, h
 
-    def set(self, var, val):
-
-        warnings.warn(u'item.set() is deprecated (for var %s)' % var,
-                      DeprecationWarning)
-        setattr(self.var, var, val)
-
-    def unset(self, var):
-
-        warnings.warn(u'item.unset() is deprecated (for var %s)' % var,
-                      DeprecationWarning)
-        self.var.unset(var)
-
-    def get(self, var, _eval=True):
-
-        warnings.warn(u'item.get() is deprecated (for var %s)' % var,
-                      DeprecationWarning)
-        return self.var.get(var, _eval=_eval)
-
-    def get_check(self, var, default=None, valid=None, _eval=True):
-
-        warnings.warn(u'item.var.get() is deprecated (for var %s)' % var,
-                      DeprecationWarning)
-        return self.var.get(var, default=default, _eval=_eval, valid=valid)
-
-    def has(self, var):
-
-        warnings.warn(u'item.has() is deprecated (for var %s)' % var,
-                      DeprecationWarning)
-        return var in self.var
-
     def get_refs(self, text):
         """
         desc:
@@ -520,25 +478,6 @@ class item(object):
 
         return self.clock.time()
 
-    def flush_log(self):
 
-        warnings.warn(u'item.flush_log() has been deprecated',
-                      DeprecationWarning)
-
-    def split(self, s):
-
-        warnings.warn(
-            u'item.split() has been deprecated. Please use syntax.split()',
-            DeprecationWarning)
-        return self.syntax.split(s)
-
-    def eval_text(self, text, round_float=False, soft_ignore=False,
-                  quote_str=False):
-
-        warnings.warn(
-            u'item.eval_text() has been deprecated. Please use syntax.eval_text()',
-            DeprecationWarning)
-        return self.syntax.eval_text(text, round_float=round_float)
-
-
-Item = item
+# alias for backwards compatibility
+item = Item

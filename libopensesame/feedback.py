@@ -18,17 +18,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame import sketchpad
+from libopensesame.sketchpad import Sketchpad
 
 
-class feedback(sketchpad.sketchpad):
+class Feedback(Sketchpad):
 
     description = u'Provides feedback to the participant'
 
     def reset(self):
         """See item."""
 
-        super(feedback, self).reset()
+        super().reset()
         self.var.reset_variables = u'yes'
 
     def prepare(self):
@@ -39,14 +39,18 @@ class feedback(sketchpad.sketchpad):
     def run(self):
         """Runs the item."""
 
-        sketchpad.sketchpad.prepare(self)
-        sketchpad.sketchpad.run(self)
+        super().prepare()
+        super().run()
         if self.var.reset_variables == u'yes':
             self.experiment.reset_feedback()
 
     def coroutine(self):
         """See coroutines plug-in."""
 
-        sketchpad.sketchpad.prepare(self)
+        super().prepare()
         yield
         self.set_item_onset(self.canvas.show())
+
+
+# Alias for backwards compatibility
+feedback = Feedback

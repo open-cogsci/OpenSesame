@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libopensesame import debug
 from libopensesame.widgets._widget import Widget
 from openexp.canvas_elements import RichText
 

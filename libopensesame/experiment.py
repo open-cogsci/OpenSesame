@@ -24,11 +24,12 @@ from libopensesame.response_store import response_store
 from libopensesame.file_pool_store import file_pool_store
 from libopensesame.syntax import syntax
 from libopensesame.exceptions import osexception
-from libopensesame import misc, item, debug, metadata
+from libopensesame import misc, item, metadata
 from libopensesame.item_stack import item_stack_singleton
 from libopensesame.oslogging import oslogger
 from libopensesame.py3compat import *
 import os
+import sys
 import pickle
 import time
 import warnings
@@ -147,7 +148,7 @@ class experiment(item.item):
 
         # This is some duplication of the option parser in qtopensesame,
         # but nevertheless keep it so we don't need qtopensesame
-        self.debug = debug.enabled
+        self.debug = '--debug' in sys.argv or '-d' in sys.argv
         if string is not None:
             string = self.open(string)
         item.item.__init__(self, name, self, string)

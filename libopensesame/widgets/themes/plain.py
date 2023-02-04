@@ -21,18 +21,19 @@ from libopensesame.py3compat import *
 from openexp.canvas_elements import Rect
 
 
-class plain:
+class Plain:
 
     def __init__(self, form):
 
         self.form = form
-        if self.form.clicks:
-            from openexp.sampler import sampler
-            import os
-            self.click_sound = sampler(self.form.experiment,
-                                       self.form.experiment.resource(os.path.join(
-                                           'widgets', 'interaction.ogg')),
-                                       duration=0, volume=.5)
+        if not self.form.clicks:
+            return
+        from openexp.sampler import Sampler
+        import os
+        self.click_sound = Sampler(self.form.experiment,
+            self.form.experiment.resource(
+                os.path.join('widgets', 'interaction.ogg')),
+            duration=0, volume=.5)
 
     @property
     def canvas(self):
@@ -54,3 +55,7 @@ class plain:
 
         if self.form.clicks:
             self.click_sound.play()
+
+
+# Alias for backwards compatibility
+plain = Plain

@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import os
+import re
 import os.path
 import platform
 import sys
@@ -396,6 +397,19 @@ def escape_html(s):
     for orig, new in l:
         s = s.replace(orig, new)
     return s
+
+
+snake_case_pattern = re.compile(r'(?<!^)(?=[A-Z])')
+
+
+def snake_case(s):
+    """Turns CamelCase to snake_case"""
+    return snake_case_pattern.sub('_', s).lower()
+    
+    
+def camel_case(s):
+    """Turns snake_case to CamelCase"""
+    return (''.join(x.capitalize() or '_' for x in s.split('_'))).capitalize()
 
 
 # Build a list of base folders, that is, folders that can have

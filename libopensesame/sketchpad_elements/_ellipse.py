@@ -18,11 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.sketchpad_elements._base_element import BaseElement
 
-from libopensesame.sketchpad_elements._base_element import base_element
 
-
-class ellipse(base_element):
+class Ellipse(BaseElement):
 
     """
     desc:
@@ -48,7 +47,7 @@ class ellipse(base_element):
             (u'color', sketchpad.var.get(u'foreground')),
             (u'penwidth', 1),
         ]
-        super(ellipse, self).__init__(sketchpad, string, defaults=defaults)
+        super().__init__(sketchpad, string, defaults=defaults)
 
     def draw(self):
         """
@@ -62,3 +61,7 @@ class ellipse(base_element):
                                    fill=properties[u'fill'],
                                    color=properties[u'color'],
                                    penwidth=properties[u'penwidth'])
+
+
+# Alias for backwards compatibility
+ellipse = Ellipse

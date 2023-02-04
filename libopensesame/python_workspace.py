@@ -23,22 +23,22 @@ from libopensesame.exceptions import AbortCoroutines
 import types
 from openexp.canvas_elements import ElementFactory
 from libopensesame.widgets.widget_factory import WidgetFactory
-from libopensesame.base_python_workspace import base_python_workspace
+from libopensesame.base_python_workspace import BasePythonWorkspace
 
 
-class python_workspace(base_python_workspace):
+class PythonWorkspace(BasePythonWorkspace):
 
     """
     desc:
-            Provides a worspace in which Python scripts can be executed. Generally,
-            each experiment has one python_workspace object, which is used for all
-            inline_script items, and other items that make allow users to execute
-            Python code.
+        Provides a worspace in which Python scripts can be executed. Generally,
+        each experiment has one python_workspace object, which is used for all
+        inline_script items, and other items that make allow users to execute
+        Python code.
 
-            The python_workspace object is dictionary-like, and allows you to get
-            and set global variables in a dictionary way, e.g.:
+        The python_workspace object is dictionary-like, and allows you to get
+        and set global variables in a dictionary way, e.g.:
 
-                    self.experiment.python_workspace[u'my_var'] = 10
+            self.experiment.python_workspace[u'my_var'] = 10
     """
 
     def __init__(self, experiment):
@@ -52,7 +52,7 @@ class python_workspace(base_python_workspace):
                         type:	experiment
         """
 
-        base_python_workspace.__init__(self, experiment)
+        super().__init__(experiment)
         api.experiment = experiment
 
     def init_globals(self):
@@ -90,3 +90,7 @@ class python_workspace(base_python_workspace):
                 obj, (WidgetFactory, ElementFactory)):
             return True
         return False
+
+
+# Alias for backwards compatibility
+python_workspace = PythonWorkspace
