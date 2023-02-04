@@ -85,7 +85,7 @@ class markdown_parser(base_subcomponent):
 
 <div class="footer">
 %s
-Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-2022
+Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-2023
 </div>
 ''' % (_(u'Dismiss this message'), metadata.identity)
 
