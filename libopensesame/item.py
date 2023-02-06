@@ -135,7 +135,7 @@ class Item(object):
                 return True
         return False
 
-    def parse_keywords(self, line, from_ascii=False, _eval=False):
+    def parse_keywords(self, line, _eval=False):
         """
         Parses keywords, e.g. 'my_keyword=my_value'.
 
@@ -143,7 +143,6 @@ class Item(object):
         line		--	A single definition line.
 
         Keyword arguments:
-        from_ascii	--	DEPRECATED KEYWORD.
         _eval		--	Indicates whether the values should be evaluated.
                                         (default=False)
 
@@ -205,19 +204,6 @@ class Item(object):
             self.comments.append(line[2:])
             return True
         return False
-
-    def __getattr__(self, var):
-
-        if var in self.var.__vars__:
-            warnings.warn(u'called %s as item property' % var,
-                          DeprecationWarning)
-            return self.var.get(var)
-        if hasattr(self.__class__, var):
-            warnings.warn(
-                u'called %s as item property and stored as class attribute'
-                % var, DeprecationWarning)
-            return getattr(self.__class__, var)
-        raise AttributeError(u'%s not found' % var)
 
     def variable_to_string(self, var):
         """

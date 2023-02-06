@@ -369,38 +369,6 @@ class Mouse(Backend):
                 return bm
         return []
 
-    # Deprecated functions
-
-    def set_buttonlist(self, buttonlist=None):
-        """
-        visible:	False
-        desc:		deprecated
-        """
-
-        warnings.warn(u'mouse.set_buttonlist() has been deprecated. '
-                      'Use mouse.buttonlist instead.', DeprecationWarning)
-        self.buttonlist = buttonlist
-
-    def set_timeout(self, timeout=None):
-        """
-        visible:	False
-        desc:		deprecated
-        """
-
-        warnings.warn(u'mouse.set_timeout() has been deprecated. '
-                      'Use mouse.timeout instead.', DeprecationWarning)
-        self.timeout = timeout
-
-    def set_visible(self, visible=True):
-        """
-        visible:	False
-        desc:		deprecated
-        """
-
-        warnings.warn(u'mouse.set_visible() has been deprecated. '
-                      'Use mouse.visible instead.', DeprecationWarning)
-        self.visible = visible
-
 
 # Non PEP-8 alias for backwards compatibility
 mouse = Mouse

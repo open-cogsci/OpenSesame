@@ -665,18 +665,6 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
         return self.sketchpad.var.get(u'height') // 2
 
-    def set_font(self, style=None, size=None, italic=None, bold=None,
-                 underline=None):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
-
-        # Deprecated function
-        if bold:
-            weight = QtGui.QFont.Bold
-        else:
-            weight = QtGui.QFont.Normal
-        self._font = QtGui.QFont(style, weight=weight, italic=italic)
-        self._font.setPixelSize(self._font_size(size))
-
     def text(self, text, center=True, x=None, y=None, max_width=None,
              **properties):
         """Mimicks canvas api. See openexp._canvas.canvas."""

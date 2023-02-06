@@ -62,8 +62,6 @@ class Log(object):
 
     def __call__(self, msg):
 
-        warnings.warn(u'item.flog() has been deprecated. '
-                      u'Use experiment.log.write() instead.', DeprecationWarning)
         self.write(msg)
 
     def close(self):

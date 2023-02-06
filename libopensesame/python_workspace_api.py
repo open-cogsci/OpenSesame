@@ -227,18 +227,6 @@ def reset_feedback():
     experiment.reset_feedback()
 
 
-def set_response(response=None, response_time=None, correct=None):
-    """
-    visible: False
-    """
-
-    warnings.warn(
-        u'set_response() has been deprecated. Use responses object instead.',
-        DeprecationWarning)
-    experiment.responses.add(response=response, response_time=response_time,
-                             correct=correct)
-
-
 def set_subject_nr(nr):
     """
     desc:

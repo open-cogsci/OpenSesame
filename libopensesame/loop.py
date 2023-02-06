@@ -313,14 +313,6 @@ class Loop(Item):
         """See item."""
 
         super().prepare()
-        # Deprecation errors. The direct reference to __vars__ prevents a lookup
-        # in the parent var store.
-        if (u'skip' in self.var.__vars__ and self.var.skip != 0) \
-                or (u'offset' in self.var.__vars__ and self.var.offset != u'no'):
-            raise osexception(
-                u'The skip and offset options have been removed. Please refer '
-                u'to the documentation of the loop item for more information.'
-            )
         # Compile break-if statement
         break_if = self.var.get(u'break_if', _eval=False)
         if break_if not in (u'never', u''):

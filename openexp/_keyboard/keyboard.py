@@ -329,38 +329,6 @@ class Keyboard(Backend):
 
         raise NotImplementedError()
 
-    # Deprecated functions
-
-    def to_chr(self, key):
-        """
-        visible:	False
-        desc:		deprecated
-        """
-
-        warnings.warn(u'keyboard.to_chr() has been deprecated.',
-                      DeprecationWarning)
-        return key
-
-    def set_keylist(self, keylist=None):
-        """
-        visible:	False
-        desc:		deprecated
-        """
-
-        warnings.warn(u'keyboard.set_keylist() has been deprecated. '
-                      'Use keyboard.keylist instead.', DeprecationWarning)
-        self.keylist = keylist
-
-    def set_timeout(self, timeout=None):
-        """
-        visible:	False
-        desc:		deprecated
-        """
-
-        warnings.warn(u'keyboard.set_timeout() has been deprecated. '
-                      'Use keyboard.timeout instead.', DeprecationWarning)
-        self.timeout = timeout
-
 
 # Non PEP-8 alias for backwards compatibility
 keyboard = Keyboard

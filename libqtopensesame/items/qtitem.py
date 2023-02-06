@@ -477,7 +477,7 @@ class QtItem(object):
             )
         self.extension_manager.fire(u'change_item', name=self.name)
 
-    def edit_widget(self, *deprecated, **_deprecated):
+    def edit_widget(self):
         """
         desc:
                 This function updates the controls based on the item state.
@@ -486,7 +486,7 @@ class QtItem(object):
         self.auto_edit_widget()
         self.header.refresh()
 
-    def apply_edit_changes(self, *deprecated, **_deprecated):
+    def apply_edit_changes(self):
         """
         desc:
                 Applies changes to the graphical controls.
@@ -497,7 +497,7 @@ class QtItem(object):
         self.set_clean()
         return True
 
-    def apply_script_changes(self, *deprecated, **_deprecated):
+    def apply_script_changes(self):
         """
         desc:
                 Applies changes to the script.
@@ -514,7 +514,7 @@ class QtItem(object):
             self.cached_script = new_script
         self.edit_widget()
 
-    def apply_script_changes_and_switch_view(self, *deprecated, **_deprecated):
+    def apply_script_changes_and_switch_view(self):
         """
         desc:
                 Applies changes to the script if possible. If so, switches to the

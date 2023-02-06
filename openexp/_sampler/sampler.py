@@ -306,21 +306,6 @@ class Sampler(Backend):
 
         raise NotImplementedError()
 
-    # Deprecated functions
-
-    def stop_after(self, ms):
-        """
-        visible:	False
-        desc:		deprecated
-        """
-
-        warnings.warn(
-            u'sampler.stop_after() has been deprecated. '
-            'Use sampler.duration instead.',
-            DeprecationWarning
-        )
-        self.duration = ms
-
     @staticmethod
     def init_sound(experiment):
         """

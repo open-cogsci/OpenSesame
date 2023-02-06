@@ -603,23 +603,6 @@ class Canvas(Backend):
 
     def set_config(self, **cfg):
 
-        # Remap deprecated names
-        if u'bgcolor' in cfg:
-            warnings.warn(u'bgcolor is a deprecated style argument. '
-                          'Use background_color instead.',
-                          DeprecationWarning)
-            cfg[u'background_color'] = cfg[u'bgcolor']
-            del cfg['bgcolor']
-        if u'fgcolor' in cfg:
-            warnings.warn(u'fgcolor is a deprecated style argument. '
-                          'Use color instead.', DeprecationWarning)
-            cfg[u'color'] = cfg[u'fgcolor']
-            del cfg['fgcolor']
-        if u'font_style' in cfg:
-            warnings.warn(u'font_style is a deprecated style argument. '
-                          'Use font_family instead.',	DeprecationWarning)
-            cfg[u'font_family'] = cfg[u'font_style']
-            del cfg['font_style']
         # Convert color to backend specific colors
         if u'color' in cfg and not hasattr(cfg[u'color'], u'backend_color'):
             cfg[u'color'] = Color(self.experiment, cfg[u'color'])
@@ -1342,66 +1325,6 @@ class Canvas(Backend):
         self += NoisePatch(x, y, env=env, size=size, stdev=stdev,
                            col1=col1, col2=col2, bgmode=bgmode)
         return 'stim%d' % self._stimnr
-
-    # Deprecated functions
-
-    def xcenter(self):
-        """
-        visible:	False
-        desc:		deprecated
-        """
-
-        return self.experiment.var.get(u'width') / 2
-
-    def ycenter(self):
-        """
-        visible:	False
-        desc:		deprecated
-        """
-
-        return self.experiment.var.get(u'height') / 2
-
-    def set_penwidth(self, penwidth):
-        """
-        visible:	False
-        desc:		deprecated
-        """
-
-        self.penwidth = penwidth
-
-    def set_fgcolor(self, color):
-        """
-        visible:	False
-        desc:		deprecated
-        """
-
-        self.color = color
-
-    def set_bgcolor(self, color):
-        """
-        visible:	False
-        desc:		deprecated
-        """
-
-        self.background_color = color
-
-    def set_font(self, style=None, size=None, italic=None, bold=None,
-                 underline=None):
-        """
-        visible:	False
-        desc:		deprecated
-        """
-
-        if style is not None:
-            self.font_family = style
-        if size is not None:
-            self.font_size = size
-        if italic is not None:
-            self.font_italic = italic
-        if bold is not None:
-            self.font_bold = bold
-        if underline is not None:
-            self.font_underline = underline
 
     @staticmethod
     def init_display(experiment):
