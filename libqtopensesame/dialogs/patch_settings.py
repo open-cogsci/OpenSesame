@@ -142,7 +142,7 @@ class PatchSettings(BaseDialog):
                 Safely sets a spinbox based on a variable, or disables the spinbox
                 if the value is not numeric.
 
-        desc:
+        arguments:
                 spinbox:	A QSpinBox
                 var:		A variable name
                 properties:	A properties dict

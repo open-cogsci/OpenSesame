@@ -389,8 +389,9 @@ def escape_html(s):
 
     # Note that we need to replace the '&' first, otherwise we'll start escaping
     # the escaped characters.
-    l = [(u'&', u'&amp;'), (u' ', u'&nbsp;'), (u'\t',
-                                               u'&nbsp;&nbsp;&nbsp;&nbsp;'), (u'<', u'&lt;'), (u'>', u'&gt;')]
+    l = [(u'&', u'&amp;'), (u' ', u'&nbsp;'),
+         (u'\t', u'&nbsp;&nbsp;&nbsp;&nbsp;'), (u'<', u'&lt;'),
+         (u'>', u'&gt;')]
     for orig, new in l:
         s = s.replace(orig, new)
     return s

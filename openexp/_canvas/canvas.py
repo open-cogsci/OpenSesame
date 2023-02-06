@@ -1391,7 +1391,7 @@ def _color(col):
             Wrapper function for _gabor and _noise_patch to convert color names to
             PyGame color objects.
 
-    argumens:
+    arguments:
             col:	A color specification.
 
     returns:

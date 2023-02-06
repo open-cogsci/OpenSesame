@@ -258,7 +258,7 @@ class Experiment(ExperimentRuntime):
 
     def varref(self, val):
         """
-        desc:
+        desc: |
                 Checks whether a value contains a variable reference, for example:
 
                         'This is [width] px'

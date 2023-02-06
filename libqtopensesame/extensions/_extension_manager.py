@@ -158,7 +158,7 @@ class ExtensionManager(BaseSubcomponent):
                 event:        The event name.
 
         keyword-dict:
-        kwdict:        A dictionary with keywords that are applicable to a
+            kwdict:        A dictionary with keywords that are applicable to a
                                 particular event.
         """
 

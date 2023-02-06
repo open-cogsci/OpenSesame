@@ -52,7 +52,7 @@ class OSExpBase:
     @property
     def format(self):
         """
-        desc:
+        desc: |
                 The format of the experiment, which can be:
 
                 - script: a script (ie. not from file)
