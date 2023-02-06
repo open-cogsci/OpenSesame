@@ -74,7 +74,7 @@ class Legacy(Sampler):
     def __init__(self, experiment, src, **playback_args):
 
         if src is not None:
-            if isinstance(src, basestring):
+            if isinstance(src, str):
                 if not os.path.exists(src):
                     raise osexception(
                         u"openexp._sampler.legacy.__init__() the file '%s' does not exist"

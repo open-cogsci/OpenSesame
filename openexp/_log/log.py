@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 import warnings
 
 
-class Log(object):
+class Log:
 
     """
     desc: |

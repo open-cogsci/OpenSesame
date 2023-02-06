@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception, AbortCoroutines
 
 
-class base_task(object):
+class base_task:
 
     """
     desc:

@@ -47,7 +47,7 @@ class FileHandler(BaseExtension):
         self._bindings = {
             pattern: cmd
             for pattern, cmd in self._bindings.items()
-            if isinstance(pattern, basestring) and isinstance(cmd, basestring)
+            if isinstance(pattern, str) and isinstance(cmd, str)
         }
 
     def _is_experiment(self, path):
@@ -61,7 +61,7 @@ class FileHandler(BaseExtension):
 
     def provide_file_handler(self, path):
 
-        if not isinstance(path, basestring) or self._is_experiment(path):
+        if not isinstance(path, str) or self._is_experiment(path):
             return
         for pattern, cmd in self._bindings.items():
             if fnmatch.fnmatch(path, pattern):

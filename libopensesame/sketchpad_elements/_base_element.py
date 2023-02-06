@@ -22,7 +22,7 @@ from libopensesame.misc import snake_case
 from libopensesame.exceptions import osexception
 
 
-class BaseElement(object):
+class BaseElement:
 
     """
     desc:
@@ -191,7 +191,7 @@ class BaseElement(object):
                 type:		[unicode, int, float]
         """
 
-        if not isinstance(val, basestring):
+        if not isinstance(val, str):
             return val
         val = val.replace(u'\\', u'\\\\')
         val = val.replace(u'"', u'\\"')

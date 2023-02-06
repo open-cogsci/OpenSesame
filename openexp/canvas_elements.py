@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from openexp import backend
 
 
-class ElementFactory(object):
+class ElementFactory:
 
     def __init__(self, *args, **kwargs):
 

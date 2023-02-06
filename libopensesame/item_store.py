@@ -33,7 +33,7 @@ INVALID_NAMES = [
 ]
 
 
-class ItemStore(object):
+class ItemStore:
 
     """
     desc: |

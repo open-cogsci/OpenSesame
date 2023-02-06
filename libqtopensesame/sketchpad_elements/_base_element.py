@@ -25,7 +25,7 @@ from libqtopensesame.dialogs.text_input import TextInput
 _ = translation_context(u'sketchpad', category=u'item')
 
 
-class BaseElement(object):
+class BaseElement:
 
     """
     desc:

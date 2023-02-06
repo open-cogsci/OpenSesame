@@ -273,7 +273,7 @@ class Experiment(ExperimentRuntime):
                 type:		bool
         """
 
-        if not isinstance(val, basestring):
+        if not isinstance(val, str):
             return False
         # TODO: Improve with regular expression
         return u'[' in val

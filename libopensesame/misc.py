@@ -44,7 +44,7 @@ def parse_environment_file():
         d = safe_yaml_load(fd.read())
     # Convert all values from UTF8 to the filesystem encoding
     for key, val in d.items():
-        if isinstance(val, basestring):
+        if isinstance(val, str):
             d[key] = safe_str(safe_decode(val), enc=filesystem_encoding())
         elif isinstance(val, list):
             d[key] = [
@@ -56,7 +56,7 @@ def parse_environment_file():
     # The Python path is added to sys.path, the rest is added as an environment
     # variable.
     if u'PYTHON_PATH' in d:
-        if isinstance(d[u'PYTHON_PATH'], basestring):
+        if isinstance(d[u'PYTHON_PATH'], str):
             sys.path = d[u'PYTHON_PATH'].split(';') + sys.path
         else:
             sys.path = d[u'PYTHON_PATH'] + sys.path
@@ -198,10 +198,7 @@ def messagebox(title, msg):
     msg -- the message
     """
 
-    if py3:
-        import tkinter as Tkinter
-    else:
-        import Tkinter
+    import tkinter as Tkinter
     root = Tkinter.Tk()
     root.title(title)
     l = Tkinter.Label(root, text=msg, justify=Tkinter.LEFT, padx=8, pady=8,
@@ -431,10 +428,7 @@ def camel_case(s):
 # - /usr/local/share
 # - /usr/share
 
-if py3:
-    cwd = os.getcwd()
-else:
-    cwd = os.getcwdu()
+cwd = os.getcwd()
 parent_folder = safe_decode(
     os.path.dirname(os.path.dirname(__file__)),
     enc=filesystem_encoding()

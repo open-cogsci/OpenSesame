@@ -22,7 +22,7 @@ import numpy as np
 from openexp._canvas import canvas
 
 
-class PsychoElement(object):
+class PsychoElement:
 
     """
     desc:
@@ -89,7 +89,7 @@ class PsychoElement(object):
         raise ValueError('Invalid mask')
 
 
-class RotatingElement(object):
+class RotatingElement:
 
     def _on_attribute_change(self, **kwargs):
 

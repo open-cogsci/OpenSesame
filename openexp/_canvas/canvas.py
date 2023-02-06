@@ -482,7 +482,7 @@ class Canvas(Backend):
                 A (name, element) tuple.
         """
 
-        if isinstance(element, basestring):
+        if isinstance(element, str):
             return element, self._elements[element]
         for name, _element in self._elements.items():
             if element is _element:

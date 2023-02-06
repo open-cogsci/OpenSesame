@@ -23,7 +23,7 @@ from libopensesame.exceptions import osexception
 from openexp.canvas_elements import Rect
 
 
-class Widget(object):
+class Widget:
 
     """
     desc:

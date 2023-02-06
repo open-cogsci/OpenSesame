@@ -28,7 +28,7 @@ from qtpy import QtGui, QtWidgets, QtCore
 available_themes = [u'default', u'monokai']
 
 
-class Theme(object):
+class Theme:
 
     """Handles the GUI theme"""
 
@@ -205,7 +205,7 @@ class Theme(object):
         A QPixmap
         """
 
-        if isinstance(icon, basestring) and os.path.exists(icon):
+        if isinstance(icon, str) and os.path.exists(icon):
             return QtGui.QPixmap(icon)
         if size is None:
             if icon in self.icon_map:

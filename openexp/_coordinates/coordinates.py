@@ -23,7 +23,7 @@ from openexp._mouse.mouse import Mouse
 from libopensesame.exceptions import osexception
 
 
-class Coordinates(object):
+class Coordinates:
 
     """
     desc:

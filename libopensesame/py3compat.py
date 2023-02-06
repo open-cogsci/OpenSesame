@@ -22,25 +22,7 @@ import sys
 import io
 import yaml
 
-if sys.version_info >= (3, 0, 0):
-    py3 = True
-    basestring = str
-    universal_newline_mode = u'r'
-else:
-    bytes = str
-    str = unicode
-    py3 = False
-    universal_newline_mode = u'rU'
-    RecursionError = RuntimeError
-    PermissionError = IOError
-    FileNotFoundError = OSError
-
-try:
-    str.isascii
-    def isascii(s): return s.isascii()
-except AttributeError:  # str.isascii doesn't exist before Python 3.7
-    import string
-    def isascii(s): return all(ch in string.printable for ch in s)
+py3 = True
 
 
 def safe_decode(s, enc='utf-8', errors='strict'):
@@ -94,40 +76,19 @@ def safe_read(path):
     return safe_decode(s, errors=u'ignore')
 
 
-# Depending on the version of yaml, we should pass the Loader keyword or not
-if hasattr(yaml, u'FullLoader'):
-    def safe_yaml_load(s):
-        return yaml.load(s, Loader=yaml.UnsafeLoader)
-else:
-    def safe_yaml_load(s):
-        return yaml.load(s)
+def safe_yaml_load(s):
+    return yaml.load(s, Loader=yaml.UnsafeLoader)
 
 
-if py3:
-    safe_str = safe_decode
-    safe_open = functools.partial(open, encoding=u'utf-8')
-else:
-    safe_open = functools.partial(io.open, encoding=u'utf-8')
-    safe_str = safe_encode
+safe_str = safe_decode
+safe_open = functools.partial(open, encoding=u'utf-8')
 
 __all__ = [
     'py3',
     'safe_decode',
     'safe_encode',
     'safe_str',
-    'universal_newline_mode',
     'safe_read',
     'safe_open',
     'safe_yaml_load',
-    'isascii'
 ]
-if not py3:
-    __all__ += [
-        'str',
-        'bytes',
-        'RecursionError',
-        'PermissionError',
-        'FileNotFoundError'
-    ]
-else:
-    __all__ += ['basestring']

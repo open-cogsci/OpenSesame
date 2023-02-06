@@ -349,7 +349,7 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
                 True if val contains variable references, False otherwise.
         """
 
-        if not isinstance(val, basestring):
+        if not isinstance(val, str):
             return False
         return len(self.sketchpad.get_refs(val)) > 0
 

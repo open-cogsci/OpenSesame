@@ -183,13 +183,7 @@ class BaseResponseItem(Item):
         responses = safe_decode(self.var.get(var, default=u''))
         if responses == u'':
             return
-        if py3:
-            responses = [r.strip() for r in responses.split(';')]
-        else:
-            responses = [
-                safe_decode(r.strip())
-                for r in safe_encode(responses).split(';')
-            ]
+        responses = [r.strip() for r in responses.split(';')]
         for r in responses:
             if not self.validate_response(r):
                 raise osexception(

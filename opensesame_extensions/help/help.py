@@ -26,10 +26,7 @@ from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.base_subcomponent import base_subcomponent
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.translate import translation_context
-if py3:
-    from urllib.request import urlopen
-else:
-    from urllib2 import urlopen
+from urllib.request import urlopen
 _ = translation_context(u'help', category=u'extension')
 
 
@@ -191,7 +188,7 @@ class help(base_extension):
         else:
             menu = parent_menu
         for name, link in _dict.items():
-            if not isinstance(link, basestring):
+            if not isinstance(link, str):
                 self.build_menu(menu, base_url, name, link)
                 return
             if not self._is_url(link):

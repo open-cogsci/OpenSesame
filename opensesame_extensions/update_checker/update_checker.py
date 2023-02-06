@@ -129,10 +129,7 @@ class update_checker(base_extension):
 
 def _update_checker(queue, metadata_url):
 
-    if py3:
-        from urllib.request import urlopen
-    else:
-        from urllib2 import urlopen
+    from urllib.request import urlopen
     try:
         fd = urlopen(metadata_url, timeout=1)
         content = fd.read()

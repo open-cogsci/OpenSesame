@@ -28,7 +28,7 @@ MAXBYTES = 10 * 1024 ** 2
 BACKUPCOUNT = 1
 
 
-class OSLogger(object):
+class OSLogger:
 
     """
     desc:

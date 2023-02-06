@@ -145,8 +145,7 @@ def set_paths():
 def opensesame():
     """The entrty point for the OpenSesame GUI"""
     set_paths()
-    if py3:
-        patch_pyqt()
+    patch_pyqt()
     # Support for multiprocessing when packaged
     # In OS X the multiprocessing module is horribly broken, but a fixed
     # version has been released as the 'billiard' module

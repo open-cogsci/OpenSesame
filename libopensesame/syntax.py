@@ -28,7 +28,7 @@ from libopensesame.exceptions import osexception
 from libopensesame.py3compat import *
 
 
-class Syntax(object):
+class Syntax:
 
     """
     desc:
@@ -97,7 +97,7 @@ class Syntax(object):
         try:
             f = float(val)
             # No flanking whitespace
-            if isinstance(val, basestring):
+            if isinstance(val, str):
                 assert(val == val.strip())
         except:
             return safe_decode(val, errors=u'ignore')
@@ -181,11 +181,7 @@ class Syntax(object):
         """
 
         try:
-            if py3:
-                return shlex.split(s)
-            # In Python 2, shlex is not unicode safe, so we need to do some manual
-            # encoding and decoding
-            return [safe_decode(_s) for _s in shlex.split(safe_encode(s))]
+            return shlex.split(s)
         except Exception as e:
             raise osexception(
                 u'Failed to parse line "%s". Is there a closing quotation missing?'
@@ -284,7 +280,7 @@ class Syntax(object):
             return u'' if m.group(1) is None \
                 else m.group(1)[:len(m.group(1))//2]
 
-        if not isinstance(txt, basestring):
+        if not isinstance(txt, str):
             return txt
         txt = safe_decode(txt)
         if var is None:
@@ -485,7 +481,7 @@ class Syntax(object):
             assert(s == s.strip())  # No flanking whitespace
         except:
             t = s.replace(u'_', u'')
-            if not t.isalnum() or not isascii(t):
+            if not t.isalnum() or not t.isascii():
                 return u'"%s"' % s.replace(u'"', u'\\"')
         return s
 
@@ -573,7 +569,7 @@ class Syntax(object):
                 type:	unicode
         """
 
-        if not isinstance(s, basestring):
+        if not isinstance(s, str):
             raise osexception(
                 u'from_ascii() expects first argument to be unicode or str, not "%s"'
                 % type(s))
@@ -582,11 +578,7 @@ class Syntax(object):
             m = self.re_from_ascii.search(s)
             if m is None:
                 break
-            if py3:
-                _unichr = chr
-            else:
-                _unichr = unichr
-            s = s.replace(m.group(0), _unichr(int(m.group(1), 16)), 1)
+            s = s.replace(m.group(0), chr(int(m.group(1), 16)), 1)
         return s
 
     def valid_var_name(self, s):

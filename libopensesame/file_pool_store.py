@@ -26,7 +26,7 @@ import os
 import shutil
 
 
-class FilePoolStore(object):
+class FilePoolStore:
 
     """
     desc: |
@@ -403,7 +403,7 @@ class FilePoolStore(object):
         return sum([os.path.getsize(self[path]) for path in self])
 
 
-class file_pool_store_iterator(object):
+class FilePoolStoreIterator:
 
     def __init__(self, pool):
 
@@ -429,3 +429,4 @@ class file_pool_store_iterator(object):
 
 # Alias for backwards compatibility
 file_pool_store = FilePoolStore
+file_pool_store_iterator = FilePoolStoreIterator

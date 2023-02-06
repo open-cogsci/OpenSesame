@@ -46,7 +46,7 @@ class variable_inspector_cell(QtWidgets.QTableWidgetItem):
         f = QtGui.QFont()
         if info[u'alive']:
             f.setBold(True)
-        if not isinstance(text, basestring):
+        if not isinstance(text, str):
             try:
                 len(text)
             except TypeError:

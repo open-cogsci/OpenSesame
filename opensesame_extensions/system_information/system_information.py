@@ -68,7 +68,7 @@ class system_information(base_extension):
                     u'%s [installed, but `%s` occured while importing]'
                     % (name, e.__class__.__name__))
                 continue
-            if isinstance(attr, basestring):
+            if isinstance(attr, str):
                 attr = [attr]
             while len(attr) > 1:
                 a = attr.pop(0)

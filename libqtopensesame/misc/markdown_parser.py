@@ -31,14 +31,10 @@ except ImportError:
     markdown = None
 try:
     from pygments import highlight
-    if py3:
-        from pygments.lexers import Python3TracebackLexer as TracebackLexer
-        from pygments.lexers import Python3Lexer as PythonLexer
-    else:
-        from pygments.lexers import PythonTracebackLexer as TracebackLexer
-        from pygments.lexers import PythonLexer as PythonLexer
+    from pygments.lexers import Python3TracebackLexer as TracebackLexer
+    from pygments.lexers import Python3Lexer as PythonLexer
     from pygments.formatters import HtmlFormatter
-except:
+except ImportError:
     highlight = None
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'markdown', category=u'core')

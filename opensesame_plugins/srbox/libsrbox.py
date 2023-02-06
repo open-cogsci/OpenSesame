@@ -24,7 +24,7 @@ import serial
 import os
 
 
-class libsrbox(object):
+class libsrbox:
 
     """
     desc: |

@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 
-class items_adapter(object):
+class items_adapter:
 
     """
     desc:

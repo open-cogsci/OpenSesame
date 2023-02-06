@@ -29,7 +29,7 @@ from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 
 
-class BaseComponent(object):
+class BaseComponent:
 
     """
     desc:
@@ -86,12 +86,8 @@ class BaseComponent(object):
                     from libopensesame import misc
                     ui_path = misc.resource(os.path.join(*path_list)+u'.ui')
             oslogger.debug(u'dynamically loading ui: %s' % ui_path)
-            if py3:
-                with safe_open(ui_path) as fd:
-                    self.ui = uic.loadUi(fd, self)
-            else:  # On Python 2 we need to open it the old-fashioned way
-                with open(ui_path) as fd:
-                    self.ui = uic.loadUi(fd, self)
+            with safe_open(ui_path) as fd:
+                self.ui = uic.loadUi(fd, self)
         else:
             self.ui = None
 

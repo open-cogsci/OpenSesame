@@ -99,9 +99,9 @@ class Checkbox(Button):
                         type:	[str, unicode, NoneType]
         """
 
-        if isinstance(checked, basestring):
+        if isinstance(checked, str):
             checked = checked == u'yes'
-        if isinstance(click_accepts, basestring):
+        if isinstance(click_accepts, str):
             click_accepts = click_accepts == u'yes'
         Button.__init__(self, form, text, frame=frame, center=False)
         self.type = u'checkbox'

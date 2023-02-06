@@ -80,7 +80,7 @@ class MultiprocessRunner(BaseRunner):
                 msg = self.channel.get(True, 0.05)
             except Exception:
                 continue
-            if isinstance(msg, basestring):
+            if isinstance(msg, str):
                 sys.stdout.write(safe_decode(msg, errors=u'ignore'))
                 continue
             # Capture exceptions

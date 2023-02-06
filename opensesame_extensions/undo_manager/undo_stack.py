@@ -22,7 +22,7 @@ from libqtopensesame.misc.config import cfg
 import time
 
 
-class undo_stack(object):
+class undo_stack:
 
     def __init__(self):
 

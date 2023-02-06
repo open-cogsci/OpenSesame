@@ -348,7 +348,7 @@ class Loop(Item):
             self.experiment.var.live_row = self.live_row
             self.experiment.var.set('live_row_%s' % self.name, self.live_row)
             for name, val in self.live_dm[self.live_row]:
-                if isinstance(val, basestring) and val.startswith(u'='):
+                if isinstance(val, str) and val.startswith(u'='):
                     try:
                         val = self.python_workspace._eval(val[1:])
                     except Exception as e:

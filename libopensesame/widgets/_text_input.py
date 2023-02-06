@@ -100,7 +100,7 @@ class TextInput(Label):
                         type:	[FunctionType, NoneType]
         """
 
-        if isinstance(return_accepts, basestring):
+        if isinstance(return_accepts, str):
             return_accepts = return_accepts == u'yes'
         Label.__init__(self, form, text, frame=frame, center=center)
         self.type = u'text_input'

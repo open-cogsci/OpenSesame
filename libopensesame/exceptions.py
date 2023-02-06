@@ -100,10 +100,7 @@ class osexception(Exception):
                 Returns the traceback as a formatted string.
         """
 
-        if py3:
-            return traceback.format_exc()
-        return safe_decode(traceback.format_exc(self.exception), enc=self.enc,
-                           errors=u'ignore')
+        return traceback.format_exc()
 
     def _parse_traceback(self, info):
         """
@@ -221,9 +218,7 @@ class osexception(Exception):
                 type:	str
         """
 
-        if py3:
-            return self._plaintext
-        return safe_encode(self._plaintext)
+        return self._plaintext
 
     def plaintext(self):
         """

@@ -95,7 +95,7 @@ DEFAULT_CONFIG_MAC = {}
 DEFAULT_CONFIG_WINDOWS = {}
 
 
-class Config(object):
+class Config:
 
     def __init__(self):
         """
@@ -107,13 +107,13 @@ class Config(object):
 
     def __str__(self):
 
-        return self.__unicode__() if py3 else safe_encode(self.__unicode__())
+        return self.__unicode__()
 
     def __unicode__(self):
 
         s = u''
         for key, val in self.config.items():
-            if not isinstance(val, basestring) and not isinstance(val, int) \
+            if not isinstance(val, str) and not isinstance(val, int) \
                     and not isinstance(val, float):
                 val = type(val)
             s += u'%s: %s\n' % (key, val)
@@ -250,7 +250,7 @@ class Config(object):
                 isinstance(value, QtCore.QPyNullVariant):
             return default
         if isinstance(default, bool):
-            if isinstance(value, basestring):
+            if isinstance(value, str):
                 return value == u'true'
             try:
                 return bool(value)

@@ -88,7 +88,7 @@ def key_to_freq(key):
 
     if type(key) in [int, float]:
         return key
-    if not isinstance(key, basestring) or len(key) < 2:
+    if not isinstance(key, str) or len(key) < 2:
         raise osexception(
             "synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")
     n = key[:-1].lower()

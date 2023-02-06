@@ -25,7 +25,7 @@ from libqtopensesame import sketchpad_elements
 from libqtopensesame.validators import DurationValidator
 
 
-class Feedpad(object):
+class Feedpad:
 
     """
     desc:

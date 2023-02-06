@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 import copy
 
 
-class XpyrimentElement(object):
+class XpyrimentElement:
 
     """
     desc:

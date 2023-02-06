@@ -99,7 +99,7 @@ class RatingScale(Widget):
                         type:	[int, NoneType]
         """
 
-        if isinstance(click_accepts, basestring):
+        if isinstance(click_accepts, str):
             click_accepts = click_accepts == u'yes'
         Widget.__init__(self, form)
         self.type = u'rating_scale'
@@ -109,7 +109,7 @@ class RatingScale(Widget):
         self.orientation = orientation
         if type(nodes) == int:
             self.nodes = [u'']*nodes
-        elif isinstance(nodes, basestring):
+        elif isinstance(nodes, str):
             self.nodes = nodes.split(u';')
         else:
             self.nodes = nodes

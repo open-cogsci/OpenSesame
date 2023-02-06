@@ -82,9 +82,9 @@ class ImageWidget(Widget):
                         type:	bool
         """
 
-        if isinstance(adjust, basestring):
+        if isinstance(adjust, str):
             adjust = adjust == u'yes'
-        if isinstance(frame, basestring):
+        if isinstance(frame, str):
             frame = frame == u'yes'
         Widget.__init__(self, form)
         self.adjust = adjust

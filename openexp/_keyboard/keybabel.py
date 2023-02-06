@@ -58,7 +58,7 @@ CHAR_TO_NAME = {
 NAME_TO_CHAR = {name: char for char, name in CHAR_TO_NAME.items()}
 
 
-class KeyBabel(object):
+class KeyBabel:
 
     """
     desc:
@@ -96,7 +96,7 @@ class KeyBabel(object):
 
         short_name = (
             key
-            if isinstance(key, basestring) and len(key) == 1
+            if isinstance(key, str) and len(key) == 1
             else sorted(self.synonyms(key), key=len)[0]
         )
         return short_name.upper() if shift else short_name.lower()
@@ -117,7 +117,7 @@ class KeyBabel(object):
             return self._none_synonyms()
         if isinstance(key, int):
             return self._keycode_synonyms(key)
-        if isinstance(key, basestring):
+        if isinstance(key, str):
             return self._str_synonyms(key)
         raise osexception(
             u'Key names should be string, numeric, or None, not %s'

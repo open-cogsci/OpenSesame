@@ -28,7 +28,7 @@ from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'base_runner', category=u'core')
 
 
-class BaseRunner(object):
+class BaseRunner:
 
     """
     A runner implements a specific way to execute an OpenSesame experiment from

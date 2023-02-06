@@ -24,7 +24,7 @@ from openexp._canvas.canvas import Canvas
 from openexp.mouse import Mouse
 
 
-class MouseResponseMixin(object):
+class MouseResponseMixin:
 
     """
     desc:

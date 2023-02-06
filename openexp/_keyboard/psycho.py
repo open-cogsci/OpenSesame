@@ -124,7 +124,7 @@ class Psycho(Keyboard):
             return l
 
         # Sanity check
-        if not isinstance(key, basestring):
+        if not isinstance(key, str):
             raise osexception(
                 u'Key names should be string or numeric, not %s' % type(key))
 

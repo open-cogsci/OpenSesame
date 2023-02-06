@@ -109,7 +109,7 @@ class OSExpReader(OSExpBase):
         """
 
         self._experiment_path = os.path.dirname(self._src)
-        with safe_open(self._src, universal_newline_mode) as fd:
+        with safe_open(self._src) as fd:
             self._script = fd.read()
 
     def _read_tarfile(self, format):
@@ -150,6 +150,6 @@ class OSExpReader(OSExpBase):
         # right away
         script_path = os.path.join(self._pool.folder(), u'script.opensesame')
         tar.extract(u'script.opensesame', self._pool.folder())
-        with safe_open(script_path, universal_newline_mode) as fd:
+        with safe_open(script_path) as fd:
             self._script = fd.read()
         os.remove(script_path)

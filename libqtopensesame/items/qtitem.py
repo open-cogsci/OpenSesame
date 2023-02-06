@@ -65,7 +65,7 @@ def wait_cursor(fnc):
     return inner
 
 
-class QtItem(object):
+class QtItem:
 
     """Base class for the GUI controls of other items"""
 
@@ -831,7 +831,7 @@ class QtItem(object):
         for var, edit in self.auto_line_edit.items():
             if isinstance(var, int):
                 continue
-            if edit.isEnabled() and isinstance(var, basestring):
+            if edit.isEnabled() and isinstance(var, str):
                 val = edit.text().strip()
                 if val:
                     self.var.set(var, val)
@@ -846,32 +846,32 @@ class QtItem(object):
         for var, combobox in self.auto_combobox.items():
             if isinstance(var, int):
                 continue
-            if combobox.isEnabled() and isinstance(var, basestring):
+            if combobox.isEnabled() and isinstance(var, str):
                 self.var.set(var, combobox.currentText())
 
         for var, spinbox in self.auto_spinbox.items():
             if isinstance(var, int):
                 continue
-            if spinbox.isEnabled() and isinstance(var, basestring):
+            if spinbox.isEnabled() and isinstance(var, str):
                 self.var.set(var, spinbox.value())
 
         for var, slider in self.auto_slider.items():
             if isinstance(var, int):
                 continue
-            if slider.isEnabled() and isinstance(var, basestring):
+            if slider.isEnabled() and isinstance(var, str):
                 self.var.set(var, slider.value())
 
         for var, checkbox in self.auto_checkbox.items():
             if isinstance(var, int):
                 continue
-            if checkbox.isEnabled() and isinstance(var, basestring):
+            if checkbox.isEnabled() and isinstance(var, str):
                 val = u'yes' if checkbox.isChecked() else u'no'
                 self.var.set(var, val)
 
         for var, editor in self.auto_editor.items():
             if isinstance(var, int):
                 continue
-            if isinstance(var, basestring):
+            if isinstance(var, str):
                 self.var.set(var, editor.toPlainText())
         return True
 

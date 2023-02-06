@@ -22,7 +22,7 @@ from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_component import BaseComponent
 
 
-class BaseDraggable(object):
+class BaseDraggable:
 
     """
     desc:

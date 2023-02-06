@@ -66,12 +66,8 @@ class bug_report(base_extension):
         """
 
         self.main_window.tabwidget.close_current()
-        if py3:
-            from urllib.request import urlopen
-            from urllib.parse import urlencode
-        else:
-            from urllib import urlencode
-            from urllib2 import urlopen
+        from urllib.request import urlopen
+        from urllib.parse import urlencode
         if self.traceback is None:
             return
         q = urlencode({

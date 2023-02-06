@@ -20,7 +20,7 @@ from libopensesame.py3compat import *
 import warnings
 
 
-class BasePythonWorkspace(object):
+class BasePythonWorkspace:
 
     """
     desc:

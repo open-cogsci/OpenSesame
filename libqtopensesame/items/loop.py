@@ -147,7 +147,7 @@ class Loop(QtStructureItem, QtItem, LoopRuntime):
             return
         col = self.qdm.dm.columns[colnr][1]
         val = self.qdm.dm[col][rownr - 1]
-        if not isinstance(val, basestring) or u'\n' not in val:
+        if not isinstance(val, str) or u'\n' not in val:
             return
         val = val.replace(u'\n', u'')
         self.qdm._spreadsheet._setcell(rownr, colnr, val)

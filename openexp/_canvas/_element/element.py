@@ -27,7 +27,7 @@ INF = float('inf')
 NUMERIC_PROPERTIES = u'x', u'y', u'w', u'h', u'r'
 
 
-class Element(object):
+class Element:
 
     """
     desc:

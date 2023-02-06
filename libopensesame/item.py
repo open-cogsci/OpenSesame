@@ -25,7 +25,7 @@ from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
 
 
-class Item(object):
+class Item:
 
     """Abstract class that serves as the basis for all OpenSesame items."""
 

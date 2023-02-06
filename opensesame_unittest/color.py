@@ -59,7 +59,7 @@ class CheckColor(unittest.TestCase):
 			(u'lab(37, -91, 34)', u'#006f17'),
 			(u'lab( +41. , 8 , -59.0 )', u'#0062c2'),
 		]:
-			if isinstance(colorspec, basestring) and colorspec.startswith('lab'):
+			if isinstance(colorspec, str) and colorspec.startswith('lab'):
 				try:
 					import psychopy
 				except ImportError:

@@ -53,7 +53,7 @@ def _raise_invalid(colorspec):
     )
 
 
-class Color(object):
+class Color:
 
     """
     desc:
@@ -111,7 +111,7 @@ class Color(object):
             return webcolors.rgb_to_hex((colorspec, colorspec, colorspec))
         if _is_rgb(colorspec):
             return webcolors.rgb_to_hex(colorspec)
-        if not isinstance(colorspec, basestring):
+        if not isinstance(colorspec, str):
             _raise_invalid(colorspec)
         try:  # 0-255 luminance value passed as string
             colorspec = int(colorspec)

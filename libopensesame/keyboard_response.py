@@ -23,7 +23,7 @@ from libopensesame.base_response_item import BaseResponseItem
 from openexp.keyboard import Keyboard
 
 
-class KeyboardResponseMixin(object):
+class KeyboardResponseMixin:
 
     """
     desc:

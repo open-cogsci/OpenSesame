@@ -27,7 +27,7 @@ from openexp._keyboard.keybabel import KeyBabel
 from libopensesame.widgets.widget_factory import WidgetFactory
 
 
-class Form(object):
+class Form:
 
     """
     desc: |

@@ -72,9 +72,9 @@ class Label(Widget):
                         type:	bool
         """
 
-        if isinstance(frame, basestring):
+        if isinstance(frame, str):
             frame = frame == u'yes'
-        if isinstance(center, basestring):
+        if isinstance(center, str):
             center = center == u'yes'
         Widget.__init__(self, form)
         self.type = u'label'

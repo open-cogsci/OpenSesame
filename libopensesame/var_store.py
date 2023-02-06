@@ -22,7 +22,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 
 
-class VarStore(object):
+class VarStore:
 
     """
     desc: |
@@ -110,7 +110,7 @@ class VarStore(object):
             self.__item__.experiment
         except:
             return
-        if isinstance(var, basestring) and \
+        if isinstance(var, str) and \
                 self.__item__.experiment.syntax.valid_var_name(var):
             return
         raise osexception(u'"%s" is not a valid variable name' % var)
@@ -496,7 +496,7 @@ class VarStorePickle(VarStore):
         return self.__inspect__
 
 
-class VarStoreIterator(object):
+class VarStoreIterator:
 
     """
     desc:

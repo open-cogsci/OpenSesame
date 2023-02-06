@@ -46,19 +46,10 @@ def backend_info(experiment):
     """
 
     global _backend_info
-    # Use caching
-    if _backend_info is not None:
-        return _backend_info
-    with safe_open(experiment.resource(u'backend_info.yaml')) as fd:
-        d = safe_yaml_load(fd.read())
-    l = []
-    for name, info in d.items():
-        if (py3 and not info[u'py3']) or (not py3 and not info[u'py2']):
-            l.append(name)
-    for name in l:
-        del d[name]
-    _backend_info = d
-    return d
+    if _backend_info is None:
+        with safe_open(experiment.resource(u'backend_info.yaml')) as fd:
+            _backend_info = safe_yaml_load(fd.read())
+    return _backend_info
 
 
 def backend_guess(experiment, _type):
@@ -232,7 +223,7 @@ def docstring(key):
 	""" % {u'key': key}
 
 
-class Backend(object):
+class Backend:
 
     """
     desc:
@@ -355,7 +346,7 @@ class Backend(object):
                 val:	The value of the configurable.
         """
 
-        if not isinstance(val, basestring):
+        if not isinstance(val, str):
             raise osexception(
                 u'%s should be string (str or unicode), not %s' % (key, val))
 

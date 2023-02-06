@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 
 
-class ResponseInfo(object):
+class ResponseInfo:
 
     """
     desc:
@@ -73,7 +73,7 @@ class ResponseInfo(object):
                self.feedback)
 
 
-class ResponseStore(object):
+class ResponseStore:
 
     """
     desc: |
