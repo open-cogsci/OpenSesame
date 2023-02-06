@@ -18,15 +18,16 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.dialogs.base_dialog import base_dialog
+from libqtopensesame.dialogs.base_dialog import BaseDialog
 from datamatrix import DataMatrix, operations
 from qdatamatrix import QDataMatrix
 import pickle
 from qtpy import QtWidgets
 
 
-class loop_wizard(base_dialog):
+class LoopWizard(BaseDialog):
 
     """
     desc:
@@ -42,13 +43,13 @@ class loop_wizard(base_dialog):
                 main_window:	The main window object.
         """
 
-        super(loop_wizard, self).__init__(main_window,
-                                          ui=u'dialogs.loop_wizard_dialog')
+        super().__init__(main_window, ui=u'dialogs.loop_wizard_dialog')
         try:
             self._dm = pickle.loads(cfg.loop_wizard)
             assert(isinstance(self._dm, DataMatrix))
             assert(hasattr(self._dm._rowid, u'clone'))
-        except:
+        except Exception as e:
+            oslogger.warning(f'failed to restore loop table: {e}')
             self._dm = DataMatrix(length=0)
         self._qdm = QDataMatrix(self._dm)
         self.ui.hbox_container.addWidget(self._qdm)
@@ -63,9 +64,13 @@ class loop_wizard(base_dialog):
                 The dialog return status.
         """
 
-        retval = base_dialog.exec_(self)
+        retval = super().exec_()
         if retval == QtWidgets.QDialog.Rejected:
             return None
         self._dm = self._qdm.dm
         cfg.loop_wizard = pickle.dumps(self._dm)
         return operations.fullfactorial(self._dm)
+
+
+# Alias for backwards compatibility
+loop_wizard = LoopWizard

@@ -18,14 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.misc.sketchpad_canvas import sketchpad_canvas
-from libqtopensesame.widgets.sketchpad_widget import sketchpad_widget
-from libqtopensesame.items.qtplugin import qtplugin
+from libqtopensesame.misc.sketchpad_canvas import SketchpadCanvas
+from libqtopensesame.widgets.sketchpad_widget import SketchpadWidget
+from libqtopensesame.items.qtplugin import QtPlugin
 from libqtopensesame import sketchpad_elements
-from libqtopensesame.validators import duration_validator
+from libqtopensesame.validators import DurationValidator
 
 
-class feedpad(object):
+class Feedpad(object):
 
     """
     desc:
@@ -41,14 +41,14 @@ class feedpad(object):
                 Initializes the widget.
         """
 
-        qtplugin.init_edit_widget(self, False)
-        self.canvas = sketchpad_canvas(self)
-        self.sketchpad_widget = sketchpad_widget(self)
+        QtPlugin.init_edit_widget(self, False)
+        self.canvas = SketchpadCanvas(self)
+        self.sketchpad_widget = SketchpadWidget(self)
         self.add_widget(self.sketchpad_widget)
         self.auto_add_widget(self.sketchpad_widget.ui.edit_duration,
                              u'duration')
         self.sketchpad_widget.ui.edit_duration.setValidator(
-            duration_validator(self))
+            DurationValidator(self))
         self.first_refresh = True
         self._lock = False
 
@@ -61,7 +61,7 @@ class feedpad(object):
         # changes.
         f = self.apply_edit_changes
         self.apply_edit_changes = lambda: None
-        qtplugin.apply_script_changes(self)
+        QtPlugin.apply_script_changes(self)
         self.apply_edit_changes = f
 
     def element_module(self):
@@ -87,7 +87,7 @@ class feedpad(object):
                 Updates the widget.
         """
 
-        qtplugin.edit_widget(self)
+        QtPlugin.edit_widget(self)
         self.sketchpad_widget.initialize()
         self.sketchpad_widget.draw()
         if self.first_refresh:
@@ -330,3 +330,7 @@ class feedpad(object):
     @property
     def select_pointer_tool(self):
         return self.sketchpad_widget.select_pointer_tool
+
+
+# Alias for backwards compatibility
+feedpad = Feedpad

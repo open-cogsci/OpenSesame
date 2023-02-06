@@ -20,11 +20,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame import metadata
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.misc.base_component import base_component
+from libqtopensesame.misc.base_component import BaseComponent
 from libqtopensesame.misc import theme
 
 
-class qtopensesamerun(QtWidgets.QMainWindow, base_component):
+class QtOpenSesameRun(QtWidgets.QMainWindow, BaseComponent):
 
     """Implements the GUI for opensesamerun."""
 
@@ -111,6 +111,10 @@ class qtopensesamerun(QtWidgets.QMainWindow, base_component):
         self.options.height = self.ui.spinbox_height.value()
         self.options.pylink = self.ui.checkbox_pylink.isChecked()
         self.close()
+
+
+# Alias for backwards compatibility
+qtopensesamerun = QtOpenSesameRun
 
 
 if __name__ == u'__main__':

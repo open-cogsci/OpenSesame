@@ -18,14 +18,25 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libopensesame.sketchpad_elements._arrow import Arrow
+from libopensesame.sketchpad_elements._circle import Circle
+from libopensesame.sketchpad_elements._ellipse import Ellipse
+from libopensesame.sketchpad_elements._fixdot import Fixdot
+from libopensesame.sketchpad_elements._gabor import Gabor
+from libopensesame.sketchpad_elements._image import Image
+from libopensesame.sketchpad_elements._line import Line
+from libopensesame.sketchpad_elements._noise import Noise
+from libopensesame.sketchpad_elements._textline import Textline
+from libopensesame.sketchpad_elements._rect import Rect
 
-from libopensesame.sketchpad_elements._arrow import arrow
-from libopensesame.sketchpad_elements._circle import circle
-from libopensesame.sketchpad_elements._ellipse import ellipse
-from libopensesame.sketchpad_elements._fixdot import fixdot
-from libopensesame.sketchpad_elements._gabor import gabor
-from libopensesame.sketchpad_elements._image import image
-from libopensesame.sketchpad_elements._line import line
-from libopensesame.sketchpad_elements._noise import noise
-from libopensesame.sketchpad_elements._textline import textline
-from libopensesame.sketchpad_elements._rect import rect
+# Alias for backwards compatibility
+arrow = Arrow
+circle = Circle
+ellipse = Ellipse
+fixdot = Fixdot
+gabor = Gabor
+image = Image
+line = Line
+noise = Noise
+textline = Textline
+rect = Rect

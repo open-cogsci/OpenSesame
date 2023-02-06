@@ -20,28 +20,25 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 import sip
-from libqtopensesame.widgets.base_widget import base_widget
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.widgets.base_widget import BaseWidget
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from openexp import backend
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'backend_settings', category=u'core')
 
 
-class backend_settings(base_widget):
+class BackendSettings(BaseWidget):
 
     def __init__(self, main_window):
 
-        super(backend_settings, self).__init__(main_window,
-                                               ui=u'widgets.backend_settings')
+        super().__init__(main_window, ui=u'widgets.backend_settings')
         self.tab_name = u'__backend_settings__'
-
         for backend_type in backend._backend_types:
             try:
                 _backend = backend.get_backend_class(self.experiment,
                                                      backend_type)
             except:
                 _backend = None
-
             layout = getattr(self.ui, u'layout_%s' % backend_type)
             label = getattr(self.ui, u'label_%s' % backend_type)
             # Horribly ugly way to clear the previous settings
@@ -61,7 +58,7 @@ class backend_settings(base_widget):
                                                  _backend.settings))
 
 
-class settings_edit(QtWidgets.QLineEdit, base_subcomponent):
+class SettingsEdit(QtWidgets.QLineEdit, BaseSubcomponent):
 
     """An edit widget for a single variable"""
 
@@ -78,7 +75,7 @@ class settings_edit(QtWidgets.QLineEdit, base_subcomponent):
         parent -- parent QWidget (default=None)
         """
 
-        super(settings_edit, self).__init__()
+        super().__init__()
         self.setup(main_window)
         self.setText(safe_decode(val))
         self.var = var
@@ -91,7 +88,7 @@ class settings_edit(QtWidgets.QLineEdit, base_subcomponent):
             self.var, self.experiment.syntax.sanitize(self.text()))
 
 
-class settings_widget(base_widget):
+class SettingsWidget(BaseWidget):
 
     """A widget containing a number of settings"""
 
@@ -107,7 +104,7 @@ class settings_widget(base_widget):
         parent -- parent QWidget (default=None)
         """
 
-        super(settings_widget, self).__init__(main_window)
+        super().__init__(main_window)
         self.settings = settings
         self.layout = QtWidgets.QFormLayout(self)
         self.layout.setFieldGrowthPolicy(
@@ -124,3 +121,9 @@ class settings_widget(base_widget):
             label.setTextFormat(QtCore.Qt.RichText)
             edit = settings_edit(self.main_window, var, val)
             self.layout.addRow(label, edit)
+
+
+# Alias for backwards compatibility
+backend_settings = BackendSettings
+settings_edit = SettingsEdit
+settings_widget = SettingsWidget

@@ -18,12 +18,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.widgets.tree_base_item import tree_base_item
+from libqtopensesame.widgets.tree_base_item import TreeBaseItem
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_recursion_error_item', category=u'core')
 
 
-class tree_recursion_error_item(tree_base_item):
+class TreeRecursionErrorItem(TreeBaseItem):
 
     """
     desc:
@@ -42,7 +42,7 @@ class tree_recursion_error_item(tree_base_item):
                         type:	qtopensesame
         """
 
-        super(tree_recursion_error_item, self).__init__()
+        super().__init__()
         self.setup(main_window)
         self.setText(0, _(u'Recursion detected'))
         self.setIcon(0, self.theme.qicon(u'dialog-error'))
@@ -53,3 +53,7 @@ class tree_recursion_error_item(tree_base_item):
     def open_tab(self):
 
         self.main_window.tabwidget.open_general_script()
+
+
+# Alias for backwards compatibility
+tree_recursion_error_item = TreeRecursionErrorItem

@@ -19,17 +19,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
-from libopensesame.sequence import sequence as sequence_runtime
-from libqtopensesame.widgets.tree_item_item import tree_item_item
-from libqtopensesame.widgets.tree_overview import tree_overview
+from libopensesame.sequence import Sequence as SequenceRuntime
+from libqtopensesame.widgets.tree_item_item import TreeItemItem
+from libqtopensesame.widgets.tree_overview import TreeOverview
 from libqtopensesame.items.qtitem import requires_init
-from libqtopensesame.items.qtplugin import qtplugin
-from libqtopensesame.items.qtstructure_item import qtstructure_item
+from libqtopensesame.items.qtplugin import QtPlugin
+from libqtopensesame.items.qtstructure_item import QtStructureItem
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'sequence', category=u'item')
 
 
-class sequence(qtstructure_item, qtplugin, sequence_runtime):
+class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
 
     """
     desc:
@@ -53,15 +53,15 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
                 string:		A definition string.
         """
 
-        sequence_runtime.__init__(self, name, experiment, string)
-        qtstructure_item.__init__(self)
-        qtplugin.__init__(self)
+        SequenceRuntime.__init__(self, name, experiment, string)
+        QtStructureItem.__init__(self)
+        QtPlugin.__init__(self)
         self.last_removed_child = None, None
 
     def init_edit_widget(self):
         """See qtitem."""
 
-        super(sequence, self).init_edit_widget(False)
+        super().init_edit_widget(False)
         self.checkbox_flush_keyboard = QtWidgets.QCheckBox(
             _(u'Flush pending key presses at sequence start'))
         self.checkbox_flush_keyboard.setToolTip(
@@ -69,7 +69,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
         self.auto_add_widget(self.checkbox_flush_keyboard,
                              var=u'flush_keyboard')
         self.edit_vbox.addWidget(self.checkbox_flush_keyboard)
-        self.treewidget = tree_overview(self.main_window, overview_mode=False)
+        self.treewidget = TreeOverview(self.main_window, overview_mode=False)
         self.treewidget.setup(self.main_window)
         self.treewidget.structure_change.connect(self.update)
         self.treewidget.text_change.connect(self.update_script)
@@ -81,7 +81,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
     def edit_widget(self):
         """See qtitem."""
 
-        super(sequence, self).edit_widget()
+        super().edit_widget()
         if self.treewidget.locked:
             return
         for item, cond in self.items:
@@ -98,11 +98,11 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
         self.treewidget.append_button.set_position()
 
     @requires_init
-    @qtstructure_item.clears_children_cache
+    @QtStructureItem.clears_children_cache
     def rename(self, from_name, to_name):
         """See qtitem."""
 
-        qtplugin.rename(self, from_name, to_name)
+        QtPlugin.rename(self, from_name, to_name)
         new_items = []
         for item, cond in self.items:
             if item == from_name:
@@ -112,7 +112,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
         self.items = new_items
         self.treewidget.rename(from_name, to_name)
 
-    @qtstructure_item.clears_children_cache
+    @QtStructureItem.clears_children_cache
     def delete(self, item_name, item_parent=None, index=None):
         """See qtitem."""
 
@@ -133,7 +133,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
                         extra_info=None):
         """See qtitem."""
 
-        widget = tree_item_item(self, extra_info=extra_info)
+        widget = TreeItemItem(self, extra_info=extra_info)
         items.append(self.name)
         if max_depth < 0 or max_depth > 1:
             for item, cond in self.items:
@@ -164,7 +164,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 
         self.items[index] = self.items[index][0], cond
 
-    @qtstructure_item.cached_children
+    @QtStructureItem.cached_children
     def children(self):
         """See qtitem."""
 
@@ -188,7 +188,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
 
         return item in self.children()
 
-    @qtstructure_item.clears_children_cache
+    @QtStructureItem.clears_children_cache
     def insert_child_item(self, item_name, index=0):
         """See qtitem."""
 
@@ -201,7 +201,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
         self.update()
         self.main_window.set_unsaved(True)
 
-    @qtstructure_item.clears_children_cache
+    @QtStructureItem.clears_children_cache
     def remove_child_item(self, item_name, index=0):
         """See qtitem."""
 
@@ -219,3 +219,7 @@ class sequence(qtstructure_item, qtplugin, sequence_runtime):
         if not self.update():
             self.extension_manager.fire(u'change_item', name=self.name)
         self.main_window.set_unsaved(True)
+
+
+# Alias for backwards compatibility
+sequence = Sequence

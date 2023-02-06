@@ -22,7 +22,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 
 
-class var_store(object):
+class VarStore(object):
 
     """
     desc: |
@@ -455,7 +455,7 @@ class var_store(object):
         return (var_store_pickle, (self.inspect(), ))
 
 
-class var_store_pickle(var_store):
+class VarStorePickle(VarStore):
 
     """
     desc:
@@ -496,7 +496,7 @@ class var_store_pickle(var_store):
         return self.__inspect__
 
 
-class var_store_iterator(object):
+class VarStoreIterator(object):
 
     """
     desc:
@@ -522,3 +522,9 @@ class var_store_iterator(object):
         if len(self.vars) == 0:
             raise StopIteration
         return self.vars.pop()
+
+
+# Alias for backwards compatibility
+var_store = VarStore
+var_store_pickle = VarStorePickle
+var_store_iterator = VarStoreIterator

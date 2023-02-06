@@ -22,14 +22,14 @@ from qtpy import QtCore, QtWidgets
 from collections import OrderedDict
 from libopensesame import plugins
 from libopensesame.oslogging import oslogger
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from libqtopensesame.widgets.toolbar_items_label import toolbar_items_label
-from libqtopensesame.widgets.toolbar_items_item import toolbar_items_item
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
+from libqtopensesame.widgets.toolbar_items_label import ToolbarItemsLabel
+from libqtopensesame.widgets.toolbar_items_item import ToolbarItemsItem
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'toolbar_items', category=u'core')
 
 
-class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
+class ToolbarItems(BaseSubcomponent, QtWidgets.QToolBar):
 
     """
     desc:
@@ -48,7 +48,7 @@ class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
                         type:	QWidget
         """
 
-        super(toolbar_items, self).__init__(parent)
+        super().__init__(parent)
         self.setup(parent)
         self.orientationChanged.connect(self.build)
         for child in self.children():
@@ -98,9 +98,9 @@ class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
             return
         self.clear()
         if self.orientation() == QtCore.Qt.Vertical:
-            self.addWidget(toolbar_items_label(self, _(u'Commonly used')))
+            self.addWidget(ToolbarItemsLabel(self, _(u'Commonly used')))
         # Add the core items
-        self.add_content([toolbar_items_item(self, item)
+        self.add_content([ToolbarItemsItem(self, item)
                           for item in self.experiment.core_items])
         # Create a dictionary of plugins by category. We also maintain a list
         # to preserve the order of the categories.
@@ -114,12 +114,12 @@ class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
         for cat, cat_plugins in cat_dict.items():
             self.addSeparator()
             if self.orientation() == QtCore.Qt.Vertical:
-                self.addWidget(toolbar_items_label(self, cat))
+                self.addWidget(ToolbarItemsLabel(self, cat))
             content = []
             for plugin in cat_plugins:
                 oslogger.debug(u"adding plugin '%s'" % plugin)
                 pixmap = self.theme.qpixmap(plugins.plugin_icon_large(plugin))
-                content.append(toolbar_items_item(self, plugin, pixmap))
+                content.append(ToolbarItemsItem(self, plugin, pixmap))
             self.add_content(content)
 
     def collapse(self):
@@ -130,3 +130,7 @@ class toolbar_items(base_subcomponent, QtWidgets.QToolBar):
 
         if self._expand_button.isChecked():
             self._expand_button.click()
+
+
+# Alias for backwards compatibility
+toolbar_items = ToolbarItems

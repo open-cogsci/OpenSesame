@@ -18,11 +18,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from qtpy import QtWidgets
+from libqtopensesame.widgets.base_widget import BaseWidget
 
-from qtpy import QtWidgets, QtCore
-from libqtopensesame.widgets.base_widget import base_widget
 
-
-class sketchpad_graphics_view(QtWidgets.QGraphicsView, base_widget):
-
+class SketchpadGraphicsView(QtWidgets.QGraphicsView, BaseWidget):
     pass
+
+
+# Alias for backwards compatibility
+sketchpad_graphics_view = SketchpadGraphicsView

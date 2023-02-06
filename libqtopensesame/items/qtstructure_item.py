@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 
-class qtstructure_item(object):
+class QtStructureItem(object):
 
     """
     desc:
@@ -40,13 +40,13 @@ class qtstructure_item(object):
     def update(self):
         """See qtitem."""
 
-        super(qtstructure_item, self).update()
+        super().update()
         self.experiment.build_item_tree()
 
     def apply_script_changes(self):
         """See qtitem."""
 
-        super(qtstructure_item, self).apply_script_changes()
+        super().apply_script_changes()
         self.experiment.build_item_tree()
 
     @staticmethod
@@ -79,3 +79,7 @@ class qtstructure_item(object):
             return fnc(self, *args, **kwargs)
 
         return inner
+
+
+# Alias for backwards compatibility
+qtstructure_item = QtStructureItem

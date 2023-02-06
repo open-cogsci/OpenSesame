@@ -65,7 +65,7 @@ def wait_cursor(fnc):
     return inner
 
 
-class qtitem(object):
+class QtItem(object):
 
     """Base class for the GUI controls of other items"""
 
@@ -1018,4 +1018,5 @@ class qtitem(object):
         pass
 
 
-QtItem = qtitem
+# Alias for backwards compatibility
+qtitem = QtItem

@@ -19,13 +19,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libqtopensesame.misc import config
-from libqtopensesame.widgets.base_widget import base_widget
+from libqtopensesame.widgets.base_widget import BaseWidget
 from qtpy import QtWidgets, QtCore
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'unused_widget', category=u'core')
 
 
-class unused_widget(base_widget):
+class UnusedWidget(BaseWidget):
 
     """
     desc:
@@ -45,7 +45,7 @@ class unused_widget(base_widget):
                         type:	qtopensesame
         """
 
-        super(unused_widget, self).__init__(main_window)
+        super().__init__(main_window)
         header_hbox = QtWidgets.QHBoxLayout()
         header_hbox.addWidget(self.theme.qlabel(u"unused"))
         header_label = QtWidgets.QLabel()
@@ -74,9 +74,9 @@ class unused_widget(base_widget):
         """
 
         resp = QtWidgets.QMessageBox.question(self.main_window.ui.centralwidget,
-                                              _(u"Permanently delete items?"),
-                                              _(u"Are you sure you want to permanently delete all unused items? This action cannot be undone."),
-                                              QtWidgets.QMessageBox.Yes, QtWidgets.QMessageBox.No)
+            _(u"Permanently delete items?"),
+            _(u"Are you sure you want to permanently delete all unused items? This action cannot be undone."),
+            QtWidgets.QMessageBox.Yes, QtWidgets.QMessageBox.No)
         if resp == QtWidgets.QMessageBox.No:
             return
         self.extension_manager.fire(u'prepare_purge_unused_items')
@@ -96,3 +96,7 @@ class unused_widget(base_widget):
         """
 
         self.purge_button.setDisabled(len(self.experiment.items.unused()) == 0)
+
+
+# Alias for backwards compatibility
+unused_widget = UnusedWidget

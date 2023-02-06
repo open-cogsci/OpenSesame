@@ -18,12 +18,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from libqtopensesame.widgets.tree_append_menu import tree_append_menu
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
+from libqtopensesame.widgets.tree_append_menu import TreeAppendMenu
 from qtpy import QtWidgets
 
 
-class tree_append_button(base_subcomponent, QtWidgets.QPushButton):
+class TreeAppendButton(BaseSubcomponent, QtWidgets.QPushButton):
 
     """
     desc:
@@ -33,10 +33,10 @@ class tree_append_button(base_subcomponent, QtWidgets.QPushButton):
 
     def setup(self, main_window):
 
-        super(tree_append_button, self).setup(main_window)
+        super().setup(main_window)
         self.setIcon(self.main_window.theme.qicon(u'list-add'))
         self.tree_overview = self.parent()
-        self.append_menu = tree_append_menu(self.tree_overview)
+        self.append_menu = TreeAppendMenu(self.tree_overview)
         self.setMenu(self.append_menu)
         self.setFlat(True)
         self.adjustSize()
@@ -57,3 +57,7 @@ class tree_append_button(base_subcomponent, QtWidgets.QPushButton):
         geom = self.geometry()
         geom.moveTopLeft(rect.bottomLeft())
         self.setGeometry(geom)
+
+
+# Alias for backwards compatibility
+tree_append_button = TreeAppendButton

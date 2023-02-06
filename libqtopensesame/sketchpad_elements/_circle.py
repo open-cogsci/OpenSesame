@@ -20,11 +20,11 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import math
 from libopensesame.py3compat import *
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.sketchpad_elements._base_element import base_element
-from libopensesame.sketchpad_elements import circle as circle_runtime
+from libqtopensesame.sketchpad_elements._base_element import BaseElement
+from libopensesame.sketchpad_elements import Circle as CircleRuntime
 
 
-class circle(base_element, circle_runtime):
+class Circle(BaseElement, CircleRuntime):
 
     pos_start = None
     preview = None
@@ -38,8 +38,8 @@ class circle(base_element, circle_runtime):
         xc = sketchpad.canvas.xcenter()
         yc = sketchpad.canvas.ycenter()
         cls.preview = sketchpad.canvas.circle(pos[0], pos[1], 0,
-                                              color=cfg.sketchpad_preview_color,
-                                              penwidth=cfg.sketchpad_preview_penwidth)
+            color=cfg.sketchpad_preview_color,
+            penwidth=cfg.sketchpad_preview_penwidth)
 
     @classmethod
     def mouse_release(cls, sketchpad, pos):
@@ -60,7 +60,7 @@ class circle(base_element, circle_runtime):
             u'fill': sketchpad.current_fill(),
             u'show_if': sketchpad.current_show_if()
         }
-        e = circle(sketchpad, properties=properties)
+        e = Circle(sketchpad, properties=properties)
         cls.pos_start = None
         sketchpad.canvas.removeItem(cls.preview)
         return e
@@ -120,3 +120,7 @@ class circle(base_element, circle_runtime):
     @staticmethod
     def requires_fill():
         return True
+
+
+# Alias for backwards compatibility
+circle = Circle

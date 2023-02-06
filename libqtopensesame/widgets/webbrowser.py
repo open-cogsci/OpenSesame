@@ -21,9 +21,9 @@ from libopensesame.py3compat import *
 import os
 import platform
 from qtpy import QtCore
-from libqtopensesame.widgets.base_widget import base_widget
+from libqtopensesame.widgets.base_widget import BaseWidget
 from libopensesame import plugins, misc
-from libqtopensesame.misc.markdown_parser import markdown_parser
+from libqtopensesame.misc.markdown_parser import MarkdownParser
 from libqtopensesame.misc import display
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'webbrowser', category=u'core')
@@ -45,7 +45,7 @@ else:
 INTERNAL_URLS = []
 
 
-class small_webview(WebView):
+class SmallWebview(WebView):
 
     """
     desc:
@@ -65,7 +65,7 @@ class small_webview(WebView):
         return QtCore.QSize(100, 100)
 
 
-class small_webpage(WebPage):
+class SmallWebpage(WebPage):
 
     """
     desc:
@@ -133,10 +133,10 @@ class small_webpage(WebPage):
                     return False
             misc.open_url(url)
             return False
-        return super(small_webpage, self).acceptNavigationRequest(*args)
+        return super().acceptNavigationRequest(*args)
 
 
-class webbrowser(base_widget):
+class Webbrowser(BaseWidget):
 
     """
     desc:
@@ -152,15 +152,12 @@ class webbrowser(base_widget):
                 main_window:	A qtopensesame object.
         """
 
-        super(webbrowser, self).__init__(
-            main_window,
-            ui=u'widgets.webbrowser_widget'
-        )
+        super().__init__(main_window, ui=u'widgets.webbrowser_widget')
         self._current_url = u''
         self._cache = None
-        self.ui.webview = small_webview(self)
+        self.ui.webview = SmallWebview(self)
         # Set webpage which handles link clicks
-        webpage = small_webpage(self)
+        webpage = SmallWebpage(self)
         self.ui.webview.setPage(webpage)
         # Touch events are enabled by default, and this has the effect that
         # touch events are broken for all other widgets once the webbrowser has
@@ -175,7 +172,7 @@ class webbrowser(base_widget):
         self.ui.button_osdoc.clicked.connect(self.open_osdoc)
         self.ui.button_forum.clicked.connect(self.open_forum)
         self.main_window.theme.apply_theme(self)
-        self.markdown_parser = markdown_parser(self)
+        self.markdown_parser = MarkdownParser(self)
 
     def load(self, url, tmpl=None):
         """
@@ -322,3 +319,7 @@ class webbrowser(base_widget):
                                     cmd[2]+u'.md')
                 self.load(path)
             return
+
+
+# Alias for backwards compatibility
+webbrowser = Webbrowser

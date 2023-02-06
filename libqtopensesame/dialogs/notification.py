@@ -20,10 +20,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.dialogs.base_dialog import base_dialog
+from libqtopensesame.dialogs.base_dialog import BaseDialog
 
 
-class notification(base_dialog):
+class Notification(BaseDialog):
 
     """
     desc:
@@ -44,11 +44,14 @@ class notification(base_dialog):
                 icon:			A custom dialog icon.
         """
 
-        super(notification, self).__init__(main_window,
-                                           ui=u'dialogs.notification_dialog')
+        super().__init__(main_window, ui=u'dialogs.notification_dialog')
         self.ui.textedit_notification.setHtml(msg)
         if title is not None:
             self.ui.label_title.setText(title)
         if icon is not None:
             self.ui.label_notification.setPixmap(self.theme.qpixmap(icon))
         self.adjustSize()
+
+
+# Alias for backwards compatibility
+notification = Notification

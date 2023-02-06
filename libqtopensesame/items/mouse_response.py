@@ -18,18 +18,16 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.mouse_response import (
-    mouse_response as mouse_response_runtime
-)
-from libqtopensesame.items.qtplugin import qtplugin
-from libqtopensesame.validators import timeout_validator
+from libopensesame.mouse_response import MouseResponse as MouseResponseRuntime
+from libqtopensesame.items.qtplugin import QtPlugin
+from libqtopensesame.validators import TimeoutValidator
 from libqtopensesame.misc.translate import translation_context
-from libqtopensesame._input.item_combobox import item_combobox
-from libqtopensesame.items.feedpad import feedpad
+from libqtopensesame._input.item_combobox import ItemComboBox
+from libqtopensesame.items.feedpad import Feedpad
 _ = translation_context(u'mouse_response', category=u'item')
 
 
-class mouse_response(mouse_response_runtime, qtplugin):
+class MouseResponse(MouseResponseRuntime, QtPlugin):
 
     """mouse_response item GUI"""
 
@@ -51,8 +49,8 @@ class mouse_response(mouse_response_runtime, qtplugin):
                                         initialization.
         """
 
-        mouse_response_runtime.__init__(self, name, experiment, string)
-        qtplugin.__init__(self)
+        MouseResponseRuntime.__init__(self, name, experiment, string)
+        QtPlugin.__init__(self)
 
     def init_edit_widget(self):
         """
@@ -60,7 +58,7 @@ class mouse_response(mouse_response_runtime, qtplugin):
                 Initialize controls.
         """
 
-        qtplugin.init_edit_widget(self, stretch=True)
+        super().init_edit_widget(stretch=True)
         self.add_line_edit_control(
             var=u'correct_response',
             label=_(u'Correct response'),
@@ -75,13 +73,13 @@ class mouse_response(mouse_response_runtime, qtplugin):
             var=u'timeout',
             label=_(u'Timeout'),
             tooltip=_(u'In milliseconds or "infinite"'),
-            validator=timeout_validator(self)
+            validator=TimeoutValidator(self)
         )
-        self._combobox_sketchpad = item_combobox(
+        self._combobox_sketchpad = ItemComboBox(
             self.main_window,
             filter_fnc=lambda item: isinstance(
                 self.experiment.items[item],
-                feedpad
+                Feedpad
             )
         )
         self._combobox_sketchpad.activated.connect(self.apply_edit_changes)
@@ -126,3 +124,7 @@ class mouse_response(mouse_response_runtime, qtplugin):
 
         if self.var.linked_sketchpad == item_name:
             self.var.linked_sketchpad = u''
+
+
+# Alias for backwards compatibility
+mouse_response = MouseResponse

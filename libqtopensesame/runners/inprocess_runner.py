@@ -20,10 +20,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
-from libqtopensesame.runners import base_runner
+from libqtopensesame.runners import BaseRunner
 
 
-class inprocess_runner(base_runner):
+class InprocessRunner(BaseRunner):
 
     """Runs an experiment in the traditional way, in the same process."""
 

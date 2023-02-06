@@ -19,9 +19,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 
-from libqtopensesame.extensions._extension_manager import extension_manager, \
+from libqtopensesame.extensions._extension_manager import ExtensionManager, \
     suspend_events
-from libqtopensesame.extensions._base_extension import base_extension
+from libqtopensesame.extensions._base_extension import BaseExtension
 
-# PEP-8 alias
-BaseExtension = base_extension
+# Alias for backwards compatibility
+base_extension = BaseExtension
+extension_manager = ExtensionManager

@@ -18,12 +18,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.widgets.header_widget import header_widget
+from libqtopensesame.widgets.header_widget import HeaderWidget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'general_header_widget', category=u'core')
 
 
-class general_header_widget(header_widget):
+class GeneralHeaderWidget(HeaderWidget):
 
     """
     desc:
@@ -41,7 +41,7 @@ class general_header_widget(header_widget):
                 main_window:	A qtopensesame object.
         """
 
-        header_widget.__init__(self, main_window.experiment)
+        super().__init__(main_window.experiment)
         self.general_tab = general_tab
 
     def refresh(self):
@@ -81,3 +81,7 @@ class general_header_widget(header_widget):
         self.edit_desc.hide()
         self.general_tab.apply_changes()
         self.refresh()
+
+
+# Alias for backwards compatibility
+general_header_widget = GeneralHeaderWidget

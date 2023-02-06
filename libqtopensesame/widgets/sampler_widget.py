@@ -18,11 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
+from libqtopensesame.widgets.base_widget import BaseWidget
 
-from libqtopensesame.widgets.base_widget import base_widget
 
-
-class sampler_widget(base_widget):
+class SamplerWidget(BaseWidget):
 
     """
     desc:
@@ -38,5 +37,8 @@ class sampler_widget(base_widget):
                 main_window:	A qtopensesame object.
         """
 
-        super(sampler_widget, self).__init__(main_window,
-                                             ui=u'widgets.sampler_widget')
+        super().__init__(main_window, ui=u'widgets.sampler_widget')
+
+
+# Alias for backwards compatibility
+sampler_widget = SamplerWidget

@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets, QtGui
-from libqtopensesame.widgets.base_widget import base_widget
+from libqtopensesame.widgets.base_widget import BaseWidget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'color_edit', category=u'core')
 
 
-class color_edit(base_widget):
+class ColorEdit(BaseWidget):
 
     """
     desc:
@@ -45,7 +45,7 @@ class color_edit(base_widget):
                         type:	qtopensesame
         """
 
-        super(color_edit, self).__init__(main_window)
+        super().__init__(main_window)
         self.edit = QtWidgets.QLineEdit()
         self._parent = None
         self.edit.setSizePolicy(QtWidgets.QSizePolicy.Minimum,
@@ -136,3 +136,7 @@ class color_edit(base_widget):
             color = experiment.var.get(u'foreground', _eval=False)
         self.setText(color)
         self.button.setIcon(self.theme.qicon(u'os-color-picker'))
+
+
+# Alias for backwards compatibility
+color_edit = ColorEdit

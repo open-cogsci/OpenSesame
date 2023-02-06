@@ -20,15 +20,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.oslogging import oslogger
 from qtpy import QtWidgets
-from libqtopensesame.widgets.general_header_widget import general_header_widget
-from libqtopensesame.widgets.base_widget import base_widget
-from openexp._color.color import color
+from libqtopensesame.widgets.general_header_widget import GeneralHeaderWidget
+from libqtopensesame.widgets.base_widget import BaseWidget
+from openexp._color.color import Color
 from openexp import backend
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'general_properties', category=u'core')
 
 
-class general_properties(base_widget):
+class GeneralProperties(BaseWidget):
 
     """The QWidget for the general properties tab."""
 
@@ -43,13 +43,10 @@ class general_properties(base_widget):
                 main_window:	A qtopensesame object.
         """
 
-        super(general_properties, self).__init__(
-            main_window,
-            ui=u'widgets.general_properties'
-        )
+        super().__init__(main_window, ui=u'widgets.general_properties')
         self.lock = False
         # Set the header, with the icon, label and script button
-        self.header_widget = general_header_widget(self, self.main_window)
+        self.header_widget = GeneralHeaderWidget(self, self.main_window)
         header_hbox = QtWidgets.QHBoxLayout()
         header_hbox.addWidget(self.theme.qlabel(u"experiment"))
         header_hbox.addWidget(self.header_widget)
@@ -149,7 +146,7 @@ class general_properties(base_widget):
         refs = []
         try:
             refs = self.experiment.get_refs(foreground)
-            color.to_hex(foreground)
+            Color.to_hex(foreground)
         except Exception as e:
             if refs == []:
                 self.experiment.notify(e)
@@ -162,7 +159,7 @@ class general_properties(base_widget):
         refs = []
         try:
             refs = self.experiment.get_refs(background)
-            color.to_hex(background)
+            Color.to_hex(background)
         except Exception as e:
             if refs == []:
                 self.experiment.notify(e)
@@ -222,3 +219,7 @@ class general_properties(base_widget):
             self.experiment.var.disable_garbage_collection == u'yes')
         # Release the general tab
         self.lock = False
+
+
+# Alias for backwards compatibility
+general_properties = GeneralProperties

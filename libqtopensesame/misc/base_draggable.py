@@ -19,14 +19,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libqtopensesame.misc import drag_and_drop
-from libqtopensesame.misc.base_component import base_component
+from libqtopensesame.misc.base_component import BaseComponent
 
 
-class base_draggable(object):
+class BaseDraggable(object):
 
     """
     desc:
-            A base class for components that support drag and drop.
+        A base class for components that support drag and drop.
     """
 
     def set_supported_drop_types(self, types=None):
@@ -43,12 +43,12 @@ class base_draggable(object):
     def dragEnterEvent(self, e):
         """
         desc:
-                Handles drag-enter events to see if they are supported
+            Handles drag-enter events to see if they are supported
 
         arguments:
-                e:
-                        desc:	A drag-enter event.
-                        type:	QDragEnterEvent
+            e:
+                desc: A drag-enter event.
+                type: QDragEnterEvent
         """
 
         if not hasattr(self, u'supported_drop_types'):
@@ -63,12 +63,12 @@ class base_draggable(object):
     def dropEvent(self, e):
         """
         desc:
-                Handles drop events and accepts them if supported.
+            Handles drop events and accepts them if supported.
 
         arguments:
-                e:
-                        desc:	A drop event.
-                        type:	QDropEvent
+            e:
+                desc: A drop event.
+                type: QDropEvent
         """
 
         if not hasattr(self, u'supported_drop_types'):
@@ -84,12 +84,16 @@ class base_draggable(object):
     def accept_drop(self, data):
         """
         desc:
-                Is called after a supported drop type. Should be re-implemented.
+            Is called after a supported drop type. Should be re-implemented.
 
         arguments:
-                data:
-                        desc:	The drop data.
-                        type:	dict
+            data:
+                desc: The drop data.
+                type: dict
         """
 
         pass
+
+
+# Alias for backwards compatibility
+base_draggable = BaseDraggable

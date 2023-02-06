@@ -20,10 +20,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.validators._base_validator import base_validator
+from libqtopensesame.validators._base_validator import BaseValidator
 
 
-class timeout_validator(base_validator):
+class TimeoutValidator(BaseValidator):
 
     """
     desc:
@@ -32,7 +32,7 @@ class timeout_validator(base_validator):
 
     def __init__(self, main_window, default=u'infinite'):
 
-        super(timeout_validator, self).__init__(main_window, default=default)
+        super().__init__(main_window, default=default)
 
     def is_valid(self, val):
 

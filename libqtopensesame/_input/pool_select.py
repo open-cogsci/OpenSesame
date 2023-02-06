@@ -19,13 +19,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtWidgets, QtCore
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.widgets import pool_widget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'pool_select', category=u'core')
 
 
-class pool_select(QtWidgets.QWidget, base_subcomponent):
+class PoolSelect(QtWidgets.QWidget, BaseSubcomponent):
 
     """
     desc:
@@ -72,3 +72,7 @@ class pool_select(QtWidgets.QWidget, base_subcomponent):
             return
         self.edit.setText(s)
         self.editingFinished.emit()
+
+
+# Alias for backwards compatibility
+pool_select = PoolSelect

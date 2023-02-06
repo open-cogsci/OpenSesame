@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import os
-from openexp._color.color import color
+from openexp._color.color import Color
 from openexp._canvas._richtext.richtext import RichText
 from openexp._canvas.canvas import Canvas
 from openexp._coordinates.coordinates import Coordinates
@@ -60,7 +60,7 @@ class QtRichText(RichText):
         RichText._register_font(self, exp, font, QtGui.QFontDatabase())
 
 
-class sketchpad_canvas(QtWidgets.QGraphicsScene):
+class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
     """
     desc:
@@ -81,7 +81,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
         self.background_color = sketchpad.var.background
         self.placeholder_color = cfg.sketchpad_placeholder_color
         self.grid = 32
-        super(sketchpad_canvas, self).__init__(self.sketchpad.main_window)
+        super().__init__(self.sketchpad.main_window)
         self.indicator = None
 
     @property
@@ -477,7 +477,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
         if isinstance(_color, QtGui.QColor):
             return _color
         try:
-            hexcolor = color(self.sketchpad.experiment, _color).hexcolor
+            hexcolor = Color(self.sketchpad.experiment, _color).hexcolor
         except:
             self.notify(
                 _(u'Color "%s" is unknown or variably defined, using placeholder color')
@@ -626,7 +626,8 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
         painter.fillRect(QtCore.QRect(-xc, -yc, w, h), self._color(
             self.background_color))
         painter.setPen(self._pen(cfg.sketchpad_grid_color,
-                                 cfg.sketchpad_grid_thickness_thin, cfg.sketchpad_grid_opacity))
+                                 cfg.sketchpad_grid_thickness_thin,
+                                 cfg.sketchpad_grid_opacity))
         painter.drawRect(QtCore.QRect(-xc, -yc, w, h))
         # Draw all lines except for the center ones, because they should be
         # thicker
@@ -641,7 +642,8 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
                 painter.drawLine(-xc, y, xc, y)
         # Draw thicker central lines
         painter.setPen(self._pen(cfg.sketchpad_grid_color,
-                                 cfg.sketchpad_grid_thickness_thick, cfg.sketchpad_grid_opacity))
+                                 cfg.sketchpad_grid_thickness_thick,
+                                 cfg.sketchpad_grid_opacity))
         painter.drawLine(-xc, 0, xc, 0)
         painter.drawLine(0, -yc, 0, yc)
 
@@ -901,3 +903,7 @@ class sketchpad_canvas(QtWidgets.QGraphicsScene):
             self.notify(_(u'Fixdot style "%s" is unknown or variably defined')
                         % style)
         return group
+
+
+# Alias for backwards compatibility
+sketchpad_canvas = SketchpadCanvas

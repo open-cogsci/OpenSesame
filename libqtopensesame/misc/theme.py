@@ -28,7 +28,7 @@ from qtpy import QtGui, QtWidgets, QtCore
 available_themes = [u'default', u'monokai']
 
 
-class theme(object):
+class Theme(object):
 
     """Handles the GUI theme"""
 
@@ -316,3 +316,7 @@ class theme(object):
         """
 
         return os.path.join(self.theme_folder, fname)
+
+
+# Alias for backwards compatibility
+theme = Theme

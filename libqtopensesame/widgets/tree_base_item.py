@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_base_item', category=u'core')
 
 
-class tree_base_item(base_subcomponent, QtWidgets.QTreeWidgetItem):
+class TreeBaseItem(BaseSubcomponent, QtWidgets.QTreeWidgetItem):
 
     """
     desc:
@@ -170,3 +170,7 @@ class tree_base_item(base_subcomponent, QtWidgets.QTreeWidgetItem):
 
         for i in range(self.childCount()):
             self.child(i).set_icon(name, icon)
+
+
+# Alias for backwards compatibility
+tree_base_item = TreeBaseItem

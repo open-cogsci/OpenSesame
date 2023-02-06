@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'unused_widget', category=u'core')
 
 
-class unused_items_context_menu(base_subcomponent, QtWidgets.QMenu):
+class UnusedItemsContextMenu(BaseSubcomponent, QtWidgets.QMenu):
 
     """
     desc:
@@ -45,7 +45,7 @@ class unused_items_context_menu(base_subcomponent, QtWidgets.QMenu):
                         type:	tree_item_item
         """
 
-        super(unused_items_context_menu, self).__init__(main_window)
+        super().__init__(main_window)
         self.setup(main_window)
         a = self.addAction(
             self.theme.qicon(u'purge'),
@@ -64,3 +64,7 @@ class unused_items_context_menu(base_subcomponent, QtWidgets.QMenu):
         w = self.tabwidget.get_widget(u'__unused__')
         w.purge_unused()
         w.on_activate()
+
+
+# Alias for backwards compatibility
+unused_items_context_menu = UnusedItemsContextMenu

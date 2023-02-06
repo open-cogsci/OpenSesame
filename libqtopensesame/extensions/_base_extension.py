@@ -25,11 +25,11 @@ from qtpy import QtWidgets, QtCore
 from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.translate import translation_context
 
 
-class base_extension(base_subcomponent):
+class BaseExtension(BaseSubcomponent):
 
     """
     desc:
@@ -401,9 +401,9 @@ class base_extension(base_subcomponent):
 
         for path in os.listdir(self.info[u'plugin_folder']):
             if path.endswith(u'.ui'):
-                self.experiment.resources[u'extensions.%s.%s' % (self.name(),
-                                                                 os.path.splitext(path)[0])] = os.path.join(
-                    self.info[u'plugin_folder'], path)
+                self.experiment.resources[u'extensions.%s.%s' %
+                    (self.name(), os.path.splitext(path)[0])] = \
+                        os.path.join(self.info[u'plugin_folder'], path)
 
     def qaction(self, icon, label, target, checkable=False, tooltip=None,
                 shortcut=None):

@@ -24,12 +24,12 @@ import tempfile
 from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.runners import base_runner
+from libqtopensesame.runners import BaseRunner
 from qtpy import QtWidgets
 import time
 
 
-class external_runner(base_runner):
+class ExternalRunner(BaseRunner):
 
     """Runs an experiment using opensesamerun."""
 

@@ -28,7 +28,7 @@ from libopensesame.exceptions import osexception
 from libopensesame.py3compat import *
 
 
-class syntax(object):
+class Syntax(object):
 
     """
     desc:
@@ -628,3 +628,5 @@ def osreplace(exc):
 
 
 codecs.register_error(u'osreplace', osreplace)
+# Alias for backwards compatibility
+syntax = Syntax

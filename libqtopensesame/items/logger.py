@@ -18,14 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.logger import logger as logger_runtime
-from libqtopensesame.items.qtplugin import qtplugin
-from libqtopensesame.widgets.logger_widget import logger_widget
+from libopensesame.logger import Logger as LoggerRuntime
+from libqtopensesame.items.qtplugin import QtPlugin
+from libqtopensesame.widgets.logger_widget import LoggerWidget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'logger', category=u'item')
 
 
-class logger(logger_runtime, qtplugin):
+class Logger(LoggerRuntime, QtPlugin):
 
     """
     desc:
@@ -39,14 +39,14 @@ class logger(logger_runtime, qtplugin):
     def __init__(self, name, experiment, string=None):
         """See item."""
 
-        logger_runtime.__init__(self, name, experiment, string)
-        qtplugin.__init__(self)
+        LoggerRuntime.__init__(self, name, experiment, string)
+        QtPlugin.__init__(self)
 
     def init_edit_widget(self):
         """See qtitem."""
 
-        super(logger, self).init_edit_widget(stretch=False)
-        self.logger_widget = logger_widget(self)
+        super().init_edit_widget(stretch=False)
+        self.logger_widget = LoggerWidget(self)
         self.add_widget(self.logger_widget)
         self.auto_add_widget(self.logger_widget.ui.checkbox_auto_log,
                              u'auto_log')
@@ -54,18 +54,21 @@ class logger(logger_runtime, qtplugin):
     def edit_widget(self):
         """See qtitem."""
 
-        super(logger, self).edit_widget()
+        super().edit_widget()
         for item in self.experiment.items.values():
             if item.item_type == self.item_type and item is not self:
                 self.extension_manager.fire(u'notify',
-                                            message=_(
-                                                u'You have multiple unlinked loggers. This can lead to messy log files.'),
-                                            category=u'warning')
+                    message=_(u'You have multiple unlinked loggers. This can lead to messy log files.'),
+                    category=u'warning')
                 break
         self.logger_widget.update()
 
     def apply_edit_changes(self):
         """See qtitem."""
 
-        super(logger, self).apply_edit_changes()
+        super().apply_edit_changes()
         self.logger_widget.update()
+
+
+# Alias for backwards compatibility
+logger = Logger

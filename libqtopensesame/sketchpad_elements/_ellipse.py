@@ -20,11 +20,11 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.sketchpad_elements._base_rect_ellipse import \
-    base_rect_ellipse
-from libopensesame.sketchpad_elements import ellipse as ellipse_runtime
+    BaseRectEllipse
+from libopensesame.sketchpad_elements import Ellipse as EllipseRuntime
 
 
-class ellipse(base_rect_ellipse, ellipse_runtime):
+class Ellipse(BaseRectEllipse, EllipseRuntime):
 
     """
     desc:
@@ -42,5 +42,9 @@ class ellipse(base_rect_ellipse, ellipse_runtime):
         xc = sketchpad.canvas.xcenter()
         yc = sketchpad.canvas.ycenter()
         cls.preview = sketchpad.canvas.ellipse(pos[0]+xc, pos[1]+yc, 0, 0,
-                                               color=cfg.sketchpad_preview_color,
-                                               penwidth=cfg.sketchpad_preview_penwidth)
+            color=cfg.sketchpad_preview_color,
+            penwidth=cfg.sketchpad_preview_penwidth)
+
+
+# Alias for backwards compatibility
+ellipse = Ellipse

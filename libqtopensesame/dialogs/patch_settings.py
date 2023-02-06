@@ -18,10 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.dialogs.base_dialog import base_dialog
+from libqtopensesame.dialogs.base_dialog import BaseDialog
 
 
-class patch_settings(base_dialog):
+class PatchSettings(BaseDialog):
 
     """
     desc:
@@ -49,7 +49,7 @@ class patch_settings(base_dialog):
                 main_window:	The main window object.
         """
 
-        super(patch_settings, self).__init__(main_window, ui=self.ui_file())
+        super().__init__(main_window, ui=self.ui_file())
         self.ui.combobox_env.currentIndexChanged.connect(self.apply_env)
         self.ui.edit_color1.initialize()
         self.ui.edit_color2.initialize(color=self.experiment.var.background)
@@ -174,3 +174,7 @@ class patch_settings(base_dialog):
                 combobox.setEnabled(True)
                 return
         combobox.setEnabled(False)
+
+
+# Alias for backwards compatibility
+patch_settings = PatchSettings

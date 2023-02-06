@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from qtpy import QtWidgets
 
 
-class base_widget(QtWidgets.QWidget, base_subcomponent):
+class BaseWidget(QtWidgets.QWidget, BaseSubcomponent):
 
     """
     desc:
@@ -49,9 +49,9 @@ class base_widget(QtWidgets.QWidget, base_subcomponent):
         *kwdict:			A dict of keywords to be passed onto QDialog.
         """
 
-        super(base_widget, self).__init__(main_window, *arglist, **kwdict)
+        super().__init__(main_window, *arglist, **kwdict)
         self.setup(main_window, ui=ui)
 
 
-# PEP8 alias
-BaseWidget = base_widget
+# Alias for backwards compatibility
+base_widget = BaseWidget

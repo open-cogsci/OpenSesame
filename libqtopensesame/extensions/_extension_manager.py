@@ -22,7 +22,7 @@ from qtpy import QtWidgets
 from libopensesame import plugins
 from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'extension_manager', category=u'core')
 
@@ -44,7 +44,7 @@ def suspend_events(fnc):
     return inner
 
 
-class extension_manager(base_subcomponent):
+class ExtensionManager(BaseSubcomponent):
 
     """
     desc:

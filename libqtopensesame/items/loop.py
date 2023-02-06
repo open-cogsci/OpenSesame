@@ -20,18 +20,18 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qdatamatrix import QDataMatrix
 from pseudorandom import EnforceFailed
-from libopensesame.loop import loop as loop_runtime
+from libopensesame.loop import Loop as LoopRuntime
 from libopensesame.exceptions import osexception
-from libqtopensesame.items.qtitem import qtitem
-from libqtopensesame.items.qtstructure_item import qtstructure_item
-from libqtopensesame.widgets.loop_widget import loop_widget
-from libqtopensesame.widgets.tree_item_item import tree_item_item
+from libqtopensesame.items.qtitem import QtItem
+from libqtopensesame.items.qtstructure_item import QtStructureItem
+from libqtopensesame.widgets.loop_widget import LoopWidget
+from libqtopensesame.widgets.tree_item_item import TreeItemItem
 from libqtopensesame.misc.translate import translation_context
 import math
 _ = translation_context(u'loop', category=u'item')
 
 
-class loop(qtstructure_item, qtitem, loop_runtime):
+class Loop(QtStructureItem, QtItem, LoopRuntime):
 
     """The GUI for the loop item"""
 
@@ -40,18 +40,18 @@ class loop(qtstructure_item, qtitem, loop_runtime):
     lazy_init = True
 
     def __init__(self, name, experiment, string=None):
-        """See qtitem."""
+        """See QtItem."""
 
         self.lock_cycles = False
-        loop_runtime.__init__(self, name, experiment, string)
-        qtstructure_item.__init__(self)
-        qtitem.__init__(self)
+        LoopRuntime.__init__(self, name, experiment, string)
+        QtStructureItem.__init__(self)
+        QtItem.__init__(self)
 
     def init_edit_widget(self):
         """Builds the loop controls."""
 
-        qtitem.init_edit_widget(self, stretch=False)
-        self.loop_widget = loop_widget(self.experiment.main_window)
+        super().init_edit_widget(stretch=False)
+        self.loop_widget = LoopWidget(self.experiment.main_window)
         self.qdm = QDataMatrix(self.dm)
         self.qdm.changed.connect(self._apply_table)
         self.qdm.cellchanged.connect(self._on_cell_changed)
@@ -115,7 +115,7 @@ class loop(qtstructure_item, qtitem, loop_runtime):
         self.tabwidget.open_markdown(
             md, title=u'Loop preview', icon=u'os-loop')
 
-    @qtstructure_item.clears_children_cache
+    @QtStructureItem.clears_children_cache
     def _apply_item(self, *args):
         """
         desc:
@@ -307,9 +307,9 @@ class loop(qtstructure_item, qtitem, loop_runtime):
             )
 
     def edit_widget(self):
-        """See qtitem."""
+        """See QtItem."""
 
-        qtitem.edit_widget(self)
+        super().edit_widget()
         self.loop_widget.ui.combobox_item.filter_fnc = (
             lambda item: item not in self.parents()
         )
@@ -323,28 +323,28 @@ class loop(qtstructure_item, qtitem, loop_runtime):
         self._warn_empty_rows()
 
     def update_script(self, use_cache=True):
-        """See qtitem."""
+        """See QtItem."""
 
-        qtitem.update_script(self, use_cache=use_cache)
+        super().update_script(use_cache=use_cache)
         self._update_summary()
 
     def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
                         extra_info=None):
-        """See qtitem."""
+        """See QtItem."""
 
         items.append(self.name)
-        widget = tree_item_item(self, extra_info=extra_info)
+        widget = TreeItemItem(self, extra_info=extra_info)
         if toplevel is not None:
             toplevel.addChild(widget)
         if (max_depth < 0 or max_depth > 1) \
                 and self._item in self.experiment.items:
             self.experiment.items[self._item].build_item_tree(widget, items,
-                                                              max_depth=max_depth-1)
+                max_depth=max_depth-1)
         return widget
 
-    @qtstructure_item.cached_children
+    @QtStructureItem.cached_children
     def children(self):
-        """See qtitem."""
+        """See QtItem."""
 
         if self._item not in self.experiment.items:
             return []
@@ -355,22 +355,22 @@ class loop(qtstructure_item, qtitem, loop_runtime):
         return [self._item] if self._item in self.experiment.items else []
 
     def is_child_item(self, item):
-        """See qtitem."""
+        """See QtItem."""
 
         return self._item == item or (self._item in self.experiment.items and
                                       self.experiment.items[self._item].is_child_item(item))
 
-    @qtstructure_item.clears_children_cache
+    @QtStructureItem.clears_children_cache
     def insert_child_item(self, item_name, index=0):
-        """See qtitem."""
+        """See QtItem."""
 
         self._item = item_name
         self.update()
         self.main_window.set_unsaved(True)
 
-    @qtstructure_item.clears_children_cache
+    @QtStructureItem.clears_children_cache
     def remove_child_item(self, item_name, index=0):
-        """See qtitem."""
+        """See QtItem."""
 
         if item_name == self._item:
             self._item = u''
@@ -378,17 +378,21 @@ class loop(qtstructure_item, qtitem, loop_runtime):
             self.extension_manager.fire(u'change_item', name=self.name)
         self.main_window.set_unsaved(True)
 
-    @qtstructure_item.clears_children_cache
+    @QtStructureItem.clears_children_cache
     def rename(self, from_name, to_name):
-        """See qtitem."""
+        """See QtItem."""
 
-        qtitem.rename(self, from_name, to_name)
+        super().rename(from_name, to_name)
         if self._item == from_name:
             self._item = to_name
 
-    @qtstructure_item.clears_children_cache
+    @QtStructureItem.clears_children_cache
     def delete(self, item_name, item_parent=None, index=None):
-        """See qtitem."""
+        """See QtItem."""
 
         if self._item == item_name and item_parent == self.name:
             self._item = u''
+
+
+# Alias for backwards compatibility
+loop = Loop

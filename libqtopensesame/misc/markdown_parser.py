@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import metadata
 from libopensesame.py3compat import *
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 import re
 import os
 from libopensesame.oslogging import oslogger
@@ -44,7 +44,7 @@ from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'markdown', category=u'core')
 
 
-class markdown_parser(base_subcomponent):
+class MarkdownParser(BaseSubcomponent):
 
     """
     desc:
@@ -148,3 +148,7 @@ Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-202
             title, body = tuple(html.split(u'\n', 1))
             html = u'<h1>%s</h1>\n\n%s' % (title[9:-4], body)
         return html
+
+
+# Alias for backwards compatibility
+markdown_parser = MarkdownParser

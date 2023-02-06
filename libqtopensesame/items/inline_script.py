@@ -20,14 +20,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qtpy.QtWidgets import QSizePolicy
 from qtpy.QtCore import Qt
-from libopensesame.inline_script import inline_script as inline_script_runtime
+from libopensesame.inline_script import InlineScript as InlineScriptRuntime
 from libopensesame.oslogging import oslogger
-from libqtopensesame.items.qtplugin import qtplugin
+from libqtopensesame.items.qtplugin import QtPlugin
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'inline_script', category=u'item')
 
 
-class inline_script(inline_script_runtime, qtplugin):
+class InlineScript(InlineScriptRuntime, QtPlugin):
 
     """The inline_script GUI controls"""
 
@@ -39,8 +39,8 @@ class inline_script(inline_script_runtime, qtplugin):
     def __init__(self, name, experiment, string=None):
         """See item."""
 
-        inline_script_runtime.__init__(self, name, experiment, string)
-        qtplugin.__init__(self)
+        InlineScriptRuntime.__init__(self, name, experiment, string)
+        QtPlugin.__init__(self)
 
     def apply_edit_changes(self):
         """See qtitem."""
@@ -50,7 +50,7 @@ class inline_script(inline_script_runtime, qtplugin):
         self._set_modified()
         self.var._prepare = sp
         self.var._run = sr
-        qtplugin.apply_edit_changes(self)
+        super().apply_edit_changes()
 
     def _set_modified(self, prepare=False, run=False):
         """
@@ -82,7 +82,7 @@ class inline_script(inline_script_runtime, qtplugin):
 
         from pyqode.core.widgets import SplittableCodeEditTabWidget
 
-        qtplugin.init_edit_widget(self, stretch=False)
+        super().init_edit_widget(stretch=False)
         self._pyqode_tab_widget = SplittableCodeEditTabWidget(
             tabs_movable=False,
             plus_button=False,
@@ -119,7 +119,7 @@ class inline_script(inline_script_runtime, qtplugin):
     def edit_widget(self):
         """See qtitem."""
 
-        qtplugin.edit_widget(self)
+        super().edit_widget()
         _prepare = safe_decode(self.var._prepare)
         if _prepare != self._pyqode_prepare_editor.toPlainText():
             self._pyqode_prepare_editor.setPlainText(
@@ -138,3 +138,7 @@ class inline_script(inline_script_runtime, qtplugin):
         if self.container_widget is None:
             return
         self.apply_edit_changes()
+
+
+# Alias for backwards compatibility
+inline_script = InlineScript

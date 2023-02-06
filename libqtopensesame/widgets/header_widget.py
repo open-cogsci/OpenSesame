@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.widgets.base_widget import base_widget
+from libqtopensesame.widgets.base_widget import BaseWidget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'header_widget', category=u'core')
 
 
-class header_widget(base_widget):
+class HeaderWidget(BaseWidget):
 
     """
     desc:
@@ -40,7 +40,7 @@ class header_widget(base_widget):
                 item: 			A qtitem object.
         """
 
-        super(header_widget, self).__init__(item.main_window)
+        super().__init__(item.main_window)
         self.setCursor(QtCore.Qt.IBeamCursor)
         self.setToolTip(_(u"Click to edit"))
         self.item = item
@@ -171,3 +171,7 @@ class header_widget(base_widget):
             self.edit_desc.show()
             self.edit_desc.selectAll()
             self.edit_desc.setFocus()
+
+
+# Alias for backwards compatibility
+header_widget = HeaderWidget

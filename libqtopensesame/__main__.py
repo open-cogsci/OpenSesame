@@ -134,18 +134,16 @@ def set_paths():
         os.path.dirname(sys.executable), 'Library', 'plugins')
     if os.path.isdir(qt_plugin_path):
         QtCore.QCoreApplication.addLibraryPath(
-            safe_decode(qt_plugin_path, enc=misc.filesystem_encoding())
-        )
+            safe_decode(qt_plugin_path, enc=misc.filesystem_encoding()))
     qt_plugin_path = os.path.join(
         os.path.dirname(sys.executable), 'Library', 'lib', 'qt4', 'plugins')
     if os.path.isdir(qt_plugin_path):
         QtCore.QCoreApplication.addLibraryPath(
-            safe_decode(qt_plugin_path, enc=misc.filesystem_encoding())
-        )
+            safe_decode(qt_plugin_path, enc=misc.filesystem_encoding()))
 
 
 def opensesame():
-
+    """The entrty point for the OpenSesame GUI"""
     set_paths()
     if py3:
         patch_pyqt()
@@ -166,8 +164,8 @@ def opensesame():
         from multiprocessing import freeze_support
         freeze_support()
     # Parse the (optional) environment file that contains special paths, etc.
-    from libopensesame.misc import parse_environment_file
-    parse_environment_file()
+    from libopensesame import misc
+    misc.parse_environment_file()
     # Force the new-style Qt API
     import sip
     import qtpy
@@ -194,9 +192,9 @@ def opensesame():
     if hasattr(Qt, 'HighDpiScaleFactorRoundingPolicy'):
         QApplication.setHighDpiScaleFactorRoundingPolicy(
             Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    from libqtopensesame.qtopensesame import qtopensesame
+    from libqtopensesame.qtopensesame import QtOpenSesame
     app = QApplication(sys.argv)
-    opensesame = qtopensesame(app)
+    opensesame = QtOpenSesame(app)
     opensesame.__script__ = __file__
     app.processEvents()
     # Install the translator. For some reason, the translators need to be
@@ -217,19 +215,19 @@ def opensesame():
 
 
 def opensesamerun():
-
+    """The entrty point for the OpenSesameRun GUI"""
     set_paths()
     from libopensesame.oslogging import oslogger
     oslogger.start(u'gui')
-    import libopensesame.misc
-    libopensesame.misc.parse_environment_file()
-    import libopensesame.experiment
+    from libopensesame import misc
+    misc.parse_environment_file()
+    from libopensesame.experiment import Experiment
     # Parse the command line options
-    options = libopensesame.misc.opensesamerun_options()
+    options = misc.opensesamerun_options()
     app = None
     # If the command line options haven't provided sufficient information to
     # run right away, present a GUI
-    while not libopensesame.misc.opensesamerun_ready(options):
+    while not misc.opensesamerun_ready(options):
         # If PyQt4 is not available (e.g., this might be the case on Mac OS)
         # give an error instead of showing a GUI. This makes sure that even
         # without PyQt4, people can still run experiments.
@@ -240,16 +238,16 @@ def opensesamerun():
             sip.setapi('QVariant', 2)
             from qtpy import QtGui, QtCore, QtWidgets
         except:
-            libopensesame.misc.messagebox(u"OpenSesame Run", u"Incorrect or "
-                                          u"missing options.\n\nRun 'opensesame --help' from a terminal "
-                                          u"(or command prompt) to see a list of available options, or "
-                                          u"install Python Qt4 to enable the graphical user interface.")
+            misc.messagebox(u"OpenSesame Run", u"Incorrect or "
+                            u"missing options.\n\nRun 'opensesame --help' from a terminal "
+                            u"(or command prompt) to see a list of available options, or "
+                            u"install Python Qt4 to enable the graphical user interface.")
             sys.exit()
         # Create the GUI and show it
-        import libqtopensesame.qtopensesamerun
+        from libqtopensesame.qtopensesamerun import QtOpenSesameRun
         if app is None:
             app = QtWidgets.QApplication(sys.argv)
-            myapp = libqtopensesame.qtopensesamerun.qtopensesamerun(options)
+            myapp = QtOpenSesameRun(options)
         myapp.show()
         app.exec_()
         # Update the options from the GUI
@@ -260,71 +258,49 @@ def opensesamerun():
     # Decode the experiment path and logfile
     experiment = os.path.abspath(options.experiment)
     if isinstance(experiment, bytes):
-        experiment = safe_decode(
-            experiment,
-            enc=libopensesame.misc.filesystem_encoding(),
-            errors=u'ignore'
-        )
+        experiment = safe_decode(experiment, enc=misc.filesystem_encoding(),
+                                 errors=u'ignore')
     # experiment_path = os.path.dirname(experiment)
     logfile = options.logfile
     if isinstance(logfile, bytes):
-        logfile = safe_decode(
-            logfile,
-            enc=libopensesame.misc.filesystem_encoding(),
-            errors=u'ignore'
-        )
-    experiment_path = safe_decode(
-        os.path.abspath(options.experiment),
-        enc=libopensesame.misc.filesystem_encoding()
-    )
+        logfile = safe_decode(logfile, enc=misc.filesystem_encoding(),
+                              errors=u'ignore')
+    experiment_path = safe_decode(os.path.abspath(options.experiment),
+                                  enc=misc.filesystem_encoding())
+    # In debug mode, don't try to catch any exceptions
     if options.debug:
-        # In debug mode, don't try to catch any exceptions
-        exp = libopensesame.experiment.experiment(
-            u"Experiment",
-            experiment,
-            experiment_path=experiment_path
-        )
+        exp = Experiment(u"Experiment", experiment,
+                         experiment_path=experiment_path)
         exp.set_subject(options.subject)
         exp.var.fullscreen = options.fullscreen
         exp.logfile = logfile
         exp.run()
         exp.end()
-    else:
-        # Try to parse the experiment from a file
+        return
+    # Try to parse the experiment from a file
+    try:
+        exp = Experiment(u"Experiment", experiment,
+                         experiment_path=experiment_path)
+    except Exception as e:
+        misc.messagebox(
+            u"OpenSesame Run",
+            misc.strip_tags(e)
+        )
+        sys.exit()
+    # Set some options
+    exp.set_subject(options.subject)
+    exp.var.fullscreen = options.fullscreen
+    exp.logfile = logfile
+    # Initialize random number generator
+    import random
+    random.seed()
+    # Try to run the experiment
+    try:
+        exp.run()
+    except Exception as e:
+        misc.messagebox(u"OpenSesame Run", misc.strip_tags(e))
+    finally:
         try:
-            exp = libopensesame.experiment.experiment(
-                u"Experiment",
-                experiment,
-                experiment_path=experiment_path
-            )
-        except Exception as e:
-            libopensesame.misc.messagebox(
-                u"OpenSesame Run",
-                libopensesame.misc.strip_tags(e)
-            )
-            sys.exit()
-        # Set some options
-        exp.set_subject(options.subject)
-        exp.var.fullscreen = options.fullscreen
-        exp.logfile = logfile
-        # Initialize random number generator
-        import random
-        random.seed()
-        # Try to run the experiment
-        try:
-            exp.run()
-        except Exception as e:
-            # Try to nicely end the experiment, even though an exception
-            # occurred.
-            try:
-                exp.end()
-            except Exception as f:
-                libopensesame.misc.messagebox(
-                    u"OpenSesame Run",
-                    libopensesame.misc.strip_tags(f)
-                )
-            libopensesame.misc.messagebox(
-                u"OpenSesame Run",
-                libopensesame.misc.strip_tags(e)
-            )
-    libopensesame.experiment.clean_up(exp.debug)
+            exp.end()
+        except Exception as f:
+            misc.messagebox(u"OpenSesame Run", misc.strip_tags(f))

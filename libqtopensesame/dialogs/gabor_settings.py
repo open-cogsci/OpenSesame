@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from qtpy import QtWidgets
-from libqtopensesame.dialogs.patch_settings import patch_settings
+from libqtopensesame.dialogs.patch_settings import PatchSettings
 from libopensesame.py3compat import *
 
 
-class gabor_settings(patch_settings):
+class GaborSettings(PatchSettings):
 
     """
     desc:
@@ -96,3 +96,7 @@ class gabor_settings(patch_settings):
             u'bgmode',
             properties
         )
+
+
+# Alias for backwards compatibility
+gabor_settings = GaborSettings

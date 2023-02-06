@@ -20,13 +20,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtGui, QtWidgets
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from libqtopensesame.widgets.tree_append_menu import tree_append_menu
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
+from libqtopensesame.widgets.tree_append_menu import TreeAppendMenu
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'item_context_menu', category=u'core')
 
 
-class item_context_menu(base_subcomponent, QtWidgets.QMenu):
+class ItemContextMenu(BaseSubcomponent, QtWidgets.QMenu):
 
     """
     desc:
@@ -47,7 +47,7 @@ class item_context_menu(base_subcomponent, QtWidgets.QMenu):
                         type:	tree_item_item
         """
 
-        super(item_context_menu, self).__init__(main_window)
+        super().__init__(main_window)
         self.setup(main_window)
         self.treeitem = treeitem
         self.addAction(self.theme.qicon(self.item.item_icon()), _('Open'),
@@ -82,7 +82,7 @@ class item_context_menu(base_subcomponent, QtWidgets.QMenu):
                             cfg.shortcut_permanently_delete)
         if self.treeitem.has_append_menu():
             # An append menu for sequence items
-            menu = tree_append_menu(self.treeitem.treeWidget(), self.treeitem)
+            menu = TreeAppendMenu(self.treeitem.treeWidget(), self.treeitem)
             action = QtWidgets.QAction(self.theme.qicon(u'list-add'),
                                        u'Append item', self)
             action.setMenu(menu)
@@ -121,3 +121,7 @@ class item_context_menu(base_subcomponent, QtWidgets.QMenu):
     @property
     def treewidget(self):
         return self.treeitem.treeWidget()
+
+
+# Alias for backwards compatibility
+item_context_menu = ItemContextMenu

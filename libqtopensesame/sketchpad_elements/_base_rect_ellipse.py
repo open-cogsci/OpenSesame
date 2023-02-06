@@ -19,10 +19,10 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.sketchpad_elements._base_element import base_element
+from libqtopensesame.sketchpad_elements._base_element import BaseElement
 
 
-class base_rect_ellipse(base_element):
+class BaseRectEllipse(BaseElement):
 
     pos_start = None
     preview = None
@@ -87,3 +87,7 @@ class base_rect_ellipse(base_element):
     @staticmethod
     def requires_fill():
         return True
+
+
+# Alias for backwards compatibility
+base_rect_ellipse = BaseRectEllipse

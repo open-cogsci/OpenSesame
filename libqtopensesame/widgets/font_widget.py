@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtGui, QtWidgets
-from libqtopensesame.widgets.base_widget import base_widget
+from libqtopensesame.widgets.base_widget import BaseWidget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'font_widget', category=u'core')
 
 
-class font_widget_base(base_widget):
+class FontWidgetBase(BaseWidget):
 
     """A font selection widget"""
 
@@ -174,7 +174,7 @@ class font_widget_base(base_widget):
         self.ui.combobox_family.activated.connect(self.apply_family)
 
 
-class font_widget_horizontal(font_widget_base):
+class FontWidgetHorizontal(FontWidgetBase):
 
     def __init__(self, main_window):
         """
@@ -187,13 +187,10 @@ class font_widget_horizontal(font_widget_base):
         parent		--	The parent QWidget. (default=None)
         """
 
-        super(font_widget_horizontal, self).__init__(
-            main_window,
-            ui=u'widgets.font_widget_horizontal'
-        )
+        super().__init__(main_window, ui=u'widgets.font_widget_horizontal')
 
 
-class font_widget(font_widget_base):
+class FontWidget(FontWidgetBase):
 
     def __init__(self, main_window):
         """
@@ -206,7 +203,10 @@ class font_widget(font_widget_base):
         parent		--	The parent QWidget. (default=None)
         """
 
-        super(font_widget, self).__init__(
-            main_window,
-            ui=u'widgets.font_widget'
-        )
+        super().__init__(main_window, ui=u'widgets.font_widget')
+
+
+# Alias for backwards compatibility
+font_widget = FontWidget
+font_widget_base = FontWidgetBase
+font_widget_horizontal = FontWidgetHorizontal

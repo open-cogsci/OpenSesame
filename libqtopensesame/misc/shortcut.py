@@ -19,16 +19,22 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtGui, QtCore, QtWidgets
+from qtpy.QtWidgets import QShortcut
+from qtpy.QtCore import Qt
+from qtpy.QtGui import QKeySequence
 
 
-class shortcut(QtWidgets.QShortcut):
+class Shortcut(QShortcut):
 
     def __init__(self, parent, key_sequence, target,
                  _global=False):
-
         if _global:
-            context = QtCore.Qt.ApplicationShortcut
+            context = Qt.ApplicationShortcut
         else:
-            context = QtCore.Qt.WidgetWithChildrenShortcut
-        super(shortcut, self).__init__(QtGui.QKeySequence(key_sequence), parent,
-                                       target, context=context)
+            context = Qt.WidgetWithChildrenShortcut
+        super().__init__(QKeySequence(key_sequence), parent, target,
+                         context=context)
+
+
+# Alias for backwards compatibility
+shortcut = Shortcut

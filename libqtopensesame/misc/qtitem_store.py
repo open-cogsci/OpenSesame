@@ -19,21 +19,19 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libopensesame.item_store import item_store
+from libopensesame.item_store import ItemStore
 from libopensesame import plugins
 from libqtopensesame.misc.translate import translation_context
 from libopensesame.oslogging import oslogger
 _ = translation_context(u'qtitem_store', category=u'core')
 
 
-class qtitem_store(item_store):
-
+class QtItemStore(ItemStore):
     """
     desc:
             The GUI counterpart of the item store, which also distributes item
             changes etc.
     """
-
     def __init__(self, experiment):
         """
         desc:
@@ -45,7 +43,7 @@ class qtitem_store(item_store):
                         type:	qtopensesame
         """
 
-        super(qtitem_store, self).__init__(experiment)
+        super().__init__(experiment)
         self.error_log = []
 
     @property
@@ -92,10 +90,8 @@ class qtitem_store(item_store):
         self.experiment.build_item_tree()
         self.extension_manager.fire(u'delete_item', name=name)
 
-    def new(
-            self, _type, name=None, script=None, catch_exceptions=True,
-            allow_rename=True
-    ):
+    def new(self, _type, name=None, script=None, catch_exceptions=True,
+            allow_rename=True):
         """See item_store."""
 
         import warnings
@@ -140,21 +136,22 @@ class qtitem_store(item_store):
     def rename(self, from_name, to_name):
         """
         desc:
-                Renames an item and updates the interface. This function may show
-                a notification dialog.
+            Renames an item and updates the interface. This function may show
+            a notification dialog.
 
         arguments:
-                from_name:
-                        desc:	The old item name.
-                        type:	unicode
-                to_name:
-                        desc:	The desired new item name.
-                        type:	unicode
+            from_name:
+                desc: The old item name.
+                type: unicode
+            to_name:
+                desc: The desired new item name.
+                type: unicode
 
         returns:
-                desc:	The new name of the item, if renaming was successful, None
-                                otherwise.
-                type:	[NoneType, unicode]
+            desc:
+                The new name of the item, if renaming was successful, None
+                otherwise.
+            type: [NoneType, unicode]
         """
 
         if from_name not in self:
@@ -171,8 +168,8 @@ class qtitem_store(item_store):
         if to_name == u'':
             self.experiment.notify(_(u'An item name cannot be empty.'))
             return None
-        self.extension_manager.fire(u'prepare_rename_item', from_name=from_name,
-                                    to_name=to_name)
+        self.extension_manager.fire(u'prepare_rename_item',
+                                    from_name=from_name, to_name=to_name)
         # Copy the item in the __items__dictionary
         self.__items__[to_name] = self.__items__[from_name]
         del self.__items__[from_name]
@@ -189,15 +186,15 @@ class qtitem_store(item_store):
     def set_icon(self, name, icon):
         """
         desc:
-                Changes an item's icon.
+            Changes an item's icon.
 
         arguments:
-                name:
-                        desc:	The item name.
-                        type:	unicode
-                icon:
-                        desc:	The icon name.
-                        type:	unicode
+            name:
+                desc: The item name.
+                type: unicode
+            icon:
+                desc: The icon name.
+                type: unicode
         """
 
         self.itemtree.set_icon(name, icon)
@@ -205,20 +202,20 @@ class qtitem_store(item_store):
     def used(self):
         """
         returns:
-                desc:	A list of used item names.
-                type:	list
+            desc: A list of used item names.
+            type: list
         """
 
         if self.experiment.var.start not in self:
             return []
-        return [self.experiment.var.start] \
-            + self[self.experiment.var.start].children()
+        return [self.experiment.var.start] + \
+                self[self.experiment.var.start].children()
 
     def unused(self):
         """
         returns:
-                desc:	A list of unused item names.
-                type:	list
+            desc: A list of unused item names.
+            type: list
         """
 
         _used = self.used()
@@ -228,13 +225,13 @@ class qtitem_store(item_store):
     def valid_type(self, _type):
         """
         arguments:
-                _type:
-                        desc:	The item type to check.
-                        type:	str
+            _type:
+                desc: The item type to check.
+                type: str
 
         returns:
-                desc: 	True if _type is a valid type, False otherwise.
-                type:	bool
+            desc: True if _type is a valid type, False otherwise.
+            type: bool
         """
 
         if plugins.is_plugin(_type):
@@ -246,9 +243,13 @@ class qtitem_store(item_store):
     def clear_cache(self):
         """
         desc:
-                Clears the cache, currently only the cache with children for each
-                item.
+            Clears the cache, currently only the cache with children for each
+            item.
         """
 
         for item in self.values():
             item._children = None
+
+
+# Alias for backwards compatibility
+qtitem_store = QtItemStore

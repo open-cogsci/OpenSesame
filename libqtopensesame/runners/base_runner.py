@@ -22,13 +22,13 @@ from qtpy import QtWidgets
 from libqtopensesame.misc.config import cfg
 from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
-from libopensesame.experiment import experiment
+from libopensesame.experiment import Experiment
 from libopensesame.py3compat import *
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'base_runner', category=u'core')
 
 
-class base_runner(object):
+class BaseRunner(object):
 
     """
     A runner implements a specific way to execute an OpenSesame experiment from
@@ -238,7 +238,7 @@ class base_runner(object):
             experiment_path = None
         # Build a new experiment. This can trigger a script error.
         try:
-            self.experiment = experiment(
+            self.experiment = Experiment(
                 string=script,
                 pool_folder=self.main_window.experiment.pool.folder(),
                 experiment_path=experiment_path,

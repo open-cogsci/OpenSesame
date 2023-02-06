@@ -18,14 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.synth import synth as synth_runtime
-from libqtopensesame.items.qtplugin import qtplugin
-from libqtopensesame.validators import duration_validator
+from libopensesame.synth import Synth as SynthRuntime
+from libqtopensesame.items.qtplugin import QtPlugin
+from libqtopensesame.validators import DurationValidator
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'synth', category=u'item')
 
 
-class synth(synth_runtime, qtplugin):
+class Synth(SynthRuntime, QtPlugin):
 
     """
     desc:
@@ -39,13 +39,13 @@ class synth(synth_runtime, qtplugin):
     def __init__(self, name, experiment, string=None):
         """See item."""
 
-        synth_runtime.__init__(self, name, experiment, string)
-        qtplugin.__init__(self)
+        SynthRuntime.__init__(self, name, experiment, string)
+        QtPlugin.__init__(self)
 
     def init_edit_widget(self):
         """See qtitem."""
 
-        qtplugin.init_edit_widget(self)
+        QtPlugin.init_edit_widget(self)
         self.add_combobox_control(u'osc', _(u'Waveform'),
                                   [u'sine', u'saw', u'square', u'white_noise'])
         self.add_line_edit_control(u'freq',
@@ -65,3 +65,7 @@ class synth(synth_runtime, qtplugin):
                                    info=_(
                                        u'In milliseconds, "sound", "keypress", or "mouseclick"'),
                                    validator=duration_validator(self, default=u'sound'))
+
+
+# Alias for backwards compatibility
+synth = Synth

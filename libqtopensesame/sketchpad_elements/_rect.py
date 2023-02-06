@@ -20,11 +20,11 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.sketchpad_elements._base_rect_ellipse import \
-    base_rect_ellipse
-from libopensesame.sketchpad_elements import rect as rect_runtime
+    BaseRectEllipse
+from libopensesame.sketchpad_elements import Rect as RectRuntime
 
 
-class rect(base_rect_ellipse, rect_runtime):
+class Rect(BaseRectEllipse, RectRuntime):
 
     """
     desc:
@@ -44,3 +44,7 @@ class rect(base_rect_ellipse, rect_runtime):
         cls.preview = sketchpad.canvas.rect(pos[0]+xc, pos[1]+yc, 0, 0,
                                             color=cfg.sketchpad_preview_color,
                                             penwidth=cfg.sketchpad_preview_penwidth)
+
+
+# Alias for backwards compatibility
+rect = Rect

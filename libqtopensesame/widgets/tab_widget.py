@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libopensesame import metadata, misc
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.tab_bar import TabBar
 from qtpy import QtGui, QtWidgets, QtCore
@@ -31,7 +31,7 @@ _ = translation_context(u'tab_widget', category=u'core')
 MAX_TAB_STACK = 3
 
 
-class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
+class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
 
     """A custom tab widget with some extra functionality"""
 
@@ -49,7 +49,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
 
         QtWidgets.QTabWidget.__init__(self, parent)
         self.setTabBar(TabBar(self))
-        base_subcomponent.setup(self, parent)
+        BaseSubcomponent.setup(self, parent)
         self.tabCloseRequested.connect(self.removeTab)
         self.currentChanged.connect(self.index_changed)
         self.setSizePolicy(
@@ -495,3 +495,7 @@ class tab_widget(base_subcomponent, QtWidgets.QTabWidget):
         if item is None:
             return
         self.experiment.items[item].set_focus()
+
+
+# Alias for backwards compatibility
+tab_widget = TabWidget

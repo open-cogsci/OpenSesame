@@ -19,10 +19,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtGui
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 
 
-class base_validator(base_subcomponent, QtGui.QValidator):
+class BaseValidator(BaseSubcomponent, QtGui.QValidator):
 
     """
     desc:
@@ -33,7 +33,7 @@ class base_validator(base_subcomponent, QtGui.QValidator):
 
         self.default = default
         main_window = self.get_main_window(main_window)
-        super(base_validator, self).__init__(main_window)
+        super().__init__(main_window)
         self.setup(main_window)
 
     def is_valid(self, val):

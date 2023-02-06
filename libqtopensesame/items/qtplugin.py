@@ -23,15 +23,15 @@ import mimetypes
 from libopensesame import plugins
 from libopensesame.oslogging import oslogger
 from qtpy import QtGui, QtCore, QtWidgets
-from libqtopensesame.items import qtitem
-from libqtopensesame.widgets import color_edit
+from libqtopensesame.items.qtitem import QtItem
+from libqtopensesame.widgets.color_edit import ColorEdit
 from libopensesame import misc
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'qtplugin', category=u'core')
 
 
-class qtplugin(qtitem.qtitem):
+class QtPlugin(QtItem):
 
     """Provides basic functionality for plugin GUIs"""
 
@@ -70,7 +70,7 @@ class qtplugin(qtitem.qtitem):
         else:
             self.qicon = None
         self.lock = False
-        qtitem.qtitem.__init__(self)
+        super().__init__()
 
     def init_item_icon(self):
 
@@ -105,7 +105,7 @@ class qtplugin(qtitem.qtitem):
                 Updates the GUI controls.
         """
 
-        qtitem.qtitem.edit_widget(self)
+        super().edit_widget()
         self.auto_edit_widget()
 
     def add_control(self, label, widget, tooltip=None, min_width=200,
@@ -219,7 +219,7 @@ class qtplugin(qtitem.qtitem):
                 A color_edit widget.
         """
 
-        edit = color_edit.color_edit(self.main_window)
+        edit = ColorEdit(self.main_window)
         edit.setMinimumWidth(200)
         edit.initialize(self.experiment)
         edit.textEdited.connect(self.apply_edit_changes)
@@ -504,7 +504,8 @@ class qtplugin(qtitem.qtitem):
                 oslogger.debug(u'applying pending editor changes')
                 self.apply_edit_changes()
                 return True
-        return qtitem.qtitem.get_ready(self)
+        return super().get_ready()
 
 
-QtPlugin = qtplugin
+# Alias for backwards compatibility
+qtplugin = QtPlugin

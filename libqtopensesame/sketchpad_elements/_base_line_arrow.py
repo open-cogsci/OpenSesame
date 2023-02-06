@@ -19,10 +19,10 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.sketchpad_elements._base_element import base_element
+from libqtopensesame.sketchpad_elements._base_element import BaseElement
 
 
-class base_line_arrow(base_element):
+class BaseLineArrow(BaseElement):
 
     """
     desc:
@@ -72,3 +72,7 @@ class base_line_arrow(base_element):
     @staticmethod
     def requires_penwidth():
         return True
+
+
+# Alias for backwards compatibility
+base_line_arrow = BaseLineArrow

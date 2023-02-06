@@ -19,10 +19,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 
 
-class qtitem_splitter(base_subcomponent, QtWidgets.QSplitter):
+class QtItemSplitter(BaseSubcomponent, QtWidgets.QSplitter):
 
     """
     desc:
@@ -41,10 +41,7 @@ class qtitem_splitter(base_subcomponent, QtWidgets.QSplitter):
                 type:	qtitem
         """
 
-        super(qtitem_splitter, self).__init__(
-            QtCore.Qt.Vertical,
-            item.main_window
-        )
+        super().__init__(QtCore.Qt.Vertical, item.main_window)
         self.item = item
         self.setup(item.main_window)
         self.addWidget(self.item._edit_widget)
@@ -72,3 +69,7 @@ class qtitem_splitter(base_subcomponent, QtWidgets.QSplitter):
         """
 
         return QtCore.QSize(100, 100)
+
+
+# Alias for backwards compatibility
+qtitem_splitter = QtItemSplitter

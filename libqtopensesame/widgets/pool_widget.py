@@ -21,9 +21,9 @@ from libopensesame.py3compat import *
 from libopensesame import misc
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.widgets.base_widget import base_widget
-from libqtopensesame._input.popup_menu import popup_menu
-from libqtopensesame._input.confirmation import confirmation
+from libqtopensesame.widgets.base_widget import BaseWidget
+from libqtopensesame._input.popup_menu import PopupMenu
+from libqtopensesame._input.confirmation import Confirmation
 from qtpy import QtCore, QtWidgets
 import os
 import os.path
@@ -32,7 +32,7 @@ from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'pool_widget', category=u'core')
 
 
-class pool_widget(base_widget):
+class PoolWidget(BaseWidget):
 
     """
     desc:
@@ -49,8 +49,7 @@ class pool_widget(base_widget):
         """
 
         self.max_len = 5
-        super(pool_widget, self).__init__(main_window,
-                                          ui=u'widgets.pool_widget')
+        super().__init__(main_window, ui=u'widgets.pool_widget')
         self.ui.button_pool_add.clicked.connect(self.select_and_add)
         self.ui.button_refresh.clicked.connect(self.refresh)
         self.ui.button_help_pool.clicked.connect(self.help)
@@ -377,7 +376,7 @@ def select_from_pool(main_window, parent=None):
     if parent is None:
         parent = main_window.ui.centralwidget
     d = QtWidgets.QDialog(parent)
-    widget = pool_widget(main_window)
+    widget = PoolWidget(main_window)
     widget.refresh()
     bbox = QtWidgets.QDialogButtonBox(d)
     bbox.addButton(_(u"Cancel"), QtWidgets.QDialogButtonBox.RejectRole)
@@ -397,3 +396,7 @@ def select_from_pool(main_window, parent=None):
     if selected is None:
         return u""
     return selected.text()
+
+
+# Alias for backwards compatibility
+pool_widget = PoolWidget

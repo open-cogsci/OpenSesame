@@ -18,11 +18,11 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.sketchpad_elements._base_line_arrow import base_line_arrow
-from libopensesame.sketchpad_elements import arrow as arrow_runtime
+from libqtopensesame.sketchpad_elements._base_line_arrow import BaseLineArrow
+from libopensesame.sketchpad_elements import Arrow as ArrowRuntime
 
 
-class arrow(base_line_arrow, arrow_runtime):
+class Arrow(BaseLineArrow, ArrowRuntime):
 
     """
     desc:
@@ -55,7 +55,7 @@ class arrow(base_line_arrow, arrow_runtime):
             u'fill':				sketchpad.current_fill(),
             u'show_if':				sketchpad.current_show_if()
         }
-        e = arrow(sketchpad, properties=properties)
+        e = Arrow(sketchpad, properties=properties)
         cls.pos_start = None
         sketchpad.canvas.removeItem(cls.preview)
         return e
@@ -75,3 +75,7 @@ class arrow(base_line_arrow, arrow_runtime):
     @staticmethod
     def requires_fill():
         return True
+
+
+# Alias for backwards compatibility
+arrow = Arrow

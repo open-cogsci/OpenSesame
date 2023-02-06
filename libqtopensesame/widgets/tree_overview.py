@@ -21,20 +21,20 @@ from libopensesame.py3compat import *
 from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc import drag_and_drop
-from libqtopensesame.misc.shortcut import shortcut
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from libqtopensesame.misc.base_draggable import base_draggable
-from libqtopensesame.widgets.tree_append_button import tree_append_button
-from libqtopensesame._input.popup_menu import popup_menu
-from libqtopensesame.items.qtstructure_item import qtstructure_item
+from libqtopensesame.misc.shortcut import Shortcut
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
+from libqtopensesame.misc.base_draggable import BaseDraggable
+from libqtopensesame.widgets.tree_append_button import TreeAppendButton
+from libqtopensesame._input.popup_menu import PopupMenu
+from libqtopensesame.items.qtstructure_item import QtStructureItem
 from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
-from libopensesame.sequence import sequence
+from libopensesame.sequence import Sequence
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_overview', category=u'core')
 
 
-class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
+class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
 
     """
     desc:
@@ -71,7 +71,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
                         type:		int
         """
 
-        super(tree_overview, self).__init__(main_window)
+        super().__init__(main_window)
         self.locked = False
         self.overview_mode = overview_mode
         self.setAcceptDrops(True)
@@ -86,19 +86,19 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
         self.drag_timer = None
         self.inhibit_drag = False
         if not self.overview_mode:
-            shortcut(self, cfg.shortcut_edit_runif, self.start_edit_runif)
-            self.append_button = tree_append_button(self)
+            Shortcut(self, cfg.shortcut_edit_runif, self.start_edit_runif)
+            self.append_button = TreeAppendButton(self)
         else:
             self.append_button = None
-        shortcut(self, cfg.shortcut_context_menu, self.show_context_menu)
-        shortcut(self, cfg.shortcut_rename, self.start_rename)
-        shortcut(self, cfg.shortcut_copy_clipboard_unlinked,
+        Shortcut(self, cfg.shortcut_context_menu, self.show_context_menu)
+        Shortcut(self, cfg.shortcut_rename, self.start_rename)
+        Shortcut(self, cfg.shortcut_copy_clipboard_unlinked,
                  self.copy_item_unlinked)
-        shortcut(self, cfg.shortcut_copy_clipboard_linked,
+        Shortcut(self, cfg.shortcut_copy_clipboard_linked,
                  self.copy_item_linked)
-        shortcut(self, cfg.shortcut_paste_clipboard, self.paste_item)
-        shortcut(self, cfg.shortcut_delete, self.delete_item)
-        shortcut(self, cfg.shortcut_permanently_delete,
+        Shortcut(self, cfg.shortcut_paste_clipboard, self.paste_item)
+        Shortcut(self, cfg.shortcut_delete, self.delete_item)
+        Shortcut(self, cfg.shortcut_permanently_delete,
                  self.permanently_delete_item)
         self.drop_indicator = None
         self.drop_indicator_pen = QtGui.QPen(QtGui.QBrush(
@@ -305,7 +305,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
                         type:	QMouseEvent
         """
 
-        super(tree_overview, self).mousePressEvent(e)
+        super().mousePressEvent(e)
         if e.buttons() != QtCore.Qt.LeftButton:
             return
         # Get item and open tab.
@@ -336,7 +336,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
             u'move': True,
             u'item-name': target_item.name,
             u'item-type': target_item.item_type,
-            u'structure-item': isinstance(target_item, qtstructure_item),
+            u'structure-item': isinstance(target_item, QtStructureItem),
             u'ancestry': target_item_ancestry,
             u'script': target_item.to_string(),
             u'application-id': self.main_window._id(),
@@ -387,7 +387,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
                         type:	QMouseEvent
         """
 
-        super(tree_overview, self).mouseReleaseEvent(e)
+        super().mouseReleaseEvent(e)
         self.pending_drag_data = None
 
     def parent_from_ancestry(self, ancestry):
@@ -712,9 +712,9 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
             target_item.insert_child_item(item.name)
             inserted = True
         else:
-            if isinstance(target_item, qtstructure_item):
+            if isinstance(target_item, QtStructureItem):
                 self.main_window.set_busy(False)
-                resp = popup_menu(self, [
+                resp = PopupMenu(self, [
                     (0, _('Insert into %s') % target_item.name, u'go-next'),
                     (1, _('Insert after %s') %
                      target_item.name, u'go-down')
@@ -751,7 +751,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
                     return False
                 parent_item_name = str(parent_treeitem.text(0))
                 parent_item = self.experiment.items[parent_item_name]
-                if isinstance(parent_item, sequence):
+                if isinstance(parent_item, Sequence):
                     break
                 target_treeitem = parent_treeitem
             index = parent_treeitem.indexOfChild(target_treeitem) + 1
@@ -853,7 +853,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
         rect = self.visualRect(index)
         if target.name == u'__unused__' or (
                 target.item.name in self.experiment.items.used() and
-                isinstance(target.item, qtstructure_item) and
+                isinstance(target.item, QtStructureItem) and
                 target.item.name != self.experiment.var.start and
                 target.parent() is not None):
             self.drop_indicator = rect
@@ -904,7 +904,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
         e -- a QKeyEvent
         """
 
-        super(tree_overview, self).keyPressEvent(e)
+        super().keyPressEvent(e)
         current_item = self.currentItem()
         if current_item is None:
             return
@@ -1022,7 +1022,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
                 also set up.
         """
 
-        super(tree_overview, self).setup(main_window)
+        super().setup(main_window)
         if self.append_button is not None:
             self.append_button.setup(main_window)
 
@@ -1033,7 +1033,7 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
                 append menu (if any).
         """
 
-        super(tree_overview, self).clear()
+        super().clear()
         if self.append_button is None:
             return
         self.append_button.append_menu.target_treeitem = None
@@ -1044,6 +1044,10 @@ class tree_overview(base_subcomponent, base_draggable, QtWidgets.QTreeWidget):
                 Select the general tab if no item is currently selected.
         """
 
-        super(tree_overview, self).focusInEvent(e)
+        super().focusInEvent(e)
         if len(self.selectedItems()) == 0:
             self.setCurrentItem(self.topLevelItem(0))
+
+
+# Alias for backwards compatibility
+tree_overview = TreeOverview

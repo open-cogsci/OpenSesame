@@ -18,14 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libopensesame import plugins
 from qtpy import QtWidgets, QtGui
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_append_menu', category=u'core')
 
 
-class append_existing_action(base_subcomponent, QtWidgets.QAction):
+class AppendExistingAction(BaseSubcomponent, QtWidgets.QAction):
 
     """
     desc:
@@ -50,7 +50,7 @@ class append_existing_action(base_subcomponent, QtWidgets.QAction):
                         type:	unicode
         """
 
-        super(append_existing_action, self).__init__(menu)
+        super().__init__(menu)
         self.setup(append_menu)
         self.setText(item_name)
         self.item_name = item_name
@@ -74,7 +74,7 @@ class append_existing_action(base_subcomponent, QtWidgets.QAction):
         target_item.insert_child_item(item_name, len(target_item.items))
 
 
-class append_new_action(base_subcomponent, QtWidgets.QAction):
+class AppendNewAction(BaseSubcomponent, QtWidgets.QAction):
 
     """
     desc:
@@ -98,7 +98,7 @@ class append_new_action(base_subcomponent, QtWidgets.QAction):
                         type:	unicode
         """
 
-        super(append_new_action, self).__init__(menu)
+        super().__init__(menu)
         self.setup(append_menu)
         self.item_type = item_type
         self.setText(item_type)
@@ -127,7 +127,7 @@ class append_new_action(base_subcomponent, QtWidgets.QAction):
             target_item.insert_child_item(item.name, len(target_item.items))
 
 
-class tree_append_menu(base_subcomponent, QtWidgets.QMenu):
+class TreeAppendMenu(BaseSubcomponent, QtWidgets.QMenu):
 
     """
     desc:
@@ -152,7 +152,7 @@ class tree_append_menu(base_subcomponent, QtWidgets.QMenu):
                         type:	tree_item_item
         """
 
-        super(tree_append_menu, self).__init__(tree_overview)
+        super().__init__(tree_overview)
         self.setup(tree_overview)
         self.target_treeitem = target_treeitem
         self.tree_overview = tree_overview
@@ -224,7 +224,7 @@ class tree_append_menu(base_subcomponent, QtWidgets.QMenu):
         self._items.sort()
         m = QtWidgets.QMenu(self)
         for item_name in self._items:
-            m.addAction(append_existing_action(self, m, item_name))
+            m.addAction(AppendExistingAction(self, m, item_name))
         return m
 
     def new_items_menu(self):
@@ -245,5 +245,9 @@ class tree_append_menu(base_subcomponent, QtWidgets.QMenu):
                 self._new_items_menu.addSeparator()
             else:
                 self._new_items_menu.addAction(
-                    append_new_action(self, self._new_items_menu, item_type))
+                    AppendNewAction(self, self._new_items_menu, item_type))
         return self._new_items_menu
+
+
+# Alias for backwards compatibility
+tree_append_menu = TreeAppendMenu

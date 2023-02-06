@@ -18,14 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.feedback import feedback as feedback_runtime
-from libqtopensesame.items.qtplugin import qtplugin
-from libqtopensesame.items.feedpad import feedpad
+from libopensesame.feedback import Feedback as FeedbackRuntime
+from libqtopensesame.items.qtplugin import QtPlugin
+from libqtopensesame.items.feedpad import Feedpad
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'feeback', category=u'item')
 
 
-class feedback(feedpad, qtplugin, feedback_runtime):
+class Feedback(Feedpad, QtPlugin, FeedbackRuntime):
 
     """
     desc:
@@ -36,11 +36,15 @@ class feedback(feedpad, qtplugin, feedback_runtime):
 
     def __init__(self, name, experiment, string=None):
 
-        feedback_runtime.__init__(self, name, experiment, string)
-        qtplugin.__init__(self)
+        FeedbackRuntime.__init__(self, name, experiment, string)
+        QtPlugin.__init__(self)
 
     def init_edit_widget(self):
 
-        feedpad.init_edit_widget(self)
+        Feedpad.init_edit_widget(self)
         self.auto_add_widget(self.sketchpad_widget.ui.checkbox_reset_variables,
                              u'reset_variables')
+
+
+# Alias for backwards compatibility
+feedback = Feedback

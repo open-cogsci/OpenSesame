@@ -18,11 +18,15 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.syntax import syntax
+from libopensesame.syntax import Syntax
 
 
-class qtsyntax(syntax):
+class QtSyntax(Syntax):
 
     def eval_text(self, txt, round_float=False):
 
         return txt
+    
+
+# Alias for backwards compatibility
+qtsyntax = QtSyntax

@@ -18,13 +18,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.dialogs.base_dialog import base_dialog
-from libqtopensesame.widgets import sketchpad_widget
+from libqtopensesame.dialogs.base_dialog import BaseDialog
+from libqtopensesame.widgets import SketchpadWidget
 
 
-class sketchpad_dialog(base_dialog):
+class SketchpadDialog(BaseDialog):
 
     """
     desc:
@@ -41,11 +40,13 @@ class sketchpad_dialog(base_dialog):
                 sketchpad:		A sketchpad object.
         """
 
-        super(sketchpad_dialog, self).__init__(
-            main_window, flags=QtCore.Qt.WindowMinMaxButtonsHint | QtCore.Qt.WindowCloseButtonHint)
+        super().__init__(main_window,
+                         flags=QtCore.Qt.WindowMinMaxButtonsHint | 
+                               QtCore.Qt.WindowCloseButtonHint)
         self.sketchpad = sketchpad
         self.tools_widget = sketchpad_widget.sketchpad_widget(self.sketchpad,
-                                                              parent=self, embed=False)
+                                                              parent=self,
+                                                              embed=False)
         self.close_button = QtWidgets.QPushButton(self.theme.qicon(u"close"),
                                                   u"Close")
         self.close_button.setIconSize(QtCore.QSize(16, 16))
@@ -60,3 +61,7 @@ class sketchpad_dialog(base_dialog):
         self.vbox.addWidget(self.tools_widget)
         self.vbox.addWidget(self.hbox_widget)
         self.setLayout(self.vbox)
+
+
+# Alias for backwards compatibility
+sketchpad_dialog = SketchpadDialog

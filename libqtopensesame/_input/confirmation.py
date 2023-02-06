@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'confirmation', category=u'core')
 
 
-class confirmation(QtWidgets.QMessageBox, base_subcomponent):
+class Confirmation(QtWidgets.QMessageBox, BaseSubcomponent):
 
     """
     desc:
@@ -92,3 +92,7 @@ class confirmation(QtWidgets.QMessageBox, base_subcomponent):
         if self.cancel is not None and button is self.cancel:
             return None
         return button == self.yes
+
+
+# Alias for backwards compatibility
+confirmation = Confirmation

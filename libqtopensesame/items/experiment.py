@@ -19,17 +19,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 import os
-from libopensesame.experiment import experiment as experiment_runtime
-from libopensesame.base_python_workspace import base_python_workspace
+from libopensesame.experiment import Experiment as ExperimentRuntime
+from libopensesame.base_python_workspace import BasePythonWorkspace
 import libopensesame.plugins
-from libqtopensesame.misc.qtitem_store import qtitem_store
-from libqtopensesame.misc.qtsyntax import qtsyntax
+from libqtopensesame.misc.qtitem_store import QtItemStore
+from libqtopensesame.misc.qtsyntax import QtSyntax
 from qtpy import QtCore, QtWidgets, QtGui
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'experiment', category=u'item')
 
 
-class experiment(experiment_runtime):
+class Experiment(ExperimentRuntime):
 
     """Contains various GUI controls for the experiment"""
 
@@ -77,15 +77,12 @@ class experiment(experiment_runtime):
             u"synth", u"keyboard_response", u"mouse_response", u"logger",
             u"inline_script"
         ]
-        self.items = qtitem_store(self)
-        self._syntax = qtsyntax(self)
-        experiment_runtime.__init__(
-            self, name, string, pool_folder,
-            experiment_path=experiment_path,
-            resources=resources,
-            fullscreen=None,
-            workspace=base_python_workspace(self)
-        )
+        self.items = QtItemStore(self)
+        self._syntax = QtSyntax(self)
+        super().__init__(name, string, pool_folder,
+                         experiment_path=experiment_path, resources=resources,
+                         fullscreen=None,
+                         workspace=BasePythonWorkspace(self))
 
     @property
     def overview_area(self):
@@ -280,3 +277,7 @@ class experiment(experiment_runtime):
             return False
         # TODO: Improve with regular expression
         return u'[' in val
+
+
+# Alias for backwards compatibility
+experiment = Experiment

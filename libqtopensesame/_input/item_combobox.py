@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'item_combobox', category=u'core')
 
 
-class item_combobox(QtWidgets.QComboBox, base_subcomponent):
+class ItemComboBox(QtWidgets.QComboBox, BaseSubcomponent):
 
     """
     desc:
@@ -94,3 +94,7 @@ class item_combobox(QtWidgets.QComboBox, base_subcomponent):
             self.setItemIcon(i+1,
                              self.theme.qicon(self.item_store[item_name].item_icon()))
         self.select(prev_selected)
+
+
+# Alias for backwards compatibility
+item_combobox = ItemComboBox

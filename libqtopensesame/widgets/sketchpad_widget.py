@@ -22,12 +22,12 @@ from qtpy import QtCore, QtGui
 from libopensesame.exceptions import osexception
 from libqtopensesame import sketchpad_elements
 from libqtopensesame.widgets.sketchpad_element_button import \
-    sketchpad_element_button
-from libqtopensesame.widgets.base_widget import base_widget
-from libqtopensesame.validators import cond_validator
+    SketchpadElementButton
+from libqtopensesame.widgets.base_widget import BaseWidget
+from libqtopensesame.validators import CondValidator
 
 
-class sketchpad_widget(base_widget):
+class SketchpadWidget(BaseWidget):
 
     """
     desc:
@@ -46,8 +46,7 @@ class sketchpad_widget(base_widget):
                         type:	sketchpad
         """
 
-        super(sketchpad_widget, self).__init__(sketchpad.main_window,
-                                               ui=u'widgets.sketchpad')
+        super().__init__(sketchpad.main_window, ui=u'widgets.sketchpad')
         self.sketchpad = sketchpad
         self.initialized = False
         self.margin = 50
@@ -63,8 +62,8 @@ class sketchpad_widget(base_widget):
         self.ui.spinbox_penwidth.valueChanged.connect(self.apply_penwidth)
         self.ui.edit_color.textEdited.connect(self.apply_color)
         self.ui.edit_show_if.editingFinished.connect(self.apply_show_if)
-        self.ui.edit_show_if.setValidator(cond_validator(self,
-                                                         default=u'always'))
+        self.ui.edit_show_if.setValidator(
+            CondValidator(self, default=u'always'))
         self.ui.edit_name.editingFinished.connect(self.apply_name)
         self.ui.spinbox_arrow_head_width.valueChanged.connect(
             self.apply_arrow_head_width)
@@ -426,7 +425,7 @@ class sketchpad_widget(base_widget):
 
         self.element_buttons = [self.ui.button_pointer]
         for element in sketchpad_elements.elements[::-1]:
-            b = sketchpad_element_button(self, element)
+            b = SketchpadElementButton(self, element)
             self.ui.layout_tools.insertWidget(1, b)
             self.element_buttons.append(b)
 
@@ -727,3 +726,7 @@ class sketchpad_widget(base_widget):
         if self.ui.checkbox_html.isChecked():
             return u'yes'
         return u'no'
+
+
+# Alias for backwards compatibility
+sketchpad_widget = SketchpadWidget

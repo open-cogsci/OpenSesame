@@ -18,15 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
 from qtpy import QtWidgets
 from libopensesame import plugins
 
 
-class plugin_action(QtWidgets.QAction):
+class PluginAction(QtWidgets.QAction):
 
     """Menu action for a plugin"""
 
@@ -55,3 +51,7 @@ class plugin_action(QtWidgets.QAction):
         """
 
         self.main_window.drag_item(self.plugin)
+
+
+# Alias for backwards compatibility
+plugin_action = PluginAction

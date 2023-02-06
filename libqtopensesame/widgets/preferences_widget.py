@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame import misc
 from libopensesame.exceptions import osexception
-from libqtopensesame.widgets.base_widget import base_widget
+from libqtopensesame.widgets.base_widget import BaseWidget
 from libqtopensesame.misc import theme
 from libqtopensesame.misc.config import cfg
 from libopensesame.oslogging import oslogger
@@ -29,7 +29,7 @@ from qtpy import QtCore, QtWidgets
 import os
 
 
-class preferences_widget(base_widget):
+class PreferencesWidget(BaseWidget):
 
     """
     desc:
@@ -45,10 +45,7 @@ class preferences_widget(base_widget):
                 main_window:	A qtopensesame object.
         """
 
-        super(preferences_widget, self).__init__(
-            main_window,
-            ui=u'widgets.preferences_widget'
-        )
+        super().__init__(main_window, ui=u'widgets.preferences_widget')
         self.tab_name = u'__preferences__'
         self.lock = False
         # Connect the controls
@@ -157,3 +154,7 @@ class preferences_widget(base_widget):
         cfg.style = self.ui.combobox_style.currentText()
         self.main_window.save_state()
         self.lock = False
+
+
+# Alias for backwards compatibility
+preferences_widget = PreferencesWidget

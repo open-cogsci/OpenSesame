@@ -29,7 +29,7 @@ from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 
 
-class base_component(object):
+class BaseComponent(object):
 
     """
     desc:
@@ -41,16 +41,16 @@ class base_component(object):
     def setup(self, main_window, ui=None):
         """
         desc:
-                Constructor.
+            Constructor.
 
         arguments:
-                main_window:	A qtopensesame object.
+            main_window:	A qtopensesame object.
 
         keywords:
-                ui:
-                                                An id for a user-interface file. For example
-                                                'dialogs.quick_switcher' will correspond to
-                                                the file 'resources/ui/dialogs/quick_switcher.ui'.
+            ui:
+                An id for a user-interface file. For example
+                'dialogs.quick_switcher' will correspond to
+                the file 'resources/ui/dialogs/quick_switcher.ui'.
         """
 
         self.main_window = self.get_main_window(main_window)
@@ -61,10 +61,10 @@ class base_component(object):
     def load_ui(self, ui=None):
         """
         desc:
-                Dynamically loads the ui, if any.
+            Dynamically loads the ui, if any.
 
         keywords:
-                ui:			An id for a user-interface file, or None.
+            ui: An id for a user-interface file, or None.
         """
 
         if ui is not None:
@@ -98,21 +98,22 @@ class base_component(object):
     def get_main_window(self, main_window):
         """
         desc:
-                If the main_window is actually not the main window, but a widget
-                that has the main window somewhere above it in the hierarchy, we
-                traverse upwards.
+            If the main_window is actually not the main window, but a widget
+            that has the main window somewhere above it in the hierarchy, we
+            traverse upwards.
 
         arguments:
-                main_window:	An object that is the main window or a descendant of
-                                                the main window.
+            main_window:
+                An object that is the main window or a descendant of
+                the main window.
 
         returns:
-                desc:	The main window.
-                type:	qtopensesame
+            desc: The main window.
+            type: qtopensesame
         """
 
-        from libqtopensesame.qtopensesame import qtopensesame
-        while not isinstance(main_window, qtopensesame):
+        from libqtopensesame.qtopensesame import QtOpenSesame
+        while not isinstance(main_window, QtOpenSesame):
             if hasattr(main_window, u'main_window'):
                 _parent = main_window.main_window
             else:
@@ -126,12 +127,16 @@ class base_component(object):
     def quick_connect(slot, signals):
         """
         desc:
-                A convenience function to connect many signals to one slot.
+            A convenience function to connect many signals to one slot.
 
         arguments:
-                slot:		a slot
-                signals:	a list of signals
+            slot: a slot
+            signals:	a list of signals
         """
 
         for signal in signals:
             signal.connect(slot)
+
+
+# Alias for backwards compatibility
+base_component = BaseComponent

@@ -18,15 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"
-
 from qtpy import QtWidgets
 import os.path
 
 
-class recent_action(QtWidgets.QAction):
+class RecentAction(QtWidgets.QAction):
 
     """Menu action for a recently opened file"""
 
@@ -54,3 +50,7 @@ class recent_action(QtWidgets.QAction):
         """
 
         self.main_window.open_file(path=self.path)
+
+
+# Alias for backwards compatibility
+recent_action = RecentAction

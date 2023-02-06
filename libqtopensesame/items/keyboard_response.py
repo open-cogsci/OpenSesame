@@ -18,17 +18,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libopensesame.keyboard_response import keyboard_response as \
-    keyboard_response_runtime
-from libqtopensesame.validators import timeout_validator
-from libqtopensesame.items.qtplugin import qtplugin
+from libopensesame.keyboard_response import KeyboardResponse as \
+    KeyboardResponseRuntime
+from libqtopensesame.validators import TimeoutValidator
+from libqtopensesame.items.qtplugin import QtPlugin
 from openexp.keyboard import keyboard
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'keyboard_response', category=u'item')
 
 
-class keyboard_response(keyboard_response_runtime, qtplugin):
+class KeyboardResponse(KeyboardResponseRuntime, QtPlugin):
 
     """keyboard_response item GUI"""
 
@@ -48,13 +48,13 @@ class keyboard_response(keyboard_response_runtime, qtplugin):
         string -- a definition string (default=None)
         """
 
-        keyboard_response_runtime.__init__(self, name, experiment, string)
-        qtplugin.__init__(self)
+        KeyboardResponseRuntime.__init__(self, name, experiment, string)
+        QtPlugin.__init__(self)
 
     def init_edit_widget(self):
         """Initialize controls"""
 
-        qtplugin.init_edit_widget(self, stretch=True)
+        super().init_edit_widget(stretch=True)
         # Use auto-controls for most stuff
         self.add_line_edit_control(
             var=u'correct_response',
@@ -70,7 +70,7 @@ class keyboard_response(keyboard_response_runtime, qtplugin):
             var=u'timeout',
             label=_(u'Timeout'),
             info=_(u'In milliseconds or "infinite"'),
-            validator=timeout_validator(self)
+            validator=TimeoutValidator(self)
         )
         self.add_combobox_control(
             var=u'event_type',
@@ -93,10 +93,14 @@ class keyboard_response(keyboard_response_runtime, qtplugin):
     def list_keys(self):
         """Show a dialog with available key names"""
 
-        my_keyboard = keyboard(self.experiment)
+        my_keyboard = Keyboard(self.experiment)
         keylist = filter(lambda key: key.strip(), my_keyboard.valid_keys())
         md = u'# ' + _(u'Key names') + u'\n\n' \
             + _(u'The following key names are valid:') + u'\n\n- ' \
             + u'\n- '.join([u'`%s`' % key for key in keylist])
         self.tabwidget.open_markdown(md, icon=u'os-keyboard_response',
                                      title=_(u'Key names'))
+
+
+# Alias for backwards compatibility
+keyboard_response = KeyboardResponse

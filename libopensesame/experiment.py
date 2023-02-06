@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from openexp import backend
-from libopensesame.var_store import var_store
-from libopensesame.item_store import item_store
-from libopensesame.response_store import response_store
-from libopensesame.file_pool_store import file_pool_store
-from libopensesame.syntax import syntax
+from libopensesame.var_store import VarStore
+from libopensesame.item_store import ItemStore
+from libopensesame.response_store import ResponseStore
+from libopensesame.file_pool_store import FilePoolStore
+from libopensesame.syntax import Syntax
 from libopensesame.exceptions import osexception
 from libopensesame import misc, item, metadata
 from libopensesame.item_stack import item_stack_singleton
@@ -46,7 +46,7 @@ class OldStyle:
 classobj = type(OldStyle)
 
 
-class experiment(item.item):
+class Experiment(item.item):
 
     """
     desc:
@@ -113,18 +113,18 @@ class experiment(item.item):
         if not oslogger.started:
             oslogger.start()
             oslogger.debug('starting logger in experiment init')
-        self.var = var_store(self)
-        self.pool = file_pool_store(self, folder=pool_folder)
-        self._responses = response_store(self)
+        self.var = VarStore(self)
+        self.pool = FilePoolStore(self, folder=pool_folder)
+        self._responses = ResponseStore(self)
         # The _syntax and items objects may already have been created by
         # libqtopensesame.experiment.
         if not hasattr(self, u'_syntax'):
-            self._syntax = syntax(self)
+            self._syntax = Syntax(self)
         if not hasattr(self, u'items'):
-            self.items = item_store(self)
+            self.items = ItemStore(self)
         if workspace is None:
-            from libopensesame.python_workspace import python_workspace
-            self._python_workspace = python_workspace(self)
+            from libopensesame.python_workspace import PythonWorkspace
+            self._python_workspace = PythonWorkspace(self)
         else:
             self._python_workspace = workspace
         self.running = False
@@ -182,34 +182,8 @@ class experiment(item.item):
             )
 
     @property
-    def pool_folder(self):
-        """Deprecated."""
-
-        warnings.warn(
-            u'experiment.pool_folder is deprecated. Use file_pool_store instead.',
-            DeprecationWarning)
-        return self.pool.folder()
-
-    @property
-    def fallback_pool_folder(self):
-        """Deprecated."""
-
-        warnings.warn(
-            u'experiment.fallback_pool_folder is deprecated. Use file_pool_store instead.',
-            DeprecationWarning)
-        return self.pool.fallback_folder()
-
-    @property
     def default_title(self):
         return u'New experiment'
-
-    def get_file(self, path):
-        """Deprecated."""
-
-        warnings.warn(
-            u'experiment.get_file() is deprecated. Use file_pool_store instead.',
-            DeprecationWarning)
-        return self.pool[path]
 
     def reset(self):
         """See item."""
@@ -242,14 +216,6 @@ class experiment(item.item):
         self.var.font_italic = u'no'
         self.var.font_bold = u'no'
         self.var.font_underline = u'no'
-
-    def file_in_pool(self, path):
-        """Deprecated."""
-
-        warnings.warn(
-            u'experiment.file_in_pool() is deprecated. Use file_pool_store instead.',
-            DeprecationWarning)
-        return path in self.pool
 
     def module_container(self):
         """Specify the module that contains the item modules"""
@@ -726,7 +692,5 @@ class experiment(item.item):
         self._log = log(self, self.logfile)
 
 
-def clean_up(verbose=False, keep=[]):
-
-    warnings.warn(u'libopensesame.experiment.clean_up() is deprecated',
-                  DeprecationWarning)
+# Alias for backwards compatibility
+experiment = Experiment

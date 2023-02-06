@@ -20,6 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.var_store import var_store
 import warnings
+from libopensesame.misc import snake_case
 from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
 
@@ -52,7 +53,7 @@ class Item(object):
         self._get_lock = None
         # Deduce item_type from class name
         prefix = self.experiment.item_prefix()
-        self.item_type = str(self.__class__.__name__)
+        self.item_type = snake_case(self.__class__.__name__)
         if self.item_type.startswith(prefix):
             self.item_type = self.item_type[len(prefix):]
         if not hasattr(self, u'description'):

@@ -19,13 +19,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.widgets.tree_base_item import tree_base_item
+from libqtopensesame.widgets.tree_base_item import TreeBaseItem
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_unused_items_item', category=u'core')
 
 
-class tree_unused_items_item(tree_base_item):
+class TreeUnusedItemsItem(TreeBaseItem):
 
     """
     desc:
@@ -43,7 +43,7 @@ class tree_unused_items_item(tree_base_item):
                         type:	qtopensesame
         """
 
-        super(tree_unused_items_item, self).__init__()
+        super().__init__()
         self.setup(main_window)
         self.setIcon(0, self.theme.qicon(u'unused'))
         self.setToolTip(0, _(u'Unused items'))
@@ -76,6 +76,10 @@ class tree_unused_items_item(tree_base_item):
     def show_context_menu(self, pos):
 
         from libqtopensesame.widgets.unused_items_context_menu import \
-            unused_items_context_menu
-        menu = unused_items_context_menu(self.main_window, self)
+            UnusedItemsContextMenu
+        menu = UnusedItemsContextMenu(self.main_window, self)
         menu.popup(pos)
+
+
+# Alias for backwards compatibility
+tree_unused_items_item = TreeUnusedItemsItem

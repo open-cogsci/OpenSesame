@@ -46,7 +46,7 @@ class BasePreferencesWidget(BaseWidget):
                 ui:			A ui file.
         """
 
-        super(BasePreferencesWidget, self).__init__(main_window, ui=ui)
+        super().__init__(main_window, ui=ui)
         self._its_me = False
         self._before_init_widgets()
         self._init_widgets()

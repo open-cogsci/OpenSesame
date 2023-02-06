@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame import misc, metadata
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.widgets.base_widget import base_widget
+from libqtopensesame.widgets.base_widget import BaseWidget
 from libopensesame.py3compat import *
 from qtpy import QtWidgets, QtCore
 
 
-class credits_widget(base_widget):
+class CreditsWidget(BaseWidget):
 
     """
     desc:
@@ -40,8 +40,7 @@ class credits_widget(base_widget):
                 main_window:	A qtopensesame object.
         """
 
-        super(credits_widget, self).__init__(main_window,
-                                             ui=u'widgets.credits_widget')
+        super().__init__(main_window, ui=u'widgets.credits_widget')
         self.ui.label_opensesame.setText(self.ui.label_opensesame.text() % {
             u'version': metadata.__version__,
             u'codename': metadata.codename,
@@ -66,3 +65,7 @@ class credits_widget(base_widget):
         """Open Twitter page"""
 
         misc.open_url(cfg.url_twitter)
+
+
+# Alias for backwards compatibility
+credits_widget = CreditsWidget

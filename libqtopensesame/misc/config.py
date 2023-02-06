@@ -95,7 +95,7 @@ DEFAULT_CONFIG_MAC = {}
 DEFAULT_CONFIG_WINDOWS = {}
 
 
-class config(object):
+class Config(object):
 
     def __init__(self):
         """
@@ -353,4 +353,4 @@ class config(object):
 
 
 # Create a singleton config instance
-cfg = config()
+cfg = Config()

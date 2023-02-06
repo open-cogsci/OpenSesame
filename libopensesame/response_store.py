@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 
 
-class response_info(object):
+class ResponseInfo(object):
 
     """
     desc:
@@ -73,7 +73,7 @@ class response_info(object):
                self.feedback)
 
 
-class response_store(object):
+class ResponseStore(object):
 
     """
     desc: |
@@ -268,8 +268,8 @@ class response_store(object):
                 responses.add(response_time=500, correct=1, response='left')
         """
 
-        r = response_info(self, response=response, correct=correct,
-                          response_time=response_time, item=item, feedback=feedback)
+        r = ResponseInfo(self, response=response, correct=correct,
+                         response_time=response_time, item=item, feedback=feedback)
         if correct is None:
             correct = u'undefined'
         else:
@@ -320,7 +320,7 @@ class response_store(object):
 
     def _select(self, **kwdict):
 
-        rs = response_store(self._experiment)
+        rs = ResponseStore(self._experiment)
         for r in self._responses:
             if r.match(**kwdict):
                 rs._responses.append(r)
@@ -328,7 +328,7 @@ class response_store(object):
 
     def _selectnot(self, **kwdict):
 
-        rs = response_store(self._experiment)
+        rs = ResponseStore(self._experiment)
         for r in self._responses:
             if r.matchnot(**kwdict):
                 rs._responses.append(r)
@@ -341,7 +341,7 @@ class response_store(object):
     def __getitem__(self, key):
 
         if isinstance(key, slice):
-            rs = response_store(self._experiment)
+            rs = ResponseStore(self._experiment)
             rs._responses = self._responses[key]
             return rs
         if isinstance(key, int):
@@ -359,3 +359,8 @@ class response_store(object):
 
         for r in self._responses:
             yield r
+
+
+# Alias for backwards compatibility
+response_info = ResponseInfo
+response_store = ResponseStore

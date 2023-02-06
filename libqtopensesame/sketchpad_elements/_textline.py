@@ -20,14 +20,14 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 import os
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from libqtopensesame.sketchpad_elements._base_element import base_element
-from libopensesame.sketchpad_elements import textline as textline_runtime
+from libqtopensesame.sketchpad_elements._base_element import BaseElement
+from libopensesame.sketchpad_elements import Textline as TextlineRuntime
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'sketchpad', category=u'item')
 
 
-class textline(base_element, textline_runtime):
+class Textline(BaseElement, TextlineRuntime):
 
     """
     desc:
@@ -78,7 +78,7 @@ class textline(base_element, textline_runtime):
             u'html':		sketchpad.current_html(),
             u'show_if': 	sketchpad.current_show_if()
         }
-        return textline(sketchpad, properties=properties)
+        return Textline(sketchpad, properties=properties)
 
     @staticmethod
     def clean_text(text, escape=False):
@@ -119,3 +119,7 @@ class textline(base_element, textline_runtime):
     @staticmethod
     def requires_center():
         return True
+
+
+# Alias for backwards compatibility
+textline = Textline

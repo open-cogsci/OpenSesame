@@ -19,15 +19,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtGui, QtCore, QtWidgets
-from libqtopensesame.misc.base_component import base_component
+from libqtopensesame.misc.base_component import BaseComponent
 from libqtopensesame.misc.config import cfg
-from libqtopensesame.items import experiment
+from libqtopensesame.items.experiment import Experiment
 from libopensesame import metadata
 from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
-import libopensesame.experiment
-import libopensesame.plugins
-import libopensesame.misc
+from libopensesame import misc
 import os
 import sys
 import warnings
@@ -46,7 +44,7 @@ OPEN_FILE_FILTER = (
 )
 
 
-class qtopensesame(QtWidgets.QMainWindow, base_component):
+class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     """The main class of the OpenSesame GUI"""
 
@@ -118,7 +116,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
         self.ui.tabwidget.main_window = self
 
         # Determine the home folder
-        self.home_folder = libopensesame.misc.home_folder()
+        self.home_folder = misc.home_folder()
 
         # Create .opensesame folder if it doesn't exist yet
         if not os.path.exists(os.path.join(self.home_folder, u".opensesame")):
@@ -185,12 +183,9 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
         self._tooltip_shortcut(self.action_show_pool)
         self._tooltip_shortcut(self.action_show_overview)
         # Create the initial experiment, which is the default template.
-        with safe_open(misc.resource(os.path.join(u'templates', u'default.osexp')), u'r') as fd:
-            self.experiment = experiment.experiment(
-                self,
-                u'New experiment',
-                fd.read()
-            )
+        with safe_open(misc.resource(
+                os.path.join(u'templates', u'default.osexp')), u'r') as fd:
+            self.experiment = Experiment(self, u'New experiment', fd.read())
         self.experiment.build_item_tree()
         self.ui.itemtree.default_fold_state()
         # Miscellaneous initialization
@@ -537,7 +532,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
         for i, argv in enumerate(sys.argv[:-1]):
             if argv == '--locale':
                 locale = safe_decode(sys.argv[i + 1])
-        qm = libopensesame.misc.resource(
+        qm = misc.resource(
             os.path.join(u'locale', locale) + u'.qm'
         )
         # Say that we're trying to load de_AT, and it is not found, then we'll
@@ -546,7 +541,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
             loctuple = locale.split(u'_')
             if loctuple:
                 _locale = loctuple[0] + u'_' + loctuple[0].upper()
-                qm = libopensesame.misc.resource(
+                qm = misc.resource(
                     os.path.join(u'locale', _locale + u'.qm')
                 )
                 if qm is not None:
@@ -570,7 +565,7 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
         self.translators = translators
         self._main_translator = self.translators.pop()
         self._main_translator.load(
-            libopensesame.misc.resource(
+            misc.resource(
                 os.path.join(u'locale', self.locale + u'.qm')
             )
         )
@@ -810,12 +805,8 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
         self.ui.tabwidget.close_all(avoid_empty=False)
         cfg.file_dialog_path = os.path.dirname(path)
         try:
-            exp = experiment.experiment(
-                self,
-                u"Experiment",
-                path,
-                experiment_path=os.path.dirname(path)
-            )
+            exp = Experiment(self, u"Experiment", path,
+                             experiment_path=os.path.dirname(path))
         except Exception as e:
             if not isinstance(e, osexception):
                 e = osexception(msg=u'Failed to open file', exception=e)
@@ -970,14 +961,11 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
         self.extension_manager.fire(u'prepare_regenerate')
         try:
-            exp = experiment.experiment(
-                self,
-                name=self.experiment.var.title,
-                string=script,
-                pool_folder=self.experiment.pool.folder(),
-                experiment_path=self.experiment.experiment_path,
-                resources=self.experiment.resources
-            )
+            exp = Experiment(self, name=self.experiment.var.title,
+                             string=script,
+                             pool_folder=self.experiment.pool.folder(),
+                             experiment_path=self.experiment.experiment_path,
+                             resources=self.experiment.resources)
         except osexception as e:
             md = _(
                 u'# Parsing error\n\nFailed to parse the script for the '
@@ -1028,14 +1016,11 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
         new_cmd = self.experiment.syntax.create_cmd(u'set', [u'width', width])
         script = script.replace(old_cmd, new_cmd)
         try:
-            tmp = experiment.experiment(
-                self,
-                name=self.experiment.var.title,
-                string=script,
-                pool_folder=self.experiment.pool.folder(),
-                experiment_path=self.experiment.experiment_path,
-                resources=self.experiment.resources
-            )
+            tmp = Experiment(self, name=self.experiment.var.title,
+                             string=script,
+                             pool_folder=self.experiment.pool.folder(),
+                             experiment_path=self.experiment.experiment_path,
+                             resources=self.experiment.resources)
         except osexception as error:
             self.experiment.notify(_(u"Could not parse script: %s") % error)
             self.edit_script.edit.setText(self.experiment.to_string())
@@ -1159,15 +1144,6 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
         self.ui.dock_pool.setEnabled(enabled)
         self.ui.dock_overview.setEnabled(enabled)
 
-    def refresh(self, *deprecated, **_deprecated):
-        """
-        desc:
-                This function used to implement refreshing of the OpenSesame GUI,
-                but has been deprecated.
-        """
-
-        oslogger.warning(u'qtopensesame.refresh() is deprecated')
-
     def _id(self):
         """
         returns:
@@ -1199,6 +1175,10 @@ class qtopensesame(QtWidgets.QMainWindow, base_component):
 
         self._read_only = read_only
         self.ui.action_save.setEnabled(not read_only)
+
+
+# Alias for backwards compatibility
+qtopensesame = QtOpenSesame
 
 
 if __name__ == u'__main__':

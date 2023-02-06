@@ -18,12 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.dialogs.base_dialog import base_dialog
+from libqtopensesame.dialogs.base_dialog import BaseDialog
 
 
-class text_input(base_dialog):
+class TextInput(BaseDialog):
 
     """
     desc:
@@ -46,8 +45,7 @@ class text_input(base_dialog):
                                                 bool.
         """
 
-        super(text_input, self).__init__(main_window,
-                                         ui=u'dialogs.text_input_dialog')
+        super().__init__(main_window, ui=u'dialogs.text_input_dialog')
         if msg is not None:
             self.ui.label_message.setText(msg)
         self._validator = validator
@@ -71,3 +69,7 @@ class text_input(base_dialog):
             if self._validator is None or self._validator(s):
                 return s
         return None
+
+
+# Alias for backwards compatibility
+text_input = TextInput

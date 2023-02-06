@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
-from libqtopensesame.widgets.base_widget import base_widget
+from libqtopensesame.widgets.base_widget import BaseWidget
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'general_script_editor', category=u'core')
 
 
-class general_script_editor(base_widget):
+class GeneralScriptEditor(BaseWidget):
 
     """
     desc:
@@ -41,10 +41,7 @@ class general_script_editor(base_widget):
         """
 
         from pyqode_extras.widgets import OpenSesameCodeEdit
-        super(general_script_editor, self).__init__(
-            main_window,
-            ui=u'widgets.general_script_editor'
-        )
+        super().__init__(main_window, ui=u'widgets.general_script_editor')
         self.ui.editor = OpenSesameCodeEdit()
         self.extension_manager.fire(
             u'register_editor',
@@ -91,3 +88,7 @@ class general_script_editor(base_widget):
             u'text/generic',
             u'utf-8'
         )
+
+
+# Alias for backwards compatibility
+general_script_editor = GeneralScriptEditor

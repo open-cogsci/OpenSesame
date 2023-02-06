@@ -18,6 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.validators._cond_validator import cond_validator
-from libqtopensesame.validators._timeout_validator import timeout_validator
-from libqtopensesame.validators._duration_validator import duration_validator
+from libqtopensesame.validators._cond_validator import CondValidator
+from libqtopensesame.validators._timeout_validator import TimeoutValidator
+from libqtopensesame.validators._duration_validator import DurationValidator
+
+# Alias for backwards compatibility
+cond_validator = CondValidator
+timeout_validator = TimeoutValidator
+duration_validator = DurationValidator

@@ -19,13 +19,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtGui, QtWidgets
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'toolbar_items_item', category=u'core')
 
 
-class toolbar_items_item(base_subcomponent, QtWidgets.QLabel):
+class ToolbarItemsItem(BaseSubcomponent, QtWidgets.QLabel):
 
     """
     desc:
@@ -49,7 +49,7 @@ class toolbar_items_item(base_subcomponent, QtWidgets.QLabel):
                         type:	QPixmap
         """
 
-        super(toolbar_items_item, self).__init__(parent)
+        super().__init__(parent)
         self.setup(parent)
         self.item = item
         if pixmap is None:
@@ -87,3 +87,7 @@ class toolbar_items_item(base_subcomponent, QtWidgets.QLabel):
         }
         self.item_toolbar.collapse()
         drag_and_drop.send(self, data)
+
+
+# Alias for backwards compatibility
+toolbar_items_item = ToolbarItemsItem

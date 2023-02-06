@@ -18,12 +18,12 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.dialogs.noise_settings import noise_settings
-from libqtopensesame.sketchpad_elements._base_element import base_element
-from libopensesame.sketchpad_elements import noise as noise_runtime
+from libqtopensesame.dialogs.noise_settings import NoiseSettings
+from libqtopensesame.sketchpad_elements._base_element import BaseElement
+from libopensesame.sketchpad_elements import Noise as NoiseRuntime
 
 
-class noise(base_element, noise_runtime):
+class Noise(BaseElement, NoiseRuntime):
 
     """
     desc:
@@ -38,7 +38,7 @@ class noise(base_element, noise_runtime):
                 The show-edit dialog for the noise shows the settings dialog.
         """
 
-        d = noise_settings(self.sketchpad._edit_widget)
+        d = NoiseSettings(self.sketchpad._edit_widget)
         d.set_properties(self.properties)
         properties = d.get_properties()
         if properties is None:
@@ -49,7 +49,7 @@ class noise(base_element, noise_runtime):
     @classmethod
     def mouse_press(cls, sketchpad, pos):
 
-        d = noise_settings(sketchpad._edit_widget)
+        d = NoiseSettings(sketchpad._edit_widget)
         properties = d.get_properties()
         if properties is None:
             return
@@ -59,3 +59,7 @@ class noise(base_element, noise_runtime):
             u'show_if': 	sketchpad.current_show_if()
         })
         return noise(sketchpad, properties=properties)
+
+
+# Alias for backwards compatibility
+noise = Noise

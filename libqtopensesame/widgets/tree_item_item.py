@@ -19,13 +19,13 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.widgets.tree_base_item import tree_base_item
-from libqtopensesame.items.qtstructure_item import qtstructure_item
+from libqtopensesame.widgets.tree_base_item import TreeBaseItem
+from libqtopensesame.items.qtstructure_item import QtStructureItem
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_item_item', category=u'core')
 
 
-class tree_item_item(tree_base_item):
+class TreeItemItem(TreeBaseItem):
 
     """
     desc:
@@ -49,7 +49,7 @@ class tree_item_item(tree_base_item):
                         type:	[NoneType, unicode]
         """
 
-        super(tree_item_item, self).__init__()
+        super().__init__()
         self.setup(item.main_window)
         self.item = item
         tooltip = _(u"Type: %s\nDescription: %s") % (item.item_type,
@@ -148,7 +148,7 @@ class tree_item_item(tree_base_item):
                         type:	unicode
         """
 
-        super(tree_item_item, self).rename(from_name, to_name)
+        super().rename(from_name, to_name)
         if str(self.text(0)) == from_name:
             self.setText(0, to_name)
             self.name = to_name
@@ -175,7 +175,7 @@ class tree_item_item(tree_base_item):
     def set_icon(self, name, icon):
         """See tree_base_item."""
 
-        super(tree_item_item, self).set_icon(name, icon)
+        super().set_icon(name, icon)
         if str(self.text(0)) == name:
             self.setIcon(0, self.theme.qicon(icon))
 
@@ -304,7 +304,7 @@ class tree_item_item(tree_base_item):
             u'move': False,
             u'application-id': self.main_window._id(),
             u'ancestry': self.ancestry()[1],
-            u'structure-item': isinstance(self.item, qtstructure_item),
+            u'structure-item': isinstance(self.item, QtStructureItem),
         }
         text = safe_decode(json.dumps(data))
         QtWidgets.QApplication.clipboard().setText(text)
@@ -345,3 +345,7 @@ class tree_item_item(tree_base_item):
         if drag_and_drop.matches(data, [u'item-snippet', u'item-existing']):
             return data
         return None
+
+
+# Alias for backwards compatibility
+tree_item_item = TreeItemItem

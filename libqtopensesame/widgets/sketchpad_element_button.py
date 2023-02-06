@@ -18,13 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
-from qtpy import QtCore, QtWidgets
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
+from qtpy.QtWidgets import QPushButton
 from libqtopensesame.misc.translate import translation_context
+from libopensesame.misc import snake_case
 _ = translation_context(u'sketchpad', category=u'item')
 
 
-class sketchpad_element_button(base_subcomponent, QtWidgets.QPushButton):
+class SketchpadElementButton(BaseSubcomponent, QPushButton):
 
     """
     desc:
@@ -43,7 +44,7 @@ class sketchpad_element_button(base_subcomponent, QtWidgets.QPushButton):
                         type:	base_element
         """
 
-        super(sketchpad_element_button, self).__init__(sketchpad_widget)
+        super().__init__(sketchpad_widget)
         self.element = element
         self.sketchpad_widget = sketchpad_widget
         self.setup(sketchpad_widget)
@@ -65,4 +66,8 @@ class sketchpad_element_button(base_subcomponent, QtWidgets.QPushButton):
 
     @property
     def name(self):
-        return self.element.__name__
+        return snake_case(self.element.__name__)
+
+
+# Alias for backwards compatibility
+sketchpad_element_button = SketchpadElementButton

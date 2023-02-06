@@ -18,34 +18,27 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 
 ---
 desc:
-	Drag-and-drop data is communicated by json-encoded dictionaries. The
-	following drag types exist:
+    Drag-and-drop data is communicated by json-encoded dictionaries. The
+    following drag types exist:
 
-	-	type:			invalid
-
-	-	type:			sketchpad-element-move
-
-	-	type:			url-local
-		url:			[url]
-
-	-	type:			item-existing
-		item-name:		[item name]
-		QTreeWidgetItem	[representation of QTreeWidgetItem]
-
-	-	type:		item-clone
-		item:		[item name]
-
-	-	type:		variable
-		variable:	[variable name]
-
-	-	type:			item-snippet
-		main-item-name:	[suggested name]
-
-		items:
-			-	item-name:	[suggested name]
-				item-type:	[item type]
-				script:		[script]
-			-	[...]
+    - type: invalid
+    - type: sketchpad-element-move
+    - type: url-local
+      url: [url]
+    - type: item-existing
+      item-name: [item name]
+      QTreeWidgetItem [representation of QTreeWidgetItem]
+    - type: item-clone
+      item: [item name]
+    - type: variable
+      variable: [variable name]
+    - type: item-snippet
+      main-item-name: [suggested name]
+      items:
+      - item-name: [suggested name]
+        item-type: [item type]
+        script: [script]
+      - [...]
 ---
 """
 
@@ -64,20 +57,21 @@ INVALID_DATA = {
 def matches(data, types):
     """
     desc:
-            Checks whether a data dictionary matches any of the specified drop
-            types.
+        Checks whether a data dictionary matches any of the specified drop
+        types.
 
     arguments:
-            data:
-                    desc:	A data dictionary. Non-dict types do not give an error, but
-                                    return False.
-            types:
-                    desc:	A list of types, matching the 'type' key in the data dict.
-                    type:	list
+        data:
+            desc:
+                A data dictionary. Non-dict types do not give an error, but
+                return False.
+        types:
+            desc: A list of types, matching the 'type' key in the data dict.
+            type: list
 
     returns:
-            desc:		True if the data matches, False otherwise.
-            type:		bool
+        desc: True if the data matches, False otherwise.
+        type: bool
     """
 
     if not isinstance(data, dict):
@@ -92,18 +86,19 @@ def matches(data, types):
 def receive(drop_event):
     """
     desc:
-            Extracts data from a drop event. This data should be embedded in the
-            mimedata as a json text string.
+        Extracts data from a drop event. This data should be embedded in the
+        mimedata as a json text string.
 
     arguments:
-            drop_event:
-                    desc:	A drop event.
-                    type:	QDropEvent
+        drop_event:
+            desc: A drop event.
+            type: QDropEvent
 
     returns:
-            desc:		A data dictionary. The 'type' key identifies the type of
-                                    data that is being dropped.
-            type:		dict
+        desc:
+            A data dictionary. The 'type' key identifies the type of
+            data that is being dropped.
+        type: dict
     """
 
     mimedata = drop_event.mimeData()
@@ -140,21 +135,22 @@ def receive(drop_event):
 def send(drag_src, data):
     """
     desc:
-            Starts a drag event, and embeds a data dictionary as json text in the
-            mimedata.
+        Starts a drag event, and embeds a data dictionary as json text in the
+        mimedata.
 
     arguments:
-            drag_src:
-                    desc:	The source widget.
-                    type:	QWidget
-            data:
-                    desc:	A data dictionary. The 'type' key identifies the type of
-                                    data that is being dropped.
-                    type:	dict
+        drag_src:
+            desc: The source widget.
+            type: QWidget
+        data:
+            desc:
+                A data dictionary. The 'type' key identifies the type of data
+                that is being dropped.
+            type: dict
 
     returns:
-            desc:		A drag object. The start function is called automatically.
-            type:		QDrag
+        desc: A drag object. The start function is called automatically.
+        type: QDrag
     """
 
     text = safe_decode(json.dumps(data), enc=u'utf-8')

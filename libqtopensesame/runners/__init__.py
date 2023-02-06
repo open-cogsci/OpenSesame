@@ -18,12 +18,16 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-from libqtopensesame.runners.base_runner import base_runner
-from libqtopensesame.runners.inprocess_runner import inprocess_runner
-from libqtopensesame.runners.external_runner import external_runner
-from libqtopensesame.runners.multiprocess_runner import multiprocess_runner
+from libqtopensesame.runners.base_runner import BaseRunner
+from libqtopensesame.runners.inprocess_runner import InprocessRunner
+from libqtopensesame.runners.external_runner import ExternalRunner
+from libqtopensesame.runners.multiprocess_runner import MultiprocessRunner
 
 # This order has to match the order in the preferences combobox
 RUNNER_LIST = 'inprocess', 'multiprocess', 'external'
 DEFAULT_RUNNER = 'multiprocess'
+# Alias for backwards compatibility
+base_runner = BaseRunner
+inprocess_runner = InprocessRunner
+external_runner = ExternalRunner
+multiprocess_runner = MultiprocessRunner

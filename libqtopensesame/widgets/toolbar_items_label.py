@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.misc.base_subcomponent import base_subcomponent
+from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'item_category', category=u'core')
 
 
-class toolbar_items_label(base_subcomponent, QtWidgets.QFrame):
+class ToolbarItemsLabel(BaseSubcomponent, QtWidgets.QFrame):
 
     """
     desc:
@@ -45,7 +45,7 @@ class toolbar_items_label(base_subcomponent, QtWidgets.QFrame):
                         type:	unicode
         """
 
-        super(toolbar_items_label, self).__init__(parent)
+        super().__init__(parent)
         self.setup(parent)
         l = QtWidgets.QLabel(_(label))
         l.setMaximumWidth(90)
@@ -55,3 +55,7 @@ class toolbar_items_label(base_subcomponent, QtWidgets.QFrame):
         hbox.setContentsMargins(0, 0, 0, 0)
         hbox.addWidget(l)
         self.setLayout(hbox)
+
+
+# Alias for backwards compatibility
+toolbar_items_label = ToolbarItemsLabel

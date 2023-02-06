@@ -18,28 +18,22 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
 from libopensesame import plugins
-from libqtopensesame.items.qtplugin import qtplugin
+from libqtopensesame.items.qtplugin import QtPlugin
 from libqtopensesame import validators
 from libqtopensesame.misc.translate import translation_context
 from libopensesame.exceptions import osexception
-
 _ = translation_context(u'qtautoplugin', category=u'core')
 
 
-class qtautoplugin(qtplugin):
+class QtAutoPlugin(QtPlugin):
 
     """A class that processes auto-plugins defined in a YAML file"""
-
-    def __init__(self, plugin_file):
-
-        qtplugin.__init__(self, plugin_file)
 
     def init_edit_widget(self):
         """Construct the GUI controls based on info.yaml"""
 
-        qtplugin.init_edit_widget(self, False)
+        super().init_edit_widget(False)
         item_type_translate = translation_context(self.item_type,
                                                   category=u'plugin')
         self.info = plugins.plugin_properties(self.item_type, _type=u'plugins')
@@ -103,34 +97,34 @@ class qtautoplugin(qtplugin):
             # Parse color_edit
             elif c[u'type'] == u'color_edit':
                 widget = self.add_color_edit_control(c[u'var'], c[u'label'],
-                                                     info=c[u'info'], min_width=c[u'min_width'])
+                    info=c[u'info'], min_width=c[u'min_width'])
             # Parse combobox
             elif c[u'type'] == u'combobox':
                 widget = self.add_combobox_control(c[u'var'], c[u'label'],
-                                                   c[u'options'], info=c[u'info'])
+                    c[u'options'], info=c[u'info'])
             # Parse editor
             elif c[u'type'] == u'editor':
                 widget = self.add_editor_control(c[u'var'], c[u'label'],
-                                                 syntax=c[u'syntax'], language=c[u'language'])
+                    syntax=c[u'syntax'], language=c[u'language'])
                 need_stretch = False
             # Parse filepool
             elif c[u'type'] == u'filepool':
                 widget = self.add_filepool_control(c[u'var'], c[u'label'],
-                                                   info=c[u'info'])
+                    info=c[u'info'])
             # Parse line_edit
             elif c[u'type'] == u'line_edit':
                 widget = self.add_line_edit_control(c[u'var'], c[u'label'],
-                                                    info=c[u'info'], min_width=c[u'min_width'])
+                    info=c[u'info'], min_width=c[u'min_width'])
             # Parse spinbox
             elif c[u'type'] == u'spinbox':
                 widget = self.add_spinbox_control(c[u'var'], c[u'label'],
-                                                  c[u'min_val'], c[u'max_val'], prefix=c[u'prefix'],
-                                                  suffix=c[u'suffix'], info=c[u'info'])
+                    c[u'min_val'], c[u'max_val'], prefix=c[u'prefix'],
+                    suffix=c[u'suffix'], info=c[u'info'])
             # Parse slider
             elif c[u'type'] == u'slider':
                 widget = self.add_slider_control(c[u'var'], c[u'label'],
-                                                 c[u'min_val'], c[u'max_val'], left_label=c[u'left_label'],
-                                                 right_label=c[u'right_label'], info=c[u'info'])
+                    c[u'min_val'], c[u'max_val'], left_label=c[u'left_label'],
+                    right_label=c[u'right_label'], info=c[u'info'])
             # Parse text
             elif c[u'type'] == u'text':
                 widget = self.add_text(c[u'label'])
@@ -159,7 +153,7 @@ class qtautoplugin(qtplugin):
     def apply_edit_changes(self):
         """Applies the controls. I.e. sets the variables from the controls."""
 
-        if not qtplugin.apply_edit_changes(self) or self.lock:
+        if not super().apply_edit_changes() or self.lock:
             return False
         return True
 
@@ -167,9 +161,10 @@ class qtautoplugin(qtplugin):
         """Sets the controls based on the variables."""
 
         self.lock = True
-        qtplugin.edit_widget(self)
+        super().edit_widget()
         self.lock = False
         return self._edit_widget
 
 
-QtAutoPlugin = qtautoplugin
+# Alias for backwards compatibility
+qtautoplugin = QtAutoPlugin

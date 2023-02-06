@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
-from libqtopensesame.widgets.tree_base_item import tree_base_item
+from libqtopensesame.widgets.tree_base_item import TreeBaseItem
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_general_item', category=u'core')
 
 
-class tree_general_item(tree_base_item):
+class TreeGeneralItem(TreeBaseItem):
 
     """
     desc:
@@ -42,7 +42,7 @@ class tree_general_item(tree_base_item):
                         type:	qtopensesame
         """
 
-        super(tree_general_item, self).__init__()
+        super().__init__()
         self.setup(main_window)
         self.setText(0, safe_decode(self.experiment.var.title))
         self.setIcon(0, self.theme.qicon(u'os-experiment'))
@@ -71,3 +71,7 @@ class tree_general_item(tree_base_item):
     def open_tab(self):
 
         self.main_window.tabwidget.open_general()
+
+
+# Alias for backwards compatibility
+tree_general_item = TreeGeneralItem

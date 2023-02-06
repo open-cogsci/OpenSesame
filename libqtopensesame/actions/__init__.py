@@ -18,6 +18,3 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-
-__author__ = "Sebastiaan Mathot"
-__license__ = "GPLv3"

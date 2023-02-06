@@ -18,11 +18,11 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.sketchpad_elements._base_element import base_element
-from libopensesame.sketchpad_elements import image as image_runtime
+from libqtopensesame.sketchpad_elements._base_element import BaseElement
+from libopensesame.sketchpad_elements import Image as ImageRuntime
 
 
-class image(base_element, image_runtime):
+class Image(BaseElement, ImageRuntime):
 
     """
     desc:
@@ -48,7 +48,7 @@ class image(base_element, image_runtime):
             u'center': sketchpad.current_center(),
             u'show_if': sketchpad.current_show_if()
         }
-        e = image(sketchpad, properties=properties)
+        e = Image(sketchpad, properties=properties)
         return e
 
     @staticmethod
@@ -62,3 +62,7 @@ class image(base_element, image_runtime):
     @staticmethod
     def requires_rotation():
         return True
+
+
+# Alias for backwards compatibility
+image = Image

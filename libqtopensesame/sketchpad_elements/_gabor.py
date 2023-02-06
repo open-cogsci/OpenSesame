@@ -18,12 +18,12 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.dialogs.gabor_settings import gabor_settings
-from libqtopensesame.sketchpad_elements._base_element import base_element
-from libopensesame.sketchpad_elements import gabor as gabor_runtime
+from libqtopensesame.dialogs.gabor_settings import GaborSettings
+from libqtopensesame.sketchpad_elements._base_element import BaseElement
+from libopensesame.sketchpad_elements import Gabor as GaborRuntime
 
 
-class gabor(base_element, gabor_runtime):
+class Gabor(BaseElement, GaborRuntime):
 
     """
     desc:
@@ -38,7 +38,7 @@ class gabor(base_element, gabor_runtime):
                 The show-edit dialog for the gabor shows the settings dialog.
         """
 
-        d = gabor_settings(self.sketchpad._edit_widget)
+        d = GaborSettings(self.sketchpad._edit_widget)
         d.set_properties(self.properties)
         properties = d.get_properties()
         if properties is None:
@@ -49,7 +49,7 @@ class gabor(base_element, gabor_runtime):
     @classmethod
     def mouse_press(cls, sketchpad, pos):
 
-        d = gabor_settings(sketchpad._edit_widget)
+        d = GaborSettings(sketchpad._edit_widget)
         properties = d.get_properties()
         if properties is None:
             return
@@ -58,4 +58,8 @@ class gabor(base_element, gabor_runtime):
             u'y':			pos[1],
             u'show_if': 	sketchpad.current_show_if()
         })
-        return gabor(sketchpad, properties=properties)
+        return Gabor(sketchpad, properties=properties)
+
+
+# Alias for backwards compatibility
+gabor = Gabor

@@ -20,10 +20,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
 from libopensesame.python_workspace_api import xy_from_polar
-from libqtopensesame.dialogs.base_dialog import base_dialog
+from libqtopensesame.dialogs.base_dialog import BaseDialog
 
 
-class polar_coordinates(base_dialog):
+class PolarCoordinates(BaseDialog):
 
     """
     desc:
@@ -39,8 +39,7 @@ class polar_coordinates(base_dialog):
                 main_window:	The main window object.
         """
 
-        base_dialog.__init__(
-            self, main_window, ui=u'dialogs.polar_coordinates')
+        super().__init__(main_window, ui=u'dialogs.polar_coordinates')
         self.update()
 
     def xy(self):
@@ -54,7 +53,7 @@ class polar_coordinates(base_dialog):
 
     def update(self):
 
-        base_dialog.update(self)
+        super().update()
         x, y = self.xy()
         self.ui.label_cartesian_x.setText(u'%.2f px' % x)
         self.ui.label_cartesian_y.setText(u'%.2f px' % y)
@@ -72,3 +71,7 @@ class polar_coordinates(base_dialog):
         if self.exec_() != QtWidgets.QDialog.Accepted:
             return None
         return self.xy()
+
+
+# Alias for backwards compatibility
+polar_coordinates = PolarCoordinates

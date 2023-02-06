@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import sys
 import time
-from libqtopensesame.runners import base_runner
+from libqtopensesame.runners import BaseRunner
 from qtpy import QtWidgets
 from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
@@ -28,7 +28,7 @@ from libopensesame.oslogging import oslogger
 JOIN_TIMEOUT = 3  # Seconds to wait for the process to end cleanly
 
 
-class multiprocess_runner(base_runner):
+class MultiprocessRunner(BaseRunner):
 
     """Runs an experiment in another process using multiprocessing."""
 

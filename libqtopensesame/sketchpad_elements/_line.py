@@ -18,11 +18,11 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.sketchpad_elements._base_line_arrow import base_line_arrow
-from libopensesame.sketchpad_elements import line as line_runtime
+from libqtopensesame.sketchpad_elements._base_line_arrow import BaseLineArrow
+from libopensesame.sketchpad_elements import Line as LineRuntime
 
 
-class line(base_line_arrow, line_runtime):
+class Line(BaseLineArrow, LineRuntime):
 
     """
     desc:
@@ -51,7 +51,11 @@ class line(base_line_arrow, line_runtime):
             u'penwidth': sketchpad.current_penwidth(),
             u'show_if': sketchpad.current_show_if()
         }
-        e = line(sketchpad, properties=properties)
+        e = Line(sketchpad, properties=properties)
         cls.pos_start = None
         sketchpad.canvas.removeItem(cls.preview)
         return e
+
+
+# Alias for backwards compatibility
+line = Line

@@ -19,17 +19,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
-from libqtopensesame.widgets.base_widget import base_widget
-from libqtopensesame.misc.base_draggable import base_draggable
+from libqtopensesame.widgets.base_widget import BaseWidget
+from libqtopensesame.misc.base_draggable import BaseDraggable
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'logger', category=u'item')
 
 
-class remove_custom_var_button(QtWidgets.QPushButton):
+class RemoveCustomVarButton(QtWidgets.QPushButton):
 
     def __init__(self, logger_widget, icon, var):
 
-        super(remove_custom_var_button, self).__init__(icon, u'')
+        super().__init__(icon, u'')
         self.logger_widget = logger_widget
         self.setFlat(True)
         self.var = var
@@ -40,7 +40,7 @@ class remove_custom_var_button(QtWidgets.QPushButton):
         self.logger_widget.remove_custom_variable(self.var)
 
 
-class logger_widget(base_widget, base_draggable):
+class LoggerWidget(BaseWidget, BaseDraggable):
 
     """
     desc:
@@ -58,8 +58,7 @@ class logger_widget(base_widget, base_draggable):
                         type:	logger
         """
 
-        super(logger_widget, self).__init__(logger.main_window,
-                                            ui=u'widgets.logger')
+        super().__init__(logger.main_window, ui=u'widgets.logger')
         self.logger = logger
         self.checkboxes = []
         self.ui.table_var.setColumnWidth(0, 32)
@@ -108,8 +107,8 @@ class logger_widget(base_widget, base_draggable):
 
         d = self.experiment.var.inspect()
         for row, var in enumerate(self.logger.logvars):
-            button = remove_custom_var_button(self,
-                                              self.logger.theme.qicon(u'list-remove'), var)
+            button = RemoveCustomVarButton(
+                self, self.logger.theme.qicon(u'list-remove'), var)
             self.table_var.insertRow(row)
             self.table_var.setCellWidget(row, 0, button)
             self.table_var.setCellWidget(row, 1, QtWidgets.QLabel(var))
@@ -129,3 +128,7 @@ class logger_widget(base_widget, base_draggable):
         self.logger.logvars.append(name)
         self.update()
         self.logger.update()
+
+
+# Alias for backwards compatibility
+logger_widget = LoggerWidget

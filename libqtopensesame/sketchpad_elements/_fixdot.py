@@ -18,11 +18,11 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from libopensesame.py3compat import *
-from libqtopensesame.sketchpad_elements._base_element import base_element
-from libopensesame.sketchpad_elements import fixdot as fixdot_runtime
+from libqtopensesame.sketchpad_elements._base_element import BaseElement
+from libopensesame.sketchpad_elements import Fixdot as FixdotRuntime
 
 
-class fixdot(base_element, fixdot_runtime):
+class Fixdot(BaseElement, FixdotRuntime):
 
     """
     desc:
@@ -40,9 +40,13 @@ class fixdot(base_element, fixdot_runtime):
             u'color': 	sketchpad.current_color(),
             u'show_if': sketchpad.current_show_if()
         }
-        e = fixdot(sketchpad, properties=properties)
+        e = Fixdot(sketchpad, properties=properties)
         return e
 
     @staticmethod
     def requires_color():
         return True
+
+
+# Alias for backwards compatibility
+fixdot = Fixdot

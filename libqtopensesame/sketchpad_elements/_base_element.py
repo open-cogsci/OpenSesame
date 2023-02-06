@@ -21,11 +21,11 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from qtpy import QtWidgets, QtGui
 from libqtopensesame.misc.translate import translation_context
-from libqtopensesame.dialogs.text_input import text_input
+from libqtopensesame.dialogs.text_input import TextInput
 _ = translation_context(u'sketchpad', category=u'item')
 
 
-class base_element(object):
+class BaseElement(object):
 
     """
     desc:
@@ -291,9 +291,9 @@ class base_element(object):
         """
 
         old_string = self.to_string()
-        string = text_input(self.sketchpad._edit_widget,
-                            msg=_(u'Element script'), content=self.to_string(),
-                            validator=self.script_validator).get_input()
+        string = TextInput(self.sketchpad._edit_widget,
+                           msg=_(u'Element script'), content=self.to_string(),
+                           validator=self.script_validator).get_input()
         if string is None:
             return
         try:
@@ -573,3 +573,7 @@ class base_element(object):
             return
         self.properties.update({u'x': xy[0], u'y': xy[1]})
         self.sketchpad.draw()
+
+
+# Alias for backwards compatibility
+base_element = BaseElement
