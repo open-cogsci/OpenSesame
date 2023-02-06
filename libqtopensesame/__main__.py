@@ -59,6 +59,10 @@ if platform.system() == 'Darwin':
     # - https://forum.cogsci.nl/discussion/comment/21525/#Comment_21525
     os.environ['QT_MAC_WANTS_LAYER'] = '1'
 
+from openexp import resources
+from pathlib import Path
+# Add the libqtopensesame resource folder, which contains ui files etc
+resources.add_resource_folder(Path(__file__).parent / 'resources')
 
 def patch_pyqt():
     """This patches PyQt such that properties are removed from objects before
@@ -132,12 +136,12 @@ def set_paths():
         os.path.dirname(sys.executable), 'Library', 'plugins')
     if os.path.isdir(qt_plugin_path):
         QtCore.QCoreApplication.addLibraryPath(
-            safe_decode(qt_plugin_path, enc=misc.filesystem_encoding()))
+            safe_decode(qt_plugin_path, enc=sys.getfilesystemencoding()))
     qt_plugin_path = os.path.join(
         os.path.dirname(sys.executable), 'Library', 'lib', 'qt4', 'plugins')
     if os.path.isdir(qt_plugin_path):
         QtCore.QCoreApplication.addLibraryPath(
-            safe_decode(qt_plugin_path, enc=misc.filesystem_encoding()))
+            safe_decode(qt_plugin_path, enc=sys.getfilesystemencoding()))
 
 
 def opensesame():
@@ -255,15 +259,15 @@ def opensesamerun():
     # Decode the experiment path and logfile
     experiment = os.path.abspath(options.experiment)
     if isinstance(experiment, bytes):
-        experiment = safe_decode(experiment, enc=misc.filesystem_encoding(),
+        experiment = safe_decode(experiment, enc=sys.getfilesystemencoding(),
                                  errors=u'ignore')
     # experiment_path = os.path.dirname(experiment)
     logfile = options.logfile
     if isinstance(logfile, bytes):
-        logfile = safe_decode(logfile, enc=misc.filesystem_encoding(),
+        logfile = safe_decode(logfile, enc=sys.getfilesystemencoding(),
                               errors=u'ignore')
     experiment_path = safe_decode(os.path.abspath(options.experiment),
-                                  enc=misc.filesystem_encoding())
+                                  enc=sys.getfilesystemencoding())
     # In debug mode, don't try to catch any exceptions
     if options.debug:
         exp = Experiment(u"Experiment", experiment,

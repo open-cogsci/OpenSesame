@@ -8,8 +8,6 @@ legacy:
   clock: legacy
   log: csv
   icon: os-pygame
-  py2: true
-  py3: true
 psycho:
   description: uses PsychoPy, powerful stimulus generation
   canvas: psycho
@@ -20,8 +18,6 @@ psycho:
   clock: psycho
   log: csv
   icon: os-psychopy
-  py2: true
-  py3: true
 psycho_legacy:
   description: uses PsychoPy with PyGame sound backend
   canvas: psycho
@@ -32,8 +28,6 @@ psycho_legacy:
   clock: psycho
   log: csv
   icon: os-psychopy
-  py2: true
-  py3: true
 xpyriment:
   description: uses Expyriment
   canvas: xpyriment

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
+from openexp import resources
 from libopensesame import misc
 from libopensesame.exceptions import osexception
 from libqtopensesame.widgets.base_widget import BaseWidget
@@ -94,7 +95,7 @@ class PreferencesWidget(BaseWidget):
         locales = sorted(
             [
                 locale[:-3]
-                for locale in os.listdir(misc.resource(u'locale'))
+                for locale in os.listdir(resources['locale'])
                 if locale != u'translatables.qm'
             ] + [u'en_US']
         )

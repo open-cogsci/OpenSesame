@@ -110,7 +110,7 @@ class OSExpReader(OSExpBase):
             fname = self._syntax.from_ascii(fname)
             pool_folder = safe_str(
                 self._pool.folder(),
-                enc=misc.filesystem_encoding()
+                enc=sys.getfilesystemencoding()
             )
             tar.extract(name, pool_folder)
             from_name = os.path.join(self._pool.folder(), uname)

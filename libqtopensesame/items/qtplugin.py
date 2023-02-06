@@ -18,7 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 import os
+import sys
 import mimetypes
+from openexp import resources
 from libopensesame import plugins
 from libopensesame.oslogging import oslogger
 from qtpy import QtGui, QtCore, QtWidgets
@@ -45,7 +47,7 @@ class QtPlugin(QtItem):
             # The __file__ variable is generally a str, which will cause unicode
             # errors. Therefore, convert this here if necessary.
             plugin_file = safe_decode(plugin_file,
-                                      enc=misc.filesystem_encoding())
+                                      enc=sys.getfilesystemencoding())
             # These lines makes sure that the icons and help file are recognized
             # by OpenSesame.
             self.plugin_folder = os.path.dirname(plugin_file)
@@ -53,7 +55,7 @@ class QtPlugin(QtItem):
                 basename = self.item_type + ext
                 path = os.path.join(self.plugin_folder, basename)
                 if os.path.exists(path):
-                    self.experiment.resources[basename] = path
+                    resources[basename] = path
             # Install a translation file if there is one. Most plugins have
             # their translations as part of the OpenSesame main translations.
             # However, separate plugins can bring their own translation.
@@ -79,8 +81,8 @@ class QtPlugin(QtItem):
             self.plugin_folder, u'%s.png' % self.item_type)
         icon32 = os.path.join(
             self.plugin_folder, u'%s_large.png' % self.item_type)
-        self.experiment.resources[u'%s.png' % self.item_type] = icon16
-        self.experiment.resources[u'%s_large.png' % self.item_type] = icon32
+        resources[u'%s.png' % self.item_type] = icon16
+        resources[u'%s_large.png' % self.item_type] = icon32
         self.qicon = QtGui.QIcon()
         self.qicon.addFile(icon16, QtCore.QSize(16, 16))
         self.qicon.addFile(icon32, QtCore.QSize(32, 32))

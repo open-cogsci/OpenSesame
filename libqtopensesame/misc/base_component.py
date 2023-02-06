@@ -24,6 +24,7 @@ if os.environ[u'QT_API'] == u'pyqt5':
 else:
     from PyQt4 import uic
 from qtpy import QtCore, QtWidgets
+from openexp import resources
 from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 
@@ -58,29 +59,24 @@ class BaseComponent:
         ui, optional
             An id for a user-interface file, or None.
         """
-        if ui is not None:
-            # If the UI file has been explicitly registered, which is the case
-            # for extensions
-            if hasattr(self, u'experiment') and ui in self.experiment.resources:
-                ui_path = self.experiment.resources[ui]
-            else:
-                # Dot-split the ui id, append a `.ui` extension, and assume it's
-                # relative to the resources/ui subfolder.
-                path_list = [u'ui'] + ui.split(u'.')
-                if hasattr(self, u'experiment'):
-                    # If an experiment object is available, use that to find the
-                    # resources ...
-                    ui_path = self.experiment.resource(
-                        os.path.join(*path_list)+u'.ui')
-                else:
-                    # ... otherwise use the static resources function.
-                    from libopensesame import misc
-                    ui_path = misc.resource(os.path.join(*path_list)+u'.ui')
-            oslogger.debug(u'dynamically loading ui: %s' % ui_path)
-            with safe_open(ui_path) as fd:
-                self.ui = uic.loadUi(fd, self)
-        else:
-            self.ui = None
+        self.ui = None
+        if ui is None:
+            return
+        # If the UI file has been explicitly registered, which is the case
+        # for extensions
+        try:
+            ui_path = resources[ui]
+        except FileNotFoundError:
+            # Dot-split the ui id, append a `.ui` extension, and assume it's
+            # relative to the resources/ui subfolder.
+            path_list = [u'ui'] + ui.split(u'.')
+            try:
+                ui_path = resources[os.path.join(*path_list) + '.ui']
+            except FileNotFoundError:
+                return
+        oslogger.debug(f'dynamically loading ui: {ui_path}')
+        with safe_open(ui_path) as fd:
+            self.ui = uic.loadUi(fd, self)
 
     def get_main_window(self, main_window):
         r"""If the main_window is actually not the main window, but a widget

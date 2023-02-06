@@ -113,11 +113,9 @@ class check_backend_argspec(unittest.TestCase):
 		desc:
 			Checks the integrity of all back-ends.
 		"""
-		self.checkBackendCategory(u'canvas', ['legacy', 'droid', 'xpyriment',
-			'psycho'])
-		self.checkBackendCategory(u'keyboard', ['legacy', 'droid', 'psycho'])
-		self.checkBackendCategory(u'mouse', ['legacy', 'droid', 'xpyriment',
-			'psycho'])
+		self.checkBackendCategory(u'canvas', ['legacy', 'xpyriment', 'psycho'])
+		self.checkBackendCategory(u'keyboard', ['legacy', 'psycho'])
+		self.checkBackendCategory(u'mouse', ['legacy', 'xpyriment', 'psycho'])
 		self.checkBackendCategory(u'sampler', ['legacy'])
 		self.checkBackendCategory(u'clock', ['legacy', 'psycho'])
 		self.checkBackendCategory(u'log', ['csv'])

@@ -98,11 +98,11 @@ class BaseRunner:
                 logfile = os.path.join(
                     safe_decode(
                         tempfile.gettempdir(),
-                        enc=misc.filesystem_encoding()
+                        enc=sys.getfilesystemencoding()
                     ),
                     safe_decode(
                         tempfile.gettempprefix(),
-                        enc=misc.filesystem_encoding()
+                        enc=sys.getfilesystemencoding()
                     ) + u'quickrun.csv'
                 )
                 oslogger.warning(u'Using temporary file %s' % logfile)

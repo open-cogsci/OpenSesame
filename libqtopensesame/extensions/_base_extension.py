@@ -21,6 +21,7 @@ import os
 import time
 import functools
 from qtpy import QtWidgets, QtCore
+from openexp import resources
 from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 from libqtopensesame.misc.config import cfg
@@ -353,9 +354,8 @@ class BaseExtension(BaseSubcomponent):
         """
         for path in os.listdir(self.info[u'plugin_folder']):
             if path.endswith(u'.ui'):
-                self.experiment.resources[u'extensions.%s.%s' %
-                    (self.name(), os.path.splitext(path)[0])] = \
-                        os.path.join(self.info[u'plugin_folder'], path)
+                resources[f'extensions.{self.name()}.{os.path.splitext(path)[0]}'] \
+                    = os.path.join(self.info[u'plugin_folder'], path)
 
     def qaction(self, icon, label, target, checkable=False, tooltip=None,
                 shortcut=None):

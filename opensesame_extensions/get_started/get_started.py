@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import os
 import sys
+from openexp import resources
 from libopensesame import misc, metadata
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.translate import translation_context
@@ -39,7 +40,7 @@ class get_started(base_extension):
         templates = []
         for i, (path, desc) in enumerate(template_info.templates):
             try:
-                path = self.experiment.resource(path)
+                path = resources[path]
             except:
                 continue
             if not i:
@@ -114,7 +115,7 @@ class get_started(base_extension):
         # Open an experiment if it has been specified as a command line argument
         # and suppress the new wizard in that case.
         if len(sys.argv) >= 2 and os.path.isfile(sys.argv[1]):
-            path = safe_decode(sys.argv[1], enc=misc.filesystem_encoding(),
+            path = safe_decode(sys.argv[1], enc=sys.getfilesystemencoding(),
                                errors=u'ignore')
             self.main_window.open_file(path=path)
             return

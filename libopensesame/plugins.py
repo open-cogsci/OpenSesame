@@ -66,7 +66,7 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
         key = u'OPENSESAME_EXTENSION_PATH'
     if key in os.environ:
         for path in os.environ[key].split(';'):
-            path = safe_decode(path, enc=misc.filesystem_encoding())
+            path = safe_decode(path, enc=sys.getfilesystemencoding())
             if os.path.exists(path):
                 l.insert(0, path)
     if os.name == u'posix' and u'HOME' in os.environ:
@@ -87,7 +87,7 @@ def plugin_folders(only_existing=True, _type=u'plugins'):
     elif os.name == u'nt':
         # Windows
         path = os.path.join(safe_decode(os.environ[u'APPDATA'],
-                                        enc=misc.filesystem_encoding()), u'.opensesame', _type)
+                                        enc=sys.getfilesystemencoding()), u'.opensesame', _type)
         if not only_existing or os.path.exists(path):
             l.append(path)
     return l
@@ -389,13 +389,13 @@ def import_plugin(plugin, _type=u'plugins'):
         if os.path.exists(os.path.join(folder, tmpl % plugin)):
             path = os.path.join(folder, tmpl % plugin)
             if not py3:
-                path = safe_encode(path, enc=misc.filesystem_encoding())
+                path = safe_encode(path, enc=sys.getfilesystemencoding())
             return imp.load_source(plugin, path)
     for tmpl in bytecode_templates:
         if os.path.exists(os.path.join(folder, tmpl % plugin)):
             path = os.path.join(folder, tmpl % plugin)
             if not py3:
-                path = safe_encode(path, enc=misc.filesystem_encoding())
+                path = safe_encode(path, enc=sys.getfilesystemencoding())
             return imp.load_compiled(plugin, path)
 
 

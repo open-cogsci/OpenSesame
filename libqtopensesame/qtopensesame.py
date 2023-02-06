@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from qtpy import QtGui, QtCore, QtWidgets
+from openexp import resources
 from libqtopensesame.misc.base_component import BaseComponent
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.items.experiment import Experiment
@@ -94,14 +95,12 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         # Make sure that icons are shown in context menu, regardless of the
         # system settings. This is necessary, because Ubuntu doesn't show menu
         # icons by default.
-        QtWidgets.QApplication.setAttribute(
-            QtCore.Qt.AA_DontShowIconsInMenus,
-            False
-        )
+        QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_DontShowIconsInMenus,
+                                            False)
         # Initialize random number generator
         random.seed()
         # Check the filesystem encoding for debugging purposes
-        oslogger.debug(u'filesystem encoding: %s' % misc.filesystem_encoding())
+        oslogger.debug(f'filesystem encoding: {sys.getfilesystemencoding()}')
         # self.restore_config()
         self.set_style()
         self.set_warnings()
@@ -179,8 +178,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self._tooltip_shortcut(self.action_show_pool)
         self._tooltip_shortcut(self.action_show_overview)
         # Create the initial experiment, which is the default template.
-        with safe_open(misc.resource(
-                os.path.join(u'templates', u'default.osexp')), u'r') as fd:
+        with safe_open(resources['templates/default.osexp'], u'r') as fd:
             self.experiment = Experiment(self, u'New experiment', fd.read())
         self.experiment.build_item_tree()
         self.ui.itemtree.default_fold_state()
@@ -250,7 +248,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                 u'Roboto-Regular'
         ]:
             try:
-                ttf = self.experiment.resource(u'%s.ttf' % font)
+                ttf = resources[f'{font}.ttf']
             except FileNotFoundError:
                 oslogger.error(u'failed to find %s' % font)
             else:
@@ -500,42 +498,39 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         for i, argv in enumerate(sys.argv[:-1]):
             if argv == '--locale':
                 locale = safe_decode(sys.argv[i + 1])
-        qm = misc.resource(
-            os.path.join(u'locale', locale) + u'.qm'
-        )
-        # Say that we're trying to load de_AT, and it is not found, then we'll
-        # try de_DE as fallback.
-        if qm is None:
+        try:
+            qm = resources[f'locale/{locale}.qm']
+        except FileNotFoundError:
+            # Say that we're trying to load de_AT, and it is not found, then
+            # we'll try de_DE as fallback.
             loctuple = locale.split(u'_')
             if loctuple:
                 _locale = loctuple[0] + u'_' + loctuple[0].upper()
-                qm = misc.resource(
-                    os.path.join(u'locale', _locale + u'.qm')
-                )
-                if qm is not None:
+                try:
+                    qm = resources[f'locale/{_locale}.qm']
+                except FileNotFoundError:
+                    pass
+                else:
                     locale = _locale
         self._locale = locale
         return self._locale
 
     def set_locale(self, translators):
-        """"
-        desc:
-                Sets the application language.
+        """"Sets the application language.
 
-        arguments:
-                translator:
-                        desc:	For some reason, the QTranslator object needs to be
-                                        created in the main function. Therefore it is passed
-                                        as an argument.
-                        type:	QTranslator
+        Parameters
+        ----------
+        translators: list of QTranslator
+            For some reason, the QTranslator object needs to be created in the
+            main function. Therefore it is passed as an argument.
         """
+        try:
+            qm = resources[f'locale/{self.locale}.qm']
+        except FileNotFoundError:
+            return
         self.translators = translators
         self._main_translator = self.translators.pop()
-        self._main_translator.load(
-            misc.resource(
-                os.path.join(u'locale', self.locale + u'.qm')
-            )
-        )
+        self._main_translator.load(qm)
         QtWidgets.QApplication.installTranslator(self._main_translator)
 
     def set_auto_response(self):

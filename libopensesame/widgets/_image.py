@@ -83,7 +83,7 @@ class ImageWidget(Widget):
 
     def _init_canvas_elements(self):
         r"""Initializes all canvas elements."""
-        _path = safe_str(self.path, enc=misc.filesystem_encoding())
+        _path = safe_str(self.path, enc=sys.getfilesystemencoding())
         if not os.path.exists(_path):
             raise osexception(
                 u'No valid path has been specified in image widget')
@@ -107,7 +107,7 @@ class ImageWidget(Widget):
             A (left, top, width, height) tuple.
         """
         self.rect = rect
-        _path = safe_str(self.path, enc=misc.filesystem_encoding())
+        _path = safe_str(self.path, enc=sys.getfilesystemencoding())
         if not os.path.isfile(_path):
             raise osexception(u'"%s" does not exist' % _path)
         if self.adjust:

@@ -21,6 +21,7 @@ import pygame
 from openexp._canvas import legacy
 from openexp._canvas._text.text import Text
 from openexp._canvas._element.legacy import LegacyElement
+from openexp import resources
 
 
 class Legacy(LegacyElement, Text):
@@ -57,7 +58,7 @@ class Legacy(LegacyElement, Text):
         if (family, size) in legacy.fonts:
             return legacy.fonts[(family, size)]
         try:
-            path = experiment.resource(u'%s.ttf' % family)
+            path = resource[f'{family}.ttf']
         except:
             # If the family cannot be found in the filepool, assume that it is
             # a system font.

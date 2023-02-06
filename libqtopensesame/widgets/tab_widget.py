@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
+from openexp import resources
 from libopensesame import metadata, misc
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.config import cfg
@@ -287,13 +288,12 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
         """
         import os
         try:
-            path = self.main_window.experiment.resource(item + u'.md')
-        except:
+            path = resources[f'{item}.md']
+        except FileNotFoundError:
             try:
-                path = self.main_window.experiment.resource(item + u'.html')
-            except:
-                path = self.main_window.experiment.resource(
-                    os.path.join(u'help', u'missing.md'))
+                path = resources[f'{item}.html']
+            except FileNotFoundError:
+                path = resources[f'help/missing.md']
         self.open_browser(path)
 
     def open_backend_settings(self):

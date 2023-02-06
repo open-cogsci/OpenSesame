@@ -466,31 +466,6 @@ class Experiment(item.item):
             s += self.items[_item].to_string() + u'\n'
         return s
 
-    def resource(self, name):
-        """
-        Retrieves a file from the resources folder.
-
-        Arguments:
-        name	--	The file name.
-
-        Returns:
-        A Unicode string with the full path to the file in the resources
-        folder.
-        """
-        name = safe_decode(name)
-        if self is not None:
-            if name in self.resources:
-                return self.resources[name]
-            if os.path.exists(self.pool[name]):
-                return self.pool[name]
-        path = misc.resource(name)
-        if path is None:
-            raise FileNotFoundError(
-                u"The resource '%s' could not be found in libopensesame.experiment.resource()"
-                % name
-            )
-        return path
-
     def save(self, path, overwrite=False, update_path=True):
         r"""Saves the experiment to file.
 

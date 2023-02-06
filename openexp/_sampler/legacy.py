@@ -30,10 +30,7 @@ try:
     import numpy
 except:
     numpy = None
-try:
-    import pygame.mixer as mixer
-except ImportError:
-    import android.mixer as mixer
+import pygame.mixer as mixer
 
 
 class Legacy(Sampler):
@@ -78,12 +75,6 @@ class Legacy(Sampler):
                     raise osexception(
                         u"openexp._sampler.legacy.__init__() the file '%s' is not an .ogg or .wav file"
                         % src)
-                # The mixer chokes on unicode pathnames that contain special
-                # characters. To avoid this we convert to str with the
-                # filesystem encoding. (Python 2 only).
-                if not py3 and isinstance(src, str):
-                    import sys
-                    src = src.encode(misc.filesystem_encoding())
             self.sound = mixer.Sound(src)
         Sampler.__init__(self, experiment, src, **playback_args)
         self.keyboard = Keyboard(experiment)

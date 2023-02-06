@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import os
 from libopensesame.widgets.themes.plain import Plain
+from openexp import resources
 from openexp.canvas_elements import Rect, Line, Image
 from openexp._canvas._element.group import Group
 
@@ -28,10 +29,8 @@ class Gray(Plain):
     def __init__(self, form):
 
         super().__init__(form)
-        self.box_checked_image = self.form.experiment.resource(os.path.join(
-            u'widgets', u'gray', u'box-checked.png'))
-        self.box_unchecked_image = self.form.experiment.resource(os.path.join(
-            u'widgets', u'gray', u'box-unchecked.png'))
+        self.box_checked_image = resources['widgets/gray/box-checked.png']
+        self.box_unchecked_image = resources['widgets/gray/box-unchecked.png']
 
     def box(self, x, y, checked=False):
 

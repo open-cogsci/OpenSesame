@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
 import sys
+from openexp import resources
 from libopensesame.py3compat import *
 from libopensesame import misc
 from libopensesame.oslogging import oslogger
@@ -87,13 +88,13 @@ class RichText(Element):
             os.path.dirname(sys.executable), 'Library', 'plugins')
         if os.path.isdir(qt_plugin_path):
             QCoreApplication.addLibraryPath(
-                safe_decode(qt_plugin_path, enc=misc.filesystem_encoding())
+                safe_decode(qt_plugin_path, enc=sys.getfilesystemencoding())
             )
         qt_plugin_path = os.path.join(
             os.path.dirname(sys.executable), 'Library', 'lib', 'qt4', 'plugins')
         if os.path.isdir(qt_plugin_path):
             QCoreApplication.addLibraryPath(
-                safe_decode(qt_plugin_path, enc=misc.filesystem_encoding())
+                safe_decode(qt_plugin_path, enc=sys.getfilesystemencoding())
             )
         # If no instance of QApplication exists, a segmentation fault seems to
         # always occur. So we create one.
@@ -113,13 +114,13 @@ class RichText(Element):
             pyqt_initialized = True
         oslogger.debug(u'Registering font {}'.format(font))
         try:
-            path = exp.resource(font + u'.ttf')
+            path = resources[f'{font}.ttf']
         except Exception:
             warnings.warn(u'Font %s not found' % font)
         else:
             if fd is None:
                 fd = font_database
-            font_id = fd.addApplicationFont(path)
+            font_id = fd.addApplicationFont(str(path))
             if font_id < 0:
                 warnings.warn(u'Failed to load font %s' % font)
                 return

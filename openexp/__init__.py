@@ -18,3 +18,4 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.metadata import __version__
+from .resources import resources

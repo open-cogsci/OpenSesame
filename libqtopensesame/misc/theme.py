@@ -18,7 +18,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 import os.path
+import sys
 import imp
+from openexp import resources
 from libopensesame import misc
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
@@ -43,11 +45,9 @@ class Theme:
         theme -- the theme to be used or None to use config (default=None)
         """
         self.main_window = main_window
-        self.fallback_icon = QtGui.QIcon(
-            os.path.join(misc.resource(u"theme"), u"fallback.png")
-        )
+        self.fallback_icon = QtGui.QIcon(resources['theme/fallback.png'])
         self.theme = cfg.theme if theme is None else theme
-        self.theme_folder = misc.resource(os.path.join(u"theme", self.theme))
+        self.theme_folder = resources[f'theme/{self.theme}']
         self._icon_theme_path = self.theme_folder
         oslogger.debug(u"theme = '%s' (%s)" % (self.theme, self.theme_folder))
         # The theme folder must exist, and contain a file called __theme__.py,
@@ -60,14 +60,13 @@ class Theme:
                 u"theme '%s' does not exist, using 'default'" % theme,
             )
             self.theme = u"default"
-            self._icon_theme_path = self.theme_folder = misc.resource(
-                os.path.join(u"theme", self.theme)
-            )
+            self._icon_theme_path = self.theme_folder = \
+                resources[f'theme/{self.theme}']
         self.theme_info = os.path.join(self.theme_folder, u"__theme__.py")
         if os.path.exists(self.theme_info):
             info = imp.load_source(
                 self.theme,
-                safe_str(self.theme_info, enc=misc.filesystem_encoding())
+                safe_str(self.theme_info, enc=sys.getfilesystemencoding())
             )
             with safe_open(os.path.join(self.theme_folder, info.qss)) as fd:
                 self._qss = fd.read()
@@ -78,9 +77,8 @@ class Theme:
                 for key, color in info.qdatamatrix.items():
                     setattr(_qcell, key, color)
             if hasattr(info, 'icon_theme_path'):
-                self._icon_theme_path = misc.resource(
-                    os.path.join(u"theme", info.icon_theme_path)
-                )
+                self._icon_theme_path = \
+                    resources[f'theme/{info.icon_theme_path}']
         self.load_icon_map()
         self.apply_theme(self.main_window)
 
@@ -165,15 +163,11 @@ class Theme:
         ):
             qicon = QtGui.QIcon()
             if u'%s_large.png' % icon in self.experiment.resources:
-                qicon.addFile(
-                    self.experiment.resource(u'%s_large.png' % icon),
-                    size=QtCore.QSize(32, 32)
-                )
+                qicon.addFile(resources[f'{icon}_large.png'],
+                              size=QtCore.QSize(32, 32))
             if u'%s.png' % icon in self.experiment.resources:
-                qicon.addFile(
-                    self.experiment.resource(u'%s.png' % icon),
-                    size=QtCore.QSize(16, 16)
-                )
+                qicon.addFile(resources[f'{icon}.png'],
+                              size=QtCore.QSize(16, 16))
             return qicon
         if icon in self.icon_map:
             name = self.icon_map[icon][0]

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
+from openexp import resources
 from openexp.canvas_elements import Rect
 
 
@@ -30,9 +31,8 @@ class Plain:
         from openexp.sampler import Sampler
         import os
         self.click_sound = Sampler(self.form.experiment,
-            self.form.experiment.resource(
-                os.path.join('widgets', 'interaction.ogg')),
-            duration=0, volume=.5)
+                                   resource['widgets/interaction.ogg'],
+                                   duration=0, volume=.5)
 
     @property
     def canvas(self):

@@ -22,6 +22,7 @@ from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 import tempfile
 import os
+import sys
 import shutil
 
 
@@ -101,7 +102,7 @@ class FilePoolStore:
                 suffix=u'.opensesame_pool',
                 dir=safe_decode(
                     tempfile.gettempdir(),
-                    enc=misc.filesystem_encoding()
+                    enc=sys.getfilesystemencoding()
                 )
             )
             oslogger.debug(u'creating new pool folder')

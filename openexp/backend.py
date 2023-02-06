@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
+from openexp import resources
 from libopensesame.exceptions import osexception
 from functools import partial
 import inspect
@@ -45,7 +46,7 @@ def backend_info(experiment):
     """
     global _backend_info
     if _backend_info is None:
-        with safe_open(experiment.resource(u'backend_info.yaml')) as fd:
+        with safe_open(resources['backend_info.yaml']) as fd:
             _backend_info = safe_yaml_load(fd.read())
     return _backend_info
 

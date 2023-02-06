@@ -22,11 +22,7 @@ import re
 import os.path
 import platform
 import sys
-try:
-    import site
-except IOError:
-    # On Android, the site package cannot be imported
-    site = None
+import site
 from libopensesame import metadata
 from libopensesame.oslogging import oslogger
 
@@ -40,10 +36,10 @@ def parse_environment_file():
     # Convert all values from UTF8 to the filesystem encoding
     for key, val in d.items():
         if isinstance(val, str):
-            d[key] = safe_str(safe_decode(val), enc=filesystem_encoding())
+            d[key] = safe_str(safe_decode(val), enc=sys.getfilesystemencoding())
         elif isinstance(val, list):
             d[key] = [
-                safe_str(safe_decode(i), enc=filesystem_encoding())
+                safe_str(safe_decode(i), enc=sys.getfilesystemencoding())
                 for i in val
             ]
         else:
@@ -211,26 +207,8 @@ def strip_tags(s):
     The stripped string
     """
     import re
-    return re.compile(r'<.*?>').sub('', str(s).replace("<br />",
-                                                       "\n").replace("<br>", "\n"))
-
-
-def resource(name):
-    """
-    A hacky way to get a resource using the functionality from openexp
-
-    Arguments:
-    name	--	The name of the requested resource. If this is a regular string
-                            it is assumed to be encoded as utf-8.
-
-    Returns:
-    A Unicode string with the full path to the resource.
-    """
-    for folder in resource_folders:
-        path = os.path.join(folder, safe_decode(name, enc=u'utf-8'))
-        if os.path.exists(path):
-            return path
-    return None
+    return re.compile(r'<.*?>').sub(
+        '', str(s).replace("<br />","\n").replace("<br>", "\n"))
 
 
 def home_folder():
@@ -249,7 +227,7 @@ def home_folder():
         home_folder = os.environ[u"HOME"]
     else:
         home_folder = os.environ[u"HOME"]
-    return safe_decode(home_folder, enc=filesystem_encoding())
+    return safe_decode(home_folder, enc=sys.getfilesystemencoding())
 
 
 def opensesame_folder():
@@ -329,20 +307,6 @@ def open_url(url):
         oslogger.error(u"Failed to open '%s'" % url)
 
 
-def filesystem_encoding():
-    """
-    Gets the current file system encoding. This wrapper is necessary, because
-    sys.getfilesystemencoding() returns None on Android.
-
-    Returns:
-    A string with the file system encoding, such as 'utf-8' or 'mdcs'
-    """
-    enc = sys.getfilesystemencoding()
-    if enc is None:
-        enc = u'utf-8'
-    return enc
-
-
 def strip_html(s):
     """
     Strips basic HTML tags from a string.
@@ -416,31 +380,31 @@ def camel_case(s):
 cwd = os.getcwd()
 parent_folder = safe_decode(
     os.path.dirname(os.path.dirname(__file__)),
-    enc=filesystem_encoding()
+    enc=sys.getfilesystemencoding()
 )
 base_folders = [cwd, parent_folder]
 # Locate Anaconda/Miniconda share
 base_folders.append(os.path.join(
     safe_decode(
         os.path.dirname(os.path.dirname(sys.executable)),
-        enc=filesystem_encoding()
+        enc=sys.getfilesystemencoding()
     ),
     u"share"
 ))
 if hasattr(site, u'getuserbase'):
     base_folders.append(os.path.join(
-        safe_decode(site.getuserbase(), enc=filesystem_encoding()),
+        safe_decode(site.getuserbase(), enc=sys.getfilesystemencoding()),
         u'share'
     ))
 if hasattr(site, u'getusersitepackages'):
     base_folders.append(os.path.join(
-        safe_decode(site.getusersitepackages(), enc=filesystem_encoding()),
+        safe_decode(site.getusersitepackages(), enc=sys.getfilesystemencoding()),
         u'share'
     ))
 if hasattr(site, u'getsitepackages'):
     base_folders += [
         os.path.join(
-            safe_decode(folder, enc=filesystem_encoding()),
+            safe_decode(folder, enc=sys.getfilesystemencoding()),
             u'share'
         )
         for folder in site.getsitepackages()
