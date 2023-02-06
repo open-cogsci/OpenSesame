@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from pygame.locals import *
 import pygame
@@ -39,13 +38,9 @@ except ImportError:
 
 class Legacy(Sampler):
 
+    r"""This is a sampler backend built on top of PyGame. For function
+    specifications and docstrings, see `openexp._sampler.sampler`.
     """
-    desc:
-            This is a sampler backend built on top of PyGame.
-            For function specifications and docstrings, see
-            `openexp._sampler.sampler`.
-    """
-
     # The settings variable is used by the GUI to provide a list of back-end
     # settings
     settings = {

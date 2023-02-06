@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame.item import Item
@@ -28,7 +27,6 @@ from openexp.keyboard import Keyboard
 class Loop(Item):
 
     """A loop item runs a single other item multiple times"""
-
     description = u'Repeatedly runs another item'
     valid_orders = u'sequential', u'random'
     commands = [
@@ -45,7 +43,6 @@ class Loop(Item):
 
     def reset(self):
         """See item."""
-
         self.ef = None
         self.dm = DataMatrix(length=0)
         self.dm.sorted = False
@@ -65,7 +62,6 @@ class Loop(Item):
 
     def from_string(self, string):
         """See item."""
-
         self.var.clear()
         self.comments = []
         self.reset()
@@ -134,7 +130,6 @@ class Loop(Item):
 
     def to_string(self):
         """See item."""
-
         # Older versions of OpenSesame use an explicit cycles variable, so we
         # set this here for backwards compatibility.
         self.var.cycles = len(self.dm)
@@ -153,34 +148,28 @@ class Loop(Item):
         return s
 
     def _require_arglist(self, cmd, arglist, minlen=1):
-        """
-        desc:
-                Checks whether a non-empty argument list has been specified, and
-                raises an Exception otherwise.
+        r"""Checks whether a non-empty argument list has been specified, and
+        raises an Exception otherwise.
 
-        arguments:
-                cmd:
-                        desc:	The command to check for.
-                        type:	str
-                arglist:
-                        desc:	The argument list to check.
-                        type:	list
+        Parameters
+        ----------
+        cmd : str
+            The command to check for.
+        arglist : list
+            The argument list to check.
         """
-
         if len(arglist) < minlen:
             raise osexception(u'Invalid argument list for %s' % cmd)
 
     def _create_live_datamatrix(self):
-        """
-        desc:
-                Builds a live DataMatrix. That is, it takes the orignal DataMatrix
-                and applies all the operations as specified.
+        r"""Builds a live DataMatrix. That is, it takes the orignal DataMatrix
+        and applies all the operations as specified.
 
-        returns:
-                desc:	A live DataMatrix.
-                type:	DataMatrix
+        Returns
+        -------
+        DataMatrix
+            A live DataMatrix.
         """
-
         src_dm = self.dm if self.var.source == u'table' else self._read_file()
         for column_name in src_dm.column_names:
             if not self.syntax.valid_var_name(column_name):
@@ -311,7 +300,6 @@ class Loop(Item):
 
     def prepare(self):
         """See item."""
-
         super().prepare()
         # Compile break-if statement
         break_if = self.var.get(u'break_if', _eval=False)
@@ -337,7 +325,6 @@ class Loop(Item):
 
     def run(self):
         """See item."""
-
         self.set_item_onset()
         if self.live_dm is None or self.var.continuous == u'no':
             self.live_dm = self._create_live_datamatrix()
@@ -392,14 +379,12 @@ class Loop(Item):
             self.live_dm = None
 
     def _read_file(self):
-        """
-        desc:
-                Reads a source file and raises an osexception if this fails.
+        r"""Reads a source file and raises an osexception if this fails.
 
-        returns:
-                type:	DataMatrix
+        Returns
+        -------
+        DataMatrix
         """
-
         from datamatrix import io
         src = self.experiment.pool[self.var.source_file]
         if src.endswith(u'.xlsx'):
@@ -423,7 +408,6 @@ class Loop(Item):
                 A list of (var, value) tuples that have been defined in the loop
                 table.
         """
-
         return [(colname, safe_decode(col)) for colname, col in self.dm.columns]
 
     def _var_info_file(self):
@@ -432,7 +416,6 @@ class Loop(Item):
                 A list of (var, value) tuples that have been defined in a source
                 file.
         """
-
         try:
             dm = self._read_file()
         except osexception:
@@ -441,7 +424,6 @@ class Loop(Item):
 
     def var_info(self):
         """See item."""
-
         return super().var_info() + (
             self._var_info_table()
             if self.var.source == u'table'

@@ -189,7 +189,6 @@ class Parallel:
     should) also work with the Windows version of this class.
 
     """
-
     def __init__(self, port=0, exclusive=False):
         if type(port) == type(""):
             self.device = port

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from pygame.locals import *
 from openexp._mouse.mouse import Mouse
@@ -28,13 +27,9 @@ import pygame
 
 class Legacy(Mouse, LegacyCoordinates):
 
+    r"""This is a mouse backend built on top of PyGame. For function
+    specifications and docstrings, see `openexp._mouse.mouse`.
     """
-    desc:
-            This is a mouse backend built on top of PyGame.
-            For function specifications and docstrings, see
-            `openexp._mouse.mouse`.
-    """
-
     settings = {
         u"enable_escape": {
             u"name": u"Enable escape",

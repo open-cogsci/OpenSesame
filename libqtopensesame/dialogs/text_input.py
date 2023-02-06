@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.dialogs.base_dialog import BaseDialog
@@ -24,27 +23,22 @@ from libqtopensesame.dialogs.base_dialog import BaseDialog
 
 class TextInput(BaseDialog):
 
-    """
-    desc:
-            A simple text-input dialog.
-    """
-
+    r"""A simple text-input dialog."""
     def __init__(self, main_window, msg=None, content=u'', validator=None):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        main_window
+            The main window object.
+        msg
+            A text message.
+        content, optional
+            The starting content.
+        validator, optional
+            A function to validate the input. This function should take a
+            single str as argument, and return a bool.
         """
-        desc:
-                Constructor.
-
-        arguments:
-                main_window:	The main window object.
-                msg:			A text message.
-
-        keywords:
-                content:		The starting content.
-                validator:		A function to validate the input. This function
-                                                should take a single str as argument, and return a
-                                                bool.
-        """
-
         super().__init__(main_window, ui=u'dialogs.text_input_dialog')
         if msg is not None:
             self.ui.label_message.setText(msg)
@@ -54,14 +48,12 @@ class TextInput(BaseDialog):
         self.adjustSize()
 
     def get_input(self):
-        """
-        desc:
-                Gets text input.
+        r"""Gets text input.
 
-        returns:
-                A string with text input or None of the dialog was not accepted.
+        Returns
+        -------
+        A string with text input or None of the dialog was not accepted.
         """
-
         while True:
             if self.exec_() != QtWidgets.QDialog.Accepted:
                 break

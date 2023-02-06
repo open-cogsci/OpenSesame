@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.sketchpad_elements._base_line_arrow import BaseLineArrow
 from libopensesame.sketchpad_elements import Arrow as ArrowRuntime
@@ -24,13 +23,10 @@ from libopensesame.sketchpad_elements import Arrow as ArrowRuntime
 
 class Arrow(BaseLineArrow, ArrowRuntime):
 
+    r"""An arrow element.
+    See base_element for docstrings and function
+    descriptions.
     """
-    desc:
-            An arrow element.
-
-            See base_element for docstrings and function descriptions.
-    """
-
     @classmethod
     def mouse_release(cls, sketchpad, pos):
 

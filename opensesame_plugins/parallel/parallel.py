@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 IMPORTANT NOTE: The parallel plug-in is not reliable, and will be replaced
 by the coroutines plugin.
 """
-
 from libopensesame.py3compat import *
 import threading
 from libopensesame import sequence
@@ -36,7 +35,6 @@ except ImportError:
 class parallel_process(threading.Thread):
 
     """A wrapper for a single process"""
-
     def __init__(self, item):
         """
         Constructor
@@ -44,14 +42,12 @@ class parallel_process(threading.Thread):
         Arguments:
         item -- the item to run
         """
-
         threading.Thread.__init__(self)
         self.item = item
         self.exception = None
 
     def run(self):
         """Runs the item"""
-
         self.launch_time = self.item.time()
         try:
             self.item.run()
@@ -65,7 +61,6 @@ class parallel(sequence.sequence):
     The parallel plug-in behaves much like a sequence, but it runs items in
     parallel. The parallel exits when the last item is finished
     """
-
     def run(self):
         """
         Run the parallel
@@ -73,7 +68,6 @@ class parallel(sequence.sequence):
         Returns:
         True on success, False on failure
         """
-
         # Optionally flush the responses to catch escape presses
         if self._keyboard is not None:
             self._keyboard.flush()
@@ -129,7 +123,6 @@ class parallel(sequence.sequence):
 class qtparallel(qtsequence.sequence, qtplugin.qtplugin):
 
     """Parallel GUI"""
-
     def __init__(self, name, experiment, string=None):
         """
         Constructor
@@ -141,7 +134,6 @@ class qtparallel(qtsequence.sequence, qtplugin.qtplugin):
         Keyword arguments:
         string -- a string with the item definition (default=None)
         """
-
         qtsequence.sequence.__init__(self, name, experiment, string)
         self.item_type = 'parallel'
         self.description = "Runs a number of items in parallel"

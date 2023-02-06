@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import warnings
 from libqtopensesame.extensions import base_extension
@@ -24,18 +23,11 @@ from libqtopensesame.extensions import base_extension
 
 class psychopy_monitor_center(base_extension):
 
-    """
-    desc:
-            Launches the PsychoPy monitor center.
-    """
-
+    r"""Launches the PsychoPy monitor center."""
     def activate(self):
+        r"""Is called when the extension is activated through the menu/ toolbar
+        action.
         """
-        desc:
-                Is called when the extension is activated through the menu/ toolbar
-                action.
-        """
-
         from psychopy.monitors.MonitorCenter import MonitorCenter
         with warnings.catch_warnings(record=True) as w:
             app = MonitorCenter(0)

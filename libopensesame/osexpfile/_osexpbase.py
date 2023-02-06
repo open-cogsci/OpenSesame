@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 
@@ -29,18 +28,18 @@ class OSExpBase:
 
     @staticmethod
     def valid_extension(path):
+        r"""Checks whether a path ends with one of the known extensions for an
+        experiment file.
+
+        Parameters
+        ----------
+        path
+            The path to check.
+
+        Returns
+        -------
+        bool
         """
-        desc:
-                Checks whether a path ends with one of the known extensions for an
-                experiment file.
-
-        arguments:
-                path:	The path to check.
-
-        returns:
-                type:	bool
-        """
-
         return any(
             path.lower().endswith(ext) for ext in [
                 u'.opensesame',
@@ -51,37 +50,29 @@ class OSExpBase:
 
     @property
     def format(self):
-        """
-        desc: |
-                The format of the experiment, which can be:
+        r"""The format of the experiment, which can be:
 
-                - script: a script (ie. not from file)
-                - scriptfile: plain-text file
-                - targz: targz archive
-                - tar: tar archive
+        - script: a script
+        (ie. not from file)
+        - scriptfile: plain-text file
+        - targz: targz
+        archive
+        - tar: tar archive
         """
-
         if self._format is None:
             self._format = self._determine_format()
         return self._format
 
     @property
     def experiment_path(self):
+        r"""The path to the experiment file, or None if the experiment was
+        loaded from script.
         """
-        desc:
-                The path to the experiment file, or None if the experiment was
-                loaded from script.
-        """
-
         return self._experiment_path
 
     @property
     def script(self):
-        """
-        desc:
-                The experiment script.
-        """
-
+        r"""The experiment script."""
         raise NotImplementedError()
 
     def _determine_format(self):
@@ -90,22 +81,10 @@ class OSExpBase:
 
     @property
     def _syntax(self):
-        """
-        visible: False
-
-        desc:
-                A shortcut to the experiment syntax object.
-        """
-
+        r"""A shortcut to the experiment syntax object."""
         return self._exp._syntax
 
     @property
     def _pool(self):
-        """
-        visible: False
-
-        desc:
-                A shortcut to the experiment pool object.
-        """
-
+        r"""A shortcut to the experiment pool object."""
         return self._exp.pool

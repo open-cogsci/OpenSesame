@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import item
 from libqtopensesame import qtplugin
@@ -53,12 +52,10 @@ class pp_io(item.item):
     handles the basic functionality of the item. It does
     not deal with GUI stuff.
     """
-
     def __init__(self, name, experiment, string=None):
         """
         Constructor
         """
-
         # The item_typeshould match the name of the module
         self.item_type = "pp_io"
 
@@ -86,7 +83,6 @@ class pp_io(item.item):
         """
         Prepare the item. In this case this means doing little.
         """
-
         # Pass the word on to the parent
         item.item.prepare(self)
 
@@ -112,7 +108,6 @@ class pp_io(item.item):
         Run the item. In this case this means putting the offline canvas
         to the display and waiting for the specified duration.
         """
-
         # Set the pp value
         if not self.pp is None:
             self.set_item_onset(self.pp.setData(self.value))
@@ -136,12 +131,10 @@ class qtpp_io(pp_io, qtplugin.qtplugin):
     GUI programming using qtpy, see:
     <http://www.riverbankcomputing.co.uk/static/Docs/qtpy/html/classes.html>
     """
-
     def __init__(self, name, experiment, string=None):
         """
         Constructor
         """
-
         # Pass the word on to the parents
         pp_io.__init__(self, name, experiment, string)
         qtplugin.qtplugin.__init__(self, __file__)
@@ -151,7 +144,6 @@ class qtpp_io(pp_io, qtplugin.qtplugin):
         This function creates the controls for the edit
         widget.
         """
-
         # Lock the widget until we're doing creating it
         self.lock = True
 
@@ -188,7 +180,6 @@ class qtpp_io(pp_io, qtplugin.qtplugin):
         """
         Set the variables based on the controls
         """
-
         # Abort if the parent reports failure of if the controls are locked
         if not qtplugin.qtplugin.apply_edit_changes(self) or self.lock:
             return False
@@ -203,7 +194,6 @@ class qtpp_io(pp_io, qtplugin.qtplugin):
         """
         Set the controls based on the variables
         """
-
         # Lock the controls, otherwise a recursive loop might aris
         # in which updating the controls causes the variables to be
         # updated, which causes the controls to be updated, etc...

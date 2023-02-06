@@ -17,7 +17,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import unittest
 from openexp._color.color import color
 from libopensesame.exceptions import osexception
@@ -29,7 +28,6 @@ class check_response(unittest.TestCase):
 	desc: |
 		Checks whether response logging is sane
 	"""
-
 	def assertState(self, response, response_time, correct, total_responses,
 		total_response_time, total_correct):
 
@@ -46,7 +44,6 @@ class check_response(unittest.TestCase):
 		desc:
 			Runs the response test.
 		"""
-
 		print(u'Checking response handling')
 		self.exp = experiment()
 		with self.assertRaises(osexception) as cm:

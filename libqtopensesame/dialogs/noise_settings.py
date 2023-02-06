@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from qtpy import QtWidgets
 from libqtopensesame.dialogs.patch_settings import PatchSettings
 from libopensesame.py3compat import *
@@ -24,30 +23,23 @@ from libopensesame.py3compat import *
 
 class NoiseSettings(PatchSettings):
 
-    """
-    desc:
-            A noise settings dialog.
-    """
-
+    r"""A noise settings dialog."""
     def ui_file(self):
         """
         returns:
                 desc:	The ui file.
                 type:	unicode
         """
-
         return u'dialogs.noise_settings'
 
     def get_properties(self):
-        """
-        desc:
-                Gets the Gabor properties.
+        r"""Gets the Gabor properties.
 
-        returns:
-                desc:	A dictionary with properties.
-                type:	dict
+        Returns
+        -------
+        dict
+            A dictionary with properties.
         """
-
         if self.exec_() != QtWidgets.QDialog.Accepted:
             return None
         properties = self._spinbox_properties(u'size', u'stdev')
@@ -60,16 +52,13 @@ class NoiseSettings(PatchSettings):
         return properties
 
     def set_properties(self, properties):
-        """
-        desc:
-                Fills the dialog controls based on a properties dictionary.
+        r"""Fills the dialog controls based on a properties dictionary.
 
-        arguments:
-                properties:
-                        desc:	A properties dictionary.
-                        type:	dict
+        Parameters
+        ----------
+        properties : dict
+            A properties dictionary.
         """
-
         self._set_spinbox(self.ui.spinbox_size, u'size', properties)
         self._set_spinbox(self.ui.spinbox_stdev, u'stdev', properties)
         self.ui.edit_color1.setText(properties[u'color1'])

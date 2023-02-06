@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtWidgets, QtGui
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -26,32 +25,22 @@ _ = translation_context(u'popup_menu', category=u'core')
 
 class PopupMenu(QtWidgets.QMenu, BaseSubcomponent):
 
+    r"""A simple pop-up menu that is shown at the cursor position to obtain a
+    user response.
     """
-    desc:
-            A simple pop-up menu that is shown at the cursor position to obtain a
-            user response.
-    """
-
     def __init__(self, main_window, actions, cancel=True, title=None):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        main_window : QWidget
+            The main-window object.
+        actions : list
+            A list of actions, where each action is (response code, text, icon
+            name) tuple.
+        cancel : bool, optional
+            Indicates whether a cancel option should be shown.
         """
-        desc:
-                Constructor.
-
-        arguments:
-                main_window:
-                        desc:	The main-window object.
-                        type:	QWidget
-                actions:
-                        desc:	A list of actions, where each action is (response code,
-                                        text, icon name) tuple.
-                        type:	list
-
-        keywords:
-                cancel:
-                        desc:	Indicates whether a cancel option should be shown.
-                        type:	bool
-        """
-
         QtWidgets.QMenu.__init__(self, main_window)
         self.setup(main_window)
 
@@ -75,14 +64,12 @@ class PopupMenu(QtWidgets.QMenu, BaseSubcomponent):
             self.addAction(action)
 
     def show(self):
-        """
-        desc:
-                Shows the pop-up menu.
+        r"""Shows the pop-up menu.
 
-        returns:
-                A response code or None if the popup was cancelled.
+        Returns
+        -------
+        A response code or None if the popup was cancelled.
         """
-
         action = self.exec_(QtGui.QCursor.pos())
         if action is None:
             return None

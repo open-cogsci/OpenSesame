@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import plugins
 from libqtopensesame.items.qtautoplugin import qtautoplugin
@@ -33,7 +32,6 @@ widget 0 1 3 1 label text=[form_text] center=no
 widget 1 2 1 1 button text=[ok_text]
 """
 
-
 class form_text_display(form_base.form_base):
 
     initial_view = u'controls'
@@ -49,7 +47,6 @@ class form_text_display(form_base.form_base):
         Keyword arguments:
         string		--	A definition string. (default=None)
         """
-
         if string is None or string.strip() == u'':
             string = default_script
         # Due to dynamic loading, we need to implement this super() hack. See
@@ -66,7 +63,6 @@ class form_text_display(form_base.form_base):
         Arguments:
         script		--	The definition script.
         """
-
         self._widgets = []
         self.super_form_text_display.from_string(script)
 

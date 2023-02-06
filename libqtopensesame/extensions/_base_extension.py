@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 import time
@@ -31,27 +30,21 @@ from libqtopensesame.misc.translate import translation_context
 
 class BaseExtension(BaseSubcomponent):
 
-    """
-    desc:
-            A base class for GUI extensions.
-    """
-
+    r"""A base class for GUI extensions."""
     extension_filter = None
     preferences_ui = None
 
     def __init__(self, main_window, info={}):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        main_window
+            The main-window object.
+        info, optional
+            A dictionary with extension properties that have been read from
+            info.[json|txt].
         """
-        desc:
-                Constructor.
-
-        arguments:
-                main_window:    The main-window object.
-
-        keywords:
-                info:            A dictionary with extension properties that have
-                                                been read from info.[json|txt].
-        """
-
         oslogger.debug(u'creating %s' % self.name())
         if main_window.options.profile:
             # Use a special fire() function that keeps track of durations
@@ -66,12 +59,9 @@ class BaseExtension(BaseSubcomponent):
 
     @staticmethod
     def as_thread(wait):
+        r"""A decorator to execute events in a separate thread, optionally
+        after a delay.
         """
-        desc:
-                A decorator to execute events in a separate thread, optionally
-                after a delay.
-        """
-
         def inner(fnc):
 
             def innermost(self, *args, **kwargs):
@@ -97,7 +87,6 @@ class BaseExtension(BaseSubcomponent):
                 desc:    Gives the menubar.
                 type:    QMenuBar
         """
-
         return self.main_window.menuBar()
 
     @property
@@ -107,7 +96,6 @@ class BaseExtension(BaseSubcomponent):
                 desc:    Gives the main toolbar.
                 type:    QToolBar
         """
-
         return self.main_window.ui.toolbar_main
 
     @property
@@ -117,7 +105,6 @@ class BaseExtension(BaseSubcomponent):
                 desc:    Gives the tab widget.
                 type:    QTabWidget
         """
-
         return self.main_window.ui.tabwidget
 
     @property
@@ -127,7 +114,6 @@ class BaseExtension(BaseSubcomponent):
                 desc:    Gives the statusbar.
                 type:    QStatusBar
         """
-
         return self.main_window.statusBar()
 
     @property
@@ -136,38 +122,33 @@ class BaseExtension(BaseSubcomponent):
         returns:
                 desc:    A shortcut to `qtopensesame.set_busy`.
         """
-
         return self.main_window.set_busy
 
     def label(self):
-        """
-        desc:
-                Gives the label that is used for the menu and toolbar entry.
-                Normally, this is specified in info.json, but you can override this
-                function to implement custom logic.
+        r"""Gives the label that is used for the menu and toolbar entry.
+        Normally, this is specified in info.json, but you can override this
+        function to implement custom logic.
 
-        returns:
-                desc:    A label text or None.
-                type:    [unicode, NoneType]
+        Returns
+        -------
+        unicode, NoneType
+            A label text or None.
         """
-
         if not hasattr(self, '_label'):
             label = self.info.get(u'label', None)
             self._label = None if label is None else self._(label)
         return self._label
 
     def tooltip(self):
-        """
-        desc:
-                Gives the tooltip that is used for the menu and toolbar entry.
-                Normally, this is specified in info.json, but you can override this
-                function to implement custom logic.
+        r"""Gives the tooltip that is used for the menu and toolbar entry.
+        Normally, this is specified in info.json, but you can override this
+        function to implement custom logic.
 
-        returns:
-                desc:    A tooltip text.
-                type:    [unicode, NoneType]
+        Returns
+        -------
+        unicode, NoneType
+            A tooltip text.
         """
-
         if not hasattr(self, '_tooltip'):
             tooltip = self._(self.info.get(u'tooltip', None))
             if not tooltip:
@@ -181,92 +162,78 @@ class BaseExtension(BaseSubcomponent):
         return self._tooltip
 
     def checkable(self):
-        """
-        desc:
-                Indicates whether the extension action is checkable or not.
-                Normally, this is specified in info.json, but you can override this
-                function to implement custom logic.
+        r"""Indicates whether the extension action is checkable or not.
+        Normally, this is specified in info.json, but you can override this
+        function to implement custom logic.
 
-        returns:
-                type:    bool
+        Returns
+        -------
+        bool
         """
-
         return self.info.get(u'checkable', False)
 
     def set_checked(self, checked):
-        """
-        desc:
-                Sets the checked status of the action. If there is no action, or if
-                the action is not checkable, this is silently ignored.
+        r"""Sets the checked status of the action. If there is no action, or if
+        the action is not checkable, this is silently ignored.
 
-        arguments:
-                checked:
-                        desc:    The checked status.
-                        type:    bool
+        Parameters
+        ----------
+        checked : bool
+            The checked status.
         """
-
         if self.action is None or not self.checkable():
             return
         self.action.setChecked(checked)
 
     def set_enabled(self, enabled=True):
-        """
-        desc:
-                Enables/ disables the action. If there is no action, this is
-                silently ignored.
+        r"""Enables/ disables the action. If there is no action, this is
+        silently ignored.
 
-        arguments:
-                enabled:
-                        desc:    The enabled status.
-                        type:    bool
+        Parameters
+        ----------
+        enabled : bool
+            The enabled status.
         """
-
         if self.action is None:
             return
         self.action.setEnabled(enabled)
 
     def icon(self):
-        """
-        desc:
-                Gives the name of the icon that is used for the menu and toolbar
-                entry. Normally, this is specified in info.json, but you can
-                override this function to implement custom logic.
+        r"""Gives the name of the icon that is used for the menu and toolbar
+        entry. Normally, this is specified in info.json, but you can override
+        this function to implement custom logic.
 
-        returns:
-                desc:    The name of an icon.
-                type:    unicode
+        Returns
+        -------
+        unicode
+            The name of an icon.
         """
-
         return self.info.get(u'icon', u'applications-utilities')
 
     def shortcut(self):
-        """
-        desc:
-                Gives the keyboard shortcut that activates the extension. Normally,
-                this is specified in info.json, but you can override this
-                function to implement custom logic. A shortcut only works if the
-                extension has either a toolbar ot menu entry.
+        r"""Gives the keyboard shortcut that activates the extension. Normally,
+        this is specified in info.json, but you can override this function to
+        implement custom logic. A shortcut only works if the extension has
+        either a toolbar ot menu entry.
 
-        returns:
-                desc:    The keyboard shortcut.
-                type:    unicode
+        Returns
+        -------
+        unicode
+            The keyboard shortcut.
         """
-
         return self.info.get(u'shortcut', None)
 
     def menu_pos(self):
-        """
-        desc:
-                Describes the position of the extension in the menu. Normally,
-                this is specified in info.json, but you can override this
-                function to implement custom logic.
+        r"""Describes the position of the extension in the menu. Normally, this
+        is specified in info.json, but you can override this function to
+        implement custom logic.
 
-        returns:
-                desc:    A (submenu, menuindex, separator_before, separator_after)
-                                tuple, or None if the extension has no menu entry.
-                type:    [tuple, NoneType]
+        Returns
+        -------
+        tuple, NoneType
+            A (submenu, menuindex, separator_before, separator_after) tuple, or
+            None if the extension has no menu entry.
         """
-
         menu_pos = self.info.get(u'menu', None)
         if menu_pos is None:
             return None
@@ -276,18 +243,16 @@ class BaseExtension(BaseSubcomponent):
                 menu_pos.get(u'separator_after', False))
 
     def toolbar_pos(self):
-        """
-        desc:
-                Describes the position of the extension in the toolbar. Normally,
-                this is specified in info.json, but you can override this
-                function to implement custom logic.
+        r"""Describes the position of the extension in the toolbar. Normally,
+        this is specified in info.json, but you can override this function to
+        implement custom logic.
 
-        returns:
-                desc:    An (index, separator_before, separator_after)
-                                tuple, or None if the extension has no toolbar entry.
-                type:    [tuple, NoneType]
+        Returns
+        -------
+        tuple, NoneType
+            An (index, separator_before, separator_after) tuple, or None if the
+            extension has no toolbar entry.
         """
-
         toolbar_pos = self.info.get(u'toolbar', None)
         if toolbar_pos is None:
             return None
@@ -296,24 +261,14 @@ class BaseExtension(BaseSubcomponent):
                 toolbar_pos.get(u'separator_after', False))
 
     def activate(self):
+        r"""Is called when the extension is activated through a keyboard
+        shortcut, or a menu/ toolbar click. Override this function to implement
+        your extension's behavior.
         """
-        desc:
-                Is called when the extension is activated through a keyboard
-                shortcut, or a menu/ toolbar click. Override this function to
-                implement your extension's behavior.
-        """
-
         pass
 
     def _activate(self):
-        """
-        visible:
-                False
-
-        desc:
-                A wrapper around [activate] to catch Exceptions.
-        """
-
+        r"""A wrapper around [activate] to catch Exceptions."""
         try:
             self.activate()
         except Exception as e:
@@ -326,21 +281,22 @@ class BaseExtension(BaseSubcomponent):
 
     def add_action(self, widget, action, index, separator_before,
                    separator_after):
-        """
-        desc:
-                Adds an action to a widget that supports actions (i.e. a QMenu or
-                a QToolBar).
+        r"""Adds an action to a widget that supports actions (i.e. a QMenu or a
+        QToolBar).
 
-        arguments:
-                widget:                The widget to add the action to.
-                action:                The action to add.
-                index:                The index of the action.
-                separator_before:    Indicates whether a separator should be added
-                                                        before the action.
-                separator_action:    Indicates whether a separator should be added
-                                                        before the action.
+        Parameters
+        ----------
+        widget
+            The widget to add the action to.
+        action
+            The action to add.
+        index
+            The index of the action.
+        separator_before
+            Indicates whether a separator should be added before the action.
+        separator_action
+            Indicates whether a separator should be added before the action.
         """
-
         if index >= len(widget.actions()) or index < -len(widget.actions()) \
                 or index == -1:
             before = None
@@ -362,19 +318,19 @@ class BaseExtension(BaseSubcomponent):
             widget.insertSeparator(action)
 
     def get_submenu(self, menu_text):
+        r"""Gets the submenu that matches the menu text. If no match is found a
+        new submenu is created.
+
+        Parameters
+        ----------
+        menu_text
+            The menu text. This should match an object in
+            main_window.ui.menu_[menu_text].
+
+        Returns
+        -------
+        QMenu
         """
-        desc:
-                Gets the submenu that matches the menu text. If no match is found
-                a new submenu is created.
-
-        arguments:
-                menu_text:    The menu text. This should match an object in
-                                        main_window.ui.menu_[menu_text].
-
-        returns:
-                type:    QMenu
-        """
-
         menu_name = u'menu_%s' % menu_text.lower()
         if not hasattr(self.main_window.ui, menu_name):
             menu_name = u'menu_custom_{}'.format(len(self.menubar.actions()))
@@ -389,16 +345,12 @@ class BaseExtension(BaseSubcomponent):
                 desc:    The folder of the extension.
                 type:    unicode
         """
-
         return self.info[u'plugin_folder']
 
     def register_ui_files(self):
+        r"""Registers all .ui files in the extension folder so that they can be
+        retrieved as extensions.[extension name].[ui name].
         """
-        desc:
-                Registers all .ui files in the extension folder so that they can
-                be retrieved as extensions.[extension name].[ui name].
-        """
-
         for path in os.listdir(self.info[u'plugin_folder']):
             if path.endswith(u'.ui'):
                 self.experiment.resources[u'extensions.%s.%s' %
@@ -433,7 +385,6 @@ class BaseExtension(BaseSubcomponent):
         returns:
                 type: QAction
         """
-
         action = QtWidgets.QAction(
             self.theme.qicon(icon), label, self.main_window)
         action.triggered.connect(target)
@@ -445,12 +396,9 @@ class BaseExtension(BaseSubcomponent):
         return action
 
     def create_action(self):
+        r"""Creates a QAction for the extension, and adds it to the menubar
+        and/ or the toolbar.
         """
-        desc:
-                Creates a QAction for the extension, and adds it to the menubar
-                and/ or the toolbar.
-        """
-
         if self.label() is not None:
             self.action = self.qaction(self.icon(), self.label(),
                                        self._activate, checkable=self.checkable(),
@@ -471,41 +419,34 @@ class BaseExtension(BaseSubcomponent):
             self.action = None
 
     def register_config(self):
-        """
-        desc:
-                Registers the extension settings in the config object.
-        """
-
+        r"""Registers the extension settings in the config object."""
         for setting, default in self.info.get(u'settings', {}).items():
             if isinstance(default, dict):
                 default = default.get(self.main_window.mode, u'')
             cfg.register(setting, default=default)
 
     def _settings_widget_from_ui(self, ui):
-        """
-        desc:
-                Generates a standard preferences widget based on a ui file.
+        r"""Generates a standard preferences widget based on a ui file.
 
-        arguments:
-                ui: A ui file.
+        Parameters
+        ----------
+        ui
+            A ui file.
         """
-
         from libqtopensesame.widgets.base_preferences_widget import (
             BasePreferencesWidget
         )
         return BasePreferencesWidget(self.main_window, ui)
 
     def settings_widget(self):
-        """
-        desc:
-                Creates a settings QWidget for the extension, or returns None if
-                no settings have been defined. Override this function to implement
-                a more fancy non-default settings menu.
+        r"""Creates a settings QWidget for the extension, or returns None if no
+        settings have been defined. Override this function to implement a more
+        fancy non-default settings menu.
 
-        returns:
-                A settings QWidget or None.
+        Returns
+        -------
+        A settings QWidget or None.
         """
-
         if self.preferences_ui is not None:
             return self._settings_widget_from_ui(self.preferences_ui)
         r = 10000000  # Maximumum range for spinbox widgets
@@ -552,12 +493,9 @@ class BaseExtension(BaseSubcomponent):
         return group
 
     def apply_settings_widget(self):
+        r"""Applies the settings widget. This function is called automatically
+        when a default settings widget is created by [settings_widget].
         """
-        desc:
-                Applies the settings widget. This function is called automatically
-                when a default settings widget is created by [settings_widget].
-        """
-
         for setting, default in self.info[u'settings'].items():
             control = self.settings_controls[setting]
             if isinstance(default, bool):
@@ -568,22 +506,20 @@ class BaseExtension(BaseSubcomponent):
                 cfg[setting] = str(control.text())
 
     def ext_resource(self, resource):
+        r"""Finds an extension resource, i.e. a file in the extension folder,
+        and returns the full path to the resource. An `osexception` is raised
+        if the resource does not exist.
+
+        Parameters
+        ----------
+        resource : str, unicode
+            The name of a resource.
+
+        Returns
+        -------
+        unicode
+            The full path to the resource.
         """
-        desc:
-                Finds an extension resource, i.e. a file in the extension folder,
-                and returns the full path to the resource. An `osexception` is
-                raised if the resource does not exist.
-
-        arguments:
-                resource:
-                        desc:    The name of a resource.
-                        type:    [str, unicode]
-
-        returns:
-                desc:    The full path to the resource.
-                type:    unicode
-        """
-
         path = os.path.join(self.info[u'plugin_folder'], u'locale', self.locale,
                             resource)
         if os.path.exists(path):

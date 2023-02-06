@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtGui, QtWidgets
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -27,28 +26,19 @@ _ = translation_context(u'toolbar_items_item', category=u'core')
 
 class ToolbarItemsItem(BaseSubcomponent, QtWidgets.QLabel):
 
-    """
-    desc:
-            A draggable toolbar icon.
-    """
-
+    r"""A draggable toolbar icon."""
     def __init__(self, parent, item, pixmap=None):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                parent:
-                        desc:	The parent.
-                        type:	QWidget
-                item:
-                        desc:	An item.
-                        type:	qtitem
-                pixmap:
-                        desc:	A pixmap for the icon.
-                        type:	QPixmap
+        Parameters
+        ----------
+        parent : QWidget
+            The parent.
+        item : qtitem
+            An item.
+        pixmap : QPixmap
+            A pixmap for the icon.
         """
-
         super().__init__(parent)
         self.setup(parent)
         self.item = item
@@ -63,16 +53,13 @@ class ToolbarItemsItem(BaseSubcomponent, QtWidgets.QLabel):
         self.setPixmap(self.pixmap)
 
     def mousePressEvent(self, e):
-        """
-        desc:
-                Initiates a drag event after a mouse press.
+        r"""Initiates a drag event after a mouse press.
 
-        arguments:
-                e:
-                        desc:	A mouse event.
-                        type:	QMouseEvent
+        Parameters
+        ----------
+        e : QMouseEvent
+            A mouse event.
         """
-
         if e.buttons() != QtCore.Qt.LeftButton:
             return
         name = u'new_%s' % self.item

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.var_store import var_store
 import warnings
@@ -28,7 +27,6 @@ from libopensesame.oslogging import oslogger
 class Item:
 
     """Abstract class that serves as the basis for all OpenSesame items."""
-
     encoding = u'utf-8'
     var = None
 
@@ -43,7 +41,6 @@ class Item:
         Keyword arguments:
         string		--	An definition string. (default=None).
         """
-
         if self.var is None:
             self.var = var_store(self, parent=experiment.var)
         self.name = name
@@ -64,7 +61,6 @@ class Item:
 
     def __deepcopy__(self, memo):
         """Disable deep-copying of items"""
-
         return None
 
     @property
@@ -92,22 +88,16 @@ class Item:
         return u'Default description'
 
     def reset(self):
-        """
-        desc:
-                Resets all item variables to their default value.
-        """
-
+        r"""Resets all item variables to their default value."""
         pass
 
     def prepare(self):
         """Implements the prepare phase of the item."""
-
         self.experiment.var.set(u'count_%s' % self.name, self.count)
         self.count += 1
 
     def run(self):
         """Implements the run phase of the item."""
-
         pass
 
     def parse_variable(self, line):
@@ -120,7 +110,6 @@ class Item:
         Returns:
         True on succes, False on failure.
         """
-
         # It is a little ugly to call parse_comment() here, but otherwise
         # all from_string() derivatives need to be modified
         if self.parse_comment(line):
@@ -149,7 +138,6 @@ class Item:
         Returns:
         A value dictionary with keywords as keys and values as values.
         """
-
         # Parse keywords
         l = self.syntax.split(line.strip())
         keywords = {}
@@ -182,7 +170,6 @@ class Item:
         Arguments:
         line	--	A single definition line.
         """
-
         pass
 
     def parse_comment(self, line):
@@ -195,7 +182,6 @@ class Item:
         Returns:
         True on succes, False on failure.
         """
-
         line = line.strip()
         if len(line) > 0 and line[0] == u'#':
             self.comments.append(line[1:])
@@ -206,20 +192,18 @@ class Item:
         return False
 
     def variable_to_string(self, var):
+        r"""Encodes a variable into a definition string.
+
+        Parameters
+        ----------
+        var : str
+            The name of the variable to encode.
+
+        Returns
+        -------
+        str
+            A definition string.
         """
-        desc:
-                Encodes a variable into a definition string.
-
-        arguments:
-                var:
-                        desc:	The name of the variable to encode.
-                        type:	str
-
-        returns:
-                desc:	A definition string.
-                type:	str
-        """
-
         val = safe_decode(self.var.get(var, _eval=False))
         # Multiline variables are stored as a block
         if u'\n' in val or u'"' in val:
@@ -235,16 +219,13 @@ class Item:
         return self.syntax.create_cmd(u'set', arglist=[var, val]) + u'\n'
 
     def from_string(self, string):
-        """
-        desc:
-                Parses the item from a definition string.
+        r"""Parses the item from a definition string.
 
-        arguments:
-                string:
-                        desc:	A definition string, or None to reset the item.
-                        type:	[str, NoneType]
+        Parameters
+        ----------
+        string : str, NoneType
+            A definition string, or None to reset the item.
         """
-
         self._script = string
         textblock_var = None
         self.var.clear()
@@ -301,7 +282,6 @@ class Item:
         Returns:
         The unicode definition string
         """
-
         if item_type is None:
             item_type = self.item_type
         s = u'define %s %s\n' % (item_type, self.name)
@@ -312,24 +292,26 @@ class Item:
         return s
 
     def resolution(self):
+        r"""Returns the display resolution and checks whether the resolution is
+        valid.
+
+        __Important note:__
+
+        The meaning of 'resolution' depends on the
+        back-end. For example,
+        the legacy back-end changes the actual
+        resolution of the display,
+        whereas the other back-ends do not alter the
+        actual display
+        resolution, but create a 'virtual display' with the
+        requested
+        resolution that is presented in the center of the display.
+
+        Returns
+        -------
+        tuple
+            A (width, height) tuple
         """
-        desc: |
-                Returns the display resolution and checks whether the resolution is
-                valid.
-
-                __Important note:__
-
-                The meaning of 'resolution' depends on the back-end. For example,
-                the legacy back-end changes the actual resolution of the display,
-                whereas the other back-ends do not alter the actual display
-                resolution, but create a 'virtual display' with the requested
-                resolution that is presented in the center of the display.
-
-        returns:
-                desc:	A (width, height) tuple
-                type:	tuple
-        """
-
         w = self.var.get(u'width')
         h = self.var.get(u'height')
         if type(w) != int or type(h) != int:
@@ -338,26 +320,20 @@ class Item:
         return w, h
 
     def get_refs(self, text):
+        r"""Returns a list of variables that are referred to by a string of
+        text.
+
+        Parameters
+        ----------
+        text    A string of text. This can be any type, but will coerced to unicode
+            if it is not unicode.
+
+        Returns
+        -------
+        list
+            A list of variable names or an empty list if the string contains no
+            references.
         """
-        desc:
-                Returns a list of variables that are referred to by a string of
-                text.
-
-        arguments:
-                text:
-                        desc:	A string of text. This can be any type, but will coerced
-                                        to unicode if it is not unicode.
-
-        returns:
-                desc:	A list of variable names or an empty list if the string
-                                contains no references.
-                type:	list
-
-        Example: |
-                print(self.get_refs('There are [two] [references] here'))
-                # Prints ['two', 'references']
-        """
-
         text = safe_decode(text)
 
         l = []
@@ -378,28 +354,18 @@ class Item:
         return l
 
     def auto_type(self, val):
+        r"""Converts a value into the 'best fitting' or 'simplest' type that is
+        compatible with the value.
+
+        Parameters
+        ----------
+        val    A value. This can be any type.
+
+        Returns
+        -------
+        unicode, int, float
+            The same value converted to the 'best fitting' type.
         """
-        desc:
-                Converts a value into the 'best fitting' or 'simplest' type that is
-                compatible with the value.
-
-        arguments:
-                val:
-                        desc:	A value. This can be any type.
-
-        returns:
-                desc:	The same value converted to the 'best fitting' type.
-                type:	[unicode, int, float]
-
-        Example: |
-                print(type(self.auto_type('1'))) # Prints 'int'
-                print(type(self.auto_type('1.1'))) # Prints 'float'
-                print(type(self.auto_type('some text'))) # Prints 'unicode'
-                # Note: Boolean values are converted to 'yes' / 'no' and are
-                # therefore also returned as unicode objects.
-                print(type(self.auto_type(True))) # Prints 'unicode'
-        """
-
         # Booleans are converted to True/ False
         if type(val) == bool:
             if val:
@@ -420,17 +386,16 @@ class Item:
             return safe_decode(val)
 
     def set_item_onset(self, time=None):
+        r"""Set a timestamp for the onset time of the item's execution.
+
+        Parameters
+        ----------
+        time, optional
+            A timestamp or None to use the current time.
+
+        Returns
+        -------
         """
-        desc:
-                Set a timestamp for the onset time of the item's execution.
-
-        keywords:
-                time:	A timestamp or None to use the current time.
-
-        returns:
-                desc:	A timestamp.
-        """
-
         if time is None:
             time = self.time()
         self.experiment.var.set(u'time_%s' % self.name, time)
@@ -443,7 +408,6 @@ class Item:
         Keyword arguments:
         arguments -- accepts all keywords for compatibility
         """
-
         pass
 
     def var_info(self):
@@ -453,7 +417,6 @@ class Item:
         Returns:
         A list of (variable, description) tuples
         """
-
         return [(u"time_%s" % self.name, u"[Timestamp of last item call]"),
                 (u"count_%s" % self.name, u"[Number of item calls]")]
 

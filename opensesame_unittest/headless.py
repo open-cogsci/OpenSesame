@@ -17,7 +17,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import unittest
 import os
 from libopensesame.experiment import experiment
@@ -29,14 +28,12 @@ class check_headless(unittest.TestCase):
 		Runs several experiments in headless mode (i.e. on a virtual X server)
 		to see if they execute correctly.
 	"""
-
 	def runTest(self):
 
 		"""
 		desc:
 			Walks through the test.
 		"""
-
 		from qtpy.QtWidgets import QApplication
 		app = QApplication([])
 		experiment_path = os.path.join(os.path.dirname(__file__), u'data')

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy.QtWidgets import QTabBar, QMenu, QAction
 from qtpy.QtCore import Qt
@@ -29,7 +28,6 @@ class TabBar(BaseSubcomponent, QTabBar):
     """A tab-bar for the overview area, implementing a right-click context
     menu, and a close-on-middle-click.
     """
-
     def __init__(self, tab_widget):
 
         QTabBar.__init__(self, tab_widget)

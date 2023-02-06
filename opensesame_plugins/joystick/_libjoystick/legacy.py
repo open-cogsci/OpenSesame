@@ -21,7 +21,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 """
-
 from libopensesame.py3compat import *
 import pygame
 from libopensesame import plugins
@@ -38,7 +37,6 @@ class legacy(basejoystick):
 
     def __init__(self, experiment, device=0, joybuttonlist=None, timeout=None):
         """See _libjoystick.basejoystick"""
-
         self.js = pygame.joystick.Joystick(device)
         self.js.init()
         self.experiment = experiment
@@ -50,7 +48,6 @@ class legacy(basejoystick):
 
     def get_joybutton(self, joybuttonlist=None, timeout=None):
         """See _libjoystick.basejoystick"""
-
         if joybuttonlist is None or joybuttonlist == []:
             joybuttonlist = self._joybuttonlist
         if timeout is None:
@@ -74,7 +71,6 @@ class legacy(basejoystick):
 
     def get_joyaxes(self, timeout=None):
         """See _libjoystick.basejoystick"""
-
         pygame.event.set_allowed(pygame.JOYAXISMOTION)
         if timeout is None:
             timeout = self.timeout
@@ -97,7 +93,6 @@ class legacy(basejoystick):
 
     def get_joyballs(self, timeout=None):
         """See _libjoystick.basejoystick"""
-
         pygame.event.set_allowed(pygame.JOYBALLMOTION)
         if timeout is None:
             timeout = self.timeout
@@ -120,7 +115,6 @@ class legacy(basejoystick):
 
     def get_joyhats(self, timeout=None):
         """See _libjoystick.basejoystick"""
-
         pygame.event.set_allowed(pygame.JOYHATMOTION)
         if timeout is None:
             timeout = self.timeout
@@ -143,7 +137,6 @@ class legacy(basejoystick):
 
     def get_joyinput(self, joybuttonlist=None, timeout=None):
         """See _libjoystick.basejoystick"""
-
         pygame.event.set_allowed(pygame.JOYHATMOTION)
         pygame.event.set_allowed(pygame.JOYAXISMOTION)
         pygame.event.set_allowed(pygame.JOYBALLMOTION)
@@ -205,7 +198,6 @@ class legacy(basejoystick):
 
     def input_options(self):
         """See _libjoystick.basejoystick"""
-
         ninputs = [
             self.js.get_numbuttons(),
             self.js.get_numaxes(),
@@ -216,7 +208,6 @@ class legacy(basejoystick):
 
     def flush(self):
         """See _libjoystick.basejoystick"""
-
         joyinput = False
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:

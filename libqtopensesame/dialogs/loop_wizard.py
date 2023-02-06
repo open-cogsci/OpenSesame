@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
@@ -29,20 +28,15 @@ from qtpy import QtWidgets
 
 class LoopWizard(BaseDialog):
 
-    """
-    desc:
-            The loop-wizard dialog
-    """
-
+    r"""The loop-wizard dialog"""
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:	The main window object.
+        Parameters
+        ----------
+        main_window
+            The main window object.
         """
-
         super().__init__(main_window, ui=u'dialogs.loop_wizard_dialog')
         try:
             self._dm = pickle.loads(cfg.loop_wizard)
@@ -56,14 +50,12 @@ class LoopWizard(BaseDialog):
         self.ui.table_example.hide()
 
     def exec_(self):
-        """
-        desc:
-                Executes the dialog.
+        r"""Executes the dialog.
 
-        returns:
-                The dialog return status.
+        Returns
+        -------
+        The dialog return status.
         """
-
         retval = super().exec_()
         if retval == QtWidgets.QDialog.Rejected:
             return None

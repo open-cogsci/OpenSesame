@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 import mimetypes
@@ -34,16 +33,14 @@ _ = translation_context(u'qtplugin', category=u'core')
 class QtPlugin(QtItem):
 
     """Provides basic functionality for plugin GUIs"""
-
     def __init__(self, plugin_file=None):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                plugin_file:	The location of the plugin script file.
+        Parameters
+        ----------
+        plugin_file
+            The location of the plugin script file.
         """
-
         if plugin_file is not None:
             # The __file__ variable is generally a str, which will cause unicode
             # errors. Therefore, convert this here if necessary.
@@ -94,37 +91,32 @@ class QtPlugin(QtItem):
                 desc:	The name of the item icon.
                 type:	unicode
         """
-
         if self.qicon is not None:
             return self.qicon
         return self.item_type
 
     def edit_widget(self):
-        """
-        desc:
-                Updates the GUI controls.
-        """
-
+        r"""Updates the GUI controls."""
         super().edit_widget()
         self.auto_edit_widget()
 
     def add_control(self, label, widget, tooltip=None, min_width=200,
                     info=None):
+        r"""Adds a generic control QWidget.
+
+        Parameters
+        ----------
+        label
+            A text label.
+        widget
+            A QWidget.
+        tooltip, optional
+            A tooltip text.
+        min_width, optional
+            A minimum width for the widget.
+        info, optional
+            Additional info, to be presented to the right of the control.
         """
-        desc:
-                Adds a generic control QWidget.
-
-        arguments:
-                label:	A text label.
-                widget:	A QWidget.
-
-        keywords:
-                tooltip:	A tooltip text.
-                min_width:	A minimum width for the widget.
-                info:		Additional info, to be presented to the right of the
-                                        control.
-        """
-
         if tooltip is not None:
             try:
                 widget.setToolTip(tooltip)
@@ -151,24 +143,24 @@ class QtPlugin(QtItem):
         self.set_focus_widget(widget)
 
     def add_line_edit_control(self, var, label, validator=None, **kwdict):
+        r"""Adds a QLineEdit control that is linked to a variable.
+
+        Parameters
+        ----------
+        var
+            The associated variable.
+        label
+            The label text.
+        validator, optional
+            A validator object.
+        **kwdict : dict
+            A keyword dict to be passed on to add_control().
+
+
+        Returns
+        -------
+        A QLineEdit widget.
         """
-        desc:
-                Adds a QLineEdit control that is linked to a variable.
-
-        arguments:
-                var:	The associated variable.
-                label:	The label text.
-
-        keywords:
-                validator:	A validator object.
-
-        keyword-dict:
-                kwdict:		A keyword dict to be passed on to add_control().
-
-        returns:
-                A QLineEdit widget.
-        """
-
         edit = QtWidgets.QLineEdit()
         edit.editingFinished.connect(self.apply_edit_changes)
         edit.textEdited.connect(self.set_dirty)
@@ -181,21 +173,22 @@ class QtPlugin(QtItem):
         return edit
 
     def add_checkbox_control(self, var, label, **kwdict):
+        r"""Adds a QCheckBox control that is linked to a variable.
+
+        Parameters
+        ----------
+        var
+            The associated variable.
+        label
+            The label text.
+        **kwdict : dict
+            A keyword dict to be passed on to add_control().
+
+
+        Returns
+        -------
+        A QCheckBox widget.
         """
-        desc:
-                Adds a QCheckBox control that is linked to a variable.
-
-        arguments:
-                var:	The associated variable.
-                label:	The label text.
-
-        keyword-dict:
-                kwdict:		A keyword dict to be passed on to add_control().
-
-        returns:
-                A QCheckBox widget.
-        """
-
         checkbox = QtWidgets.QCheckBox(label)
         checkbox.clicked.connect(self.apply_edit_changes)
         self.add_control(u'', checkbox, **kwdict)
@@ -204,21 +197,22 @@ class QtPlugin(QtItem):
         return checkbox
 
     def add_color_edit_control(self, var, label, **kwdict):
+        r"""Adds a color_edit control.
+
+        Parameters
+        ----------
+        var
+            The associated variable.
+        label
+            The label text.
+        **kwdict : dict
+            A keyword dict to be passed on to add_control().
+
+
+        Returns
+        -------
+        A color_edit widget.
         """
-        desc:
-                Adds a color_edit control.
-
-        arguments:
-                var:	The associated variable.
-                label:	The label text.
-
-        keyword-dict:
-                kwdict:		A keyword dict to be passed on to add_control().
-
-        returns:
-                A color_edit widget.
-        """
-
         edit = ColorEdit(self.main_window)
         edit.setMinimumWidth(200)
         edit.initialize(self.experiment)
@@ -229,22 +223,24 @@ class QtPlugin(QtItem):
         return edit
 
     def add_combobox_control(self, var, label, options, **kwdict):
+        r"""Adds a QComboBox control that is linked to a variable.
+
+        Parameters
+        ----------
+        var
+            The associated variable.
+        label
+            The label text.
+        options
+            A list of options.
+        **kwdict : dict
+            A keyword dict to be passed on to add_control().
+
+
+        Returns
+        -------
+        A QComboBox widget.
         """
-        desc:
-                Adds a QComboBox control that is linked to a variable.
-
-        arguments:
-                var:		The associated variable.
-                label:		The label text.
-                options:	A list of options.
-
-        keyword-dict:
-                kwdict:		A keyword dict to be passed on to add_control().
-
-        returns:
-                A QComboBox widget.
-        """
-
         combobox = QtWidgets.QComboBox()
         combobox.setMinimumWidth(200)
         for o in options:
@@ -256,46 +252,37 @@ class QtPlugin(QtItem):
         return combobox
 
     def add_doublespinbox_control(self, *args, **kwdict):
-        """
-        desc:
-                Adds a QDoubleSpinBox. See _add_spinbox_control().
-        """
-
+        r"""Adds a QDoubleSpinBox. See _add_spinbox_control()."""
         return self._add_spinbox_control(QtWidgets.QDoubleSpinBox, *args,
                                          **kwdict)
 
     def add_spinbox_control(self, *args, **kwdict):
-        """
-        desc:
-                Adds a QSpinBox. See _add_spinbox_control().
-        """
-
+        r"""Adds a QSpinBox. See _add_spinbox_control()."""
         return self._add_spinbox_control(QtWidgets.QSpinBox, *args, **kwdict)
 
     def _add_spinbox_control(self, cls, var, label, min_val, max_val,
                              prefix=u'', suffix=u'', **kwdict):
+        r"""Adds a QSpinBox or QDoubleSpinBox control that is linked to a
+        variable.
+
+        Parameters
+        ----------
+        var
+            The associated variable.
+        label
+            The label text.
+        min_val
+            A minimum value.
+        max_val
+            A maximum value.
+        **kwdict : dict
+            A keyword dict to be passed on to add_control().
+
+
+        Returns
+        -------
+        A QSpinBox widget.
         """
-        desc:
-                Adds a QSpinBox or QDoubleSpinBox control that is linked to a
-                variable.
-
-        arguments:
-                var:		The associated variable.
-                label:		The label text.
-                min_val:	A minimum value.
-                max_val:	A maximum value.
-
-        Keyword arguments:
-                prefix:		A prefix text.
-                suffix:		A suffix text.
-
-        keyword-dict:
-                kwdict:		A keyword dict to be passed on to add_control().
-
-        returns:
-                A QSpinBox widget.
-        """
-
         spinbox = cls()
         spinbox.setMinimum(min_val)
         spinbox.setMaximum(max_val)
@@ -332,7 +319,6 @@ class QtPlugin(QtItem):
         returns:
                 A QSlider widget.
         """
-
         slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
         slider.setFocusPolicy(QtCore.Qt.NoFocus)
         slider.setGeometry(30, 40, 100, 30)
@@ -360,27 +346,27 @@ class QtPlugin(QtItem):
         return slider
 
     def add_filepool_control(self, var, label, **kwdict):
+        r"""Adds a control to select a file from the file pool, and is linked
+        to a variable.
+
+        Parameters
+        ----------
+        var
+            The associated variable.
+        label
+            The label text.
+        click_func, optional
+            A custom function to be called when a file is selected. If no
+            click_func is specified, file selection will be handled
+            automatically. (default=None)
+        **kwdict : dict
+            A keyword dict to be passed on to add_control().
+
+
+        Returns
+        -------
+        A pool_select widget that contains the path of the selected file.
         """
-        desc:
-                Adds a control to select a file from the file pool, and is linked to
-                a variable.
-
-        arguments:
-                var:		The associated variable.
-                label:		The label text.
-
-        keywords:
-                click_func:	A custom function to be called when a file is selected.
-                                        If no click_func is specified, file selection will be
-                                        handled automatically. (default=None)
-
-        keyword-dict:
-                kwdict:		A keyword dict to be passed on to add_control().
-
-        returns:
-                A pool_select widget that contains the path of the selected file.
-        """
-
         from libqtopensesame._input.pool_select import pool_select
         edit = pool_select(self.main_window)
         edit.editingFinished.connect(self.apply_edit_changes)
@@ -405,7 +391,6 @@ class QtPlugin(QtItem):
         returns:
                 An editor widget.
         """
-
         if syntax:
             if language == 'python':
                 from pyqode_extras.widgets import PythonCodeEdit as CodeEdit
@@ -447,17 +432,17 @@ class QtPlugin(QtItem):
         self.apply_edit_changes()
 
     def add_text(self, msg):
+        r"""Adds a non-interactive QLabel for description purposes.
+
+        Parameters
+        ----------
+        msg
+            A text message.
+
+        Returns
+        -------
+        A QLabel.
         """
-        desc:
-                Adds a non-interactive QLabel for description purposes.
-
-        arguments:
-                msg:	A text message.
-
-        returns:
-                A QLabel.
-        """
-
         label = QtWidgets.QLabel(msg)
         label.setWordWrap(True)
         label.setOpenExternalLinks(True)
@@ -465,40 +450,32 @@ class QtPlugin(QtItem):
         return label
 
     def add_widget(self, w):
+        r"""Adds a QWidget to the controls.
+
+        Parameters
+        ----------
+        w : QWidget
+            A widget.
+
+        Returns
+        -------
+        QWidget
+            The widget.
         """
-        desc:
-                Adds a QWidget to the controls.
-
-        arguments:
-                w:
-                        desc:	A widget.
-                        type:	QWidget
-
-        returns:
-                desc:		The widget.
-                type:		QWidget
-        """
-
         self.edit_vbox.addWidget(w)
         return w
 
     def add_stretch(self):
-        """
-        desc:
-                Pads empty space below the controls.
-        """
-
+        r"""Pads empty space below the controls."""
         self.edit_vbox.addStretch()
 
     def get_ready(self):
-        """
-        desc:
-                Applies pending script changes.
+        r"""Applies pending script changes.
 
-        returns:
-                True if changes have been made, False otherwise.
+        Returns
+        -------
+        True if changes have been made, False otherwise.
         """
-
         for var, editor in self.auto_editor.items():
             if editor.dirty:
                 oslogger.debug(u'applying pending editor changes')

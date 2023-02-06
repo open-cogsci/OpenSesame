@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import openexp.mouse
 from libopensesame.mouse_response import mouse_response
@@ -26,7 +25,6 @@ from libqtopensesame.items.qtautoplugin import qtautoplugin
 class touch_response(mouse_response):
 
     """A simple fixation-dot plug-in."""
-
     description = \
         u'A grid-based response item, convenient for touch screens'
 
@@ -38,7 +36,6 @@ class touch_response(mouse_response):
 
     def process_response(self, response_args):
         """See base_response_item."""
-
         response, pos, t1 = response_args
         if pos is not None:
             x, y = pos
@@ -56,7 +53,6 @@ class touch_response(mouse_response):
 class qttouch_response(touch_response, qtautoplugin):
 
     """The GUI part of the plug-in. Controls are defined in info.json."""
-
     def __init__(self, name, experiment, script=None):
         """
         Constructor.
@@ -68,6 +64,5 @@ class qttouch_response(touch_response, qtautoplugin):
         Keyword arguments:
         script		--	A definition script. (default=None)
         """
-
         touch_response.__init__(self, name, experiment, script)
         qtautoplugin.__init__(self, __file__)

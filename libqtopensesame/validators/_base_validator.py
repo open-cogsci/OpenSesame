@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtGui
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -24,11 +23,7 @@ from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 
 class BaseValidator(BaseSubcomponent, QtGui.QValidator):
 
-    """
-    desc:
-            A base class for input validators.
-    """
-
+    r"""A base class for input validators."""
     def __init__(self, main_window, default):
 
         self.default = default

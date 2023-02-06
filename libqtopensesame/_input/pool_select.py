@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtWidgets, QtCore
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -27,12 +26,9 @@ _ = translation_context(u'pool_select', category=u'core')
 
 class PoolSelect(QtWidgets.QWidget, BaseSubcomponent):
 
+    r"""A widget that implements a file-pool selector. Partly emulates the
+    QLineEdit API.
     """
-    desc:
-            A widget that implements a file-pool selector. Partly emulates the
-            QLineEdit API.
-    """
-
     editingFinished = QtCore.Signal()
     textEdited = QtCore.Signal()
 

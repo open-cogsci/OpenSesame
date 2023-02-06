@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import misc
 from libopensesame.exceptions import osexception
@@ -31,20 +30,15 @@ import os
 
 class PreferencesWidget(BaseWidget):
 
-    """
-    desc:
-            The widget for the preferences tab.
-    """
-
+    r"""The widget for the preferences tab."""
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:	A qtopensesame object.
+        Parameters
+        ----------
+        main_window
+            A qtopensesame object.
         """
-
         super().__init__(main_window, ui=u'widgets.preferences_widget')
         self.tab_name = u'__preferences__'
         self.lock = False
@@ -79,11 +73,7 @@ class PreferencesWidget(BaseWidget):
         self.ui.container_widget.adjustSize()
 
     def set_controls(self):
-        """
-        desc:
-                Updates the controls.
-        """
-
+        r"""Updates the controls."""
         if self.lock:
             return
         self.lock = True
@@ -128,7 +118,6 @@ class PreferencesWidget(BaseWidget):
 
     def apply(self):
         """Apply the controls"""
-
         if self.lock:
             return
         self.lock = True

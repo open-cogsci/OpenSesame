@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 from math import hypot
@@ -38,7 +37,6 @@ class Droid(Legacy):
     This is a canvas backend for Android devices. It is identical to the legacy
     backend, except for the display initialization.
     """
-
     @staticmethod
     def init_display(experiment):
 

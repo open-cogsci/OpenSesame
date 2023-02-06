@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 import sys
@@ -30,19 +29,12 @@ BACKUPCOUNT = 1
 
 class OSLogger:
 
-    """
-    desc:
-            Implements application logging through the Python logging module.
-    """
-
+    r"""Implements application logging through the Python logging module."""
     def start(self, name=u'default'):
+        r"""When the module is imported, an uninitialized singleton instance of
+        OSLogger is created. OSLogger.start() is then called to Initialize the
+        actual logger.
         """
-        desc:
-                When the module is imported, an uninitialized singleton instance of
-                OSLogger is created. OSLogger.start() is then called to Initialize
-                the actual logger.
-        """
-
         self._name = name
         self._formatter = logging.Formatter(
             u'[%(asctime)s:%(module)s:%(lineno)s:%(levelname)s] %(message)s'
@@ -60,18 +52,19 @@ class OSLogger:
             self._logger.setLevel(logging.INFO)
 
     def RotatingFileHandler(self, path=None, level=logging.DEBUG):
+        r"""A factory that returns an instance of a RotatingFileHandler.
+
+        Parameters
+        ----------
+        path, optional
+            A logfile path or `None` to use the default path.
+        level, optional
+            A logging level.
+
+        Returns
+        -------
+        A RotatingFileHandler.
         """
-        desc:
-                A factory that returns an instance of a RotatingFileHandler.
-
-        keywords:
-                path:   A logfile path or `None` to use the default path.
-                level:  A logging level.
-
-        returns:
-                A RotatingFileHandler.
-        """
-
         if path is None:
             from libopensesame import misc
             path = os.path.join(
@@ -91,37 +84,30 @@ class OSLogger:
         return h
 
     def StreamHandler(self, stream, level=logging.INFO):
+        r"""A factory that returns an instance of a StreamHandler.
+
+        Parameters
+        ----------
+        stream, optional
+            A file-like object.
+        level, optional
+            A logging level.
+
+        Returns
+        -------
+        A StreamHandler.
         """
-        desc:
-                A factory that returns an instance of a StreamHandler.
-
-        keywords:
-                stream: A file-like object.
-                level:  A logging level.
-
-        returns:
-                A StreamHandler.
-        """
-
         h = logging.StreamHandler(stream=stream)
         h.setLevel(level)
         h.setFormatter(self._formatter)
         return h
 
     def add_handler(self, handler):
-        """
-        desc:
-                Adds a handler.
-        """
-
+        r"""Adds a handler."""
         self._logger.addHandler(handler)
 
     def remove_handler(self, handler):
-        """
-        desc:
-                Removes a handler.
-        """
-
+        r"""Removes a handler."""
         self._logger.removeHandler(handler)
 
     @property

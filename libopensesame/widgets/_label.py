@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import textwrap
 from libopensesame.widgets._widget import Widget
@@ -25,53 +24,43 @@ from openexp.canvas_elements import RichText
 
 class Label(Widget):
 
+    r"""The `Label` widget is a non-interactive string of text.
+
+    __Example
+    (OpenSesame script):__
+
+    ~~~
+    widget 0 0 1 1 label text='My text'
+    ~~~
+    __Example (Python):__
+
+    ~~~ .python
+    form = Form()
+    label = Label(text='My
+    text')
+    form.set_widget(label, (0,0))
+    form._exec()
+    ~~~
+
+    [TOC]
     """
-    desc: |
-            The `Label` widget is a non-interactive string of text.
-
-            __Example (OpenSesame script):__
-
-            ~~~
-            widget 0 0 1 1 label text='My text'
-            ~~~
-
-            __Example (Python):__
-
-            ~~~ .python
-            form = Form()
-            label = Label(text='My text')
-            form.set_widget(label, (0,0))
-            form._exec()
-            ~~~
-
-            [TOC]
-    """
-
     def __init__(self, form, text=u'label', frame=False, center=True):
+        r"""Constructor to create a new `Label` object. You do not generally
+        call this constructor directly, but use the `Label()` factory
+        function,
+        which is described here: [/python/common/]().
+
+        Parameters
+        ----------
+        form : form
+            The parent form.
+        text : str, unicode, optional
+            The label text.
+        frame : bool, optional
+            Indicates whether a frame should be drawn around the widget.
+        center : bool, optional
+            Indicates whether the text should be centerd.
         """
-        desc: |
-                Constructor to create a new `Label` object. You do not generally
-                call this constructor directly, but use the `Label()` factory
-                function, which is described here: [/python/common/]().
-
-        arguments:
-                form:
-                        desc:	The parent form.
-                        type:	form
-
-        keywords:
-                text:
-                        desc:	The label text.
-                        type:	[str, unicode]
-                frame:
-                        desc:	Indicates whether a frame should be drawn around the
-                                        widget.
-                        type:	bool
-                center:
-                        desc:	Indicates whether the text should be centerd.
-                        type:	bool
-        """
-
         if isinstance(frame, str):
             frame = frame == u'yes'
         if isinstance(center, str):
@@ -102,26 +91,19 @@ class Label(Widget):
         Widget._init_canvas_elements(self)
 
     def _update_text(self, text):
-        """
-        desc:
-                Draws text inside the widget.
+        r"""Draws text inside the widget.
 
-        arguments:
-                text:
-                        desc:	The text to draw.
-                        type:	[str, unicode]
+        Parameters
+        ----------
+        text : str, unicode
+            The text to draw.
         """
-
         text = self.form.experiment.syntax.eval_text(text)
         text = safe_decode(text).replace(u'\t', self.tab_str)
         self._text_element.text = text
 
     def _update(self):
-        """
-        desc:
-                Draws the widget.
-        """
-
+        r"""Draws the widget."""
         if self.frame:
             self._update_frame(self.rect)
         self._update_text(self.text)

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.oslogging import oslogger
 from libqtopensesame.extensions import base_extension
@@ -24,11 +23,7 @@ from libqtopensesame.extensions import base_extension
 
 class restore_ui_elements(base_extension):
 
-    """
-    desc:
-            Restores key UI elements when they have been accidentally hidden.
-    """
-
+    r"""Restores key UI elements when they have been accidentally hidden."""
     @base_extension.as_thread(1000)
     def event_startup(self):
 

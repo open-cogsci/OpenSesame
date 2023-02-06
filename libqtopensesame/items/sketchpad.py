@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.sketchpad import Sketchpad as SketchpadRuntime
 from libqtopensesame.items.qtplugin import QtPlugin
@@ -27,11 +26,7 @@ _ = translation_context(u'sketchpad', category=u'item')
 
 class Sketchpad(Feedpad, QtPlugin, SketchpadRuntime):
 
-    """
-    desc:
-            The sketchpad controls are implemented in feedpad.
-    """
-
+    r"""The sketchpad controls are implemented in feedpad."""
     description = _(u'Displays stimuli')
 
     def __init__(self, name, experiment, string=None):
@@ -40,11 +35,7 @@ class Sketchpad(Feedpad, QtPlugin, SketchpadRuntime):
         QtPlugin.__init__(self)
 
     def init_edit_widget(self):
-        """
-        desc:
-                Initializes the widget.
-        """
-
+        r"""Initializes the widget."""
         Feedpad.init_edit_widget(self)
         self.sketchpad_widget.ui.widget_settings_reset_variables.hide()
 

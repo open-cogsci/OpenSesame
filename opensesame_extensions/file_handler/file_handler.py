@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import fnmatch
 import subprocess
@@ -27,11 +26,7 @@ from libqtopensesame.extensions import BaseExtension
 
 class FileHandler(BaseExtension):
 
-    """
-    desc:
-            Opens files in external applications.
-    """
-
+    r"""Opens files in external applications."""
     def event_startup(self):
 
         # First make sure that the bindings config evaluates to a dict

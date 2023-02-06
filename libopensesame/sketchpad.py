@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import sketchpad_elements
 from libopensesame.item import Item
@@ -29,36 +28,28 @@ from openexp.canvas import Canvas
 
 class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
-    """
-    desc:
-            The runtime part of the sketchpad item.
-    """
-
+    r"""The runtime part of the sketchpad item."""
     description = u'Displays stimuli'
     is_oneshot_coroutine = True
 
     def reset(self):
         """See item."""
-
         self.var.duration = u'keypress'
         self.elements = []
 
     def element_module(self):
-        """
-        desc:
-                Determines the module to be used for the element classes. The
-                runtime and GUI use different modules.
+        r"""Determines the module to be used for the element classes. The
+        runtime and GUI use different modules.
 
-        returns:
-                desc:	A module containing sketchpad-element classes
-                type:	module
+        Returns
+        -------
+        module
+            A module containing sketchpad-element classes
         """
-
         return sketchpad_elements
 
     def from_string(self, string):
         """See item."""
-
         self.var.clear()
         self.comments = []
         self.reset()
@@ -88,7 +79,6 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
     def process_response(self, response_args):
         """See base_response_item."""
-
         if self.var.duration == u'mouseclick':
             MouseResponseMixin.process_response(self, response_args)
             return
@@ -96,7 +86,6 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
     def prepare_response_func(self):
         """See base_response_item."""
-
         if isinstance(self.var.duration, (int, float)):
             self._flush = lambda: None
             return self._prepare_sleep_func(self.var.duration)
@@ -109,12 +98,9 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
         raise osexception(u'Invalid duration: %s' % self.var.duration)
 
     def _elements(self):
+        r"""Creates a list of sketchpad elements that are shown, sorted by
+        z-index.
         """
-        desc:
-                Creates a list of sketchpad elements that are shown, sorted by
-                z-index.
-        """
-
         elements = [e for e in self.elements if e.is_shown()]
         try:
             elements.sort(key=lambda e: -int(self.syntax.eval_text(e.z_index)))
@@ -127,7 +113,6 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
     def prepare(self):
         """See item."""
-
         super().prepare()
         self.canvas = Canvas(self.experiment, color=self.var.foreground,
                              background_color=self.var.background)
@@ -139,20 +124,17 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
     def run(self):
         """See item."""
-
         self._t0 = self.set_item_onset(self.canvas.show())
         self._flush()
         super().run()
 
     def coroutine(self):
         """See coroutines plug-in."""
-
         yield
         self.set_item_onset(self.canvas.show())
 
     def to_string(self):
         """See item."""
-
         s = super().to_string()
         for element in self.elements:
             s += u'\t%s\n' % element.to_string()
@@ -160,7 +142,6 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
     def var_info(self):
         """See item."""
-
         if self.var.get(u'duration', _eval=False, default=u'') in \
                 [u'keypress', u'mouseclick']:
             return super().var_info()

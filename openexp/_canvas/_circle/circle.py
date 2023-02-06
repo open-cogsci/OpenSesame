@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from openexp._canvas._ellipse.ellipse import Ellipse
 
@@ -49,12 +48,9 @@ class Circle(Ellipse):
         return ((xy[0]-self.x)**2+(xy[1]-self.y)**2)**0.5 <= self.r
 
     def circle_prepare(self, ellipse_prepare):
+        r"""A decorator that converts the center coordinates used by the circle
+        to the top-left coordinates used by the ellipse.
         """
-        desc:
-                A decorator that converts the center coordinates used by the circle
-                to the top-left coordinates used by the ellipse.
-        """
-
         def inner():
 
             r = self._properties[u'w'] // 2

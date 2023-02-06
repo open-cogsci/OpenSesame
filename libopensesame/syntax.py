@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import shlex
 import re
 import codecs
@@ -30,21 +29,17 @@ from libopensesame.py3compat import *
 
 class Syntax:
 
+    r"""The `syntax` class implement text operations, including those that are
+    necessary for interpreting OpenSesame script.
     """
-    desc:
-            The `syntax` class implement text operations, including those that are
-            necessary for interpreting OpenSesame script.
-    """
-
     def __init__(self, experiment):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                experiment:	The experiment object.
+        Parameters
+        ----------
+        experiment
+            The experiment object.
         """
-
         self.experiment = experiment
         # A regular expression to match keywords, which are characterized by:
         # - Start with a letter or underscore
@@ -83,17 +78,18 @@ class Syntax:
         self.re_front_matter = re.compile(r'---(?P<info>.*?)---', re.S)
 
     def auto_type(self, val):
+        r"""Casts a value to its best-fitting type, i.e. float, int, or
+        unicode.
+
+        Parameters
+        ----------
+        val
+            A value of any type.
+
+        Returns
+        -------
+        An auto-typed value.
         """
-        desc:
-                Casts a value to its best-fitting type, i.e. float, int, or unicode.
-
-        arguments:
-                val:	A value of any type.
-
-        returns:
-                An auto-typed value.
-        """
-
         try:
             f = float(val)
             # No flanking whitespace
@@ -106,21 +102,19 @@ class Syntax:
         return f
 
     def parse_front_matter(self, s):
+        r"""Parses the YAML front matter at the start of the script.
+
+        Parameters
+        ----------
+        s : str
+            The script.
+
+        Returns
+        -------
+        dict
+            A (d, s) tuple, where d is a dict with the front matter, and and s
+            is the script with the front matter stripped off.
         """
-        desc:
-                Parses the YAML front matter at the start of the script.
-
-        arguments:
-                s:
-                        desc:	The script.
-                        type:	str
-
-        returns:
-                desc:	A (d, s) tuple, where d is a dict with the front matter, and
-                                and s is the script with the front matter stripped off.
-                type:	dict
-        """
-
         m = self.re_front_matter.match(s)
         try:
             d = safe_yaml_load(m.group(u'info'))
@@ -140,17 +134,15 @@ class Syntax:
         return d, s
 
     def generate_front_matter(self):
-        """
-        desc:
-                Generates YAML front matter. Any existing front matter is copied,
-                except for the `OpenSesame`, `API`, and `Platform` fields, which are
-                updated.
+        r"""Generates YAML front matter. Any existing front matter is copied,
+        except for the `OpenSesame`, `API`, and `Platform` fields, which are
+        updated.
 
-        returns:
-                desc:	A front matter string.
-                type:	str
+        Returns
+        -------
+        str
+            A front matter string.
         """
-
         self.experiment.front_matter.update({
             'OpenSesame': safe_str(metadata.__version__),
             'API': metadata.api,
@@ -165,21 +157,19 @@ class Syntax:
             allow_unicode=True))
 
     def split(self, s):
+        r"""A unicode-safe bash-style split function. This is a wrapper around
+        shlex.split() which is not unicode-safe on Python 2.
+
+        Parameters
+        ----------
+        s : str, unicode
+            The string to split.
+
+        Returns
+        -------
+        list
+            The string split into a list.
         """
-        desc:
-                A unicode-safe bash-style split function. This is a wrapper around
-                shlex.split() which is not unicode-safe on Python 2.
-
-        arguments:
-                s:
-                        desc:	The string to split.
-                        type:	[str, unicode]
-
-        returns:
-                desc:	The string split into a list.
-                type:	list
-        """
-
         try:
             return shlex.split(s)
         except Exception as e:
@@ -209,7 +199,6 @@ class Syntax:
                 desc:	A (command, arglist, kwdict) tuple.
                 type:	tuple
         """
-
         l = self.split(cmd)
         if len(l) == 0:
             return None, [], {}
@@ -227,24 +216,17 @@ class Syntax:
         return cmd, arglist, kwdict
 
     def create_cmd(self, cmd, arglist=[], kwdict={}):
+        r"""Generates a command string.
+
+        Parameters
+        ----------
+        cmd : str
+            The command.
+        arglist : list, optional
+            A list of compulsory order-specified arguments.
+        kwdict : dict, optional
+            A dict of optional named keywords.
         """
-        desc:
-                Generates a command string.
-
-        arguments:
-                cmd:
-                        desc:	The command.
-                        type:	str
-
-        keywords:
-                arglist:
-                        desc:	A list of compulsory order-specified arguments.
-                        type:	list
-                kwdict:
-                        desc:	A dict of optional named keywords.
-                        type:	dict
-        """
-
         l = [cmd]
         for arg in arglist:
             l.append(self.safe_wrap(arg))
@@ -275,7 +257,6 @@ class Syntax:
         returns:
                 The evaluated string, or the input value for non-string input.
         """
-
         def get_escape_sequence(m):
             return u'' if m.group(1) is None \
                 else m.group(1)[:len(m.group(1))//2]
@@ -317,7 +298,6 @@ class Syntax:
                                 statement, and False otherwise.
                 type:	bool
         """
-
         # Don't quote operators
         if s in [u'not', u'or', 'and']:
             return False
@@ -355,7 +335,6 @@ class Syntax:
                 desc:	The conditional statement as a Python string or bytecode.
                 type:	[str, bytecode]
         """
-
         # Python conditions `=True` don't have to be evaluated
         if cnd.startswith(u'='):
             cnd = cnd[1:]
@@ -436,20 +415,18 @@ class Syntax:
         return self.unescape(cnd)
 
     def unescape(self, s):
+        r"""Unescapes square brackets in text.
+
+        Parameters
+        ----------
+        s : str
+            The text to unescape.
+
+        Returns
+        -------
+        str
+            The unescaped text.
         """
-        desc:
-                Unescapes square brackets in text.
-
-        arguments:
-                s:
-                        desc:	The text to unescape.
-                        type:	str
-
-        returns:
-                desc:	The unescaped text.
-                type:	str
-        """
-
         s = safe_decode(s)
         return s.replace(u'\[', u'[').replace(u'\]', u']')
 
@@ -474,7 +451,6 @@ class Syntax:
                 desc:	The wrapped text.
                 type:	str
         """
-
         s = safe_decode(s).replace(u'\\', u'\\\\')
         try:
             float(s)
@@ -486,36 +462,31 @@ class Syntax:
         return s
 
     def sanitize(self, s, strict=False, allow_vars=True):
+        r"""Removes invalid characters (notably quotes) from the string.
+
+        Parameters
+        ----------
+        s    The string to be sanitized. This can be any type, but if it is not
+            unicode, it will be coerced to unicode.
+        strict : bool, optional
+            If True, all except underscores and alphanumeric characters are
+            stripped.
+        allow_vars : bool, optional
+            If True, square brackets are not sanitized, so you can use
+            variables.
+
+        Returns
+        -------
+        unicode
+            A sanitized string.
+
+        Examples
+        --------
+        >>> # Prints 'Universit Aix-Marseille'
+        >>> print(self.sanitize('\"Université Aix-Marseille\"'))
+        >>> # Prints 'UniversitAixMarseille'
+        >>> print(self.sanitize('\"Université Aix-Marseille\""', strict=True))
         """
-        desc:
-                Removes invalid characters (notably quotes) from the string.
-
-        arguments:
-                s:
-                        desc:	The string to be sanitized. This can be any type, but
-                                        if it is not unicode, it will be coerced to unicode.
-
-        keywords:
-                strict:
-                        desc:	If True, all except underscores and alphanumeric
-                                        characters are stripped.
-                        type:	bool
-                allow_vars:
-                        desc:	If True, square brackets are not sanitized, so you can
-                                        use variables.
-                        type:	bool
-
-        returns:
-                desc:	A sanitized string.
-                type:	unicode
-
-        example: |
-                # Prints 'Universit Aix-Marseille'
-                print(self.sanitize('\"Université Aix-Marseille\"'))
-                # Prints 'UniversitAixMarseille'
-                print(self.sanitize('\"Université Aix-Marseille\""', strict=True))
-        """
-
         s = safe_decode(s)
         if strict:
             if allow_vars:
@@ -524,28 +495,22 @@ class Syntax:
         return self.re_sanitize_loose.sub(u'', s)
 
     def to_ascii(self, s, strict=False):
+        r"""Converts all non-ASCII characters to U+XXXX notation, so that the
+        resulting string can be treated as plain ASCII text.
+
+        Parameters
+        ----------
+        s : unicode
+            A unicode string to be santized
+        strict : bool, optional
+            If True, special characters are ignored rather than recoded.
+
+        Returns
+        -------
+        str
+            A regular Python string with all special characters replaced by
+            U+XXXX notation or ignored (if strict).
         """
-        desc:
-                Converts all non-ASCII characters to U+XXXX notation, so that the
-                resulting string can be treated as plain ASCII text.
-
-        arguments:
-                s:
-                        desc:	A unicode string to be santized
-                        type:	unicode
-
-        keywords:
-                strict:
-                        desc:	If True, special characters are ignored rather than
-                                        recoded.
-                        type:	bool
-
-        returns:
-                desc:	A regular Python string with all special characters replaced
-                                by U+XXXX notation or ignored (if strict).
-                type:	str
-        """
-
         if strict:
             _s = safe_encode(s, enc=u'ascii', errors=u'ignore')
         else:
@@ -554,21 +519,19 @@ class Syntax:
         return _s.replace(os.linesep, u'\n')
 
     def from_ascii(self, s):
+        r"""Converts an ascii str with U+XXXX notation to actual Unicode.
+
+        Parameters
+        ----------
+        s : str
+            A plain-ascii string.
+
+        Returns
+        -------
+        unicode
+            A string with all U+XXXX characters converted to the corresponding
+            unicode characters.
         """
-        desc:
-                Converts an ascii str with U+XXXX notation to actual Unicode.
-
-        arguments:
-                s:
-                        desc:	A plain-ascii string.
-                        type:	str
-
-        returns:
-                desc:	A string with all U+XXXX characters converted to the corresponding
-                                unicode characters.
-                type:	unicode
-        """
-
         if not isinstance(s, str):
             raise osexception(
                 u'from_ascii() expects first argument to be unicode or str, not "%s"'
@@ -582,37 +545,33 @@ class Syntax:
         return s
 
     def valid_var_name(self, s):
+        r"""Checks whether a string is a valid variable name.
+
+        Parameters
+        ----------
+        s : str
+            The string to check.
+
+        Returns
+        -------
+        True if s is a variable valid name, False if not.
         """
-        desc:
-                Checks whether a string is a valid variable name.
-
-        arguments:
-                s:
-                        desc:	The string to check.
-                        type:	str
-
-        returns:
-                type:	True if s is a variable valid name, False if not.
-        """
-
         return re.match(self.re_valid_var_name, s)
 
 
 def osreplace(exc):
+    r"""A replacement function to allow opensame-style replacement of unicode
+    characters.
+
+    Parameters
+    ----------
+    exc : UnicodeEncodeError
+
+    Returns
+    -------
+    tuple
+        A (replacement, end) tuple.
     """
-    desc:
-            A replacement function to allow opensame-style replacement of unicode
-            characters.
-
-    arguments:
-            exc:
-                    type:	UnicodeEncodeError
-
-    returns:
-            desc:	A (replacement, end) tuple.
-            type:	tuple
-    """
-
     _s = u''
     for ch in exc.object[exc.start:exc.end]:
         _s += u'U+%.4X' % ord(ch)

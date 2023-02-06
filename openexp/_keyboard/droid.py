@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from openexp._keyboard.legacy import *
 import pygame
@@ -29,15 +28,12 @@ except ImportError:
 
 class Droid(Legacy):
 
-    """
-    desc: |
-            This is a keyboard backend built on top of PyGame, adapted for Android
-            devices.
+    r"""This is a keyboard backend built on top of PyGame, adapted for Android
+    devices.
 
-            For function specifications and docstrings, see
-            `openexp._keyboard.keyboard`.
+    For function specifications and docstrings, see
+    `openexp._keyboard.keyboard`.
     """
-
     def _get_key_event(self, event_type):
 
         if not self.persistent_virtual_keyboard and android is not None:

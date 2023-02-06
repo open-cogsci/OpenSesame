@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.dialogs.noise_settings import NoiseSettings
 from libqtopensesame.sketchpad_elements._base_element import BaseElement
@@ -25,19 +24,12 @@ from libopensesame.sketchpad_elements import Noise as NoiseRuntime
 
 class Noise(BaseElement, NoiseRuntime):
 
+    r"""A noise element.
+    See base_element for docstrings and function
+    descriptions.
     """
-    desc:
-            A noise element.
-
-            See base_element for docstrings and function descriptions.
-    """
-
     def show_edit_dialog(self):
-        """
-        desc:
-                The show-edit dialog for the noise shows the settings dialog.
-        """
-
+        r"""The show-edit dialog for the noise shows the settings dialog."""
         d = NoiseSettings(self.sketchpad._edit_widget)
         d.set_properties(self.properties)
         properties = d.get_properties()

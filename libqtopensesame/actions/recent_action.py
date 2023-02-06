@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
 import os.path
@@ -25,7 +24,6 @@ import os.path
 class RecentAction(QtWidgets.QAction):
 
     """Menu action for a recently opened file"""
-
     def __init__(self, path, main_window, menu):
         """
         Constructor
@@ -35,7 +33,6 @@ class RecentAction(QtWidgets.QAction):
         main_window -- the main window
         menu -- the menu into which the action should be inserted
         """
-
         QtWidgets.QAction.__init__(self, os.path.basename(path), menu)
         self.main_window = main_window
         self.triggered.connect(self.open_file)
@@ -48,7 +45,6 @@ class RecentAction(QtWidgets.QAction):
         Keyword arguments:
         dummy -- a dummy argument passed by the signal handler (default=None)
         """
-
         self.main_window.open_file(path=self.path)
 
 

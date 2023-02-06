@@ -17,7 +17,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import os
 hiddenExts = '.pyc', '.pyo'
 
@@ -30,7 +29,6 @@ def updateHidden(folder):
     Arguments:
     folder -- the folder to process
     """
-
     print('Scanning', folder)
     f = open(os.path.join(folder, '.hidden'), 'w')
     for fname in os.listdir(folder):

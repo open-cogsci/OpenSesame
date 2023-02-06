@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc import display
 from libqtopensesame.misc.translate import translation_context
@@ -26,14 +25,10 @@ _ = translation_context(u'system_check', category=u'extension')
 class system_check(base_extension):
 
     def event_startup(self):
+        r"""Performs several checks when OpenSesame is started. For now, it
+        only checks whether the display is scaled or not, and if so, provides a
+        warning because this may affect how stimuli look during the experiment.
         """
-        desc:
-                Performs several checks when OpenSesame is started. For now, it only
-                checks whether the display is scaled or not, and if so, provides a
-                warning because this may affect how stimuli look during the
-                experiment.
-        """
-
         if display.display_scaling != 1:
             self.extension_manager.fire(
                 u'notify',

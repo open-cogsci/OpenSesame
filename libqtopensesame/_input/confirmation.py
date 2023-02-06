@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -26,37 +25,25 @@ _ = translation_context(u'confirmation', category=u'core')
 
 class Confirmation(QtWidgets.QMessageBox, BaseSubcomponent):
 
-    """
-    desc:
-            A simple yes/ no/ cancel confirmation dialog.
-    """
-
+    r"""A simple yes/ no/ cancel confirmation dialog."""
     def __init__(self, main_window, msg, title=None, allow_cancel=False,
                  default=u'no'):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:
-                        desc:	The main-window object.
-                        type:	QWidget
-                msg:
-                        desc:	The message.
-                        type:	[unicode, str]
-                title:
-                        desc:	A Window title or None for a default title.
-                        type:	[str, NoneType]
-                allow_cancel:
-                        desc:	Indicates whether a cancel button should be included,
-                                        in addition to the yes and no buttons.
-                        type:	bool
-                default:
-                        desc:	The button that is active by default, 'no', 'yes', or
-                                        'cancel'
-                        type:	str
+        Parameters
+        ----------
+        main_window : QWidget
+            The main-window object.
+        msg : unicode, str
+            The message.
+        title : str, NoneType
+            A Window title or None for a default title.
+        allow_cancel : bool
+            Indicates whether a cancel button should be included, in addition
+            to the yes and no buttons.
+        default : str
+            The button that is active by default, 'no', 'yes', or 'cancel'
         """
-
         QtWidgets.QMessageBox.__init__(self, main_window)
         self.setup(main_window)
         self.yes = self.addButton(QtWidgets.QMessageBox.Yes)
@@ -77,16 +64,13 @@ class Confirmation(QtWidgets.QMessageBox, BaseSubcomponent):
         self.setText(msg)
 
     def show(self):
-        """
-        desc:
-                Shows the confirmation dialog.
+        r"""Shows the confirmation dialog.
 
-        returns:
-                desc:	True if confirmed, False disconfirmed, and None if
-                                cancelled.
-                type:	[bool, NoneType]
+        Returns
+        -------
+        bool, NoneType
+            True if confirmed, False disconfirmed, and None if cancelled.
         """
-
         self.exec_()
         button = self.clickedButton()
         if self.cancel is not None and button is self.cancel:

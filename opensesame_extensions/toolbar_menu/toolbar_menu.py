@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.config import cfg
@@ -28,11 +27,7 @@ _ = translation_context(u'toolbar_menu', category=u'extension')
 
 class toolbar_menu(base_extension):
 
-    """
-    desc:
-            Integrates the menu into the toolbar.
-    """
-
+    r"""Integrates the menu into the toolbar."""
     def event_startup(self):
 
         self._menu = None
@@ -43,11 +38,7 @@ class toolbar_menu(base_extension):
         self.set_checked(True)
 
     def activate(self):
-        """
-        desc:
-                Toggle the menubar integration.
-        """
-
+        r"""Toggle the menubar integration."""
         if self._menu is None:
             self._init_menu()
         if cfg.toolbar_menu_active:
@@ -56,12 +47,9 @@ class toolbar_menu(base_extension):
             self._activate_toolbar_menu()
 
     def _init_menu(self):
+        r"""Creates a widget with a menu that copies all actions from the main
+        menu bar.
         """
-        desc:
-                Creates a widget with a menu that copies all actions from the main
-                menu bar.
-        """
-
         self._menu = QtWidgets.QMenu()
         for action in self.menubar.actions():
             self._menu.addAction(action)
@@ -90,11 +78,7 @@ class toolbar_menu(base_extension):
         self.toolbar.setVisible(True)
 
     def _activate_toolbar_menu(self):
-        """
-        desc:
-                Hide the menu bar and show the toolbar widget.
-        """
-
+        r"""Hide the menu bar and show the toolbar widget."""
         cfg.toolbar_menu_active = True
         self.menubar.setVisible(False)
         self.menu_action.setVisible(True)
@@ -104,11 +88,7 @@ class toolbar_menu(base_extension):
         self.toolbar.visibilityChanged.connect(self._keep_toolbar_visible)
 
     def _deactivate_toolbar_menu(self):
-        """
-        desc:
-                Show the menu bar and hide the toolbar widget.
-        """
-
+        r"""Show the menu bar and hide the toolbar widget."""
         cfg.toolbar_menu_active = False
         self.menubar.setVisible(True)
         self.menu_action.setVisible(False)

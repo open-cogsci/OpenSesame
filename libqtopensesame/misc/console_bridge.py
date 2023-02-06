@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -24,11 +23,7 @@ from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 
 class ConsoleBridge(BaseSubcomponent):
 
-    """
-    desc:
-            A base console for debug-window consoles.
-    """
-
+    r"""A base console for debug-window consoles."""
     def __init__(self, main_window):
 
         super(ConsoleBridge, self).__init__()

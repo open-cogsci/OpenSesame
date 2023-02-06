@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import math
 from openexp._canvas._polygon.polygon import Polygon
@@ -57,7 +56,6 @@ class Arrow(Polygon):
         returns:
                 Returns a list of (x, y) tuples that specify an arrow shape.
         """
-
         # length
         d = math.sqrt((ey-sy)**2 + (sx-ex)**2)
         # direction

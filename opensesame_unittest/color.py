@@ -17,7 +17,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import unittest
 from libopensesame.py3compat import *
 from openexp._color.color import color
@@ -30,14 +29,12 @@ class CheckColor(unittest.TestCase):
 	desc: |
 		Checks whether color specifications are correct.
 	"""
-
 	def runTest(self):
 
 		"""
 		desc:
 			Checks various correct and incorrect color specifications.
 		"""
-
 		for colorspec, colorref in [
 			(u'green', u'#008000'),
 			(255, u'#ffffff'),

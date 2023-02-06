@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame.widgets._button import Button
@@ -24,81 +23,66 @@ from libopensesame.widgets._button import Button
 
 class Checkbox(Button):
 
+    r"""The `Checkbox` widget is a checkable box accompanied by a string of
+    text.
+
+    __Example (OpenSesame script):__
+
+    ~~~
+    widget 0 0 1 1 checkbox
+    group="group" text="Option 1"
+    widget 0 1 1 1 checkbox group="group"
+    text="Option 2"
+    ~~~
+
+    __Example (Python):__
+
+    ~~~ .python
+    form = Form()
+    checkbox1 = Checkbox(text='Option 1', group='group')
+    checkbox2 =
+    Checkbox(text='Option 2', group='group')
+    form.set_widget(checkbox1, (0,0))
+    form.set_widget(checkbox2, (0,1))
+    ~~~
+
+    [TOC]
     """
-    desc: |
-            The `Checkbox` widget is a checkable box accompanied by a string of
-            text.
-
-            __Example (OpenSesame script):__
-
-            ~~~
-            widget 0 0 1 1 checkbox group="group" text="Option 1"
-            widget 0 1 1 1 checkbox group="group" text="Option 2"
-            ~~~
-
-            __Example (Python):__
-
-            ~~~ .python
-            form = Form()
-            checkbox1 = Checkbox(text='Option 1', group='group')
-            checkbox2 = Checkbox(text='Option 2', group='group')
-            form.set_widget(checkbox1, (0,0))
-            form.set_widget(checkbox2, (0,1))
-            ~~~
-
-            [TOC]
-    """
-
     def __init__(self, form, text=u'checkbox', frame=False, group=None,
                  checked=False, click_accepts=False, var=None):
+        r"""Constructor to create a new `Checkbox` object. You do not generally
+        call this constructor directly, but use the `Checkbox()` factory
+        function, which is described here: [/python/common/]().
+
+        Parameters
+        ----------
+        form : form
+            The parent form.
+        text : str, unicode, optional
+            Checkbox text.
+        frame : bool, optional
+            Indicates whether a frame should be drawn around the widget.
+        group : str, unicode, NoneType, optional
+            If a group is specified, checking one checkbox from the group will
+            uncheck all other checkboxes in that group. Checkboxes that are
+            part of a group cannot be unchecked, except by clicking on another
+            checkbox in the group. The `group` keyword also affects how
+            variables are stored (see the `var` keyword).
+        checked : bool, optional
+            The initial checked state of the checkbox.
+        click_accepts : bool, optional
+            Indicates whether a click press should accept and close the form.
+        var : str, unicode, NoneType, optional
+            The name of the experimental variable that should be used to log
+            the widget status. This variable will contain a semi-colon
+            separated list of the text of all checked checkboxes in the same
+            group (falling back to checkbox1, etc. if no text has been
+            specified), or 'no' if no checkbox in the group is checked.  For
+            the purpose of the variable, all checkboxes that are not part of a
+            group are placed in the same group. For more information about the
+            use of response variables in forms, see the form documentation
+            page.
         """
-        desc: |
-                Constructor to create a new `Checkbox` object. You do not generally
-                call this constructor directly, but use the `Checkbox()` factory
-                function, which is described here: [/python/common/]().
-
-        arguments:
-                form:
-                        desc:	The parent form.
-                        type:	form
-
-        keywords:
-                text:
-                        desc:	Checkbox text.
-                        type:	[str, unicode]
-                frame:
-                        desc:	Indicates whether a frame should be drawn around the
-                                        widget.
-                        type:	bool
-                group:
-                        desc:	If a group is specified, checking one checkbox from the
-                                        group will uncheck all other checkboxes in that group.
-                                        Checkboxes that are part of a group cannot be
-                                        unchecked, except by clicking on another checkbox in the
-                                        group. The `group` keyword also affects how variables
-                                        are stored (see the `var` keyword).
-                        type:	[str, unicode, NoneType]
-                checked:
-                        desc:	The initial checked state of the checkbox.
-                        type:	bool
-                click_accepts:
-                        desc:	Indicates whether a click press should accept and close
-                                        the form.
-                        type:	bool
-                var:
-                        desc:	The name of the experimental variable that should be
-                                        used to log the widget status. This variable will
-                                        contain a semi-colon separated list of the text of all
-                                        checked checkboxes in the same group (falling back to
-                                        checkbox1, etc. if no text has been specified), or
-                                        'no' if no checkbox in the group is checked. 	For the
-                                        purpose of the variable, all checkboxes that are not
-                                        part of a group are placed in the same group. For more
-                                        information about the use of response variables in
-                                        forms, see the form documentation page.
-                        type:	[str, unicode, NoneType]
-        """
-
         if isinstance(checked, str):
             checked = checked == u'yes'
         if isinstance(click_accepts, str):
@@ -113,17 +97,14 @@ class Checkbox(Button):
         self.checked = checked
 
     def on_mouse_click(self, pos):
-        """
-        desc:
-                Is called whenever the user clicks on the widget. Toggles the state
-                of the checkbox.
+        r"""Is called whenever the user clicks on the widget. Toggles the state
+        of the checkbox.
 
-        arguments:
-                pos:
-                        desc:	An (x, y) coordinate tuple.
-                        type:	tuple
+        Parameters
+        ----------
+        pos : tuple
+            An (x, y) coordinate tuple.
         """
-
         if self.group is not None:
             # If the checkbox is part of a group than checking it will uncheck
             # all other checkboxes in the group, and check the current one
@@ -152,37 +133,28 @@ class Checkbox(Button):
         self.set_checked(self.checked)
 
     def set_checked(self, checked=True):
-        """
-        desc:
-                Sets the checked status of the checkbox.
+        r"""Sets the checked status of the checkbox.
 
-        keywords:
-                checked:
-                        desc:	The checked status.
-                        type:	bool
+        Parameters
+        ----------
+        checked : bool, optional
+            The checked status.
         """
-
         self._checked_element.visible = checked
         self._unchecked_element.visible = not checked
         self.checked = checked
         self.set_var(checked)
 
     def set_var(self, val, var=None):
+        r"""Sets an experimental variable.
+
+        Parameters
+        ----------
+        val : str, unicode
+            A value.
+        var : str, unicode, NoneType, optional
+            A variable name, or `None` to use widget default.
         """
-        desc:
-                Sets an experimental variable.
-
-        arguments:
-                val:
-                        desc:	A value.
-                        type:	[str, unicode]
-
-        keywords:
-                var:
-                        desc:	A variable name, or `None` to use widget default.
-                        type:	[str, unicode, NoneType]
-        """
-
         if var is None:
             var = self.var
         if var is None:

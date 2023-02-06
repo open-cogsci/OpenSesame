@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from functools import partial
@@ -44,7 +43,6 @@ def backend_info(experiment):
             desc:	A dictionary with backend information.
             type:	dict
     """
-
     global _backend_info
     if _backend_info is None:
         with safe_open(experiment.resource(u'backend_info.yaml')) as fd:
@@ -53,23 +51,20 @@ def backend_info(experiment):
 
 
 def backend_guess(experiment, _type):
+    r"""Guesses the backend of a specific type.
+
+    Parameters
+    ----------
+    experiment : experiment
+        The experiment object.
+    _type : str
+        A backend type, e.g. 'canvas'
+
+    Returns
+    -------
+    str
+        A backend, e.g. 'legacy'
     """
-    desc:
-            Guesses the backend of a specific type.
-
-    arguments:
-            experiment:
-                    desc:	The experiment object.
-                    type:	experiment
-            _type:
-                    desc:	A backend type, e.g. 'canvas'
-                    type:	str
-
-    returns:
-            desc:	A backend, e.g. 'legacy'
-            type:	str
-    """
-
     if u'%s_backend' % _type in experiment.var:
         return experiment.var.get(u'%s_backend' % _type)
     d = backend_info(experiment)
@@ -77,21 +72,19 @@ def backend_guess(experiment, _type):
 
 
 def backend_match(experiment):
+    r"""Tries to determine which combination of backends is used by the
+    experiment.
+
+    Parameters
+    ----------
+    experiment : experiment
+        The experiment object.
+
+    Returns
+    -------
+    str
+        The name of a backend combination, e.g. 'legacy'.
     """
-    desc:
-            Tries to determine which combination of backends is used by the
-            experiment.
-
-    arguments:
-            experiment:
-                    desc:	The experiment object.
-                    type:	experiment
-
-    returns:
-            desc:	The name of a backend combination, e.g. 'legacy'.
-            type:	str
-    """
-
     for name, info in backend_info(experiment).items():
         for _type in _backend_types:
             if backend_guess(experiment, _type) != info[_type]:
@@ -102,61 +95,55 @@ def backend_match(experiment):
 
 
 def get_backend_mod(experiment, _type):
+    r"""Gets a backend module.
+
+    Parameters
+    ----------
+    experiment : experiment
+        The experiment object.
+    _type : str
+        The backend type, e.g. u'canvas'.
+
+    Returns
+    -------
+    module
+        A module that contains the backend.
     """
-    desc:
-            Gets a backend module.
-
-    arguments:
-            experiment:
-                    desc:	The experiment object.
-                    type:	experiment
-            _type:
-                    desc:	The backend type, e.g. u'canvas'.
-                    type:	str
-
-    returns:
-            desc:	A module that contains the backend.
-            type:	module
-    """
-
     name = backend_guess(experiment, _type)
     return __import__('openexp._%s.%s' % (_type, name), fromlist=['dummy'])
 
 
 def get_backend_class(experiment, _type):
+    r"""Gets a backend class.
+
+    Parameters
+    ----------
+    _type : str
+        The backend type, e.g. u'canvas'.
+    experiment : experiment
+        The experiment object.
+
+    Returns
+    -------
+    type
+        A backend class.
     """
-    desc:
-            Gets a backend class.
-
-    arguments:
-            _type:
-                    desc:	The backend type, e.g. u'canvas'.
-                    type:	str
-            experiment:
-                    desc:	The experiment object.
-                    type:	experiment
-
-    returns:
-            desc:	A backend class.
-            type:	type
-    """
-
     name = backend_guess(experiment, _type)
     return getattr(get_backend_mod(experiment, _type), name)
 
 
 def configurable(fnc):
+    r"""A decorator that makes a function configurable.
+
+    Parameters
+    ----------
+    fnc
+        The function to make configurable.
+
+    Returns
+    -------
+    A decorated configurable function.
     """
-    desc:
-            A decorator that makes a function configurable.
-
-    arguments:
-            fnc:	The function to make configurable.
-
-    returns:
-            A decorated configurable function.
-    """
-
     def inner(self, *arglist, **kwdict):
 
         cfg = {}
@@ -182,29 +169,17 @@ def configurable(fnc):
 
 
 def getter(key, self):
-    """
-    desc:
-            A getter function for configurable properties.
-    """
-
+    r"""A getter function for configurable properties."""
     return self.__cfg__[key]
 
 
 def setter(key, self, val):
-    """
-    desc:
-            A setter function for configurable properties.
-    """
-
+    r"""A setter function for configurable properties."""
     self.set_config(**{key: val})
 
 
 def deller():
-    """
-    desc:
-            A dummy delete function for configurable properties.
-    """
-
+    r"""A dummy delete function for configurable properties."""
     pass
 
 
@@ -213,7 +188,6 @@ def docstring(key):
     returns:
             A docstring for configurable properties.
     """
-
     return """
 	name:
 		%(key)s
@@ -225,29 +199,20 @@ def docstring(key):
 
 class Backend:
 
-    """
-    desc:
-            A base backend that provides the configurable framework.
-    """
-
+    r"""A base backend that provides the configurable framework."""
     docinherit = type
 
     def __init__(self, configurables={}, **cfg):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        configurables : dict, optional
+            A dict of configurable properties with the name of the property as
+            a key, and a validation function (which can be None) as value.
+        **cfg : dict
+            The initial values for all the configurable properties.
         """
-        desc:
-                Constructor.
-
-        keywords:
-                configurables:
-                        desc:	A dict of configurable properties with the name of the
-                                        property as a key, and a validation function (which can
-                                        be None) as value.
-                        type:	dict
-
-        keyword-dict:
-                cfg:	The initial values for all the configurable properties.
-        """
-
         self.configurables = configurables
         for key in configurables:
             if hasattr(backend, key):
@@ -265,51 +230,45 @@ class Backend:
 
     @classmethod
     def assert_list_or_None(cls, key, val):
+        r"""Asserts that a value is a list or None.
+
+        Parameters
+        ----------
+        key
+            The name of the configurable.
+        val
+            The value of the configurable.
         """
-        visible:	False
-
-        desc:
-                Asserts that a value is a list or None.
-
-        arguments:
-                key:	The name of the configurable.
-                val:	The value of the configurable.
-        """
-
         if not val is None and not isinstance(val, list):
             raise osexception(
                 u'%s should be a list or None, not %s' % (key, val))
 
     @classmethod
     def assert_bool(cls, key, val):
+        r"""Asserts that a value is bool.
+
+        Parameters
+        ----------
+        key
+            The name of the configurable.
+        val
+            The value of the configurable.
         """
-        visible:	False
-
-        desc:
-                Asserts that a value is bool.
-
-        arguments:
-                key:	The name of the configurable.
-                val:	The value of the configurable.
-        """
-
         if not isinstance(val, bool) and not isinstance(val, int):
             raise osexception(
                 u'%s should be True or False, not %s' % (key, val))
 
     @classmethod
     def assert_numeric_or_None(cls, key, val):
+        r"""Asserts that a value is float, int, or None.
+
+        Parameters
+        ----------
+        key
+            The name of the configurable.
+        val
+            The value of the configurable.
         """
-        visible:	False
-
-        desc:
-                Asserts that a value is float, int, or None.
-
-        arguments:
-                key:	The name of the configurable.
-                val:	The value of the configurable.
-        """
-
         if not val is None and not isinstance(val, int) and \
                 not isinstance(val, float):
             raise osexception(
@@ -318,34 +277,30 @@ class Backend:
 
     @classmethod
     def assert_numeric(cls, key, val):
+        r"""Asserts that a value is float or int.
+
+        Parameters
+        ----------
+        key
+            The name of the configurable.
+        val
+            The value of the configurable.
         """
-        visible:	False
-
-        desc:
-                Asserts that a value is float or int.
-
-        arguments:
-                key:	The name of the configurable.
-                val:	The value of the configurable.
-        """
-
         if not isinstance(val, int) and not isinstance(val, float):
             raise osexception(
                 u'%s should be numeric (float or int), not %s' % (key, val))
 
     @classmethod
     def assert_string(cls, key, val):
+        r"""Asserts that a value is string or unicode.
+
+        Parameters
+        ----------
+        key
+            The name of the configurable.
+        val
+            The value of the configurable.
         """
-        visible:	False
-
-        desc:
-                Asserts that a value is string or unicode.
-
-        arguments:
-                key:	The name of the configurable.
-                val:	The value of the configurable.
-        """
-
         if not isinstance(val, str):
             raise osexception(
                 u'%s should be string (str or unicode), not %s' % (key, val))
@@ -359,20 +314,16 @@ class Backend:
                                 and values as values.
                 type:	dict
         """
-
         return self.__cfg__.copy()
 
     def set_config(self, **cfg):
+        r"""Updates the configurables.
+
+        Parameters
+        ----------
+        **cfg : dict
+            The to-be-updated configurables.
         """
-        visible:	False
-
-        desc:
-                Updates the configurables.
-
-        keyword-dict:
-                cfg:	The to-be-updated configurables.
-        """
-
         for key in cfg:
             if key not in self.configurables:
                 raise osexception(u'Unknown argument: %s' % key)
@@ -394,7 +345,6 @@ class Backend:
                                 values as values.
                 type:	dict
         """
-
         return {}
 
 

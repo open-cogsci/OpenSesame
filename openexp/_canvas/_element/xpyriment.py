@@ -16,19 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import copy
 
 
 class XpyrimentElement:
 
+    r"""Together with Element, XpyrimentElement is the base object for all
+    xpyriment sketchpad elements.
     """
-    desc:
-            Together with Element, XpyrimentElement is the base object for all
-            xpyriment sketchpad elements.
-    """
-
     ANTI_ALIAS = 1
 
     @property

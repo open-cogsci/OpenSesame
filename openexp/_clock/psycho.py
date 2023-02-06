@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from openexp._clock.clock import Clock
 from psychopy import core
@@ -24,11 +23,7 @@ from psychopy import core
 
 class Psycho(Clock):
 
-    """
-    desc:
-            For docstrings, see openexp._clock.clock.
-    """
-
+    r"""For docstrings, see openexp._clock.clock."""
     def time(self):
 
         return 1000.*core.getTime()

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import re
 from pyqode.core import api
@@ -30,7 +29,6 @@ class ConvertIndentationMode(api.Mode):
 
     """Comments/uncomments a set of lines using Ctrl+/.
     """
-
     def __init__(self):
 
         super(ConvertIndentationMode, self).__init__()
@@ -47,7 +45,6 @@ class ConvertIndentationMode(api.Mode):
         """
         Called when the mode is activated/deactivated
         """
-
         if state:
             self._action_spaces_to_tabs.triggered.connect(self._spaces_to_tabs)
             self.editor.add_action(

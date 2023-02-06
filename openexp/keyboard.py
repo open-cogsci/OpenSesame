@@ -16,28 +16,22 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from openexp import backend
 
 
 def Keyboard(experiment, *arglist, **kwdict):
+    r"""A factory that returns a back-end specific keyboard object.
+
+    Parameters
+    ----------
+    experiment : experiment
+        The experiment object.
+    *arglist : list
+        See keyboard.__init__().
+    **kwdict : dict
+        See keyboard.__init__().
     """
-    desc:
-            A factory that returns a back-end specific keyboard object.
-
-    arguments:
-            experiment:
-                    desc:	The experiment object.
-                    type:	experiment
-
-    argument-list:
-            arglist:	See keyboard.__init__().
-
-    keyword-dict:
-            kwdict:		See keyboard.__init__().
-    """
-
     cls = backend.get_backend_class(experiment, u'keyboard')
     return cls(experiment, *arglist, **kwdict)
 

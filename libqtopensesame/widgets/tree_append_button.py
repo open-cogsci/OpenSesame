@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.widgets.tree_append_menu import TreeAppendMenu
@@ -25,12 +24,9 @@ from qtpy import QtWidgets
 
 class TreeAppendButton(BaseSubcomponent, QtWidgets.QPushButton):
 
+    r"""An append item menu that appears below the tree structure of sequence
+    items.
     """
-    desc:
-            An append item menu that appears below the tree structure of sequence
-            items.
-    """
-
     def setup(self, main_window):
 
         super().setup(main_window)
@@ -42,11 +38,7 @@ class TreeAppendButton(BaseSubcomponent, QtWidgets.QPushButton):
         self.adjustSize()
 
     def set_position(self):
-        """
-        desc:
-                Places the button right below the last item.
-        """
-
+        r"""Places the button right below the last item."""
         last_item = self.tree_overview.topLevelItem(0)
         while self.tree_overview.itemBelow(last_item) is not None:
             last_item = self.tree_overview.itemBelow(last_item)

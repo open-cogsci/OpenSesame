@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets, QtGui
 from libqtopensesame.widgets.base_widget import BaseWidget
@@ -26,25 +25,18 @@ _ = translation_context(u'color_edit', category=u'core')
 
 class ColorEdit(BaseWidget):
 
-    """
-    desc:
-            A colorpicker widget that emulates a QLineEdit.
-    """
-
+    r"""A colorpicker widget that emulates a QLineEdit."""
     textChanged = QtCore.Signal('QString')
     textEdited = QtCore.Signal('QString')
 
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:
-                        desc:	The main-window object.
-                        type:	qtopensesame
+        Parameters
+        ----------
+        main_window : qtopensesame
+            The main-window object.
         """
-
         super().__init__(main_window)
         self.edit = QtWidgets.QLineEdit()
         self._parent = None
@@ -62,11 +54,7 @@ class ColorEdit(BaseWidget):
         self.setLayout(layout)
 
     def colorpicker(self):
-        """
-        desc:
-                Picks a color with the colorpicker dialog.
-        """
-
+        r"""Picks a color with the colorpicker dialog."""
         _color = QtWidgets.QColorDialog.getColor(QtGui.QColor(u'white'),
                                                  self._parent, _(u'Pick a color'))
         if not _color.isValid():
@@ -75,15 +63,13 @@ class ColorEdit(BaseWidget):
         self.apply()
 
     def text(self):
-        """
-        desc:
-                Gets text (emulate QLineEdit behavior).
+        r"""Gets text (emulate QLineEdit behavior).
 
-        returns:
-                desc:	A color text.
-                type:	QString
+        Returns
+        -------
+        QString
+            A color text.
         """
-
         return self.edit.text()
 
     def setText(self, s):
@@ -96,36 +82,28 @@ class ColorEdit(BaseWidget):
                         desc:	Text.
                         type:	unicode
         """
-
         self.edit.setText(safe_decode(s))
 
     def apply(self):
+        r"""Emits a 'set_color' signal to indicate that a color has been
+        picked.
         """
-        desc:
-                Emits a 'set_color' signal to indicate that a color has been picked.
-        """
-
         self.textChanged.emit(self.text())
         self.textEdited.emit(self.text())
 
     def initialize(self, experiment=None, color=None, parent=None):
-        """
-        desc:
-                Initializes the widget. This is necessary to apply the theme and
-                give the fields initial values.
+        r"""Initializes the widget. This is necessary to apply the theme and
+        give the fields initial values.
 
-        keywords:
-                experiment:
-                        desc:	The experiment object or None if it is already available
-                                        via the base_component property.
-                        type:	[experiment, NoneType]
-                color:
-                        color:	An initial color or None to start with experiment
-                                        foreground.
-                        type:	[unicode, NoneType]
-                parent:	A parent QWidget.
+        Parameters
+        ----------
+        experiment : experiment, NoneType, optional
+            The experiment object or None if it is already available via the
+            base_component property.
+        color : unicode, NoneType, optional
+        parent, optional
+            A parent QWidget.
         """
-
         if parent is not None:
             self._parent = parent
         else:

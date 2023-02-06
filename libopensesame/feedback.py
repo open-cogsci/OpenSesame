@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.sketchpad import Sketchpad
 
@@ -27,18 +26,15 @@ class Feedback(Sketchpad):
 
     def reset(self):
         """See item."""
-
         super().reset()
         self.var.reset_variables = u'yes'
 
     def prepare(self):
         """Prepares the item."""
-
         pass
 
     def run(self):
         """Runs the item."""
-
         super().prepare()
         super().run()
         if self.var.reset_variables == u'yes':
@@ -46,7 +42,6 @@ class Feedback(Sketchpad):
 
     def coroutine(self):
         """See coroutines plug-in."""
-
         super().prepare()
         yield
         self.set_item_onset(self.canvas.show())

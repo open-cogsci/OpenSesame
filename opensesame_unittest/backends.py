@@ -17,7 +17,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import types
 import yamldoc
 import unittest
@@ -33,7 +32,6 @@ class check_backend_argspec(unittest.TestCase):
 		-	Checks whether all functions that should be overridden in thebackends
 			back-ends have in fact been overridden.
 	"""
-
 
 	@yamldoc.validate
 	def check(self, ref_cls, chk_cls):
@@ -51,7 +49,6 @@ class check_backend_argspec(unittest.TestCase):
 				desc:	The implementation class.
 				type:	type
 		"""
-
 		print(u'Starting new check ...')
 		print(u'\tChecking whether %s inherits %s ...' % (chk_cls, ref_cls))
 		self.assertTrue(issubclass(chk_cls, ref_cls))
@@ -88,7 +85,6 @@ class check_backend_argspec(unittest.TestCase):
 				desc:	A list of back-end names that should be checked.
 				type:	list
 		"""
-
 		# Check sampler back-ends
 		ref_mod = __import__(u'openexp._%s.%s' % (category, category),
 			fromlist=[u'dummy'])
@@ -117,7 +113,6 @@ class check_backend_argspec(unittest.TestCase):
 		desc:
 			Checks the integrity of all back-ends.
 		"""
-
 		self.checkBackendCategory(u'canvas', ['legacy', 'droid', 'xpyriment',
 			'psycho'])
 		self.checkBackendCategory(u'keyboard', ['legacy', 'droid', 'psycho'])

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import os
 from qtpy import QtWidgets
 from libqtopensesame.misc.config import cfg
@@ -35,7 +34,6 @@ class BaseRunner:
     within the GUI. The base_runner is an abstract runner that is inherited by
     actual runners.
     """
-
     valid_logfile_extensions = u'.csv', u'.txt', u'.dat', u'.log'
     default_logfile_extension = u'.csv'
     supports_kill = False
@@ -48,7 +46,6 @@ class BaseRunner:
         main_window		--	An QtWidgets.QMainWindow object. Typically this will be
                                                 the qtopensesame object.
         """
-
         self.main_window = main_window
         self.paused = False
 
@@ -69,7 +66,6 @@ class BaseRunner:
         None if the experiment finished cleanly, or an Exception (any kind) if
         an exception occurred.
         """
-
         pass
 
     def get_logfile(self, quick=False, subject_nr=0):
@@ -87,7 +83,6 @@ class BaseRunner:
         A pathname for the logfile or None if no logfile was chosen (i.e. the
         dialogue was cancelled).
         """
-
         remember_logfile = True
         if quick:
             logfile = os.path.join(
@@ -172,7 +167,6 @@ class BaseRunner:
         A subject number or None if no subject number was chosen (i.e. the
         dialogue was cancelled).
         """
-
         if quick:
             return 999
         subject_nr, ok = QtWidgets.QInputDialog.getInt(
@@ -202,7 +196,6 @@ class BaseRunner:
         Returns:
         True if the experiment was successfully initiated, False it was not.
         """
-
         # First tell the experiment to get ready, to apply any pending changes,
         # and then initialize the script. This can trigger errors.
         try:
@@ -271,7 +264,6 @@ class BaseRunner:
         auto_response	--	Indicates whether auto-response mode should be
                                                 enabled. (default=False)
         """
-
         self.main_window.set_run_status(u'running')
         self.main_window.extension_manager.fire(
             u'run_experiment',
@@ -307,20 +299,17 @@ class BaseRunner:
 
     def kill(self):
         """Kills an experiment, if the runner supports it."""
-
         pass
 
     def workspace_globals(self):
-        """
-        desc:
-                Returns the experiment's globals dictionary as it was when the
-                experiment finished.
+        r"""Returns the experiment's globals dictionary as it was when the
+        experiment finished.
 
-        returns:
-                desc:	A globals dictionary.
-                type:	dict
+        Returns
+        -------
+        dict
+            A globals dictionary.
         """
-
         return {}
 
     def data_files(self):
@@ -328,11 +317,7 @@ class BaseRunner:
         return self.workspace_globals().get(u'data_files', [])
 
     def pause(self):
-        """
-        desc:
-                Is called when the experiment is paused.
-        """
-
+        r"""Is called when the experiment is paused."""
         self.console.set_workspace_globals(self.workspace_globals())
         print(
             u'The experiment has been paused. Switch back to the experiment '
@@ -344,21 +329,14 @@ class BaseRunner:
         self.paused = True
 
     def resume(self):
-        """
-        desc:
-                Is called when the experiment is resumed/ unpaused.
-        """
-
+        r"""Is called when the experiment is resumed/ unpaused."""
         self.paused = False
         self.main_window.set_run_status(u'running')
         self.main_window.extension_manager.fire(u'resume_experiment')
 
     @staticmethod
     def has_heartbeat():
+        r"""Gives True if the runner supports heartbeats, which are used to
+        update the variable inspector, and False otherwise.
         """
-        desc:
-                Gives True if the runner supports heartbeats, which are used to
-                update the variable inspector, and False otherwise.
-        """
-
         return False

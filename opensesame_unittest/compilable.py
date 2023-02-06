@@ -17,7 +17,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import yamldoc
 import unittest
@@ -29,7 +28,6 @@ class check_compilable(unittest.TestCase):
 	desc: |
 		Checks whether all `.py` files can be compiled.
 	"""
-
 	@yamldoc.validate
 	def checkFile(self, path):
 
@@ -42,7 +40,6 @@ class check_compilable(unittest.TestCase):
 				desc:	The full path to the file.
 				type:	[str, unicode]
 		"""
-
 		print(u'- %s' % path)
 		src = open(path).read()
 		usrc = safe_decode(src)
@@ -70,7 +67,6 @@ class check_compilable(unittest.TestCase):
 				desc:	The directory to start from.
 				type:	[str, unicode]
 		"""
-
 		for dirpath, dirnames, filenames in os.walk(root):
 			for dirname in dirnames:
 				path = os.path.join(dirpath, dirname)
@@ -88,7 +84,6 @@ class check_compilable(unittest.TestCase):
 			Checks the syntax of all `.py` source files.
 
 		"""
-
 		print(u'Checking whether all files are compilable and valid ...\n')
 		for folder in [
 			u'plugins',

@@ -16,19 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from openexp._coordinates.coordinates import Coordinates
 
 
 class Psycho(Coordinates):
 
+    r"""For function specifications and docstrings, see
+    `openexp._coordinates.coordinates`.
     """
-    desc:
-            For function specifications and docstrings, see
-            `openexp._coordinates.coordinates`.
-    """
-
     def to_xy(self, x, y=None):
 
         if isinstance(x, tuple):

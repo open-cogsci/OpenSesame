@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import libopensesame.python_workspace_api as api
 from libopensesame.exceptions import AbortCoroutines
@@ -40,27 +39,19 @@ class PythonWorkspace(BasePythonWorkspace):
 
             self.experiment.python_workspace[u'my_var'] = 10
     """
-
     def __init__(self, experiment):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                experiment:
-                        desc:	The experiment object.
-                        type:	experiment
+        Parameters
+        ----------
+        experiment : experiment
+            The experiment object.
         """
-
         super().__init__(experiment)
         api.experiment = experiment
 
     def init_globals(self):
-        """
-        desc:
-                Initialize the global workspace.
-        """
-
+        r"""Initialize the global workspace."""
         # By setting the __name__ global, the workspace will operate as a
         # module, so that e.g. import statements don't suffer from locality.
         self._globals.update({

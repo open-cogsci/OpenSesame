@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.item import Item
 from libopensesame.exceptions import osexception
@@ -24,24 +23,18 @@ from libopensesame.exceptions import osexception
 
 class Logger(Item):
 
-    """
-    desc:
-            The logger item logs experimental data (i.e. variables).
-    """
-
+    r"""The logger item logs experimental data (i.e. variables)."""
     description = u'Logs experimental data'
     is_oneshot_coroutine = True
 
     def reset(self):
         """See item."""
-
         self.logvars = []
         self._logvars = None
         self.var.auto_log = u'yes'
 
     def run(self):
         """See item."""
-
         self.set_item_onset()
         if self._logvars is None:
             if self.var.auto_log == u'yes':
@@ -56,13 +49,11 @@ class Logger(Item):
 
     def coroutine(self, coroutines):
         """See coroutines plug-in."""
-
         yield
         self.run()
 
     def from_string(self, string):
         """See item."""
-
         self.var.clear()
         self.comments = []
         self.reset()
@@ -80,7 +71,6 @@ class Logger(Item):
 
     def to_string(self):
         """See item."""
-
         s = super().to_string('logger')
         for logvar in self.logvars:
             s += u'\t' + self.experiment.syntax.create_cmd(

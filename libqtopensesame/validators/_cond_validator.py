@@ -16,18 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.validators._base_validator import BaseValidator
 
 
 class CondValidator(BaseValidator):
 
-    """
-    desc:
-            A validator for conditional statements.
-    """
-
+    r"""A validator for conditional statements."""
     def __init__(self, main_window, default=u'always'):
 
         super().__init__(main_window, default=default)

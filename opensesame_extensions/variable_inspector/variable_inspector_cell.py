@@ -16,32 +16,23 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtGui, QtWidgets
 
 
 class variable_inspector_cell(QtWidgets.QTableWidgetItem):
 
-    """
-    desc:
-            A cell for the variable-inspector table.
-    """
-
+    r"""A cell for the variable-inspector table."""
     def __init__(self, text, info):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                text:
-                        desc:	The cell text.
-                        type:	str
-                info:
-                        desc:	Variable info as returned by var_store.inspect().
-                        type:	dict
+        Parameters
+        ----------
+        text : str
+            The cell text.
+        info : dict
+            Variable info as returned by var_store.inspect().
         """
-
         a = QtCore.Qt.AlignLeft
         f = QtGui.QFont()
         if info[u'alive']:

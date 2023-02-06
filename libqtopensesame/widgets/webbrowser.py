@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 import platform
@@ -47,32 +46,25 @@ INTERNAL_URLS = []
 
 class SmallWebview(WebView):
 
+    r"""A wrapper around QWebView too override the sizeHint, which prevents the
+    browser from resizing to small sizes.
     """
-    desc:
-            A wrapper around QWebView too override the sizeHint, which prevents the
-            browser from resizing to small sizes.
-    """
-
     def sizeHint(self):
-        """
-        desc:
-                Gives a size hint.
+        r"""Gives a size hint.
 
-        returns:
-                A QSize
+        Returns
+        -------
+        A QSize
         """
-
         return QtCore.QSize(100, 100)
 
 
 class SmallWebpage(WebPage):
 
+    r"""A wrapper around QWeb(Engine)Page, to overload the
+    acceptNavigationRequest function, which determines what needs to be done
+    after a link is clicked.
     """
-    desc:
-            A wrapper around QWeb(Engine)Page, to overload the acceptNavigationRequest
-            function, which determines what needs to be done after a link is clicked.
-    """
-
     def acceptNavigationRequest(self, *args):
         """
         desc:
@@ -109,7 +101,6 @@ class SmallWebpage(WebPage):
                                                 to the main frame or a child frame.
                                 type: 	boolean
         """
-
         # Check if the first argument is a QUrl. If so, then
         # QWebEngine is used, if not, then QWebKit must be used. This way, the order
         # of received arguments can be determined.
@@ -138,20 +129,15 @@ class SmallWebpage(WebPage):
 
 class Webbrowser(BaseWidget):
 
-    """
-    desc:
-            A browser widget used to display online and offline help pages.
-    """
-
+    r"""A browser widget used to display online and offline help pages."""
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        keywords:
-                main_window:	A qtopensesame object.
+        Parameters
+        ----------
+        main_window, optional
+            A qtopensesame object.
         """
-
         super().__init__(main_window, ui=u'widgets.webbrowser_widget')
         self._current_url = u''
         self._cache = None
@@ -175,16 +161,16 @@ class Webbrowser(BaseWidget):
         self.markdown_parser = MarkdownParser(self)
 
     def load(self, url, tmpl=None):
-        """
-        desc:
-                Loads a webpage.
+        r"""Loads a webpage.
 
-        arguments:
-                url:	The url to load.
-                tmpl:	A template to be wrapped around the html in the case of
-                                Markdown files.
+        Parameters
+        ----------
+        url
+            The url to load.
+        tmpl
+            A template to be wrapped around the html in the case of Markdown
+            files.
         """
-
         if isinstance(url, QtCore.QUrl):
             url = url.toString()
         if url.endswith(u'.md') and not url.startswith(u'http://') \
@@ -200,16 +186,17 @@ class Webbrowser(BaseWidget):
         self.ui.webview.load(QtCore.QUrl(url))
 
     def load_markdown(self, md, url=None, tmpl=None):
-        """
-        desc:
-                Loads a Markdown text string.
+        r"""Loads a Markdown text string.
 
-        arguments:
-                md:		A Markdown text string.
-                url:	The url to load.
-                tmpl:	A template to be wrapped around the html.
+        Parameters
+        ----------
+        md
+            A Markdown text string.
+        url
+            The url to load.
+        tmpl
+            A template to be wrapped around the html.
         """
-
         if url is None:
             url = u'untitled'
         url = QtCore.QUrl(u'http://opensesame.app.cogsci.nl/%s' % url)
@@ -221,72 +208,51 @@ class Webbrowser(BaseWidget):
         self.ui.webview.setZoomFactor(display.display_scaling)
 
     def load_finished(self, ok):
-        """
-        desc:
-                Hides the statusbar to indicate that loading is finished.
-        """
-
+        r"""Hides the statusbar to indicate that loading is finished."""
         self.ui.label_load_progress.setText(_(u'Done'))
         self.ui.webview.setZoomFactor(display.display_scaling)
 
     def update_progressbar(self, progress):
-        """
-        desc:
-                Updates the progressbar to indicate the load progress.
+        r"""Updates the progressbar to indicate the load progress.
 
-        arguments:
-                progress:	The load progress.
+        Parameters
+        ----------
+        progress
+            The load progress.
         """
-
         self.ui.label_load_progress.setText(u'%d%%' % progress)
 
     def load_started(self):
-        """
-        desc:
-                Shows the statusbar to indicate that loading has started.
-        """
-
+        r"""Shows the statusbar to indicate that loading has started."""
         self.ui.label_load_progress.setText(_(u'Loading …'))
 
     def open_osdoc(self):
-        """
-        desc:
-                Opens osdoc.cogsci.nl.
-        """
-
+        r"""Opens osdoc.cogsci.nl."""
         self.load(u'http://osdoc.cogsci.nl/')
 
     def open_forum(self):
-        """
-        desc:
-                Opens forum.cogsci.nl.
-        """
-
+        r"""Opens forum.cogsci.nl."""
         self.load(u'http://forum.cogsci.nl/')
 
     def url_changed(self, url):
-        """
-        desc:
-                Updates the url bar.
+        r"""Updates the url bar.
 
-        arguments:
-                url:	A url string.
+        Parameters
+        ----------
+        url
+            A url string.
         """
-
         self.ui.edit_url.setText(url.toString())
 
     def command(self, cmd):
-        """
-        desc:
-                Processes commands that are embedded in urls to trigger actions and
-                events.
+        r"""Processes commands that are embedded in urls to trigger actions and
+        events.
 
-        arguments:
-                cmd:
-                        desc:	A command string, such as 'action.save'.
-                        type:	str
+        Parameters
+        ----------
+        cmd : str
+            A command string, such as 'action.save'.
         """
-
         cmd = cmd[13:]
         # This is quite a hacky workaround for Windows. The file paths are
         # automatically transformed into a Unix-like slashforward format.

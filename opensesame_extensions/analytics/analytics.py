@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtNetwork
 from libopensesame import metadata
@@ -47,11 +46,7 @@ HTML = u'''<!DOCTYPE html>
 
 class analytics(base_extension):
 
-    """
-    desc:
-            Sends a ping to Google Analytics when OpenSesame is started.
-    """
-
+    r"""Sends a ping to Google Analytics when OpenSesame is started."""
     def event_startup(self):
 
         wv = WebView(self.main_window)

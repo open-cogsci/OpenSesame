@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 import sys
@@ -67,7 +66,6 @@ def patch_pyqt():
     in some versions, the introspection crashes when properties cannot be
     accessed, for example because the object needs to be initialized first.
     """
-
     def _(fnc):
 
         def make_object_safe(obj, cls):

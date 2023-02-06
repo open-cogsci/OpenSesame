@@ -41,7 +41,6 @@ desc:
       - [...]
 ---
 """
-
 import json
 from qtpy import QtCore, QtGui
 from libopensesame.oslogging import oslogger
@@ -55,25 +54,21 @@ INVALID_DATA = {
 
 
 def matches(data, types):
+    r"""Checks whether a data dictionary matches any of the specified drop
+    types.
+
+    Parameters
+    ----------
+    data    A data dictionary. Non-dict types do not give an error, but return
+        False.
+    types : list
+        A list of types, matching the 'type' key in the data dict.
+
+    Returns
+    -------
+    bool
+        True if the data matches, False otherwise.
     """
-    desc:
-        Checks whether a data dictionary matches any of the specified drop
-        types.
-
-    arguments:
-        data:
-            desc:
-                A data dictionary. Non-dict types do not give an error, but
-                return False.
-        types:
-            desc: A list of types, matching the 'type' key in the data dict.
-            type: list
-
-    returns:
-        desc: True if the data matches, False otherwise.
-        type: bool
-    """
-
     if not isinstance(data, dict):
         return False
     if u'type' not in data:
@@ -84,23 +79,20 @@ def matches(data, types):
 
 
 def receive(drop_event):
+    r"""Extracts data from a drop event. This data should be embedded in the
+    mimedata as a json text string.
+
+    Parameters
+    ----------
+    drop_event : QDropEvent
+        A drop event.
+
+    Returns
+    -------
+    dict
+        A data dictionary. The 'type' key identifies the type of data that is
+        being dropped.
     """
-    desc:
-        Extracts data from a drop event. This data should be embedded in the
-        mimedata as a json text string.
-
-    arguments:
-        drop_event:
-            desc: A drop event.
-            type: QDropEvent
-
-    returns:
-        desc:
-            A data dictionary. The 'type' key identifies the type of
-            data that is being dropped.
-        type: dict
-    """
-
     mimedata = drop_event.mimeData()
     # Reject unknown mimedata
     if not mimedata.hasText() and not mimedata.hasUrls():
@@ -133,26 +125,22 @@ def receive(drop_event):
 
 
 def send(drag_src, data):
+    r"""Starts a drag event, and embeds a data dictionary as json text in the
+    mimedata.
+
+    Parameters
+    ----------
+    drag_src : QWidget
+        The source widget.
+    data : dict
+        A data dictionary. The 'type' key identifies the type of data that is
+        being dropped.
+
+    Returns
+    -------
+    QDrag
+        A drag object. The start function is called automatically.
     """
-    desc:
-        Starts a drag event, and embeds a data dictionary as json text in the
-        mimedata.
-
-    arguments:
-        drag_src:
-            desc: The source widget.
-            type: QWidget
-        data:
-            desc:
-                A data dictionary. The 'type' key identifies the type of data
-                that is being dropped.
-            type: dict
-
-    returns:
-        desc: A drag object. The start function is called automatically.
-        type: QDrag
-    """
-
     text = safe_decode(json.dumps(data), enc=u'utf-8')
     mimedata = QtCore.QMimeData()
     mimedata.setText(text)

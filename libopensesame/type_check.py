@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 from libopensesame.exceptions import osexception
@@ -40,7 +39,6 @@ def float_list(l, desc, min_len=None, max_len=None):
     Returns:
     A list of floats.
     """
-
     try:
         l = list(l)
     except:

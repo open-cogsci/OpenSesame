@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import numpy as np
 from openexp._canvas import canvas
@@ -24,12 +23,9 @@ from openexp._canvas import canvas
 
 class PsychoElement:
 
+    r"""Together with Element, PsychoElement is the base object for all psycho
+    sketchpad elements.
     """
-    desc:
-            Together with Element, PsychoElement is the base object for all psycho
-            sketchpad elements.
-    """
-
     @property
     def win(self):
         return self._canvas.experiment.window
@@ -45,29 +41,22 @@ class PsychoElement:
             self.prepare()
 
     def _mask(self, env, size, stdev):
+        r"""Generates a PsychoPy mask for Gabor and NoisePatch stimuli.
+
+        Parameters
+        ----------
+        env : str
+            The envelope.
+        size : int
+            The stimulus size.
+        stdev : int
+            The standard deviation of the mask if the envelope is gaussian.
+
+        Returns
+        -------
+        ndarray
+            A PsychoPy mask, which is a numpy array.
         """
-        visible: False
-
-        desc:
-                Generates a PsychoPy mask for Gabor and NoisePatch stimuli.
-
-        arguments:
-                env:
-                        desc:	The envelope.
-                        type:	str
-                size:
-                        desc:	The stimulus size.
-                        type:	int
-                stdev:
-                        desc:	The standard deviation of the mask if the envelope is
-                                        gaussian.
-                        type:	int
-
-        returns:
-                desc:	A PsychoPy mask, which is a numpy array.
-                type:	ndarray
-        """
-
         # Get the smallest power-of-two that is larger than or equal to the
         # given size
         size = int(np.ceil(np.sqrt(size))**2)

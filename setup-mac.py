@@ -22,7 +22,6 @@ This scripts builds OpenSesame as a standalone application for Mac OS.
 Usage:
     python setup-mac.py py2app
 """
-
 import macholib
 from setuptools import setup
 import os
@@ -51,7 +50,6 @@ if macholib.__version__ <= "1.7":
 """
 END Monkey-patch macholib"
 """
-
 # Get the root folder of anaconda
 anaconda_path = os.path.dirname(os.path.dirname(sys.executable))
 

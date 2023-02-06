@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame import item, widgets
@@ -29,11 +28,7 @@ class form_multiple_choice(item.item):
     lazy_init = False
 
     def reset(self):
-        """
-        desc:
-                Initialize plug-in.
-        """
-
+        r"""Initialize plug-in."""
         self.var.options = u'Yes\nNo\nMaybe'
         self.var.question = u'Your question'
         self.var.form_title = u'Form title'
@@ -48,7 +43,6 @@ class form_multiple_choice(item.item):
 
     def run(self):
         """Run the item"""
-
         # Parse the option list
         option_list = self.var.options.split(u'\n')  # split by return
         # Filter out empty options
@@ -131,7 +125,6 @@ class form_multiple_choice(item.item):
         Returns:
         A list of (name, description) tuples
         """
-
         return (
             item.item.var_info(self) +
             [(self.var.form_var, u'[Depends on response]')]
@@ -141,7 +134,6 @@ class form_multiple_choice(item.item):
 class qtform_multiple_choice(form_multiple_choice, qtautoplugin):
 
     """GUI controls"""
-
     def __init__(self, name, experiment, string=None):
         """
         Constructor
@@ -153,14 +145,12 @@ class qtform_multiple_choice(form_multiple_choice, qtautoplugin):
         Keyword arguments:
         string		--	A definition string. (default=None)
         """
-
         form_multiple_choice.__init__(self, name, experiment, string)
         qtautoplugin.__init__(self, __file__)
         self.custom_interactions()
 
     def apply_edit_changes(self):
         """Apply the controls"""
-
         if not qtautoplugin.apply_edit_changes(self) or self.lock:
             return False
         self.custom_interactions()
@@ -171,7 +161,6 @@ class qtform_multiple_choice(form_multiple_choice, qtautoplugin):
         The advance_immediately option is not applicable if multiple items can
         be selected.
         """
-
         self.checkbox_advance_immediately.setEnabled(
             self.var.get(u'allow_multiple') == u'no'
         )

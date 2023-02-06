@@ -16,27 +16,21 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.widgets.base_widget import BaseWidget
 
 
 class LoopWidget(BaseWidget):
 
-    """
-    desc:
-            A widget for the loop controls.
-    """
-
+    r"""A widget for the loop controls."""
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        keywords:
-                main_window:	A qtopensesame object.
+        Parameters
+        ----------
+        main_window, optional
+            A qtopensesame object.
         """
-
         super().__init__(main_window, ui=u'widgets.loop_widget')
 
 

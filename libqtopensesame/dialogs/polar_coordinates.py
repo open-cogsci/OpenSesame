@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
 from libopensesame.python_workspace_api import xy_from_polar
@@ -25,20 +24,15 @@ from libqtopensesame.dialogs.base_dialog import BaseDialog
 
 class PolarCoordinates(BaseDialog):
 
-    """
-    desc:
-            A dialog for determining cartesian coordinates from polar coordinates.
-    """
-
+    r"""A dialog for determining cartesian coordinates from polar coordinates."""
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:	The main window object.
+        Parameters
+        ----------
+        main_window
+            The main window object.
         """
-
         super().__init__(main_window, ui=u'dialogs.polar_coordinates')
         self.update()
 
@@ -59,15 +53,13 @@ class PolarCoordinates(BaseDialog):
         self.ui.label_cartesian_y.setText(u'%.2f px' % y)
 
     def get_xy(self):
-        """
-        desc:
-                Executes the dialog and gets the xy coordinates, or None if the
-                dialog was cancelled.
+        r"""Executes the dialog and gets the xy coordinates, or None if the
+        dialog was cancelled.
 
-        returns:
-                type:	[tuple, NoneType]
+        Returns
+        -------
+        tuple, NoneType
         """
-
         if self.exec_() != QtWidgets.QDialog.Accepted:
             return None
         return self.xy()

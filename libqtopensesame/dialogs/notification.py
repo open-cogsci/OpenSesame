@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 from qtpy import QtCore, QtWidgets
@@ -25,25 +24,21 @@ from libqtopensesame.dialogs.base_dialog import BaseDialog
 
 class Notification(BaseDialog):
 
-    """
-    desc:
-            The notification dialog shows a simple notification.
-    """
-
+    r"""The notification dialog shows a simple notification."""
     def __init__(self, main_window, msg, title=None, icon=None):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        main_window
+            The main window object.
+        msg
+            A notification message.
+        title, optional
+            A custom dialog title.
+        icon, optional
+            A custom dialog icon.
         """
-        desc:
-                Constructor.
-
-        arguments:
-                main_window:	The main window object.
-                msg:			A notification message.
-
-        keywords:
-                title:			A custom dialog title.
-                icon:			A custom dialog icon.
-        """
-
         super().__init__(main_window, ui=u'dialogs.notification_dialog')
         self.ui.textedit_notification.setHtml(msg)
         if title is not None:

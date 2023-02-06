@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
 from variable_inspector_widget import variable_inspector_widget
@@ -26,11 +25,7 @@ _ = translation_context(u'variable_inspector', category=u'extension')
 
 class variable_inspector_dockwidget(QtWidgets.QDockWidget):
 
-    """
-    desc:
-            A QDocktWidget that holds the variable inspector.
-    """
-
+    r"""A QDocktWidget that holds the variable inspector."""
     def __init__(self, main_window, ext):
 
         super(variable_inspector_dockwidget, self).__init__(

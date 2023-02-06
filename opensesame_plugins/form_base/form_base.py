@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame import item, widgets
@@ -31,7 +30,6 @@ except ImportError:
 class form_base(item.item):
 
     """A generic form plug-in"""
-
     initial_view = u'script'
 
     def __init__(self, name, experiment, script=None, item_type=u'form_base',
@@ -46,17 +44,12 @@ class form_base(item.item):
         Keyword arguments:
         script		--	A definition script. (default=None)
         """
-
         self.item_type = item_type
         item.item.__init__(self, name, experiment, script)
         self.var.description = description
 
     def reset(self):
-        """
-        desc:
-                Resets plug-in to initial values.
-        """
-
+        r"""Resets plug-in to initial values."""
         self.var.cols = u'2;2'
         self.var.rows = u'2;2'
         self.var.spacing = 10
@@ -68,11 +61,7 @@ class form_base(item.item):
         self._variables = []
 
     def set_validator(self):
-        """
-        desc:
-                See qtitem.
-        """
-
+        r"""See qtitem."""
         self.validator = form_base
 
     def parse_line(self, line):
@@ -82,7 +71,6 @@ class form_base(item.item):
         Arguments:
         line	--	A single definition line.
         """
-
         cmd, arglist, kwdict = self.syntax.parse_cmd(line)
         if cmd != u'widget':
             return
@@ -99,7 +87,6 @@ class form_base(item.item):
         Returns:
         A definition string
         """
-
         s = item.item.to_string(self, self.item_type)
         for arglist, kwdict in self._widgets:
             s += u'\t%s\n' % self.syntax.create_cmd(u'widget', arglist, kwdict)
@@ -108,7 +95,6 @@ class form_base(item.item):
 
     def run(self):
         """Runs the item."""
-
         self.set_item_onset()
         if self.var.only_render == u'yes':
             self._form.render()
@@ -117,7 +103,6 @@ class form_base(item.item):
 
     def prepare(self):
         """Prepares the item."""
-
         item.item.prepare(self)
 
         # Prepare the form
@@ -178,15 +163,13 @@ class form_base(item.item):
                 self.focus_widget = _w
 
     def var_info(self):
-        """
-        desc:
-                Add response variables to var info list.
+        r"""Add response variables to var info list.
 
-        returns:
-                desc:	A list of (var_name, description) tuples.
-                type:	list
+        Returns
+        -------
+        list
+            A list of (var_name, description) tuples.
         """
-
         l = item.item.var_info(self)
         for var in self._variables:
             l.append((var, u'[Response variable]'))

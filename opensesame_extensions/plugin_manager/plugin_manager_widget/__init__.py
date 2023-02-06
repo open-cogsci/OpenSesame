@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from plugin_manager_widget._plugin_manager_widget import plugin_manager_widget
 from plugin_manager_widget._plugin_widget import plugin_widget

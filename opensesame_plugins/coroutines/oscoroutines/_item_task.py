@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from oscoroutines._base_task import base_task
@@ -25,23 +24,16 @@ from libopensesame.item_stack import item_stack_singleton
 
 class item_task(base_task):
 
-    """
-    desc:
-            A task controls the coroutine for one item.
-    """
-
+    r"""A task controls the coroutine for one item."""
     def __init__(self, coroutines, _item, start_time, end_time,
                  abort_on_end=False):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                item:
-                        desc:	An item object.
-                        type:	item
+        Parameters
+        ----------
+        item : item
+            An item object.
         """
-
         if not hasattr(_item, u'coroutine'):
             raise osexception(
                 u'%s not supported by coroutines' % _item.item_type)
@@ -52,7 +44,6 @@ class item_task(base_task):
 
     def step(self):
         """See base_task."""
-
         item_stack_singleton.push(self._item.name, u'coroutines_step')
         retval = base_task.step(self)
         item_stack_singleton.pop()
@@ -60,7 +51,6 @@ class item_task(base_task):
 
     def launch(self):
         """See base_task."""
-
         item_stack_singleton.push(self._item.name, u'coroutines_prepare')
         self._item.prepare()
         item_stack_singleton.pop()

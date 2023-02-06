@@ -16,18 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.dialogs.base_dialog import BaseDialog
 
 
 class PatchSettings(BaseDialog):
 
-    """
-    desc:
-            A patch settings dialog, inherited by the gabor and noise settings.
-    """
-
+    r"""A patch settings dialog, inherited by the gabor and noise settings."""
     # Maps the GUI names onto valid keyword values
     env_map = {
         u'gaussian': u'gaussian',
@@ -41,14 +36,13 @@ class PatchSettings(BaseDialog):
     }
 
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:	The main window object.
+        Parameters
+        ----------
+        main_window
+            The main window object.
         """
-
         super().__init__(main_window, ui=self.ui_file())
         self.ui.combobox_env.currentIndexChanged.connect(self.apply_env)
         self.ui.edit_color1.initialize()
@@ -61,56 +55,45 @@ class PatchSettings(BaseDialog):
                 desc:	The ui file.
                 type:	unicode
         """
-
         raise NotImplementedError()
 
     def apply_env(self):
-        """
-        desc:
-                Enables/ disables the stdev control based on the env combobox.
-        """
-
+        r"""Enables/ disables the stdev control based on the env combobox."""
         self.ui.spinbox_stdev.setEnabled(
             self.ui.combobox_env.currentText() == u'gaussian')
 
     def get_properties(self):
-        """
-        desc:
-                Gets the Gabor properties.
+        r"""Gets the Gabor properties.
 
-        returns:
-                desc:	A dictionary with properties.
-                type:	dict
+        Returns
+        -------
+        dict
+            A dictionary with properties.
         """
-
         raise NotImplementedError()
 
     def set_properties(self, properties):
-        """
-        desc:
-                Fills the dialog controls based on a properties dictionary.
+        r"""Fills the dialog controls based on a properties dictionary.
 
-        arguments:
-                properties:
-                        desc:	A properties dictionary.
-                        type:	dict
+        Parameters
+        ----------
+        properties : dict
+            A properties dictionary.
         """
-
         raise NotImplementedError()
 
     def _spinbox_properties(self, *spinbox_vars):
+        r"""Gets the properties of all enabled spinboxes.
+
+        Parameters
+        ----------
+        *spinbox_vars : list
+            A list of variables that are defined through spinbox widgets.
+
+        Returns
+        -------
+        A dictionary with (var, value) mappings
         """
-        desc:
-                Gets the properties of all enabled spinboxes.
-
-        argument-list:
-                spinbox_vars:	A list of variables that are defined through spinbox
-                                                widgets.
-
-        returns:
-                A dictionary with (var, value) mappings
-        """
-
         return {
             var: getattr(self.ui, u'spinbox_%s' % var).value()
             for var in spinbox_vars
@@ -118,18 +101,18 @@ class PatchSettings(BaseDialog):
         }
 
     def _combobox_properties(self, *combobox_vars):
+        r"""Gets the properties of all enabled comboboxes.
+
+        Parameters
+        ----------
+        *combobox_vars : list
+            A list of (var, options) tuples of variables that are defined
+            through combobox widgets.
+
+        Returns
+        -------
+        A dictionary with (var, value) mappings
         """
-        desc:
-                Gets the properties of all enabled comboboxes.
-
-        argument-list:
-                combobox_vars:	A list of (var, options) tuples of variables that
-                                                are defined through combobox widgets.
-
-        returns:
-                A dictionary with (var, value) mappings
-        """
-
         return {
             var: options[getattr(self.ui, u'combobox_%s' % var).currentText()]
             for var, options in combobox_vars
@@ -137,17 +120,18 @@ class PatchSettings(BaseDialog):
         }
 
     def _set_spinbox(self, spinbox, var, properties):
-        """
-        desc:
-                Safely sets a spinbox based on a variable, or disables the spinbox
-                if the value is not numeric.
+        r"""Safely sets a spinbox based on a variable, or disables the spinbox
+        if the value is not numeric.
 
-        arguments:
-                spinbox:	A QSpinBox
-                var:		A variable name
-                properties:	A properties dict
+        Parameters
+        ----------
+        spinbox
+            A QSpinBox
+        var
+            A variable name
+        properties
+            A properties dict
         """
-
         if isinstance(properties[var], (int, float)):
             spinbox.setEnabled(True)
             spinbox.setValue(properties[var])
@@ -155,18 +139,20 @@ class PatchSettings(BaseDialog):
             spinbox.setEnabled(False)
 
     def _set_combobox(self, options, combobox, var, properties):
-        """
-        desc:
-                Safely sets a combobox based on a variable, or disables the combobox
-                if the value is not among the combobox options.
+        r"""Safely sets a combobox based on a variable, or disables the
+        combobox if the value is not among the combobox options.
 
-        arguments:
-                options:	A dictionary with options
-                combobox:	QComboBox
-                var:		A variable name
-                properties:	A properties dict
+        Parameters
+        ----------
+        options
+            A dictionary with options
+        combobox
+            QComboBox
+        var
+            A variable name
+        properties
+            A properties dict
         """
-
         for key, val in options.items():
             if val == properties[var]:
                 i = combobox.findText(key)

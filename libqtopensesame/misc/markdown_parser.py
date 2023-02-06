@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame import metadata
 from libopensesame.py3compat import *
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -42,20 +41,15 @@ _ = translation_context(u'markdown', category=u'core')
 
 class MarkdownParser(BaseSubcomponent):
 
-    """
-    desc:
-            A Markdown parser with syntax highlighting.
-    """
-
+    r"""A Markdown parser with syntax highlighting."""
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:	The main-window object.
+        Parameters
+        ----------
+        main_window
+            The main-window object.
         """
-
         self.setup(main_window)
         self.css = u'<style type="text/css">'
         with safe_open(self.main_window.theme.resource(u'markdown.css')) as fd:
@@ -86,20 +80,18 @@ Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-202
 ''' % (_(u'Dismiss this message'), metadata.identity)
 
     def highlight(self, md):
+        r"""Replaces ~~~ blocks with syntax-highlighted HTML code.
+
+        Parameters
+        ----------
+        md : str
+            A Markdown  string.
+
+        Returns
+        -------
+        str
+            A Markdown  string.
         """
-        desc:
-                Replaces ~~~ blocks with syntax-highlighted HTML code.
-
-        arguments:
-                md:
-                        desc:	A Markdown  string.
-                        type:	str
-
-        returns:
-                desc:	A Markdown  string.
-                type:	str
-        """
-
         if highlight is None:
             return md
         while True:
@@ -121,20 +113,18 @@ Copyright <a href="http://www.cogsci.nl/smathot">Sebastiaan Mathôt</a> 2010-202
         return md
 
     def to_html(self, md):
+        r"""Converts Markdown to HTML.
+
+        Parameters
+        ----------
+        md : str
+            A Markdown  string.
+
+        Returns
+        -------
+        str
+            A Markdown  string.
         """
-        desc:
-                Converts Markdown to HTML.
-
-        arguments:
-                md:
-                        desc:	A Markdown  string.
-                        type:	str
-
-        returns:
-                desc:	A Markdown  string.
-                type:	str
-        """
-
         md = self.highlight(md)
         if markdown is None:
             return u'<pre>%s</pre>' % md

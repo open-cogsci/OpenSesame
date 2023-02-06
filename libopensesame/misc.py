@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 import re
@@ -33,11 +32,7 @@ from libopensesame.oslogging import oslogger
 
 
 def parse_environment_file():
-    """
-    desc:
-            Parses the environment.yaml file if it exists.
-    """
-
+    r"""Parses the environment.yaml file if it exists."""
     if not os.path.exists(u'environment.yaml'):
         return
     with safe_open(u'environment.yaml') as fd:
@@ -69,7 +64,6 @@ def parse_environment_file():
 
 def change_working_dir():
     """A horrifyingly ugly hack to change the working directory under Windows"""
-
     import libqtopensesame.qtopensesame
 
     if os.name == "nt":
@@ -94,7 +88,6 @@ def change_working_dir():
 
 def opensesamerun_options():
     """Parse the command line options for opensesamerun"""
-
     import optparse
 
     parser = optparse.OptionParser(
@@ -174,7 +167,6 @@ def opensesamerun_ready(options):
     Returns:
     True or False, depending on whether the options are sufficient
     """
-
     # Check if the experiment exists
     if not os.path.exists(options.experiment):
         return False
@@ -197,7 +189,6 @@ def messagebox(title, msg):
     title -- the title of the messagebox
     msg -- the message
     """
-
     import tkinter as Tkinter
     root = Tkinter.Tk()
     root.title(title)
@@ -219,7 +210,6 @@ def strip_tags(s):
     Returns:
     The stripped string
     """
-
     import re
     return re.compile(r'<.*?>').sub('', str(s).replace("<br />",
                                                        "\n").replace("<br>", "\n"))
@@ -236,7 +226,6 @@ def resource(name):
     Returns:
     A Unicode string with the full path to the resource.
     """
-
     for folder in resource_folders:
         path = os.path.join(folder, safe_decode(name, enc=u'utf-8'))
         if os.path.exists(path):
@@ -251,7 +240,6 @@ def home_folder():
     Returns:
     A path to the home folder.
     """
-
     import platform
     if platform.system() == u"Windows":
         home_folder = os.environ[u"APPDATA"]
@@ -321,7 +309,6 @@ def open_url(url):
     Arguments:
     url -- a url
     """
-
     oslogger.info(u'opening %s' % url)
     if url.startswith(u'http://') or url.startswith(u'https://'):
         import webbrowser
@@ -350,7 +337,6 @@ def filesystem_encoding():
     Returns:
     A string with the file system encoding, such as 'utf-8' or 'mdcs'
     """
-
     enc = sys.getfilesystemencoding()
     if enc is None:
         enc = u'utf-8'
@@ -367,7 +353,6 @@ def strip_html(s):
     Returns:
     A stripped string.
     """
-
     s = s.replace(u'<br />', u'\n')
     for tag in [u'<i>', u'</i>', u'<b>', u'</b>']:
         s = s.replace(tag, u'')
@@ -386,7 +371,6 @@ def escape_html(s):
     Returns:
     An escaped string.
     """
-
     # Note that we need to replace the '&' first, otherwise we'll start escaping
     # the escaped characters.
     l = [(u'&', u'&amp;'), (u' ', u'&nbsp;'),

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension, suspend_events
 from libqtopensesame.items.qtstructure_item import qtstructure_item
@@ -29,17 +28,9 @@ _ = translation_context(u'undo_manager', category=u'extension')
 
 class undo_manager(base_extension):
 
-    """
-    desc:
-            An extension that implements undo/ redo.
-    """
-
+    r"""An extension that implements undo/ redo."""
     def event_startup(self):
-        """
-        desc:
-                Initializes the extension on startup.
-        """
-
+        r"""Initializes the extension on startup."""
         self.undo_action = self.qaction(u'edit-undo', _(u'Undo'), self.undo,
                                         tooltip=_(u'Undo most recent action'),
                                         shortcut=u'Alt+Ctrl+Z')
@@ -50,65 +41,39 @@ class undo_manager(base_extension):
         self.initialize()
 
     def event_open_experiment(self, path):
-        """
-        desc:
-                Re-initializes when a new experiment is opened.
-        """
-
+        r"""Re-initializes when a new experiment is opened."""
         self.initialize()
 
     def event_change_item(self, name):
-        """
-        desc:
-                Remember an items state when it has changed.
-        """
-
+        r"""Remember an items state when it has changed."""
         self.remember_item_state(name)
 
     def event_new_item(self, name, _type):
-        """
-        desc:
-                Remember addition of a new item.
-        """
-
+        r"""Remember addition of a new item."""
         self.remember_new_item(name)
 
     def activate(self):
+        r"""Activated the redo action (undo is added as custom action in
+        event_startup).
         """
-        desc:
-                Activated the redo action (undo is added as custom action in
-                event_startup).
-        """
-
         self.redo()
 
     def initialize(self):
-        """
-        desc:
-                Initializes an empty undo stack.
-        """
-
+        r"""Initializes an empty undo stack."""
         self.stack = undo_stack()
         for item in self.experiment.items:
             self.remember_item_state(item)
         self.undo_action.setEnabled(self.stack.can_undo())
 
     def remember_experiment_state_before(self):
-        """
-        desc:
-                Remember the entire experiment state before it has changed.
-        """
-
+        r"""Remember the entire experiment state before it has changed."""
         self.remember_experiment_state()
 
     def remember_experiment_state_after(self):
+        r"""Remember the entire experiment state after it has changed, and
+        update the current-item status. If no change has actually occurred the
+        last two experiments are discarded.
         """
-        desc:
-                Remember the entire experiment state after it has changed, and
-                update the current-item status. If no change has actually occurred
-                the last two experiments are discarded.
-        """
-
         self.remember_experiment_state()
         if self.prune_unchanged_experiment():
             return
@@ -116,37 +81,31 @@ class undo_manager(base_extension):
             self.make_current(item)
 
     def make_current(self, item):
-        """
-        desc:
-                Update the current-item status for one item.
+        r"""Update the current-item status for one item.
 
-        arguments:
-                item:	The item name.
+        Parameters
+        ----------
+        item
+            The item name.
         """
-
         script = self.experiment.items[item].cached_script
         self.stack.set_current(item, script)
 
     def remember_item_state(self, item):
-        """
-        desc:
-                Push the state of an item to the undo stack.
+        r"""Push the state of an item to the undo stack.
 
-        arguments:
-                item:	The item name.
+        Parameters
+        ----------
+        item
+            The item name.
         """
-
         script = self.experiment.items[item].cached_script
         self.stack.add(item, script)
         self.set_enabled(self.stack.can_redo())
         self.undo_action.setEnabled(self.stack.can_undo())
 
     def remember_experiment_state(self):
-        """
-        desc:
-                Push the state of the entire experiment to the undo stack.
-        """
-
+        r"""Push the state of the entire experiment to the undo stack."""
         script = self.experiment.to_string()
         self.stack.add(u'__experiment__', script)
         self.set_enabled(self.stack.can_redo())
@@ -159,12 +118,9 @@ class undo_manager(base_extension):
         self.undo_action.setEnabled(self.stack.can_undo())
 
     def prune_unchanged_experiment(self):
+        r"""If the last two items on the undo stack are full experiments, and
+        there is no change between them, discard them.
         """
-        desc:
-                If the last two items on the undo stack are full experiments, and
-                there is no change between them, discard them.
-        """
-
         if len(self.stack) < 2:
             return False
         key1, state1 = self.stack.peek(-1)
@@ -176,11 +132,7 @@ class undo_manager(base_extension):
 
     @suspend_events
     def undo(self, dummy=False):
-        """
-        desc:
-                Perform an undo action.
-        """
-
+        r"""Perform an undo action."""
         if not self.stack:
             return
         item, script = self.stack.undo()
@@ -203,11 +155,7 @@ class undo_manager(base_extension):
 
     @suspend_events
     def redo(self):
-        """
-        desc:
-                Perform a redo action.
-        """
-
+        r"""Perform a redo action."""
         item, script = self.stack.redo()
         if item not in self.experiment.items:
             return
@@ -221,11 +169,7 @@ class undo_manager(base_extension):
         self.undo_action.setEnabled(self.stack.can_undo())
 
     def show(self):
-        """
-        desc:
-                Print a summary of undo actions to the debug window.
-        """
-
+        r"""Print a summary of undo actions to the debug window."""
         item, old_script = self.stack.peek()
         if item is None:
             print(u'\nThe undo stack is empty')

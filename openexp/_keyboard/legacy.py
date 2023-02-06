@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import platform
 import pygame
@@ -47,13 +46,9 @@ if platform.system() == "Darwin":
 
 class Legacy(Keyboard):
 
+    r"""This is a keyboard backend built on top of PyGame. For function
+    specifications and docstrings, see `openexp._keyboard.keyboard`.
     """
-    desc:
-            This is a keyboard backend built on top of PyGame.
-            For function specifications and docstrings, see
-            `openexp._keyboard.keyboard`.
-    """
-
     def __init__(self, experiment, **resp_args):
 
         pygame.init()

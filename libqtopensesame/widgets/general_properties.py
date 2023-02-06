@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.oslogging import oslogger
 from qtpy import QtWidgets
@@ -31,18 +30,16 @@ _ = translation_context(u'general_properties', category=u'core')
 class GeneralProperties(BaseWidget):
 
     """The QWidget for the general properties tab."""
-
     backend_format = u'%s [%s]'
 
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:	A qtopensesame object.
+        Parameters
+        ----------
+        main_window
+            A qtopensesame object.
         """
-
         super().__init__(main_window, ui=u'widgets.general_properties')
         self.lock = False
         # Set the header, with the icon, label and script button
@@ -89,21 +86,14 @@ class GeneralProperties(BaseWidget):
         self.on_activate = self.refresh
 
     def set_header_label(self):
+        r"""Sets the general header based on the experiment title and
+        description.
         """
-        desc:
-                Sets the general header based on the experiment title and
-                description.
-        """
-
         self.header_widget.set_name(self.experiment.var.title)
         self.header_widget.set_desc(self.experiment.var.description)
 
     def apply_changes(self):
-        """
-        desc:
-                Applies changes to the general tab.
-        """
-
+        r"""Applies changes to the general tab."""
         # Skip if the general tab is locked and lock it otherwise
         if self.lock:
             return
@@ -181,11 +171,7 @@ class GeneralProperties(BaseWidget):
         self.main_window.set_busy(False)
 
     def refresh(self):
-        """
-        desc:
-                Updates the controls of the general tab.
-        """
-
+        r"""Updates the controls of the general tab."""
         # Lock the general tab to prevent a recursive loop
         self.lock = True
         # Set the header containing the titel etc

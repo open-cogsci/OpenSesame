@@ -16,24 +16,21 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame import plugins
 
 
 def libjoystick(experiment, **kwargs):
+    r"""A factory that returns a back-end specific joystick module.
+
+    Parameters
+    ----------
+    experiment
+        The experiment object.
+    **kwargs : dict
+        Keyords to be passed on the joystick init.
     """
-    desc:
-            A factory that returns a back-end specific joystick module.
-
-    arguments:
-            experiment:		The experiment object.
-
-    keyword-dict:
-            kwargs:			Keyords to be passed on the joystick init.
-    """
-
     if experiment.var.canvas_backend == u'psycho':
         raise osexception(
             u'The joystick plug-in does not yet support the psycho back-end'

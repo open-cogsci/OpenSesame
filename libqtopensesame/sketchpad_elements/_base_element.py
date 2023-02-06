@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from qtpy import QtWidgets, QtGui
@@ -27,31 +26,23 @@ _ = translation_context(u'sketchpad', category=u'item')
 
 class BaseElement:
 
-    """
-    desc:
-            A base class for the sketchpad-element GUIs.
-    """
-
+    r"""A base class for the sketchpad-element GUIs."""
     def __init__(self, sketchpad, string=None, properties=None):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        sketchpad
+            A sketchpad object.
+        type
+            sketchpad
+        string : str, unicode, NoneType, optional
+            An element-definition string.
+        properties : dict, NoneType, optional
+            A dictionary with element properties. If a dictionary is provided,
+            the string keyword is ignored, and a definition string is created
+            from the properties dict.
         """
-        desc:
-                Constructor.
-
-        arguments:
-                sketchpad:	A sketchpad object.
-                type:		sketchpad
-
-        keywords:
-                string:
-                        desc:	An element-definition string.
-                        type:	[str, unicode, NoneType]
-                properties:
-                        desc:	A dictionary with element properties. If a dictionary
-                                        is provided, the string keyword is ignored, and a
-                                        definition string is created from the properties dict.
-                        type:	[dict, NoneType]
-        """
-
         if properties is not None:
             string = u'draw %s' % (self.__class__.__name__)
             for var, val in properties.items():
@@ -77,26 +68,22 @@ class BaseElement:
         return self.experiment.main_window.console
 
     def draw(self):
-        """
-        desc:
-                Draw this element, without redrawing the entire sketchpad.
-        """
-
+        r"""Draw this element, without redrawing the entire sketchpad."""
         self.graphics_item = super(base_element, self).draw()
         self.graphics_item.element = self
         self.graphics_item.setToolTip(self.to_string())
         self.update()
 
     def move(self, dx=0, dy=0):
-        """
-        desc:
-                Moves the element position.
+        r"""Moves the element position.
 
-        keywords:
-                dx:		The horizontal movement.
-                dy:		The vertical movement.
+        Parameters
+        ----------
+        dx, optional
+            The horizontal movement.
+        dy, optional
+            The vertical movement.
         """
-
         for var, val in self.properties.items():
             if var in [u'x', u'x1', u'x2'] and \
                     isinstance(self.properties[var], (int, float)):
@@ -106,38 +93,32 @@ class BaseElement:
                 self.properties[var] += dy
 
     def set_pos(self, x=0, y=0):
-        """
-        desc:
-                Sets the element position.
+        r"""Sets the element position.
 
-        keywords:
-                x:		The horizontal position.
-                y:		The vertical position.
+        Parameters
+        ----------
+        x, optional
+            The horizontal position.
+        y, optional
+            The vertical position.
         """
-
         self.properties[u'x'] = x
         self.properties[u'y'] = y
 
     def get_pos(self):
-        """
-        desc:
-                Gets the element position.
+        r"""Gets the element position.
 
-        returns:
-                desc:	An (x,y) tuple.
-                type:	tuple
+        Returns
+        -------
+        tuple
+            An (x,y) tuple.
         """
-
         if u'x' in self.properties:
             return self.properties[u'x'], self.properties[u'y']
         return self.properties[u'x1'], self.properties[u'y1']
 
     def update(self):
-        """
-        desc:
-                Redraws this element.
-        """
-
+        r"""Redraws this element."""
         if self.graphics_item is None:
             # Sometimes update is called before draw, and the graphics_item
             # doesn't exist yet.
@@ -150,38 +131,34 @@ class BaseElement:
             self.graphics_item.setGraphicsEffect(None)
 
     def highlight(self, highlighted=True):
-        """
-        desc:
-                Sets the highlight status of the element and redraws.
+        r"""Sets the highlight status of the element and redraws.
 
-        arguments:
-                highlighted:	A bool indicating the highlight status.
+        Parameters
+        ----------
+        highlighted
+            A bool indicating the highlight status.
         """
-
         self.highlighted = highlighted
         self.update()
 
     def select(self, selected=True):
-        """
-        desc:
-                Sets the selected status of the element and redraws.
+        r"""Sets the selected status of the element and redraws.
 
-        arguments:
-                selected:	A bool indicating the selected status.
+        Parameters
+        ----------
+        selected
+            A bool indicating the selected status.
         """
-
         self.selected = selected
         self.update()
 
     def selected_effect(self):
-        """
-        desc:
-                Creates the selected effect.
+        r"""Creates the selected effect.
 
-        returns:
-                A QGraphicsEffect object.
+        Returns
+        -------
+        A QGraphicsEffect object.
         """
-
         effect = QtWidgets.QGraphicsDropShadowEffect()
         effect.setColor(QtGui.QColor('#00FF00'))
         effect.setBlurRadius(32)
@@ -189,35 +166,33 @@ class BaseElement:
         return effect
 
     def highlighted_effect(self):
-        """
-        desc:
-                Creates the highlighted effect.
+        r"""Creates the highlighted effect.
 
-        returns:
-                A QGraphicsEffect object.
+        Returns
+        -------
+        A QGraphicsEffect object.
         """
-
         effect = QtWidgets.QGraphicsOpacityEffect()
         return effect
 
     def get_property(self, name, _type=str, fallback=None):
+        r"""Gets an element property.
+
+        Parameters
+        ----------
+        name
+            The property name.
+        _type, optional
+            The property type.
+        fallback, optional
+            A fallback value, in case the value cannot be cast to the requested
+            type.
+
+        Returns
+        -------
+        The property in the specified type, or None if the property doesn't
+        exist.
         """
-        desc:
-                Gets an element property.
-
-        arguments:
-                name:	The property name.
-
-        keywords:
-                _type:		The property type.
-                fallback:	A fallback value, in case the value cannot be cast to
-                                        the requested type.
-
-        returns:
-                The property in the specified type, or None if the property doesn't
-                exist.
-        """
-
         properties = self.eval_properties()
         if name not in properties:
             return None
@@ -245,19 +220,18 @@ class BaseElement:
         raise osexception(u'Unknown type: %s' % _type)
 
     def set_property(self, name, val, yes_no=False):
+        r"""Sets an element property.
+
+        Parameters
+        ----------
+        name
+            The property name.
+        val
+            The property value.
+        yes_no, optional
+            Indicates whether the value should be treated as a bool and recoded
+            to yes/ no.
         """
-        desc:
-                Sets an element property.
-
-        arguments:
-                name:	The property name.
-                val:	The property value.
-
-        keywords:
-                yes_no:	Indicates whether the value should be treated as a bool and
-                                recoded to yes/ no.
-        """
-
         if name not in self.properties:
             return None
         if yes_no:
@@ -268,28 +242,22 @@ class BaseElement:
         self.properties[name] = val
 
     def script_validator(self, s):
+        r"""Validates an element script.
+
+        Parameters
+        ----------
+        s : str
+            An element script.
+
+        Returns
+        -------
+        bool
+            True if the script is valid, False otherwise.
         """
-        desc:
-                Validates an element script.
-
-        arguments:
-                s:
-                        desc:	An element script.
-                        type:	str
-
-        returns:
-                desc:	True if the script is valid, False otherwise.
-                type:	bool
-        """
-
         return u'\n' not in s
 
     def show_script_edit_dialog(self):
-        """
-        desc:
-                Shows the script-edit dialog.
-        """
-
+        r"""Shows the script-edit dialog."""
         old_string = self.to_string()
         string = TextInput(self.sketchpad._edit_widget,
                            msg=_(u'Element script'), content=self.to_string(),
@@ -306,24 +274,18 @@ class BaseElement:
         self.sketchpad.draw()
 
     def show_edit_dialog(self):
+        r"""Shows an edit dialog for the element, typically to edit the element
+        script.
         """
-        desc:
-                Shows an edit dialog for the element, typically to edit the element
-                script.
-        """
-
         self.show_script_edit_dialog()
 
     def show_context_menu(self, pos):
-        """
-        desc:
-                Shows a context menu for the element.
+        r"""Shows a context menu for the element.
 
-        arguments:
-                pos:
-                        type:	QPoint
+        Parameters
+        ----------
+        pos : QPoint
         """
-
         from libqtopensesame._input.popup_menu import popup_menu
         pm = popup_menu(self.main_window, [
             (0, _(u'Edit script'), u'utilities-terminal'),
@@ -349,50 +311,52 @@ class BaseElement:
 
     @classmethod
     def mouse_press(cls, sketchpad, pos):
+        r"""A static method that processes mouse clicks and returns an element
+        object when one has been created.
+
+        Parameters
+        ----------
+        sketchpad
+            A sketchpad object.
+        pos
+            An (x,y) tuple with mouse-click coordinates.
+
+        Returns
+        -------
+        An element object, or None if no element was created.
         """
-        desc:
-                A static method that processes mouse clicks and returns an element
-                object when one has been created.
-
-        arguments:
-                sketchpad:	A sketchpad object.
-                pos:		An (x,y) tuple with mouse-click coordinates.
-
-        returns:
-                An element object, or None if no element was created.
-        """
-
         return None
 
     @classmethod
     def mouse_release(cls, sketchpad, pos):
+        r"""A static method that processes mouse releases and returns an
+        element object when one has been created.
+
+        Parameters
+        ----------
+        sketchpad
+            A sketchpad object.
+        pos
+            An (x,y) tuple with mouse-release coordinates.
+
+        Returns
+        -------
+        An element object, or None if no element was created.
         """
-        desc:
-                A static method that processes mouse releases and returns an element
-                object when one has been created.
-
-        arguments:
-                sketchpad:	A sketchpad object.
-                pos:		An (x,y) tuple with mouse-release coordinates.
-
-        returns:
-                An element object, or None if no element was created.
-        """
-
         pass
 
     @classmethod
     def mouse_move(cls, sketchpad, pos):
-        """
-        desc:
-                A static method that processes mouse moves, and gives elements the
-                opportunity to update their preview.
+        r"""A static method that processes mouse moves, and gives elements the
+        opportunity to update their preview.
 
-        arguments:
-                sketchpad:	A sketchpad object.
-                pos:		An (x,y) tuple with mousecoordinates.
+        Parameters
+        ----------
+        sketchpad
+            A sketchpad object.
+        pos
+            An (x,y) tuple with mousecoordinates.
         """
-
         pass
 
     @classmethod
@@ -402,169 +366,140 @@ class BaseElement:
 
     @staticmethod
     def requires_text():
-        """
-        desc:
-                Indicates whether the element requires text settings.
+        r"""Indicates whether the element requires text settings.
 
-        returns:
-                type:	bool
+        Returns
+        -------
+        bool
         """
-
         return False
 
     @staticmethod
     def requires_name():
-        """
-        desc:
-                Indicates whether the element requires name settings.
+        r"""Indicates whether the element requires name settings.
 
-        returns:
-                type:	bool
+        Returns
+        -------
+        bool
         """
-
         return True
 
     @staticmethod
     def requires_penwidth():
-        """
-        desc:
-                Indicates whether the element requires penwidth settings.
+        r"""Indicates whether the element requires penwidth settings.
 
-        returns:
-                type:	bool
+        Returns
+        -------
+        bool
         """
-
         return False
 
     @staticmethod
     def requires_color():
-        """
-        desc:
-                Indicates whether the element requires color settings.
+        r"""Indicates whether the element requires color settings.
 
-        returns:
-                type:	bool
+        Returns
+        -------
+        bool
         """
-
         return False
 
     @staticmethod
     def requires_arrow_head_width():
-        """
-        desc:
-                Indicates whether the element requires arrow_head_width settings.
+        r"""Indicates whether the element requires arrow_head_width settings.
 
-        returns:
-                type:	bool
+        Returns
+        -------
+        bool
         """
-
         return False
 
     @staticmethod
     def requires_arrow_body_width():
-        """
-        desc:
-                Indicates whether the element requires arrow_body_width settings.
+        r"""Indicates whether the element requires arrow_body_width settings.
 
-        returns:
-                type:	bool
+        Returns
+        -------
+        bool
         """
-
         return False
 
     @staticmethod
     def requires_arrow_body_length():
-        """
-        desc:
-                Indicates whether the element requires arrow_body_length settings.
+        r"""Indicates whether the element requires arrow_body_length settings.
 
-        returns:
-                type:	bool
+        Returns
+        -------
+        bool
         """
-
         return False
 
     @staticmethod
     def requires_scale():
-        """
-        desc:
-                Indicates whether the element requires scale settings.
+        r"""Indicates whether the element requires scale settings.
 
-        returns:
-                type:	bool
+        Returns
+        -------
+        bool
         """
-
         return False
 
     @staticmethod
     def requires_rotation():
-        """
-        desc:
-                Indicates whether the element requires rotation settings.
+        r"""Indicates whether the element requires rotation settings.
 
-        returns:
-                type:	bool
+        Returns
+        -------
+        bool
         """
-
         return False
 
     @staticmethod
     def requires_fill():
-        """
-        desc:
-                Indicates whether the element requires fill settings.
+        r"""Indicates whether the element requires fill settings.
 
-        returns:
-                type:	bool
+        Returns
+        -------
+        bool
         """
-
         return False
 
     @staticmethod
     def requires_center():
-        """
-        desc:
-                Indicates whether the element requires center settings.
+        r"""Indicates whether the element requires center settings.
 
-        returns:
-                type:	bool
+        Returns
+        -------
+        bool
         """
-
         return False
 
     @staticmethod
     def requires_show_if():
-        """
-        desc:
-                Indicates whether the element requires show-if settings.
+        r"""Indicates whether the element requires show-if settings.
 
-        returns:
-                type:	bool
+        Returns
+        -------
+        bool
         """
-
         return True
 
     @staticmethod
     def cursor():
-        """
-        desc:
-                Indicates which cursor should be shown when the element tool is
-                selected.
+        r"""Indicates which cursor should be shown when the element tool is
+        selected.
 
-        returns:
-                desc:	A Qt::CursorShape value
-                type:	int
+        Returns
+        -------
+        int
+            A Qt::CursorShape value
         """
-
         return u'cursor-pencil', 3, 28
 
     def show_polar_coordinates_dialog(self):
+        r"""The dialog for calculating cartesian coordinates from polar
+        coordinates.
         """
-        desc:
-                The dialog for calculating cartesian coordinates from polar
-                coordinates.
-        """
-
         from libqtopensesame.dialogs.polar_coordinates import polar_coordinates
 
         d = polar_coordinates(self.sketchpad._edit_widget)

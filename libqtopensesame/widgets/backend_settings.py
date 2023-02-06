@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 import sip
@@ -61,7 +60,6 @@ class BackendSettings(BaseWidget):
 class SettingsEdit(QtWidgets.QLineEdit, BaseSubcomponent):
 
     """An edit widget for a single variable"""
-
     def __init__(self, main_window, var, val):
         """
         Constructor
@@ -74,7 +72,6 @@ class SettingsEdit(QtWidgets.QLineEdit, BaseSubcomponent):
         Keywords arguments:
         parent -- parent QWidget (default=None)
         """
-
         super().__init__()
         self.setup(main_window)
         self.setText(safe_decode(val))
@@ -83,7 +80,6 @@ class SettingsEdit(QtWidgets.QLineEdit, BaseSubcomponent):
 
     def apply_setting(self):
         """Apply changes"""
-
         self.experiment.var.set(
             self.var, self.experiment.syntax.sanitize(self.text()))
 
@@ -91,7 +87,6 @@ class SettingsEdit(QtWidgets.QLineEdit, BaseSubcomponent):
 class SettingsWidget(BaseWidget):
 
     """A widget containing a number of settings"""
-
     def __init__(self, main_window, settings):
         """
         Constructor
@@ -103,7 +98,6 @@ class SettingsWidget(BaseWidget):
         Keywords arguments:
         parent -- parent QWidget (default=None)
         """
-
         super().__init__(main_window)
         self.settings = settings
         self.layout = QtWidgets.QFormLayout(self)

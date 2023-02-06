@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 # OpenCV is used to read the video file
@@ -46,7 +45,6 @@ class video_player(item.item):
         Keyword arguments:
         script		--	A definition script. (default=None)
         """
-
         self.duration = u"keypress"
         self.fullscreen = u"yes"
         self.frame_dur = 50
@@ -55,7 +53,6 @@ class video_player(item.item):
 
     def prepare(self):
         """Opens the video file for playback."""
-
         if self.experiment.var.get(u'canvas_backend') != u'legacy':
             raise osexception(
                 u'The video_player plug-in requires the legacy back-end!')
@@ -90,7 +87,6 @@ class video_player(item.item):
 
     def run(self):
         """Handles the actual video playback."""
-
         # Log the onset time of the item
         self.set_item_onset()
 

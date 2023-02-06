@@ -48,7 +48,6 @@ installed on an attached Android device or emulator. The resulting `.apk` can
 be found in the `bin` subfolder of the PyGame subset for Android folder.
 ---
 """
-
 import shutil
 import sys
 import os

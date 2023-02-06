@@ -16,28 +16,23 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.sketchpad_elements._base_element import BaseElement
 
 
 class Fixdot(BaseElement):
 
-    """
-    desc:
-            A fixation-dot element for the sketchpad.
-    """
-
+    r"""A fixation-dot element for the sketchpad."""
     def __init__(self, sketchpad, string):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                sketchpad:		A sketchpad object.
-                string:			A definition string.
+        Parameters
+        ----------
+        sketchpad
+            A sketchpad object.
+        string
+            A definition string.
         """
-
         defaults = [
             (u'x', None),
             (u'y', None),
@@ -47,11 +42,7 @@ class Fixdot(BaseElement):
         super().__init__(sketchpad, string, defaults=defaults)
 
     def draw(self):
-        """
-        desc:
-                Draws the element to the canvas of the sketchpad.
-        """
-
+        r"""Draws the element to the canvas of the sketchpad."""
         properties = self.eval_properties()
         return self.canvas.fixdot(properties[u'x'], properties[u'y'],
                                   style=properties[u'style'],

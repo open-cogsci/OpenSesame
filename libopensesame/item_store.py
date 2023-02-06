@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.misc import snake_case
 from libopensesame import plugins
@@ -35,142 +34,128 @@ INVALID_NAMES = [
 
 class ItemStore:
 
+    r"""The `items` object provides dict-like access to the items. It's mainly
+    useful for programatically executing items.
+
+    An `items` object is created
+    automatically when the experiment starts.
+
+    In addition to the functions
+    listed below, the following semantics are
+    supported:
+
+    __Example__:
+
+    ~~~
+    .python
+    # Programmatically prepare and run a sketchpad item.
+    items.execute(u'my_sketchpad')
+    # Check if an item exists
+    if u'my_sketchpad'
+    in items:
+            print(u'my_sketchpad exists')
+    # Delete an item
+    del
+    items[u'my_sketchpad']
+    # Walk through all item names
+    for item_name in
+    items:
+            print(item_name)
+    ~~~
+
+    [TOC]
     """
-    desc: |
-        The `items` object provides dict-like access to the items. It's mainly
-        useful for programatically executing items.
-
-        An `items` object is created automatically when the experiment starts.
-
-        In addition to the functions listed below, the following semantics are
-        supported:
-
-        __Example__:
-
-        ~~~ .python
-        # Programmatically prepare and run a sketchpad item.
-        items.execute(u'my_sketchpad')
-        # Check if an item exists
-        if u'my_sketchpad' in items:
-                print(u'my_sketchpad exists')
-        # Delete an item
-        del items[u'my_sketchpad']
-        # Walk through all item names
-        for item_name in items:
-                print(item_name)
-        ~~~
-
-        [TOC]
-    """
-
     built_in_types = [u'sequence', u'loop', u'sketchpad', u'feedback',
                       u'keyboard_response', u'mouse_response', u'sampler',
                       u'synth', u'inline_script', u'logger']
 
     def __init__(self, experiment):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        experiment : experiment.
+            The experiment object.
         """
-        visible: False
-
-        desc:
-                Constructor.
-
-        arguments:
-                experiment:
-                        desc:	The experiment object.
-                        type:	experiment.
-        """
-
         self.__items__ = {}
         self.experiment = experiment
 
     def execute(self, name):
+        r"""Executes the run and prepare phases of an item, and updates the
+        item stack.
+
+        Parameters
+        ----------
+        name : str
+            An item name.
+
+        Examples
+        --------
+        >>> items.execute(u'target_sketchpad')
         """
-        desc:
-                Executes the run and prepare phases of an item, and updates the item
-                stack.
-
-        arguments:
-                name:
-                        desc:	An item name.
-                        type:	str
-
-        example: |
-                items.execute(u'target_sketchpad')
-        """
-
         self.prepare(name)
         self.run(name)
 
     def run(self, name):
+        r"""Executes the run phase of an item, and updates the item stack.
+
+        Parameters
+        ----------
+        name : str
+            An item name.
+
+        Examples
+        --------
+        >>> items.prepare('target_sketchpad')
+        >>> items.run('target_sketchpad')
         """
-        desc:
-                Executes the run phase of an item, and updates the item stack.
-
-        arguments:
-                name:
-                        desc:	An item name.
-                        type:	str
-
-        example: |
-                items.prepare('target_sketchpad')
-                items.run('target_sketchpad')
-        """
-
         item_stack_singleton.push(name, u'run')
         self[name].run()
         item_stack_singleton.pop()
 
     def prepare(self, name):
+        r"""Executes the prepare phase of an item, and updates the item stack.
+
+        Parameters
+        ----------
+        name : str
+            An item name.
+
+        Examples
+        --------
+        >>> items.prepare('target_sketchpad')
+        >>> items.run('target_sketchpad')
         """
-        desc:
-                Executes the prepare phase of an item, and updates the item stack.
-
-        arguments:
-                name:
-                        desc:	An item name.
-                        type:	str
-
-        example: |
-                items.prepare('target_sketchpad')
-                items.run('target_sketchpad')
-        """
-
         item_stack_singleton.push(name, u'prepare')
         self[name].prepare()
         item_stack_singleton.pop()
 
     def new(self, _type, name=None, script=None, allow_rename=True):
-        """
-        desc:
-            Creates a new item.
+        r"""Creates a new item.
 
-        arguments:
-            _type:
-                desc: The item type.
-                type: unicode
+        Parameters
+        ----------
+        _type : unicode
+            The item type.
+        name : unicode, NoneType, optional
+            The item name, or None to choose a unique name based on the item
+            type.
+        script : unicode, NoneType, optional
+            A definition script, or None to start with a blank item.
+        allow_rename : bool, optional
+            Indicates whether OpenSesame can use a different name from the one
+            that is provided as `name` to avoid duplicate names etc.
 
-        keywords:
-            name:
-                desc: The item name, or None to choose a unique name based
-                      on the item type.
-                type: [unicode, NoneType]
-            script:
-                desc: A definition script, or None to start with a blank item.
-                type: [unicode, NoneType]
-            allow_rename:
-                desc: Indicates whether OpenSesame can use a different name
-                      from the one that is provided as `name` to avoid
-                      duplicate names etc.
-                type: bool
+        Returns
+        -------
+        item
+            The newly generated item.
 
-        returns:
-                desc: The newly generated item.
-                type: item
-
-        example: |
-                items.new('sketchpad', name='my_sketchpad')
-                items['my_sketchpad'].prepare()
-                items['my_sketchpad'].run()
+        Examples
+        --------
+        >>> items.new('sketchpad', name='my_sketchpad')
+        >>> items['my_sketchpad'].prepare()
+        >>> items['my_sketchpad'].run()
         """
         oslogger.debug('creating %s' % _type)
         if allow_rename:
@@ -198,30 +183,26 @@ class ItemStore:
         return item
 
     def valid_name(self, item_type, suggestion=None):
+        r"""Generates a unique name that is valid and resembles the desired
+        name.
+
+        Parameters
+        ----------
+        item_type : unicode
+            The type of the item to suggest a name for.
+        suggestion : unicode, NoneType, optional
+            The desired name, or None to choose a name based on the item's
+            type.
+
+        Returns
+        -------
+        unicode
+            A unique name.
+
+        Examples
+        --------
+        >>> valid_name = items.valid_name(u'sketchpad', u'an invalid name')
         """
-        desc:
-                Generates a unique name that is valid and resembles the desired
-                name.
-
-        arguments:
-                item_type:
-                        desc:	The type of the item to suggest a name for.
-                        type:	unicode
-
-        keywords:
-                suggestion:
-                        desc:	The desired name, or None to choose a name based on the
-                                        item's type.
-                        type:	[unicode, NoneType]
-
-        returns:
-                desc:	A unique name.
-                type:	unicode
-
-        example: |
-                valid_name = items.valid_name(u'sketchpad', u'an invalid name')
-        """
-
         if suggestion is None:
             name = u'new_%s' % item_type
         else:
@@ -243,23 +224,22 @@ class ItemStore:
         return CIStr(_name)
 
     def _type(self, name):
+        r"""Gets the type of an item.
+
+        Parameters
+        ----------
+        name : unicode
+            The name of an item.
+
+        Returns
+        -------
+        unicode, NoneType
+            The type of an item, or `None` if the item doesn't exist.
+
+        Examples
+        --------
+        >>> print(items._type('target_sketchpad'))
         """
-        desc:
-                Gets the type of an item.
-
-        arguments:
-                name:
-                        desc:	The name of an item.
-                        type:	unicode
-
-        returns:
-                desc:	The type of an item, or `None` if the item doesn't exist.
-                type:	[unicode, NoneType]
-
-        example: |
-                print(items._type('target_sketchpad'))
-        """
-
         if name not in self:
             return None
         return self[name].item_type

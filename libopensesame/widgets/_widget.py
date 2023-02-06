@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.widgets._form import Form
 from libopensesame.exceptions import osexception
@@ -25,22 +24,15 @@ from openexp.canvas_elements import Rect
 
 class Widget:
 
-    """
-    desc:
-            The base class for all other widgets.
-    """
-
+    r"""The base class for all other widgets."""
     def __init__(self, form):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                form:
-                        desc:	The parent form.
-                        type:	form
+        Parameters
+        ----------
+        form : form
+            The parent form.
         """
-
         self.type = u'widget'
         self.form = form
         self.frame = False
@@ -83,29 +75,20 @@ class Widget:
         return not (x1 < x2 or y1 < y2 or x1 > x2+w or y1 > y2+h)
 
     def _init_canvas_elements(self):
-        """
-        desc:
-                Initializes all canvas elements.
-        """
-
+        r"""Initializes all canvas elements."""
         self._frame_elements = {}
 
     def _update_frame(self, rect=None, style=u'normal'):
-        """
-        desc:
-                Draws a simple frame around the widget.
+        r"""Draws a simple frame around the widget.
 
-        keywords:
-                rect:
-                        desc:	A (left, top, width, height) tuple for the frame
-                                        geometry or `None` to use the widget geometry.
-                        type:	[tuple, NoneType]
-                style:
-                        desc:	A visual style. Should be 'normal', 'active', or
-                                        'light'.
-                        type:	[str, unicode]
+        Parameters
+        ----------
+        rect : tuple, NoneType, optional
+            A (left, top, width, height) tuple for the frame geometry or `None`
+            to use the widget geometry.
+        style : str, unicode, optional
+            A visual style. Should be 'normal', 'active', or 'light'.
         """
-
         if not self.frame:
             return
         if style not in self._frame_elements:
@@ -117,43 +100,30 @@ class Widget:
             element.visible = element_style == style
 
     def _update(self):
-        """
-        desc:
-                Draws the widget.
-        """
-
+        r"""Draws the widget."""
         self._update_frame(self.rect)
 
     def set_rect(self, rect):
-        """
-        desc:
-                Sets the widget geometry.
+        r"""Sets the widget geometry.
 
-        arguments:
-                rect:
-                        desc:	A (left, top, width, height) tuple.
-                        type:	tuple
+        Parameters
+        ----------
+        rect : tuple
+            A (left, top, width, height) tuple.
         """
-
         self.rect = rect
         self._init_canvas_elements()
         self._update()
 
     def set_var(self, val, var=None):
+        r"""Sets an experimental variable.
+
+        Parameters
+        ----------
+        val    A value.
+        var : str, unicode, NoneType, optional
+            A variable name, or None to use widget default.
         """
-        desc:
-                Sets an experimental variable.
-
-        arguments:
-                val:
-                        desc:	A value.
-
-        keywords:
-                var:
-                        desc:	A variable name, or None to use widget default.
-                        type:	[str, unicode, NoneType]
-        """
-
         if var is None:
             var = self.var
         if var is None:
@@ -161,38 +131,30 @@ class Widget:
         self.form.experiment.var.set(var, val)
 
     def on_key_press(self, key):
-        """
-        desc:
-                Is called whenever the widget is focused and the users enters a key.
+        r"""Is called whenever the widget is focused and the users enters a
+        key.
 
-        arguments:
-                key:
-                        desc:	A key
-                        type:	str
+        Parameters
+        ----------
+        key : str
+            A key
         """
-
         pass
 
     def on_mouse_click(self, pos):
-        """
-        desc:
-                Is called whenever the user clicks on the widget.
+        r"""Is called whenever the user clicks on the widget.
 
-        arguments:
-                pos:
-                        desc:	An (x, y) coordinates tuple.
-                        type:	tuple
+        Parameters
+        ----------
+        pos : tuple
+            An (x, y) coordinates tuple.
         """
-
         pass
 
     def coroutine(self):
+        r"""Implements the interaction. This can be overridden to implement
+        more complicated keyboard/ mouse interactions.
         """
-        desc:
-                Implements the interaction. This can be overridden to implement more
-                complicated keyboard/ mouse interactions.
-        """
-
         retval = None
         while True:
             d = yield retval

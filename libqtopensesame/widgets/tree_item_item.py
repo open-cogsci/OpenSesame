@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.widgets.tree_base_item import TreeBaseItem
@@ -27,28 +26,18 @@ _ = translation_context(u'tree_item_item', category=u'core')
 
 class TreeItemItem(TreeBaseItem):
 
-    """
-    desc:
-            Corresponds to an item widget in the overview area.
-    """
-
+    r"""Corresponds to an item widget in the overview area."""
     def __init__(self, item, extra_info=None, parent_item=None, index=None):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        item : qtitem
+            An item.
+        extra_info : NoneType, unicode, optional
+            Extra info that is shown in the second column. Not shown in
+            overview mode.
         """
-        desc:
-                Constructor.
-
-        arguments:
-                item:
-                        desc:	An item.
-                        type:	qtitem
-
-        keywords:
-                extra_info:
-                        desc:	Extra info that is shown in the second column. Not shown
-                                        in overview mode.
-                        type:	[NoneType, unicode]
-        """
-
         super().__init__()
         self.setup(item.main_window)
         self.item = item
@@ -104,7 +93,6 @@ class TreeItemItem(TreeBaseItem):
 
                 type:	tuple
         """
-
         treeitem = self
         item_name = str(treeitem.text(0))
         l = []
@@ -120,61 +108,46 @@ class TreeItemItem(TreeBaseItem):
         return item_name, u'.'.join(l)
 
     def show_context_menu(self, pos):
-        """
-        desc:
-                Pops up the item context menu.
+        r"""Pops up the item context menu.
 
-        arguments:
-                pos:
-                        desc:	The cursor position.
-                        type:	QPoint
+        Parameters
+        ----------
+        pos : QPoint
+            The cursor position.
         """
-
         from libqtopensesame.widgets.item_context_menu import item_context_menu
         menu = item_context_menu(self.main_window, self)
         menu.popup(pos)
 
     def rename(self, from_name, to_name):
-        """
-        desc:
-                Renames an item.
+        r"""Renames an item.
 
-        arguments:
-                from_name:
-                        desc:	The old item name.
-                        type:	unicode
-                to_name:
-                        desc:	The new item name.
-                        type:	unicode
+        Parameters
+        ----------
+        from_name : unicode
+            The old item name.
+        to_name : unicode
+            The new item name.
         """
-
         super().rename(from_name, to_name)
         if str(self.text(0)) == from_name:
             self.setText(0, to_name)
             self.name = to_name
 
     def start_rename(self):
-        """
-        desc:
-                Goes into edit mode for the item's name.
-        """
-
+        r"""Goes into edit mode for the item's name."""
         self.treeWidget().editItem(self, 0)
 
     def start_edit_runif(self):
+        r"""Goes into edit mode for the item's run-if statement. This is only
+        applicable to sequences, i.e. not if the treewidget is in overview
+        mode.
         """
-        desc:
-                Goes into edit mode for the item's run-if statement. This is only
-                applicable to sequences, i.e. not if the treewidget is in overview
-                mode.
-        """
-
         if not self.treeWidget().overview_mode:
             self.treeWidget().editItem(self, 1)
 
     def set_icon(self, name, icon):
         """See tree_base_item."""
-
         super().set_icon(name, icon)
         if str(self.text(0)) == name:
             self.setIcon(0, self.theme.qicon(icon))
@@ -195,7 +168,6 @@ class TreeItemItem(TreeBaseItem):
                                 otherwise.
                 type:	bool
         """
-
         return hasattr(self.parent(), u'item')
 
     def is_unused(self):
@@ -204,7 +176,6 @@ class TreeItemItem(TreeBaseItem):
                 desc:	True if the item is unused, False otherwise.
                 type:	bool
         """
-
         return self.parent() is not None and self.parent().name == u'__unused__'
 
     def is_cloneable(self):
@@ -214,7 +185,6 @@ class TreeItemItem(TreeBaseItem):
                                 otherwise. An item can be cloned if it is in a sequence.
                 type:	bool
         """
-
         if not hasattr(self.parent(), u'item'):
             return False
         if not getattr(self.parent(), u'item').item_type == u'sequence':
@@ -222,11 +192,7 @@ class TreeItemItem(TreeBaseItem):
         return True
 
     def delete(self):
-        """
-        desc:
-                Deletes the item, if possible.
-        """
-
+        r"""Deletes the item, if possible."""
         if not self.is_deletable():
             return
         index = self.parent().indexOfChild(self)
@@ -236,11 +202,7 @@ class TreeItemItem(TreeBaseItem):
         self.experiment.build_item_tree()
 
     def permanently_delete(self):
-        """
-        desc:
-                Permanently deletes the item, if possible.
-        """
-
+        r"""Permanently deletes the item, if possible."""
         if not self.is_deletable() and not self.is_unused():
             return
         if QtWidgets.QMessageBox.question(self.treeWidget(),
@@ -264,11 +226,7 @@ class TreeItemItem(TreeBaseItem):
             pass
 
     def copy_unlinked(self):
-        """
-        desc:
-                Copies a snippet of the current item plus children to the keyboard.
-        """
-
+        r"""Copies a snippet of the current item plus children to the keyboard."""
         import json
 
         data = {
@@ -290,11 +248,7 @@ class TreeItemItem(TreeBaseItem):
         QtWidgets.QApplication.clipboard().setText(text)
 
     def copy_linked(self):
-        """
-        desc:
-                Copies a linked copy to the keyboard
-        """
-
+        r"""Copies a linked copy to the keyboard"""
         import json
 
         data = {
@@ -310,11 +264,7 @@ class TreeItemItem(TreeBaseItem):
         QtWidgets.QApplication.clipboard().setText(text)
 
     def paste(self):
-        """
-        desc:
-                Pastes clipboard data onto the current item, if possible.
-        """
-
+        r"""Pastes clipboard data onto the current item, if possible."""
         data = self.clipboard_data()
         if data is None:
             return
@@ -325,15 +275,13 @@ class TreeItemItem(TreeBaseItem):
             self.treeWidget().drop_event_item_new(data, target_treeitem=self)
 
     def clipboard_data(self):
-        """
-        desc:
-                Gets an item data dictionary from the clipboard.
+        r"""Gets an item data dictionary from the clipboard.
 
-        returns:
-                desc:	A data dictionary or None if no valid data was found.
-                type:	[dict, NoneType]
+        Returns
+        -------
+        dict, NoneType
+            A data dictionary or None if no valid data was found.
         """
-
         import json
         from libqtopensesame.misc import drag_and_drop
 

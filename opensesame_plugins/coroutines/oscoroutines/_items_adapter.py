@@ -16,19 +16,15 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 
 class items_adapter:
 
+    r"""Gives an editable view on (item_name, start_time, end_time, cond) tuple
+    (schedule) used by coroutines that funtions like an (item_name, cond) tuple
+    as used by sequences.
     """
-    desc:
-            Gives an editable view on (item_name, start_time, end_time, cond) tuple
-            (schedule) used by coroutines that funtions like an (item_name, cond)
-            tuple as used by sequences.
-    """
-
     def __init__(self, schedule):
 
         self.schedule = schedule

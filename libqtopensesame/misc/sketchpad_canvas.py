@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 from openexp._color.color import Color
@@ -32,11 +31,7 @@ _ = translation_context(u'sketchpad', category=u'item')
 
 class QtCanvas(Canvas, Coordinates):
 
-    """
-    desc:
-            A dummy Canvas that can be passed to the RichText element.
-    """
-
+    r"""A dummy Canvas that can be passed to the RichText element."""
     def __init__(self, experiment):
 
         Canvas.__init__(self, experiment)
@@ -45,12 +40,9 @@ class QtCanvas(Canvas, Coordinates):
 
 class QtRichText(RichText):
 
+    r"""Disables the pyqt initialization in the RichText element, becausee it
+    is not necessary in the context of the GUI.
     """
-    desc:
-            Disables the pyqt initialization in the RichText element, becausee it is
-            not necessary in the context of the GUI.
-    """
-
     def _init_pyqt(self, exp):
 
         pass
@@ -62,21 +54,17 @@ class QtRichText(RichText):
 
 class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
+    r"""A partial implementation of a canvas, so that sketchpad elements can
+    draw to the canvas just as in runtime.
     """
-    desc:
-            A partial implementation of a canvas, so that sketchpad elements can
-            draw to the canvas just as in runtime.
-    """
-
     def __init__(self, sketchpad):
-        """
-        desc:
-                constructor.
+        r"""constructor.
 
-        arguments:
-                sketchpad:	A sketchpad object.
+        Parameters
+        ----------
+        sketchpad
+            A sketchpad object.
         """
-
         self.sketchpad = sketchpad
         self.background_color = sketchpad.var.background
         self.placeholder_color = cfg.sketchpad_placeholder_color
@@ -90,15 +78,12 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return self.sketchpad.sketchpad_widget.selected_element_tool
 
     def dragMoveEvent(self, e):
-        """
-        desc:
-                Accepts drag-moves to implement moving items.
+        r"""Accepts drag-moves to implement moving items.
 
-        arguments:
-                e:
-                        type:	QGraphicsSceneDragDropEvent
+        Parameters
+        ----------
+        e : QGraphicsSceneDragDropEvent
         """
-
         data = drag_and_drop.receive(e)
         if data[u'type'] != u'sketchpad-element-move':
             e.ignore()
@@ -116,30 +101,24 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         e.accept()
 
     def wheelEvent(self, e):
-        """
-        desc:
-                Scrolls the graphics view based on a wheel event (i.e. mouse-scroll
-                event.
+        r"""Scrolls the graphics view based on a wheel event (i.e. mouse-scroll
+        event.
 
-        arguments:
-                e:
-                        type:	QGraphicsViewWheelEvent
+        Parameters
+        ----------
+        e : QGraphicsViewWheelEvent
         """
-
         if not QtCore.Qt.ControlModifier & e.modifiers():
             return
         self.sketchpad.zoom_diff(e.delta())
 
     def mouseDoubleClickEvent(self, e):
-        """
-        desc:
-                Processes mouse-press events, to handle element selection.
+        r"""Processes mouse-press events, to handle element selection.
 
-        arguments:
-                e:
-                        type:	QGraphicsSceneMouseEvent
+        Parameters
+        ----------
+        e : QGraphicsSceneMouseEvent
         """
-
         if not QtCore.Qt.LeftButton & e.button():
             # Only accept right clicks
             return
@@ -168,7 +147,6 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
                 e:
                         type:	QMouseEvent
         """
-
         # When control is not pressed, we deselect all currently selected
         # elements first
         if not QtCore.Qt.ControlModifier & e.modifiers():
@@ -200,32 +178,26 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
                 drag_and_drop.send(e.widget(), data)
 
     def mouseReleaseEvent(self, e):
-        """
-        desc:
-                Mouse-release events give elements the opportunity to finish a
-                drawing operation.
+        r"""Mouse-release events give elements the opportunity to finish a
+        drawing operation.
 
-        arguments:
-                e:
-                        type:	QMouseEvent
+        Parameters
+        ----------
+        e : QMouseEvent
         """
-
         if self.selected_element_tool is not None:
             self.sketchpad.add_element(
                 self.selected_element_tool.mouse_release(self.sketchpad,
                                                          self.cursor_pos(e)))
 
     def mouseMoveEvent(self, e):
-        """
-        desc:
-                Processes mouse-move events, to handle highlighting and cursor-
-                position display.
+        r"""Processes mouse-move events, to handle highlighting and cursor-
+        position display.
 
-        arguments:
-                e:
-                        type:	QMouseEvent
+        Parameters
+        ----------
+        e : QMouseEvent
         """
-
         cursor_pos = self.cursor_pos(e)
         self.sketchpad.set_cursor_pos(cursor_pos)
         for element in self.sketchpad.elements:
@@ -239,15 +211,12 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
             self.selected_element_tool.mouse_move(self.sketchpad, cursor_pos)
 
     def keyPressEvent(self, e):
-        """
-        desc:
-                Processes key-press events, to handle deletion, movement, etc.
+        r"""Processes key-press events, to handle deletion, movement, etc.
 
-        arguments:
-                e:
-                        type:	QKeyEvent
+        Parameters
+        ----------
+        e : QKeyEvent
         """
-
         if e.key() == QtCore.Qt.Key_Delete:
             self.sketchpad.remove_elements(self.sketchpad.selected_elements())
         elif e.key() == QtCore.Qt.Key_Up:
@@ -268,17 +237,17 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         self.sketchpad.draw()
 
     def element_at(self, pos):
+        r"""Gets the element at a specific position.
+
+        Parameters
+        ----------
+        pos
+            An (x,y) tuple.
+
+        Returns
+        -------
+        A sketchpad element (base_element) or None of no element was at pos.
         """
-        desc:
-                Gets the element at a specific position.
-
-        arguments:
-                pos:	An (x,y) tuple.
-
-        returns:
-                A sketchpad element (base_element) or None of no element was at pos.
-        """
-
         # First try to see if there's an exact position match ...
         graphics_item = self.itemAt(pos, QtGui.QTransform())
         # ... if not, try if there's an element that encompasses the position.
@@ -299,24 +268,18 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
             return
 
     def cursor_pos(self, e, grid=True):
+        r"""Gets the position of the mouse cursor.
+
+        Parameters
+        ----------
+        e : QMouseEvent
+        grid : bool, optional
+            Indicates whether the cursor should be locked to the grid.
+
+        Returns
+        -------
+        An (x, y) tuple with the the coordinates of the mouse cursor.
         """
-        desc:
-                Gets the position of the mouse cursor.
-
-        arguments:
-                e:
-                        type:	QMouseEvent
-
-        keywords:
-                grid:
-                        desc:	Indicates whether the cursor should be locked to the
-                                        grid.
-                        type:	bool
-
-        returns:
-                An (x, y) tuple with the the coordinates of the mouse cursor.
-        """
-
         pos = e.scenePos().toPoint()
         if grid:
             x = pos.x() + 0.5 * self.grid
@@ -329,39 +292,33 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return x, y
 
     def notify(self, msg):
-        """
-        desc:
-                Adds a notification message.
-        """
-
+        r"""Adds a notification message."""
         self.notifications.append(msg)
 
     def is_var(self, val):
+        r"""Determines whether a value is a string containing variable
+        references (i.e. "[my_var]").
+
+        Parameters
+        ----------
+        val
+            A value.
+
+        Returns
+        -------
+        True if val contains variable references, False otherwise.
         """
-        desc:
-                Determines whether a value is a string containing variable
-                references (i.e. "[my_var]").
-
-        arguments:
-                val:	A value.
-
-        returns:
-                True if val contains variable references, False otherwise.
-        """
-
         if not isinstance(val, str):
             return False
         return len(self.sketchpad.get_refs(val)) > 0
 
     def _pixmap(self, fname):
-        """
-        desc:
-                Safely returns a QPixmap.
+        r"""Safely returns a QPixmap.
 
-        returns:
-                A QPixmap object.
+        Returns
+        -------
+        A QPixmap object.
         """
-
         if not os.path.exists(fname):
             self.notify(
                 _(u'Image name "%s" is unknown or variably defined, using fallback image')
@@ -378,25 +335,21 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return p
 
     def _brush(self, color):
-        """
-        desc:
-                Safely returns a QBrush.
+        r"""Safely returns a QBrush.
 
-        returns:
-                A QBrush object.
+        Returns
+        -------
+        A QBrush object.
         """
-
         return QtGui.QBrush(self._color(color))
 
     def _penwidth(self, penwidth):
-        """
-        desc:
-                Safely returns a penwidth.
+        r"""Safely returns a penwidth.
 
-        returns:
-                An int penwidth.
+        Returns
+        -------
+        An int penwidth.
         """
-
         if type(penwidth) not in (int, float):
             self.notify(
                 _(u'Penwidth "%s" is unknown or variably defined, using 1') % penwidth)
@@ -404,14 +357,12 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return penwidth
 
     def _scale(self, scale):
-        """
-        desc:
-                Safely returns a scale.
+        r"""Safely returns a scale.
 
-        returns:
-                An float scale.
+        Returns
+        -------
+        An float scale.
         """
-
         if not isinstance(scale, (int, float)):
             self.notify(
                 _(u'Scale "%s" is unknown or variably defined, using 1')
@@ -421,14 +372,12 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return scale
 
     def _rotation(self, rotation):
-        """
-        desc:
-                Safely returns a rotation.
+        r"""Safely returns a rotation.
 
-        returns:
-                A rotation.
+        Returns
+        -------
+        A rotation.
         """
-
         if rotation is None:
             return 0
         if not isinstance(rotation, (int, float)):
@@ -440,22 +389,26 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return rotation
 
     def _point(self, i, x, y, center, scale):
+        r"""Safely returns a QPoint.
+
+        Parameters
+        ----------
+        i
+            A QGraphicsItem.
+        x
+            An X coordinate.
+        y
+            A Y coordinate.
+        center
+            A boolean indicating whether the point should reflect the center of
+            i (True), or the top-left (False).
+        scale
+            A scaling factor.
+
+        Returns
+        -------
+        A QPoint object.
         """
-        desc:
-                Safely returns a QPoint.
-
-        arguments:
-                i:		A QGraphicsItem.
-                x:		An X coordinate.
-                y:		A Y coordinate.
-                center:	A boolean indicating whether the point should reflect the
-                                center of i (True), or the top-left (False).
-                scale:	A scaling factor.
-
-        returns:
-                A QPoint object.
-        """
-
         x = self._x(x)
         y = self._y(y)
         scale = self._scale(scale)
@@ -466,14 +419,12 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return QtCore.QPoint(x, y)
 
     def _color(self, _color):
-        """
-        desc:
-                Safely returns a QColor.
+        r"""Safely returns a QColor.
 
-        returns:
-                A QColor object.
+        Returns
+        -------
+        A QColor object.
         """
-
         if isinstance(_color, QtGui.QColor):
             return _color
         try:
@@ -486,14 +437,12 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return QtGui.QColor(hexcolor)
 
     def _fill(self, fill):
-        """
-        desc:
-                Safely returns a fill value.
+        r"""Safely returns a fill value.
 
-        returns:
-                A fill value (bool).
+        Returns
+        -------
+        A fill value (bool).
         """
-
         if isinstance(fill, str):
             self.notify(
                 _(u'Fill "%s" is unknown or variably defined, assuming filled')
@@ -502,14 +451,12 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return bool(fill)
 
     def _x(self, x):
-        """
-        desc:
-                Safely returns an X coordinate.
+        r"""Safely returns an X coordinate.
 
-        returns:
-                An X coordinate.
+        Returns
+        -------
+        An X coordinate.
         """
-
         if type(x) not in (int, float):
             self.notify(
                 _('X coordinate "%s" is unknown or variably defined, using display center')
@@ -518,14 +465,12 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return x
 
     def _y(self, y):
-        """
-        desc:
-                Safely returns a Y coordinate.
+        r"""Safely returns a Y coordinate.
 
-        returns:
-                A Y coordinate.
+        Returns
+        -------
+        A Y coordinate.
         """
-
         if type(y) not in (int, float):
             self.notify(
                 _('Y coordinate "%s" is unknown or variably defined, using display center')
@@ -534,14 +479,12 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return y
 
     def _r(self, r):
-        """
-        desc:
-                Safely returns a radius
+        r"""Safely returns a radius
 
-        returns:
-                A radius.
+        Returns
+        -------
+        A radius.
         """
-
         if type(r) not in (int, float):
             self.notify(
                 _('Radius "%s" is unknown or variably defined, using 50') % r)
@@ -549,14 +492,12 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return r
 
     def _p(self, r):
-        """
-        desc:
-                Safely returns a proportion
+        r"""Safely returns a proportion
 
-        returns:
-                A radius.
+        Returns
+        -------
+        A radius.
         """
-
         if type(r) not in (int, float):
             self.notify(
                 _('Proportion "%s" is unknown or variably defined, using .5')
@@ -565,14 +506,12 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return r
 
     def _w(self, x):
-        """
-        desc:
-                Safely returns a width.
+        r"""Safely returns a width.
 
-        returns:
-                A width.
+        Returns
+        -------
+        A width.
         """
-
         if type(x) not in (int, float):
             self.notify(
                 _('Width "%s" is unknown or variably defined, using 100') % x)
@@ -580,14 +519,12 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return x
 
     def _h(self, y):
-        """
-        desc:
-                Safely returns a height.
+        r"""Safely returns a height.
 
-        returns:
-                A height.
+        Returns
+        -------
+        A height.
         """
-
         if type(y) not in (int, float):
             self.notify(
                 _('Height "%s" is unknown or variably defined, using 100') % y)
@@ -595,14 +532,12 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return y
 
     def _font_size(self, font_size):
-        """
-        desc:
-                Safely returns a font_size.
+        r"""Safely returns a font_size.
 
-        returns:
-                A font size.
+        Returns
+        -------
+        A font size.
         """
-
         if not isinstance(font_size, int) or font_size < 0:
             self.notify(_('Font size "%s" is invalid or variably defined, using 18')
                         % font_size)
@@ -610,15 +545,7 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return font_size
 
     def drawBackground(self, painter, rect):
-        """
-        desc:
-                Draws the background and the grid.
-
-        argumens:
-                painter:	A QPainter object.
-                rect:		A QRect object.
-        """
-
+        r"""Draws the background and the grid."""
         xc = int(self.xcenter())
         yc = int(self.ycenter())
         w = 2*xc
@@ -649,7 +576,6 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
     def clear(self):
         """Mimicks canvas api. See openexp._canvas.canvas."""
-
         super(sketchpad_canvas, self).clear()
         self.notifications = []
         self.elements = []
@@ -657,18 +583,15 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
     def xcenter(self):
         """Mimicks canvas api. See openexp._canvas.canvas."""
-
         return self.sketchpad.var.get(u'width') // 2
 
     def ycenter(self):
         """Mimicks canvas api. See openexp._canvas.canvas."""
-
         return self.sketchpad.var.get(u'height') // 2
 
     def text(self, text, center=True, x=None, y=None, max_width=None,
              **properties):
         """Mimicks canvas api. See openexp._canvas.canvas."""
-
         if u'color' in properties:
             properties[u'color'] = self._color(properties[u'color']).name()
         if u'font_size' in properties:
@@ -716,7 +639,6 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
     def line(self, sx, sy, ex, ey, color=None, penwidth=None, add=True):
         """Mimicks canvas api. See openexp._canvas.canvas."""
-
         i = QtWidgets.QGraphicsLineItem(self._x(sx), self._y(sy), self._x(ex),
                                         self._y(ey))
         i.setPen(self._pen(color, penwidth))
@@ -727,7 +649,6 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
     def arrow(self, sx, sy, ex, ey, body_length=0.8, body_width=.5,
               head_width=30, color=None, fill=False, penwidth=None, add=True):
         """Mimicks canvas api. See openexp._canvas.canvas."""
-
         from openexp._canvas._arrow.arrow import Arrow
 
         shape = Arrow._shape(self._x(sx), self._y(sy), self._x(ex),
@@ -753,7 +674,6 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
     def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
         """Mimicks canvas api. See openexp._canvas.canvas."""
-
         color = self._color(color)
         if self._fill(fill):
             pen = self._pen(color, 1)
@@ -768,7 +688,6 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
     def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None,
                 add=True):
         """Mimicks canvas api. See openexp._canvas.canvas."""
-
         color = self._color(color)
         if fill:
             pen = self._pen(color, 1)
@@ -786,7 +705,6 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
     def circle(self, x, y, r, fill=False, color=None, penwidth=None):
         """Mimicks canvas api. See openexp._canvas.canvas."""
-
         r = self._r(r)
         x = self._x(x) - r
         y = self._y(y) - r
@@ -797,7 +715,6 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
     def image(self, image, center=True, x=None, y=None, scale=None,
               rotation=None):
         """Mimicks canvas api. See openexp._canvas.canvas."""
-
         if not isinstance(image, QtGui.QPixmap):
             image = self._pixmap(image)
         i = self.addPixmap(image)
@@ -823,7 +740,6 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
     def gabor(self, x, y, *arglist, **kwdict):
         """Mimicks canvas api. See openexp._canvas.canvas."""
-
         from openexp.canvas import gabor_file
         try:
             image = gabor_file(*arglist, **kwdict)
@@ -835,7 +751,6 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
     def noise_patch(self, x, y, *arglist, **kwdict):
         """Mimicks canvas api. See openexp._canvas.canvas."""
-
         from openexp.canvas import noise_file
         try:
             image = noise_file(*arglist, **kwdict)
@@ -847,7 +762,6 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
     def fixdot(self, x=None, y=None, color=None, style=u'default'):
         """Mimicks canvas api. See openexp._canvas.canvas."""
-
         color = self._color(color)
         x = self._x(x)
         y = self._y(y)

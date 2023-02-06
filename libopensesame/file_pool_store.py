@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import misc
 from libopensesame.oslogging import oslogger
@@ -28,70 +27,70 @@ import shutil
 
 class FilePoolStore:
 
+    r"""The `pool` object provides dict-like access to the file pool. When
+    checking whether a file is in the file pool, several folders are
+    searched.
+    For more details, see `pool.folders()`.
+
+    A `pool` object is created
+    automatically when the experiment starts.
+
+    In addition to the functions
+    listed below, the following semantics are
+    supported:
+
+    __Example 1__:
+
+    ~~~
+    .python
+    # Get the full path to a file in the file pool
+    print(u'The full
+    path to img.png is %s' %  pool[u'img.png'])
+    # Check if a file is in the
+    file pool
+    if u'img.png' in pool:
+            print(u'img.png is in the file
+    pool')
+    # Delete a file from the file pool
+    del pool[u'img.png']
+    # Walk
+    through all files in the file pool. This retrieves the full
+    # paths.
+    for
+    path in pool:
+            print(path)
+    # Check the number of files in the file
+    pool
+    print(u'There are %d files in the file pool' % len(pool))
+    ~~~
+    __Example 2__:
+
+    ~~~ .python
+    # Get the full path to an image from the file
+    pool and show it
+    if u'img.png' in pool:
+            print(u'img.png could not
+    be found!')
+    else:
+            image_path = pool[u'img.png']
+            my_canvas =
+    Canvas()
+            my_canvas.image(image_path)
+            my_canvas.show()
+    ~~~
+    [TOC]
     """
-    desc: |
-        The `pool` object provides dict-like access to the file pool. When
-        checking whether a file is in the file pool, several folders are
-        searched. For more details, see `pool.folders()`.
-
-        A `pool` object is created automatically when the experiment starts.
-
-        In addition to the functions listed below, the following semantics are
-        supported:
-
-        __Example 1__:
-
-        ~~~ .python
-        # Get the full path to a file in the file pool
-        print(u'The full path to img.png is %s' %  pool[u'img.png'])
-        # Check if a file is in the file pool
-        if u'img.png' in pool:
-                print(u'img.png is in the file pool')
-        # Delete a file from the file pool
-        del pool[u'img.png']
-        # Walk through all files in the file pool. This retrieves the full
-        # paths.
-        for path in pool:
-                print(path)
-        # Check the number of files in the file pool
-        print(u'There are %d files in the file pool' % len(pool))
-        ~~~
-
-        __Example 2__:
-
-        ~~~ .python
-        # Get the full path to an image from the file pool and show it
-        if u'img.png' in pool:
-                print(u'img.png could not be found!')
-        else:
-                image_path = pool[u'img.png']
-                my_canvas = Canvas()
-                my_canvas.image(image_path)
-                my_canvas.show()
-        ~~~
-
-        [TOC]
-    """
-
     def __init__(self, experiment, folder=None):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        experiment : experiment
+            The experiment object.
+        folder : str, unicode, NoneType, optional
+            The folder to use for the file pool, or `None` to create a new
+            temporary folder.
         """
-        visible: False
-
-        desc:
-            Constructor.
-
-        arguments:
-            experiment:
-                desc:	The experiment object.
-                type:	experiment
-
-        keywords:
-            folder:
-                desc:	The folder to use for the file pool, or `None` to create
-                                a new temporary folder.
-                type:	[str, unicode, NoneType]
-        """
-
         self.experiment = experiment
         if folder is None:
             # On some systems tempfile.mkdtemp() triggers a UnicodeDecodeError.
@@ -112,47 +111,32 @@ class FilePoolStore:
         oslogger.debug(u'pool folder is \'%s\'' % self.__folder__)
 
     def clean_up(self):
-        """
-        visible: False
-
-        desc:
-                Removes the pool folder.
-        """
-
+        r"""Removes the pool folder."""
         try:
             shutil.rmtree(self.__folder__)
         except Exception:
             oslogger.error(u'Failed to remove %s' % self.__folder__)
 
     def __contains__(self, path):
+        r"""Checks if a file is in the file pool.
+
+        Returns
+        -------
+        bool
+            A bool indicating if the file is in the pool.
         """
-        visible: False
-
-        desc:
-                Checks if a file is in the file pool.
-
-        returns:
-                desc:	A bool indicating if the file is in the pool.
-                type:	bool
-        """
-
         if path == u'':
             return False
         return os.path.exists(self[path])
 
     def __delitem__(self, path):
+        r"""Deletes a file from the file pool.
+
+        Parameters
+        ----------
+        path : str, unicode
+            The name of the file.
         """
-        visible: False
-
-        desc:
-                Deletes a file from the file pool.
-
-        arguments:
-                path:
-                        desc:	The name of the file.
-                        type:	[str, unicode]
-        """
-
         os.remove(self[path])
 
     def __getitem__(self, path):
@@ -171,7 +155,6 @@ class FilePoolStore:
             desc: The full path to the file.
             type:unicode
         """
-
         path = safe_decode(path)
         if path.strip() == u'':
             raise osexception(u'Cannot get empty filename from file pool.')
@@ -188,7 +171,6 @@ class FilePoolStore:
         returns:
                 type:	file_pool_store_iterator
         """
-
         return file_pool_store_iterator(self)
 
     def __len__(self):
@@ -199,7 +181,6 @@ class FilePoolStore:
                 desc:	The number of files in the file pool.
                 type:	int
         """
-
         return len(self.files())
 
     def count_included(self):
@@ -211,50 +192,43 @@ class FilePoolStore:
                   the folder that is included with the experiment.
             type: int
         """
-
         return len(os.listdir(self.folder()))
 
     def add(self, path, new_name=None):
+        r"""Copies a file to the file pool.
+
+        Parameters
+        ----------
+        path : str, unicode
+            The full path to the file on disk.
+        new_name : str, NoneType, optional
+            A new name for the file in the pool, or None to use the file's
+            original name.
+
+        Examples
+        --------
+        >>> pool.add('/home/username/Pictures/my_ing.png')
         """
-        desc:
-            Copies a file to the file pool.
-
-        arguments:
-            path:
-                desc: The full path to the file on disk.
-                type: [str, unicode]
-
-        keywords:
-            new_name:
-                desc: A new name for the file in the pool, or None to use the
-                      file's original name.
-                type: [str, NoneType]
-
-        example: |
-            pool.add('/home/username/Pictures/my_ing.png')
-        """
-
         if new_name is None:
             new_name = os.path.basename(path)
         shutil.copyfile(path, os.path.join(self.folder(), new_name))
 
     def files(self):
+        r"""Returns all files in the file pool.
+
+        Returns
+        -------
+        list
+            A list of full paths.
+
+        Examples
+        --------
+        >>> for path in pool.files():
+        >>>         print(path)
+        >>> # Equivalent to:
+        >>> for path in pool:
+        >>>         print(path)
         """
-        desc:
-                Returns all files in the file pool.
-
-        returns:
-                desc:	A list of full paths.
-                type:	list
-
-        example: |
-                for path in pool.files():
-                        print(path)
-                # Equivalent to:
-                for path in pool:
-                        print(path)
-        """
-
         _files = []
         for _folder in self.folders():
             for _file in os.listdir(_folder):
@@ -279,84 +253,81 @@ class FilePoolStore:
             if pool.fallback_folder() is not None:
                 print('There is a fallback pool folder!')
         """
-
         _folders = self.folders()
         if len(_folders) < 2:
             return None
         return _folders[-1]
 
     def folder(self):
+        r"""Gives the full path to the (main) pool folder. This is typically a
+        temporary folder that is deleted when the experiment is finished.
+
+        Returns
+        -------
+        unicode
+            The full path to the main pool folder.
+
+        Examples
+        --------
+        >>> print(f'The pool folder is here: {pool.folder()}')
         """
-        desc:
-            Gives the full path to the (main) pool folder. This is typically a
-            temporary folder that is deleted when the experiment is finished.
-
-        returns:
-            desc: The full path to the main pool folder.
-            type: unicode
-
-        example: |
-            print(f'The pool folder is here: {pool.folder()}')
-        """
-
         if not os.path.exists(self.__folder__):
             oslogger.warning(u'recreating missing file-pool folder')
             os.mkdir(self.__folder__)
         return self.__folder__
 
     def in_folder(self, path):
+        r"""Checks whether path is in the pool folder. This is different from
+        the `path in pool` syntax in that it only checks the main pool folder,
+        and not the fallback pool folder and experiment folder.
+
+        Parameters
+        ----------
+        path : str
+            A file basename to check.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
+        >>> print(pool.in_folder('cue.png'))
         """
-        desc:
-            Checks whether path is in the pool folder. This is different from
-            the `path in pool` syntax in that it only checks the main pool
-            folder, and not the fallback pool folder and experiment folder.
-
-        arguments:
-            path:
-                desc: A file basename to check.
-                type: str
-
-        returns:
-            type: bool
-
-        example: |
-            print(pool.in_folder('cue.png'))
-        """
-
         return os.path.exists(os.path.join(self.folder(), path))
 
     def folders(self, include_fallback_folder=True,
                 include_experiment_path=False):
+        r"""Gives a list of all folders that are searched when retrieving the
+        full path to a file. These are (in order):
+
+        1. The file pool folder
+        itself, as returned by `pool.folder()`.
+        2. The folder of the current
+        experiment (if it exists)
+        3. The fallback pool folder, as returned by
+        `pool.fallback_folder()` (if it exists)
+
+        Parameters
+        ----------
+        include_fallback_folder : bool, optional
+            Indicates whether the fallback pool folder should be included if it
+            exists.
+        include_experiment_path : bool, optional
+            Indicates whether the experiment folder should be included if it
+            exists.
+
+        Returns
+        -------
+        list
+            A list of all folders.
+
+        Examples
+        --------
+        >>> print('The following folders are searched for files:')
+        >>> for folder in pool.folders():
+        >>>     print(folder)
         """
-        desc: |
-            Gives a list of all folders that are searched when retrieving the
-            full path to a file. These are (in order):
-
-            1. The file pool folder itself, as returned by `pool.folder()`.
-            2. The folder of the current experiment (if it exists)
-            3. The fallback pool folder, as returned by
-               `pool.fallback_folder()` (if it exists)
-
-        keywords:
-            include_fallback_folder:
-                desc: Indicates whether the fallback pool folder should be
-                      included if it exists.
-                type: bool
-            include_experiment_path:
-                desc: Indicates whether the experiment folder should be
-                      included if it exists.
-                type: bool
-
-        returns:
-            desc: A list of all folders.
-            type: list
-
-        example: |
-            print('The following folders are searched for files:')
-            for folder in pool.folders():
-                print(folder)
-        """
-
         _folders = [self.folder()]
         if self.experiment.experiment_path is None or \
                 not os.path.exists(self.experiment.experiment_path):
@@ -370,22 +341,19 @@ class FilePoolStore:
         return _folders
 
     def rename(self, old_path, new_path):
+        r"""Renames a file in the pool folder.
+
+        Parameters
+        ----------
+        old_path : str, unicode
+            The old file name.
+        new_path : str, unicode
+            The new file name.
+
+        Examples
+        --------
+        >>> pool.rename(u'my_old_img.png', u'my_new_img.png')
         """
-        desc:
-                Renames a file in the pool folder.
-
-        arguments:
-                old_path:
-                        desc:	The old file name.
-                        type:	[str, unicode]
-                new_path:
-                        desc:	The new file name.
-                        type:	[str, unicode]
-
-        example: |
-                pool.rename(u'my_old_img.png', u'my_new_img.png')
-        """
-
         path = self[old_path]
         dirname, basename = os.path.split(path)
         os.rename(path, os.path.join(dirname, new_path))
@@ -399,7 +367,6 @@ class FilePoolStore:
         example:
                 print(u'The size of the file pool is %d bytes' % pool.size())
         """
-
         return sum([os.path.getsize(self[path]) for path in self])
 
 

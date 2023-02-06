@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.feedback import Feedback as FeedbackRuntime
 from libqtopensesame.items.qtplugin import QtPlugin
@@ -27,11 +26,7 @@ _ = translation_context(u'feeback', category=u'item')
 
 class Feedback(Feedpad, QtPlugin, FeedbackRuntime):
 
-    """
-    desc:
-            The feedback controls are implemented in feedpad.
-    """
-
+    r"""The feedback controls are implemented in feedpad."""
     description = _(u'Provides feedback to the participant')
 
     def __init__(self, name, experiment, string=None):

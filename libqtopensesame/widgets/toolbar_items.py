@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from collections import OrderedDict
@@ -31,23 +30,17 @@ _ = translation_context(u'toolbar_items', category=u'core')
 
 class ToolbarItems(BaseSubcomponent, QtWidgets.QToolBar):
 
+    r"""The item toolbar, which allows you to insert items into the experiment
+    through drag and drop.
     """
-    desc:
-            The item toolbar, which allows you to insert items into the experiment
-            through drag and drop.
-    """
-
     def __init__(self, parent):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                parent:
-                        desc:	The parent.
-                        type:	QWidget
+        Parameters
+        ----------
+        parent : QWidget
+            The parent.
         """
-
         super().__init__(parent)
         self.setup(parent)
         self.orientationChanged.connect(self.build)
@@ -57,16 +50,13 @@ class ToolbarItems(BaseSubcomponent, QtWidgets.QToolBar):
                 break
 
     def add_content(self, content):
-        """
-        desc:
-                Add double rows of content to the toolbar.
+        r"""Add double rows of content to the toolbar.
 
-        arguments:
-                content:
-                        desc:	A list of content widgets.
-                        type:	list
+        Parameters
+        ----------
+        content : list
+            A list of content widgets.
         """
-
         for i, c in enumerate(content):
             if not i % 2:
                 if i > 0:
@@ -86,11 +76,7 @@ class ToolbarItems(BaseSubcomponent, QtWidgets.QToolBar):
         self.addWidget(w)
 
     def build(self):
-        """
-        desc:
-                Populates the toolbar with items.
-        """
-
+        r"""Populates the toolbar with items."""
         # This function is called first when no experiment has been loaded yet.
         try:
             self.experiment
@@ -123,11 +109,7 @@ class ToolbarItems(BaseSubcomponent, QtWidgets.QToolBar):
             self.add_content(content)
 
     def collapse(self):
-        """
-        desc:
-                Collapses the item toolbar if is was expanded.
-        """
-
+        r"""Collapses the item toolbar if is was expanded."""
         if self._expand_button.isChecked():
             self._expand_button.click()
 

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libopensesame import plugins
@@ -27,29 +26,21 @@ _ = translation_context(u'tree_append_menu', category=u'core')
 
 class AppendExistingAction(BaseSubcomponent, QtWidgets.QAction):
 
+    r"""An action for appending existing items, either as linked or unlinked
+    copies.
     """
-    desc:
-            An action for appending existing items, either as linked or unlinked
-            copies.
-    """
-
     def __init__(self, append_menu, menu, item_name):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                append_menu:
-                        desc:	The main menu.
-                        type:	tree_append_menu
-                menu:
-                        desc:	The submenu for this action.
-                        type:	QMenu
-                item_name:
-                        desc:	The name of the item to be appended.
-                        type:	unicode
+        Parameters
+        ----------
+        append_menu : tree_append_menu
+            The main menu.
+        menu : QMenu
+            The submenu for this action.
+        item_name : unicode
+            The name of the item to be appended.
         """
-
         super().__init__(menu)
         self.setup(append_menu)
         self.setText(item_name)
@@ -58,17 +49,14 @@ class AppendExistingAction(BaseSubcomponent, QtWidgets.QAction):
             self.theme.qicon(self.experiment.items[item_name].item_icon()))
 
     def append_item(self, target_item_name):
-        """
-        desc:
-                Performs the append operation.
+        r"""Performs the append operation.
 
-        arguments:
-                target_item_name:
-                        desc:	The name of the item (normally a sequence) to which the
-                                        append should be applied.
-                        type:	unicode
+        Parameters
+        ----------
+        target_item_name : unicode
+            The name of the item (normally a sequence) to which the append
+            should be applied.
         """
-
         target_item = self.experiment.items[target_item_name]
         item_name = self.item_name
         target_item.insert_child_item(item_name, len(target_item.items))
@@ -76,28 +64,19 @@ class AppendExistingAction(BaseSubcomponent, QtWidgets.QAction):
 
 class AppendNewAction(BaseSubcomponent, QtWidgets.QAction):
 
-    """
-    desc:
-            An action for appending a new item.
-    """
-
+    r"""An action for appending a new item."""
     def __init__(self, append_menu, menu, item_type):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                append_menu:
-                        desc:	The main menu.
-                        type:	tree_append_menu
-                menu:
-                        desc:	The submenu for this action.
-                        type:	QMenu
-                item_type:
-                        desc:	The type of item to be created and appended.
-                        type:	unicode
+        Parameters
+        ----------
+        append_menu : tree_append_menu
+            The main menu.
+        menu : QMenu
+            The submenu for this action.
+        item_type : unicode
+            The type of item to be created and appended.
         """
-
         super().__init__(menu)
         self.setup(append_menu)
         self.item_type = item_type
@@ -109,17 +88,14 @@ class AppendNewAction(BaseSubcomponent, QtWidgets.QAction):
         self.setIcon(icon)
 
     def append_item(self, target_item_name):
-        """
-        desc:
-                Performs the append operation.
+        r"""Performs the append operation.
 
-        arguments:
-                target_item_name:
-                        desc:	The name of the item (normally a sequence) to which the
-                                        append should be applied.
-                        type:	unicode
+        Parameters
+        ----------
+        target_item_name : unicode
+            The name of the item (normally a sequence) to which the append
+            should be applied.
         """
-
         target_item = self.experiment.items[target_item_name]
         item = self.experiment.items.new(
             self.item_type, catch_exceptions=False)
@@ -129,29 +105,19 @@ class AppendNewAction(BaseSubcomponent, QtWidgets.QAction):
 
 class TreeAppendMenu(BaseSubcomponent, QtWidgets.QMenu):
 
-    """
-    desc:
-            An append item menu.
-    """
-
+    r"""An append item menu."""
     def __init__(self, tree_overview, target_treeitem=None):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        tree_overview : tree_overview
+            The tree_overview with which this menu is associated.
+        target_treeitem : tree_item_item, optional
+            The treewidget item which corresponds to the sequence to which the
+            append operation should be applied. If `None`, the top-level item
+            from the tree_overview is used.
         """
-        desc:
-                Constructor.
-
-        arguments:
-                tree_overview:
-                        desc:	The tree_overview with which this menu is associated.
-                        type:	tree_overview
-
-        keywords:
-                target_treeitem:
-                        desc:	The treewidget item which corresponds to the sequence to
-                                        which the append operation should be applied. If `None`,
-                                        the top-level item from the tree_overview is used.
-                        type:	tree_item_item
-        """
-
         super().__init__(tree_overview)
         self.setup(tree_overview)
         self.target_treeitem = target_treeitem
@@ -167,16 +133,13 @@ class TreeAppendMenu(BaseSubcomponent, QtWidgets.QMenu):
         self._new_items_menu = None
 
     def append_item(self, action):
-        """
-        desc:
-                Performs the append action.
+        r"""Performs the append action.
 
-        arguments:
-                action:
-                        desc:	A append_existing_action or append_new_action.
-                        type:	QAction
+        Parameters
+        ----------
+        action : QAction
+            A append_existing_action or append_new_action.
         """
-
         target_item_name, target_item_ancestry = self.target_treeitem.ancestry()
         action.append_item(target_item_name)
         self.tree_overview.structure_change.emit()
@@ -186,12 +149,9 @@ class TreeAppendMenu(BaseSubcomponent, QtWidgets.QMenu):
             self.experiment.items[target_item_name].update()
 
     def refresh(self):
+        r"""Refreshes the menu before it is shown. This is necessary because
+        the structure of the experiment may change.
         """
-        desc:
-                Refreshes the menu before it is shown. This is necessary because the
-                structure of the experiment may change.
-        """
-
         self._items = None
         if self.target_treeitem is None:
             self.target_treeitem = self.tree_overview.topLevelItem(0)
@@ -199,20 +159,18 @@ class TreeAppendMenu(BaseSubcomponent, QtWidgets.QMenu):
         self.action_new_items.setMenu(self.new_items_menu())
 
     def existing_items_menu(self):
+        r"""Generates a menu with existing items.
+
+        Parameters
+        ----------
+        linked : bool, optional
+            Indicates whether the actions should result in linked (True) or
+            unliked (False) copies.
+
+        Returns
+        -------
+        QMenu
         """
-        desc:
-                Generates a menu with existing items.
-
-        keywords:
-                linked:
-                        desc:	Indicates whether the actions should result in linked
-                                        (True) or unliked (False) copies.
-                        type:	bool
-
-        returns:
-                type:	QMenu
-        """
-
         self._items = []
         target_item_name = self.target_treeitem.item.name
         for item_name in self.experiment.items:
@@ -228,14 +186,12 @@ class TreeAppendMenu(BaseSubcomponent, QtWidgets.QMenu):
         return m
 
     def new_items_menu(self):
-        """
-        desc:
-                Generates a menu with new items.
+        r"""Generates a menu with new items.
 
-        returns:
-                type:	QMenu
+        Returns
+        -------
+        QMenu
         """
-
         if self._new_items_menu is not None:
             return self._new_items_menu
         self._new_items_menu = QtWidgets.QMenu(self)

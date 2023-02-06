@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import time
 from libqtopensesame.misc.config import cfg
@@ -27,11 +26,7 @@ from qtpy.QtCore import QAbstractEventDispatcher, QTime
 
 class preload_items(base_extension):
 
-    """
-    desc:
-            Silently preloads items in the background to improve usability.
-    """
-
+    r"""Silently preloads items in the background to improve usability."""
     def event_startup(self):
 
         self._monitoring_idle = False

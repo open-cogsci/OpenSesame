@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 import sys
@@ -29,19 +28,13 @@ _ = translation_context(u'get_started', category=u'extension')
 
 class get_started(base_extension):
 
+    r"""Shows the get-started tab and opens an experiment on startup, if one
+    was passed on the command line.
     """
-    desc:
-            Shows the get-started tab and opens an experiment on startup, if one was
-            passed on the command line.
-    """
-
     def activate(self):
+        r"""Is called when the extension is activated through the menu/ toolbar
+        action.
         """
-        desc:
-                Is called when the extension is activated through the menu/ toolbar
-                action.
-        """
-
         # Initialize templates
         templates = []
         for i, (path, desc) in enumerate(template_info.templates):
@@ -82,18 +75,18 @@ class get_started(base_extension):
                                      icon=u'document-new')
 
     def _unambiguous_path(self, path):
+        r"""If the path basename is unique among the resent experiments, this
+        is used. Otherwise, the full path is used.
+
+        Parameters
+        ----------
+        path
+            The path to shorten unambiguously.
+
+        Returns
+        -------
+        The unambiguously shortened path.
         """
-        desc:
-                If the path basename is unique among the resent experiments, this is
-                used. Otherwise, the full path is used.
-
-        arguments:
-                path:	The path to shorten unambiguously.
-
-        returns:
-                The unambiguously shortened path.
-        """
-
         basename = os.path.basename(path)
         basenames = \
             [os.path.basename(_path)
@@ -117,11 +110,7 @@ class get_started(base_extension):
 
     @base_extension.as_thread(wait=500)
     def event_startup(self):
-        """
-        desc:
-                Called on startup.
-        """
-
+        r"""Called on startup."""
         # Open an experiment if it has been specified as a command line argument
         # and suppress the new wizard in that case.
         if len(sys.argv) >= 2 and os.path.isfile(sys.argv[1]):

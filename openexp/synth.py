@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from openexp.sampler import Sampler
@@ -29,24 +28,25 @@ except:
 
 
 def Synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
+    r"""A factory that synthesizes a sound and returns it as a `sampler
+    object`.
+    For a full description of keywords, see
+    `python_workspace_api.synth`.
+
+    For backwards compatibility, this function
+    behaves as though it is a
+    back-end.
+
+    Parameters
+    ----------
+    experiment : experiment
+        The experiment object.
+
+    Returns
+    -------
+    sampler
+        A SAMPLER object.
     """
-    desc: |
-            A factory that synthesizes a sound and returns it as a `sampler object`.
-            For a full description of keywords, see `python_workspace_api.synth`.
-
-            For backwards compatibility, this function behaves as though it is a
-            back-end.
-
-    arguments:
-            experiment:
-                    desc:		The experiment object.
-                    type:		experiment
-
-    returns:
-            desc:	A SAMPLER object.
-            type:	sampler
-    """
-
     if np is None:
         raise osexception(
             u'The synth is not available, because numpy is missing.')
@@ -65,27 +65,25 @@ def Synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
 
 
 def key_to_freq(key):
+    r"""Converts a key (e.g., A1) to a frequency.
+
+    Parameters
+    ----------
+    key : str, unicode, int, float
+        A string like "A1", "eb2", etc, or a numeric frequency (in which case
+        the frequency is simply returned as a float).
+
+    Returns
+    -------
+    float
+        A frequency in hertz.
+
+    Examples
+    --------
+    >>> from openexp.synth import synth
+    >>> my_synth = synth(exp)
+    >>> print('An a2 is %d Hz' % my_synth.key_to_freq('a2'))
     """
-    desc:
-            Converts a key (e.g., A1) to a frequency.
-
-    arguments:
-            key:
-                    desc:	A string like "A1", "eb2", etc, or a numeric frequency
-                                    (in which case the frequency is simply returned as a
-                                    float).
-                    type:	[str, unicode, int, float]
-
-    returns:
-            desc:		A frequency in hertz.
-            type:		float
-
-    example: |
-            from openexp.synth import synth
-            my_synth = synth(exp)
-            print('An a2 is %d Hz' % my_synth.key_to_freq('a2'))
-    """
-
     if type(key) in [int, float]:
         return key
     if not isinstance(key, str) or len(key) < 2:
@@ -145,15 +143,7 @@ def osc_gen(_type, freq, length, rate):
 
 
 def envelope(length, attack, decay, rate):
-    """
-    desc:
-            An envelope generator that determines the volume profile of the
-            sound.
-
-    visible:
-            False
-    """
-
+    r"""An envelope generator that determines the volume profile of the sound."""
     length *= .001
     attack *= .001
     decay *= .001
@@ -168,15 +158,9 @@ def envelope(length, attack, decay, rate):
 
 
 def to_int_16(a):
+    r"""Converts the float array to an 16 bit int array, which is a more
+    typical sound format.
     """
-    desc:
-            Converts the float array to an 16 bit int array, which is a more
-            typical sound format.
-
-    visible:
-            False
-    """
-
     a *= 32767
     return a.astype(np.int16)
 

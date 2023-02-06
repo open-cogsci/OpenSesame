@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from openexp._canvas.canvas import Canvas
 from openexp._mouse.mouse import Mouse
@@ -25,17 +24,9 @@ from libopensesame.exceptions import osexception
 
 class Coordinates:
 
-    """
-    desc:
-            A base class for classes that need to perform coordinate conversions.
-    """
-
+    r"""A base class for classes that need to perform coordinate conversions."""
     def __init__(self):
-        """
-        desc:
-                Constructor.
-        """
-
+        r"""Constructor."""
         self.uniform_coordinates = \
             self.experiment.var.uniform_coordinates == u'yes'
         self._width = self.experiment.var.width
@@ -58,23 +49,20 @@ class Coordinates:
                 u'coordinates class should be coparent with canvas or mouse class')
 
     def none_to_center(self, x, y):
+        r"""Interpretes None coordinates as the display center.
+
+        Parameters
+        ----------
+        x : int, float, NoneType
+            An X coordinate.
+        y : int, float, NoneType
+            A Y coordinate.
+
+        Returns
+        -------
+        tuple
+            An (x, y) coordinate tuple.
         """
-        desc:
-                Interpretes None coordinates as the display center.
-
-        arguments:
-                x:
-                        desc:	An X coordinate.
-                        type:	[int, float, NoneType]
-                y:
-                        desc:	A Y coordinate.
-                        type:	[int, float, NoneType]
-
-        returns:
-                desc:	An (x, y) coordinate tuple.
-                type:	tuple
-        """
-
         if x is None:
             if not self.uniform_coordinates:
                 x = self._xcenter
@@ -88,52 +76,41 @@ class Coordinates:
         return x, y
 
     def to_xy(self, x, y=None):
+        r"""Converts coordinates from the OpenSesame reference frame to the
+        back-end specific reference frame. `None` values are taken as the
+        display center.
+
+        Parameters
+        ----------
+        x : float, int, NoneType, tuple
+            An x coordinate, or an (x,y) tuple.
+        y : float, int, NoneType, optional
+            A y coordinate. Only applicable if x was not a tuple.
+
+        Returns
+        -------
+        tuple
+            An (x, y) coordinate tuple in the back-end specific reference
+            frame.
         """
-        desc:
-                Converts coordinates from the OpenSesame reference frame to the
-                back-end specific reference frame. `None` values are taken as the
-                display center.
-
-        arguments:
-                x:
-                        desc:	An x coordinate, or an (x,y) tuple.
-                        type:	[float, int, NoneType, tuple]
-
-        keywords:
-                y:
-                        desc:	A y coordinate. Only applicable if x was not a tuple.
-                        type:	[float, int, NoneType]
-
-        returns:
-                desc:	An (x, y) coordinate tuple in the back-end specific
-                                reference frame.
-                type:	tuple
-        """
-
         raise NotImplementedError()
 
     def from_xy(self, x, y=None):
+        r"""Converts coordinates from the back-end specific reference frame to
+        the OpenSesame reference frame.
+
+        Parameters
+        ----------
+        x : float, int, tuple
+            An x coordinate, or an (x,y) tuple.
+        y : float, int, NoneType, optional
+            A y coordinate. Only applicable if x was not a tuple.
+
+        Returns
+        -------
+        tuple
+            An (x, y) coordinate tuple in the OpenSesame reference frame.
         """
-        desc:
-                Converts coordinates from the back-end specific reference frame to
-                the OpenSesame reference frame.
-
-        arguments:
-                x:
-                        desc:	An x coordinate, or an (x,y) tuple.
-                        type:	[float, int, tuple]
-
-        keywords:
-                y:
-                        desc:	A y coordinate. Only applicable if x was not a tuple.
-                        type:	[float, int, NoneType]
-
-        returns:
-                desc:	An (x, y) coordinate tuple in the OpenSesame reference
-                                frame.
-                type:	tuple
-        """
-
         raise NotImplementedError()
 
 

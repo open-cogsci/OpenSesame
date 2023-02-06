@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.oslogging import oslogger
 from libqtopensesame.extensions import base_extension
@@ -24,18 +23,11 @@ from libqtopensesame.extensions import base_extension
 
 class example(base_extension):
 
-    """
-    desc:
-            An example extension that lists all available events.
-    """
-
+    r"""An example extension that lists all available events."""
     def activate(self):
+        r"""Is called when the extension is activated through the menu/ toolbar
+        action.
         """
-        desc:
-                Is called when the extension is activated through the menu/ toolbar
-                action.
-        """
-
         oslogger.debug(u'Example extension activated')
 
     # Below is a list of event handlers, which you can implement to have your

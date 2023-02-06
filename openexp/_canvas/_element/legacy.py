@@ -16,18 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 
 class LegacyElement:
 
+    r"""Together with Element, LegacyElement is the base object for all legacy
+    sketchpad elements.
     """
-    desc:
-            Together with Element, LegacyElement is the base object for all legacy
-            sketchpad elements.
-    """
-
     @property
     def surface(self):
         return self._canvas.surface

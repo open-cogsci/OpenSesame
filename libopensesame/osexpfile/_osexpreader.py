@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 import tarfile
@@ -26,28 +25,19 @@ from libopensesame.osexpfile import OSExpBase
 
 class OSExpReader(OSExpBase):
 
-    """
-    desc:
-            A reader for osexp files of any format.
-    """
-
+    r"""A reader for osexp files of any format."""
     def __init__(self, exp, src):
-        """
-        desc:
-                Constructor. A side effect of calling this constructor is that all
-                files in the file pool of src are extracted to the file pool folder
-                of the experiment.
+        r"""Constructor. A side effect of calling this constructor is that all
+        files in the file pool of src are extracted to the file pool folder of
+        the experiment.
 
-        arguments:
-                exp:
-                        desc:	An experiment object.
-                        type:	experiment
-                src:
-                        desc:	An OpenSesame script, or the name of an OpenSesame
-                                        experiment file.
-                        type:	str
+        Parameters
+        ----------
+        exp : experiment
+            An experiment object.
+        src : str
+            An OpenSesame script, or the name of an OpenSesame experiment file.
         """
-
         super().__init__(exp)
         self._src = safe_decode(src)
         if self.format == u'script':
@@ -64,12 +54,10 @@ class OSExpReader(OSExpBase):
     @property
     def script(self):
         """See osexpbase"""
-
         return self._script
 
     def _determine_format(self):
         """See osexpbase"""
-
         try:
             # Checking whether a path exists can appartently trigger a
             # ValueError when src is too long. Therefore, we use this awkward
@@ -90,41 +78,24 @@ class OSExpReader(OSExpBase):
             return 'scriptfile'
 
     def _read_script(self):
-        """
-        visible: False
-
-        desc:
-                Reads a script (ie. not a file)
-        """
-
+        r"""Reads a script (ie. not a file)"""
         self._script = self._src
         self._experiment_path = None
 
     def _read_scriptfile(self):
-        """
-        visible: False
-
-        desc:
-                Reads a plain-text script file.
-        """
-
+        r"""Reads a plain-text script file."""
         self._experiment_path = os.path.dirname(self._src)
         with safe_open(self._src) as fd:
             self._script = fd.read()
 
     def _read_tarfile(self, format):
+        r"""Reads a tar or targz archive.
+
+        Parameters
+        ----------
+        format : str
+            The format to be used for tarfile.open().
         """
-        visible: False
-
-        desc:
-                Reads a tar or targz archive.
-
-        arguments:
-                format:
-                        desc:	The format to be used for tarfile.open().
-                        type:	str
-        """
-
         self._experiment_path = os.path.dirname(self._src)
         tar = tarfile.open(self._src, format)
         for name in tar.getnames():

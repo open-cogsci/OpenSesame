@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 import time
@@ -31,28 +30,16 @@ _ = translation_context(u'automatic_backup', category=u'extension')
 
 class automatic_backup(base_extension):
 
-    """
-    desc:
-            An extension that periodically saves the experiment.
-    """
-
+    r"""An extension that periodically saves the experiment."""
     def activate(self):
-        """
-        desc:
-                Opens the autosave folder.
-        """
-
+        r"""Opens the autosave folder."""
         if os.name == u"nt":
             os.startfile(self.autosave_folder)
         elif os.name == u"posix":
             misc.open_url(self.autosave_folder)
 
     def event_startup(self):
-        """
-        desc:
-                Initializes the extension on OpenSesame startup.
-        """
-
+        r"""Initializes the extension on OpenSesame startup."""
         # Create the autosave folder if it doesn't exist yet
         if not os.path.exists(os.path.join(self.main_window.home_folder,
                                            u".opensesame", u"backup")):
@@ -76,31 +63,19 @@ class automatic_backup(base_extension):
         self.start_autosave_timer()
 
     def event_run_experiment(self, fullscreen):
-        """
-        desc:
-                Suspend autosave timer when the experiment starts.
-        """
-
+        r"""Suspend autosave timer when the experiment starts."""
         if self.autosave_timer is not None:
             oslogger.debug(u"stopping autosave timer")
             self.autosave_timer.stop()
 
     def event_end_experiment(self, ret_val):
-        """
-        desc:
-                Resume autosave timer when the experiment ends.
-        """
-
+        r"""Resume autosave timer when the experiment ends."""
         if self.autosave_timer is not None:
             oslogger.debug(u"resuming autosave timer")
             self.autosave_timer.start()
 
     def start_autosave_timer(self):
-        """
-        desc:
-                Starts the autosave timer.
-        """
-
+        r"""Starts the autosave timer."""
         if cfg.autosave_interval > 0:
             oslogger.debug(u"autosave interval = %d ms" %
                            cfg.autosave_interval)
@@ -114,11 +89,7 @@ class automatic_backup(base_extension):
             self.autosave_timer = None
 
     def autosave(self):
-        """
-        desc:
-                Autosave the experiment if there are unsaved changes.
-        """
-
+        r"""Autosave the experiment if there are unsaved changes."""
         if self.main_window.unsaved_changes:
             path = os.path.join(self.autosave_folder,
                                 u'%s.osexp' % str(time.ctime()).replace(u':',

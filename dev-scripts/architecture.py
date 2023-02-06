@@ -17,7 +17,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
@@ -38,7 +37,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-
 from academicmarkdown import build
 import sys
 import os
@@ -54,7 +52,6 @@ tmpl_doc = u"""
 %(libqtopensesame)s
 
 """
-
 obj_doc = u"%(header)s - [%(name)s](%(src)s)\n"
 
 
@@ -65,7 +62,6 @@ def ingit(path):
     Returns:
     True if the file is in Git, False otherwise.
     """
-
     cmd = u'git ls-files %s --error-unmatch' % path
     try:
         subprocess.check_call(cmd.split())
@@ -84,7 +80,6 @@ def objcontains(obj):
     Returns:
     A documentation string.
     """
-
     l = []
     for i in dir(obj):
         o = getattr(obj, i)
@@ -107,7 +102,6 @@ def docstr(obj):
     Returns:
     A docstring.
     """
-
     doc = u''
     if obj.__doc__ is None:
         return u'Auto-generated object.'
@@ -131,7 +125,6 @@ def docmod(path, lvl=0):
     Returns:
     A full documentation string.
     """
-
     name = os.path.basename(path)[:-3]
     full_name = path[:-3].replace(u'/', '.')
     header = u'\t' * lvl
@@ -164,7 +157,6 @@ def docpkg(folder, lvl=0):
     Returns:
     A full documentation string.
     """
-
     md = u''
 
     path = os.path.join(folder, u'__init__.py')

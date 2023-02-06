@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.widgets.tree_base_item import TreeBaseItem
@@ -27,22 +26,15 @@ _ = translation_context(u'tree_unused_items_item', category=u'core')
 
 class TreeUnusedItemsItem(TreeBaseItem):
 
-    """
-    desc:
-            Corresponds to the unused-items widget in the overview area.
-    """
-
+    r"""Corresponds to the unused-items widget in the overview area."""
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:
-                        desc:	The main-window object.
-                        type:	qtopensesame
+        Parameters
+        ----------
+        main_window : qtopensesame
+            The main-window object.
         """
-
         super().__init__()
         self.setup(main_window)
         self.setIcon(0, self.theme.qicon(u'unused'))

@@ -16,21 +16,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import operator
 
 
 class CIStr(str):
 
+    r"""A class for case-insensitive string comparisons. This is used to speed
+    up the item store, which gets a lot of look ups for item names. This is not
+    a full emulation of the str protocol, only those parts that are used by the
+    item store.
     """
-    desc:
-        A class for case-insensitive string comparisons. This is used to speed
-        up the item store, which gets a lot of look ups for item names. This is
-        not a full emulation of the str protocol, only those parts that are used
-        by the item store.
-    """
-
     def __init__(self, s):
 
         str.__init__(s)

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
 from libqtopensesame.widgets.base_widget import BaseWidget
@@ -42,22 +41,15 @@ class RemoveCustomVarButton(QtWidgets.QPushButton):
 
 class LoggerWidget(BaseWidget, BaseDraggable):
 
-    """
-    desc:
-            The logger widget.
-    """
-
+    r"""The logger widget."""
     def __init__(self, logger):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                sketchpad:
-                        desc:	A logger object.
-                        type:	logger
+        Parameters
+        ----------
+        sketchpad : logger
+            A logger object.
         """
-
         super().__init__(logger.main_window, ui=u'widgets.logger')
         self.logger = logger
         self.checkboxes = []
@@ -68,11 +60,7 @@ class LoggerWidget(BaseWidget, BaseDraggable):
         self.set_supported_drop_types([u'variable'])
 
     def add_custom_variable(self):
-        """
-        desc:
-                Provides a simple dialog for the user to add a custom variable.
-        """
-
+        r"""Provides a simple dialog for the user to add a custom variable."""
         name = self.text_input(_(u'Add custom variable'),
                                message=_(u'Which variable do you wish to log?'))
         if name is None:
@@ -85,26 +73,22 @@ class LoggerWidget(BaseWidget, BaseDraggable):
         self.logger.update()
 
     def remove_custom_variable(self, var):
-        """
-        desc:
-                Removes an entry from the custom variable list.
+        r"""Removes an entry from the custom variable list.
 
-        arguments:
-                var:	The variable to remove.
+        Parameters
+        ----------
+        var
+            The variable to remove.
         """
-
         if var in self.logger.logvars:
             self.logger.logvars.remove(var)
         self.update()
         self.logger.update()
 
     def update(self):
+        r"""Fills the table with variables, makes a selection, and disables/
+        enables the table.
         """
-        desc:
-                Fills the table with variables, makes a selection, and disables/
-                enables the table.
-        """
-
         d = self.experiment.var.inspect()
         for row, var in enumerate(self.logger.logvars):
             button = RemoveCustomVarButton(
@@ -121,7 +105,6 @@ class LoggerWidget(BaseWidget, BaseDraggable):
 
     def accept_drop(self, data):
         """See base_widget."""
-
         name = data[u'variable']
         if name in self.logger.logvars:
             return

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from variable_inspector_cell import variable_inspector_cell
 from libqtopensesame.widgets.base_widget import base_widget
@@ -27,22 +26,19 @@ _ = translation_context(u'variable_inspector', category=u'extension')
 
 class variable_inspector_widget(base_widget):
 
+    r"""The variable inspector widget, which includes the table, filter button,
+    etc.
     """
-    desc:
-            The variable inspector widget, which includes the table, filter button,
-            etc.
-    """
-
     def __init__(self, main_window, ext):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:	The main-window object.
-                ext:			The variable_inspector-extension object.
+        Parameters
+        ----------
+        main_window
+            The main-window object.
+        ext
+            The variable_inspector-extension object.
         """
-
         super(variable_inspector_widget, self).__init__(
             main_window,
             ui=u'extensions.variable_inspector.variable_inspector'
@@ -56,19 +52,11 @@ class variable_inspector_widget(base_widget):
         self.refresh()
 
     def focus(self):
-        """
-        desc:
-                Sets the focus to the filter box.
-        """
-
+        r"""Sets the focus to the filter box."""
         self.ui.edit_variable_filter.setFocus()
 
     def _reset(self):
-        """
-        desc:
-                Resets the console, to reset the workspace.
-        """
-
+        r"""Resets the console, to reset the workspace."""
         self.set_workspace_globals({})
         self.refresh()
 
@@ -80,7 +68,6 @@ class variable_inspector_widget(base_widget):
                                 from an inactive GUI experiment.
                 type:	tuple
         """
-
         if (
                 u'var' in self._workspace_globals and
                 hasattr(self._workspace_globals[u'var'], u'inspect')
@@ -89,26 +76,22 @@ class variable_inspector_widget(base_widget):
         return self.experiment.var, False
 
     def set_workspace_globals(self, global_dict):
-        """
-        desc:
-                Sets the workspace global dict.
+        r"""Sets the workspace global dict.
 
-        arguments:
-                global_dict:		The workspace global dict
+        Parameters
+        ----------
+        global_dict
+            The workspace global dict
         """
-
         self._workspace_globals = global_dict
 
     def start_drag(self, e):
-        """
-        desc:
-                Starts a variable drag operation.
+        r"""Starts a variable drag operation.
 
-        arguments:
-                e:
-                        type:	QMousePressEvent
+        Parameters
+        ----------
+        e : QMousePressEvent
         """
-
         item = self.ui.table_variables.itemAt(e.pos())
         if item is None:
             return
@@ -123,11 +106,7 @@ class variable_inspector_widget(base_widget):
         )
 
     def refresh(self):
-        """
-        desc:
-                Refreshes the table.
-        """
-
+        r"""Refreshes the table."""
         # Remember the view position
         scrollpos = self.ui.table_variables.verticalScrollBar().sliderPosition()
         col = self.ui.table_variables.currentColumn()

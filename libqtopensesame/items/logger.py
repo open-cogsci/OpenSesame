@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.logger import Logger as LoggerRuntime
 from libqtopensesame.items.qtplugin import QtPlugin
@@ -27,24 +26,18 @@ _ = translation_context(u'logger', category=u'item')
 
 class Logger(LoggerRuntime, QtPlugin):
 
-    """
-    desc:
-            GUI controls for the logger item.
-    """
-
+    r"""GUI controls for the logger item."""
     description = _(u'Logs experimental data')
     help_url = u'manual/logging'
     lazy_init = True
 
     def __init__(self, name, experiment, string=None):
         """See item."""
-
         LoggerRuntime.__init__(self, name, experiment, string)
         QtPlugin.__init__(self)
 
     def init_edit_widget(self):
         """See qtitem."""
-
         super().init_edit_widget(stretch=False)
         self.logger_widget = LoggerWidget(self)
         self.add_widget(self.logger_widget)
@@ -53,7 +46,6 @@ class Logger(LoggerRuntime, QtPlugin):
 
     def edit_widget(self):
         """See qtitem."""
-
         super().edit_widget()
         for item in self.experiment.items.values():
             if item.item_type == self.item_type and item is not self:
@@ -65,7 +57,6 @@ class Logger(LoggerRuntime, QtPlugin):
 
     def apply_edit_changes(self):
         """See qtitem."""
-
         super().apply_edit_changes()
         self.logger_widget.update()
 

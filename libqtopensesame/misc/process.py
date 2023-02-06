@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.oslogging import oslogger
 import platform
@@ -36,7 +35,6 @@ else:
 class OutputChannel:
 
     """Passes messages from child process back to main process."""
-
     def __init__(self, channel, orig=None):
         """
         Constructor.
@@ -48,7 +46,6 @@ class OutputChannel:
         Keyword arguments:
         orig	--	The original stdout or stderr to also print the messages to.
         """
-
         self.channel = channel
         self.orig = orig
 
@@ -60,30 +57,23 @@ class OutputChannel:
         m		--	The message to write. Should be a string or an (Exception,
                                 traceback) tuple.
         """
-
         self.channel.put(m)
 
     def flush(self):
         """Dummy function to mimic the stderr.flush() function."""
-
         if self.orig:
             self.orig.flush()
         else:
             pass
 
     def isatty(self):
-        """
-        desc:
-                Indicates that the output is not attached to a terminal.
-        """
-
+        r"""Indicates that the output is not attached to a terminal."""
         return False
 
 
 class ExperimentProcess(multiprocessing.Process):
 
     """Creates a new process to run an experiment in."""
-
     def __init__(self, exp, output):
         """
         Constructor.
@@ -93,7 +83,6 @@ class ExperimentProcess(multiprocessing.Process):
         output	--	A reference to the queue object created in and used to
                                 communicate with the main process.
         """
-
         multiprocessing.Process.__init__(self)
         self.output = output
         # The experiment object is troublesome to serialize,
@@ -115,7 +104,6 @@ class ExperimentProcess(multiprocessing.Process):
         stdin and stderr to the pipe to the main process so OpenSesame can
         handle all prints and errors.
         """
-
         import os
         import sys
         from libopensesame import misc

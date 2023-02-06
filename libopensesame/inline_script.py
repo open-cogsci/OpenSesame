@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import warnings
 import re
@@ -30,16 +29,11 @@ extract_new_style = re.compile(r'var.([_a-zA-Z]+[_a-zA-Z0-9]*)\s*=')
 
 class InlineScript(Item):
 
-    """
-    desc: |
-            Allows users to use Python code in their experiments.
-    """
-
+    r"""Allows users to use Python code in their experiments."""
     description = u'Executes Python code'
 
     def reset(self):
         """See item."""
-
         self.var._prepare = u''
         self.var._run = u''
         self._var_info = None
@@ -50,13 +44,10 @@ class InlineScript(Item):
         return self.experiment.python_workspace
 
     def prepare(self):
+        r"""Executes the prepare script. The code that you enter in the
+        'prepare' tab of an inline_script item in the GUI is used as a body for
+        this function.
         """
-        desc:
-            Executes the prepare script. The code that you enter in the
-            'prepare' tab of an inline_script item in the GUI is used as a body
-            for this function.
-        """
-
         super().prepare()
         # 'self' must always be registered, otherwise we get confusions between
         # the various inline_script items.
@@ -98,13 +89,10 @@ class InlineScript(Item):
             )
 
     def run(self):
+        r"""Executes the run script. The code that you enter in the 'run' tab
+        of an inline_script item in the GUI is used as a body for this
+        function.
         """
-        desc:
-            Executes the run script. The code that you enter in the 'run' tab of
-            an inline_script item in the GUI is used as a body for this
-            function.
-        """
-
         self.set_item_onset()
         # 'self' must always be registered, otherwise we get confusions between
         # the various inline_script items.
@@ -122,7 +110,6 @@ class InlineScript(Item):
 
     def coroutine(self, coroutines):
         """See coroutines plug-in"""
-
         yield
         self.set_item_onset()
         while True:
@@ -145,14 +132,12 @@ class InlineScript(Item):
             yield
 
     def var_info(self):
-        """
-        desc:
-                Gives a list of dictionaries with variable descriptions.
+        r"""Gives a list of dictionaries with variable descriptions.
 
-        returns:
-                A list of (variable, description) tuples.
+        Returns
+        -------
+        A list of (variable, description) tuples.
         """
-
         l = super().var_info()
         script = (
             self.var.get(u'_prepare', _eval=False, default=u'')

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import functools
 from qtpy.QtWidgets import (
@@ -37,15 +36,15 @@ from libqtopensesame.misc.config import cfg
 class BasePreferencesWidget(BaseWidget):
 
     def __init__(self, main_window, ui):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:	A qtopensesame object.
-                ui:			A ui file.
+        Parameters
+        ----------
+        main_window
+            A qtopensesame object.
+        ui
+            A ui file.
         """
-
         super().__init__(main_window, ui=ui)
         self._its_me = False
         self._before_init_widgets()
@@ -54,29 +53,19 @@ class BasePreferencesWidget(BaseWidget):
         self.extension_manager.register_extension(self)
 
     def _before_init_widgets(self):
+        r"""Can be implemented to perform some actions before the rest of the
+        widgets are initialized.
         """
-        desc:
-                Can be implemented to perform some actions before the rest of
-                the widgets are initialized.
-        """
-
         pass
 
     def _after_init_widgets(self):
+        r"""Can be implemented to perform some actions after the rest of the
+        widgets have been initialized.
         """
-        desc:
-                Can be implemented to perform some actions after the rest of
-                the widgets have been initialized.
-        """
-
         pass
 
     def _init_widgets(self):
-        """
-        desc:
-                Introspects the widgets and automatically binds them to settings.
-        """
-
+        r"""Introspects the widgets and automatically binds them to settings."""
         for name in dir(self.ui):
             if not name.startswith('cfg_'):
                 continue
@@ -128,16 +117,15 @@ class BasePreferencesWidget(BaseWidget):
                 oslogger.warning('invalid QWidget with name {}'.format(name))
 
     def event_setting_changed(self, setting, value):
-        """
-        desc:
-                Update the controls if settings have been changed by someone
-                else.
+        r"""Update the controls if settings have been changed by someone else.
 
-        arguments:
-                setting:	The name of the changed setting
-                value:	The new value
+        Parameters
+        ----------
+        setting
+            The name of the changed setting
+        value
+            The new value
         """
-
         if self._its_me:
             return
         name = 'cfg_{}'.format(setting)

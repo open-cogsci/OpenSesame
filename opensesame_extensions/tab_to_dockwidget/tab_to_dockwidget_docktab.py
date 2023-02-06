@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy.QtWidgets import QDockWidget
 from libqtopensesame.items.qtitem import qtitem
@@ -24,11 +23,7 @@ from libqtopensesame.items.qtitem import qtitem
 
 class DockTab(QDockWidget):
 
-    """
-    desc:
-            A dockwidget that holds a tab.
-    """
-
+    r"""A dockwidget that holds a tab."""
     def __init__(self, tab_to_dockwidget, widget, name):
 
         QDockWidget.__init__(self, name, tab_to_dockwidget.main_window)

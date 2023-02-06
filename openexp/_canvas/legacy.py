@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 import pygame
@@ -43,13 +42,9 @@ fonts = {}
 
 class Legacy(Canvas, LegacyCoordinates):
 
+    r"""This is a canvas backend built on top of PyGame. For function
+    specifications and docstrings, see `openexp._canvas.canvas`.
     """
-    desc:
-            This is a canvas backend built on top of PyGame.
-            For function specifications and docstrings, see
-            `openexp._canvas.canvas`.
-    """
-
     # The settings variable is used by the GUI to provide a list of back-end
     # settings
     settings = {
@@ -101,15 +96,10 @@ class Legacy(Canvas, LegacyCoordinates):
         return t1
 
     def _show_macos(self):
+        r"""On Mac OS, the display is sometimes not refreshed unless there is
+        some interaction with the event loop. Therefor we implement this hack
+        which is only used on Mac OS.
         """
-        visible: False
-
-        desc:
-                On Mac OS, the display is sometimes not refreshed unless there is
-                some interaction with the event loop. Therefor we implement this
-                hack which is only used on Mac OS.
-        """
-
         self.experiment.surface.blit(self.surface, (0, 0))
         self.experiment.last_shown_canvas = self.surface
         pygame.display.flip()
@@ -117,14 +107,10 @@ class Legacy(Canvas, LegacyCoordinates):
         return pygame.time.get_ticks()
 
     def prepare(self):
+        r"""Finishes pending canvas operations (if any), so that a subsequent
+        call to [canvas.show] is extra fast. It's only necessary to call this
+        function if you have disabled `auto_prepare` in [canvas.__init__].
         """
-        desc:
-                Finishes pending canvas operations (if any), so that a subsequent
-                call to [canvas.show] is extra fast. It's only necessary to call
-                this function if you have disabled `auto_prepare` in
-                [canvas.__init__].
-        """
-
         self.surface.fill(self.background_color.backend_color)
         Canvas.prepare(self)
 

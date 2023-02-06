@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 import tarfile
@@ -28,26 +27,19 @@ from libopensesame.oslogging import oslogger
 
 class OSExpWriter(OSExpBase):
 
+    r"""A writer of osexp files. The format (plain text or tar.gz) depends on
+    whether the file pool contains files.
     """
-    desc:
-            A writer of osexp files. The format (plain text or tar.gz) depends on
-            whether the file pool contains files.
-    """
-
     def __init__(self, exp, path):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                exp:
-                        desc:	An experiment object.
-                        type:	experiment
-                path:
-                        desc:	A path to the experiment file.
-                        type:	str
+        Parameters
+        ----------
+        exp : experiment
+            An experiment object.
+        path : str
+            A path to the experiment file.
         """
-
         super().__init__(exp)
         self._path = path
         self._experiment_path = os.path.dirname(path)
@@ -61,33 +53,19 @@ class OSExpWriter(OSExpBase):
     @property
     def script(self):
         """See osexpbase"""
-
         return self._exp.to_string()
 
     def _determine_format(self):
         """See osexpbase"""
-
         return 'scriptfile' if not self._pool.count_included() else 'tarfile'
 
     def _write_scriptfile(self):
-        """
-        visible: False
-
-        desc:
-                Writes a plain-text file.
-        """
-
+        r"""Writes a plain-text file."""
         with safe_open(self._path, u'w') as fd:
             fd.write(self.script)
 
     def _write_tarfile(self):
-        """
-        visible: False
-
-        desc:
-                Writes a .tar.gz file.
-        """
-
+        r"""Writes a .tar.gz file."""
         # Write the script to a text file in the file pool
         script_path = os.path.join(self._pool.folder(), u'script.opensesame')
         with safe_open(script_path, u'w') as fd:

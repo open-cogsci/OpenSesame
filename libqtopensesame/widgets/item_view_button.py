@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -26,22 +25,15 @@ _ = translation_context(u'item_view_button', category=u'core')
 
 class ItemViewButton(BaseSubcomponent, QtWidgets.QPushButton):
 
-    """
-    desc:
-            The view button in the top-right of the edit controls.
-    """
-
+    r"""The view button in the top-right of the edit controls."""
     def __init__(self, item):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                item:
-                        desc:	An item.
-                        type:	qtitem.
+        Parameters
+        ----------
+        item : qtitem.
+            An item.
         """
-
         super().__init__(item.main_window)
         self.item = item
         self.setup(item)
@@ -64,7 +56,6 @@ class ItemViewButton(BaseSubcomponent, QtWidgets.QPushButton):
                 desc:	The icon for the controls view.
                 type: 	QIcon
         """
-
         return self.theme.qicon(u'os-view-controls')
 
     def view_script_icon(self):
@@ -73,7 +64,6 @@ class ItemViewButton(BaseSubcomponent, QtWidgets.QPushButton):
                 desc:	The icon for the script view.
                 type: 	QIcon
         """
-
         return self.theme.qicon(u'os-view-script')
 
     def view_split_icon(self):
@@ -82,7 +72,6 @@ class ItemViewButton(BaseSubcomponent, QtWidgets.QPushButton):
                 desc:	The icon for the split view.
                 type: 	QIcon
         """
-
         return self.theme.qicon(u'os-view-split')
 
     def set_view_icon(self, view):
@@ -95,7 +84,6 @@ class ItemViewButton(BaseSubcomponent, QtWidgets.QPushButton):
                         desc:	'controls', 'script', or 'split'.
                         type:	unicode
         """
-
         if view == u'controls':
             self.setIcon(self.view_controls_icon())
         elif view == u'script':

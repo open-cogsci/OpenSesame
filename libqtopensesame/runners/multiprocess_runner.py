@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import sys
 import time
@@ -31,12 +30,10 @@ JOIN_TIMEOUT = 3  # Seconds to wait for the process to end cleanly
 class MultiprocessRunner(BaseRunner):
 
     """Runs an experiment in another process using multiprocessing."""
-
     supports_kill = True
 
     def execute(self):
         """See base_runner.execute()."""
-
         import platform
         if platform.system() == 'Darwin' and sys.version_info < (3, 4):
             # In OS X the multiprocessing module is horribly broken,
@@ -147,16 +144,13 @@ class MultiprocessRunner(BaseRunner):
 
     def kill(self):
         """See base_runner."""
-
         self.exp_process.kill()
 
     def workspace_globals(self):
         """See base_runner."""
-
         return self._workspace_globals
 
     @staticmethod
     def has_heartbeat():
         """See base_runner."""
-
         return True

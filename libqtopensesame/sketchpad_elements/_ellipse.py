@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.sketchpad_elements._base_rect_ellipse import \
@@ -26,13 +25,10 @@ from libopensesame.sketchpad_elements import Ellipse as EllipseRuntime
 
 class Ellipse(BaseRectEllipse, EllipseRuntime):
 
+    r"""An ellipse element.
+    See base_element for docstrings and function
+    descriptions.
     """
-    desc:
-            An ellipse element.
-
-            See base_element for docstrings and function descriptions.
-    """
-
     @classmethod
     def mouse_press(cls, sketchpad, pos):
 

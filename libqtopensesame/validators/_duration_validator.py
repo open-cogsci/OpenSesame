@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.validators._base_validator import BaseValidator
@@ -24,11 +23,7 @@ from libqtopensesame.validators._base_validator import BaseValidator
 
 class DurationValidator(BaseValidator):
 
-    """
-    desc:
-            A validator for durations.
-    """
-
+    r"""A validator for durations."""
     def __init__(self, main_window, default=u'keypress'):
 
         super().__init__(main_window, default=default)

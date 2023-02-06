@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
 from libopensesame.sequence import Sequence as SequenceRuntime
@@ -31,28 +30,23 @@ _ = translation_context(u'sequence', category=u'item')
 
 class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
 
-    """
-    desc:
-            GUI controls for the sequence item.
-    """
-
+    r"""GUI controls for the sequence item."""
     description = _(u'Runs a number of items in sequence')
     help_url = u'manual/structure/sequence'
     lazy_init = True
 
     def __init__(self, name, experiment, string=None):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        name
+            The item name.
+        experiment
+            The experiment object.
+        string, optional
+            A definition string.
         """
-        desc:
-                Constructor.
-
-        arguments:
-                name:		The item name.
-                experiment:	The experiment object.
-
-        keywords:
-                string:		A definition string.
-        """
-
         SequenceRuntime.__init__(self, name, experiment, string)
         QtStructureItem.__init__(self)
         QtPlugin.__init__(self)
@@ -60,7 +54,6 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
 
     def init_edit_widget(self):
         """See qtitem."""
-
         super().init_edit_widget(False)
         self.checkbox_flush_keyboard = QtWidgets.QCheckBox(
             _(u'Flush pending key presses at sequence start'))
@@ -80,7 +73,6 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
 
     def edit_widget(self):
         """See qtitem."""
-
         super().edit_widget()
         if self.treewidget.locked:
             return
@@ -101,7 +93,6 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
     @QtStructureItem.clears_children_cache
     def rename(self, from_name, to_name):
         """See qtitem."""
-
         QtPlugin.rename(self, from_name, to_name)
         new_items = []
         for item, cond in self.items:
@@ -115,7 +106,6 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
     @QtStructureItem.clears_children_cache
     def delete(self, item_name, item_parent=None, index=None):
         """See qtitem."""
-
         if item_parent is None or (item_parent == self.name and index is None):
             while True:
                 for i, (child_item_name, child_run_if) in enumerate(self.items):
@@ -132,7 +122,6 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
     def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
                         extra_info=None):
         """See qtitem."""
-
         widget = TreeItemItem(self, extra_info=extra_info)
         items.append(self.name)
         if max_depth < 0 or max_depth > 1:
@@ -147,27 +136,20 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
         return widget
 
     def set_run_if(self, index, cond=u'always'):
+        r"""Sets the run-if statement for an item at a specific index.
+
+        Parameters
+        ----------
+        index : int
+            The index of the item to change the run-if statement of.
+        cond : unicode, optional
+            The run-if statement.
         """
-        desc:
-                Sets the run-if statement for an item at a specific index.
-
-        arguments:
-                index:
-                        desc:	The index of the item to change the run-if statement of.
-                        type:	int
-
-        keywords:
-                cond:
-                        desc:	The run-if statement.
-                        type:	unicode
-        """
-
         self.items[index] = self.items[index][0], cond
 
     @QtStructureItem.cached_children
     def children(self):
         """See qtitem."""
-
         self._children = []
         for item, cond in self.items:
             if item not in self.experiment.items:
@@ -185,13 +167,11 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
 
     def is_child_item(self, item):
         """See qtitem."""
-
         return item in self.children()
 
     @QtStructureItem.clears_children_cache
     def insert_child_item(self, item_name, index=0):
         """See qtitem."""
-
         if item_name == self.last_removed_child[0]:
             # If this item was just removed, re-add it and preserve its run-if
             # statement.
@@ -204,7 +184,6 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
     @QtStructureItem.clears_children_cache
     def remove_child_item(self, item_name, index=0):
         """See qtitem."""
-
         if index < 0:
             items = []
             for item, cond in self.items:

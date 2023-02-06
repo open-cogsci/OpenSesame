@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from openexp._coordinates.coordinates import Coordinates
@@ -24,12 +23,9 @@ from openexp._coordinates.coordinates import Coordinates
 
 class Xpyriment(Coordinates):
 
+    r"""For function specifications and docstrings, see
+    `openexp._coordinates.coordinates`.
     """
-    desc:
-            For function specifications and docstrings, see
-            `openexp._coordinates.coordinates`.
-    """
-
     def __init__(self):
 
         Coordinates.__init__(self)

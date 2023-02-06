@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 from libopensesame import plugins
@@ -26,20 +25,15 @@ from plugin_manager_widget._plugin_widget import plugin_widget
 
 class plugin_manager_widget(base_widget):
 
-    """
-    desc:
-            A list of plugins.
-    """
-
+    r"""A list of plugins."""
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:	The main-window object.
+        Parameters
+        ----------
+        main_window
+            The main-window object.
         """
-
         super(plugin_manager_widget, self).__init__(main_window,
                                                     ui=u'extensions.plugin_manager.plugin_manager')
         self.plugin_list = plugins.list_plugins(

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from openexp._keyboard.keyboard import Keyboard
@@ -27,13 +26,9 @@ from openexp.backend import configurable
 
 class Psycho(Keyboard):
 
+    r"""This is a keyboard backend built on top of PsychoPy. For function
+    specifications and docstrings, see `openexp._keyboard.keyboard`.
     """
-    desc:
-            This is a keyboard backend built on top of PsychoPy.
-            For function specifications and docstrings, see
-            `openexp._keyboard.keyboard`.
-    """
-
     # The keymap is an incomplete attempt at translating keys from the PyGame
     # names to the names used by PsychoPy
     keymap = {

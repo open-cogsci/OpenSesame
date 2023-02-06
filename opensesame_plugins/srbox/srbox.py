@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.oslogging import oslogger
 from libopensesame.base_response_item import base_response_item
@@ -27,16 +26,11 @@ import libsrbox
 
 class srbox(base_response_item):
 
-    """
-    desc:
-            A plug-in for using the serial response box.
-    """
-
+    r"""A plug-in for using the serial response box."""
     process_feedback = True
 
     def reset(self):
         """See item."""
-
         self.var.timeout = u'infinite'
         self.var.lights = u''
         self.var.dev = u'autodetect'
@@ -45,7 +39,6 @@ class srbox(base_response_item):
 
     def validate_response(self, response):
         """See base_response_item."""
-
         try:
             response = int(response)
         except (ValueError, TypeError):
@@ -54,18 +47,13 @@ class srbox(base_response_item):
 
     def process_response(self, response_args):
         """See base_response_item."""
-
         response, t1 = response_args
         if isinstance(response, list):
             response = response[0]
         base_response_item.process_response(self, (safe_decode(response), t1))
 
     def _get_button_press(self):
-        """
-        desc:
-                Calls srbox.get_button_press() with the correct arguments.
-        """
-
+        r"""Calls srbox.get_button_press() with the correct arguments."""
         return self.experiment.srbox.get_button_press(
             allowed_buttons=self._allowed_responses,
             timeout=self._timeout,
@@ -74,7 +62,6 @@ class srbox(base_response_item):
 
     def prepare_response_func(self):
         """See base_response_item."""
-
         self._keyboard = keyboard(
             self.experiment,
             keylist=self._allowed_responses,
@@ -107,7 +94,6 @@ class srbox(base_response_item):
 
     def run(self):
         """See item."""
-
         self._keyboard.flush()
         if self.var._dummy != u'yes':
             self.experiment.srbox.start()
@@ -116,11 +102,7 @@ class srbox(base_response_item):
             self.experiment.srbox.stop()
 
     def close(self):
-        """
-        desc:
-                Neatly close the connection to the srbox.
-        """
-
+        r"""Neatly close the connection to the srbox."""
         if (
                 not hasattr(self.experiment, "srbox") or
                 self.experiment.srbox is None

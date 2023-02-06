@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from openexp._coordinates.psycho import Psycho as PsychoCoordinates
 from openexp._mouse.mouse import Mouse
@@ -26,13 +25,9 @@ from openexp.backend import configurable
 
 class Psycho(Mouse, PsychoCoordinates):
 
+    r"""This is a mouse backend built on top of PsychoPy. For function
+    specifications and docstrings, see `openexp._mouse.mouse`.
     """
-    desc:
-            This is a mouse backend built on top of PsychoPy.
-            For function specifications and docstrings, see
-            `openexp._mouse.mouse`.
-    """
-
     def __init__(self, experiment, **resp_args):
 
         Mouse.__init__(self, experiment, **resp_args)

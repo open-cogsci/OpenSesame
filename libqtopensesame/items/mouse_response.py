@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.mouse_response import MouseResponse as MouseResponseRuntime
 from libqtopensesame.items.qtplugin import QtPlugin
@@ -30,34 +29,27 @@ _ = translation_context(u'mouse_response', category=u'item')
 class MouseResponse(MouseResponseRuntime, QtPlugin):
 
     """mouse_response item GUI"""
-
     description = _(u'Collects mouse responses')
     help_url = u'manual/response/mouse'
     lazy_init = True
 
     def __init__(self, name, experiment, string=None):
+        r"""Constructor
+
+        Parameters
+        ----------
+        name
+            The item name.
+        experiment
+            The experiment object.
+        string, optional
+            The item definition string, or None for default initialization.
         """
-        desc:
-                Constructor
-
-        arguments:
-                name:		The item name.
-                experiment: The experiment object.
-
-        keywords:
-                string:		The item definition string, or None for default
-                                        initialization.
-        """
-
         MouseResponseRuntime.__init__(self, name, experiment, string)
         QtPlugin.__init__(self)
 
     def init_edit_widget(self):
-        """
-        desc:
-                Initialize controls.
-        """
-
+        r"""Initialize controls."""
         super().init_edit_widget(stretch=True)
         self.add_line_edit_control(
             var=u'correct_response',
@@ -108,20 +100,17 @@ class MouseResponse(MouseResponseRuntime, QtPlugin):
 
     def edit_widget(self):
         """See qtplugin."""
-
         self._combobox_sketchpad.refresh()
         qtplugin.edit_widget(self)
 
     def rename(self, from_name, to_name):
         """See qtplugin."""
-
         qtplugin.rename(self, from_name, to_name)
         if self.var.linked_sketchpad == from_name:
             self.var.linked_sketchpad = to_name
 
     def delete(self, item_name, item_parent=None, index=None):
         """See qtplugin."""
-
         if self.var.linked_sketchpad == item_name:
             self.var.linked_sketchpad = u''
 

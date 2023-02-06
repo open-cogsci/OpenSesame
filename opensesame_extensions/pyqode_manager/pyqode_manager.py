@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import re
 import types
@@ -55,12 +54,9 @@ from qtpy.QtCore import QProcess
 
 class pyqode_manager(base_extension):
 
+    r"""Keeps track of all PyQode editor instances, which need to be explicitly
+    closed. And also modifies their behavior somewhat.
     """
-    desc:
-            Keeps track of all PyQode editor instances, which need to be explicitly
-            closed. And also modifies their behavior somewhat.
-    """
-
     def _is_opensesame_api_object(self, name, obj):
 
         if name.startswith(u'safe_'):

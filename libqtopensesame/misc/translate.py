@@ -31,30 +31,25 @@ Translation logic:
   and translated when automatic controls are defined
 - UI files are extracted, and translated fully automatically
 """
-
 import os
 from libopensesame.py3compat import *
 from qtpy.QtCore import QCoreApplication
 
 
 def translation_context(name, category=u'core'):
-    """
-    desc:
-        A factory that generates a translation method with a fixed context.
+    r"""A factory that generates a translation method with a fixed context.
 
-    arguments:
-        name:
-            desc: The name to use for the context.
-            type: str
+    Parameters
+    ----------
+    name : str
+        The name to use for the context.
+    name : str, optional
+        The category to use for the context.
 
-    keywords:
-        name:
-            desc: The category to use for the context.
-            type: str
-
-    returns:
-        desc: A translation function.
-        type: FunctionType
+    Returns
+    -------
+    FunctionType
+        A translation function.
     """
     _context = u'%s_%s' % (category, name)
     if os.environ[u'QT_API'] == u'pyqt5':

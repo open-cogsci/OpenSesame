@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from openexp.sampler import Sampler as OpenExpSampler
@@ -28,17 +27,12 @@ from libopensesame.mouse_response import MouseResponseMixin
 
 class Sampler(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
-    """
-    desc:
-            An item for sound-file playback.
-    """
-
+    r"""An item for sound-file playback."""
     description = u'Plays a sound file in .wav or .ogg format'
     is_oneshot_coroutine = True
 
     def reset(self):
         """See item."""
-
         self.var.sample = u''
         self.var.pan = 0
         self.var.pitch = 1
@@ -49,7 +43,6 @@ class Sampler(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
     def process_response(self, response_args):
         """See base_response_item."""
-
         if self.var.duration == u'mouseclick':
             MouseResponseMixin.process_response(self, response_args)
             return
@@ -57,7 +50,6 @@ class Sampler(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
     def prepare_response_func(self):
         """See base_response_item."""
-
         if isinstance(self.var.duration, (int, float)):
             return self._prepare_sleep_func(self.var.duration)
         if self.var.duration == u'keypress':
@@ -70,7 +62,6 @@ class Sampler(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
     def prepare(self):
         """See item."""
-
         super().prepare()
         if safe_decode(self.var.sample).strip() == u'':
             raise osexception(
@@ -95,14 +86,12 @@ class Sampler(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
     def run(self):
         """See item."""
-
         self._t0 = self.set_item_onset()
         self.sampler.play()
         super().run()
 
     def coroutine(self):
         """See coroutines plug-in."""
-
         self.sampler.block = False
         yield
         self.set_item_onset()
@@ -110,7 +99,6 @@ class Sampler(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
     def var_info(self):
         """See item."""
-
         if self.var.get(u'duration', _eval=False, default=u'') in \
                 [u'keypress', u'mouseclick']:
             return super().var_info()

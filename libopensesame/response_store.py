@@ -16,18 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 
 
 class ResponseInfo:
 
-    """
-    desc:
-            A single response.
-    """
-
+    r"""A single response."""
     def __init__(self, response_store, response=None, correct=None,
                  response_time=None, item=None, feedback=True):
 
@@ -75,63 +70,56 @@ class ResponseInfo:
 
 class ResponseStore:
 
+    r"""The `responses` object contains the history of the responses that were
+    collected during the experiment.
+
+    A `responses` object is created
+    automatically when the experiment starts.
+
+    In addition to the functions
+    listed below, the following semantics are
+    supported:
+
+    __Example__:
+
+    ~~~
+    .python
+    # Loop through all responses, where last-given responses come first
+    # Each response has correct, response, response_time, item, and feedback
+    #
+    attributes.
+    for response in responses:
+            print(response.correct)
+    #
+    Print the two last-given respones
+    print('last_two responses:')
+    print(responses[:2])
+    ~~~
+
+    [TOC]
     """
-    desc: |
-            The `responses` object contains the history of the responses that were
-            collected during the experiment.
-
-            A `responses` object is created automatically when the experiment starts.
-
-            In addition to the functions listed below, the following semantics are
-            supported:
-
-            __Example__:
-
-            ~~~ .python
-            # Loop through all responses, where last-given responses come first
-            # Each response has correct, response, response_time, item, and feedback
-            # attributes.
-            for response in responses:
-                    print(response.correct)
-            # Print the two last-given respones
-            print('last_two responses:')
-            print(responses[:2])
-            ~~~
-
-            [TOC]
-    """
-
     def __init__(self, experiment):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        experiment : experiment.
+            The experiment object.
         """
-        visible: False
-
-        desc:
-                Constructor.
-
-        arguments:
-                experiment:
-                        desc:	The experiment object.
-                        type:	experiment.
-        """
-
         self._experiment = experiment
         self._responses = []
         self._feedback_from = 0
 
     @property
     def acc(self):
+        r"""The percentage of correct responses for all responses that are
+        included in feedback. If there are no responses to give feedback on,
+        'undefined' is returned.
+
+        Examples
+        --------
+        >>> print('The accuracy was %s%%' % responses.acc)
         """
-        name: acc
-
-        desc:
-                The percentage of correct responses for all responses that are included
-                in feedback. If there are no responses to give feedback on,
-                'undefined' is returned.
-
-        example: |
-                print('The accuracy was %s%%' % responses.acc)
-        """
-
         l = self._select(feedback=True)._selectnot(correct=None).correct
         if not l:
             return u'undefined'
@@ -139,18 +127,14 @@ class ResponseStore:
 
     @property
     def avg_rt(self):
+        r"""The average response time for all responses that are included in
+        feedback. If there are no responses to give feedback on, 'undefined' is
+        returned.
+
+        Examples
+        --------
+        >>> print('The average RT was %s ms' % responses.avg_rt)
         """
-        name: avg_rt
-
-        desc:
-                The average response time for all responses that are included
-                in feedback. If there are no responses to give feedback on,
-                'undefined' is returned.
-
-        example: |
-                print('The average RT was %s ms' % responses.avg_rt)
-        """
-
         l = self._select(feedback=True)._selectnot(response_time=None) \
                 .response_time
         if not l:
@@ -159,80 +143,60 @@ class ResponseStore:
 
     @property
     def response(self):
+        r"""A list of all response values. (I.e. not response objects, but
+        actual response keys, buttons, etc.)
+
+        Examples
+        --------
+        >>> for response in responses.response:
+        >>>         print(response)
         """
-        name: response
-
-        desc:
-                A list of all response values. (I.e. not response objects, but
-                actual response keys, buttons, etc.)
-
-        example: |
-                for response in responses.response:
-                        print(response)
-        """
-
         return [r.response for r in self._responses]
 
     @property
     def correct(self):
+        r"""A list of all correct (0, 1, or None) values.
+
+        Examples
+        --------
+        >>> for correct in responses.correct:
+        >>>         print(correct)
         """
-        name: correct
-
-        desc:
-                A list of all correct (0, 1, or None) values.
-
-        example: |
-                for correct in responses.correct:
-                        print(correct)
-        """
-
         return [r.correct for r in self._responses]
 
     @property
     def response_time(self):
+        r"""A list of all response times (float or None).
+
+        Examples
+        --------
+        >>> for rt in responses.response_time:
+        >>>         print(rt)
         """
-        name: response_time
-
-        desc:
-                A list of all response times (float or None).
-
-        example: |
-                for rt in responses.response_time:
-                        print(rt)
-        """
-
         return [r.response_time for r in self._responses]
 
     @property
     def item(self):
+        r"""A list of all item names (str or None) associated with each
+        response.
+
+        Examples
+        --------
+        >>> for item in responses.item:
+        >>>         print(item)
         """
-        name: item
-
-        desc:
-                A list of all item names (str or None) associated with each
-                response.
-
-        example: |
-                for item in responses.item:
-                        print(item)
-        """
-
         return [r.item for r in self._responses]
 
     @property
     def feedback(self):
+        r"""A list of the feedback status (True or False) associated with each
+        response.
+
+        Examples
+        --------
+        >>> for feedback in responses.feedback:
+        >>>         print(feedback)
         """
-        name: feedback
-
-        desc:
-                A list of the feedback status (True or False) associated with each
-                response.
-
-        example: |
-                for feedback in responses.feedback:
-                        print(feedback)
-        """
-
         return [r.feedback for r in self._responses]
 
     @property
@@ -242,32 +206,26 @@ class ResponseStore:
 
     def add(self, response=None, correct=None, response_time=None, item=None,
             feedback=True):
+        r"""Adds a response.
+
+        Parameters
+        ----------
+        response    The response value, for example, 'space' for the spacebar, 0 for
+            joystick button 0, etc.
+        correct : bool, int, None, optional
+            The correctness of the response.
+        response_time : float, int, None, optional
+            The response_time.
+        item : str, None, optional
+            The item that collected the response.
+        feedback : bool, optional
+            Indicates whether the response should be included in feedback on
+            accuracy and average response time.
+
+        Examples
+        --------
+        >>> responses.add(response_time=500, correct=1, response='left')
         """
-        desc:
-                Adds a response.
-
-        keywords:
-                response:
-                        desc:	The response value, for example, 'space' for the
-                                        spacebar, 0 for joystick button 0, etc.
-                correct:
-                        desc:	The correctness of the response.
-                        type:	[bool, int, None]
-                response_time:
-                        desc:	The response_time.
-                        type:	[float, int, None]
-                item:
-                        desc:	The item that collected the response.
-                        type:	[str, None]
-                feedback:
-                        desc:	Indicates whether the response should be included in
-                                        feedback on accuracy and average response time.
-                        type:	bool
-
-        example: |
-                responses.add(response_time=500, correct=1, response='left')
-        """
-
         r = ResponseInfo(self, response=response, correct=correct,
                          response_time=response_time, item=item, feedback=feedback)
         if correct is None:
@@ -295,26 +253,22 @@ class ResponseStore:
         self.var.total_correct = len(rs._select(correct=1))
 
     def clear(self):
-        """
-        desc:
-                Clears all responses.
+        r"""Clears all responses.
 
-        example: |
-                responses.clear()
+        Examples
+        --------
+        >>> responses.clear()
         """
-
         self._responses = []
 
     def reset_feedback(self):
-        """
-        desc:
-                Sets the feedback status of all responses to False, so that only
-                new responses will be included in feedback.
+        r"""Sets the feedback status of all responses to False, so that only
+        new responses will be included in feedback.
 
-        example: |
-                responses.reset_feedback()
+        Examples
+        --------
+        >>> responses.reset_feedback()
         """
-
         for r in self._responses:
             r.feedback = False
 

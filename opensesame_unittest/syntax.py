@@ -17,7 +17,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import os
 import yamldoc
 import unittest
@@ -30,7 +29,6 @@ class check_syntax(unittest.TestCase):
 	desc:
 		Checks whether OpenSesame syntax is correctly parsed
 	"""
-
 	def checkCmd(self, s, cmd, arglist, kwdict):
 
 		print(u'Checking: %s' % s)
@@ -63,7 +61,6 @@ class check_syntax(unittest.TestCase):
 		desc:
 			Walk through the test
 		"""
-
 		self.exp = experiment()
 		self.checkCmd(u'widget 0 0 1 1 label text="Tést 123"',
 			u'widget', [0, 0, 1, 1, u'label'],

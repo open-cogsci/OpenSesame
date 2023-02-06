@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 from libopensesame.experiment import Experiment as ExperimentRuntime
@@ -32,43 +31,30 @@ _ = translation_context(u'experiment', category=u'item')
 class Experiment(ExperimentRuntime):
 
     """Contains various GUI controls for the experiment"""
-
     def __init__(self, main_window, name, string=None, pool_folder=None,
                  experiment_path=None, resources={}):
+        r"""Constructor. The experiment is created automatically be OpenSesame
+        and you will generally not need to create it yourself.
+
+        Parameters
+        ----------
+        main_window : qtopensesame
+            The main-window object.
+        name : str, unicode
+            The name of the experiment.
+        string : str, unicode, NoneType, optional
+            A string containing the experiment definition, the name of an
+            OpenSesame experiment file, or `None` to create a blank experiment.
+        pool_folder : str, unicode, NoneType, optional
+            A specific folder to be used for the file pool, or `None` to use a
+            new temporary folder.
+        experiment_path : str, unicode, NoneType, optional
+            The path of the experiment file. This will need to be specified
+            even if a filename was passed using the `string` keyword.
+        resources : dict, optional
+            A dictionary with names as keys and paths as values. This serves as
+            a look-up table for resources.
         """
-        desc:
-                Constructor. The experiment is created automatically be OpenSesame
-                and you will generally not need to create it yourself.
-
-        arguments:
-                main_window:
-                        desc:	The main-window object.
-                        type:	qtopensesame
-                name:
-                        desc:	The name of the experiment.
-                        type:	[str, unicode]
-
-        keywords:
-                string:
-                        desc:	A string containing the experiment definition, the
-                                        name of an OpenSesame experiment file, or `None` to
-                                        create a blank experiment.
-                        type:	[str, unicode, NoneType]
-                pool_folder:
-                        desc:	A specific folder to be used for the file pool, or
-                                        `None` to use a new temporary folder.
-                        type:	[str, unicode, NoneType]
-                experiment_path:
-                        desc:	The path of the experiment file. This will need to
-                                        be specified even if a filename was passed using the
-                                        `string` keyword.
-                        type:	[str, unicode, NoneType]
-                resources:
-                        desc:	A dictionary with names as keys and paths as values.
-                                        This serves as a look-up table for resources.
-                        type:	dict
-        """
-
         self.main_window = main_window
         self.ui = self.main_window.ui
         self.unused_items = []
@@ -103,7 +89,6 @@ class Experiment(ExperimentRuntime):
         Returns:
         u'libqtopensesame.items'
         """
-
         return u'libqtopensesame.items'
 
     def item_prefix(self):
@@ -113,23 +98,23 @@ class Experiment(ExperimentRuntime):
         Returns:
         u'qt'
         """
-
         return u'qt'
 
     def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
                         select=None):
-        """
-        desc:
-                Builds the overview area for the full experiment.
+        r"""Builds the overview area for the full experiment.
 
-        keywords:
-                toplevel:	The toplevel widget.
-                items:		A list of items that have already been added, to
-                                        prevent recursion.
-                max_depth:	The maximum depth of the tree.
-                select:		The selected item.
+        Parameters
+        ----------
+        toplevel, optional
+            The toplevel widget.
+        items, optional
+            A list of items that have already been added, to prevent recursion.
+        max_depth, optional
+            The maximum depth of the tree.
+        select, optional
+            The selected item.
         """
-
         if self.overview_area.locked:
             return
         from libqtopensesame.widgets.tree_unused_items_item import \
@@ -154,7 +139,6 @@ class Experiment(ExperimentRuntime):
         from_name	--	The old name.
         to_name		--	The new name.
         """
-
         if self.var.start == from_name:
             self.var.start = to_name
 
@@ -169,7 +153,6 @@ class Experiment(ExperimentRuntime):
         Returns:
         True if the name is allowed, False otherwise.
         """
-
         if name.strip() == u'':
             return u'Empty names are not allowed.'
         if name.lower() in [item.lower() for item in self.items.keys()]:
@@ -190,7 +173,6 @@ class Experiment(ExperimentRuntime):
         index			--	The index of the item in the parent sequence, if
                                                 applicable. (default=None)
         """
-
         if self.var.start == item_name:
             self.notify(
                 u'You cannot delete the entry point of the experiment!')
@@ -210,7 +192,6 @@ class Experiment(ExperimentRuntime):
         title	--	A title message or None for default title. (default=None)
         icon	--	A custom icon or None for default icon. (default=None)
         """
-
         from libqtopensesame.dialogs.notification import notification
         nd = notification(self.main_window, msg=safe_decode(msg), title=title,
                           icon=icon)
@@ -233,7 +214,6 @@ class Experiment(ExperimentRuntime):
         returns:
                 A string of text or None if cancel was pressed.
         """
-
         from libqtopensesame.dialogs.text_input import text_input
         if parent is None:
             parent = self.main_window
@@ -247,7 +227,6 @@ class Experiment(ExperimentRuntime):
         Returns:
         A QFont.
         """
-
         if os.name == u'posix':
             font_family = u'mono'
         else:
@@ -257,22 +236,19 @@ class Experiment(ExperimentRuntime):
         return font
 
     def varref(self, val):
+        r"""Checks whether a value contains a variable reference, for example:
+        'This is [width] px'
+
+        Parameters
+        ----------
+        val    The value to check. This can be any type, but only str and unicode
+            can contain variable references.
+
+        Returns
+        -------
+        bool
+            True if a variable reference was found, False otherwise.
         """
-        desc: |
-                Checks whether a value contains a variable reference, for example:
-
-                        'This is [width] px'
-
-        arguments:
-                val:
-                        desc:	The value to check. This can be any type, but only
-                                        str and unicode can contain variable references.
-
-        returns:
-                desc:		True if a variable reference was found, False otherwise.
-                type:		bool
-        """
-
         if not isinstance(val, str):
             return False
         # TODO: Improve with regular expression

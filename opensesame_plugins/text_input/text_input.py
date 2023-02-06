@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with opensesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.item import item
 from libqtopensesame.items.qtautoplugin import qtautoplugin
@@ -30,7 +29,6 @@ class text_input(item):
 class qttext_input(text_input, qtautoplugin):
 
     """Automatic GUI class."""
-
     def __init__(self, name, experiment, script=None):
 
         text_input.__init__(self, name, experiment, script)

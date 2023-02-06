@@ -16,88 +16,73 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.widgets._label import Label
 
 
 class Button(Label):
 
+    r"""The `Button` widget is a clickable text string, by default surrounded
+    by
+    a button-like frame.
+
+    __Example (OpenSesame script):__
+
+    ~~~
+    widget 0 0 1
+    1 button text='Click me!' center='yes' frame='yes' var='response'
+    ~~~
+    Defining a button widget with Python inline code:
+
+    __Example (Python):__
+    ~~~ .python
+    form = Form()
+    button = Button(text='Click me!', frame=True,
+    center=True, var='response')
+    form.set_widget(button, (0,0))
+    form._exec()
+    ~~~
+
+    [TOC]
     """
-    desc: |
-            The `Button` widget is a clickable text string, by default surrounded by
-            a button-like frame.
-
-            __Example (OpenSesame script):__
-
-            ~~~
-            widget 0 0 1 1 button text='Click me!' center='yes' frame='yes' var='response'
-            ~~~
-
-            Defining a button widget with Python inline code:
-
-            __Example (Python):__
-
-            ~~~ .python
-            form = Form()
-            button = Button(text='Click me!', frame=True, center=True, var='response')
-            form.set_widget(button, (0,0))
-            form._exec()
-            ~~~
-
-            [TOC]
-    """
-
     def __init__(self, form, text=u'button', frame=True, center=True, var=None):
+        r"""Constructor to create a new `Button` object. You do not generally
+        call this constructor directly, but use the `Button()` factory
+        function, which is described here: [/python/common/]().
+
+        Parameters
+        ----------
+        form : form
+            The parent form.
+        text : str, unicode, optional
+            Button text.
+        frame : bool, optional
+            Indicates whether a frame should be drawn around the widget.
+        center : bool, optional
+            Indicates whether the text should be centered.
+        var : str, unicode, NoneType, optional
+            The name of the experimental variable that should be used to log
+            the widget status.
         """
-        desc: |
-                Constructor to create a new `Button` object. You do not generally
-                call this constructor directly, but use the `Button()` factory
-                function, which is described here: [/python/common/]().
-
-        arguments:
-                form:
-                        desc:	The parent form.
-                        type:	form
-
-        keywords:
-                text:
-                        desc:	Button text.
-                        type:	[str, unicode]
-                frame:
-                        desc:	Indicates whether a frame should be drawn around the
-                                        widget.
-                        type:	bool
-                center:
-                        desc:	Indicates whether the text should be centered.
-                        type:	bool
-                var:
-                        desc:	The name of the experimental variable that should be
-                                        used to log the widget status.
-                        type:	[str, unicode, NoneType]
-        """
-
         Label.__init__(self, form, text, frame=frame, center=center)
         self.type = u'button'
         self.var = var
         self.set_var(False)
 
     def on_mouse_click(self, pos):
+        r"""Is called when the user clicks on the button. Returns the button
+        text.
+
+        Parameters
+        ----------
+        pos : tuple
+            An (x, y) coordinates tuple.
+
+        Returns
+        -------
+        unicode
+            The button text.
         """
-        desc:
-                Is called when the user clicks on the button. Returns the button
-                text.
-
-        arguments:
-                pos:
-                        desc:	An (x, y) coordinates tuple.
-                        type:	tuple
-
-        returns:
-                desc:	The button text.
-                type:	unicode
-        """
-
         self.theme_engine.click()
         self.set_var(True)
         return self.text

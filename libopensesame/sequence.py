@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 from libopensesame.exceptions import osexception
@@ -28,18 +27,15 @@ from openexp.keyboard import Keyboard
 class Sequence(Item):
 
     """The sequence item"""
-
     description = u'Runs a number of items in sequence'
 
     def reset(self):
         """See item."""
-
         self.items = []
         self.var.flush_keyboard = u'yes'
 
     def run(self):
         """Runs the sequence."""
-
         self.set_item_onset()
         # Optionally flush the responses to catch escape presses
         if self._keyboard is not None:
@@ -52,11 +48,7 @@ class Sequence(Item):
             gc.collect()
 
     def set_validator(self):
-        """
-        desc:
-                See qtitem.
-        """
-
+        r"""See qtitem."""
         self.validator = sequence
 
     def parse_run(self, i):
@@ -69,7 +61,6 @@ class Sequence(Item):
         Returns:
         An (item_name, conditional) tuple.
         """
-
         name = i[1]
         cond = u'always'
         if len(i) > 2:
@@ -83,7 +74,6 @@ class Sequence(Item):
         Arguments:
         string 	--	A definition string.
         """
-
         self.var.clear()
         self.comments = []
         self.reset()
@@ -103,7 +93,6 @@ class Sequence(Item):
 
     def prepare(self):
         """Prepares the sequence."""
-
         super().prepare()
         if self.var.flush_keyboard == u'yes':
             # Create a keyboard to flush responses at the start of the run
@@ -127,7 +116,6 @@ class Sequence(Item):
         Returns:
         A definition string.
         """
-
         s = super().to_string(self.item_type)
         for _item, cond in self.items:
             s += u'\t' + self.syntax.create_cmd(u'run', [_item, cond]) + u'\n'

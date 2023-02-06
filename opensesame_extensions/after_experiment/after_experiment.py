@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import time
 import os
 import json
@@ -30,22 +29,15 @@ _ = translation_context(u'after_experiment', category=u'extension')
 
 class after_experiment(base_extension):
 
-    """
-    desc:
-            Shows notifications after an experiment has finished.
-    """
-
+    r"""Shows notifications after an experiment has finished."""
     def event_end_experiment(self, ret_val):
-        """
-        desc:
-                Handles the end of an experiment.
+        r"""Handles the end of an experiment.
 
-        arguments:
-                ret_val:
-                        desc:	An Exception, or None if no exception occurred.
-                        type:	[Exception, NoneType]
+        Parameters
+        ----------
+        ret_val : Exception, NoneType
+            An Exception, or None if no exception occurred.
         """
-
         if ret_val is None:
             self.handle_success()
         else:
@@ -59,7 +51,6 @@ class after_experiment(base_extension):
                                 could not be determined.
                 type:	[str, NoneType]
         """
-
         # Depending on the runner, the logfile is either a property of the
         # var object ...
         var = self.extension_manager.provide(
@@ -88,7 +79,6 @@ class after_experiment(base_extension):
         returns:
                 A list of extra data files, such as eye-tracking data.
         """
-
         data_files = self.extension_manager.provide(
             'jupyter_workspace_variable',
             name='data_files'
@@ -104,42 +94,26 @@ class after_experiment(base_extension):
             pass
 
     def event_after_experiment_copy_logfile(self):
-        """
-        desc:
-                Copies the logfile to the file pool.
-        """
-
+        r"""Copies the logfile to the file pool."""
         if self._logfile is None:
             return
         self.main_window.ui.pool_widget.add([self._logfile],
                                             rename=True)
 
     def event_after_experiment_open_logfile_folder(self):
-        """
-        desc:
-                Opens the logfile folder.
-        """
-
+        r"""Opens the logfile folder."""
         if self._logfile is None:
             return
         misc.open_url(os.path.dirname(self._logfile))
 
     def event_after_experiment_open_logfile(self):
-        """
-        desc:
-                Opens the logfile.
-        """
-
+        r"""Opens the logfile."""
         if self._logfile is None:
             return
         misc.open_url(self._logfile)
 
     def handle_success(self):
-        """
-        desc:
-                Shows a summary after successful completion of the experiment.
-        """
-
+        r"""Shows a summary after successful completion of the experiment."""
         logfile = self._logfile
         if logfile is None:
             logfile = u'Unknown logfile'
@@ -157,16 +131,13 @@ class after_experiment(base_extension):
             md, u'os-finished-success', _(u'Finished'))
 
     def handle_exception(self, e):
-        """
-        desc:
-                Shows a summary when the experiment was aborted.
+        r"""Shows a summary when the experiment was aborted.
 
-        arguments:
-                e:
-                        desc:	The Exception that caused the experiment to stop.
-                        type:	Exception
+        Parameters
+        ----------
+        e : Exception
+            The Exception that caused the experiment to stop.
         """
-
         if not isinstance(e, osexception):
             e = osexception(msg=u'Unexpected error', exception=e)
         if e.user_triggered:

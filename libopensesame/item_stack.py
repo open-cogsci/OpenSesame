@@ -16,56 +16,38 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 
 class ItemStack:
 
-    """
-    desc:
-            Keeps track of which item is currently active.
-    """
-
+    r"""Keeps track of which item is currently active."""
     def __init__(self):
-        """
-        desc:
-                Constructor.
-        """
-
+        r"""Constructor."""
         self.clear()
 
     def clear(self):
-        """
-        desc:
-                Clears the stack.
-        """
-
+        r"""Clears the stack."""
         self.l = []
 
     def push(self, item, phase):
-        """
-        desc:
-                Adds a new item to the stack.
+        r"""Adds a new item to the stack.
 
-        arguments:
-                item:
-                        desc:	The item to add.
-                        type:	str
+        Parameters
+        ----------
+        item : str
+            The item to add.
         """
-
         self.l.append((item, phase))
 
     def pop(self):
-        """
-        desc:
-                Pops the last item from the stack.
+        r"""Pops the last item from the stack.
 
-        returns:
-                desc:	The popped item.
-                type:	str
+        Returns
+        -------
+        str
+            The popped item.
         """
-
         return self.l.pop()
 
     def __str__(self):

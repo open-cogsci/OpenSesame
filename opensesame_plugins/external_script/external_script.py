@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame.item import item
@@ -30,22 +29,14 @@ class external_script(item):
         u"Run Python code directly from a script file"
 
     def reset(self):
-        """
-        desc:
-                Resets plug-in to initial state.
-        """
-
+        r"""Resets plug-in to initial state."""
         self.module = None
         self.var.file = u''
         self.var.prepare_func = u'prepare'
         self.var.run_func = u'run'
 
     def prepare(self):
-        """
-        desc:
-                Prepares the item.
-        """
-
+        r"""Prepares the item."""
         item.prepare(self)
         if self.module is None:
             path = self.experiment.pool[self.var.file]
@@ -57,11 +48,7 @@ class external_script(item):
         self.experiment.python_workspace._exec(self.prepare_bytecode)
 
     def run(self):
-        """
-        desc:
-                Runs the item.
-        """
-
+        r"""Runs the item."""
         self.set_item_onset()
         self.experiment.python_workspace._exec(self.run_bytecode)
 

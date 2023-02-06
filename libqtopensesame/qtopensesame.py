@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.misc.base_component import BaseComponent
@@ -47,7 +46,6 @@ OPEN_FILE_FILTER = (
 class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     """The main class of the OpenSesame GUI"""
-
     def __init__(self, app, parent=None):
         """
         Constructor. This does very little, except prepare the app to be shown
@@ -60,7 +58,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         Keyword arguments:
         parent -- a link to the parent window
         """
-
         if sys.platform == 'darwin':
             # Workaround for Qt issue on OS X that causes QMainWindow to
             # hide when adding QToolBar, see
@@ -87,7 +84,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def resume_init(self):
         """Resume GUI initialization"""
-
         from libopensesame import misc
         from libqtopensesame.misc import theme
         from libqtopensesame.misc.console_bridge import ConsoleBridge
@@ -199,25 +195,21 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     @property
     def mode(self):
+        r"""A property that determines the application mode, falling back to
+        'default'.
         """
-        desc:
-                A property that determines the application mode, falling back to
-                'default'.
-        """
-
         if self.options.mode is None:
             return u'default'
         return self.options.mode
 
     def _tooltip_shortcut(self, action):
-        """
-        desc:
-                Adds a shortcut between parentheses to the tooltip of an action.
+        r"""Adds a shortcut between parentheses to the tooltip of an action.
 
-        arguments:
-                action:		A QAction
+        Parameters
+        ----------
+        action
+            A QAction
         """
-
         if not action.shortcut() or action.toolTip()[-1] == u')':
             return
         action.setToolTip(
@@ -225,42 +217,30 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         )
 
     def _kb_shortcut(self, target):
-        """
-        desc:
-                Builds a simple keybaord shortcut. The key sequence is specified
-                later, while restoring the settings.
+        r"""Builds a simple keybaord shortcut. The key sequence is specified
+        later, while restoring the settings.
 
-        arguments:
-                target:	The target function.
+        Parameters
+        ----------
+        target
+            The target function.
         """
-
         return QtWidgets.QShortcut(QtGui.QKeySequence(), self, target)
 
     def focus_overview_area(self):
-        """
-        desc:
-                Shows and focuses the overview area.
-        """
-
+        r"""Shows and focuses the overview area."""
         self.ui.itemtree.setFocus()
         self.ui.dock_overview.setVisible(True)
 
     def focus_file_pool(self):
-        """
-        desc:
-                Shows and focuses the file pool.
-        """
-
+        r"""Shows and focuses the file pool."""
         self.ui.pool_widget.setFocus()
         self.ui.dock_pool.setVisible(True)
 
     def init_custom_fonts(self):
+        r"""Registers the custom OpenSesame fonts, so that they are properly
+        displayed in the sketchpad widget.
         """
-        desc:
-                Registers the custom OpenSesame fonts, so that they are properly
-                displayed in the sketchpad widget.
-        """
-
         from libqtopensesame.widgets.font_widget import font_widget
         # The last element of font_list is the "other" entry
         for font in font_widget.font_list[:-1] + [
@@ -282,7 +262,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def parse_command_line(self):
         """Parse command line options"""
-
         import optparse
 
         parser = optparse.OptionParser(
@@ -376,11 +355,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.options, args = parser.parse_args(sys.argv)
 
     def set_warnings(self):
-        """
-        desc:
-                Sets a custom warning function, if specified on the command line.
-        """
-
+        r"""Sets a custom warning function, if specified on the command line."""
         if '-w' not in sys.argv and '--warnings' not in sys.argv:
             return
         warnings.simplefilter(u'always')
@@ -404,7 +379,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def restore_config(self):
         """Restores the configuration settings, but doesn't apply anything"""
-
         if self.options.start_clean:
             return
         cfg.restore(
@@ -415,7 +389,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def restore_state(self):
         """Restore the current window to the saved state"""
-
         # Force configuration options that were set via the command line
         cfg.parse_cmdline_args(self.options._config)
         self.recent_files = []
@@ -464,7 +437,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         This is done separately from the rest of the restoration, because if we
         don't wait until the end, the window gets distorted again.
         """
-
         if self.options.start_clean:
             oslogger.info(u'Not restoring window state')
             return
@@ -473,7 +445,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def save_state(self):
         """Restores the state of the current window"""
-
         cfg.size = self.size()
         cfg.pos = self.pos()
         cfg._initial_window_geometry = self.saveGeometry()
@@ -489,7 +460,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         returns:
                 True if the cursos has a busy state, False otherwise
         """
-
         return QtWidgets.QApplication.overrideCursor() is not None
 
     def set_busy(self, state=True):
@@ -499,7 +469,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         Keywords arguments:
         state -- indicates the busy status (default=True)
         """
-
         if state:
             QtWidgets.QApplication.setOverrideCursor(QtGui.QCursor(
                 QtCore.Qt.WaitCursor))
@@ -509,7 +478,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def set_style(self):
         """Appply the application style"""
-
         if cfg.style in QtWidgets.QStyleFactory.keys():
             self.setStyle(QtWidgets.QStyleFactory.create(cfg.style))
             oslogger.debug(u"using style '%s'" % cfg.style)
@@ -561,7 +529,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                                         as an argument.
                         type:	QTranslator
         """
-
         self.translators = translators
         self._main_translator = self.translators.pop()
         self._main_translator.load(
@@ -573,37 +540,30 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def set_auto_response(self):
         """Set the auto response based on the menu action"""
-
         self.experiment.auto_response = \
             self.ui.action_enable_auto_response.isChecked()
         self.update_preferences_tab()
 
     def set_unsaved(self, unsaved_changes=True):
-        """
-        desc:
-                Sets the unsaved changes status.
+        r"""Sets the unsaved changes status.
 
-        keywords:
-                unsaved_changes:
-                        desc:	Indicates if there are unsaved changes.
-                        type:	bool
+        Parameters
+        ----------
+        unsaved_changes : bool, optional
+            Indicates if there are unsaved changes.
         """
-
         self.unsaved_changes = unsaved_changes
         self.window_message()
 
     def window_message(self, msg=None):
-        """
-        desc:
-                Display a message in the window border, including an unsaved message
-                indicator.
+        r"""Display a message in the window border, including an unsaved
+        message indicator.
 
-        keywords:
-                msg:
-                        desc:	A message, or None to refresh the window message.
-                        type:	[str, NoneType]
+        Parameters
+        ----------
+        msg : str, NoneType, optional
+            A message, or None to refresh the window message.
         """
-
         if msg is not None:
             self.window_msg = msg
         flags = u''
@@ -614,11 +574,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.setWindowTitle(self.window_msg + u'%s - OpenSesame' % flags)
 
     def update_overview_area(self):
-        """
-        desc:
-                Refreshes the overview area.
-        """
-
+        r"""Refreshes the overview area."""
         self.experiment.build_item_tree()
         item = self.tabwidget.current_item()
         if item is not None:
@@ -629,7 +585,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         If the preferences tab is open, make sure that its controls are updated
         to match potential changes to the preferences
         """
-
         w = self.ui.tabwidget.get_widget(u'__preferences__')
         if w is not None:
             w.set_controls()
@@ -638,7 +593,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         """
         Set the toolbar style (text/ icons only) based on the menu action status
         """
-
         if self.ui.action_show_text_in_toolbar.isChecked():
             style = QtCore.Qt.ToolButtonTextUnderIcon
         else:
@@ -653,7 +607,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         Keyword arguments:
         dummy -- a dummy argument passed by the signal handler (default=None)
         """
-
         if not self.ui.action_show_overview.isChecked():
             self.ui.dock_overview.setVisible(False)
             return
@@ -667,7 +620,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         make_visible -- an optional boolean that sets the visibility of the file
                                         pool (default = None)
         """
-
         if make_visible is not None:
             self.ui.action_show_pool.setChecked(make_visible)
         if not self.ui.action_show_pool.isChecked():
@@ -678,16 +630,14 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.ui.pool_widget.refresh()
 
     def save_unsaved_changes(self):
-        """
-        desc:
-                Checks whether there are unsaved changes. If so, the user can
-                choose to discard or save these changes, or to cancel.
+        r"""Checks whether there are unsaved changes. If so, the user can
+        choose to discard or save these changes, or to cancel.
 
-        returns:
-                desc:	False if the user has cancelled, True otherwise.
-                type:	bool
+        Returns
+        -------
+        bool
+            False if the user has cancelled, True otherwise.
         """
-
         from libqtopensesame._input.confirmation import confirmation
         if not self.unsaved_changes:
             return True
@@ -705,15 +655,12 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         return True
 
     def closeEvent(self, e):
-        """
-        desc:
-                Process a request to close the application.
+        r"""Process a request to close the application.
 
-        arguments:
-                e:
-                        type:	QCloseEvent
+        Parameters
+        ----------
+        e : QCloseEvent
         """
-
         if self.block_close_event:
             e.ignore()
             return
@@ -727,7 +674,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def update_recent_files(self):
         """Recreate the list with recent documents"""
-
         from libqtopensesame.actions import recent_action
 
         # Add the current path to the front of the list
@@ -759,22 +705,18 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                 )
 
     def open_file(self, dummy=None, path=None, add_to_recent=True):
-        """
-        desc:
-                Opens an experiment file.
+        r"""Opens an experiment file.
 
-        keywords:
-                dummy:		Dummy argument passed by event handler.
-                path:
-                        desc:	The path to the file. If None, a file dialog is
-                                        presented.
-                        type:	[str, NoneType]
-                add_to_recent:
-                        desc:	Indicates whether the file should be added to the list
-                                        of recent experiments.
-                        type:	bool
+        Parameters
+        ----------
+        dummy, optional
+            Dummy argument passed by event handler.
+        path : str, NoneType, optional
+            The path to the file. If None, a file dialog is presented.
+        add_to_recent : bool, optional
+            Indicates whether the file should be added to the list of recent
+            experiments.
         """
-
         from libopensesame.osexpfile import osexpreader
 
         if not self.save_unsaved_changes():
@@ -859,22 +801,19 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         return self._run_status
 
     def save_file(self):
-        """
-        desc:
-                Saves the current experiment.
+        r"""Saves the current experiment.
 
-        keywords:
-                dummy:		A dummy argument passed by the signal handler.
-                remember:
-                        desc:	Indicates whether the file should be included in the
-                                        list of recent files.
-                        type:	bool
-                catch:
-                        desc:	Indicates whether exceptions should be caught and
-                                        displayed in a notification.
-                        type:	bool
+        Parameters
+        ----------
+        dummy, optional
+            A dummy argument passed by the signal handler.
+        remember : bool, optional
+            Indicates whether the file should be included in the list of recent
+            files.
+        catch : bool, optional
+            Indicates whether exceptions should be caught and displayed in a
+            notification.
         """
-
         if self.current_path is None:
             self.save_file_as()
             return
@@ -911,11 +850,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.set_busy(False)
 
     def save_file_as(self):
-        """
-        desc:
-                Saves the current experiment after asking for a file name.
-        """
-
+        r"""Saves the current experiment after asking for a file name."""
         # Choose a default file name based on the experiment title
         if self.current_path is None:
             cfg.file_dialog_path = os.path.join(
@@ -949,16 +884,9 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.save_file()
 
     def regenerate(self, script):
+        r"""Regenerates the current experiment from script, and updates the
+        GUI.
         """
-        desc:
-                Regenerates the current experiment from script, and updates the GUI.
-
-        argument:
-                script:
-                        desc:	The new experiment script.
-                        type:	str
-        """
-
         self.extension_manager.fire(u'prepare_regenerate')
         try:
             exp = Experiment(self, name=self.experiment.var.title,
@@ -980,17 +908,17 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.extension_manager.fire(u'regenerate')
 
     def update_resolution(self, width, height):
-        """
-        desc:
-                Updates the resolution in a way that preserves display centering.
-                This is kind of a quick hack. First generate the script, change the
-                resolution in the script and then re-parse the script.
+        r"""Updates the resolution in a way that preserves display centering.
+        This is kind of a quick hack. First generate the script, change the
+        resolution in the script and then re-parse the script.
 
-        arguments:
-                width:		The display width in pixels.
-                height:		The display height in pixels.
+        Parameters
+        ----------
+        width
+            The display width in pixels.
+        height
+            The display height in pixels.
         """
-
         oslogger.debug(u"changing resolution to %d x %d" % (width, height))
         try:
             script = self.experiment.to_string()
@@ -1032,7 +960,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def get_ready(self):
         """Give all items the opportunity to get ready for running or saving"""
-
         # Redo the get_ready loop until no items report having done
         # anything
         redo = True
@@ -1051,7 +978,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         """Tries to kill a running experiment. This is not supported by all
         runners.
         """
-
         self._runner.kill()
         self.ui.action_kill.setDisabled(True)
 
@@ -1068,7 +994,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                                         the log-file and subject number. Mostly useful while
                                         testing the experiment. (default=False)
         """
-
         self.get_ready()
         self.enable(False)
         print(u'\n')
@@ -1088,7 +1013,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                 desc:	A runner class.
                 type:	base_runner
         """
-
         # Multiprocessing dus not work if opensesame is packaged as an app
         # under OSX. For now just display a warning message and do nothing
         # For the same reason, inOSX the default runner is set to inprocess
@@ -1109,25 +1033,20 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def run_experiment_in_window(self):
         """Runs the experiment in a window"""
-
         self.run_experiment(fullscreen=False)
 
     def run_quick(self):
         """Run the experiment without asking for subject nr and logfile"""
-
         self.run_experiment(fullscreen=False, quick=True)
 
     def enable(self, enabled=True):
-        """
-        desc:
-                Enable or disable parts of the GUI (i.e. those parts that should be
-                disabled when the experiment is running.
+        r"""Enable or disable parts of the GUI (i.e. those parts that should be
+        disabled when the experiment is running.
 
-        arguments:
-                enabled:
-                        type:	bool
+        Parameters
+        ----------
+        enabled : bool
         """
-
         self.block_close_event = not enabled
         self.ui.dock_overview.setEnabled(enabled)
         self.ui.centralwidget.setEnabled(enabled)
@@ -1152,27 +1071,18 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                                 program that may be running simultaneously.
                 type:	unicode
         """
-
         _id = safe_decode(
             repr(QtWidgets.QApplication.instance()), enc=self.enc)
         return _id
 
     @property
     def read_only(self):
-        """
-        desc:
-                Getter property for toggling the save action when setting.
-        """
-
+        r"""Getter property for toggling the save action when setting."""
         return self._read_only
 
     @read_only.setter
     def read_only(self, read_only):
-        """
-        desc:
-                Setter property for toggling the save action.
-        """
-
+        r"""Setter property for toggling the save action."""
         self._read_only = read_only
         self.ui.action_save.setEnabled(not read_only)
 

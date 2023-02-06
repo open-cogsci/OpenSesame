@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -26,11 +25,7 @@ _ = translation_context(u'tree_base_item', category=u'core')
 
 class TreeBaseItem(BaseSubcomponent, QtWidgets.QTreeWidgetItem):
 
-    """
-    desc:
-            A base class that corresponds to any widget in the overview area.
-    """
-
+    r"""A base class that corresponds to any widget in the overview area."""
     def start_edit(self, col):
 
         self.treeWidget().editItem(self, col)
@@ -118,56 +113,40 @@ class TreeBaseItem(BaseSubcomponent, QtWidgets.QTreeWidgetItem):
         return False
 
     def expand(self):
-        """
-        desc:
-                Expands this item and all items under it.
-        """
-
+        r"""Expands this item and all items under it."""
         self.setExpanded(True)
         for i in range(self.childCount()):
             self.child(i).expand()
 
     def collapse(self):
-        """
-        desc:
-                Collapses this item and all items under it.
-        """
-
+        r"""Collapses this item and all items under it."""
         self.setExpanded(False)
         for i in range(self.childCount()):
             self.child(i).collapse()
 
     def rename(self, from_name, to_name):
-        """
-        desc:
-                Renames an item.
+        r"""Renames an item.
 
-        arguments:
-                from_name:
-                        desc:	The old name.
-                        type:	unicode
-                to_name:
-                        desc:	The new name.
-                        type:	unicode
+        Parameters
+        ----------
+        from_name : unicode
+            The old name.
+        to_name : unicode
+            The new name.
         """
-
         for i in range(self.childCount()):
             self.child(i).rename(from_name, to_name)
 
     def set_icon(self, name, icon):
-        """
-        desc:
-                Changes an item's icon.
+        r"""Changes an item's icon.
 
-        arguments:
-                name:
-                        desc:	The item name.
-                        type:	unicode
-                icon:
-                        desc:	The icon name.
-                        type:	unicode
+        Parameters
+        ----------
+        name : unicode
+            The item name.
+        icon : unicode
+            The icon name.
         """
-
         for i in range(self.childCount()):
             self.child(i).set_icon(name, icon)
 

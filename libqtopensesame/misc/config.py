@@ -27,7 +27,6 @@ design pattern).
 	cfg.my_setting = 'my_value' # set
 	print(cfg.my_setting) # get
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from qtpy import QtCore
@@ -98,11 +97,7 @@ DEFAULT_CONFIG_WINDOWS = {}
 class Config:
 
     def __init__(self):
-        """
-        desc:
-                Constructor.
-        """
-
+        r"""Constructor."""
         self.reset()
 
     def __str__(self):
@@ -120,14 +115,13 @@ class Config:
         return s
 
     def __getattr__(self, setting):
-        """
-        desc:
-                A getter for settings, to allow for easy access
+        r"""A getter for settings, to allow for easy access
 
-        arguments:
-                setting:	The setting to get
+        Parameters
+        ----------
+        setting
+            The setting to get
         """
-
         if setting not in self.config:
             raise osexception(u'The setting "%s" does not exist'
                               % setting)
@@ -142,7 +136,6 @@ class Config:
                 setting: 	The setting to set
                 value:		The value to set
         """
-
         if setting not in self.config:
             raise osexception(u'The setting "%s" does not exist'
                               % setting)
@@ -150,19 +143,11 @@ class Config:
         self.config[u'cfg_ver'] += 1
 
     def __setitem__(self, setting, value):
-        """
-        desc:
-                Emulate dict API.
-        """
-
+        r"""Emulate dict API."""
         self.__setattr__(setting, value)
 
     def __getitem__(self, setting):
-        """
-        desc:
-                Emulate dict API.
-        """
-
+        r"""Emulate dict API."""
         return self.__getattr__(setting)
 
     def __contains__(self, setting):
@@ -170,20 +155,19 @@ class Config:
         returns:
                 True if setting exists, False otherwise.
         """
-
         return setting in self.config
 
     def register(self, setting, default):
-        """
-        desc:
-                Registers a new setting, if it doesn't already exist.
+        r"""Registers a new setting, if it doesn't already exist.
 
-        arguments:
-                setting:	The setting name.
-                default:	A default value, which is used if the setting doesn't
-                                        already exist.
+        Parameters
+        ----------
+        setting
+            The setting name.
+        default
+            A default value, which is used if the setting doesn't already
+            exist.
         """
-
         qsettings = QtCore.QSettings(u"cogscinl", self.mode)
         qsettings.beginGroup(u"MainWindow")
         if '--start-clean' in sys.argv:
@@ -203,7 +187,6 @@ class Config:
         arguments:
                 args:	The string of command line arguments
         """
-
         if args is None:
             return
         for arg in args.split(u";"):
@@ -230,22 +213,22 @@ class Config:
                     oslogger.error(u"Failed to parse argument: %s" % arg)
 
     def type_qvariant(self, value, default):
+        r"""Typecasts a value to a normal type that matches the type of a
+        default value. This is necessary, because under some combinations of
+        Python 2/3 and PyQt 4/5 settings are returned as QVariant objects,
+        whereas on other combinations the type casting occurs automatically.
+
+        Parameters
+        ----------
+        value
+            A value.
+        default
+            A default value.
+
+        Returns
+        -------
+        A value.
         """
-        desc:
-                Typecasts a value to a normal type that matches the type of a
-                default value. This is necessary, because under some combinations
-                of Python 2/3 and PyQt 4/5 settings are returned as QVariant
-                objects, whereas on other combinations the type casting occurs
-                automatically.
-
-        arguments:
-                value:		A value.
-                default:	A default value.
-
-        returns:
-                A value.
-        """
-
         if hasattr(QtCore, u'QPyNullVariant') and \
                 isinstance(value, QtCore.QPyNullVariant):
             return default
@@ -272,11 +255,7 @@ class Config:
         return value
 
     def restore(self, mode):
-        """
-        desc:
-                Restore settings from a QSettings.
-        """
-
+        r"""Restore settings from a QSettings."""
         oslogger.debug('restoring config profile {}'.format(mode))
         qsettings = QtCore.QSettings(u"cogscinl", mode)
         qsettings.beginGroup(u'MainWindow')
@@ -291,11 +270,7 @@ class Config:
         qsettings.endGroup()
 
     def save(self):
-        """
-        desc:
-                Save settings to a QSettings.
-        """
-
+        r"""Save settings to a QSettings."""
         oslogger.debug('saving config profile {}'.format(self.mode))
         qsettings = QtCore.QSettings(u"cogscinl", self.mode)
         qsettings.beginGroup(u'MainWindow')
@@ -305,33 +280,18 @@ class Config:
         qsettings.endGroup()
 
     def clear(self):
-        """
-        desc:
-                Clears all settings.
-        """
-
+        r"""Clears all settings."""
         qsettings = QtCore.QSettings(u"cogscinl", self.mode)
         qsettings.beginGroup(u'MainWindow')
         qsettings.clear()
         qsettings.endGroup()
 
     def version(self):
-        """
-        desc:
-                Gets the current version of the config.
-
-        Returns:
-                The config version.
-        """
-
+        r"""Gets the current version of the config."""
         return self.cfg_ver
 
     def reset(self):
-        """
-        desc:
-                Resets the configution back to default.
-        """
-
+        r"""Resets the configution back to default."""
         object.__setattr__(self, u'config', {})
         self.config.update(DEFAULT_CONFIG)
         if platform.system() == u"Windows":
@@ -342,11 +302,7 @@ class Config:
             self.config.update(DEFAULT_CONFIG_LINUX)
 
     def nuke(self):
-        """
-        desc:
-                Clears the config.
-        """
-
+        r"""Clears the config."""
         self.reset()
         self.clear()
         self.save()

@@ -18,7 +18,6 @@ This module is distributed under the Apache v2.0 License.
 You should have received a copy of the Apache v2.0 License
 along with this module. If not, see <http://www.apache.org/licenses/>.
 """
-
 import QNotifications
 import time
 import platform

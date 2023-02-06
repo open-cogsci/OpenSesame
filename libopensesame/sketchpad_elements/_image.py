@@ -16,28 +16,23 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.sketchpad_elements._base_element import BaseElement
 
 
 class Image(BaseElement):
 
-    """
-    desc:
-            An image element for the sketchpad.
-    """
-
+    r"""An image element for the sketchpad."""
     def __init__(self, sketchpad, string):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                sketchpad:		A sketchpad object.
-                string:			A definition string.
+        Parameters
+        ----------
+        sketchpad
+            A sketchpad object.
+        string
+            A definition string.
         """
-
         defaults = [
             (u'x', None),
             (u'y', None),
@@ -49,11 +44,7 @@ class Image(BaseElement):
         super().__init__(sketchpad, string, defaults=defaults)
 
     def draw(self):
-        """
-        desc:
-                Draws the element to the canvas of the sketchpad.
-        """
-
+        r"""Draws the element to the canvas of the sketchpad."""
         properties = self.eval_properties()
         try:
             _file = self.pool[properties[u'file']]
@@ -69,7 +60,6 @@ class Image(BaseElement):
 
     def to_string(self):
         """See base_element."""
-
         # For backwards compatibility we don't include the rotation keyword if
         # it is left on 0 (i.e. no rotation). This is necessary for sketchpads
         # to be parse-able in 3.1.X.

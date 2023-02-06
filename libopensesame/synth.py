@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame.base_response_item import BaseResponseItem
@@ -26,16 +25,11 @@ from openexp.synth import Synth as OpenExpSynth
 
 class Synth(Sampler):
 
-    """
-    desc:
-            An item for synthesized-sound playback.
-    """
-
+    r"""An item for synthesized-sound playback."""
     description = u'A basic sound synthesizer'
 
     def reset(self):
         """See item."""
-
         self.var.freq = 440
         self.var.length = 100
         self.var.osc = u'sine'
@@ -48,7 +42,6 @@ class Synth(Sampler):
 
     def prepare(self):
         """Prepares for playback."""
-
         BaseResponseItem.prepare(self)
         try:
             self.sampler = OpenExpSynth(self.experiment, osc=self.var.osc,

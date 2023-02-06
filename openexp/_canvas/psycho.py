@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from collections import OrderedDict
 from libopensesame.oslogging import oslogger
@@ -35,13 +34,9 @@ _old_gamma = None
 
 class Psycho(Canvas, PsychoCoordinates):
 
+    r"""This is a canvas backend built on top of PsychoPy (with Pyglet). For
+    function specifications and docstrings, see `openexp._canvas.canvas`.
     """
-    desc:
-            This is a canvas backend built on top of PsychoPy (with Pyglet).
-            For function specifications and docstrings, see
-            `openexp._canvas.canvas`.
-    """
-
     # The settings variable is used by the GUI to provide a list of back-end
     # settings
     settings = {
@@ -196,7 +191,6 @@ def _get_arg_names(callable):
     """A hack to make json_tricks work on Python 2, after some unknown module
     has injected getfullargspec into inspect.
     """
-
     from functools import partial
     from logging import warn
     from sys import version_info
@@ -213,13 +207,10 @@ def _get_arg_names(callable):
 
 
 def _psychopy_clean_quit():
+    r"""When PsychoPy encounters an error, it does a sys.exit() which is not
+    what we want, because it closes OpenSesame altogether. Instead, we nicely
+    inform the user that PsychoPy has signalled an error.
     """
-    desc:
-            When PsychoPy encounters an error, it does a sys.exit() which is not
-            what we want, because it closes OpenSesame altogether. Instead, we
-            nicely inform the user that PsychoPy has signalled an error.
-    """
-
     raise osexception(
         u'PsychoPy encountered an error and aborted the program. See the debug window for PsychoPy error messages.')
 

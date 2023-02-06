@@ -17,13 +17,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import os
 from academicmarkdown import build
 from libopensesame import misc
 
 md = u"""
-
 <div class='page-notification'>This page is generated automatically from item-specific help pages. These pages can be viewed in OpenSesame by clicking on the help icon in the top-right of the tab area.</div>
 
 ## Overview
@@ -43,7 +41,6 @@ toc:
 %s
 
 """
-
 plugin_msg = u"\n<div class='page-notification'>This is a plug-in and may not be installed by default. For plug-in installation instructions, see <a href='/plug-ins/installation'>here</a>.</div>\n"
 
 exclude_list = [u'general.md', u'variables.md', u'stdout.md', u'missing.md',
@@ -60,7 +57,6 @@ def collect(folder):
     Returns:
     A list of path names of help files.
     """
-
     src = []
     for fname in os.listdir(folder):
         path = os.path.join(folder, fname)
@@ -88,7 +84,6 @@ def helpify(folder, msg=u''):
     Returns:
     A help page.
     """
-
     src = collect(folder)
     md = u''
     for path in src:

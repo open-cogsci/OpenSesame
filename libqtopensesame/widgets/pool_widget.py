@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import misc
 from libopensesame.oslogging import oslogger
@@ -34,20 +33,15 @@ _ = translation_context(u'pool_widget', category=u'core')
 
 class PoolWidget(BaseWidget):
 
-    """
-    desc:
-            The file-pool widget.
-    """
-
+    r"""The file-pool widget."""
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window: The main-window object.
+        Parameters
+        ----------
+        main_window
+            The main-window object.
         """
-
         self.max_len = 5
         super().__init__(main_window, ui=u'widgets.pool_widget')
         self.ui.button_pool_add.clicked.connect(self.select_and_add)
@@ -62,43 +56,28 @@ class PoolWidget(BaseWidget):
         self.ui.label_size_warning.setVisible(False)
 
     def help(self):
-        """
-        desc:
-                Opens the help tab.
-        """
-
+        r"""Opens the help tab."""
         self.tabwidget.open_osdoc(u'manual/interface')
 
     def set_view(self):
-        """
-        desc:
-                Sets the viewmode (list/ icons) based on the gui control.
-        """
-
+        r"""Sets the viewmode (list/ icons) based on the gui control."""
         if self.ui.combobox_view.currentIndex() == 0:
             self.ui.list_pool.setViewMode(QtWidgets.QListView.ListMode)
         else:
             self.ui.list_pool.setViewMode(QtWidgets.QListView.IconMode)
 
     def browse(self):
-        """
-        desc:
-                Opens the pool folder in the file manager in an OS specific way.
-        """
-
+        r"""Opens the pool folder in the file manager in an OS specific way."""
         misc.open_url(self.experiment.pool.folder())
 
     def add(self, files, rename=False):
-        """
-        desc:
-                Adds a list of files to the pool.
+        r"""Adds a list of files to the pool.
 
-        arguments:
-                files:
-                        desc:	A list of paths.
-                        type:	list
+        Parameters
+        ----------
+        files : list
+            A list of paths.
         """
-
         if not files:
             return
         n_replace = sum(
@@ -129,12 +108,7 @@ class PoolWidget(BaseWidget):
         self.select(basename)
 
     def select_and_add(self, dummy=None):
-        """
-        desc:
-                Adds one or more files to the pool.
-
-        """
-
+        r"""Adds one or more files to the pool."""
         path_list = QtWidgets.QFileDialog.getOpenFileNames(
             self.main_window.ui.centralwidget, _(u"Add files to pool"),
             directory=cfg.default_pool_folder)
@@ -149,27 +123,20 @@ class PoolWidget(BaseWidget):
         self.add(path_list)
 
     def select(self, fname):
-        """
-        desc:
-                Selects a specific file in the file pool.
+        r"""Selects a specific file in the file pool.
 
-        arguments:
-                fname:
-                        desc:	The file to be selected.
-                        type:	[str, unicode]
+        Parameters
+        ----------
+        fname : str, unicode
+            The file to be selected.
         """
-
         for i in range(self.ui.list_pool.count()):
             item = self.ui.list_pool.item(i)
             if item.text() == fname:
                 self.ui.list_pool.setCurrentItem(item)
 
     def refresh(self):
-        """
-        desc:
-                Refreshes the contents of the pool widget.
-        """
-
+        r"""Refreshes the contents of the pool widget."""
         try:
             path_iterator = iter(self.pool)
         except Exception as e:
@@ -204,41 +171,32 @@ class PoolWidget(BaseWidget):
             self.ui.label_size_warning.setVisible(False)
 
     def open_file(self, path):
-        """
-        desc:
-                Opens a file in a platform specific way.
+        r"""Opens a file in a platform specific way.
 
-        arguments:
-                path:
-                        desc:	The file to be opened.
-                        type:	[unicode, str]
+        Parameters
+        ----------
+        path : unicode, str
+            The file to be opened.
         """
-
         misc.open_url(self.pool[path])
 
     def activate_file(self, item):
-        """
-        desc:
-                Is called when a file is double-clicked or otherwise activated and
-                opens the file.
+        r"""Is called when a file is double-clicked or otherwise activated and
+        opens the file.
 
-        arguments:
-                item:
-                        type:	QListWidgetItem
+        Parameters
+        ----------
+        item : QListWidgetItem
         """
-
         self.open_file(item.path)
 
     def contextMenuEvent(self, event):
-        """
-        desc:
-                Presents a context menu.
+        r"""Presents a context menu.
 
-        arguments:
-                event:
-                        type:	QMouseClickEvent
+        Parameters
+        ----------
+        event : QMouseClickEvent
         """
-
         item = self.ui.list_pool.itemAt(self.ui.list_pool.mapFromGlobal(
             event.globalPos()))
         if item is None:
@@ -258,12 +216,9 @@ class PoolWidget(BaseWidget):
             self.ui.list_pool.editItem(item)
 
     def delete_selected_files(self):
+        r"""Deletes all selected files from the pool. Asks for confimation\
+        first.
         """
-        desc:
-                Deletes all selected files from the pool. Asks for confimation\
-                first.
-        """
-
         # Prepare the confirmation dialog, which contains a limited nr of
         # filenames
         l = []
@@ -293,15 +248,12 @@ class PoolWidget(BaseWidget):
         self.main_window.set_unsaved()
 
     def rename_file(self, item):
-        """
-        desc:
-                Starts a rename action for an item.
+        r"""Starts a rename action for an item.
 
-        arguments:
-                item:
-                        type:	QListWidgetItem
+        Parameters
+        ----------
+        item : QListWidgetItem
         """
-
         old_name = item.path
         new_name = item.text().strip()
         if new_name in self.pool:
@@ -321,25 +273,20 @@ class PoolWidget(BaseWidget):
         self.select(new_name)
 
     def dragEnterEvent(self, event):
-        """
-        desc:
-                Accepts an incoming drag that precedes a drop.
+        r"""Accepts an incoming drag that precedes a drop.
 
-        arguments:
-                event:
-                        type:	QDragEnterEvent
+        Parameters
+        ----------
+        event : QDragEnterEvent
         """
-
         event.acceptProposedAction()
 
     def dropEvent(self, event):
-        """
-        desc:
-                Accepts an incoming drop.
+        r"""Accepts an incoming drop.
 
-        arguments:
-                event:
-                        type:	QDropEnterEvent
+        Parameters
+        ----------
+        event : QDropEnterEvent
         """
         files = []
         for url in event.mimeData().urls():
@@ -348,31 +295,25 @@ class PoolWidget(BaseWidget):
         event.acceptProposedAction()
 
     def focusInEvent(self, e):
-        """
-        desc:
-                Focus the filter edit when the widget receives focus.
+        r"""Focus the filter edit when the widget receives focus.
 
-        arguments:
-                e:
-                        type:	QFocusEvent
+        Parameters
+        ----------
+        e : QFocusEvent
         """
-
         self.ui.edit_pool_filter.setFocus()
 
 
 def select_from_pool(main_window, parent=None):
+    r"""A static function that presents the select from pool dialog.
+
+    Parameters
+    ----------
+    main_window
+        The GUI main window
+    parent, optional
+        The parent QWidget or None to use main window's central widget.
     """
-    desc:
-            A static function that presents the select from pool dialog.
-
-    arguments:
-            main_window:	The GUI main window
-
-    keywords:
-            parent:		The parent QWidget or None to use main window's central
-                                    widget.
-    """
-
     if parent is None:
         parent = main_window.ui.centralwidget
     d = QtWidgets.QDialog(parent)

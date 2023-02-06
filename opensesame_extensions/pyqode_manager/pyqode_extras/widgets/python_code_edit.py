@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.misc.config import cfg
 from libopensesame.oslogging import oslogger
@@ -39,12 +38,9 @@ from pyqode_extras.modes import (
 
 class PythonCodeEdit(PyCodeEditBase):
 
+    r"""A slightly modified version of the default PyCodeEdit that takes into
+    account the OpenSesame configuration.
     """
-    desc:
-            A slightly modified version of the default PyCodeEdit that takes into
-            account the OpenSesame configuration.
-    """
-
     DARK_STYLE = 0
     LIGHT_STYLE = 1
 

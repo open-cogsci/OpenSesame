@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.misc.config import cfg
@@ -36,11 +35,7 @@ _ = translation_context(u'tree_overview', category=u'core')
 
 class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
 
-    """
-    desc:
-            A tree widget used in sequence items and the overview area.
-    """
-
+    r"""A tree widget used in sequence items and the overview area."""
     structure_change = QtCore.Signal()
     text_change = QtCore.Signal()
 
@@ -55,22 +50,16 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
     ]
 
     def __init__(self, main_window, overview_mode=True):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        main_window : qtopensesame
+            The main window object.
+        overview_mode : int, optional
+            Indicates whether the tree should be overview-area style (True) or
+            sequence style (False).
         """
-        desc:
-                Constructor.
-
-        arguments:
-                main_window:
-                        desc:		The main window object.
-                        type:		qtopensesame
-
-        keywords:
-                overview_mode:
-                        desc:		Indicates whether the tree should be overview-area
-                                                style (True) or sequence style (False).
-                        type:		int
-        """
-
         super().__init__(main_window)
         self.locked = False
         self.overview_mode = overview_mode
@@ -146,91 +135,69 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         item.show_context_menu(self.mapToGlobal(rect.topLeft()))
 
     def copy_item_unlinked(self):
+        r"""Copies the currently selected treeitem to the clipboard (if
+        supported by the treeitem) as an unlinked copy.
         """
-        desc:
-                Copies the currently selected treeitem to the clipboard (if
-                supported by the treeitem) as an unlinked copy.
-        """
-
         target_treeitem = self.currentItem()
         if target_treeitem is not None:
             target_treeitem.copy_unlinked()
 
     def copy_item_linked(self):
+        r"""Copies the currently selected treeitem to the clipboard (if
+        supported by the treeitem) as a linked copy.
         """
-        desc:
-                Copies the currently selected treeitem to the clipboard (if
-                supported by the treeitem) as a linked copy.
-        """
-
         target_treeitem = self.currentItem()
         if target_treeitem is not None:
             target_treeitem.copy_linked()
 
     def paste_item(self):
+        r"""Pastes the clipboard onto the currently selected treeitem (if
+        supported by the treeitem).
         """
-        desc:
-                Pastes the clipboard onto the currently selected treeitem (if
-                supported by the treeitem).
-        """
-
         target_treeitem = self.currentItem()
         if target_treeitem is not None:
             target_treeitem.paste()
 
     def delete_item(self):
+        r"""Deletes the currently selected treeitem (if supported by the
+        treeitem).
         """
-        desc:
-                Deletes the currently selected treeitem (if supported by the
-                treeitem).
-        """
-
         target_treeitem = self.currentItem()
         if target_treeitem is not None:
             target_treeitem.delete()
 
     def permanently_delete_item(self):
+        r"""Permanently deletes the currently selected treeitem (if supported
+        by the treeitem).
         """
-        desc:
-                Permanently deletes the currently selected treeitem (if supported by
-                the treeitem).
-        """
-
         target_treeitem = self.currentItem()
         if target_treeitem is not None:
             target_treeitem.permanently_delete()
 
     def create_linked_copy(self):
+        r"""Creates a linked copy of the currently selected item (if supported
+        by the treeitem).
         """
-        desc:
-                Creates a linked copy of the currently selected item (if supported
-                by the treeitem).
-        """
-
         target_treeitem = self.currentItem()
         if target_treeitem is not None:
             target_treeitem.create_linked_copy()
 
     def create_unlinked_copy(self):
+        r"""Creates an unlinked copy of the currently selected item (if
+        supported by the treeitem).
         """
-        desc:
-                Creates an unlinked copy of the currently selected item (if
-                supported by the treeitem).
-        """
-
         target_treeitem = self.currentItem()
         if target_treeitem is not None:
             target_treeitem.create_unlinked_copy()
 
     def select_item(self, name, open_tab=True):
-        """
-        desc:
-                Selects all items that match the specified name.
+        r"""Selects all items that match the specified name.
 
-        arguments:
-                name:	The name to select.
+        Parameters
+        ----------
+        name
+            The name to select.
         """
-
         self.clearSelection()
         l = self.findItems(name,
                            QtCore.Qt.MatchFixedString | QtCore.Qt.MatchRecursive, 0)
@@ -242,19 +209,15 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
             self.experiment.items[name].open_tab(select_in_tree=False)
 
     def text_edited(self, treeitem, col):
-        """
-        desc:
-                Processes edits to the item names and run-if statements.
+        r"""Processes edits to the item names and run-if statements.
 
-        arguments:
-                treeitem:
-                        desc:	A tree item
-                        type:	QTreeWidgetItem
-                col:
-                        desc:	The column that was edited.
-                        type:	int
+        Parameters
+        ----------
+        treeitem : QTreeWidgetItem
+            A tree item
+        col : int
+            The column that was edited.
         """
-
         if col == 0:
             if hasattr(treeitem, u'name'):
                 from_name = treeitem.name
@@ -294,17 +257,14 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
                 self.text_change.emit()
 
     def mousePressEvent(self, e):
-        """
-        desc:
-                Initiates a drag event after a mouse press, these are used to
-                implement item moving, shallow copying, and deep copying.
+        r"""Initiates a drag event after a mouse press, these are used to
+        implement item moving, shallow copying, and deep copying.
 
-        arguments:
-                e:
-                        desc:	A mouse event.
-                        type:	QMouseEvent
+        Parameters
+        ----------
+        e : QMouseEvent
+            A mouse event.
         """
-
         super().mousePressEvent(e)
         if e.buttons() != QtCore.Qt.LeftButton:
             return
@@ -355,11 +315,7 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         self.drag_timer.start()
 
     def start_drag(self):
-        """
-        desc:
-                Starts a pending drag operation (if any).
-        """
-
+        r"""Starts a pending drag operation (if any)."""
         if self.pending_drag_data is None:
             return
         drag_and_drop.send(self, self.pending_drag_data)
@@ -367,45 +323,36 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         self.pending_drag_data = None
 
     def end_drag(self):
-        """
-        desc:
-                Ends a drag operation.
-        """
-
+        r"""Ends a drag operation."""
         self.drop_indicator = None
         self.viewport().update()
 
     def mouseReleaseEvent(self, e):
-        """
-        desc:
-                Cancels pending drag operations when the mouse is released to
-                quickly. This avoids accidental dragging.
+        r"""Cancels pending drag operations when the mouse is released to
+        quickly. This avoids accidental dragging.
 
-        arguments:
-                e:
-                        desc:	A mouse event.
-                        type:	QMouseEvent
+        Parameters
+        ----------
+        e : QMouseEvent
+            A mouse event.
         """
-
         super().mouseReleaseEvent(e)
         self.pending_drag_data = None
 
     def parent_from_ancestry(self, ancestry):
+        r"""Gets the parent item, and the index of the item in the parent,
+        based on an item's ancestry, as returned by ancestry_from_treeitem.
+
+        Parameters
+        ----------
+        ancestry : unicode
+            An ancestry string.
+
+        Returns
+        -------
+        tuple
+            A (parent item name, index) tuple.
         """
-        desc:
-                Gets the parent item, and the index of the item in the parent, based
-                on an item's ancestry, as returned by ancestry_from_treeitem.
-
-        arguments:
-                ancestry:
-                        desc:	An ancestry string.
-                        type:	unicode
-
-        returns:
-                desc:	A (parent item name, index) tuple.
-                type:	tuple
-        """
-
         l = ancestry.split(u'.')
         if len(l) == 1:
             return None, None
@@ -414,40 +361,35 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         return parent_item_name, index
 
     def droppable(self, treeitem, data):
+        r"""Determines if a tree item is able to accept drops.
+
+        Parameters
+        ----------
+        treeitem : QTreeWidgetItem
+            A tree item.
+        data : dict
+            Drag-and-drop data.
+
+        Returns
+        -------
+        bool
+            A bool indicating if the tree item is droppable.
         """
-        desc:
-                Determines if a tree item is able to accept drops.
-
-        arguments:
-                treeitem:
-                        desc:	A tree item.
-                        type:	QTreeWidgetItem
-                data:
-                        desc:	Drag-and-drop data.
-                        type:	dict
-
-        returns:
-                desc:	A bool indicating if the tree item is droppable.
-                type:	bool
-        """
-
         return treeitem is not None and treeitem.droppable(data)
 
     def draggable(self, treeitem):
+        r"""Determines if a tree item can be dragged.
+
+        Parameters
+        ----------
+        treeitem : QTreeWidgetItem
+            A tree item.
+
+        Returns
+        -------
+        bool
+            A bool indicating if the tree item is draggable.
         """
-        desc:
-                Determines if a tree item can be dragged.
-
-        arguments:
-                treeitem:
-                        desc:	A tree item.
-                        type:	QTreeWidgetItem
-
-        returns:
-                desc:	A bool indicating if the tree item is draggable.
-                type:	bool
-        """
-
         return treeitem is not None and treeitem.draggable()
 
     def drop_event_item_existing(self, data, e=None, target_treeitem=None):
@@ -463,7 +405,6 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
                         desc:	A drop event.
                         type:	QDropEvent
         """
-
         if not drag_and_drop.matches(data, [u'item-existing']):
             if e is not None:
                 e.ignore()
@@ -559,21 +500,19 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
             self.experiment.build_item_tree()
 
     def drop_get_item_snippet(self, data):
+        r"""Gets the item and list of newly created items for item-snippet
+        drops.
+
+        Parameters
+        ----------
+        data : dict
+            The drop data.
+
+        Returns
+        -------
+        tuple
+            An (name, new_items) tuple.
         """
-        desc:
-                Gets the item and list of newly created items for item-snippet
-                drops.
-
-        arguments:
-                data:
-                        desc:	The drop data.
-                        type:	dict
-
-        returns:
-                desc:	An (name, new_items) tuple.
-                type:	tuple
-        """
-
         for item_dict in data[u'items']:
             if not self.experiment.items.valid_type(item_dict[u'item-type']):
                 raise osexception(
@@ -600,22 +539,20 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         return main_item, [item.name for item in new_items]
 
     def drop_get_item_existing(self, data):
+        r"""Gets the item and list of newly created items for existing-item
+        drops.
+
+        Parameters
+        ----------
+        data : dict
+            The drop data.
+
+        Returns
+        -------
+        tuple
+            An (name, new_items) tuple, where new_items is always empty for
+            existing-item drops.
         """
-        desc:
-                Gets the item and list of newly created items for existing-item
-                drops.
-
-        arguments:
-                data:
-                        desc:	The drop data.
-                        type:	dict
-
-        returns:
-                desc:	An (name, new_items) tuple, where new_items is always empty
-                                for existing-item drops.
-                type:	tuple
-        """
-
         if data[u'item-name'] not in self.experiment.items:
             raise osexception(u'Unknown item: %s' % data[u'item-name'])
         return self.experiment.items[data[u'item-name']], []
@@ -642,7 +579,6 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
                 desc:	True if the drop was successful, False otherwise.
                 type:	bool
         """
-
         self.main_window.set_busy(True)
         if not drag_and_drop.matches(data, [u'item-snippet', u'item-existing']):
             if e is not None:
@@ -780,16 +716,13 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         return True
 
     def dropEvent(self, e):
-        """
-        desc:
-                Accept drops.
+        r"""Accept drops.
 
-        arguments:
-                e:
-                        desc:	A drop event.
-                        type:	QDragLeaveEvent
+        Parameters
+        ----------
+        e : QDragLeaveEvent
+            A drop event.
         """
-
         # The focusOutEvent arrives too late, so here we explictly give the
         # currently opened item the opportunity to get ready
         item_name = self.tabwidget.current_item()
@@ -808,30 +741,24 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         self.end_drag()
 
     def dragLeaveEvent(self, e):
-        """
-        desc:
-                Cancels the drop indicator when a drag leaves.
+        r"""Cancels the drop indicator when a drag leaves.
 
-        arguments:
-                e:
-                        desc:	A drag-move event.
-                        type:	QDragLeaveEvent
+        Parameters
+        ----------
+        e : QDragLeaveEvent
+            A drag-move event.
         """
-
         self.end_drag()
 
     def dragMoveEvent(self, e):
-        """
-        desc:
-                Handles drag-move events to see if the item tree can handle
-                incoming drops.
+        r"""Handles drag-move events to see if the item tree can handle
+        incoming drops.
 
-        arguments:
-                e:
-                        desc:	A drag-move event.
-                        type:	QDragMoveEvent
+        Parameters
+        ----------
+        e : QDragMoveEvent
+            A drag-move event.
         """
-
         data = drag_and_drop.receive(e)
         self.drop_indicator = None
         if drag_and_drop.matches(data, [u'url-local']):
@@ -863,15 +790,12 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         self.viewport().update()
 
     def paintEvent(self, e):
-        """
-        desc:
-                A custom pain event for the drop_indicator.
+        r"""A custom pain event for the drop_indicator.
 
-        arguments:
-                e:
-                        type:	QPaintEvent
+        Parameters
+        ----------
+        e : QPaintEvent
         """
-
         painter = QtGui.QPainter(self.viewport())
         self.drawTree(painter, e.region())
         if self.drop_indicator is not None:
@@ -883,15 +807,12 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
                 painter.drawRect(self.drop_indicator)
 
     def contextMenuEvent(self, e):
-        """
-        desc:
-                Asks a tree item to show a context menu.
+        r"""Asks a tree item to show a context menu.
 
-        arguments:
-                e:
-                        type:	QContextMenuEvent
+        Parameters
+        ----------
+        e : QContextMenuEvent
         """
-
         item = self.itemAt(e.pos())
         if item is not None:
             item.show_context_menu(e.globalPos())
@@ -903,7 +824,6 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         Arguments:
         e -- a QKeyEvent
         """
-
         super().keyPressEvent(e)
         current_item = self.currentItem()
         if current_item is None:
@@ -929,7 +849,6 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         Returns:
         A list of items (strings) that are children of the parent item
         """
-
         children = []
         for i in range(item.childCount()):
             child = item.child(i)
@@ -944,55 +863,44 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         Returns:
         A list of unused items (names as strings)
         """
-
         return self.main_window.ui.itemtree.recursive_children(
             self.main_window.ui.itemtree.topLevelItem(
                 self.main_window.ui.itemtree.topLevelItemCount()-1))
 
     def rename(self, from_name, to_name):
-        """
-        desc:
-                Renames an item.
+        r"""Renames an item.
 
-        arguments:
-                from_name:
-                        desc:	The old name.
-                        type:	unicode
-                to_name:
-                        desc:	The new name.
-                        type:	unicode
+        Parameters
+        ----------
+        from_name : unicode
+            The old name.
+        to_name : unicode
+            The new name.
         """
-
         self.itemChanged.disconnect()
         for i in range(self.topLevelItemCount()):
             self.topLevelItem(i).rename(from_name, to_name)
         self.itemChanged.connect(self.text_edited)
 
     def set_icon(self, name, icon):
-        """
-        desc:
-                Changes an item's icon.
+        r"""Changes an item's icon.
 
-        arguments:
-                name:
-                        desc:	The item name.
-                        type:	unicode
-                icon:
-                        desc:	The icon name.
-                        type:	unicode
+        Parameters
+        ----------
+        name : unicode
+            The item name.
+        icon : unicode
+            The icon name.
         """
-
         self.itemChanged.disconnect()
         for i in range(self.topLevelItemCount()):
             self.topLevelItem(i).set_icon(name, icon)
         self.itemChanged.connect(self.text_edited)
 
     def start_edit_runif(self):
+        r"""Edits the run-if statement. This is not applicable in overview
+        mode.
         """
-        desc:
-                Edits the run-if statement. This is not applicable in overview mode.
-        """
-
         if self.overview_mode:
             return
         target_treeitem = self.currentItem()
@@ -1005,45 +913,31 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         self.editItem(target_treeitem, 1)
 
     def start_rename(self):
-        """
-        desc:
-                Edits the item name.
-        """
-
+        r"""Edits the item name."""
         target_treeitem = self.currentItem()
         if target_treeitem is not None \
                 and target_treeitem.flags() & QtCore.Qt.ItemIsEditable:
             self.editItem(target_treeitem, 0)
 
     def setup(self, main_window):
+        r"""This function needs to be overridden so that the append button is
+        also set up.
         """
-        desc:
-                This function needs to be overridden so that the append button is
-                also set up.
-        """
-
         super().setup(main_window)
         if self.append_button is not None:
             self.append_button.setup(main_window)
 
     def clear(self):
+        r"""If the tree is cleared, we need to unset the target tree item in
+        the append menu (if any).
         """
-        desc:
-                If the tree is cleared, we need to unset the target tree item in the
-                append menu (if any).
-        """
-
         super().clear()
         if self.append_button is None:
             return
         self.append_button.append_menu.target_treeitem = None
 
     def focusInEvent(self, e):
-        """
-        desc:
-                Select the general tab if no item is currently selected.
-        """
-
+        r"""Select the general tab if no item is currently selected."""
         super().focusInEvent(e)
         if len(self.selectedItems()) == 0:
             self.setCurrentItem(self.topLevelItem(0))

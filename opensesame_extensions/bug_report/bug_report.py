@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.config import cfg
@@ -32,39 +31,29 @@ _ = translation_context(u'bug_report', category=u'extension')
 
 class bug_report(base_extension):
 
-    """
-    desc:
-            Captures the stderr and submits bug reports based on it.
-    """
-
+    r"""Captures the stderr and submits bug reports based on it."""
     def event_startup(self):
-        """
-        desc:
-                Start capturing.
-        """
+        r"""Start capturing."""
         sys.excepthook = self.captured_err
 
     def indent(self, s):
+        r"""Tab-indent a piece of text so that it's code for Markdown.
+
+        Parameters
+        ----------
+        s
+            The text to indent.
+
+        Returns
+        -------
+        Indented text.
         """
-        desc:
-                Tab-indent a piece of text so that it's code for Markdown.
-
-        arguments:
-                s:	The text to indent.
-
-        returns:
-                Indented text.
-        """
-
         return u'\t' + s.replace(u'\n', u'\n\t').replace(os.linesep, u'\n\t')
 
     def event_bug_report_send(self):
+        r"""Sends a bug report for the latest stacktrace. Also closes the
+        current tab, which is the report tab, and shows a results tab.
         """
-        desc:
-                Sends a bug report for the latest stacktrace. Also closes the
-                current tab, which is the report tab, and shows a results tab.
-        """
-
         self.main_window.tabwidget.close_current()
         from urllib.request import urlopen
         from urllib.parse import urlencode
@@ -94,11 +83,7 @@ class bug_report(base_extension):
                                          title=_(u'Bug report not sent'))
 
     def captured_err(self, exception_type, value, tb):
-        """
-        desc:
-                Shows a report tab when an error message has been captured.
-        """
-
+        r"""Shows a report tab when an error message has been captured."""
         error_list = traceback.format_exception(exception_type, value, tb)
         self.traceback = u"".join([safe_decode(tb_line)
                                   for tb_line in error_list])

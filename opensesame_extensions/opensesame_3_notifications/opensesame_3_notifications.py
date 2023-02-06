@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import metadata
 from libqtopensesame.extensions import base_extension
@@ -27,32 +26,21 @@ _ = translation_context(u'opensesame_3_notifications', category=u'extension')
 
 class opensesame_3_notifications(base_extension):
 
-    """
-    desc:
-            Provides tips for new users of OpenSesame 3.
-    """
-
+    r"""Provides tips for new users of OpenSesame 3."""
     def event_os3n_dismiss_old_experiment(self):
-        """
-        desc:
-                Permanently disables the old-experiment tab.
-        """
-
+        r"""Permanently disables the old-experiment tab."""
         cfg.os3n_old_experiment_notification = False
         self.main_window.tabwidget.close_current()
 
     def event_open_experiment(self, path):
-        """
-        desc:
-                Opens a notification tab when opening an experiment that was created
-                with an older version of OpenSesame.
+        r"""Opens a notification tab when opening an experiment that was
+        created with an older version of OpenSesame.
 
-        arguments:
-                path:
-                        desc:	The full path of the experiment file.
-                        type:	unicode
+        Parameters
+        ----------
+        path : unicode
+            The full path of the experiment file.
         """
-
         exp_api = self.experiment.front_matter[u'API']
         # If the major API of the experiment is the same, and the minor API is
         # the same or older

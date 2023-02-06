@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import plugins
 from libqtopensesame.misc.config import cfg
@@ -29,21 +28,17 @@ except ImportError:
 
 class plugin_widget(base_widget):
 
-    """
-    desc:
-            A widget for a single plugin.
-    """
-
+    r"""A widget for a single plugin."""
     def __init__(self, plugin, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                plugin:			The name of the plugin.
-                main_window:	The main-window object.
+        Parameters
+        ----------
+        plugin
+            The name of the plugin.
+        main_window
+            The main-window object.
         """
-
         super(plugin_widget, self).__init__(main_window,
                                             ui=u'extensions.plugin_manager.plugin')
         self.plugin = plugin
@@ -71,7 +66,6 @@ class plugin_widget(base_widget):
         returns:
                 True if the plug-in is enabled, False otherwise.
         """
-
         cfg_var = u'disabled_%s' % self.info[u'type']
         # On Mac (at least) cfg['disabled_plugins'] will return a QPyNullVariant type
         # when the disabled plugin list is empty. the 'in' operator is not allowed on
@@ -82,11 +76,7 @@ class plugin_widget(base_widget):
         return self.plugin not in cfg[cfg_var]
 
     def toggle(self):
-        """
-        desc:
-                Toggles the enabled status of the plugin.
-        """
-
+        r"""Toggles the enabled status of the plugin."""
         cfg_var = u'disabled_%s' % self.info[u'type']
         disabled_plugins = cfg[cfg_var].split(u';')
         if self.ui.checkbox_enable.isChecked():

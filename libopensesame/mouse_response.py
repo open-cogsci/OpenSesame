@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame.base_response_item import BaseResponseItem
@@ -26,12 +25,9 @@ from openexp.mouse import Mouse
 
 class MouseResponseMixin:
 
+    r"""A mixin class that should be inherited along with base_response_item by
+    all classes that want to collect mouse responses.
     """
-    desc:
-            A mixin class that should be inherited along with base_response_item
-            by all classes that want to collect mouse responses.
-    """
-
     _resp_codes = {
         u'none': None,
         u'timeout': None,
@@ -56,7 +52,6 @@ class MouseResponseMixin:
 
     def prepare_response_func(self):
         """See base_response_item."""
-
         if self._allowed_responses is None:
             buttonlist = None
         else:
@@ -76,7 +71,6 @@ class MouseResponseMixin:
 
     def process_response(self, response_args):
         """See base_response_item."""
-
         response, pos, t1 = response_args
         if pos is None:
             self.experiment.var.cursor_x = u'NA'
@@ -108,17 +102,12 @@ class MouseResponseMixin:
 
 class MouseResponse(MouseResponseMixin, BaseResponseItem):
 
-    """
-    desc:
-            An item for collecting mouse responses.
-    """
-
+    r"""An item for collecting mouse responses."""
     description = u'Collects mouse responses'
     process_feedback = True
 
     def reset(self):
         """See item."""
-
         self.var.flush = u'yes'
         self.var.show_cursor = u'yes'
         self.var.timeout = u'infinite'
@@ -130,7 +119,6 @@ class MouseResponse(MouseResponseMixin, BaseResponseItem):
 
     def validate_response(self, response):
         """See base_response_item."""
-
         try:
             self.button_code(response)
         except:
@@ -139,18 +127,15 @@ class MouseResponse(MouseResponseMixin, BaseResponseItem):
 
     def response_matches(self, test, ref):
         """See base_response_item."""
-
         return any(self.button_code(test) == self.button_code(r) for r in ref)
 
     def prepare(self):
         """See item."""
-
         super().prepare()
         self._flush = self.var.flush == u'yes'
 
     def run(self):
         """See item."""
-
         if self._flush:
             self._mouse.flush()
         # Show cursor if necessary
@@ -161,7 +146,6 @@ class MouseResponse(MouseResponseMixin, BaseResponseItem):
 
     def coroutine(self):
         """See coroutines plug-in."""
-
         self._mouse.timeout = 0
         alive = True
         yield
@@ -180,7 +164,6 @@ class MouseResponse(MouseResponseMixin, BaseResponseItem):
 
     def var_info(self):
         """See item."""
-
         return super().var_info() + [
             (u'cursor_x', u'[Depends on response]'),
             (u'cursor_y', u'[Depends on response]'),

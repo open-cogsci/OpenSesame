@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from threading import Thread, Lock
 import time
@@ -24,49 +23,32 @@ import time
 
 class Heartbeat(Thread):
 
+    r"""A thread that sends regular heartbeats to the launch process (if any).
+    A heartbeat is a transfer of the experiment workspace.
     """
-    desc:
-            A thread that sends regular heartbeats to the launch process (if any).
-            A heartbeat is a transfer of the experiment workspace.
-    """
-
     def __init__(self, exp, interval=1):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        exp : experiment
+            The experiment object.
+        interval : float, int, optional
+            The heartbeat interval in seconds.
         """
-        desc:
-                Constructor.
-
-        arguments:
-                exp:
-                        desc:	The experiment object.
-                        type:	experiment
-
-        keywords:
-                interval:
-                        desc:	The heartbeat interval in seconds.
-                        type:	[float, int]
-        """
-
         super().__init__()
         self.exp = exp
         self.interval = interval
         self.lock = Lock()
 
     def run(self):
-        """
-        desc:
-                Runs the heartbeat loop.
-        """
-
+        r"""Runs the heartbeat loop."""
         while self.exp.running:
             time.sleep(self.interval)
             self.beat()
 
     def beat(self):
-        """
-        desc:
-                Sends a single heartbeat.
-        """
-
+        r"""Sends a single heartbeat."""
         self.lock.acquire()
         self.exp.transmit_workspace(__heartbeat__=True)
         self.lock.release()

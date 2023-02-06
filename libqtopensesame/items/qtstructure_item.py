@@ -16,47 +16,33 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 
 class QtStructureItem:
 
+    r"""A base class for items that control the structure of the experiment,
+    i.e. those that require rebuilding of the item tree when they are changed.
     """
-    desc:
-            A base class for items that control the structure of the experiment,
-            i.e. those that require rebuilding of the item tree when they are
-            changed.
-    """
-
     def __init__(self):
-        """
-        desc:
-                Constructor.
-        """
-
+        r"""Constructor."""
         self._children = None
 
     def update(self):
         """See qtitem."""
-
         super().update()
         self.experiment.build_item_tree()
 
     def apply_script_changes(self):
         """See qtitem."""
-
         super().apply_script_changes()
         self.experiment.build_item_tree()
 
     @staticmethod
     def clears_children_cache(fnc):
+        r"""A decorator for functions that change the structure of the
+        experiment, and thus need a clearing of the children cache.
         """
-        desc:
-                A decorator for functions that change the structure of the
-                experiment, and thus need a clearing of the children cache.
-        """
-
         def inner(self, *args, **kwargs):
 
             self.experiment.items.clear_cache()
@@ -66,12 +52,9 @@ class QtStructureItem:
 
     @staticmethod
     def cached_children(fnc):
+        r"""A decorator for the children function, which is cached to speed up
+        performance.
         """
-        desc:
-                A decorator for the children function, which is cached to speed up
-                performance.
-        """
-
         def inner(self, *args, **kwargs):
 
             if self._children is not None:

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import metadata
 from qtpy import QtCore, QtWidgets
@@ -27,7 +26,6 @@ from libqtopensesame.misc import theme
 class QtOpenSesameRun(QtWidgets.QMainWindow, BaseComponent):
 
     """Implements the GUI for opensesamerun."""
-
     def __init__(self, options, parent=None):
         """
         Constructor.
@@ -39,7 +37,6 @@ class QtOpenSesameRun(QtWidgets.QMainWindow, BaseComponent):
         Keyword arguments:
         parent		--	A parent QWidget. (default=None)
         """
-
         # Construct the parent
         QtWidgets.QMainWindow.__init__(self, parent)
         # Setup the UI
@@ -61,7 +58,6 @@ class QtOpenSesameRun(QtWidgets.QMainWindow, BaseComponent):
 
     def browse_experiment(self):
         """Locates the experiment file."""
-
         file_type_filter = \
             u"OpenSesame files (*.osexp *.opensesame.tar.gz *.opensesame);;OpenSesame script and file pool (*.opensesame.tar.gz);;OpenSesame script (*.opensesame)"
         path = QtWidgets.QFileDialog.getOpenFileName(self,
@@ -76,7 +72,6 @@ class QtOpenSesameRun(QtWidgets.QMainWindow, BaseComponent):
 
     def browse_logfile(self):
         """Locates the logfile.	"""
-
         path = QtWidgets.QFileDialog.getSaveFileName(self,
                                                      u"Choose a location for the logfile")
         # In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of
@@ -90,7 +85,6 @@ class QtOpenSesameRun(QtWidgets.QMainWindow, BaseComponent):
 
     def show(self):
         """Sets the run flag to false."""
-
         self.run = False
         QtWidgets.QMainWindow.show(self)
 
@@ -99,7 +93,6 @@ class QtOpenSesameRun(QtWidgets.QMainWindow, BaseComponent):
         Does not actual run the experiment, but marks the application for
         running later.
         """
-
         self.run = True
         self.options.experiment = str(self.ui.edit_experiment.text())
         self.options.subject = self.ui.spinbox_subject_nr.value()

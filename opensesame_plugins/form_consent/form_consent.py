@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import plugins
 from libqtopensesame.items.qtautoplugin import qtautoplugin
@@ -48,7 +47,6 @@ widget 0 3 1 1 button text=[accept_text] var=accept_status
 widget 1 3 1 1 button text=[decline_text]
 """
 
-
 class form_consent(form_base.form_base):
 
     initial_view = u'controls'
@@ -64,7 +62,6 @@ class form_consent(form_base.form_base):
         Keyword arguments:
         string		--	A definition string. (default=None)
         """
-
         if string is None or string.strip() == u'':
             string = default_script
         # Due to dynamic loading, we need to implement this super() hack. See
@@ -75,7 +72,6 @@ class form_consent(form_base.form_base):
 
     def run(self):
         """Executes the consent form."""
-
         while True:
             # In this case we cannot call super(form_consent, self), because
             # modules may have been reloaded. The exact nature of the bug is

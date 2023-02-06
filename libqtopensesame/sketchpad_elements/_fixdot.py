@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.sketchpad_elements._base_element import BaseElement
 from libopensesame.sketchpad_elements import Fixdot as FixdotRuntime
@@ -24,13 +23,10 @@ from libopensesame.sketchpad_elements import Fixdot as FixdotRuntime
 
 class Fixdot(BaseElement, FixdotRuntime):
 
+    r"""A fixdot element.
+    See base_element for docstrings and function
+    descriptions.
     """
-    desc:
-            A fixdot element.
-
-            See base_element for docstrings and function descriptions.
-    """
-
     @classmethod
     def mouse_press(cls, sketchpad, pos):
 

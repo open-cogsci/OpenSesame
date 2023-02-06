@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 import os
@@ -31,42 +30,34 @@ from libopensesame.exceptions import osexception
 
 class BaseComponent:
 
-    """
-    desc:
-            A base class for all components, notably dialogs and widgets.
-    """
-
+    r"""A base class for all components, notably dialogs and widgets."""
     enc = u'utf-8'
 
     def setup(self, main_window, ui=None):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        main_window
+            A qtopensesame object.
+        ui, optional
+            An id for a user-interface file. For example
+            'dialogs.quick_switcher' will correspond to the file
+            'resources/ui/dialogs/quick_switcher.ui'.
         """
-        desc:
-            Constructor.
-
-        arguments:
-            main_window:	A qtopensesame object.
-
-        keywords:
-            ui:
-                An id for a user-interface file. For example
-                'dialogs.quick_switcher' will correspond to
-                the file 'resources/ui/dialogs/quick_switcher.ui'.
-        """
-
         self.main_window = self.get_main_window(main_window)
         self.load_ui(ui)
         if hasattr(self.main_window, u'theme'):
             self.main_window.theme.apply_theme(self)
 
     def load_ui(self, ui=None):
-        """
-        desc:
-            Dynamically loads the ui, if any.
+        r"""Dynamically loads the ui, if any.
 
-        keywords:
-            ui: An id for a user-interface file, or None.
+        Parameters
+        ----------
+        ui, optional
+            An id for a user-interface file, or None.
         """
-
         if ui is not None:
             # If the UI file has been explicitly registered, which is the case
             # for extensions
@@ -92,22 +83,21 @@ class BaseComponent:
             self.ui = None
 
     def get_main_window(self, main_window):
+        r"""If the main_window is actually not the main window, but a widget
+        that has the main window somewhere above it in the hierarchy, we
+        traverse upwards.
+
+        Parameters
+        ----------
+        main_window
+            An object that is the main window or a descendant of the main
+            window.
+
+        Returns
+        -------
+        qtopensesame
+            The main window.
         """
-        desc:
-            If the main_window is actually not the main window, but a widget
-            that has the main window somewhere above it in the hierarchy, we
-            traverse upwards.
-
-        arguments:
-            main_window:
-                An object that is the main window or a descendant of
-                the main window.
-
-        returns:
-            desc: The main window.
-            type: qtopensesame
-        """
-
         from libqtopensesame.qtopensesame import QtOpenSesame
         while not isinstance(main_window, QtOpenSesame):
             if hasattr(main_window, u'main_window'):
@@ -121,15 +111,15 @@ class BaseComponent:
 
     @staticmethod
     def quick_connect(slot, signals):
-        """
-        desc:
-            A convenience function to connect many signals to one slot.
+        r"""A convenience function to connect many signals to one slot.
 
-        arguments:
-            slot: a slot
-            signals:	a list of signals
+        Parameters
+        ----------
+        slot
+            a slot
+        signals
+            a list of signals
         """
-
         for signal in signals:
             signal.connect(slot)
 

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -26,25 +25,17 @@ _ = translation_context(u'item_category', category=u'core')
 
 class ToolbarItemsLabel(BaseSubcomponent, QtWidgets.QFrame):
 
-    """
-    desc:
-            A label for the item toolbar.
-    """
-
+    r"""A label for the item toolbar."""
     def __init__(self, parent, label):
-        """
-        desc:
-                Constructor
+        r"""Constructor
 
-        arguments:
-                parent:
-                        desc:	The parent.
-                        type:	QWidget
-                label:
-                        desc:	Label text.
-                        type:	unicode
+        Parameters
+        ----------
+        parent : QWidget
+            The parent.
+        label : unicode
+            Label text.
         """
-
         super().__init__(parent)
         self.setup(parent)
         l = QtWidgets.QLabel(_(label))

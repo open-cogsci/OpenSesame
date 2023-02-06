@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from openexp._log.log import Log
 import os
@@ -24,11 +23,7 @@ import os
 
 class Csv(Log):
 
-    """
-    desc:
-            For docstrings, see openexp._log.log.
-    """
-
+    r"""For docstrings, see openexp._log.log."""
     def __init__(self, experiment, path):
 
         self._log = None

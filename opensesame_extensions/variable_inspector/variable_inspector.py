@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.config import cfg
@@ -28,17 +27,9 @@ _ = translation_context(u'variable_inspector', category=u'extension')
 
 class variable_inspector(base_extension):
 
-    """
-    desc:
-            A variable inspector.
-    """
-
+    r"""A variable inspector."""
     def event_startup(self):
-        """
-        desc:
-                Initializes the variable inspector dock widget.
-        """
-
+        r"""Initializes the variable inspector dock widget."""
         self.need_refresh = False
         self.dock_widget = variable_inspector_dockwidget(
             self.main_window, self)
@@ -53,32 +44,21 @@ class variable_inspector(base_extension):
             self.focus, context=QtCore.Qt.ApplicationShortcut)
 
     def focus(self):
-        """
-        desc:
-                Makes the dock visible and sets the focus to the filter box.
-        """
-
+        r"""Makes the dock visible and sets the focus to the filter box."""
         self.set_visible(True)
         self.dock_widget.widget().focus()
 
     def open_help(self):
-        """
-        desc:
-                Opens the help tab.
-        """
-
+        r"""Opens the help tab."""
         self.tabwidget.open_osdoc('manual/variables')
 
     def set_visible(self, visible):
-        """
-        desc:
-                Sets the visibility of the dock widget.
+        r"""Sets the visibility of the dock widget.
 
-        arguments:
-                visible:
-                        type:	bool
+        Parameters
+        ----------
+        visible : bool
         """
-
         cfg.variable_inspector_visible = visible
         self.set_checked(visible)
         if visible:
@@ -91,19 +71,11 @@ class variable_inspector(base_extension):
             self.dock_widget.hide()
 
     def activate(self):
-        """
-        desc:
-                Toggles the visibility of the dock widget.
-        """
-
+        r"""Toggles the visibility of the dock widget."""
         self.set_visible(not cfg.variable_inspector_visible)
 
     def refresh(self):
-        """
-        desc:
-                Refreshes the variable inspector.
-        """
-
+        r"""Refreshes the variable inspector."""
         if self.dock_widget.isVisible():
             self.dock_widget.widget().refresh()
             self.need_refresh = False

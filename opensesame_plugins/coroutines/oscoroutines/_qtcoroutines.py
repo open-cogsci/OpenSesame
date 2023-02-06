@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 from libqtopensesame.items.sequence import sequence
@@ -32,17 +31,12 @@ _ = translation_context(u'coroutines', category=u'plugins')
 
 class qtcoroutines(coroutines, sequence):
 
-    """
-    desc:
-            The coroutines plugin GUI.
-    """
-
+    r"""The coroutines plugin GUI."""
     description = _(u'Run items simultaneously')
     help_url = u'manual/structure/coroutines'
 
     def __init__(self, name, experiment, string=None):
         """See item."""
-
         coroutines.__init__(self, name, experiment, string)
         # We don't call the sequence constructor, because it doesn't specify
         # the plugin_file to qtplugin, which we need to do. We therefore
@@ -55,28 +49,20 @@ class qtcoroutines(coroutines, sequence):
 
     def reset(self):
         """See item."""
-
         coroutines.reset(self)
         # Recreate the items adapter when the schedule is re-initialized.
         self._items = items_adapter(self.schedule)
 
     @property
     def items(self):
+        r"""A property that maps the schedule list to an items list as expected
+        by sequence.
         """
-        desc:
-                A property that maps the schedule list to an items list as expected
-                by sequence.
-        """
-
         return self._items
 
     @items.setter
     def items(self, val):
-        """
-        desc:
-                A setter that maps an items list to a schedule list.
-        """
-
+        r"""A setter that maps an items list to a schedule list."""
         self.schedule = self.schedule[:len(val)]
         self._items = items_adapter(self.schedule)
         for i, (item_name, cond) in enumerate(val):
@@ -86,7 +72,6 @@ class qtcoroutines(coroutines, sequence):
 
     def init_edit_widget(self):
         """See qtitem."""
-
         super(sequence, self).init_edit_widget(False)
         self.treewidget = tree_overview_adapter(self, self.main_window,
                                                 overview_mode=False)
@@ -110,13 +95,11 @@ class qtcoroutines(coroutines, sequence):
 
     def edit_widget(self):
         """See qtitem."""
-
         sequence.edit_widget(self)
         self._refresh()
 
     def rename(self, from_name, to_name):
         """See qtitem."""
-
         sequence.rename(self, from_name, to_name)
         if self.var.end_after_item == from_name:
             self.var.end_after_item = to_name
@@ -125,7 +108,6 @@ class qtcoroutines(coroutines, sequence):
     def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
                         extra_info=None):
         """See qtitem."""
-
         widget = tree_item_item(self, extra_info=extra_info)
         items.append(self.name)
         if max_depth < 0 or max_depth > 1:
@@ -145,7 +127,6 @@ class qtcoroutines(coroutines, sequence):
 
     def insert_child_item(self, item_name, index=0):
         """See sequence."""
-
         if not self.is_coroutine(item_name):
             self.experiment.notify(
                 _(u'"%s" does not support coroutines.') % item_name)
@@ -155,19 +136,15 @@ class qtcoroutines(coroutines, sequence):
 
     def remove_child_item(self, item_name, index=0):
         """See sequence."""
-
         sequence.remove_child_item(self, item_name, index=index)
         if item_name == self.var.end_after_item:
             self.var.end_after_item = u''
         self._refresh()
 
     def _refresh(self):
+        r"""Refreshes the GUI, which currently means updating the combobox for
+        end_after_item.
         """
-        desc:
-                Refreshes the GUI, which currently means updating the combobox for
-                end_after_item.
-        """
-
         # No refresh necessary if the combobox hasn't been initialized yet
         if not hasattr(self, u'_combobox_end_after_item'):
             return

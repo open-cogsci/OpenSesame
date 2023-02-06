@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 import os
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
@@ -29,20 +28,14 @@ _ = translation_context(u'sketchpad', category=u'item')
 
 class Textline(BaseElement, TextlineRuntime):
 
+    r"""A textline element.
+    See base_element for docstrings and function
+    descriptions.
     """
-    desc:
-            A textline element.
-
-            See base_element for docstrings and function descriptions.
-    """
-
     def show_edit_dialog(self):
+        r"""The show-edit dialog for the textline only edits the text, not the
+        full element script.
         """
-        desc:
-                The show-edit dialog for the textline only edits the text, not the
-                full element script.
-        """
-
         text = self.experiment.text_input(
             _(u'Edit text'),
             message=_(u'Please enter a text for the textline'),
@@ -82,24 +75,23 @@ class Textline(BaseElement, TextlineRuntime):
 
     @staticmethod
     def clean_text(text, escape=False):
+        r"""Cleans text by removing quotes and converting newlines to <br />
+        tags.
+
+        Parameters
+        ----------
+        text
+            The text to clean.
+        typeescape, optional
+            Indicates whether slashes should be escaped.
+        type, optional
+            bool
+
+        Returns
+        -------
+        unicode
+            Clean text.
         """
-        desc:
-                Cleans text by removing quotes and converting newlines to <br />
-                tags.
-
-        arguments:
-                text:	The text to clean.
-                type:	[str, unicode, QString]
-
-        keywords:
-                escape:	Indicates whether slashes should be escaped.
-                type:	bool
-
-        returns:
-                desc:	Clean text.
-                type:	unicode
-        """
-
         text = str(text)
         text = text.replace(os.linesep, u'<br />')
         text = text.replace(u'\n', u'<br />')

@@ -17,7 +17,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 import sys
@@ -62,14 +61,12 @@ def is_excluded(path):
 
 
 def resources():
-    """
-    desc:
-            Create a list of all resource files that need to be included
+    r"""Create a list of all resource files that need to be included
 
-    returns:
-            A list of (target folder, filenames) tuples.
+    Returns
+    -------
+    A list of (target folder, filenames) tuples.
     """
-
     l = []
     for root, dirnames, filenames in os.walk(u'opensesame_resources'):
         for f in filenames:
@@ -80,18 +77,19 @@ def resources():
 
 
 def recursive_glob(src_folder, target_folder):
+    r"""Recursively gets all files that are in src folder.
+
+    Parameters
+    ----------
+    src_folder
+        The source folder.
+    target_folder
+        The target folder.
+
+    Returns
+    -------
+    A list of (target folder, filenames) tuples.
     """
-    desc:
-            Recursively gets all files that are in src folder.
-
-    arguments:
-            src_folder:		The source folder.
-            target_folder:	The target folder.
-
-    returns:
-            A list of (target folder, filenames) tuples.
-    """
-
     l = []
     print(src_folder)
     path_list = []
@@ -109,18 +107,19 @@ def recursive_glob(src_folder, target_folder):
 
 
 def plugins(included, _type=u'plugins'):
+    r"""Create a list of all plugin files that need to be included.
+
+    Parameters
+    ----------
+    included
+        A list of included plugin names.
+    _type
+        The plugin type, i.e. 'plugins' or 'extensions'.
+
+    Returns
+    -------
+    A list of (target folder, filenames) tuples.
     """
-    desc:
-            Create a list of all plugin files that need to be included.
-
-    arguments:
-            included:	A list of included plugin names.
-            _type:		The plugin type, i.e. 'plugins' or 'extensions'.
-
-    returns:
-            A list of (target folder, filenames) tuples.
-    """
-
     l = []
     for plugin in os.listdir(u'opensesame_%s' % _type):
         if plugin in included:

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from qtpy import QtWidgets
@@ -24,11 +23,7 @@ from qtpy import QtWidgets
 
 class BaseWidget(QtWidgets.QWidget, BaseSubcomponent):
 
-    """
-    desc:
-            A base class for widgets.
-    """
-
+    r"""A base class for widgets."""
     def __init__(self, main_window, ui=None, *arglist, **kwdict):
         """
         desc:
@@ -48,7 +43,6 @@ class BaseWidget(QtWidgets.QWidget, BaseSubcomponent):
         keyword-dict:
         *kwdict:			A dict of keywords to be passed onto QDialog.
         """
-
         super().__init__(main_window, *arglist, **kwdict)
         self.setup(main_window, ui=ui)
 

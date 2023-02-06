@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from pygame.locals import *
 import pygame
@@ -31,13 +30,9 @@ except ImportError:
 
 class Droid(Legacy):
 
+    r"""This is a mouse backend built on top of PyGame, adapted for android.
+    For function specifications and docstrings, see `openexp._mouse.mouse`.
     """
-    desc:
-            This is a mouse backend built on top of PyGame, adapted for android.
-            For function specifications and docstrings, see
-            `openexp._mouse.mouse`.
-    """
-
     @configurable
     def get_click(self):
 

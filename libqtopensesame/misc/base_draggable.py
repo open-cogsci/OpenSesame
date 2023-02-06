@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.misc import drag_and_drop
 from libqtopensesame.misc.base_component import BaseComponent
@@ -24,11 +23,7 @@ from libqtopensesame.misc.base_component import BaseComponent
 
 class BaseDraggable:
 
-    """
-    desc:
-        A base class for components that support drag and drop.
-    """
-
+    r"""A base class for components that support drag and drop."""
     def set_supported_drop_types(self, types=None):
 
         if not hasattr(self, u'setAcceptDrops'):
@@ -41,16 +36,13 @@ class BaseDraggable:
         self.supported_drop_types = types
 
     def dragEnterEvent(self, e):
-        """
-        desc:
-            Handles drag-enter events to see if they are supported
+        r"""Handles drag-enter events to see if they are supported
 
-        arguments:
-            e:
-                desc: A drag-enter event.
-                type: QDragEnterEvent
+        Parameters
+        ----------
+        e : QDragEnterEvent
+            A drag-enter event.
         """
-
         if not hasattr(self, u'supported_drop_types'):
             e.ignore()
             return
@@ -61,16 +53,13 @@ class BaseDraggable:
             e.ignore()
 
     def dropEvent(self, e):
-        """
-        desc:
-            Handles drop events and accepts them if supported.
+        r"""Handles drop events and accepts them if supported.
 
-        arguments:
-            e:
-                desc: A drop event.
-                type: QDropEvent
+        Parameters
+        ----------
+        e : QDropEvent
+            A drop event.
         """
-
         if not hasattr(self, u'supported_drop_types'):
             e.ignore()
             return
@@ -82,16 +71,13 @@ class BaseDraggable:
             e.ignore()
 
     def accept_drop(self, data):
-        """
-        desc:
-            Is called after a supported drop type. Should be re-implemented.
+        r"""Is called after a supported drop type. Should be re-implemented.
 
-        arguments:
-            data:
-                desc: The drop data.
-                type: dict
+        Parameters
+        ----------
+        data : dict
+            The drop data.
         """
-
         pass
 
 

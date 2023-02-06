@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from oscoroutines._base_task import base_task
@@ -25,33 +24,24 @@ import inspect
 
 class inline_task(base_task):
 
-    """
-    desc:
-            A task controls the coroutine for a Python generator function.
-    """
-
+    r"""A task controls the coroutine for a Python generator function."""
     def __init__(self, coroutines, function_name, python_workspace, start_time,
                  end_time):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                function_name:
-                        desc:	The name of a Python generator function.
-                        type:	str
-                python_workspace:
-                        desc:	The python-workspace object.
-                        type:	python_workspace
+        Parameters
+        ----------
+        function_name : str
+            The name of a Python generator function.
+        python_workspace : python_workspace
+            The python-workspace object.
         """
-
         base_task.__init__(self, coroutines, start_time, end_time)
         self.function_name = function_name
         self.python_workspace = python_workspace
 
     def launch(self):
         """See base_task."""
-
         if self.function_name not in self.python_workspace._globals:
             raise osexception(u'"%s" is not defined' % self.function_name)
         self.coroutine = self.python_workspace._globals[self.function_name]

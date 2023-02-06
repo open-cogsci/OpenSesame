@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from openexp import backend
 from libopensesame.var_store import VarStore
 from libopensesame.item_store import ItemStore
@@ -48,67 +47,46 @@ classobj = type(OldStyle)
 
 class Experiment(item.item):
 
-    """
-    desc:
-            A special item that controls the flow of the experiment.
-    """
-
+    r"""A special item that controls the flow of the experiment."""
     description = u'The main experiment item'
 
     def __init__(self, name=u'experiment', string=None, pool_folder=None,
                  experiment_path=None, fullscreen=False, auto_response=False,
                  logfile=u'defaultlog.csv', subject_nr=0, workspace=None, resources={},
                  heartbeat_interval=1):
-        """
-        desc:
-                Constructor. The experiment is created automatically be OpenSesame
-                and you will generally not need to create it yourself.
+        r"""Constructor. The experiment is created automatically be OpenSesame
+        and you will generally not need to create it yourself.
 
-        keywords:
-                name:
-                        desc:	The name of the experiment.
-                        type:	[str, unicode]
-                string:
-                        desc:	A string containing the experiment definition, the
-                                        name of an OpenSesame experiment file, or `None` to
-                                        create a blank experiment.
-                        type:	[str, unicode, NoneType]
-                pool_folder:
-                        desc:	A specific folder to be used for the file pool, or
-                                        `None` to use a new temporary folder.
-                        type:	[str, unicode, NoneType]
-                experiment_path:
-                        desc:	The path of the experiment file. This is the folder that
-                                        the experiment is in, not the path to the experiment
-                                        file.
-                        type:	str
-                fullscreen:
-                        desc:	Indicates whether the experiment should be executed in
-                                        fullscreen.
-                        type:	bool
-                auto_response:
-                        desc:	Indicates whether auto-response mode should be enabled.
-                        type:	bool
-                logfile:
-                        desc:	The logfile path.
-                        type:	[unicode, str]
-                subject_nr:
-                        desc:	The subject number.
-                        type:	int
-                workspace:
-                        desc:	A `python_workspace` object to be used for executing
-                                        custom Python code, or `None` to create a new workspace.
-                        type:	[python_workspace, NoneType]
-                resources:
-                        desc:	A dictionary with names as keys and paths as values.
-                                        This serves as a look-up table for resources.
-                        type:	dict
-                heartbeat_interval:
-                        desc:	A heartbeat interval in seconds, or <= 0 to disable
-                                        heartbeats.
-                        type:	[int, float]
+        Parameters
+        ----------
+        name : str, unicode, optional
+            The name of the experiment.
+        string : str, unicode, NoneType, optional
+            A string containing the experiment definition, the name of an
+            OpenSesame experiment file, or `None` to create a blank experiment.
+        pool_folder : str, unicode, NoneType, optional
+            A specific folder to be used for the file pool, or `None` to use a
+            new temporary folder.
+        experiment_path : str, optional
+            The path of the experiment file. This is the folder that the
+            experiment is in, not the path to the experiment file.
+        fullscreen : bool, optional
+            Indicates whether the experiment should be executed in fullscreen.
+        auto_response : bool, optional
+            Indicates whether auto-response mode should be enabled.
+        logfile : unicode, str, optional
+            The logfile path.
+        subject_nr : int, optional
+            The subject number.
+        workspace : python_workspace, NoneType, optional
+            A `python_workspace` object to be used for executing custom Python
+            code, or `None` to create a new workspace.
+        resources : dict, optional
+            A dictionary with names as keys and paths as values. This serves as
+            a look-up table for resources.
+        heartbeat_interval : int, float, optional
+            A heartbeat interval in seconds, or <= 0 to disable heartbeats.
         """
-
         # Make sure the logger is started
         if not oslogger.started:
             oslogger.start()
@@ -187,7 +165,6 @@ class Experiment(item.item):
 
     def reset(self):
         """See item."""
-
         # Set default variables
         self.var.start = u'experiment'
         self.var.title = self.default_title
@@ -219,7 +196,6 @@ class Experiment(item.item):
 
     def module_container(self):
         """Specify the module that contains the item modules"""
-
         return u'libopensesame'
 
     def item_prefix(self):
@@ -227,27 +203,24 @@ class Experiment(item.item):
         A prefix for the plug-in classes, so that [prefix][plugin] class is used
         instead of the [plugin] class.
         """
-
         return u''
 
     def set_subject(self, nr):
+        r"""Sets the subject number and parity (even/ odd). This function is
+        called automatically when an experiment is started, so you do not
+        generally need to call it yourself.
+
+        Parameters
+        ----------
+        nr : int
+            The subject nr.
+
+        Examples
+        --------
+        >>> exp.set_subject(1)
+        >>> print('Subject nr = %d' % exp.get('subject_nr'))
+        >>> print('Subject parity = %s' % exp.get('subject_parity'))
         """
-        desc:
-                Sets the subject number and parity (even/ odd). This function is
-                called automatically when an experiment is started, so you do not
-                generally need to call it yourself.
-
-        arguments:
-                nr:
-                        desc:	The subject nr.
-                        type:	int
-
-        example: |
-                exp.set_subject(1)
-                print('Subject nr = %d' % exp.get('subject_nr'))
-                print('Subject parity = %s' % exp.get('subject_parity'))
-        """
-
         # Set the subject nr and parity
         self.var.subject_nr = nr
         if nr % 2 == 0:
@@ -266,7 +239,6 @@ class Experiment(item.item):
         A (str, str) tuple with the full string minus the definition string
         and the definition string.
         """
-
         # Read the string until the end of the definition
         def_str = u''
         line = next(s, None)
@@ -285,14 +257,13 @@ class Experiment(item.item):
         return line, def_str
 
     def from_string(self, string):
-        """
-        desc:
-                Reads the entire experiment from a string.
+        r"""Reads the entire experiment from a string.
 
-        arguments:
-                string:	The definition string.
+        Parameters
+        ----------
+        string
+            The definition string.
         """
-
         self.var.clear(preserve=[u'experiment_path', u'experiment_file'])
         self.reset()
         self.comments = []
@@ -340,15 +311,14 @@ class Experiment(item.item):
                 line = next(s, None)
 
     def transmit_workspace(self, **extra):
-        """
-        desc:
-                Sends the current workspace through the output channel. If there is
-                no output channel, this function does nothing.
+        r"""Sends the current workspace through the output channel. If there is
+        no output channel, this function does nothing.
 
-        keyword-dict:
-                extra:	Any extra items in the workspace dict to be sent.
+        Parameters
+        ----------
+        **extra : dict
+            Any extra items in the workspace dict to be sent.
         """
-
         if self.output_channel is None:
             return
         d = self.python_workspace._globals.copy()
@@ -361,23 +331,19 @@ class Experiment(item.item):
         self.output_channel.put(d)
 
     def set_output_channel(self, output_channel):
-        """
-        desc:
-                Sets the output channel, which is used to communicate the workspace
-                between the experiment and the launch process (typically the GUI).
+        r"""Sets the output channel, which is used to communicate the workspace
+        between the experiment and the launch process (typically the GUI).
 
-        arguments:
-                output_channel:
-                        desc: 	The output object, which must support a `put` method.
+        Parameters
+        ----------
+        output_channel    The output object, which must support a `put` method.
         """
-
         if not hasattr(output_channel, u'put'):
             raise osexception(u'Invalid output_channel: %s' % output_channel)
         self.output_channel = output_channel
 
     def run(self):
         """Runs the experiment."""
-
         # Save the date and time, and the version of OpenSesame
         self.var.datetime = safe_decode(
             time.strftime(u'%c'),
@@ -417,13 +383,10 @@ class Experiment(item.item):
         self.end()
 
     def pause(self):
+        r"""Pauses the experiment, sends the Python workspace to the GUI, and
+        waits for the GUI to send a resume signal. This requires an output
+        channel.
         """
-        desc:
-                Pauses the experiment, sends the Python workspace to the GUI, and
-                waits for the GUI to send a resume signal. This requires an output
-                channel.
-        """
-
         if self.paused:
             return
 
@@ -467,7 +430,6 @@ class Experiment(item.item):
 
     def cleanup(self):
         """Calls all the cleanup functions."""
-
         while len(self.cleanup_functions) > 0:
             func = self.cleanup_functions.pop()
             oslogger.debug(u"calling cleanup function")
@@ -475,7 +437,6 @@ class Experiment(item.item):
 
     def end(self):
         """Nicely ends the experiment."""
-
         from openexp import sampler, canvas
         self.running = False
         try:
@@ -497,7 +458,6 @@ class Experiment(item.item):
         Returns:
         A Unicode definition string for the experiment.
         """
-
         s = self._syntax.generate_front_matter()
         for var in self.var:
             s += self.variable_to_string(var)
@@ -517,7 +477,6 @@ class Experiment(item.item):
         A Unicode string with the full path to the file in the resources
         folder.
         """
-
         name = safe_decode(name)
         if self is not None:
             if name in self.resources:
@@ -533,29 +492,22 @@ class Experiment(item.item):
         return path
 
     def save(self, path, overwrite=False, update_path=True):
+        r"""Saves the experiment to file.
+
+        Parameters
+        ----------
+        path : str, unicode
+            The target file to save to.
+        overwrite : bool, optional
+            Indicates if existing files should be overwritten.
+        update_path : bool, optional
+            Indicates if the experiment_path attribute should be updated.
+
+        Returns
+        -------
+        unicode, bool
+            The path on successful saving or False otherwise.
         """
-        desc:
-                Saves the experiment to file.
-
-        arguments:
-                path:
-                        desc:	The target file to save to.
-                        type:	[str, unicode]
-
-        keywords:
-                overwrite:
-                        desc:	Indicates if existing files should be overwritten.
-                        type:	bool
-                update_path:
-                        desc:	Indicates if the experiment_path attribute should be
-                                        updated.
-                        type:	bool
-
-        returns:
-                desc:	The path on successful saving or False otherwise.
-                type:	[unicode, bool]
-        """
-
         path = safe_decode(path, enc=self.encoding)
         if os.path.exists(path) and not overwrite:
             return False
@@ -566,23 +518,23 @@ class Experiment(item.item):
         return path
 
     def open(self, src):
+        r"""Opens an experiment. The source can be any of the following:
+
+        - An
+        OpenSesame script (ie. not a file)
+        - The full path to a .osexp
+        experiment file.
+
+        Parameters
+        ----------
+        src : str
+            The source.
+
+        Returns
+        -------
+        str
+            An OpenSesame script.
         """
-        desc: |
-                Opens an experiment. The source can be any of the following:
-
-                - An OpenSesame script (ie. not a file)
-                - The full path to a .osexp experiment file.
-
-        arguments:
-                src:
-                        desc:	The source.
-                        type:	str
-
-        returns:
-                desc:	An OpenSesame script.
-                type:	str
-        """
-
         from libopensesame.osexpfile import osexpreader
         f = osexpreader(self, src)
         self.experiment_path = f.experiment_path
@@ -590,7 +542,6 @@ class Experiment(item.item):
 
     def reset_feedback(self):
         """Resets the feedback variables (acc, avg_rt, etc.)."""
-
         self.responses.reset_feedback()
 
     def var_info(self):
@@ -601,18 +552,13 @@ class Experiment(item.item):
         Returns:
         A list of tuples.
         """
-
         l = []
         for var in self.var:
             l.append((var, self.var.get(var, _eval=False)))
         return l
 
     def init_heartbeat(self):
-        """
-        desc:
-                Initializes heartbeat.
-        """
-
+        r"""Initializes heartbeat."""
         if self.heartbeat_interval <= 0 or self.var.fullscreen == u'yes' or \
                 self.output_channel is None:
             self.heartbeat = None
@@ -635,7 +581,6 @@ class Experiment(item.item):
 
                 - <http://forum.cogsci.nl/index.php?p=/discussion/1441/>
         """
-
         import random
         random.seed()
         try:
@@ -647,26 +592,22 @@ class Experiment(item.item):
 
     def init_sound(self):
         """Intializes the sound backend."""
-
         from openexp import sampler
         sampler.init_sound(self)
 
     def init_display(self):
         """Initializes the canvas backend."""
-
         from openexp import canvas
         canvas.init_display(self)
         self.python_workspace[u'win'] = self.window
 
     def init_clock(self):
         """Initializes the clock backend."""
-
         from openexp.clock import clock
         self._clock = clock(self)
 
     def init_log(self):
         """Initializes the log backend."""
-
         from openexp.log import log
         self._log = log(self, self.logfile)
 

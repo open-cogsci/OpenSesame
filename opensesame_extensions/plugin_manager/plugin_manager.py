@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 from libqtopensesame.extensions import base_extension
@@ -24,21 +23,13 @@ from libqtopensesame.extensions import base_extension
 
 class plugin_manager(base_extension):
 
-    """
-    desc:
-            Manages plug-ins and extensions
-    """
-
+    r"""Manages plug-ins and extensions"""
     def event_startup(self):
 
         self._widget = None
 
     def activate(self):
-        """
-        desc:
-                Open the plug-in manager tab, or switch to it if already open.
-        """
-
+        r"""Open the plug-in manager tab, or switch to it if already open."""
         self.tabwidget.add(self.widget(), self.icon(), self.label())
 
     def widget(self):
@@ -47,7 +38,6 @@ class plugin_manager(base_extension):
                 desc:	The widget to be used in the tab widget.
                 type:	QWidget
         """
-
         if self._widget is None:
             self.set_busy()
             from plugin_manager_widget import plugin_manager_widget

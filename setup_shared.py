@@ -22,7 +22,6 @@ desc:
 	platform-specific setup scripts.
 ---
 """
-
 # List of included plug-ins
 included_plugins = [
     'advanced_delay',

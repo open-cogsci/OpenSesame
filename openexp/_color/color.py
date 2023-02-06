@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import re
 import webcolors
@@ -55,27 +54,20 @@ def _raise_invalid(colorspec):
 
 class Color:
 
+    r"""Converts various color specifications to a back-end specific format.
+    Valid color specificatons are described in more detail in
+    openexp._canvas.canvas.canvas.
     """
-    desc:
-            Converts various color specifications to a back-end specific format.
-            Valid color specificatons are described in more detail in
-            openexp._canvas.canvas.canvas.
-    """
-
     def __init__(self, experiment, colorspec):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                experiment:
-                        desc:	The experiment object.
-                        type:	experiment
-                colorspec:
-                        desc:	A color specification.
-                        type:	[str, unicode, tuple, int]
+        Parameters
+        ----------
+        experiment : experiment
+            The experiment object.
+        colorspec : str, unicode, tuple, int
+            A color specification.
         """
-
         self.experiment = experiment
         self.colorspec = colorspec
         self.hexcolor = self.to_hex(self.colorspec)
@@ -87,26 +79,23 @@ class Color:
                 A representation of the color, which matches the color
                 specification.
         """
-
         return self.colorspec
 
     @staticmethod
     def to_hex(colorspec):
+        r"""Converts a color specificaton to a seven-character lowercase
+        hexadecimal color string, such as '#ff0000'.
+
+        Parameters
+        ----------
+        colorspec : str, unicode, array-like, int
+            A color specification.
+
+        Returns
+        -------
+        unicode
+            A hexadecimal color specification.
         """
-        desc:
-                Converts a color specificaton to a seven-character lowercase
-                hexadecimal color string, such as '#ff0000'.
-
-        arguments:
-                colorspec:
-                        desc:	A color specification.
-                        type:	[str, unicode, array-like, int]
-
-        returns:
-                desc:	A hexadecimal color specification.
-                type:	unicode
-        """
-
         if isinstance(colorspec, int):  # 0-255 luminance value
             return webcolors.rgb_to_hex((colorspec, colorspec, colorspec))
         if _is_rgb(colorspec):
@@ -188,20 +177,18 @@ class Color:
         _raise_invalid(colorspec)
 
     def to_backend_color(self, hexcolor):
+        r"""Converts a hexadecimal color string to a backend-specific color
+        object.
+
+        Parameters
+        ----------
+        hexcolor : str, unicode
+            A hexadecimal color specification.
+
+        Returns
+        -------
+        A backend-specific color object.
         """
-        desc:
-                Converts a hexadecimal color string to a backend-specific color
-                object.
-
-        arguments:
-                hexcolor:
-                        desc:	A hexadecimal color specification.
-                        type:	[str, unicode]
-
-        returns:
-                A backend-specific color object.
-        """
-
         return hexcolor
 
 

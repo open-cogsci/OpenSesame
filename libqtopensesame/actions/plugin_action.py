@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
 from libopensesame import plugins
@@ -25,7 +24,6 @@ from libopensesame import plugins
 class PluginAction(QtWidgets.QAction):
 
     """Menu action for a plugin"""
-
     def __init__(self, main_window, menu, plugin):
         """
         Constructor
@@ -35,7 +33,6 @@ class PluginAction(QtWidgets.QAction):
         menu -- the menu into which the action should be inserted
         plugin -- the name of the plugin
         """
-
         self.main_window = main_window
         icon = QtGui.QIcon(plugins.plugin_icon_large(plugin))
         self.plugin = plugin
@@ -49,7 +46,6 @@ class PluginAction(QtWidgets.QAction):
         Keyword arguments:
         dummy -- a dummy argument passed by the signal handler (default=None)
         """
-
         self.main_window.drag_item(self.plugin)
 
 

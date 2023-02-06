@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os.path
 import imp
@@ -31,7 +30,6 @@ available_themes = [u'default', u'monokai']
 class Theme:
 
     """Handles the GUI theme"""
-
     default_icon_size = 32
 
     def __init__(self, main_window, theme=None):
@@ -44,7 +42,6 @@ class Theme:
         Keyword arguments:
         theme -- the theme to be used or None to use config (default=None)
         """
-
         self.main_window = main_window
         self.fallback_icon = QtGui.QIcon(
             os.path.join(misc.resource(u"theme"), u"fallback.png")
@@ -98,24 +95,23 @@ class Theme:
         Arguments:
         widget -- a QWidget
         """
-
         if hasattr(widget, u'setStyleSheet'):
             widget.setStyleSheet(self._qss)
         if hasattr(widget, u"ui"):
             self.load_icons(widget.ui)
 
     def qfileicon(self, path):
+        r"""Gets an filetype icon for a file.
+
+        Parameters
+        ----------
+        path
+            The full path to the file. The file must exist.
+
+        Returns
+        -------
+        QIcon
         """
-        desc:
-                Gets an filetype icon for a file.
-
-        arguments:
-                path:	The full path to the file. The file must exist.
-
-        returns:
-                type:	QIcon
-        """
-
         try:
             import fileinspector
         except ImportError:
@@ -150,7 +146,6 @@ class Theme:
                 desc:	An icon, or a fallback icon if the specified wasn't found.
                 type:	QIcon
         """
-
         if isinstance(icon, QtGui.QIcon):
             return icon
         if os.path.isfile(icon):
@@ -204,7 +199,6 @@ class Theme:
         Returns:
         A QPixmap
         """
-
         if isinstance(icon, str) and os.path.exists(icon):
             return QtGui.QPixmap(icon)
         if size is None:
@@ -234,14 +228,12 @@ class Theme:
         Returns:
         A QLabel
         """
-
         label = QtWidgets.QLabel()
         label.setPixmap(self.qpixmap(icon, size=size))
         return label
 
     def load_icon_map(self):
         """Load the icon map"""
-
         self.original_theme = QtGui.QIcon.themeName()
         if os.path.exists(
                 os.path.join(self._icon_theme_path, self._icon_theme)
@@ -280,7 +272,6 @@ class Theme:
         Arguments:
         ui -- the ui object to load icons into
         """
-
         for i in dir(ui):
             # Oddly enough, it can happend that getattr() fails on items that
             # have been returned by dir(). That's why we need a hasattr() as
@@ -299,7 +290,6 @@ class Theme:
         Arguments:
         size -- a size in pixels
         """
-
         self.main_window.ui.toolbar_main.setIconSize(QtCore.QSize(size, size))
         self.main_window.ui.toolbar_items.setIconSize(QtCore.QSize(size, size))
         self.main_window.ui.toolbar_items.build()
@@ -314,7 +304,6 @@ class Theme:
         Returns:
         The full path to the resource file in the theme folder.
         """
-
         return os.path.join(self.theme_folder, fname)
 
 

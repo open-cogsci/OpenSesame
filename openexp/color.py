@@ -16,28 +16,22 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from openexp import backend
 
 
 def Color(experiment, *arglist, **kwdict):
+    r"""A factory that returns a back-end specific color object.
+
+    Parameters
+    ----------
+    experiment : experiment
+        The experiment object.
+    *arglist : list
+        See color.__init__().
+    **kwdict : dict
+        See color.__init__().
     """
-    desc:
-            A factory that returns a back-end specific color object.
-
-    arguments:
-            experiment:
-                    desc:	The experiment object.
-                    type:	experiment
-
-    argument-list:
-            arglist:	See color.__init__().
-
-    keyword-dict:
-            kwdict:		See color.__init__().
-    """
-
     cls = backend.get_backend_class(experiment, u'color')
     return cls(experiment, *arglist, **kwdict)
 

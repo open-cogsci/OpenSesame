@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.base_response_item import base_response_item
 from libopensesame.sketchpad import sketchpad
@@ -26,17 +25,12 @@ from openexp.canvas import canvas
 
 class fixation_dot(sketchpad):
 
-    """
-    desc:
-            A simple fixation-dot plug-in.
-    """
-
+    r"""A simple fixation-dot plug-in."""
     description = \
         u'Presents a central fixation dot with a choice of various styles'
 
     def reset(self):
         """See item."""
-
         self.var.style = u'default'
         self.var.duration = 1000
         self.var.penwidth = 3
@@ -45,7 +39,6 @@ class fixation_dot(sketchpad):
 
     def prepare(self):
         """See item."""
-
         base_response_item.prepare(self)
         # Create a canvas.
         self.canvas = canvas(self.experiment,

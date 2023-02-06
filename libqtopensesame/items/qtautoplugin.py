@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import plugins
 from libqtopensesame.items.qtplugin import QtPlugin
@@ -29,10 +28,8 @@ _ = translation_context(u'qtautoplugin', category=u'core')
 class QtAutoPlugin(QtPlugin):
 
     """A class that processes auto-plugins defined in a YAML file"""
-
     def init_edit_widget(self):
         """Construct the GUI controls based on info.yaml"""
-
         super().init_edit_widget(False)
         item_type_translate = translation_context(self.item_type,
                                                   category=u'plugin')
@@ -152,14 +149,12 @@ class QtAutoPlugin(QtPlugin):
 
     def apply_edit_changes(self):
         """Applies the controls. I.e. sets the variables from the controls."""
-
         if not super().apply_edit_changes() or self.lock:
             return False
         return True
 
     def edit_widget(self):
         """Sets the controls based on the variables."""
-
         self.lock = True
         super().edit_widget()
         self.lock = False

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame import item
@@ -29,21 +28,13 @@ class advanced_delay(item.item):
     description = u'Waits for a specified duration'
 
     def reset(self):
-        """
-        desc:
-                Initialize plug-in.
-        """
-
+        r"""Initialize plug-in."""
         self.var.duration = 1000
         self.var.jitter = 0
         self.var.jitter_mode = u'Uniform'
 
     def prepare(self):
-        """
-        desc:
-                The preparation phase of the plug-in.
-        """
-
+        r"""The preparation phase of the plug-in."""
         item.item.prepare(self)
         # Sanity check on the duration value, which should be a positive numeric
         # value.
@@ -66,11 +57,7 @@ class advanced_delay(item.item):
         self.experiment.var.set(u'delay_%s' % self.name, self._duration)
 
     def run(self):
-        """
-        desc:
-                The run phase of the plug-in.
-        """
-
+        r"""The run phase of the plug-in."""
         self.set_item_onset(self.time())
         self.sleep(self._duration)
 
@@ -81,7 +68,6 @@ class advanced_delay(item.item):
         Returns:
         A list of (name, description) tuples.
         """
-
         return item.item.var_info(self) + [(u'delay_%s' % self.name,
                                             u'[Determined at runtime]')]
 
@@ -89,7 +75,6 @@ class advanced_delay(item.item):
 class qtadvanced_delay(advanced_delay, qtautoplugin):
 
     """Automatic plug-in GUI."""
-
     def __init__(self, name, experiment, script=None):
 
         advanced_delay.__init__(self, name, experiment, script)

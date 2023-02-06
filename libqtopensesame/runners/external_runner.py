@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 import subprocess
@@ -32,10 +31,8 @@ import time
 class ExternalRunner(BaseRunner):
 
     """Runs an experiment using opensesamerun."""
-
     def execute(self):
         """See base_runner.execute()."""
-
         # Temporary file for the standard output and experiment
         self.stdout = tempfile.mktemp(suffix=u".stdout")
         if self.experiment.experiment_path is None:

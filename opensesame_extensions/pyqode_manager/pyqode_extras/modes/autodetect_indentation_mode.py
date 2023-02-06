@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import re
 from libopensesame.oslogging import oslogger
@@ -31,7 +30,6 @@ THRESHOLD = 500
 class AutodetectIndentationMode(api.Mode):
 
     """Automatically sets indentation based on editor contents."""
-
     def on_install(self, editor):
 
         super(AutodetectIndentationMode, self).on_install(editor)

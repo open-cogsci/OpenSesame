@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import type_check
 from libopensesame.exceptions import osexception
@@ -29,79 +28,62 @@ from libopensesame.widgets.widget_factory import WidgetFactory
 
 class Form:
 
+    r"""The `Form` is a container for widgets, such as labels, etc. If you use
+    the FORM_BASE plug-in in combination with OpenSesame script, you do not
+    need to explicitly create a `Form` object. However, if you use Python
+    inline code, you do.
+
+    __Example__:
+
+    ~~~ .python
+    form = Form()
+    label =
+    Label(text='label)
+    form.set_widget(label, (0,0))
+    form._exec()
+    ~~~
+
+    [TOC]
     """
-    desc: |
-            The `Form` is a container for widgets, such as labels, etc. If you use
-            the FORM_BASE plug-in in combination with OpenSesame script, you do not
-            need to explicitly create a `Form` object. However, if you use Python
-            inline code, you do.
-
-            __Example__:
-
-            ~~~ .python
-            form = Form()
-            label = Label(text='label)
-            form.set_widget(label, (0,0))
-            form._exec()
-            ~~~
-
-            [TOC]
-    """
-
     def __init__(self, experiment, cols=2, rows=2, spacing=10,
                  margins=(100, 100, 100, 100), theme=u'gray', item=None, timeout=None,
                  clicks=False, validator=None):
+        r"""Constructor to create a new `Form` object. You do not generally
+        call this constructor directly, but use the `Form()` factory
+        function,
+        which is described here: [/python/common/]().
+
+        Parameters
+        ----------
+        experiment : experiment
+            An OpenSesame experiment.
+        cols : int, list, optional
+            The number of columns (as int) or a list that specifies the number
+            and relative size of the columns. For example, `[1,2,1]` will
+            create 3 columns where the middle one is twice as large as the
+            outer ones.
+        rows : int, list, optional
+            Analogous to `cols`, but for the rows.
+        spacing : int, optional
+            The amount of empty space between widgets (in pixels).
+        margins : list, optional
+            The amount of empty space around the form. This is specified as a
+            list, like so [top-margin, right-margin, bottom-margin, left-
+            margin].
+        theme : str, unicode, optional
+            The theme for the widgets.
+        item : item, NoneType, optional
+            The item of which the form is part.
+        timeout : int, float, NoneType, optional
+            A timeout value in milliseconds, or None if no timeout exists.
+        clicks : bool, optional
+            If enabled, an auditory click is played on user interactions. This
+            can help to make interactions feel smoother if there is some visual
+            lag.
+        validator : FunctionType, NoneType, optional
+            A function that takes no arguments and returns True if the form is
+            successfully validated, and False if not.
         """
-        desc: |
-                Constructor to create a new `Form` object. You do not generally
-                call this constructor directly, but use the `Form()` factory
-                function, which is described here: [/python/common/]().
-
-
-        arguments:
-                experiment:
-                        desc:	An OpenSesame experiment.
-                        type:	experiment
-
-        keywords:
-                cols:
-                        desc:	The number of columns (as int) or a list that specifies
-                                        the number and relative size of the columns. For
-                                        example, `[1,2,1]` will create 3 columns where the
-                                        middle one is twice as large as the outer ones.
-                        type:	[int, list]
-                rows:
-                        desc:	Analogous to `cols`, but for the rows.
-                        type:	[int, list]
-                spacing:
-                        desc:	The amount of empty space between widgets (in pixels).
-                        type:	int
-                margins:
-                        desc:	The amount of empty space around the form. This is
-                                        specified as a list, like so [top-margin, right-margin,
-                                        bottom-margin, left-margin].
-                        type:	list
-                theme:
-                        desc:	The theme for the widgets.
-                        type:	[str, unicode]
-                item:
-                        desc:	The item of which the form is part.
-                        type:	[item, NoneType]
-                timeout:
-                        desc:	A timeout value in milliseconds, or None if no timeout
-                                        exists.
-                        type:	[int, float, NoneType]
-                clicks:
-                        desc:	If enabled, an auditory click is played on user
-                                        interactions. This can help to make interactions feel
-                                        smoother if there is some visual lag.
-                        type:	bool
-                validator:
-                        desc:	A function that takes no arguments and returns True if
-                                        the form is successfully validated, and False if not.
-                        type: 	[FunctionType, NoneType]
-        """
-
         # Normalize the column and row sizes so that they add up to 1
         if isinstance(cols, int):
             self.cols = [1./cols]*cols
@@ -138,47 +120,33 @@ class Form:
         self.theme_engine = theme_cls(self)
 
     def __len__(self):
+        r"""Implements the `len()` syntax.
+
+        Returns
+        -------
+        int
+            The number of widgets in the form.
         """
-        visible: False
-
-        desc:
-                Implements the `len()` syntax.
-
-        returns:
-                desc:	The number of widgets in the form.
-                type:	int
-        """
-
         return sum([w is not None for w in self.widgets])
 
     def render(self):
-        """
-        desc:
-                Shows the form canvas without any user interaction.
-        """
-
+        r"""Shows the form canvas without any user interaction."""
         self.canvas.show()
 
     def _exec(self, focus_widget=None):
+        r"""Executes the form.
+
+        Parameters
+        ----------
+        focus_widget : widget, NoneType, optional
+            A widget that is in the form and should receive a virtual mouse
+            click when the form is opened. This allows you to activate a
+            text_input right away, for example, so that the user doesn't have
+            to click on it anymore.
+
+        Returns
+        -------
         """
-        desc:
-                Executes the form.
-
-        keywords:
-                focus_widget:
-                        desc:	A widget that is in the form and should receive a
-                                        virtual mouse click when the form is opened. This allows
-                                        you to activate a text_input right away, for example, so
-                                        that the user doesn't have to click on it anymore.
-                        type:	[widget, NoneType]
-
-        returns:
-                desc:	Gives the return value of the form, which depends on how the
-                                user interacted with the widgets. For example, if the user
-                                pressed a button, the button text will be returned. If a
-                                timeout occurred, None will be returned.
-        """
-
         if isinstance(focus_widget, WidgetFactory):
             focus_widget = focus_widget.construct(self)
         if focus_widget is not None:
@@ -262,7 +230,6 @@ class Form:
                 desc:	True if a timeout occurred, False otherwise.
                 type:	bool
         """
-
         if self.timeout is None:
             return False
         if self.start_time is None:
@@ -271,22 +238,20 @@ class Form:
         return self.item.clock.time()-self.start_time >= self.timeout
 
     def cell_index(self, pos):
+        r"""Converts a position to a cell index. A cell index corresponds to
+        the number of the cell in the form, from left-to-right, top-to-bottom.
+
+        Parameters
+        ----------
+        pos : int, tuple
+            A position in the form, which can be an index (int) or a (column,
+            row) tuple.
+
+        Returns
+        -------
+        int
+            A cell index.
         """
-        desc:
-                Converts a position to a cell index. A cell index corresponds to the
-                number of the cell in the form, from left-to-right, top-to-bottom.
-
-        arguments:
-                pos:
-                        desc:	A position in the form, which can be an index (int) or a
-                                        (column, row) tuple.
-                        type:	[int, tuple]
-
-        returns:
-                desc:	A cell index.
-                type:	int
-        """
-
         if type(pos) == int:
             return pos
         if type(pos) in (tuple, list) and len(pos) == 2:
@@ -300,7 +265,6 @@ class Form:
         Exceptions:
         osexception		--	When the geometry is invalid.
         """
-
         for index1 in range(len(self.widgets)):
             if self.widgets[index1] is None:
                 continue
@@ -330,7 +294,6 @@ class Form:
         Returns:
         A (column, row, column_span, row_span) tuple
         """
-
         index = self.cell_index(index)
         col = index % len(self.cols)
         row = index // len(self.cols)
@@ -347,7 +310,6 @@ class Form:
         Returns:
         A (left, top, width, height) tuple
         """
-
         col = index % len(self.cols)
         row = index // len(self.cols)
         colspan, rowspan = self.span[index]
@@ -370,28 +332,20 @@ class Form:
         return x, y, w, h
 
     def set_widget(self, widget, pos, colspan=1, rowspan=1):
+        r"""Adds a widget to the form.
+
+        Parameters
+        ----------
+        widget : widget
+            The widget to add.
+        pos : int, tuple
+            The position to add the widget, which can be an index or a (column,
+            row) tuple.
+        colspan : int, optional
+            The number of columns that the widget should span.
+        rowspan : int, optional
+            The number of rows that the widget should span.
         """
-        desc:
-                Adds a widget to the form.
-
-        arguments:
-                widget:
-                        desc:	The widget to add.
-                        type:	widget
-                pos:
-                        desc:	The position to add the widget, which can be an index or
-                                        a (column, row) tuple.
-                        type:	[int, tuple]
-
-        keywords:
-                colspan:
-                        desc:	The number of columns that the widget should span.
-                        type:	int
-                rowspan:
-                        desc:	The number of rows that the widget should span.
-                        type:	int
-        """
-
         index = self.cell_index(pos)
         if index >= len(self.widgets):
             raise osexception(
@@ -411,21 +365,19 @@ class Form:
         widget.set_rect(self.get_rect(index))
 
     def xy_to_index(self, xy):
+        r"""Converts a coordinate in pixels to a cell index. This allows you to
+        determine on which widget a user has clicked.
+
+        Parameters
+        ----------
+        xy : tuple
+            An (x,y) coordinates tuple.
+
+        Returns
+        -------
+        int
+            A cell index.
         """
-        desc:
-                Converts a coordinate in pixels to a cell index. This allows you to
-                determine on which widget a user has clicked.
-
-        arguments:
-                xy:
-                        desc:	An (x,y) coordinates tuple.
-                        type:	tuple
-
-        returns:
-                desc:	A cell index.
-                type:	int
-        """
-
         for index in range(len(self.widgets)):
             x, y, w, h = self.get_rect(index)
             if x <= xy[0] and x+w >= xy[0] and y <= xy[1] and y+h >= xy[1]:

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtGui, QtWidgets
 from libqtopensesame.misc.config import cfg
@@ -28,25 +27,17 @@ _ = translation_context(u'item_context_menu', category=u'core')
 
 class ItemContextMenu(BaseSubcomponent, QtWidgets.QMenu):
 
-    """
-    desc:
-            Provides a basic context menu for an item.
-    """
-
+    r"""Provides a basic context menu for an item."""
     def __init__(self, main_window, treeitem):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:
-                        desc:	The main-window object.
-                        type:	qtopensesame
-                treeitem:
-                        desc:	The tree item.
-                        type:	tree_item_item
+        Parameters
+        ----------
+        main_window : qtopensesame
+            The main-window object.
+        treeitem : tree_item_item
+            The tree item.
         """
-
         super().__init__(main_window)
         self.setup(main_window)
         self.treeitem = treeitem
@@ -92,22 +83,23 @@ class ItemContextMenu(BaseSubcomponent, QtWidgets.QMenu):
         self.add_action(u"help", _("Help"), self.item.open_help_tab)
 
     def add_action(self, icon, text, func, shortcut=None):
+        r"""A convenience function for adding menu actions.
+
+        Parameters
+        ----------
+        icon
+            An icon name.
+        text
+            A menu text.
+        func
+            A function to call when the action is activated.
+        shortcut, optional
+            A key sequence to activate the action.
+
+        Returns
+        -------
+        QAction
         """
-        desc:
-                A convenience function for adding menu actions.
-
-        arguments:
-                icon:	An icon name.
-                text:	A menu text.
-                func:	A function to call when the action is activated.
-
-        keywords:
-                shortcut:	A key sequence to activate the action.
-
-        returns:
-                type:	QAction
-        """
-
         action = self.addAction(self.theme.qicon(icon), text, func)
         if shortcut is not None:
             action.setShortcut(QtGui.QKeySequence(shortcut))

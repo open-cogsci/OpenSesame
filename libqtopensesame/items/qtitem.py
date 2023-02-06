@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import textwrap
 from qtpy import QtCore, QtWidgets
@@ -32,12 +31,9 @@ _ = translation_context(u'qtitem', category=u'core')
 
 
 def requires_init(fnc):
+    r"""A decorator that makes sure that an item's controls are initialized
+    before a function is called.
     """
-    desc:
-            A decorator that makes sure that an item's controls are initialized
-            before a function is called.
-    """
-
     def inner(self, *args, **kwargs):
 
         if self.container_widget is None:
@@ -48,11 +44,7 @@ def requires_init(fnc):
 
 
 def wait_cursor(fnc):
-    """
-    desc:
-            A decorator that shows a waiting cursor during the function
-    """
-
+    r"""A decorator that shows a waiting cursor during the function"""
     def inner(self, *args, **kwargs):
 
         if self.main_window.is_busy():
@@ -68,7 +60,6 @@ def wait_cursor(fnc):
 class QtItem:
 
     """Base class for the GUI controls of other items"""
-
     initial_view = u'controls'
     label_align = u'right'
     help_url = None
@@ -76,7 +67,6 @@ class QtItem:
 
     def __init__(self):
         """Constructor"""
-
         # The auto-widgets are stored in name -> (var, widget) dictionaries
         self.auto_line_edit = {}
         self.auto_combobox = {}
@@ -130,11 +120,7 @@ class QtItem:
         return _(u'Default description')
 
     def open_tab(self, select_in_tree=True):
-        """
-        desc:
-                Opens the tab if it wasn't yet open, and switches to it.
-        """
-
+        r"""Opens the tab if it wasn't yet open, and switches to it."""
         unsaved = self.main_window.unsaved_changes
         self.tabwidget.add(self.widget(), self.item_icon(), self.name)
         self.main_window.set_unsaved(unsaved)
@@ -145,48 +131,30 @@ class QtItem:
             )
 
     def close_tab(self):
-        """
-        desc:
-                Closes the tab if it was open.
-        """
-
+        r"""Closes the tab if it was open."""
         self.tabwidget.remove(self.widget())
 
     def set_focus(self):
-        """
-        desc:
-                Gives focus to the most important widget.
-        """
-
+        r"""Gives focus to the most important widget."""
         if hasattr(self, u'focus_widget') and self.focus_widget is not None:
             self.focus_widget.setFocus()
 
     def set_focus_widget(self, widget, override=False):
+        r"""Sets the widget that receives focus when the tab is opened.
+
+        Parameters
+        ----------
+        widget : QWidget, NoneType
+            The widget to receive focus or `None` to reset.
+        override : bool, optional
+            Indicates whether the focus widget should be changed if there
+            already is a focus widget.
         """
-        desc:
-                Sets the widget that receives focus when the tab is opened.
-
-        arguments:
-                widget:
-                        desc:	The widget to receive focus or `None` to reset.
-                        type:	[QWidget, NoneType]
-
-        keywords:
-                override:
-                        desc:	Indicates whether the focus widget should be changed if
-                                        there already is a focus widget.
-                        type:	bool
-        """
-
         if override or not hasattr(self, u'focus_widget') or self.focus_widget is None:
             self.focus_widget = widget
 
     def update_item_icon(self):
-        """
-        desc:
-                Updates the item icon.
-        """
-
+        r"""Updates the item icon."""
         self.tabwidget.set_icon(self.widget(), self.item_icon())
         self.experiment.items.set_icon(self.name, self.item_icon())
         self.header_item_icon.setPixmap(
@@ -198,15 +166,10 @@ class QtItem:
                 desc:	The name of the item icon.
                 type:	unicode
         """
-
         return self.item_type
 
     def show_tab(self):
-        """
-        desc:
-                Is called when the tab becomes visible, and updated the contents.
-        """
-
+        r"""Is called when the tab becomes visible, and updated the contents."""
         # The first time that the tab is shown, the view is determined. For
         # the controls view, nothing needs to be done, because this is the
         # default view after initialization.
@@ -234,22 +197,17 @@ class QtItem:
                 desc:	The widget that is added to the tabwidget.
                 type:	QWidget
         """
-
         return self.container_widget
 
     def init_edit_widget(self, stretch=True):
-        """
-        desc:
-                Builds the UI.
+        r"""Builds the UI.
 
-        keywords:
-                stretch:
-                        desc:	Indicates whether a vertical stretch should be added to
-                                        the bottom of the controls. This is necessary if the
-                                        controls don't expand.
-                        type:	bool
+        Parameters
+        ----------
+        stretch : bool, optional
+            Indicates whether a vertical stretch should be added to the bottom
+            of the controls. This is necessary if the controls don't expand.
         """
-
         oslogger.debug(u'initializing controls for {}'.format(self.name))
         # Header widget
         self.header = header_widget.header_widget(self)
@@ -356,15 +314,14 @@ class QtItem:
         self.update_script(use_cache=False)
 
     def _script_focus_out(self, event):
-        """
-        desc:
-                Is called when the script editor loses focus, so that changes
-                can be applied.
+        r"""Is called when the script editor loses focus, so that changes can
+        be applied.
 
-        arguments:
-                event: a QFocusEvent
+        Parameters
+        ----------
+        event
+            a QFocusEvent
         """
-
         # When the apply button is pressed, the script is also applied. But this
         # also triggers a focusOutEvent. Hence, this check avoids applying the
         # script twice.
@@ -376,20 +333,16 @@ class QtItem:
             self.apply_script_changes()
 
     def splitter_moved(self, pos, index):
-        """
-        desc:
-                Is called when the splitter handle is manually moved.
+        r"""Is called when the splitter handle is manually moved.
 
-        arguments:
-                pos:
-                        desc:	The splitter-handle position.
-                        type:	int
-                index:
-                        desc:	The index of the splitter handle. Since there is only
-                                        one handle, this is always 0.
-                        type:	int
+        Parameters
+        ----------
+        pos : int
+            The splitter-handle position.
+        index : int
+            The index of the splitter handle. Since there is only one handle,
+            this is always 0.
         """
-
         sizes = self.splitter.sizes()
         self.edit_size = sizes[0]
         self.script_size = sizes[1]
@@ -401,31 +354,19 @@ class QtItem:
             self.button_view.set_view_icon(u'split')
 
     def set_view_controls(self):
-        """
-        desc:
-                Puts the splitter in control view.
-        """
-
+        r"""Puts the splitter in control view."""
         self.splitter.setSizes([self.splitter.width(), 0])
         self.button_view.set_view_icon(u'controls')
 
     def set_view_script(self):
-        """
-        desc:
-                Puts the splitter in script view.
-        """
-
+        r"""Puts the splitter in script view."""
         if self._script_widget is None:
             self.init_script_widget()
         self.splitter.setSizes([0, self.splitter.width()])
         self.button_view.set_view_icon(u'script')
 
     def set_view_split(self):
-        """
-        desc:
-                Puts the splitter in split view.
-        """
-
+        r"""Puts the splitter in split view."""
         if self._script_widget is None:
             self.init_script_widget()
         width = self.splitter.width() // 2
@@ -433,11 +374,7 @@ class QtItem:
         self.button_view.set_view_icon(u'split')
 
     def update(self):
-        """
-        desc:
-                Updates both the script and the controls.
-        """
-
+        r"""Updates both the script and the controls."""
         # Items are updated when they are shown in a tab, or as a maximized
         # window, or in a dockwidget. If items are not shown, we don't need to
         # update them, thus improving performance.
@@ -455,11 +392,7 @@ class QtItem:
         return True
 
     def update_script(self, use_cache=True):
-        """
-        desc:
-                Regenerates the script and updates the script widget.
-        """
-
+        r"""Regenerates the script and updates the script widget."""
         script = self.to_string()
         if use_cache and self.cached_script == script:
             return  # nothing changed
@@ -478,31 +411,19 @@ class QtItem:
         self.extension_manager.fire(u'change_item', name=self.name)
 
     def edit_widget(self):
-        """
-        desc:
-                This function updates the controls based on the item state.
-        """
-
+        r"""This function updates the controls based on the item state."""
         self.auto_edit_widget()
         self.header.refresh()
 
     def apply_edit_changes(self):
-        """
-        desc:
-                Applies changes to the graphical controls.
-        """
-
+        r"""Applies changes to the graphical controls."""
         self.auto_apply_edit_changes()
         self.update_script()
         self.set_clean()
         return True
 
     def apply_script_changes(self):
-        """
-        desc:
-                Applies changes to the script.
-        """
-
+        r"""Applies changes to the script."""
         if not self.validate_script():
             self.set_view_script()
             return
@@ -515,12 +436,9 @@ class QtItem:
         self.edit_widget()
 
     def apply_script_changes_and_switch_view(self):
+        r"""Applies changes to the script if possible. If so, switches to the
+        controls view.
         """
-        desc:
-                Applies changes to the script if possible. If so, switches to the
-                controls view.
-        """
-
         if not self.validate_script():
             self.set_view_script()
             return
@@ -528,15 +446,13 @@ class QtItem:
         self.set_view_controls()
 
     def validate_script(self):
-        """
-        desc:
-                Checks whether the script is syntactically valid. If not, the
-                offending line is highlighted if QProgEdit suppors setInvalid().
+        r"""Checks whether the script is syntactically valid. If not, the
+        offending line is highlighted if QProgEdit suppors setInvalid().
 
-        returns:
-                type:	bool
+        Returns
+        -------
+        bool
         """
-
         script = self._script_widget.toPlainText()
         # First create a dummy item to see if the string can be parsed.
         try:
@@ -570,13 +486,10 @@ class QtItem:
             return False
 
     def set_validator(self):
+        r"""Sets the validator class, that is, the class that is used to parse
+        scripts to see if they are syntactically correct. Currently, we use the
+        class that defines from_string().
         """
-        desc:
-                Sets the validator class, that is, the class that is used to parse
-                scripts to see if they are syntactically correct. Currently, we use
-                the class that defines from_string().
-        """
-
         import inspect
         meth = self.from_string
         for cls in inspect.getmro(self.__class__):
@@ -586,19 +499,15 @@ class QtItem:
         self.validator = cls
 
     def rename(self, from_name, to_name):
-        """
-        desc:
-                Handles renaming of an item (not necesarrily the current item).
+        r"""Handles renaming of an item (not necesarrily the current item).
 
-        arguments:
-                from_name:
-                        desc:	The old item name.
-                        type:	unicode
-                to_name:
-                        desc:	The new item name
-                        type:	unicode
+        Parameters
+        ----------
+        from_name : unicode
+            The old item name.
+        to_name : unicode
+            The new item name
         """
-
         if self.name != from_name:
             return
         self.name = to_name
@@ -611,22 +520,14 @@ class QtItem:
             self.tabwidget.setTabText(index, to_name)
 
     def open_help_tab(self):
-        """
-        desc:
-                Opens a help tab.
-        """
-
+        r"""Opens a help tab."""
         if self.help_url is None:
             self.tabwidget.open_help(self.item_type)
         else:
             self.tabwidget.open_osdoc(self.help_url)
 
     def toggle_maximize(self):
-        """
-        desc:
-                Toggles edit-widget maximization.
-        """
-
+        r"""Toggles edit-widget maximization."""
         if not self.maximized:
             # Always ignore close events. This is necessary, because otherwise
             # the pop-out widget can be closed without re-enabling the main
@@ -652,24 +553,18 @@ class QtItem:
         self.main_window.setDisabled(self.maximized)
 
     def delete(self, item_name, item_parent=None, index=None):
+        r"""Is called when an item is deleted (not necessarily the current
+        one).
+
+        Parameters
+        ----------
+        item_name : str
+            The name of the item to be deleted.
+        item_parent : str, optional
+            The name of the parent item.
+        index : int, optional
+            The index of the item in the parent.
         """
-        desc:
-                Is called when an item is deleted (not necessarily the current one).
-
-        arguments:
-                item_name:
-                        desc:	The name of the item to be deleted.
-                        type:	str
-
-        keywords:
-                item_parent:
-                        desc:	The name of the parent item.
-                        type:	str
-                index:
-                        desc:	The index of the item in the parent.
-                        type:	int
-        """
-
         pass
 
     def build_item_tree(
@@ -679,23 +574,19 @@ class QtItem:
             max_depth=-1,
             extra_info=None
     ):
+        r"""Constructs an item tree.
+
+        Parameters
+        ----------
+        toplevel : tree_base_item, optional
+            The toplevel widget.
+        items    A list of item names that have already been added, to prevent
+            recursion.
+
+        Returns
+        -------
+        tree_item_item
         """
-        desc:
-                Constructs an item tree.
-
-        keywords:
-                toplevel:
-                        desc:	The toplevel widget.
-                        type:	tree_base_item
-                items:
-                        desc:	A list of item names that have already been added, to
-                                        prevent recursion.
-                        tyep:	list
-
-        returns:
-                type:	tree_item_item
-        """
-
         widget = tree_item_item(self, extra_info=extra_info)
         items.append(self.name)
         if toplevel is not None:
@@ -708,7 +599,6 @@ class QtItem:
                 desc:	A list of all parents (names) of the current item.
                 type:	list
         """
-
         l = [self.name]
         for item in self.experiment.items:
             if self.experiment.items[item].is_child_item(self.name):
@@ -716,29 +606,22 @@ class QtItem:
         return l
 
     def get_ready(self):
-        """
-        desc:
-                This function should be overridden to do any last-minute stuff that
-                and item should do before an experiment is actually run, such as
-                applying pending script changes.
+        r"""This function should be overridden to do any last-minute stuff that
+        and item should do before an experiment is actually run, such as
+        applying pending script changes.
 
-        returns:
-                desc:	True if some action has been taken, False if nothing was
-                                done.
-                type:	bool
+        Returns
+        -------
+        bool
+            True if some action has been taken, False if nothing was done.
         """
-
         if self._dirty:
             self.apply_edit_changes()
             return True
         return False
 
     def auto_edit_widget(self):
-        """
-        desc:
-                Updates the GUI controls based on the auto-widgets.
-        """
-
+        r"""Updates the GUI controls based on the auto-widgets."""
         for var, edit in self.auto_line_edit.items():
             if isinstance(var, int):
                 continue
@@ -823,11 +706,7 @@ class QtItem:
                 editor.setPlainText(val)
 
     def auto_apply_edit_changes(self):
-        """
-        desc:
-                Applies the auto-widget controls.
-        """
-
+        r"""Applies the auto-widget controls."""
         for var, edit in self.auto_line_edit.items():
             if isinstance(var, int):
                 continue
@@ -876,20 +755,15 @@ class QtItem:
         return True
 
     def auto_add_widget(self, widget, var=None, apply_func=None):
-        """
-        desc:
-                Adds a widget to the list of auto-widgets.
+        r"""Adds a widget to the list of auto-widgets.
 
-        arguments:
-                widget:
-                        type:	QWidget
-
-        keywords:
-                var:	The name of the experimental variable to be linked to the
-                                widget, or None to use an automatically chosen name.
-                type:	[str, NoneType]
-        """
-
+        Parameters
+        ----------
+        widget : QWidget
+        var, optional
+            The name of the experimental variable to be linked to the widget,
+            or None to use an automatically chosen name.
+        type"""
         # Use the object id as a fallback name
         if var is None:
             var = id(widget)
@@ -926,20 +800,13 @@ class QtItem:
             raise TypeError(u"Cannot auto-add widget of type %s" % widget)
 
     def set_dirty(self):
+        r"""Indicates that the item's controls have changed since being last
+        applied.
         """
-        desc:
-                Indicates that the item's controls have changed since being last
-                applied.
-        """
-
         self._dirty = True
 
     def set_clean(self):
-        """
-        desc:
-                Indicates that the item's controls have all been applied.
-        """
-
+        r"""Indicates that the item's controls have all been applied."""
         self._dirty = False
 
     def children(self):
@@ -948,7 +815,6 @@ class QtItem:
                 desc:	A list of children, including grand children, and so on.
                 type:	list
         """
-
         return []
 
     def direct_children(self):
@@ -958,63 +824,47 @@ class QtItem:
                                 children, and so on.
                 type:	list
         """
-
         return []
 
     def is_child_item(self, item_name):
+        r"""Checks if an item is somewhere downstream from the current item in
+        the experimental hierarchy.
+
+        Parameters
+        ----------
+        item_name : unicode
+            The name of the child item.
+
+        Returns
+        -------
+        bool
+            True if the current item is offspring of the item, False otherwise.
         """
-        desc:
-                Checks if an item is somewhere downstream from the current item
-                in the experimental hierarchy.
-
-        arguments:
-                item_name:
-                        desc:	The name of the child item.
-                        type:	unicode
-
-        returns:
-                desc:	True if the current item is offspring of the item, False
-                                otherwise.
-                type:	bool
-        """
-
         return False
 
     def insert_child_item(self, item_name, index=0):
+        r"""Inserts a child item, if applicable to the item type.
+
+        Parameters
+        ----------
+        item_name : unicode
+            The name of the child item.
+        index : int, optional
+            The index of the child item.
         """
-        desc:
-                Inserts a child item, if applicable to the item type.
-
-        arguments:
-                item_name:
-                        desc:	The name of the child item.
-                        type:	unicode
-
-        keywords:
-                index:
-                        desc:	The index of the child item.
-                        type:	int
-        """
-
         pass
 
     def remove_child_item(self, item_name, index=0):
+        r"""Removes a child item, if applicable to the item type.
+
+        Parameters
+        ----------
+        item_name : unicode
+            The name of the child item.
+        index : int, optional
+            The index of the child item, if applicable. A negative value
+            indicates all instances.
         """
-        desc:
-                Removes a child item, if applicable to the item type.
-
-        arguments:
-                item_name:
-                        desc:	The name of the child item.
-                        type:	unicode
-
-        keywords:
-                index:
-                        desc:	The index of the child item, if applicable. A negative
-                                        value indicates all instances.
-                        type:	int
-        """
-
         pass
 
 

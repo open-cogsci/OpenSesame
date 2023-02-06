@@ -16,56 +16,50 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from openexp import backend
 
 
 def Sampler(experiment, *arglist, **kwdict):
+    r"""A factory that returns a back-end specific sampler object.
+
+    Parameters
+    ----------
+    experiment : experiment
+        The experiment object.
+    *arglist : list
+        See sampler.__init__().
+    **kwdict : dict
+        See sampler.__init__().
     """
-    desc:
-            A factory that returns a back-end specific sampler object.
-
-    arguments:
-            experiment:
-                    desc:	The experiment object.
-                    type:	experiment
-
-    argument-list:
-            arglist:	See sampler.__init__().
-
-    keyword-dict:
-            kwdict:		See sampler.__init__().
-    """
-
     cls = backend.get_backend_class(experiment, u'sampler')
     return cls(experiment, *arglist, **kwdict)
 
 
 def init_sound(experiment):
-    """
-    desc:
-            Calls the back-end specific init_sound function.
+    r"""Calls the back-end specific init_sound function.
 
-    arguments:
-            experiment:		The experiment object.
-            type:			experiment
+    Parameters
+    ----------
+    experiment
+        The experiment object.
+    type
+        experiment
     """
-
     cls = backend.get_backend_class(experiment, u'sampler')
     cls.init_sound(experiment)
 
 
 def close_sound(experiment):
-    """
-    desc:
-            Calls the back-end specific close_sound function.
+    r"""Calls the back-end specific close_sound function.
 
-    arguments:
-            experiment:		The experiment object.
-            type:			experiment
+    Parameters
+    ----------
+    experiment
+        The experiment object.
+    type
+        experiment
     """
-
     cls = backend.get_backend_class(experiment, u'sampler')
     cls.close_sound(experiment)
 

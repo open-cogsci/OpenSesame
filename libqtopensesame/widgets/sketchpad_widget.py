@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtGui
 from libopensesame.exceptions import osexception
@@ -29,23 +28,17 @@ from libqtopensesame.validators import CondValidator
 
 class SketchpadWidget(BaseWidget):
 
+    r"""The sketchpad controls. Most of the actual work is handled by
+    libqtopensesame.misc.sketchpad_canvas.
     """
-    desc:
-            The sketchpad controls. Most of the actual work is handled by
-            libqtopensesame.misc.sketchpad_canvas.
-    """
-
     def __init__(self, sketchpad):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                sketchpad:
-                        desc:	A sketchpad object.
-                        type:	sketchpad
+        Parameters
+        ----------
+        sketchpad : sketchpad
+            A sketchpad object.
         """
-
         super().__init__(sketchpad.main_window, ui=u'widgets.sketchpad')
         self.sketchpad = sketchpad
         self.initialized = False
@@ -96,11 +89,7 @@ class SketchpadWidget(BaseWidget):
         return self.sketchpad.elements
 
     def apply_grid(self):
-        """
-        desc:
-                Applies changes to the grid settings.
-        """
-
+        r"""Applies changes to the grid settings."""
         if not self.ui.checkbox_grid.isChecked():
             self.canvas.grid = 1
         else:
@@ -108,25 +97,19 @@ class SketchpadWidget(BaseWidget):
         self.draw(refresh=True)
 
     def apply_font(self, family, size, italic, bold):
-        """
-        desc:
-                Applies changes to the font settings.
+        r"""Applies changes to the font settings.
 
-        arguments:
-                family:
-                        desc:	Font family.
-                        type:	QString
-                size:
-                        desc:	Font size
-                        type:	int
-                italic:
-                        desc:	Font italic setting
-                        type:	bool
-                bold:
-                        desc:	Font bold setting
-                        type:	bool
+        Parameters
+        ----------
+        family : QString
+            Font family.
+        size : int
+            Font size
+        italic : bool
+            Font italic setting
+        bold : bool
+            Font bold setting
         """
-
         for element in self.sketchpad.selected_elements():
             element.set_property(u'font_family', str(family))
             if size >= 0:
@@ -136,72 +119,44 @@ class SketchpadWidget(BaseWidget):
         self.draw()
 
     def apply_html(self, html):
-        """
-        desc:
-                Applies toggling of the HTML checkbox.
-        """
-
+        r"""Applies toggling of the HTML checkbox."""
         for element in self.sketchpad.selected_elements():
             element.set_property(u'html', html, yes_no=True)
         self.draw()
 
     def apply_fill(self, fill):
-        """
-        desc:
-                Applies toggling of the fill checkbox.
-        """
-
+        r"""Applies toggling of the fill checkbox."""
         for element in self.sketchpad.selected_elements():
             element.set_property(u'fill', int(fill))
         self.draw()
 
     def apply_scale(self, scale):
-        """
-        desc:
-                Applies changes to the scale.
-        """
-
+        r"""Applies changes to the scale."""
         for element in self.sketchpad.selected_elements():
             element.set_property(u'scale', scale)
         self.draw()
 
     def apply_rotation(self, rotation):
-        """
-        desc:
-                Applies changes to the rotation.
-        """
-
+        r"""Applies changes to the rotation."""
         for element in self.sketchpad.selected_elements():
             element.set_property(u'rotation', rotation)
         self.draw()
 
     def apply_center(self, center):
-        """
-        desc:
-                Applies toggling of the center checkbox.
-        """
-
+        r"""Applies toggling of the center checkbox."""
         for element in self.sketchpad.selected_elements():
             element.set_property(u'center', int(center))
         self.draw()
 
     def apply_color(self, color):
-        """
-        desc:
-                Applies changes to the color picker.
-        """
-
+        r"""Applies changes to the color picker."""
         color = str(color)
         for element in self.sketchpad.selected_elements():
             element.set_property(u'color', color)
         self.draw()
 
     def apply_show_if(self):
-        """
-        desc:
-                Applies changes to the show-if field.
-        """
-
+        r"""Applies changes to the show-if field."""
         show_if = self.ui.edit_show_if.text()
         for element in self.sketchpad.selected_elements():
             element.set_property(u'show_if', show_if)
@@ -209,66 +164,45 @@ class SketchpadWidget(BaseWidget):
         self.draw()
 
     def apply_name(self):
-        """
-        desc:
-                Applies changes to the name field.
-        """
-
+        r"""Applies changes to the name field."""
         name = self.ui.edit_name.text()
         for element in self.sketchpad.selected_elements():
             element.set_property(u'name', name)
         self.draw()
 
     def apply_penwidth(self, penwidth):
-        """
-        desc:
-                Applies changes to the penwidth spinbox.
-        """
-
+        r"""Applies changes to the penwidth spinbox."""
         for element in self.sketchpad.selected_elements():
             element.set_property(u'penwidth', penwidth)
         self.draw()
 
     def apply_arrow_body_width(self, arrow_body_width):
-        """
-        desc:
-                Applies changes to the arrow_body_width spinbox.
-        """
-
+        r"""Applies changes to the arrow_body_width spinbox."""
         for element in self.sketchpad.selected_elements():
             element.set_property(u'arrow_body_width', arrow_body_width)
         self.draw()
 
     def apply_arrow_head_width(self, arrow_head_width):
-        """
-        desc:
-                Applies changes to the arrow_head_width spinbox.
-        """
-
+        r"""Applies changes to the arrow_head_width spinbox."""
         for element in self.sketchpad.selected_elements():
             element.set_property(u'arrow_head_width', arrow_head_width)
         self.draw()
 
     def apply_arrow_body_length(self, arrow_body_length):
-        """
-        desc:
-                Applies changes to the arrow_body_length spinbox.
-        """
-
+        r"""Applies changes to the arrow_body_length spinbox."""
         for element in self.sketchpad.selected_elements():
             element.set_property(u'arrow_body_length', arrow_body_length)
         self.draw()
 
     def show_element_settings(self, element):
-        """
-        desc:
-                Shows all the settings that are required by an element, and updates
-                these settings based on the element.
+        r"""Shows all the settings that are required by an element, and updates
+        these settings based on the element.
 
-        arguments:
-                element:	A sketchpad element.
+        Parameters
+        ----------
+        element
+            A sketchpad element.
         """
-
         # Float/ int properties need to be checked before they are apllied
         for prop, _type in [
                 (u'penwidth', int),
@@ -335,11 +269,7 @@ class SketchpadWidget(BaseWidget):
         self.show_element_tool_settings(element)
 
     def zoom_fit(self):
-        """
-        desc:
-                Sets the best-fitting zoom level.
-        """
-
+        r"""Sets the best-fitting zoom level."""
         w = self.sketchpad.var.width
         h = self.sketchpad.var.height
         l = -w/2
@@ -350,56 +280,39 @@ class SketchpadWidget(BaseWidget):
         self.ui.spinbox_zoom.setValue(zoom)
 
     def zoom_1(self):
-        """
-        desc:
-                Sets the zoom level to 1 (no zoom).
-        """
-
+        r"""Sets the zoom level to 1 (no zoom)."""
         self.zoom(1)
         self.ui.spinbox_zoom.setValue(1)
 
     def zoom(self, value):
-        """
-        desc:
-                Sets the canvas zoom level.
+        r"""Sets the canvas zoom level.
 
-        arguments:
-                value:
-                        desc:	The zoom level, where 1 is normaal zoom.
-                        type:	float
+        Parameters
+        ----------
+        value : float
+            The zoom level, where 1 is normaal zoom.
         """
-
         t = QtGui.QTransform()
         t.scale(value, value)
         self.ui.graphics_view.setTransform(t, combine=False)
 
     def zoom_diff(self, diff, adjust=.0005):
+        r"""Changes the zoom level by a given proportion. This function is used
+        mostly for zoom-by-scroll.
+
+        Parameters
+        ----------
+        diff : float
+            The zoom difference.
+        adjust : float, optional
+            A value that is multiplied with `diff` to get a sensible zoom
+            speed.
         """
-        desc:
-                Changes the zoom level by a given proportion. This function is used
-                mostly for zoom-by-scroll.
-
-        arguments:
-                diff:
-                        desc:	The zoom difference.
-                        type:	float
-
-        keywords:
-                adjust:
-                        desc:	A value that is multiplied with `diff` to get a
-                                        sensible zoom speed.
-                        type:	float
-        """
-
         zoom = self.ui.spinbox_zoom.value() + .0005 * diff
         self.ui.spinbox_zoom.setValue(zoom)
 
     def initialize(self):
-        """
-        desc:
-                Initializes the sketchpad widget.
-        """
-
+        r"""Initializes the sketchpad widget."""
         if self.initialized:
             return
         self.ui.edit_color.initialize(experiment=self.experiment, parent=self)
@@ -407,22 +320,14 @@ class SketchpadWidget(BaseWidget):
         self.initialized = True
 
     def init_settings(self):
-        """
-        desc:
-                Fills the controls with the correct starting values.
-        """
-
+        r"""Fills the controls with the correct starting values."""
         if self.ui.edit_color.text() == u'':
             self.ui.edit_color.setText(self.sketchpad.var.get(u'foreground'))
         if self.ui.edit_show_if.text() == u'':
             self.ui.edit_show_if.setText(u'always')
 
     def build_toolbar(self):
-        """
-        desc:
-                Builds the element-tool toolbar.
-        """
-
+        r"""Builds the element-tool toolbar."""
         self.element_buttons = [self.ui.button_pointer]
         for element in sketchpad_elements.elements[::-1]:
             b = SketchpadElementButton(self, element)
@@ -430,11 +335,7 @@ class SketchpadWidget(BaseWidget):
             self.element_buttons.append(b)
 
     def select_pointer_tool(self):
-        """
-        desc:
-                Selects the pointer tool.
-        """
-
+        r"""Selects the pointer tool."""
         self.unselect_all_tools()
         self.ui.button_pointer.setChecked(True)
         self.ui.widget_settings_text.setVisible(False)
@@ -452,17 +353,7 @@ class SketchpadWidget(BaseWidget):
         self.ui.graphics_view.setCursor(self.arrow_cursor)
 
     def select_element_tool(self, element):
-        """
-        desc:
-                Selects an element tool.
-
-        argument:
-                element:
-                        desc:	An element tool, which is a class, not an instance of
-                                        an element.
-                        type:	type
-        """
-
+        r"""Selects an element tool."""
         self.selected_element_tool = element
         self.show_element_tool_settings(element)
         cursor = element.cursor()
@@ -473,17 +364,7 @@ class SketchpadWidget(BaseWidget):
         self.ui.graphics_view.setCursor(cursor)
 
     def show_element_tool_settings(self, element):
-        """
-        desc:
-                Shows the settings that are applicable to a given element.
-
-        argument:
-                element:
-                        desc:	An element tool, which is a class, not an instance of
-                                        an element.
-                        type:	type
-        """
-
+        r"""Shows the settings that are applicable to a given element."""
         self.ui.widget_settings_text.setVisible(element.requires_text())
         self.ui.widget_settings_color.setVisible(element.requires_color())
         self.ui.widget_settings_penwidth.setVisible(
@@ -506,50 +387,37 @@ class SketchpadWidget(BaseWidget):
         )
 
     def unselect_all_tools(self):
-        """
-        desc:
-                Unselects all tools.
-        """
-
+        r"""Unselects all tools."""
         self.selected_element_tool = None
         for b in self.element_buttons:
             b.setChecked(False)
 
     def sizeHint(self):
-        """
-        desc:
-                Provides a size hint for the widget, so that it can become small.
+        r"""Provides a size hint for the widget, so that it can become small.
 
-        returns:
-                desc:	A size hint.
-                type:	QSize
+        Returns
+        -------
+        QSize
+            A size hint.
         """
-
         return QtCore.QSize(0, 0)
 
     def set_size(self):
-        """
-        desc:
-                Sets the size of the QGraphicsView to the experiment resolution.
-        """
-
+        r"""Sets the size of the QGraphicsView to the experiment resolution."""
         w = self.sketchpad.var.width
         h = self.sketchpad.var.height
         self.ui.graphics_view.setSceneRect(-self.margin-w/2, -self.margin-h/2,
                                            w+2*self.margin, h+2*self.margin)
 
     def draw(self, refresh=False):
-        """
-        desc:
-                Clears and redraws the sketchpad canvas.
+        r"""Clears and redraws the sketchpad canvas.
 
-        keywords:
-                refresh:
-                        desc:	Indicates whether the entire sketchpad should be
-                                        refreshed, which is necessary to repaint the background.
-                        type:	bool
+        Parameters
+        ----------
+        refresh : bool, optional
+            Indicates whether the entire sketchpad should be refreshed, which
+            is necessary to repaint the background.
         """
-
         def z_sort(element):
             if isinstance(element.z_index, (int, float)):
                 return -element.z_index
@@ -568,22 +436,17 @@ class SketchpadWidget(BaseWidget):
         self.sketchpad.apply_edit_changes()
 
     def center(self):
-        """
-        desc:
-                Centers the canvas view.
-        """
-
+        r"""Centers the canvas view."""
         self.ui.graphics_view.centerOn(0, 0)
 
     def set_cursor_pos(self, xy):
-        """
-        desc:
-                Updates the cursor-position indicator.
+        r"""Updates the cursor-position indicator.
 
-        arguments:
-                xy:		An (x,y) tuple with the cursor position.
+        Parameters
+        ----------
+        xy
+            An (x,y) tuple with the cursor position.
         """
-
         self.ui.label_cursor_pos.setText(u'%d,%d' % xy)
 
     def current_color(self):
@@ -592,7 +455,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current color.
                 type:	unicode
         """
-
         return str(self.ui.edit_color.text())
 
     def current_penwidth(self):
@@ -601,7 +463,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current penwidth.
                 type:	int
         """
-
         return self.ui.spinbox_penwidth.value()
 
     def current_scale(self):
@@ -610,7 +471,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current scale.
                 type:	float
         """
-
         return self.ui.spinbox_scale.value()
 
     def current_rotation(self):
@@ -619,7 +479,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current rotation.
                 type:	float
         """
-
         return self.ui.spinbox_rotation.value()
 
     def current_arrow_body_width(self):
@@ -628,7 +487,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current arrow body_width.
                 type:	int
         """
-
         return self.ui.spinbox_arrow_body_width.value()
 
     def current_arrow_body_length(self):
@@ -637,7 +495,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current arrow width.
                 type:	int
         """
-
         return self.ui.spinbox_arrow_body_length.value()
 
     def current_arrow_head_width(self):
@@ -646,7 +503,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current arrowhead width.
                 type:	float
         """
-
         return self.ui.spinbox_arrow_head_width.value()
 
     def current_fill(self):
@@ -655,7 +511,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current fill (0 = unfilled, 1 = filled).
                 type:	int
         """
-
         return int(self.ui.checkbox_fill.isChecked())
 
     def current_center(self):
@@ -664,7 +519,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current center (0 = uncentered, 1 = centered).
                 type:	int
         """
-
         return int(self.ui.checkbox_center.isChecked())
 
     def current_show_if(self):
@@ -673,7 +527,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current show-if statement.
                 type:	unicode
         """
-
         return str(self.ui.edit_show_if.text())
 
     def current_font_family(self):
@@ -682,7 +535,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current font family.
                 type:	unicode
         """
-
         return str(self.ui.widget_font.family)
 
     def current_font_size(self):
@@ -691,7 +543,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current font size.
                 type:	int
         """
-
         return self.ui.widget_font.size
 
     def current_font_bold(self):
@@ -700,7 +551,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current font bold setting (yes/ no).
                 type:	unicode
         """
-
         if self.ui.widget_font.bold:
             return u'yes'
         return u'no'
@@ -711,7 +561,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current font italic setting (yes/ no).
                 type:	unicode
         """
-
         if self.ui.widget_font.italic:
             return u'yes'
         return u'no'
@@ -722,7 +571,6 @@ class SketchpadWidget(BaseWidget):
                 desc:	The current html (yes/ no).
                 type:	unicode
         """
-
         if self.ui.checkbox_html.isChecked():
             return u'yes'
         return u'no'

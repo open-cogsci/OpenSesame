@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.keyboard_response import KeyboardResponse as \
     KeyboardResponseRuntime
@@ -31,7 +30,6 @@ _ = translation_context(u'keyboard_response', category=u'item')
 class KeyboardResponse(KeyboardResponseRuntime, QtPlugin):
 
     """keyboard_response item GUI"""
-
     description = _(u'Collects keyboard responses')
     help_url = u'manual/response/keyboard'
     lazy_init = True
@@ -47,13 +45,11 @@ class KeyboardResponse(KeyboardResponseRuntime, QtPlugin):
         Keywords arguments:
         string -- a definition string (default=None)
         """
-
         KeyboardResponseRuntime.__init__(self, name, experiment, string)
         QtPlugin.__init__(self)
 
     def init_edit_widget(self):
         """Initialize controls"""
-
         super().init_edit_widget(stretch=True)
         # Use auto-controls for most stuff
         self.add_line_edit_control(
@@ -92,7 +88,6 @@ class KeyboardResponse(KeyboardResponseRuntime, QtPlugin):
 
     def list_keys(self):
         """Show a dialog with available key names"""
-
         my_keyboard = Keyboard(self.experiment)
         keylist = filter(lambda key: key.strip(), my_keyboard.valid_keys())
         md = u'# ' + _(u'Key names') + u'\n\n' \

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.misc import snake_case
 from libopensesame.exceptions import osexception
@@ -24,25 +23,19 @@ from libopensesame.exceptions import osexception
 
 class BaseElement:
 
-    """
-    desc:
-            A base class from which all sketchpad elements are derived.
-    """
-
+    r"""A base class from which all sketchpad elements are derived."""
     def __init__(self, sketchpad, string, defaults=[]):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        sketchpad
+            A sketchpad object.
+        string
+            A definition string.
+        defaults, optional
+            A list with (name, default_value) tuples for all keywords.
         """
-        desc:
-                Constructor.
-
-        arguments:
-                sketchpad:		A sketchpad object.
-                string:			A definition string.
-
-        keywords:
-                defaults:		A list with (name, default_value) tuples for all
-                                                keywords.
-        """
-
         self._type = snake_case(self.__class__.__name__)
         # These keywords provide compatibility with older versions of
         # OpenSesame. `only_keywords` specifies whether all parameters should be
@@ -86,34 +79,27 @@ class BaseElement:
 
     @property
     def z_index(self):
-        """
-        desc:
-                Determines the drawing order of the elements. Elements with a
-                higher z-index are drawn first, so they are at the bottom of the
-                stack.
-        returns:
-                A z-index.
-        """
+        r"""Determines the drawing order of the elements. Elements with a
+        higher z-index are drawn first, so they are at the bottom of the stack.
 
+        Returns
+        -------
+        A z-index.
+        """
         return self.properties[u'z_index']
 
     def draw(self):
-        """
-        desc:
-                Draws the element to the canvas of the sketchpad.
-        """
-
+        r"""Draws the element to the canvas of the sketchpad."""
         pass
 
     def from_string(self, s):
-        """
-        desc:
-                Parse a definition string for the element.
+        r"""Parse a definition string for the element.
 
-        arguments:
-                s:		A definition string.
+        Parameters
+        ----------
+        s
+            A definition string.
         """
-
         cmd, arglist, kwdict = self.syntax.parse_cmd(s)
         if cmd != u'draw' or len(arglist) == 0 or arglist[0] != self._type:
             raise osexception(
@@ -151,46 +137,43 @@ class BaseElement:
                                                                     self._type, self.name))
 
     def valid_keyword(self, keyword):
+        r"""Checks whether a particular keyword is valid for this element.
+
+        Parameters
+        ----------
+        keyword
+            A keyword.
+        type
+            unicode
+
+        Returns
+        -------
+        bool
+            True if keyword is valid.
         """
-        desc:
-                Checks whether a particular keyword is valid for this element.
-
-        arguments:
-                keyword:	A keyword.
-                type:		unicode
-
-        returns:
-                desc:		True if keyword is valid.
-                type:		bool
-        """
-
         for var, val in self.defaults:
             if var == keyword:
                 return True
         return False
 
     def escape(self, val, quote=True):
+        r"""Escapes and optionally quotes a value so that it can be safely
+        inserted into a definition string. Everything except unicode is
+        returned as is.
+
+        Parameters
+        ----------
+        val : unicode, float, int
+            The value to escape.
+        quote : bool
+            Indicates whether unicode strings should be quoted with double
+            quotes.
+
+        Returns
+        -------
+        unicode, int, float
+            A value that can be safely inserted into a definiton string.
         """
-        desc:
-                Escapes and optionally quotes a value so that it can be safely
-                inserted into a definition string. Everything except unicode is
-                returned as is.
-
-        arguments:
-                val:
-                        desc:	The value to escape.
-                        type:	[unicode, float, int]
-                quote:
-                        desc:	Indicates whether unicode strings should be quoted
-                                        with double quotes.
-                        type:	bool
-
-        returns:
-                desc:		A value that can be safely inserted into a definiton
-                                        string.
-                type:		[unicode, int, float]
-        """
-
         if not isinstance(val, str):
             return val
         val = val.replace(u'\\', u'\\\\')
@@ -200,29 +183,25 @@ class BaseElement:
         return val
 
     def to_string(self):
-        """
-        desc:
-                Generates a string representation of the element.
+        r"""Generates a string representation of the element.
 
-        returns:
-                desc:	A string representation.
-                type:	unicode
+        Returns
+        -------
+        unicode
+            A string representation.
         """
-
         return self.syntax.create_cmd(u'draw', [self._type],
                                       {var: val for var, val in self.properties.items()
                                        if var != u'name' or val}
                                       )
 
     def eval_properties(self):
-        """
-        desc:
-                Evaluates all properties.
+        r"""Evaluates all properties.
 
-        returns:
-                A new property dictionary.
+        Returns
+        -------
+        A new property dictionary.
         """
-
         properties = {}
         xc = self.var.width/2
         yc = self.var.height/2
@@ -242,16 +221,14 @@ class BaseElement:
         return properties
 
     def is_shown(self):
-        """
-        desc:
-                Determines whether the element should be shown, based on the
-                show-if statement.
+        r"""Determines whether the element should be shown, based on the show-
+        if statement.
 
-        returns:
-                desc:	A bool indicating whether the element should be shown.
-                type:	bool
+        Returns
+        -------
+        bool
+            A bool indicating whether the element should be shown.
         """
-
         self.experiment.python_workspace[u'self'] = self.sketchpad
         return self.experiment.python_workspace._eval(
             self.experiment.syntax.compile_cond(self.properties[u'show_if']))

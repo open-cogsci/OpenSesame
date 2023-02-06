@@ -16,28 +16,22 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from openexp import backend
 
 
 def Log(experiment, *arglist, **kwdict):
+    r"""A factory that returns a back-end specific log object.
+
+    Parameters
+    ----------
+    experiment : experiment
+        The experiment object.
+    *arglist : list
+        See clock.__init__().
+    **kwdict : dict
+        See clock.__init__().
     """
-    desc:
-            A factory that returns a back-end specific log object.
-
-    arguments:
-            experiment:
-                    desc:	The experiment object.
-                    type:	experiment
-
-    argument-list:
-            arglist:	See clock.__init__().
-
-    keyword-dict:
-            kwdict:		See clock.__init__().
-    """
-
     cls = backend.get_backend_class(experiment, u'log')
     return cls(experiment, *arglist, **kwdict)
 

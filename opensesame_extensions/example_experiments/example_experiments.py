@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import os
 from libqtopensesame.extensions import base_extension
@@ -25,30 +24,19 @@ from libopensesame.experiment import experiment
 
 class example_experiments(base_extension):
 
-    """
-    desc:
-            Shows a list of example experiments.
-    """
-
+    r"""Shows a list of example experiments."""
     def event_startup(self):
-        """
-        desc:
-                Performs initialization.
-        """
-
+        r"""Performs initialization."""
         self.initialized = False
 
     def add_experiment(self, path):
-        """
-        desc:
-                Processes one experiment.
+        r"""Processes one experiment.
 
-        arguments:
-                path:
-                        desc:	The experiment folder name.
-                        type:	str
+        Parameters
+        ----------
+        path : str
+            The experiment folder name.
         """
-
         src = os.path.join(self.example_folder, path, u'experiment.osexp')
         if not os.path.exists(src):
             return
@@ -67,11 +55,7 @@ class example_experiments(base_extension):
         self.experiments.append(d)
 
     def initialize(self):
-        """
-        desc:
-                Initializes the plug-in by building a Markdown page with examples.
-        """
-
+        r"""Initializes the plug-in by building a Markdown page with examples."""
         self.set_busy()
         self.example_folder = os.path.join(self.folder(), 'examples')
         self.experiments = []
@@ -81,11 +65,7 @@ class example_experiments(base_extension):
         self.set_busy(False)
 
     def generate_markdown(self):
-        """
-        desc:
-                Generates a Markdown string of all experiment info.
-        """
-
+        r"""Generates a Markdown string of all experiment info."""
         self.md = u'# Example experiments\n\n'
         for d in self.experiments:
             self.md += (
@@ -97,11 +77,7 @@ class example_experiments(base_extension):
             self.md += u'\n<hr />\n'
 
     def activate(self):
-        """
-        desc:
-                Shows the list of example experiments.
-        """
-
+        r"""Shows the list of example experiments."""
         if not self.initialized:
             self.initialize()
         self.tabwidget.open_markdown(self.md, icon=u'help-contents',

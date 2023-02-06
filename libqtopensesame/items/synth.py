@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.synth import Synth as SynthRuntime
 from libqtopensesame.items.qtplugin import QtPlugin
@@ -27,24 +26,18 @@ _ = translation_context(u'synth', category=u'item')
 
 class Synth(SynthRuntime, QtPlugin):
 
-    """
-    desc:
-            GUI controls for the synth item.
-    """
-
+    r"""GUI controls for the synth item."""
     description = _(u'A basic sound synthesizer')
     help_url = u'manual/stimuli/sound'
     lazy_init = True
 
     def __init__(self, name, experiment, string=None):
         """See item."""
-
         SynthRuntime.__init__(self, name, experiment, string)
         QtPlugin.__init__(self)
 
     def init_edit_widget(self):
         """See qtitem."""
-
         QtPlugin.init_edit_widget(self)
         self.add_combobox_control(u'osc', _(u'Waveform'),
                                   [u'sine', u'saw', u'square', u'white_noise'])

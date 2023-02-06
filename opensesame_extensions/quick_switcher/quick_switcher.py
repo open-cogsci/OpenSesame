@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import base_extension
 from libqtopensesame.misc.translate import translation_context
@@ -25,11 +24,7 @@ _ = translation_context(u'quick_switcher', category=u'extension')
 
 class quick_switcher(base_extension):
 
-    """
-    desc:
-            The quick-switcher allows you to quickly navigate to items.
-    """
-
+    r"""The quick-switcher allows you to quickly navigate to items."""
     def activate(self):
 
         haystack = []

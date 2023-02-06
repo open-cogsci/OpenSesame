@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
@@ -26,10 +25,8 @@ from libqtopensesame.runners import BaseRunner
 class InprocessRunner(BaseRunner):
 
     """Runs an experiment in the traditional way, in the same process."""
-
     def execute(self):
         """See base_runner.execute()."""
-
         # Exceptions during the run phase are important and returned so that the
         # user is notified.
         retval = None
@@ -50,7 +47,6 @@ class InprocessRunner(BaseRunner):
 
     def workspace_globals(self):
         """See base_runner."""
-
         if not hasattr(self, u'experiment'):
             return {}
         return self.experiment.python_workspace._globals

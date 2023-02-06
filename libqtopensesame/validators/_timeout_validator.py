@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 
 from qtpy import QtCore, QtWidgets
@@ -25,11 +24,7 @@ from libqtopensesame.validators._base_validator import BaseValidator
 
 class TimeoutValidator(BaseValidator):
 
-    """
-    desc:
-            A validator for timeout values.
-    """
-
+    r"""A validator for timeout values."""
     def __init__(self, main_window, default=u'infinite'):
 
         super().__init__(main_window, default=default)

@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame import plugins
@@ -48,19 +47,11 @@ if Quest is None:
 
 class quest_staircase_init(item):
 
-    """
-    desc:
-            A plug-in that iniializes a Quest staircase.
-    """
-
+    r"""A plug-in that iniializes a Quest staircase."""
     description = u'Initializes a new Quest staircase procedure'
 
     def reset(self):
-        """
-        desc:
-                Initialize default variables.
-        """
-
+        r"""Initialize default variables."""
         self.var.t_guess = .5
         self.var.t_guess_sd = .25
         self.var.p_threshold = .75
@@ -73,11 +64,7 @@ class quest_staircase_init(item):
         self.var.var_test_value = u'quest_test_value'
 
     def quest_set_next_test_value(self):
-        """
-        desc:
-                Sets the next test value for the Quest procedure.
-        """
-
+        r"""Sets the next test value for the Quest procedure."""
         if self.var.test_value_method == u'quantile':
             self.experiment.quest_test_value = self.experiment.quest.quantile
         elif self.var.test_value_method == u'mean':
@@ -95,11 +82,7 @@ class quest_staircase_init(item):
         self.experiment.var.set(self.var.var_test_value, test_value)
 
     def prepare(self):
-        """
-        desc:
-                Prepares the plug-in.
-        """
-
+        r"""Prepares the plug-in."""
         self.experiment.quest = Quest.QuestObject(self.var.t_guess,
                                                   self.var.t_guess_sd, self.var.p_threshold, self.var.beta,
                                                   self.var.delta, self.var.gamma)
@@ -108,38 +91,31 @@ class quest_staircase_init(item):
         self.experiment.quest_set_next_test_value()
 
     def var_info(self):
-        """
-        desc:
-                Gives a list of dictionaries with variable descriptions.
+        r"""Gives a list of dictionaries with variable descriptions.
 
-        returns:
-                desc:	A list of (name, description) tuples.
-                type:	list
+        Returns
+        -------
+        list
+            A list of (name, description) tuples.
         """
-
         return item.var_info(self) + [(u'quest_test_value',
                                        u'(Determined by Quest procedure)')]
 
 
 class qtquest_staircase_init(quest_staircase_init, qtautoplugin):
 
-    """
-    desc:
-            The GUI part of the plug-in. Controls are defined in info.json.
-    """
-
+    r"""The GUI part of the plug-in. Controls are defined in info.json."""
     def __init__(self, name, experiment, script=None):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        name
+            The name of the plug-in.
+        experiment
+            The experiment object.
+        script, optional
+            A definition script.
         """
-        desc:
-                Constructor.
-
-        arguments:
-                name:		The name of the plug-in.
-                experiment:	The experiment object.
-
-        keywords:
-                script:		A definition script.
-        """
-
         quest_staircase_init.__init__(self, name, experiment, script)
         qtautoplugin.__init__(self, __file__)

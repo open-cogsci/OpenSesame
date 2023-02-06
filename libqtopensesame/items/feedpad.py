@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.misc.sketchpad_canvas import SketchpadCanvas
 from libqtopensesame.widgets.sketchpad_widget import SketchpadWidget
@@ -27,20 +26,12 @@ from libqtopensesame.validators import DurationValidator
 
 class Feedpad:
 
-    """
-    desc:
-            Controls for the sketchpad item.
-    """
-
+    r"""Controls for the sketchpad item."""
     help_url = u'manual/stimuli/visual'
     lazy_init = True
 
     def init_edit_widget(self):
-        """
-        desc:
-                Initializes the widget.
-        """
-
+        r"""Initializes the widget."""
         QtPlugin.init_edit_widget(self, False)
         self.canvas = SketchpadCanvas(self)
         self.sketchpad_widget = SketchpadWidget(self)
@@ -54,7 +45,6 @@ class Feedpad:
 
     def apply_script_changes(self):
         """See qtitem."""
-
         # Without this hack, the script changes will automatically trigger a
         # draw(), which triggers a call to apply_edit_changes, which updates the
         # script. To avoid this feedback loop, temporarily disable apply edit
@@ -70,23 +60,14 @@ class Feedpad:
                 desc:	The module that contains the sketchpad elements.
                 type:	module
         """
-
         return sketchpad_elements
 
     def set_focus(self):
-        """
-        desc:
-                Allows the item to focus the most important widget.
-        """
-
+        r"""Allows the item to focus the most important widget."""
         self.sketchpad_widget.ui.edit_duration.setFocus()
 
     def edit_widget(self):
-        """
-        desc:
-                Updates the widget.
-        """
-
+        r"""Updates the widget."""
         QtPlugin.edit_widget(self)
         self.sketchpad_widget.initialize()
         self.sketchpad_widget.draw()
@@ -96,16 +77,13 @@ class Feedpad:
             self.first_refresh = False
 
     def add_element(self, element):
-        """
-        desc:
-                Adds an element to the sketchpad.
+        r"""Adds an element to the sketchpad.
 
-        arguments:
-                element:
-                        desc:	The element to add.
-                        type:	base_element
+        Parameters
+        ----------
+        element : base_element
+            The element to add.
         """
-
         if element is None:
             return
         self.elements.append(element)
@@ -115,15 +93,13 @@ class Feedpad:
         element.select()
 
     def selected_elements(self):
-        """
-        desc:
-                Gets selected elements.
+        r"""Gets selected elements.
 
-        returns:
-                desc:	A list of selected elements.
-                type:	list
+        Returns
+        -------
+        list
+            A list of selected elements.
         """
-
         l = []
         for element in self.elements:
             if element.selected:
@@ -131,56 +107,44 @@ class Feedpad:
         return l
 
     def remove_elements(self, elements):
-        """
-        desc:
-                Removes elements.
+        r"""Removes elements.
 
-        arguments:
-                elements:
-                        desc:	A list of elements to be removed.
-                        type:	list
+        Parameters
+        ----------
+        elements : list
+            A list of elements to be removed.
         """
-
         for element in elements:
             self.elements.remove(element)
 
     def move_elements(self, elements, dx=0, dy=0):
+        r"""Moves elements.
+
+        Parameters
+        ----------
+        elements : list
+            A list of elements to be moved.
+        dx : int, float, optional
+            A horizontal displacement.
+        dy : int, float, optional
+            A vertical displacement
         """
-        desc:
-                Moves elements.
-
-        arguments:
-                elements:
-                        desc:	A list of elements to be moved.
-                        type:	list
-
-        keywords:
-                dx:
-                        desc:	A horizontal displacement.
-                        type:	[int, float]
-                dy:
-                        desc:	A vertical displacement
-                        type:	[int, float]
-        """
-
         for element in elements:
             element.move(dx, dy)
 
     def topleft_elements_pos(self, elements):
+        r"""Gets the top-left position of a set of elements.
+
+        Parameters
+        ----------
+        elements : list
+            A list of elements.
+
+        Returns
+        -------
+        tuple.
+            An (x,y) tuple with the top-left position.
         """
-        desc:
-                Gets the top-left position of a set of elements.
-
-        arguments:
-                elements:
-                        desc:	A list of elements.
-                        type:	list
-
-        returns:
-                desc:		An (x,y) tuple with the top-left position.
-                type:		tuple.
-        """
-
         lx = []
         ly = []
         for element in elements:
@@ -190,24 +154,17 @@ class Feedpad:
         return min(lx), min(ly)
 
     def set_elements_pos(self, elements, x=0, y=0):
+        r"""Sets position of elements.
+
+        Parameters
+        ----------
+        elements : list
+            A list of elements to be positioned.
+        x : int, float, optional
+            A horizontal position.
+        y : int, float, optional
+            A vertical position
         """
-        desc:
-                Sets position of elements.
-
-        arguments:
-                elements:
-                        desc:	A list of elements to be positioned.
-                        type:	list
-
-        keywords:
-                x:
-                        desc:	A horizontal position.
-                        type:	[int, float]
-                y:
-                        desc:	A vertical position
-                        type:	[int, float]
-        """
-
         mx, my = self.topleft_elements_pos(elements)
         for element in elements:
             dx, dy = element.get_pos()
@@ -216,15 +173,14 @@ class Feedpad:
             element.set_pos(x+dx, y+dy)
 
     def min_z_index(self):
-        """
-        desc:
-                Gets the z-index of the top item (i.e. in front of all other items).
+        r"""Gets the z-index of the top item (i.e. in front of all other
+        items).
 
-        returns:
-                desc:	A z-index.
-                type:	int
+        Returns
+        -------
+        int
+            A z-index.
         """
-
         return min([
             element.z_index
             for element in self.elements
@@ -232,15 +188,13 @@ class Feedpad:
         ])
 
     def max_z_index(self):
-        """
-        desc:
-                Gets the z-index of the bottom item (i.e. below all other items).
+        r"""Gets the z-index of the bottom item (i.e. below all other items).
 
-        returns:
-                desc:	A z-index.
-                type:	int
+        Returns
+        -------
+        int
+            A z-index.
         """
-
         return max([
             element.z_index
             for element in self.elements

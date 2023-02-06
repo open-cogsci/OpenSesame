@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtWidgets, QtCore
 import webbrowser
@@ -32,23 +31,21 @@ _ = translation_context(u'help', category=u'extension')
 
 class ActionPage(QtWidgets.QAction, base_subcomponent):
 
-    """
-    desc:
-            A menu entry for a single help page.
-    """
-
+    r"""A menu entry for a single help page."""
     def __init__(self, main_window, title, link, menu):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:	The main-window object.
-                title:			The menu title.
-                link:			The URL to open.
-                menu:			The menu for the action.
+        Parameters
+        ----------
+        main_window
+            The main-window object.
+        title
+            The menu title.
+        link
+            The URL to open.
+        menu
+            The menu for the action.
         """
-
         QtWidgets.QAction.__init__(
             self, main_window.theme.qicon(u'applications-internet'),
             title,
@@ -60,21 +57,13 @@ class ActionPage(QtWidgets.QAction, base_subcomponent):
         self.triggered.connect(self.open_page)
 
     def open_page(self):
-        """
-        desc:
-                Opens the page URL.
-        """
-
+        r"""Opens the page URL."""
         webbrowser.open(self.link)
 
 
 class GetSitemapThread(QtCore.QThread):
 
-    """
-    desc:
-            A thread that asynchronously retrieves the documentation sitemap.
-    """
-
+    r"""A thread that asynchronously retrieves the documentation sitemap."""
     def __init__(self, help, sitemap_url, local_sitemap):
 
         QtCore.QThread.__init__(self)
@@ -97,17 +86,9 @@ class GetSitemapThread(QtCore.QThread):
 
 class help(base_extension):
 
-    """
-    desc:
-            An extension that implements the help menu.
-    """
-
+    r"""An extension that implements the help menu."""
     def event_startup(self):
-        """
-        desc:
-                Build the menu on startup.
-        """
-
+        r"""Build the menu on startup."""
         self._urls = []
         self.menu = self.menubar.addMenu(_(u'Help'))
         self._wait_action = QtWidgets.QAction(
@@ -131,12 +112,9 @@ class help(base_extension):
         self._get_sitemap_thread.finished.connect(self.populate_help_menu)
 
     def populate_help_menu(self):
+        r"""Is collected when the sitemap is done loading, and populates the
+        menu.
         """
-        desc:
-                Is collected when the sitemap is done loading, and populates the
-                menu.
-        """
-
         if self._get_sitemap_thread.sitemap is None:
             return
         try:
@@ -165,21 +143,23 @@ class help(base_extension):
         self.menu.addSeparator()
 
     def build_menu(self, parent_menu, base_url, title, _dict, sub_menu=True):
+        r"""A helper function to build the online-help menu.
+
+        Parameters
+        ----------
+        parent_menu
+            A parent QMenu for a submenu.
+        base_url
+            A prefix for relative urls.
+        title
+            A menu title.
+        _dict
+            A dict extracted from the sitemap with page names and contents.
+
+        Returns
+        -------
+        A QMenu.
         """
-        desc:
-                A helper function to build the online-help menu.
-
-        arguments:
-                parent_menu:	A parent QMenu for a submenu.
-                base_url:		A prefix for relative urls.
-                title:			A menu title.
-                _dict:			A dict extracted from the sitemap with page names
-                                                and contents.
-
-        returns:
-                A QMenu.
-        """
-
         if sub_menu:
             menu = parent_menu.addMenu(
                 self.theme.qicon(u'applications-internet'),
@@ -205,14 +185,12 @@ class help(base_extension):
         return menu
 
     def psychopy_help_menu(self):
-        """
-        desc:
-                Builds a PsychoPy help menu.
+        r"""Builds a PsychoPy help menu.
 
-        returns:
-                A QMenu.
+        Returns
+        -------
+        A QMenu.
         """
-
         with safe_open(self.ext_resource(u'psychopy_sitemap.yaml')) as fd:
             sitemap = fd.read()
         _dict = safe_yaml_load(sitemap)
@@ -220,9 +198,5 @@ class help(base_extension):
         return menu
 
     def _is_url(self, link):
-        """
-        desc:
-                Verifies whether a string corresponds to an http(s) url.
-        """
-
+        r"""Verifies whether a string corresponds to an http(s) url."""
         return link.startswith(u'http://') or link.startswith(u'https://')

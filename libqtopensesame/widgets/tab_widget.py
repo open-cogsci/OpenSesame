@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import metadata, misc
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -34,19 +33,17 @@ MAX_TAB_STACK = 3
 class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
 
     """A custom tab widget with some extra functionality"""
-
     tab_removed = QtCore.Signal(int)
     tab_inserted = QtCore.Signal(int)
 
     def __init__(self, parent=None):
-        """
-        desc:
-                Constructor
+        r"""Constructor
 
-        keywords:
-                parent: The parent QWidget
+        Parameters
+        ----------
+        parent, optional
+            The parent QWidget
         """
-
         QtWidgets.QTabWidget.__init__(self, parent)
         self.setTabBar(TabBar(self))
         BaseSubcomponent.setup(self, parent)
@@ -71,22 +68,14 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
         self._tab_stack = []
 
     def switch_prev(self):
-        """
-        desc:
-                Switches to the previous tab.
-        """
-
+        r"""Switches to the previous tab."""
         i = self.currentIndex() - 1
         if i < 0:
             i = self.count() - 1
         self.setCurrentIndex(i)
 
     def switch_next(self):
-        """
-        desc:
-                Switches to the next tab.
-        """
-
+        r"""Switches to the next tab."""
         i = self.currentIndex() + 1
         if i >= self.count():
             i = 0
@@ -101,43 +90,35 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
         self.main_window.ui.action_close_current_tab.setVisible(count > 0)
 
     def tabRemoved(self, i):
+        r"""Overridden to emit the tab_removed signal when a tab has been
+        removed.
         """
-        desc:
-                Overridden to emit the tab_removed signal when a tab has been
-                removed.
-        """
-
         QtWidgets.QTabWidget.tabRemoved(self, i)
         self.tab_removed.emit(i)
         self._update_actions()
 
     def tabInserted(self, i):
+        r"""Overridden to emit the tab_removed signal when a tab has been
+        removed.
         """
-        desc:
-                Overridden to emit the tab_removed signal when a tab has been
-                removed.
-        """
-
         QtWidgets.QTabWidget.tabInserted(self, i)
         self.tab_inserted.emit(i)
         self._update_actions()
 
     def add(self, widget, icon, name, switch=True):
+        r"""Open a tab, or switches to it if the tab already exists.
+
+        Parameters
+        ----------
+        widget
+            A QWidget for the tab
+        icon
+            The name of an icon or a QIcon
+        name
+            A name for the tab
+        switch : bool, optional
+            Indicates whether the tab should be switched to.
         """
-        desc:
-                Open a tab, or switches to it if the tab already exists.
-
-        arguments:
-                widget: A QWidget for the tab
-                icon:	The name of an icon or a QIcon
-                name:	A name for the tab
-
-        keywords:
-                switch:
-                        desc:	Indicates whether the tab should be switched to.
-                        type:	bool
-        """
-
         # If a widget is currently open, then we push it to the stack so that
         # we can go back to it later when the newly added widget is closed.
         current_index = self.currentIndex()
@@ -160,67 +141,54 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
             self.setCurrentIndex(index)
 
     def remove(self, widget):
-        """
-        desc:
-                Removes the tab with a given widget in it.
+        r"""Removes the tab with a given widget in it.
 
-        arguments:
-                widget:
-                        desc:	The widget in the tab.
-                        type:	QWidget
+        Parameters
+        ----------
+        widget : QWidget
+            The widget in the tab.
         """
-
         index = self.indexOf(widget)
         if index >= 0:
             self.removeTab(index)
 
     def set_icon(self, widget, icon):
-        """
-        desc:
-                Sets the icon for a tab with a specific widget.
+        r"""Sets the icon for a tab with a specific widget.
 
-        arguments:
-                widget:
-                        desc:	A widget.
-                        type:	QWidget
-                icon:
-                        desc:	An icon name.
-                        type:	unicode
+        Parameters
+        ----------
+        widget : QWidget
+            A widget.
+        icon : unicode
+            An icon name.
         """
-
         index = self.indexOf(widget)
         if index >= 0:
             self.setTabIcon(index, self.theme.qicon(icon))
 
     def close_all(self, dummy=None, avoid_empty=True):
-        """
-        desc:
-                Closes all tabs.
+        r"""Closes all tabs.
 
-        keywords:
-                avoid_empty:
-                        desc:	Indicates whether the general tab should be
-                                        automatically opened if all tabs are closed.
-                        type:	bool
+        Parameters
+        ----------
+        avoid_empty : bool, optional
+            Indicates whether the general tab should be automatically opened if
+            all tabs are closed.
         """
-
         while self.count():
             self.removeTab(0)
         if avoid_empty and not self.count():
             self.open_general()
 
     def close_current(self, dummy=None, avoid_empty=True):
-        """
-        desc:
-                Closes the current tab.
+        r"""Closes the current tab.
 
-        keywords:
-                avoid_empty:
-                        desc:	Indicates whether the general tab should be
-                                        automatically opened if all tabs are closed.
-                        type:	bool
+        Parameters
+        ----------
+        avoid_empty : bool, optional
+            Indicates whether the general tab should be automatically opened if
+            all tabs are closed.
         """
-
         self.removeTab(self.currentIndex())
         if not avoid_empty or self.count():
             return
@@ -231,7 +199,6 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
 
     def close_other(self):
         """Close all tabs except for the currently opened one"""
-
         while self.count() > 0 and self.currentIndex() != 0:
             self.removeTab(0)
         while self.count() > 1:
@@ -247,7 +214,6 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
         Returns:
         The index of the tab or None if the tab wasn't found
         """
-
         for i in range(self.count()):
             w = self.widget(i)
             if (hasattr(w, u"tab_name") and w.tab_name == tab_name) or \
@@ -265,7 +231,6 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
         Returns:
         The index of the tab or None if the tab wasn't found
         """
-
         for i in range(self.count()):
             w = self.widget(i)
             if (hasattr(w, u"__edit_item__") and w.__edit_item__ == item):
@@ -279,7 +244,6 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
                                 is currently visible.
                 type:	[str, NoneType]
         """
-
         w = self.currentWidget()
         if hasattr(w, u'__item__'):
             return w.__item__
@@ -295,7 +259,6 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
         Returns:
         A QWidget or None if the tab wasn't found
         """
-
         i = self.get_index(tab_name)
         if i is None:
             return None
@@ -308,22 +271,20 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
         Argument:
         url -- a url
         """
-
         from libqtopensesame.widgets import webbrowser
         browser = webbrowser.webbrowser(self.main_window)
         browser.load(url)
         self.add(browser, u"applications-internet", _(u'Help'))
 
     def open_help(self, item):
-        """
-        desc:
-                Opens a help tab for the specified item. Looks for a file called
-                [item].html or [item].md in the resources folder.
+        r"""Opens a help tab for the specified item. Looks for a file called
+        [item].html or [item].md in the resources folder.
 
-        arguments:
-                item:	The item for which help should be displayed.
+        Parameters
+        ----------
+        item
+            The item for which help should be displayed.
         """
-
         import os
         try:
             path = self.main_window.experiment.resource(item + u'.md')
@@ -337,7 +298,6 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
 
     def open_backend_settings(self):
         """Opens the backend settings"""
-
         if self.switch(u'__backend_settings__'):
             return
         from libqtopensesame.widgets.backend_settings import backend_settings
@@ -346,12 +306,10 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
 
     def open_forum(self):
         """Open osdoc.cogsci.nl"""
-
         self.open_browser(u'http://forum.cogsci.nl')
 
     def open_general(self):
         """Opens the general tab"""
-
         if self.switch(u'__general_properties__'):
             return
         from libqtopensesame.widgets.general_properties import general_properties
@@ -360,7 +318,6 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
 
     def open_general_script(self):
         """Opens the general script editor"""
-
         if self.switch(u'__general_script__'):
             return
         from libqtopensesame.widgets.general_script_editor import \
@@ -369,26 +326,17 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
                  _(u'General script editor'))
 
     def open_osdoc(self, url=u''):
-        """
-        desc:
-                Open a page on osdoc.cogsci.nl.
-
-        keyword:
-                url:	A sub-url to view on osdoc.
-        """
-
+        r"""Open a page on osdoc.cogsci.nl."""
         misc.open_url(
             u'http://osdoc.cogsci.nl/%s/%s' % (metadata.main_version, url)
         )
 
     def open_stdout_help(self):
         """Open the debug window help tab"""
-
         self.open_osdoc(u'manual/interface')
 
     def open_unused(self):
         """Opens the unused tab"""
-
         if self.switch(u'__unused__'):
             return
         from libqtopensesame.widgets.unused_widget import unused_widget
@@ -397,7 +345,6 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
 
     def open_preferences(self):
         """Open the preferences tab"""
-
         from libqtopensesame.widgets import preferences_widget
         if not self.switch(u"__preferences__"):
             self.add(preferences_widget.preferences_widget(self.main_window),
@@ -410,7 +357,6 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
         Returns:
         True if the tab exists, False otherwise
         """
-
         i = self.get_index(tab_name)
         if i is None:
             return False
@@ -419,7 +365,6 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
 
     def toggle_onetabmode(self):
         """Toggles onetabmode"""
-
         cfg.onetabmode = self.main_window.ui.action_onetabmode.isChecked()
         if cfg.onetabmode:
             self.close_other()
@@ -441,7 +386,6 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
         Arguments:
         index -- the index of the new tab
         """
-
         self.currentChanged.disconnect()
         if cfg.onetabmode:
             self.close_other()
@@ -453,30 +397,21 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
 
     def open_markdown(self, md, icon=u'dialog-information',
                       title=u'Attention!', url=None, tmpl=None):
+        r"""Opens a Markdown-formatted tab.
+
+        Parameters
+        ----------
+        md : str
+            If it ends with `.md`, this is interpreted as a file name.
+            Otherwise, it is interpreted as markdown text.
+        icon : str, optional
+            The name of the tab icon.
+        title : str, optional
+            The tab title.
+        url : str, optional
+            A url to identify the page. This only applies when the markdown is
+            provided as text; otherwise the markdown filename is used.
         """
-        desc:
-                Opens a Markdown-formatted tab.
-
-        arguments:
-                md:
-                        desc:	If it ends with `.md`, this is interpreted as a file
-                                        name. Otherwise, it is interpreted as markdown text.
-                        type:	str
-
-        keywords:
-                icon:
-                        desc:	The name of the tab icon.
-                        type:	str
-                title:
-                        desc:	The tab title.
-                        type:	str
-                url:
-                        desc:	A url to identify the page. This only applies when the
-                                        markdown is provided as text; otherwise the markdown
-                                        filename is used.
-                        type:	str
-        """
-
         from libqtopensesame.widgets.webbrowser import webbrowser
         wb = webbrowser(self.main_window)
         if md.endswith(u'.md'):
@@ -486,11 +421,7 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
         self.main_window.tabwidget.add(wb, icon, title)
 
     def focus(self):
-        """
-        desc:
-                Properly give focus to the current widget (if any).
-        """
-
+        r"""Properly give focus to the current widget (if any)."""
         item = self.current_item()
         if item is None:
             return

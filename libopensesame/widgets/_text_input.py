@@ -16,37 +16,35 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.widgets._label import Label
 
 
 class TextInput(Label):
 
+    r"""The text_input widget allows the participant to enter multi-character
+    responses. (This widget has no relation to the text_input plug-in, which
+    was created before forms where added to OpenSesame.)
+
+    __Example (OpenSesame
+    script):__
+
+    ~~~
+    widget 0 0 1 1 text_input var='response'
+    return_accepts='yes'
+    ~~~
+
+    __Example (Python):__
+
+    ~~~ .python
+    form = Form()
+    text_input = TextInput(var='response', return_accepts=True)
+    form.set_widget(text_input, (0,0))
+    form._exec()
+    ~~~
+
+    [TOC]
     """
-    desc: |
-            The text_input widget allows the participant to enter multi-character
-            responses. (This widget has no relation to the text_input plug-in, which
-            was created before forms where added to OpenSesame.)
-
-            __Example (OpenSesame script):__
-
-            ~~~
-            widget 0 0 1 1 text_input var='response' return_accepts='yes'
-            ~~~
-
-            __Example (Python):__
-
-            ~~~ .python
-            form = Form()
-            text_input = TextInput(var='response', return_accepts=True)
-            form.set_widget(text_input, (0,0))
-            form._exec()
-            ~~~
-
-            [TOC]
-    """
-
     def __init__(
             self,
             form,
@@ -58,48 +56,35 @@ class TextInput(Label):
             var=None,
             key_filter=None
     ):
+        r"""Constructor to create a new `TextInput` object. You do not
+        generally
+        call this constructor directly, but use the `TextInput()`
+        factory
+        function, which is described here: [/python/common/]().
+
+        Parameters
+        ----------
+        form : form
+            The parent form.
+        text : str, unicode, optional
+            The text to start with.
+        frame : bool, optional
+            Indicates whether a frame should be drawn around the widget.
+        center : bool, optional
+            Indicates whether the text should be centered.
+        stub : str, unicode, optional
+            A text string that should be shown whenever the user has not
+            entered any text.
+        return_accepts : bool, optional
+            Indicates whether a return press should accept and close the form.
+        var : str, unicode, NoneType, optional
+            The name of the experimental variable that should be used to log
+            the widget status.
+        key_filter : FunctionType, NoneType, optional
+            A function that takes a key as a single argument and return True if
+            the key should be accepted and False otherwise. This can also
+            filter out keys such as return and backspace, but not Escape.
         """
-        desc: |
-                Constructor to create a new `TextInput` object. You do not generally
-                call this constructor directly, but use the `TextInput()` factory
-                function, which is described here: [/python/common/]().
-
-        arguments:
-                form:
-                        desc:	The parent form.
-                        type:	form
-
-        keywords:
-                text:
-                        desc:	The text to start with.
-                        type:	[str, unicode]
-                frame:
-                        desc:	Indicates whether a frame should be drawn around the
-                                        widget.
-                        type:	bool
-                center:
-                        desc:	Indicates whether the text should be centered.
-                        type:	bool
-                stub:
-                        desc:	A text string that should be shown whenever the user has
-                                        not entered any text.
-                        type:	[str, unicode]
-                return_accepts:
-                        desc:	Indicates whether a return press should accept and close
-                                        the form.
-                        type:	bool
-                var:
-                        desc:	The name of the experimental variable that should be
-                                        used to log the widget status.
-                        type:	[str, unicode, NoneType]
-                key_filter:
-                        desc:	A function that takes a key as a single argument and
-                                        return True if the key should be accepted and False
-                                        otherwise. This can also filter out keys such as return
-                                        and backspace, but not Escape.
-                        type:	[FunctionType, NoneType]
-        """
-
         if isinstance(return_accepts, str):
             return_accepts = return_accepts == u'yes'
         Label.__init__(self, form, text, frame=frame, center=center)
@@ -116,11 +101,7 @@ class TextInput(Label):
             lambda k: True) if key_filter is None else key_filter
 
     def _update(self):
-        """
-        desc:
-                Draws the widget.
-        """
-
+        r"""Draws the widget."""
         if self.frame:
             if self.focus:
                 self._update_frame(self.rect, style=u'active')
@@ -147,11 +128,7 @@ class TextInput(Label):
         self.caret_pos += len(txt)
 
     def coroutine(self):
-        """
-        desc:
-                Implements the interaction.
-        """
-
+        r"""Implements the interaction."""
         self.caret_pos = len(self.text)
         retval = None
         while True:

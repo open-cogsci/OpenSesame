@@ -26,7 +26,6 @@ example: |
 	raise osexception(u'This is a custom exception!')
 ---
 """
-
 import re
 from libopensesame.oslogging import oslogger
 from libopensesame.item_stack import item_stack_singleton
@@ -37,45 +36,32 @@ import time
 
 class AbortCoroutines(Exception):
 
+    r"""A messaging Exception to indicate that coroutines should be aborted.
+    That is, if a task raises an AbortCoroutines, then the currently running
+    coroutines should abort.
     """
-    desc:
-            A messaging Exception to indicate that coroutines should be aborted.
-            That is, if a task raises an AbortCoroutines, then the currently running
-            coroutines should abort.
-    """
-
     pass
 
 
 class osexception(Exception):
 
+    r"""A general Exception class for exceptions that occur within OpenSesame.
+    Ideally, only `osexception`s should occur, all other exceptions indicate a
+    (usually harmless) bug somewhere.
     """
-    desc:
-            A general Exception class for exceptions that occur within OpenSesame.
-            Ideally, only `osexception`s should occur, all other exceptions indicate
-            a (usually harmless) bug somewhere.
-    """
-
     def __init__(self, msg, exception=None, **info):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        msg : str, unicode
+            An Exception message.
+        exception : Exception, NoneType, optional
+            An exception that was intercepted or None for self-generated
+            exceptions.
+        **info : dict
+            Optional additional info for the exception.
         """
-        desc:
-                Constructor.
-
-        arguments:
-                msg:
-                        desc:	An Exception message.
-                        type:	[str, unicode]
-
-        keywords:
-                exception:
-                        desc:	An exception that was intercepted or None for
-                                        self-generated exceptions.
-                        type:	[Exception, NoneType]
-
-        keyword-dict:
-                info:		Optional additional info for the exception.
-        """
-
         super(osexception, self).__init__(msg)
         # Create both HTML and plain text representations of the Exception.
         self.enc = u'utf-8'
@@ -95,22 +81,14 @@ class osexception(Exception):
         del self.exception
 
     def _traceback(self):
-        """
-        desc:
-                Returns the traceback as a formatted string.
-        """
-
+        r"""Returns the traceback as a formatted string."""
         return traceback.format_exc()
 
     def _parse_traceback(self, info):
+        r"""Processes the traceback by replacing generic <string> references to
+        Inline script, and by correct the line offset to compensate for the
+        added utf-8 encoding header, which increments the line number by one.
         """
-        desc:
-                Processes the traceback by replacing generic <string> references to
-                Inline script, and by correct the line offset to compensate for the
-                added utf-8 encoding header, which increments the line number by
-                one.
-        """
-
         tb = self._traceback()
         md = u'## Traceback (also in debug window)\n\n'
         plaintext = u'\nTraceback:\n'
@@ -134,11 +112,7 @@ class osexception(Exception):
         return md, plaintext
 
     def _exception_details(self, msg, info):
-        """
-        desc:
-                Provides a markdown and plaintext overview of relevant information.
-        """
-
+        r"""Provides a markdown and plaintext overview of relevant information."""
         md = u'%s\n\n## Details\n\n' % msg
         plaintext = u'\n%s\n\n' % msg
         for key, val in info.items():
@@ -150,22 +124,15 @@ class osexception(Exception):
         return md, plaintext
 
     def _exception_info(self, msg, info):
+        r"""Updates the info dict based on the type of Exception and the
+        exception message.
         """
-        desc:
-                Updates the info dict based on the type of Exception and the
-                exception message.
-        """
-
         if isinstance(self.exception, SyntaxError):
             return self._syntaxerror_info(msg, info)
         return self._defaultexception_info(msg, info)
 
     def _syntaxerror_info(self, msg, info):
-        """
-        desc:
-                Updates the info dict specifically for SyntaxErrors
-        """
-
+        r"""Updates the info dict specifically for SyntaxErrors"""
         info = self._defaultexception_info(msg, info)
         # Syntax errors are dealt with specially, because they provide
         # introspective information.
@@ -183,11 +150,7 @@ class osexception(Exception):
         return info
 
     def _defaultexception_info(self, msg, info):
-        """
-        desc:
-                Updates the info dict for all Exceptions.
-        """
-
+        r"""Updates the info dict for all Exceptions."""
         info[u'item-stack'] = str(item_stack_singleton)
         info[u'time'] = time.ctime()
         if self.exception is None:
@@ -208,7 +171,6 @@ class osexception(Exception):
                 desc:	A representation of the exception in plaintext.
                 type:	unicode
         """
-
         return self._plaintext
 
     def __str__(self):
@@ -217,7 +179,6 @@ class osexception(Exception):
                 desc:	A representation of the exception in plaintext.
                 type:	str
         """
-
         return self._plaintext
 
     def plaintext(self):
@@ -226,7 +187,6 @@ class osexception(Exception):
                 desc:	A string representation of the exception in plaintext.
                 type:	unicode
         """
-
         return str(self)
 
     def markdown(self):
@@ -235,7 +195,6 @@ class osexception(Exception):
                 desc:	A representation of the exception in Markdown format.
                 type:	unicode
         """
-
         return self._md
 
 

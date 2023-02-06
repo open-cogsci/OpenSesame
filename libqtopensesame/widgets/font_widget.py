@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtGui, QtWidgets
 from libqtopensesame.widgets.base_widget import BaseWidget
@@ -27,7 +26,6 @@ _ = translation_context(u'font_widget', category=u'core')
 class FontWidgetBase(BaseWidget):
 
     """A font selection widget"""
-
     max_size = 64
     font_list = [
         u'mono', u'sans', u'serif', u'arabic',
@@ -39,7 +37,6 @@ class FontWidgetBase(BaseWidget):
 
     def _apply(self):
         """Applies the controls."""
-
         self.family = self.ui.combobox_family.currentText()
         self.size = self.ui.spinbox_size.value()
         self.italic = self.ui.checkbox_italic.isChecked()
@@ -57,7 +54,6 @@ class FontWidgetBase(BaseWidget):
         Applies the controls and optionally presents a full font selection
         dialog if the user has selected 'other ...'
         """
-
         if self.ui.combobox_family.currentText() == _(
                 u'other ...',
                 context=u'font_widget'
@@ -81,7 +77,6 @@ class FontWidgetBase(BaseWidget):
         returns:
                 type: QFont
         """
-
         font = QtGui.QFont(
             self.family,
             italic=self.italic,
@@ -91,12 +86,9 @@ class FontWidgetBase(BaseWidget):
         return font
 
     def set_font(self, family=None, italic=None, bold=None, size=None):
+        r"""Sets the widget to the specified font. For keywords, see
+        initialize().
         """
-        desc:
-                Sets the widget to the specified font. For keywords, see
-                initialize().
-        """
-
         self.ui.combobox_family.activated.disconnect()
         self.ui.checkbox_italic.clicked.disconnect()
         self.ui.checkbox_bold.clicked.disconnect()
@@ -118,22 +110,23 @@ class FontWidgetBase(BaseWidget):
             size=None,
             parent=None
     ):
+        r"""Initializes the widget.
+
+        Parameters
+        ----------
+        experiment
+            The experiment.
+        family, optional
+            The font family or None to use experiment default.
+        italic, optional
+            The font italic state or None to use experiment default.
+        bold, optional
+            font bold state or None to use experiment default.
+        size, optional
+            The font size or None to use experiment default.
+        parent, optional
+            A parent QWidget.
         """
-        desc:
-                Initializes the widget.
-
-        arguments:
-                experiment:		The experiment.
-
-        keywords:
-                family:	The font family or None to use experiment default.
-                italic:	The font italic state or None to use experiment
-                                default.
-                bold:	font bold state or None to use experiment default.
-                size:	The font size or None to use experiment default.
-                parent:	A parent QWidget.
-        """
-
         self._parent = parent if parent is not None else self.main_window
         if experiment is None:
             experiment = self.experiment
@@ -162,7 +155,6 @@ class FontWidgetBase(BaseWidget):
 
     def update_family_combobox(self):
         """Updates the family combobox to include a custom font."""
-
         self.ui.combobox_family.activated.disconnect()
         self.ui.combobox_family.clear()
         l = self.font_list[:]
@@ -186,7 +178,6 @@ class FontWidgetHorizontal(FontWidgetBase):
         Keywords arguments:
         parent		--	The parent QWidget. (default=None)
         """
-
         super().__init__(main_window, ui=u'widgets.font_widget_horizontal')
 
 
@@ -202,7 +193,6 @@ class FontWidget(FontWidgetBase):
         Keywords arguments:
         parent		--	The parent QWidget. (default=None)
         """
-
         super().__init__(main_window, ui=u'widgets.font_widget')
 
 

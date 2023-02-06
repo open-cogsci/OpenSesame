@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.widgets.base_widget import BaseWidget
@@ -26,20 +25,15 @@ _ = translation_context(u'header_widget', category=u'core')
 
 class HeaderWidget(BaseWidget):
 
-    """
-    desc:
-            Editable labels for an item's name and description.
-    """
-
+    r"""Editable labels for an item's name and description."""
     def __init__(self, item):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                item: 			A qtitem object.
+        Parameters
+        ----------
+        item
+            A qtitem object.
         """
-
         super().__init__(item.main_window)
         self.setCursor(QtCore.Qt.IBeamCursor)
         self.setToolTip(_(u"Click to edit"))
@@ -80,49 +74,42 @@ class HeaderWidget(BaseWidget):
         self.setLayout(vbox)
 
     def refresh(self):
-        """
-        desc:
-                Updates the header so that it's content match the item.
-        """
-
+        r"""Updates the header so that it's content match the item."""
         self.set_name(self.item.name)
         self.set_desc(self.item.var.description)
 
     def set_name(self, name):
-        """
-        desc:
-                Sets the name.
+        r"""Sets the name.
 
-        arguments:
-                name:	A name.
-                type:	unicode
+        Parameters
+        ----------
+        name
+            A name.
+        type
+            unicode
         """
-
         self.label_name.setText(safe_decode(name))
         self.label_type.setText(
             u' — ' + self.item.item_type.replace(u"_", u" "))
         self.edit_name.setText(safe_decode(name))
 
     def set_desc(self, desc):
-        """
-        desc:
-                Sets the description.
+        r"""Sets the description.
 
-        arguments:
-                name:	A description.
-                type:	unicode
+        Parameters
+        ----------
+        name
+            A description.
+        type
+            unicode
         """
-
         self.edit_desc.setText(safe_decode(desc))
         self.label_desc.setText(safe_decode(desc))
 
     def apply_name(self):
+        r"""Applies the name change and revert the edit control back to the
+        static label.
         """
-        desc:
-                Applies the name change and revert the edit control back to the
-                static label.
-        """
-
         if self.label_name.isVisible():
             return
         self.label_name.show()
@@ -131,12 +118,9 @@ class HeaderWidget(BaseWidget):
         self.item_store.rename(self.item.name, self.edit_name.text())
 
     def apply_desc(self):
+        r"""Applies the description change and revert the edit back to the
+        label.
         """
-        desc:
-                Applies the description change and revert the edit back to the
-                label.
-        """
-
         if self.label_desc.isVisible():
             return
         description = self.edit_desc.text()
@@ -156,7 +140,6 @@ class HeaderWidget(BaseWidget):
         Arguments:
         event -- the mouseClickEvent
         """
-
         target = self.childAt(event.pos())
         if target == self.label_name:
             self.apply_desc()

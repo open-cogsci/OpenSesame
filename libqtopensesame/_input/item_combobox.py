@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -26,11 +25,7 @@ _ = translation_context(u'item_combobox', category=u'core')
 
 class ItemComboBox(QtWidgets.QComboBox, BaseSubcomponent):
 
-    """
-    desc:
-            A combobox to select existing items.
-    """
-
+    r"""A combobox to select existing items."""
     def __init__(self, main_window, filter_fnc=None):
 
         QtWidgets.QComboBox.__init__(self, main_window)

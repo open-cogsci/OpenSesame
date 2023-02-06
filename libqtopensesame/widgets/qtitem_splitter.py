@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -24,23 +23,12 @@ from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 
 class QtItemSplitter(BaseSubcomponent, QtWidgets.QSplitter):
 
+    r"""Implements a splitter for the edit and script view in an item tab. This
+    custom is mostly necessary, because the default QSplitter.sizeHint() is too
+    large.
     """
-    desc:
-            Implements a splitter for the edit and script view in an item tab. This
-            custom is mostly necessary, because the default QSplitter.sizeHint()
-            is too large.
-    """
-
     def __init__(self, item):
-        """
-        desc:
-                Constructor.
-
-        item:
-                desc:	The item.
-                type:	qtitem
-        """
-
+        r"""Constructor."""
         super().__init__(QtCore.Qt.Vertical, item.main_window)
         self.item = item
         self.setup(item.main_window)
@@ -59,7 +47,6 @@ class QtItemSplitter(BaseSubcomponent, QtWidgets.QSplitter):
         returns:
                 type:	QSize
         """
-
         return QtCore.QSize(100, 100)
 
     def sizeHint(self):
@@ -67,7 +54,6 @@ class QtItemSplitter(BaseSubcomponent, QtWidgets.QSplitter):
         returns:
                 type:	QSize
         """
-
         return QtCore.QSize(100, 100)
 
 

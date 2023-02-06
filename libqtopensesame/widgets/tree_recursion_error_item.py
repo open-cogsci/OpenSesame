@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.widgets.tree_base_item import TreeBaseItem
 from libqtopensesame.misc.translate import translation_context
@@ -25,23 +24,17 @@ _ = translation_context(u'tree_recursion_error_item', category=u'core')
 
 class TreeRecursionErrorItem(TreeBaseItem):
 
+    r"""A placeholder item that is shown when there is a recursion in the
+    experiment that prevents the item tree from being built.
     """
-    desc:
-            A placeholder item that is shown when there is a recursion in the
-            experiment that prevents the item tree from being built.
-    """
-
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:
-                        desc:	The main-window object.
-                        type:	qtopensesame
+        Parameters
+        ----------
+        main_window : qtopensesame
+            The main-window object.
         """
-
         super().__init__()
         self.setup(main_window)
         self.setText(0, _(u'Recursion detected'))

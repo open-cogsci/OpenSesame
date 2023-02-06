@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import pygame
 from collections import OrderedDict
@@ -30,12 +29,9 @@ from openexp._coordinates.xpyriment import Xpyriment as XpyrimentCoordinates
 
 class Xpyriment(Canvas, XpyrimentCoordinates):
 
+    r"""This is a canvas backend built on top of Expyriment. For function
+    specifications and docstrings, see `openexp._canvas.canvas`.
     """
-    desc:
-            This is a canvas backend built on top of Expyriment. For function
-            specifications and docstrings, see `openexp._canvas.canvas`.
-    """
-
     settings = {
         u"expyriment_opengl": {
             u"name": u"Use OpenGL",

@@ -22,42 +22,34 @@ import warnings
 
 class BasePythonWorkspace:
 
+    r"""Provides a basic Python workspace for use in the GUI. This avoids
+    unnecessarily importing the entire runtime API.
     """
-    desc:
-            Provides a basic Python workspace for use in the GUI. This avoids
-            unnecessarily importing the entire runtime API.
-    """
-
     def __init__(self, experiment):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                experiment:
-                        desc:	The experiment object.
-                        type:	experiment
+        Parameters
+        ----------
+        experiment : experiment
+            The experiment object.
         """
-
         self.experiment = experiment
         self._globals = {}
 
     def check_syntax(self, script):
+        r"""Checks whether a Python script is syntactically correct.
+
+        Parameters
+        ----------
+        script : unicode
+            A Python script.
+
+        Returns
+        -------
+        int
+            0 if script is correct, 1 if there is a syntax warning, and 2 if
+            there is a syntax error.
         """
-        desc:
-                Checks whether a Python script is syntactically correct.
-
-        arguments:
-                script:
-                        desc:	A Python script.
-                        type:	unicode
-
-        returns:
-                desc:	0 if script is correct, 1 if there is a syntax warning, and
-                                2 if there is a syntax error.
-                type:	int
-        """
-
         with warnings.catch_warnings(record=True) as warning_list:
             try:
                 self._compile(safe_decode(script))
@@ -68,36 +60,31 @@ class BasePythonWorkspace:
         return 0
 
     def run_file(self, path):
-        """
-        desc:
-                Reads and executes a files.
+        r"""Reads and executes a files.
 
-        arguments:
-                path:
-                        desc:	The full path to a Python file.
-                        type:	str
+        Parameters
+        ----------
+        path : str
+            The full path to a Python file.
         """
-
         with safe_open(path) as fd:
             script = fd.read()
         bytecode = self._compile(script)
         self._exec(bytecode)
 
     def _compile(self, script):
+        r"""Compiles a script into bytecode.
+
+        Parameters
+        ----------
+        script : unicode
+            A Python script.
+
+        Returns
+        -------
+        code
+            The compiled script.
         """
-        desc:
-                Compiles a script into bytecode.
-
-        arguments:
-                script:
-                        desc:	A Python script.
-                        type:	unicode
-
-        returns:
-                desc:	The compiled script.
-                type:	code
-        """
-
         # Prepend source encoding (PEP 0263) and encode scripts. This is
         # necessary, because the exec statement doesn't take kindly to Unicode.
         script = (u'#-*- coding:%s -*-\n' % self.experiment.encoding + script) \
@@ -105,32 +92,27 @@ class BasePythonWorkspace:
         return compile(script, u'<string>', u'exec')
 
     def _exec(self, bytecode):
-        """
-        desc:
-                Executes bytecode.
+        r"""Executes bytecode.
 
-        arguments:
-                bytecode:
-                        desc:	A chunk of bytecode.
-                        type:	code
+        Parameters
+        ----------
+        bytecode : code
+            A chunk of bytecode.
         """
-
         exec(bytecode, self._globals)
 
     def _eval(self, bytecode):
+        r"""Evaluates bytecode.
+
+        Parameters
+        ----------
+        bytecode : code
+            A chunk of bytecode.
+
+        Returns
+        -------
+        The evaluated value of the bytecode
         """
-        desc:
-                Evaluates bytecode.
-
-        arguments:
-                bytecode:
-                        desc:	A chunk of bytecode.
-                        type:	code
-
-        returns:
-                The evaluated value of the bytecode
-        """
-
         return eval(bytecode, self._globals)
 
     # The properties below emulate a dict interface.

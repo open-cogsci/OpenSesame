@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import plugins
 from libqtopensesame.items.qtautoplugin import qtautoplugin
@@ -33,7 +32,6 @@ widget 0 1 1 1 label text=[form_question] center=no
 widget 0 2 1 1 text_input return_accepts=yes focus=yes var=[form_var] stub=""
 """
 
-
 class form_text_input(form_base.form_base):
 
     initial_view = u'controls'
@@ -49,7 +47,6 @@ class form_text_input(form_base.form_base):
         Keyword arguments:
         string		--	A definition string. (default=None)
         """
-
         if string is None or string.strip() == u'':
             string = default_script
 
@@ -67,7 +64,6 @@ class form_text_input(form_base.form_base):
         Returns:
         A list of (name, description) tuples.
         """
-
         return self.super_form_text_input.var_info() + \
             [(self.var.get(u'form_var', _eval=False, default=u''),
               u'[Depends on response]')]

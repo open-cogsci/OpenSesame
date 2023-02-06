@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from qtpy.QtWidgets import QSizePolicy
 from qtpy.QtCore import Qt
@@ -30,7 +29,6 @@ _ = translation_context(u'inline_script', category=u'item')
 class InlineScript(InlineScriptRuntime, QtPlugin):
 
     """The inline_script GUI controls"""
-
     description = _(u'Executes Python code')
     help_url = u'manual/python/about'
     ext = u'.py'
@@ -38,13 +36,11 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
 
     def __init__(self, name, experiment, string=None):
         """See item."""
-
         InlineScriptRuntime.__init__(self, name, experiment, string)
         QtPlugin.__init__(self)
 
     def apply_edit_changes(self):
         """See qtitem."""
-
         sp = self._pyqode_prepare_editor.toPlainText()
         sr = self._pyqode_run_editor.toPlainText()
         self._set_modified()
@@ -53,11 +49,7 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         super().apply_edit_changes()
 
     def _set_modified(self, prepare=False, run=False):
-        """
-        desc:
-                Sets the modified status of the editors.
-        """
-
+        r"""Sets the modified status of the editors."""
         self._pyqode_prepare_editor.document().setModified(prepare)
         self._pyqode_run_editor.document().setModified(run)
         self._pyqode_tab_bar.setTabText(
@@ -70,16 +62,11 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         )
 
     def set_focus(self):
-        """
-        desc:
-                Allows the item to focus the most important widget.
-        """
-
+        r"""Allows the item to focus the most important widget."""
         self._pyqode_tab_widget.setFocus()
 
     def init_edit_widget(self):
         """See qtitem."""
-
         from pyqode.core.widgets import SplittableCodeEditTabWidget
 
         super().init_edit_widget(stretch=False)
@@ -118,7 +105,6 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
 
     def edit_widget(self):
         """See qtitem."""
-
         super().edit_widget()
         _prepare = safe_decode(self.var._prepare)
         if _prepare != self._pyqode_prepare_editor.toPlainText():

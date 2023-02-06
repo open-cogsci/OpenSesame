@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import platform
 from libqtopensesame.extensions import base_extension
@@ -26,11 +25,7 @@ _ = translation_context(u'system_information', category=u'extension')
 
 class system_information(base_extension):
 
-    """
-    desc:
-            Shows a tab with system information and version numbers
-    """
-
+    r"""Shows a tab with system information and version numbers"""
     def activate(self):
 
         l = []

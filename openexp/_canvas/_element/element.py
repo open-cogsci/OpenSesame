@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 import copy
 from libopensesame.exceptions import osexception
@@ -29,30 +28,21 @@ NUMERIC_PROPERTIES = u'x', u'y', u'w', u'h', u'r'
 
 class Element:
 
-    """
-    desc:
-            A base class for sketchpad elements.
-    """
-
+    r"""A base class for sketchpad elements."""
     # A property that indicates whether style properties (color etc) can be
     # changed or not.
     read_only = False
 
     def __init__(self, canvas, **properties):
+        r"""Constructor.
+
+        Parameters
+        ----------
+        canvas : Canvas
+            The canvas of which this element is part.
+        **properties : dict
+            A dict with style arguments such as color, fill, etc.
         """
-        desc:
-                Constructor.
-
-        arguments:
-                canvas:
-                        desc:	The canvas of which this element is part.
-                        type:	Canvas
-
-        keyword-dict:
-                properties:
-                        A dict with style arguments such as color, fill, etc.
-        """
-
         self._canvas = canvas
         if u'visible' not in properties:
             properties[u'visible'] = True
@@ -75,64 +65,48 @@ class Element:
         return x <= xy[0] and x+w >= xy[0] and y <= xy[1] and y+h >= xy[1]
 
     def __iter__(self):
+        r"""Elements are iterable, but by default contain only themselves.
+        However, Group objects can contain other elements.
         """
-        visible: False
-
-        desc:
-                Elements are iterable, but by default contain only themselves.
-                However, Group objects can contain other elements.
-        """
-
         yield self
 
     def __len__(self):
+        r"""Elements have a length, but by default this is 1. However, Group
+        objects can have a different length.
         """
-        visible: False
-
-        desc:
-                Elements have a length, but by default this is 1. However, Group
-                objects can have a different length.
-        """
-
         return 1
 
     def __add__(self, element):
+        r"""Implements the + syntax, which combines Element objects into Group
+        objects.
+
+        Parameters
+        ----------
+        element : Element
+            The element to add.
+
+        Returns
+        -------
+        Group
+            A group of elements.
         """
-        visible: False
-
-        desc:
-                Implements the + syntax, which combines Element objects into Group
-                objects.
-
-        arguments:
-                element:
-                        desc:	The element to add.
-                        type:	Element
-
-        returns:
-                desc:	A group of elements.
-                type:	Group
-        """
-
         from openexp._canvas._element.group import Group
         return Group(self.canvas, [self, element])
 
     def copy(self, canvas):
+        r"""Creates a deep copy of the current element. This new copy becomes
+        part of the provided canvas.
+
+        Parameters
+        ----------
+        canvas : Canvas
+            The canvas of which the copied element is part.
+
+        Returns
+        -------
+        Element
+            A copy of the current element.
         """
-        desc:
-                Creates a deep copy of the current element. This new copy becomes
-                part of the provided canvas.
-
-        arguments:
-                canvas:
-                        desc:	The canvas of which the copied element is part.
-                        type:	Canvas
-
-        returns:
-                desc:	A copy of the current element.
-                type:	Element
-        """
-
         try:
             e = copy.deepcopy(self)
         except (ValueError, TypeError):
@@ -144,35 +118,25 @@ class Element:
         return e
 
     def prepare(self):
+        r"""Is called when the canvas is prepared. This should be implemented
+        by backend-specific element objects.
         """
-        desc:
-                Is called when the canvas is prepared. This should be implemented
-                by backend-specific element objects.
-        """
-
         pass
 
     def show(self):
+        r"""Is called when the canvas is shown. This should be implemented by
+        backend-specfic element objects.
         """
-        desc:
-                Is called when the canvas is shown. This should be implemented by
-                backend-specfic element objects.
-        """
-
         pass
 
     def _on_attribute_change(self, **kwargs):
+        r"""Is called when an attribute, such as color, is changed.
+
+        Parameters
+        ----------
+        **kwargs : dict
+            A dict with changed attributes.
         """
-        visible: False
-
-        desc:
-                Is called when an attribute, such as color, is changed.
-
-        keyword-dict:
-                kwargs:
-                        A dict with changed attributes.
-        """
-
         pass
 
     @property
@@ -227,19 +191,9 @@ class Element:
         return self.rect[:2]
 
     def _create_property(self, key):
+        r"""Dynamically creates a getter/setter property. This is used to make
+        style arguments such as color get-able and set-able.
         """
-        visible: False
-
-        desc:
-                Dynamically creates a getter/setter property. This is used to make
-                style arguments such as color get-able and set-able.
-
-        argumens:
-                key:
-                        desc:	The key to create a property for.
-                        type:	str
-        """
-
         setattr(self.__class__, key, property(
                 partial(self._getter, key),
                 partial(self._setter, key),
@@ -247,22 +201,16 @@ class Element:
 
     @staticmethod
     def _getter(key, self):
+        r"""A getter for dynamically created properties.
+
+        Parameters
+        ----------
+        key : str
+            A property name.
+        self : Element.
+            The Element instance. For technical reasons this is passed as the
+            second argument.
         """
-        visible: False
-
-        desc:
-                A getter for dynamically created properties.
-
-        arguments:
-                key:
-                        desc:	A property name.
-                        type:	str
-                self:
-                        desc:	The Element instance. For technical reasons this is
-                                        passed as the second argument.
-                        type:	Element.
-        """
-
         try:
             return self._properties[key]
         except KeyError:
@@ -270,25 +218,18 @@ class Element:
 
     @staticmethod
     def _setter(key, self, val):
+        r"""A setter for dynamically created properties.
+
+        Parameters
+        ----------
+        key : str
+            A property name.
+        self : Element.
+            The Element instance. For technical reasons this is passed as the
+            second argument.
+        val : Any
+            A property value.
         """
-        visible: False
-
-        desc:
-                A setter for dynamically created properties.
-
-        arguments:
-                key:
-                        desc:	A property name.
-                        type:	str
-                self:
-                        desc:	The Element instance. For technical reasons this is
-                                        passed as the second argument.
-                        type:	Element.
-                val:
-                        desc:	A property value.
-                        type:	Any
-        """
-
         if key in NUMERIC_PROPERTIES:
             self._assert_numeric(**{key: val})
         if key == u'color':
@@ -298,18 +239,13 @@ class Element:
 
     @staticmethod
     def _deller(self, key):
+        r"""A deller for dynamically created properties.
+
+        Parameters
+        ----------
+        key : str
+            A property name.
         """
-        visible: False
-
-        desc:
-                A deller for dynamically created properties.
-
-        arguments:
-                key:
-                        desc:	A property name.
-                        type:	str
-        """
-
         pass
 
     @staticmethod
@@ -328,22 +264,22 @@ class Element:
 
     @staticmethod
     def _rect(x, y, w, h):
+        r"""Fixes negative width and heights when defining a rect
+
+        Parameters
+        ----------
+        x
+            An X coordinate
+        y
+            A Y coordinate
+        w
+            A width
+        h
+            A height
+
+        Returns
+        -------
         """
-        visible: False
-
-        desc:
-                Fixes negative width and heights when defining a rect
-
-        arguments:
-                x:	An X coordinate
-                y:	A Y coordinate
-                w:	A width
-                h:	A height
-
-        returns:
-                desc:	An `(x, y, w, h)` tuple where the `w` and `h` >= 0.
-        """
-
         Element._assert_numeric(x=x, y=y, w=w, h=h)
         if w < 0:
             x += w

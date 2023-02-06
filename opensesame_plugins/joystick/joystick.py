@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame. If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame import plugins
 from libopensesame.base_response_item import base_response_item
@@ -26,17 +25,12 @@ from openexp.keyboard import keyboard
 
 class joystick(base_response_item):
 
-    """
-    desc:
-            A plug-in for using a joystick/gamepad.
-    """
-
+    r"""A plug-in for using a joystick/gamepad."""
     description = u'Collects input from a joystick or gamepad'
     process_feedback = True
 
     def reset(self):
         """See item."""
-
         self.var.timeout = u'infinite'
         self.var.allowed_responses = u''
         self.var._dummy = u'no'
@@ -44,7 +38,6 @@ class joystick(base_response_item):
 
     def validate_response(self, response):
         """See base_response_item."""
-
         try:
             response = int(response)
         except ValueError:
@@ -52,11 +45,7 @@ class joystick(base_response_item):
         return response >= 0 or response <= 255
 
     def _get_button_press(self):
-        """
-        desc:
-                Calls libjoystick.get_button_press() with the correct arguments.
-        """
-
+        r"""Calls libjoystick.get_button_press() with the correct arguments."""
         return self.experiment.joystick.get_joybutton(
             joybuttonlist=self._allowed_responses,
             timeout=self._timeout
@@ -64,7 +53,6 @@ class joystick(base_response_item):
 
     def prepare_response_func(self):
         """See base_response_item."""
-
         self._keyboard = keyboard(
             self.experiment,
             keylist=(
@@ -89,12 +77,10 @@ class joystick(base_response_item):
 
     def response_matches(self, test, ref):
         """See base_response_item."""
-
         return safe_decode(test) in ref
 
     def coroutine(self):
         """See coroutines plug-in."""
-
         if self.var._dummy == u'yes':
             self._keyboard.timeout = 0
         else:

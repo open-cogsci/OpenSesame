@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.item import Item
 from libopensesame.exceptions import osexception
@@ -24,75 +23,67 @@ from libopensesame.exceptions import osexception
 
 class BaseResponseItem(Item):
 
+    r"""The base class for items that collect responses, such as
+    keyboard_response, mouse_response, joystick, etc.
     """
-    desc:
-            The base class for items that collect responses, such as
-            keyboard_response, mouse_response, joystick, etc.
-    """
-
     # Override as True for objects that should be included in feedback
     process_feedback = False
 
     def prepare_response_func(self):
-        """
-        desc:
-                Should return a function that, when called, returns a
-                (response, timestamp) tuple. This function needs to be implemented
-                in every response item.
+        r"""Should return a function that, when called, returns a (response,
+        timestamp) tuple. This function needs to be implemented in every
+        response item.
 
-        returns:
-                type:	FunctionType
+        Returns
+        -------
+        FunctionType
         """
-
         raise NotImplementedError()
 
     def validate_response(self, response):
+        r"""Optionally checks whether a response is valid for this item. This
+        can be used to check whether the list of allowed responses is valid.
+
+        Parameters
+        ----------
+        response
+            The response to check.
+
+        Returns
+        -------
+        bool
+            True if response is valid, False otherwise.
         """
-        desc:
-                Optionally checks whether a response is valid for this item. This
-                can be used to check whether the list of allowed responses is
-                valid.
-
-        arguments:
-                response:	The response to check.
-
-        returns:
-                desc:	True if response is valid, False otherwise.
-                type:	bool
-        """
-
         return True
 
     def response_matches(self, test, ref):
+        r"""Checks whether two responses are the same. This can be re-
+        implemented to take synonyms into account.
+
+        Parameters
+        ----------
+        test
+            The first response.
+        ref
+            The second response.
+
+        Returns
+        -------
+        bool
+            True if the responses match, False otherwise.
         """
-        desc:
-                Checks whether two responses are the same. This can be
-                re-implemented to take synonyms into account.
-
-        arguments:
-                test:	The first response.
-                ref:	The second response.
-
-        returns:
-                desc:	True if the responses match, False otherwise.
-                type:	bool
-        """
-
         return test in ref
 
     def process_response(self, response_args):
-        """
-        desc:
-                Processes a collected responses, so that it is added to the
-                response_store, etc.
+        r"""Processes a collected responses, so that it is added to the
+        response_store, etc.
 
-        arguments:
-                response_args:
-                        desc:	The return value of the function created by
-                                        prepare_response_func().
-                        type:	tuple
+        Parameters
+        ----------
+        response_args : tuple
+            The return value of the function created by
+            prepare_response_func().
         """
-
         response, t1 = response_args
         if self._correct_responses is not None:
             correct = self.response_matches(response, self._correct_responses)
@@ -105,7 +96,6 @@ class BaseResponseItem(Item):
 
     def prepare(self):
         """See item."""
-
         super().prepare()
         self._timeout = self._prepare_timeout()
         self._allowed_responses = self._prepare_responses(u'allowed_responses')
@@ -115,7 +105,6 @@ class BaseResponseItem(Item):
 
     def run(self):
         """See item."""
-
         super().run()
         if self._t0 is None:
             self._t0 = self.set_item_onset()
@@ -126,7 +115,6 @@ class BaseResponseItem(Item):
 
     def var_info(self):
         """See item."""
-
         l = []
         l.append((u"response", u"[Depends on response]"))
         l.append((u"response_time", u"[Depends on response]"))
@@ -144,15 +132,13 @@ class BaseResponseItem(Item):
     # Private functions
 
     def _prepare_timeout(self):
-        """
-        desc:
-                Processes the timeout variable, and checks whether it is valid.
+        r"""Processes the timeout variable, and checks whether it is valid.
 
-        returns:
-                desc:	A timeout value.
-                type:	float
+        Returns
+        -------
+        float
+            A timeout value.
         """
-
         timeout = self.var.get(u'timeout', default=u'infinite')
         if timeout == u'infinite':
             return
@@ -166,20 +152,18 @@ class BaseResponseItem(Item):
         return timeout
 
     def _prepare_responses(self, var):
+        r"""Parses a semicolon-separated list of responses into a list of
+        responses or None if no responses are provided.
+
+        Parameters
+        ----------
+        var : str
+            The name of the variable that contains the responses.
+
+        Returns
+        -------
+        NoneType, list
         """
-        desc:
-                Parses a semicolon-separated list of responses into a list of
-                responses or None if no responses are provided.
-
-        arguments:
-                var:
-                        desc:	The name of the variable that contains the responses.
-                        type:	str
-
-        returns:
-                type:	[NoneType, list]
-        """
-
         responses = safe_decode(self.var.get(var, default=u''))
         if responses == u'':
             return
@@ -196,20 +180,18 @@ class BaseResponseItem(Item):
         return responses
 
     def _prepare_sleep_func(self, duration):
+        r"""Creates a function that sleeps for a specific duration.
+
+        Parameters
+        ----------
+        duration : int, float
+            The duration to sleep for.
+
+        Returns
+        -------
+        FunctionType
+            A sleep function with a fixed duration.
         """
-        desc:
-                Creates a function that sleeps for a specific duration.
-
-        arguments:
-                duration:
-                        desc:	The duration to sleep for.
-                        type:	[int, float]
-
-        returns:
-                desc:	A sleep function with a fixed duration.
-                type:	FunctionType
-        """
-
         if duration == 0:
             return lambda: None
         if self.var.duration > 0:

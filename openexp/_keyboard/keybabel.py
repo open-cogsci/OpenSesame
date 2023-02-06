@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 
@@ -60,40 +59,35 @@ NAME_TO_CHAR = {name: char for char, name in CHAR_TO_NAME.items()}
 
 class KeyBabel:
 
+    r"""Converts between different ways to represent keys through numeric
+    values (keycodes), different names (strings), and None (for timeout).
     """
-    desc:
-            Converts between different ways to represent keys through numeric
-            values (keycodes), different names (strings), and None (for timeout).
-    """
-
     def __init__(self, keyboard):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                keybaord:	A Keyboard object
+        Parameters
+        ----------
+        keybaord
+            A Keyboard object
         """
-
         self._keyboard = keyboard
 
     def standard_name(self, key, shift=False):
+        r"""Gives the standard name for a key. This is the shortest name, so it
+        corresponds to a character if a character is available.
+
+        Parameters
+        ----------
+        key
+            The key to standardize.
+        shift, optional
+            Indicates whether the name should be cast to uppercase (True) or
+            lowercase (False)
+
+        Returns
+        -------
+        The standard name for the key.
         """
-        desc:
-                Gives the standard name for a key. This is the shortest name, so
-                it corresponds to a character if a character is available.
-
-        arguments:
-                key:	The key to standardize.
-
-        keywords:
-                shift:	Indicates whether the name should be cast to uppercase
-                                (True) or lowercase (False)
-
-        returns:
-                The standard name for the key.
-        """
-
         short_name = (
             key
             if isinstance(key, str) and len(key) == 1
@@ -102,17 +96,17 @@ class KeyBabel:
         return short_name.upper() if shift else short_name.lower()
 
     def synonyms(self, key):
+        r"""Gives a set of synonyms for a key.
+
+        Parameters
+        ----------
+        key
+            The key to find synonyms for.
+
+        Returns
+        -------
+        A set of synonyms.
         """
-        desc:
-                Gives a set of synonyms for a key.
-
-        arguments:
-                key:	The key to find synonyms for.
-
-        returns:
-                A set of synonyms.
-        """
-
         if key is None:
             return self._none_synonyms()
         if isinstance(key, int):

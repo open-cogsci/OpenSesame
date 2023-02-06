@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame.item_store import ItemStore
@@ -27,22 +26,17 @@ _ = translation_context(u'qtitem_store', category=u'core')
 
 
 class QtItemStore(ItemStore):
-    """
-    desc:
-            The GUI counterpart of the item store, which also distributes item
-            changes etc.
+    r"""The GUI counterpart of the item store, which also distributes item
+    changes etc.
     """
     def __init__(self, experiment):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:
-                        desc:	The main window object.
-                        type:	qtopensesame
+        Parameters
+        ----------
+        main_window : qtopensesame
+            The main window object.
         """
-
         super().__init__(experiment)
         self.error_log = []
 
@@ -67,16 +61,13 @@ class QtItemStore(ItemStore):
         return self.main_window.console
 
     def __delitem__(self, name):
-        """
-        desc:
-                Deletes an item, and notifies other items of the deletion.
+        r"""Deletes an item, and notifies other items of the deletion.
 
-        arguments:
-                name:
-                        desc:	The name of the item to be deleted.
-                        type:	[str, unicode]
+        Parameters
+        ----------
+        name : str, unicode
+            The name of the item to be deleted.
         """
-
         self.extension_manager.fire(u'prepare_delete_item', name=name)
         # Temporarily disable build_item_tree to avoid recursively calling it,
         # which can take a long time when experiments are big. This is an ugly
@@ -93,7 +84,6 @@ class QtItemStore(ItemStore):
     def new(self, _type, name=None, script=None, catch_exceptions=True,
             allow_rename=True):
         """See item_store."""
-
         import warnings
 
         with warnings.catch_warnings(record=True) as warning_list:
@@ -134,26 +124,22 @@ class QtItemStore(ItemStore):
         return item
 
     def rename(self, from_name, to_name):
+        r"""Renames an item and updates the interface. This function may show a
+        notification dialog.
+
+        Parameters
+        ----------
+        from_name : unicode
+            The old item name.
+        to_name : unicode
+            The desired new item name.
+
+        Returns
+        -------
+        NoneType, unicode
+            The new name of the item, if renaming was successful, None
+            otherwise.
         """
-        desc:
-            Renames an item and updates the interface. This function may show
-            a notification dialog.
-
-        arguments:
-            from_name:
-                desc: The old item name.
-                type: unicode
-            to_name:
-                desc: The desired new item name.
-                type: unicode
-
-        returns:
-            desc:
-                The new name of the item, if renaming was successful, None
-                otherwise.
-            type: [NoneType, unicode]
-        """
-
         if from_name not in self:
             self.experiment.notify(_(u'Item "%s" doesn\'t exist' % from_name))
             return None
@@ -184,19 +170,15 @@ class QtItemStore(ItemStore):
         return to_name
 
     def set_icon(self, name, icon):
-        """
-        desc:
-            Changes an item's icon.
+        r"""Changes an item's icon.
 
-        arguments:
-            name:
-                desc: The item name.
-                type: unicode
-            icon:
-                desc: The icon name.
-                type: unicode
+        Parameters
+        ----------
+        name : unicode
+            The item name.
+        icon : unicode
+            The icon name.
         """
-
         self.itemtree.set_icon(name, icon)
 
     def used(self):
@@ -205,7 +187,6 @@ class QtItemStore(ItemStore):
             desc: A list of used item names.
             type: list
         """
-
         if self.experiment.var.start not in self:
             return []
         return [self.experiment.var.start] + \
@@ -217,7 +198,6 @@ class QtItemStore(ItemStore):
             desc: A list of unused item names.
             type: list
         """
-
         _used = self.used()
         return list(filter(lambda item: item not in _used,
                            self.__items__.keys()))
@@ -233,7 +213,6 @@ class QtItemStore(ItemStore):
             desc: True if _type is a valid type, False otherwise.
             type: bool
         """
-
         if plugins.is_plugin(_type):
             return True
         if _type in self.built_in_types:
@@ -241,12 +220,9 @@ class QtItemStore(ItemStore):
         return False
 
     def clear_cache(self):
+        r"""Clears the cache, currently only the cache with children for each
+        item.
         """
-        desc:
-            Clears the cache, currently only the cache with children for each
-            item.
-        """
-
         for item in self.values():
             item._children = None
 

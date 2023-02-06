@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from qtpy.QtWidgets import QPushButton
@@ -27,23 +26,15 @@ _ = translation_context(u'sketchpad', category=u'item')
 
 class SketchpadElementButton(BaseSubcomponent, QPushButton):
 
-    """
-    desc:
-            A element-tool button for the sketchpad widget.
-    """
-
+    r"""A element-tool button for the sketchpad widget."""
     def __init__(self, sketchpad_widget, element):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                sketchpad_widget:
-                        type:	sketchpad-widget
-                element:
-                        type:	base_element
+        Parameters
+        ----------
+        sketchpad_widget : sketchpad-widget
+        element : base_element
         """
-
         super().__init__(sketchpad_widget)
         self.element = element
         self.sketchpad_widget = sketchpad_widget
@@ -55,11 +46,7 @@ class SketchpadElementButton(BaseSubcomponent, QPushButton):
         self.clicked.connect(self.select)
 
     def select(self, checked):
-        """
-        desc:
-                Select this element tool.
-        """
-
+        r"""Select this element tool."""
         self.sketchpad_widget.unselect_all_tools()
         self.setChecked(True)
         self.sketchpad_widget.select_element_tool(self.element)

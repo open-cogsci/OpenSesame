@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libqtopensesame.misc import config
 from libqtopensesame.widgets.base_widget import BaseWidget
@@ -27,24 +26,17 @@ _ = translation_context(u'unused_widget', category=u'core')
 
 class UnusedWidget(BaseWidget):
 
-    """
-    desc:
-            The unused items widget.
-    """
-
+    r"""The unused items widget."""
     tab_name = u'__unused__'
 
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        arguments:
-                main_window:
-                        desc:	The main-window object.
-                        type:	qtopensesame
+        Parameters
+        ----------
+        main_window : qtopensesame
+            The main-window object.
         """
-
         super().__init__(main_window)
         header_hbox = QtWidgets.QHBoxLayout()
         header_hbox.addWidget(self.theme.qlabel(u"unused"))
@@ -68,11 +60,7 @@ class UnusedWidget(BaseWidget):
         self.__unused_tab__ = True
 
     def purge_unused(self):
-        """
-        desc:
-                Purges all unused items.
-        """
-
+        r"""Purges all unused items."""
         resp = QtWidgets.QMessageBox.question(self.main_window.ui.centralwidget,
             _(u"Permanently delete items?"),
             _(u"Are you sure you want to permanently delete all unused items? This action cannot be undone."),
@@ -90,11 +78,7 @@ class UnusedWidget(BaseWidget):
         self.extension_manager.fire(u'purge_unused_items')
 
     def on_activate(self):
-        """
-        desc:
-                Is called when the widget becomes visible.
-        """
-
+        r"""Is called when the widget becomes visible."""
         self.purge_button.setDisabled(len(self.experiment.items.unused()) == 0)
 
 

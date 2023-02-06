@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame import misc, metadata
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.base_widget import BaseWidget
@@ -26,20 +25,15 @@ from qtpy import QtWidgets, QtCore
 
 class CreditsWidget(BaseWidget):
 
-    """
-    desc:
-            A credits window, embedded in the start-new widget.
-    """
-
+    r"""A credits window, embedded in the start-new widget."""
     def __init__(self, main_window):
-        """
-        desc:
-                Constructor.
+        r"""Constructor.
 
-        keywords:
-                main_window:	A qtopensesame object.
+        Parameters
+        ----------
+        main_window, optional
+            A qtopensesame object.
         """
-
         super().__init__(main_window, ui=u'widgets.credits_widget')
         self.ui.label_opensesame.setText(self.ui.label_opensesame.text() % {
             u'version': metadata.__version__,
@@ -53,17 +47,14 @@ class CreditsWidget(BaseWidget):
 
     def open_website(self, dummy=None):
         """Open the main website"""
-
         misc.open_url(cfg.url_website)
 
     def open_facebook(self, dummy=None):
         """Open Facebook page"""
-
         misc.open_url(cfg.url_facebook)
 
     def open_twitter(self, dummy=None):
         """Open Twitter page"""
-
         misc.open_url(cfg.url_twitter)
 
 

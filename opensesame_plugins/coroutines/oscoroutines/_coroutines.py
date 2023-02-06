@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-
 from libopensesame.py3compat import *
 from libopensesame.item import item
 from oscoroutines import item_task, inline_task
@@ -24,16 +23,11 @@ from oscoroutines import item_task, inline_task
 
 class coroutines(item):
 
-    """
-    desc:
-            The coroutines plugin runtime.
-    """
-
+    r"""The coroutines plugin runtime."""
     description = u'Run items simultaneously'
 
     def reset(self):
         """See item."""
-
         self.var.duration = 5000
         self.var.flush_keyboard = u'yes'
         self.var.function_name = u''
@@ -63,7 +57,6 @@ class coroutines(item):
                 desc:	True if the item is a coroutine, False otherwise.
                 type:	bool
         """
-
         return hasattr(self.experiment.items[item_name], u'coroutine')
 
     def is_oneshot_coroutine(self, item_name):
@@ -77,7 +70,6 @@ class coroutines(item):
                 desc:	True if the item is a one-shot coroutine, False otherwise.
                 type:	bool
         """
-
         try:
             return self.experiment.items[item_name].is_oneshot_coroutine
         except AttributeError:
@@ -85,7 +77,6 @@ class coroutines(item):
 
     def from_string(self, string):
         """See item."""
-
         self.var.clear()
         self.comments = []
         self.reset()
@@ -105,7 +96,6 @@ class coroutines(item):
 
     def to_string(self):
         """See item."""
-
         s = item.to_string(self)
         for item_name, start_time, end_time, cond in self.schedule:
             # If the item doesn't exist yet, then we simply go with the times
@@ -126,7 +116,6 @@ class coroutines(item):
 
     def prepare(self):
         """See item."""
-
         item.prepare(self)
         self.event('prepare coroutines')
         self._schedule = []
@@ -147,7 +136,6 @@ class coroutines(item):
 
     def run(self):
         """See item."""
-
         # Launch all coroutines
         for task in self._schedule:
             task.launch()
@@ -201,7 +189,6 @@ class coroutines(item):
 
     def var_info(self):
         """See item."""
-
         l = []
         l.append((u"coroutines_cycles", u"[Determined at runtime]"))
         l.append((u"coroutines_duration", u"[Determined at runtime]"))
