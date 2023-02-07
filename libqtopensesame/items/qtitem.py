@@ -90,7 +90,11 @@ class QtItem:
         self.set_validator()
         oslogger.debug(u'created %s' % self.name)
         self.cached_script = self.to_string()
-
+        
+    @property
+    def plugin_attribute(self):
+        return self.plugin_manager[self.item_type].attribute
+        
     @property
     def main_window(self):
         return self.experiment.main_window

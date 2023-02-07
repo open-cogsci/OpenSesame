@@ -150,6 +150,14 @@ class BaseSubcomponent(BaseComponent):
     @property
     def extension_manager(self):
         return self.main_window.extension_manager
+    
+    @property
+    def unloaded_extension_manager(self):
+        return self.main_window._unloaded_extension_manager
+    
+    @property
+    def plugin_manager(self):
+        return self.main_window.experiment._plugin_manager
 
     @property
     def overview_area(self):

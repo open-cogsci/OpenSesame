@@ -355,7 +355,7 @@ def snake_case(s):
     
 def camel_case(s):
     """Turns snake_case to CamelCase"""
-    return (''.join(x.capitalize() or '_' for x in s.split('_'))).capitalize()
+    return ''.join(x.capitalize() or '_' for x in s.split('_'))
 
 
 # Build a list of base folders, that is, folders that can have

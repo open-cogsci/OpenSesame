@@ -299,17 +299,12 @@ class Keyboard(Backend):
 
     def show_virtual_keyboard(self, visible=True):
         r"""Shows or hides a virtual keyboard if this is supported by the
-        back-
-        end. This function is only necessary if you want the virtual
-        keyboard
-        to remain visible while collecting multicharacter
-        responses. Otherwise,
-        `Keyboard.get_key()` will implicitly show and
-        hide the keyboard for a
-        single-character response.
+        back-end. This function is only necessary if you want the virtual
+        keyboard to remain visible while collecting multicharacter
+        responses. Otherwise, `Keyboard.get_key()` will implicitly show and
+        hide the keyboard for a single-character response.
 
-        This function does nothing for back-ends
-        that do not support virtual
+        This function does nothing for back-ends that do not support virtual
         keyboards.
 
         Parameters

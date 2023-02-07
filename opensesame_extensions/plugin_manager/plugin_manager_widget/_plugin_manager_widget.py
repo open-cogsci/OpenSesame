@@ -17,8 +17,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-
-from libopensesame import plugins
 from libqtopensesame.widgets.base_widget import base_widget
 from plugin_manager_widget._plugin_widget import plugin_widget
 
@@ -34,17 +32,10 @@ class plugin_manager_widget(base_widget):
         main_window
             The main-window object.
         """
-        super(plugin_manager_widget, self).__init__(main_window,
-                                                    ui=u'extensions.plugin_manager.plugin_manager')
-        self.plugin_list = plugins.list_plugins(
-            filter_disabled=False,
-            mode=main_window.mode,
-            _type=u'plugins'
-        ) + plugins.list_plugins(
-            mode=main_window.mode,
-            filter_disabled=False,
-            _type=u'extensions'
-        )
+        super().__init__(main_window,
+            ui=u'extensions.plugin_manager.plugin_manager')
+        self.plugin_list = self.plugin_manager.filter(
+            mode=main_window.mode)
         for plugin in sorted(self.plugin_list):
             w = plugin_widget(plugin, main_window)
             self.ui.layout_container.addWidget(w)

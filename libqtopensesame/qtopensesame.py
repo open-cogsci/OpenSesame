@@ -85,11 +85,13 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def resume_init(self):
         """Resume GUI initialization"""
+        import opensesame_extensions
         from libopensesame import misc
+        from libopensesame.plugin_manager import PluginManager
         from libqtopensesame.misc import theme
         from libqtopensesame.misc.console_bridge import ConsoleBridge
-        from libqtopensesame.widgets.pool_widget import pool_widget
-        from libqtopensesame.extensions import extension_manager
+        from libqtopensesame.widgets.pool_widget import PoolWidget
+        from libqtopensesame.extensions import ExtensionManager
         import random
 
         # Make sure that icons are shown in context menu, regardless of the
@@ -160,7 +162,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.ui.dock_pool.hide()
         self.ui.dock_pool.visibilityChanged.connect(
             self.ui.action_show_pool.setChecked)
-        self.ui.pool_widget = pool_widget(self)
+        self.ui.pool_widget = PoolWidget(self)
         self.ui.dock_pool.setWidget(self.ui.pool_widget)
         # Initialize keyboard shortcuts
         self.ui.shortcut_itemtree = self._kb_shortcut(self.focus_overview_area)
@@ -188,7 +190,8 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.set_unsaved(False)
         self.init_custom_fonts()
         self.console = ConsoleBridge(self)
-        self.extension_manager = extension_manager(self)
+        self._unloaded_extension_manager = PluginManager(opensesame_extensions)
+        self.extension_manager = ExtensionManager(self)
         self.extension_manager.fire(u'startup')
 
     @property

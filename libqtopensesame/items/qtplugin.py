@@ -21,7 +21,6 @@ import os
 import sys
 import mimetypes
 from openexp import resources
-from libopensesame import plugins
 from libopensesame.oslogging import oslogger
 from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.items.qtitem import QtItem
@@ -73,7 +72,7 @@ class QtPlugin(QtItem):
 
     def init_item_icon(self):
 
-        icon = plugins.plugin_property(self.item_type, u'icon', default=None)
+        icon = self.plugin_attribute('icon')
         if icon is not None:
             self.qicon = self.theme.qicon(icon)
             return

@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.misc import snake_case
-from libopensesame import plugins
 from libopensesame.cistr import CIStr
 from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
@@ -162,12 +161,11 @@ class ItemStore:
             name = self.valid_name(_type, suggestion=name)
         else:
             name = CIStr(name)
-        if plugins.is_plugin(_type):
+        if _type in self.experiment.plugin_manager:
             # Load a plug-in
             try:
-                item = plugins.load_plugin(_type, name, self.experiment,
-                                           script,
-                                           self.experiment.item_prefix())
+                item = self.experiment.plugin_manager[_type].build(
+                    name, self.experiment, script)
             except Exception as e:
                 raise osexception(u"Failed to load plugin '%s'" % _type,
                                   exception=e)

@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
-from libopensesame import plugins
 
 
 class PluginAction(QtWidgets.QAction):
@@ -34,7 +33,8 @@ class PluginAction(QtWidgets.QAction):
         plugin -- the name of the plugin
         """
         self.main_window = main_window
-        icon = QtGui.QIcon(plugins.plugin_icon_large(plugin))
+        icon = QtGui.QIcon(
+            self.main_window.experiment.plugin_manager[plugin].icon_large)
         self.plugin = plugin
         QtWidgets.QAction.__init__(self, icon, "Add %s" % plugin, menu)
         self.triggered.connect(self.add_plugin)

@@ -51,6 +51,10 @@ class QtItemStore(ItemStore):
     @property
     def extension_manager(self):
         return self.main_window.extension_manager
+    
+    @property
+    def plugin_manager(self):
+        return self.experiment._plugin_manager
 
     @property
     def tabwidget(self):
@@ -213,11 +217,7 @@ class QtItemStore(ItemStore):
             desc: True if _type is a valid type, False otherwise.
             type: bool
         """
-        if plugins.is_plugin(_type):
-            return True
-        if _type in self.built_in_types:
-            return True
-        return False
+        return _type in self.built_in_types or _type in self.plugin_manager
 
     def clear_cache(self):
         r"""Clears the cache, currently only the cache with children for each

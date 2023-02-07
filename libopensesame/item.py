@@ -51,7 +51,7 @@ class Item:
         # Deduce item_type from class name
         prefix = self.experiment.item_prefix()
         self.item_type = snake_case(self.__class__.__name__)
-        if self.item_type.startswith(prefix):
+        if self.item_type.startswith(prefix.lower()):
             self.item_type = self.item_type[len(prefix):]
         if not hasattr(self, u'description'):
             self.var.description = self.default_description
@@ -82,6 +82,10 @@ class Item:
     @property
     def responses(self):
         return self.experiment._responses
+    
+    @property
+    def plugin_manager(self):
+        return self.experiment._plugin_manager
 
     @property
     def default_description(self):

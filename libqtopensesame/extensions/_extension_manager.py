@@ -18,7 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
-from libopensesame import plugins
+import opensesame_extensions
+from libopensesame.plugin_manager import PluginManager
 from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
@@ -62,41 +63,29 @@ class ExtensionManager(BaseSubcomponent):
         self._suspended = False
         self._suspended_until = None
         def extension_filter(ext_name): return False
-        for ext_name in plugins.list_plugins(
-                _type=u'extensions',
-                mode=self.main_window.mode
-        ):
-            if extension_filter(ext_name):
-                oslogger.debug(u'filtering extension {}'.format(ext_name))
+        for ulext in self.unloaded_extension_manager.filter(
+                modes=self.main_window.mode):
+            if extension_filter(ulext.name):
+                oslogger.info(u'filtering extension {}'.format(ulext.name))
                 continue
             try:
-                if self.main_window.options.profile:
-                    from datamatrix import functional as fnc
-                    with fnc.profile('profile-loadext-{}.log'.format(ext_name)):
-                        ext = plugins.load_extension(
-                            ext_name, self.main_window)
-                else:
-                    ext = plugins.load_extension(ext_name, self.main_window)
+                ext = ulext.build(self.main_window)
             except Exception as e:
                 if not isinstance(e, osexception):
                     e = osexception(msg=u'Extension error', exception=e)
                 self.notify(
-                    u'Failed to load extension %s (see debug window for stack trace)'
-                    % ext_name
-                )
+                    f'Failed to load extension {ext.name} (see debug window for stack trace)')
                 self.console.write(e)
             else:
                 self._extensions.append(ext)
-                self.register_extension(ext, ext_name)
+                self.register_extension(ext)
                 if ext.extension_filter is not None:
                     extension_filter = ext.extension_filter
         self.main_window.set_busy(False)
 
-    def register_extension(self, ext, ext_name=None):
+    def register_extension(self, ext):
 
-        if ext_name is None:
-            ext_name = str(ext)
-        oslogger.debug(u'installing extension {}'.format(ext_name))
+        oslogger.info(f'installing extension {ext.name()}')
         for event in ext.supported_events():
             if event not in self.events:
                 self.events[event] = []
@@ -104,8 +93,7 @@ class ExtensionManager(BaseSubcomponent):
         for provide in ext.supported_provides():
             if provide in self.provides:
                 oslogger.warning(
-                    u'multiple extensions provide {}'.format(provide)
-                )
+                    f'multiple extensions provide {provide}')
                 continue
             self.provides[provide] = ext
 

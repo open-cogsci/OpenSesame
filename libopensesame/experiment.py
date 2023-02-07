@@ -17,13 +17,16 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from openexp import backend
+import opensesame_plugins
+from libopensesame.plugin_manager import PluginManager
 from libopensesame.var_store import VarStore
 from libopensesame.item_store import ItemStore
 from libopensesame.response_store import ResponseStore
 from libopensesame.file_pool_store import FilePoolStore
 from libopensesame.syntax import Syntax
 from libopensesame.exceptions import osexception
-from libopensesame import misc, item, metadata
+from libopensesame.item import Item
+from libopensesame import misc, metadata
 from libopensesame.item_stack import item_stack_singleton
 from libopensesame.oslogging import oslogger
 from libopensesame.py3compat import *
@@ -35,17 +38,7 @@ import warnings
 import gc
 
 
-# In Python 2, sending old-style classes across the pipeline causes trouble. We
-# need to define the classobj type here. This is only applicable to Python 2,
-# because Python 3 had only new-style classes.
-class OldStyle:
-    pass
-
-
-classobj = type(OldStyle)
-
-
-class Experiment(item.item):
+class Experiment(Item):
 
     r"""A special item that controls the flow of the experiment."""
     description = u'The main experiment item'
@@ -96,10 +89,12 @@ class Experiment(item.item):
         self._responses = ResponseStore(self)
         # The _syntax and items objects may already have been created by
         # libqtopensesame.experiment.
-        if not hasattr(self, u'_syntax'):
+        if not hasattr(self, '_syntax'):
             self._syntax = Syntax(self)
-        if not hasattr(self, u'items'):
+        if not hasattr(self, 'items'):
             self.items = ItemStore(self)
+        if not hasattr(self, '_plugin_manager'):
+            self._plugin_manager = PluginManager(opensesame_plugins)
         if workspace is None:
             from libopensesame.python_workspace import PythonWorkspace
             self._python_workspace = PythonWorkspace(self)
@@ -129,7 +124,7 @@ class Experiment(item.item):
         self.debug = '--debug' in sys.argv or '-d' in sys.argv
         if string is not None:
             string = self.open(string)
-        item.item.__init__(self, name, self, string)
+        Item.__init__(self, name, self, string)
         # Default subject info
         self.set_subject(subject_nr)
         # Fullscreen needs to be set after the experiment has been parsed from

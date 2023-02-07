@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
-from libopensesame import plugins
 from qtpy import QtWidgets, QtGui
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_append_menu', category=u'core')
@@ -82,7 +81,7 @@ class AppendNewAction(BaseSubcomponent, QtWidgets.QAction):
         self.item_type = item_type
         self.setText(item_type)
         if item_type not in self.experiment.core_items:
-            icon = self.theme.qicon(plugins.plugin_icon_small(item_type))
+            icon = self.theme.qicon(self.plugin_manager[item_type].icon)
         else:
             icon = self.theme.qicon(item_type)
         self.setIcon(icon)
@@ -196,7 +195,7 @@ class TreeAppendMenu(BaseSubcomponent, QtWidgets.QMenu):
             return self._new_items_menu
         self._new_items_menu = QtWidgets.QMenu(self)
         for item_type in self.experiment.core_items + [None] + \
-                sorted(plugins.list_plugins()):
+                [plugin.name for plugin in self.plugin_manager]:
             if item_type is None:
                 self._new_items_menu.addSeparator()
             else:

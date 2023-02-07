@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame import plugins
 from libqtopensesame.items.qtplugin import QtPlugin
 from libqtopensesame import validators
 from libqtopensesame.misc.translate import translation_context
@@ -33,10 +32,7 @@ class QtAutoPlugin(QtPlugin):
         super().init_edit_widget(False)
         item_type_translate = translation_context(self.item_type,
                                                   category=u'plugin')
-        self.info = plugins.plugin_properties(self.item_type, _type=u'plugins')
-        # Process the help url, if specified
-        if u'help' in self.info:
-            self.help_url = self.info[u'help']
+        self.help_url = self.plugin_attribute('help')
         # Some options are required. Which options are requires depends on the
         # specific widget.
         required = [
@@ -62,7 +58,7 @@ class QtAutoPlugin(QtPlugin):
         # This indicates whether we should pad the controls with a stretch at
         # the end.
         need_stretch = True
-        for c in self.info[u'controls']:
+        for c in self.plugin_attribute('controls'):
             # Check whether all required options have been specified
             if u'type' not in c:
                 raise osexception(

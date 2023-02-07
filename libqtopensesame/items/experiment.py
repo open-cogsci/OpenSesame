@@ -20,7 +20,8 @@ from libopensesame.py3compat import *
 import os
 from libopensesame.experiment import Experiment as ExperimentRuntime
 from libopensesame.base_python_workspace import BasePythonWorkspace
-import libopensesame.plugins
+import opensesame_plugins
+from libqtopensesame.misc.qtplugin_manager import QtPluginManager
 from libqtopensesame.misc.qtitem_store import QtItemStore
 from libqtopensesame.misc.qtsyntax import QtSyntax
 from qtpy import QtCore, QtWidgets, QtGui
@@ -65,6 +66,7 @@ class Experiment(ExperimentRuntime):
         ]
         self.items = QtItemStore(self)
         self._syntax = QtSyntax(self)
+        self._plugin_manager = QtPluginManager(opensesame_plugins)
         super().__init__(name, string, pool_folder,
                          experiment_path=experiment_path, resources=resources,
                          fullscreen=None,
@@ -90,13 +92,11 @@ class Experiment(ExperimentRuntime):
         u'libqtopensesame.items'
         """
         return u'libqtopensesame.items'
-
+        
     def item_prefix(self):
         """
-        Specifies a prefix that should be added to classes for plugins.
-
-        Returns:
-        u'qt'
+        A prefix for the plug-in classes, so that [prefix][plugin] class is used
+        instead of the [plugin] class.
         """
         return u'qt'
 

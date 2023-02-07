@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from collections import OrderedDict
-from libopensesame import plugins
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.widgets.toolbar_items_label import ToolbarItemsLabel
@@ -91,8 +90,8 @@ class ToolbarItems(BaseSubcomponent, QtWidgets.QToolBar):
         # Create a dictionary of plugins by category. We also maintain a list
         # to preserve the order of the categories.
         cat_dict = OrderedDict()
-        for plugin in plugins.list_plugins(mode=self.main_window.mode):
-            cat = plugins.plugin_category(plugin)
+        for plugin in self.plugin_manager.filter(modes=self.main_window.mode):
+            cat = plugin['category']
             if cat not in cat_dict:
                 cat_dict[cat] = []
             cat_dict[cat].append(plugin)
@@ -104,8 +103,8 @@ class ToolbarItems(BaseSubcomponent, QtWidgets.QToolBar):
             content = []
             for plugin in cat_plugins:
                 oslogger.debug(u"adding plugin '%s'" % plugin)
-                pixmap = self.theme.qpixmap(plugins.plugin_icon_large(plugin))
-                content.append(ToolbarItemsItem(self, plugin, pixmap))
+                pixmap = self.theme.qpixmap(plugin.icon_large)
+                content.append(ToolbarItemsItem(self, plugin.name, pixmap))
             self.add_content(content)
 
     def collapse(self):
