@@ -17,9 +17,9 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from oscoroutines._item_task import item_task
-from oscoroutines._inline_task import inline_task
-from oscoroutines._tree_overview_adapter import tree_overview_adapter
-from oscoroutines._items_adapter import items_adapter
-from oscoroutines._coroutines import coroutines
-from oscoroutines._qtcoroutines import qtcoroutines
+from ._item_task import ItemTask
+from ._inline_task import InlineTask
+from ._tree_overview_adapter import TreeOverviewAdapter
+from ._items_adapter import ItemsAdapter
+from ._coroutines import Coroutines
+from ._qtcoroutines import QtCoroutines

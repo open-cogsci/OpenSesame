@@ -17,5 +17,5 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from oscoroutines._coroutines import coroutines
-from oscoroutines._qtcoroutines import qtcoroutines
+from .oscoroutines._coroutines import Coroutines
+from .oscoroutines._qtcoroutines import QtCoroutines

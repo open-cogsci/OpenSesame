@@ -17,28 +17,25 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libqtopensesame.widgets.tree_overview import tree_overview
+from libqtopensesame.widgets.tree_overview import TreeOverview
 
 
-class tree_overview_adapter(tree_overview):
-
+class TreeOverviewAdapter(TreeOverview):
     r"""Extends the tree overview so that it treats coroutines as sequences,
     and supports start and end times.
     """
+    
     def __init__(self, coroutines, main_window, overview_mode=True):
-        """See tree_overview."""
         self.coroutines = coroutines
-        super(tree_overview_adapter, self).__init__(main_window,
-                                                    overview_mode=overview_mode)
+        super().__init__(main_window, overview_mode=overview_mode)
 
     def text_edited(self, treeitem, col):
-        """See tree_overview."""
         # Renames and run-if edits are handled by the original tree overview,
         # which needs to be tricked into thinking that the coroutines item is
         # a sequence.
         if col in (0, 1):
             self.coroutines.item_type = u'sequence'
-            super(tree_overview_adapter, self).text_edited(treeitem, col)
+            super().text_edited(treeitem, col)
             self.coroutines.item_type = u'coroutines'
             return
         # Don't allow editing the times of the top-level coroutines

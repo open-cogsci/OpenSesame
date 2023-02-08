@@ -19,8 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 
-class items_adapter:
-
+class ItemsAdapter:
     r"""Gives an editable view on (item_name, start_time, end_time, cond) tuple
     (schedule) used by coroutines that funtions like an (item_name, cond) tuple
     as used by sequences.

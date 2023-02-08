@@ -1,3 +1,3 @@
 """OpenSesame core plug-ins"""
 
-__version__ = '4.0.0'
+from libopensesame.metadata import __version__

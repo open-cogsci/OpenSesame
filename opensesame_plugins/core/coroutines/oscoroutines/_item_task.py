@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from oscoroutines._base_task import base_task
+from ._base_task import BaseTask
 from libopensesame.item_stack import item_stack_singleton
 
 
-class item_task(base_task):
+class ItemTask(BaseTask):
 
     r"""A task controls the coroutine for one item."""
     def __init__(self, coroutines, _item, start_time, end_time,
@@ -38,8 +38,7 @@ class item_task(base_task):
             raise osexception(
                 u'%s not supported by coroutines' % _item.item_type)
         self._item = _item
-        base_task.__init__(self, coroutines, start_time,
-                           end_time, abort_on_end)
+        super().__init__(coroutines, start_time, end_time, abort_on_end)
         self.coroutines.event(u'initialize %s' % _item.coroutine)
 
     def step(self):

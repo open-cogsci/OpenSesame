@@ -20,7 +20,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception, AbortCoroutines
 
 
-class base_task:
+class BaseTask:
 
     r"""A task controls the coroutine for one item."""
     ALIVE = 0

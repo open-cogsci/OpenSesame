@@ -17,14 +17,11 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.item import item
-from oscoroutines import item_task, inline_task
+from libopensesame.item import Item
+from . import ItemTask, InlineTask
 
 
-class coroutines(item):
-
-    r"""The coroutines plugin runtime."""
-    description = u'Run items simultaneously'
+class Coroutines(Item):
 
     def reset(self):
         """See item."""
@@ -47,36 +44,15 @@ class coroutines(item):
         return u'\n'.join([u'%d: %s' % (t, msg) for t, msg in self._events])
 
     def is_coroutine(self, item_name):
-        """
-        arguments:
-                item_name:
-                        desc:	The name of an item.
-                        type:	str
-
-        returns:
-                desc:	True if the item is a coroutine, False otherwise.
-                type:	bool
-        """
         return hasattr(self.experiment.items[item_name], u'coroutine')
 
     def is_oneshot_coroutine(self, item_name):
-        """
-        arguments:
-                item_name:
-                        desc:	The name of an item.
-                        type:	str
-
-        returns:
-                desc:	True if the item is a one-shot coroutine, False otherwise.
-                type:	bool
-        """
         try:
             return self.experiment.items[item_name].is_oneshot_coroutine
         except AttributeError:
             return False
 
     def from_string(self, string):
-        """See item."""
         self.var.clear()
         self.comments = []
         self.reset()
@@ -95,8 +71,7 @@ class coroutines(item):
             self.schedule.append((item_name, start_time, end_time, cond))
 
     def to_string(self):
-        """See item."""
-        s = item.to_string(self)
+        s = super().to_string()
         for item_name, start_time, end_time, cond in self.schedule:
             # If the item doesn't exist yet, then we simply go with the times
             # from the schedule. This happens during loading, if the
@@ -115,14 +90,13 @@ class coroutines(item):
         return s
 
     def prepare(self):
-        """See item."""
-        item.prepare(self)
+        super().prepare()
         self.event('prepare coroutines')
         self._schedule = []
         for item_name, start_time, end_time, cond in self.schedule:
             if not self.python_workspace._eval(self.syntax.compile_cond(cond)):
                 continue
-            t = item_task(
+            t = ItemTask(
                 self, self.experiment.items[item_name],
                 self.syntax.auto_type(self.syntax.eval_text(start_time)),
                 self.syntax.auto_type(self.syntax.eval_text(end_time)),
@@ -130,8 +104,8 @@ class coroutines(item):
             )
             self._schedule.append(t)
         if self.var.function_name != u"":
-            t = inline_task(self, self.var.function_name, self.python_workspace,
-                            0, self.var.duration)
+            t = InlineTask(self, self.var.function_name, self.python_workspace,
+                           0, self.var.duration)
             self._schedule.append(t)
 
     def run(self):
@@ -188,7 +162,6 @@ class coroutines(item):
                    )
 
     def var_info(self):
-        """See item."""
         l = []
         l.append((u"coroutines_cycles", u"[Determined at runtime]"))
         l.append((u"coroutines_duration", u"[Determined at runtime]"))

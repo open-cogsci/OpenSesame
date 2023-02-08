@@ -18,11 +18,11 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
-from oscoroutines._base_task import base_task
+from ._base_task import BaseTask
 import inspect
 
 
-class inline_task(base_task):
+class InlineTask(BaseTask):
 
     r"""A task controls the coroutine for a Python generator function."""
     def __init__(self, coroutines, function_name, python_workspace, start_time,
@@ -36,7 +36,7 @@ class inline_task(base_task):
         python_workspace : python_workspace
             The python-workspace object.
         """
-        base_task.__init__(self, coroutines, start_time, end_time)
+        super().__init__(coroutines, start_time, end_time)
         self.function_name = function_name
         self.python_workspace = python_workspace
 
