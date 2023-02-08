@@ -1,8 +1,0 @@
-category: miscellaneous
-disabled: true
-controls:
-  - type: text
-    label: >
-      <b>Warning:</b> The text_input plug-in has been removed. To collect text
-      input, please use a form, as described on
-      <a href="http://osdoc.cogsci.nl/forms">http://osdoc.cogsci.nl/forms/</a>.
