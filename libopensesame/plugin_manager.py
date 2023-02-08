@@ -20,6 +20,7 @@ from libopensesame.py3compat import *
 import os
 import pkgutil
 import pathlib
+from openexp import resources
 from importlib import import_module
 from libopensesame import plugins  # deprecated
 from libopensesame.misc import camel_case
@@ -46,7 +47,7 @@ class Plugin:
         self.name = mod.__package__.split('.')[-1]
         self._mod = mod
         self._runtime_cls = None
-        self.folder = mod.__file__
+        self.folder = os.path.dirname(mod.__file__)
         # The main icon is set to the icon plugin attribute if available, and
         # otherwise to a [plugin_name].png file in the plugin folder
         self.icon = self._mod.icon if hasattr(self._mod, 'icon') \
@@ -73,6 +74,7 @@ class Plugin:
     
     def build(self, *args, **kwargs):
         if self._runtime_cls is None:
+            resources.add_resource_folder(self.folder)
             oslogger.debug(f'finding plugin runtime for {self.name}')
             mod = import_module(
                 f'{self._mod.__package__}.{self.name}')

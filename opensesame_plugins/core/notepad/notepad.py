@@ -17,21 +17,9 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.item import item
-from libqtopensesame.items.qtautoplugin import qtautoplugin
+from libopensesame.item import Item
 
 
-class notepad(item):
+class Notepad(Item):
 
-    """Notepad plug-in"""
-    description = \
-        u'A simple notepad to document your experiment. This plug-in does nothing.'
-
-
-class qtnotepad(notepad, qtautoplugin):
-
-    """Notepad plug-in GUI"""
-    def __init__(self, name, experiment, script=None):
-
-        notepad.__init__(self, name, experiment, script)
-        qtautoplugin.__init__(self, __file__)
+    pass

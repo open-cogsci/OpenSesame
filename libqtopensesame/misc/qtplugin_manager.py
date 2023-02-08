@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
+from openexp import resources
 from pathlib import Path
 from importlib import import_module
 from libopensesame.misc import camel_case
@@ -33,6 +34,7 @@ class QtPlugin(Plugin):
     
     def build(self, *args, **kwargs):
         if self._runtime_cls is None:
+            resources.add_resource_folder(self.folder)
             oslogger.debug(f'finding plugin gui class for {self.name}')
             mod = import_module(
                 f'{self._mod.__package__}.{self.name}')

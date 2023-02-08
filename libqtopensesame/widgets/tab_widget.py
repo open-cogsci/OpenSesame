@@ -286,7 +286,6 @@ class TabWidget(BaseSubcomponent, QtWidgets.QTabWidget):
         item
             The item for which help should be displayed.
         """
-        import os
         try:
             path = resources[f'{item}.md']
         except FileNotFoundError:
