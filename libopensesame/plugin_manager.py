@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from pathlib import Path
+import os
 import pkgutil
 import pathlib
 from importlib import import_module
@@ -27,35 +27,68 @@ from libopensesame.oslogging import oslogger
 
 
 class Plugin:
+    """An unloaded plugin or extension. This is created for each availabe
+    plugin or extension. An instance of the plugin or extension is created by
+    calling Plugin.build().
+
+    Attributes defined in the __init__.py of the plugin are available through
+    this class using dict syntax Plugin['icon'] and the `in` operator.
+    `Plugin.attribute()` allows you to specify a default value for the
+    attribute.
+
+    Parameters
+    ----------
+    mod: module
+        The module that contains the plugin
+    """
     
     def __init__(self, mod):
         self.name = mod.__package__.split('.')[-1]
         self._mod = mod
         self._runtime_cls = None
-        self.folder = Path(mod.__file__)
-        self.icon =  self.folder / f'{self.name}.png'
-        self.icon_large = self.folder / f'{self.name}_large.png'
-    
+        self.folder = mod.__file__
+        # The main icon is set to the icon plugin attribute if available, and
+        # otherwise to a [plugin_name].png file in the plugin folder
+        self.icon = self._mod.icon if hasattr(self._mod, 'icon') \
+            else os.path.join(self.folder, f'{self.name}.png')
+        # The large icon is set to the large_icon plugin attribute if
+        # available, and otherwise to the main icon if specified through an
+        # attribute and otherwise to a [plugin_name]_large.png file.
+        if hasattr(self._mod, 'icon_large'):
+            self.icon_large = self._mod.icon_large
+        elif hasattr(self._mod, 'icon'):
+            self.icon_large = self._mod.icon
+        else:
+            self.icon_large = os.path.join(self.folder,
+                                           f'{self.name}_large.png')
+            
+    def __contains__(self, attr):
+        return attr in self._mod.__dict__
+
     def __getitem__(self, attr):
-        return getattr(self._mod, attr)
+        return self._mod.__dict__[attr]
         
     def attribute(self, attr, default=None):
         return self._mod.__dict__.get(attr, default)
     
     def build(self, *args, **kwargs):
         if self._runtime_cls is None:
-            oslogger.info(f'finding plugin runtime for {self.name}')
+            oslogger.debug(f'finding plugin runtime for {self.name}')
             mod = import_module(
                 f'{self._mod.__package__}.{self.name}')
             if hasattr(mod, camel_case(self.name)):
                 self._runtime_cls = getattr(mod, camel_case(self.name))
             else:
                 self._runtime_cls = getattr(mod, self.name)
-        oslogger.info(f'building plugin gui for {self.name}')
+        oslogger.debug(f'building plugin gui for {self.name}')
         return self._runtime_cls(*args, **kwargs)
 
 
 class OldStylePlugin:
+    """An adapter that maps the new plugin API onto the old API (<= 3.3). To
+    maintain backwards compatibility with old plugins. This is deprecated and
+    will be removed in future versions.
+    """
     
     def __init__(self, name, type_):
         self.name = name
@@ -65,21 +98,31 @@ class OldStylePlugin:
         self.icon_large = plugins.plugin_icon_large(name, _type=self.type_)
         
     def __getitem__(self, attr):
-        return self.attribute(attr,
-                              default='default' if attr == 'modes' else None)
+        return self.attribute(attr, default=None)
         
     def attribute(self, attr, default=None):
         return plugins.plugin_property(self.name, attr, default=default, 
                                        _type=self.type_)
         
     def build(self, *args, **kwargs):
-        oslogger.info(f'building old-style plugin for {self.name}')
+        oslogger.debug(f'building old-style plugin for {self.name}')
         if self.type_ == 'plugins':
             return plugins.load_plugin(self.name, *args, **kwargs)
         return plugins.load_extension(self.name, *args, **kwargs)
 
 
 class PluginManager:
+    """A manager for unloaded plugins and extensions. This scans all available
+    plugins from a package (`pkg`) and provides access to these as Plugin
+    objects through a dict interface. `PluginManager.filter()` can be used
+    to iterate only through plugins that match on specific attributes.
+    
+    Parameters
+    ----------
+    pkg: module
+        A plugin or extension module, typically the result of
+        `import opensesame_extensions` or `import opensesame_plugins
+    """
     
     def __init__(self, pkg):
         self._plugins = {}
@@ -88,7 +131,7 @@ class PluginManager:
                 pkg.__path__, prefix=pkg.__name__ + '.'):
             if not ispkg:
                 continue
-            oslogger.info(f'found plugin package {name} in {importer.path}')
+            oslogger.debug(f'found plugin package {name} in {importer.path}')
             self._discover_subpkg(name)
         self._discover_oldstyle()
                 
@@ -98,7 +141,7 @@ class PluginManager:
                 pkg.__path__, prefix=name + '.'):
             if not ispkg:
                 continue
-            oslogger.info(f'found plugin {plugin_name} in {importer.path}')
+            oslogger.debug(f'found plugin {plugin_name} in {importer.path}')
             self._discover_plugin(plugin_name)
             
     def _discover_plugin(self, name):
@@ -115,10 +158,12 @@ class PluginManager:
     def filter(self, **kwargs):
         for plugin in self:
             for key, value in kwargs.items():
-                if isinstance(plugin[key], (list, tuple, set, dict)):
-                    if value in plugin[key]:
+                attr = plugin.attribute(
+                    key, default='default' if key == 'modes' else None)
+                if isinstance(attr, (list, tuple, set, dict)):
+                    if value in attr:
                         yield plugin
-                elif plugin[key] == value:
+                elif attr == value:
                     yield plugin
         
     def __contains__(self, name):

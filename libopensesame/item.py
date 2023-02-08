@@ -48,11 +48,15 @@ class Item:
         self.debug = oslogger.debug_mode
         self.count = 0
         self._get_lock = None
-        # Deduce item_type from class name
+        # Deduce item_type from class name. This takes into account that the
+        # class name can be CamelCase and may prefixed by Qt (QtCamelCase),
+        # whereas the item_type should always be snake_case without the qt 
+        # prefix.
         prefix = self.experiment.item_prefix()
-        self.item_type = snake_case(self.__class__.__name__)
-        if self.item_type.startswith(prefix.lower()):
+        self.item_type = self.__class__.__name__
+        if self.item_type.lower().startswith(prefix.lower()):
             self.item_type = self.item_type[len(prefix):]
+        self.item_type = snake_case(self.item_type)
         if not hasattr(self, u'description'):
             self.var.description = self.default_description
         else:

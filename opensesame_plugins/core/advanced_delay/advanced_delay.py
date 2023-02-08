@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libopensesame.item import Item
-from libqtopensesame.items.qtautoplugin import QtAutoPlugin
 import random
 
 
@@ -55,11 +54,3 @@ class AdvancedDelay(Item):
     def var_info(self):
         return super().var_info() + \
             [(f'delay_{self.name}', '[Determined at runtime]')]
-
-
-class QtAdvancedDelay(AdvancedDelay, QtAutoPlugin):
-
-    def __init__(self, name, experiment, script=None):
-
-        AdvancedDelay.__init__(self, name, experiment, script)
-        QtAutoPlugin.__init__(self, __file__)

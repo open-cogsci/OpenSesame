@@ -81,6 +81,7 @@ def safe_yaml_load(s):
 
 safe_str = safe_decode
 safe_open = functools.partial(open, encoding=u'utf-8')
+basestring = str  # deprecated
 
 __all__ = [
     'py3',
@@ -90,4 +91,5 @@ __all__ = [
     'safe_read',
     'safe_open',
     'safe_yaml_load',
+    'basestring'  # deprecated
 ]

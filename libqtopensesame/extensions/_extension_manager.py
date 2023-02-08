@@ -66,7 +66,7 @@ class ExtensionManager(BaseSubcomponent):
         for ulext in self.unloaded_extension_manager.filter(
                 modes=self.main_window.mode):
             if extension_filter(ulext.name):
-                oslogger.info(u'filtering extension {}'.format(ulext.name))
+                oslogger.debug(u'filtering extension {}'.format(ulext.name))
                 continue
             try:
                 ext = ulext.build(self.main_window)
@@ -85,7 +85,7 @@ class ExtensionManager(BaseSubcomponent):
 
     def register_extension(self, ext):
 
-        oslogger.info(f'installing extension {ext.name()}')
+        oslogger.debug(f'installing extension {ext.name()}')
         for event in ext.supported_events():
             if event not in self.events:
                 self.events[event] = []
