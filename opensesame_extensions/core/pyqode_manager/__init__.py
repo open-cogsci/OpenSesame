@@ -41,4 +41,4 @@ settings = {
     "pyqode_shortcut_swap_line_down": "Ctrl+Down",
     "pyqode_shortcut_toggle_breakpoint": "F12"
 }
-modes: ["default", "ide"]
+modes = ["default", "ide"]

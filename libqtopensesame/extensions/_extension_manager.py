@@ -110,7 +110,7 @@ class ExtensionManager(BaseSubcomponent):
         base_extension
         """
         for ext in self._extensions:
-            if ext.name() == extension_name:
+            if extension_name in ext.aliases:
                 return ext
         raise osexception(u'Extension %s does not exist' % extension_name)
 
@@ -124,7 +124,7 @@ class ExtensionManager(BaseSubcomponent):
         returns:
                 True if the extension exists, False otherwise.
         """
-        return any(ext.name() == extension_name for ext in self._extensions)
+        return any(extension_name in ext.aliases for ext in self._extensions)
 
     def fire(self, event, **kwdict):
         r"""Fires an event to all extensions that support the event.

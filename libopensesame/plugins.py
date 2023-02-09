@@ -276,16 +276,6 @@ def list_plugins(filter_disabled=True, _type=u'plugins', mode=u'default'):
         for folder in plugin_folders(_type=_type):
             for plugin in os.listdir(folder):
                 if is_plugin(plugin, _type=_type):
-                    if mode not in plugin_property(
-                            plugin,
-                            u'modes',
-                            default=[u'default'],
-                            _type=_type
-                    ):
-                        oslogger.debug(
-                            '{} does not support mode {}'.format(plugin, mode)
-                        )
-                        continue
                     _plugin = plugin, plugin_property(
                         plugin, u'priority',
                         _type=_type

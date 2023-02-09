@@ -24,7 +24,7 @@ from collections import OrderedDict
 from openexp import resources
 from importlib import import_module
 from libopensesame import plugins  # deprecated
-from libopensesame.misc import camel_case
+from libopensesame.misc import camel_case, snake_case
 from libopensesame.oslogging import oslogger
 
 
@@ -130,6 +130,7 @@ class PluginManager:
     def __init__(self, pkg):
         self._plugins = OrderedDict()
         self._pkg = pkg
+        self._aliases = {}
         for importer, name, ispkg in pkgutil.iter_modules(
                 pkg.__path__, prefix=pkg.__name__ + '.'):
             if not ispkg:
@@ -142,7 +143,7 @@ class PluginManager:
         self._plugins = OrderedDict(
             sorted(self._plugins.items(),
                    key=lambda plugin: -plugin[1].attribute('priority', 0)))
-                
+        
     def _discover_subpkg(self, name):
         pkg = import_module(name)
         for importer, plugin_name, ispkg in pkgutil.iter_modules(
@@ -154,24 +155,37 @@ class PluginManager:
             
     def _discover_plugin(self, name):
         plugin = self.plugin_cls(import_module(name))
-        if plugin.name in self._plugins:
+        if plugin.name in self._aliases:
             oslogger.warning(
                 f'duplicate plugin: {plugin.name} at {plugin.folder} '
-                f'already found at {self._plugins[plugin.name].folder}')
+                f'already found at '
+                f'{self._plugins[self._aliases[plugin.name]].folder}')
             return
         self._plugins[plugin.name] = plugin
+        # We remember the plugin under various aliases, which are either
+        # specified as a plugin attribute, or derived by turning the name into
+        # snake_case or CamelCase if it wasn't already.
+        self._aliases[plugin.name] = plugin.name
+        for alias in plugin.attribute('aliases', []):
+            self._aliases[alias] = plugin.name
+        if plugin.name.islower():
+            self._aliases[camel_case(plugin.name)] = plugin.name
+        else:
+            self._aliases[snake_case(plugin.name)] = plugin.name
         
     def _discover_oldstyle(self):
         type_ = 'plugins' if self._pkg.__name__ == 'opensesame_plugins' \
             else 'extensions'
         for plugin_name in plugins.list_plugins(_type=type_):
-            oslogger.warning(
-                f'found deprecated old-style plugin {plugin_name}')
+            oslogger.warning(f'found deprecated old-style plugin '
+                             f'{plugin_name} in '
+                             f'{plugins.plugin_folder(plugin_name, _type=type_)}')
             plugin = self.oldstyle_plugin_cls(plugin_name, type_)
-            if plugin.name in self._plugins:
+            if plugin.name in self._aliases:
                 oslogger.warning(
                     f'duplicate plugin: {plugin.name} at {plugin.folder} '
-                    f'already found at {self._plugins[plugin.name].folder}')
+                    f'already found at '
+                    f'{self._plugins[self._aliases[plugin.name]].folder}')
                 continue
             self._plugins[plugin.name] = plugin
         

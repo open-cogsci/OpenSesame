@@ -22,7 +22,7 @@ import time
 import functools
 from qtpy import QtWidgets, QtCore
 from openexp import resources
-from libopensesame.misc import snake_case
+from libopensesame.misc import snake_case, camel_case
 from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 from libqtopensesame.misc.config import cfg
@@ -64,6 +64,16 @@ class BaseExtension(BaseSubcomponent):
         self.register_ui_files()
         self.create_action()
         self.register_config()
+        # Store of aliases so that we can still call the extension by its old
+        # name if it has been renamed, e.g. OpenSesameIDE (old) for
+        # opensesame_ide (new).
+        name = self.name()
+        self.aliases = [name]
+        self.aliases += self.extension_attribute('aliases', [])
+        if name.islower():
+            self.aliases.append(camel_case(name))
+        else:
+            self.aliases.append(snake_case(name))
 
     @staticmethod
     def as_thread(wait):
