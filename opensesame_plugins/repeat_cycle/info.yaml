@@ -1,9 +1,0 @@
-category: Flow control
-description: Marks the current loop cycle so that it is repeated
-icon: os-repeat_cycle
-controls:
--
-    label: Repeat if
-    tooltip: A conditional statement that determines when the cycle is repeated
-    type: line_edit
-    var: condition

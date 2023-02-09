@@ -46,22 +46,8 @@ class Plugin:
     def __init__(self, mod):
         self.name = mod.__package__.split('.')[-1]
         self._mod = mod
-        self._runtime_cls = None
+        self._cls = None
         self.folder = os.path.dirname(mod.__file__)
-        # The main icon is set to the icon plugin attribute if available, and
-        # otherwise to a [plugin_name].png file in the plugin folder
-        self.icon = self._mod.icon if hasattr(self._mod, 'icon') \
-            else os.path.join(self.folder, f'{self.name}.png')
-        # The large icon is set to the large_icon plugin attribute if
-        # available, and otherwise to the main icon if specified through an
-        # attribute and otherwise to a [plugin_name]_large.png file.
-        if hasattr(self._mod, 'icon_large'):
-            self.icon_large = self._mod.icon_large
-        elif hasattr(self._mod, 'icon'):
-            self.icon_large = self._mod.icon
-        else:
-            self.icon_large = os.path.join(self.folder,
-                                           f'{self.name}_large.png')
             
     def __contains__(self, attr):
         return attr in self._mod.__dict__
@@ -73,17 +59,25 @@ class Plugin:
         return self._mod.__dict__.get(attr, default)
     
     def build(self, *args, **kwargs):
-        if self._runtime_cls is None:
+        if self._cls is None:
             resources.add_resource_folder(self.folder)
             oslogger.debug(f'finding plugin runtime for {self.name}')
             mod = import_module(
                 f'{self._mod.__package__}.{self.name}')
-            if hasattr(mod, camel_case(self.name)):
-                self._runtime_cls = getattr(mod, camel_case(self.name))
-            else:
-                self._runtime_cls = getattr(mod, self.name)
+            self._cls = self._get_cls(mod)
+            if not hasattr(self._cls, 'description'):
+                self._cls.description = self._get_description()
         oslogger.debug(f'building plugin gui for {self.name}')
-        return self._runtime_cls(*args, **kwargs)
+        return self._cls(*args, **kwargs)
+        
+    def _get_description(self):
+        return self._mod.__doc__
+        
+    def _get_cls(self, mod):
+        
+        if hasattr(mod, camel_case(self.name)):
+            return getattr(mod, camel_case(self.name))
+        return getattr(mod, self.name)
 
 
 class OldStylePlugin:
@@ -96,8 +90,6 @@ class OldStylePlugin:
         self.name = name
         self.type_ = type_
         self.folder = plugins.plugin_folder(name, _type=self.type_)
-        self.icon = plugins.plugin_icon_small(name, _type=self.type_)
-        self.icon_large = plugins.plugin_icon_large(name, _type=self.type_)
         
     def __getitem__(self, attr):
         return self.attribute(attr, default=None)
@@ -118,13 +110,18 @@ class PluginManager:
     plugins from a package (`pkg`) and provides access to these as Plugin
     objects through a dict interface. `PluginManager.filter()` can be used
     to iterate only through plugins that match on specific attributes.
-    
+
     Parameters
     ----------
     pkg: module
         A plugin or extension module, typically the result of
         `import opensesame_extensions` or `import opensesame_plugins
     """
+    
+    # These class attributes define which classes should be instantiated for
+    # the plugins
+    plugin_cls = Plugin
+    oldstyle_plugin_cls = OldStylePlugin
     
     def __init__(self, pkg):
         self._plugins = {}
@@ -147,15 +144,27 @@ class PluginManager:
             self._discover_plugin(plugin_name)
             
     def _discover_plugin(self, name):
-        plugin = Plugin(import_module(name))
+        plugin = self.plugin_cls(import_module(name))
+        if plugin.name in self._plugins:
+            oslogger.warning(
+                f'duplicate plugin: {plugin.name} at {plugin.folder} '
+                f'already found at {self._plugins[plugin.name].folder}')
+            return
         self._plugins[plugin.name] = plugin
         
     def _discover_oldstyle(self):
         type_ = 'plugins' if self._pkg.__name__ == 'opensesame_plugins' \
             else 'extensions'
         for plugin_name in plugins.list_plugins(_type=type_):
-            oslogger.warning(f'found deprecated old-style plugin {plugin_name}')
-            self._plugins[plugin_name] = OldStylePlugin(plugin_name, type_)
+            oslogger.warning(
+                f'found deprecated old-style plugin {plugin_name}')
+            plugin = self.oldstyle_plugin_cls(plugin_name, type_)
+            if plugin.name in self._plugins:
+                oslogger.warning(
+                    f'duplicate plugin: {plugin.name} at {plugin.folder} '
+                    f'already found at {self._plugins[plugin.name].folder}')
+                continue
+            self._plugins[plugin.name] = plugin
         
     def filter(self, **kwargs):
         for plugin in self:

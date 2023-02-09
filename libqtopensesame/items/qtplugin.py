@@ -72,19 +72,17 @@ class QtPlugin(QtItem):
 
     def init_item_icon(self):
 
-        icon = self.plugin_attribute('icon')
-        if icon is not None:
+        # If the icon is not a file, then it corresponds to a theme icon
+        icon = self.plugin_manager[self.item_type].icon
+        if not os.path.isfile(icon):
             self.qicon = self.theme.qicon(icon)
             return
-        icon16 = os.path.join(
-            self.plugin_folder, u'%s.png' % self.item_type)
-        icon32 = os.path.join(
-            self.plugin_folder, u'%s_large.png' % self.item_type)
-        resources[u'%s.png' % self.item_type] = icon16
-        resources[u'%s_large.png' % self.item_type] = icon32
+        # Otherwise it is specified through two pngs, one for small and one for
+        # large
+        icon_large = self.plugin_manager[self.item_type].icon_large
         self.qicon = QtGui.QIcon()
-        self.qicon.addFile(icon16, QtCore.QSize(16, 16))
-        self.qicon.addFile(icon32, QtCore.QSize(32, 32))
+        self.qicon.addFile(icon, QtCore.QSize(16, 16))
+        self.qicon.addFile(icon_large, QtCore.QSize(32, 32))
 
     def item_icon(self):
         """

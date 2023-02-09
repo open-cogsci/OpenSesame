@@ -32,7 +32,11 @@ class QtAutoPlugin(QtPlugin):
         super().init_edit_widget(False)
         item_type_translate = translation_context(self.item_type,
                                                   category=u'plugin')
-        self.help_url = self.plugin_attribute('help')
+        # The help url should be specified as `help_url`. However, old-style
+        # plugins used `help`.
+        self.help_url = self.plugin_attribute('help_url')
+        if self.help_url is None:
+            self.help_url = self.plugin_attribute('help')
         # Some options are required. Which options are requires depends on the
         # specific widget.
         required = [

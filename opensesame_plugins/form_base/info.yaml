@@ -1,6 +1,0 @@
-category: Form
-help: manual/forms/custom
-controls:
-  - label: "Edit the script to modify the form"
-    type: text
-icon: os-form_base

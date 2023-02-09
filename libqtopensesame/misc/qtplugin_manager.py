@@ -17,14 +17,15 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
+import os
 from openexp import resources
-from pathlib import Path
 from importlib import import_module
 from libopensesame.misc import camel_case
 from libopensesame import plugins  # deprecated
 from libopensesame.plugin_manager import OldStylePlugin, Plugin, PluginManager
 from libopensesame.oslogging import oslogger
 from libqtopensesame.items.qtautoplugin import QtAutoPlugin
+from libqtopensesame.misc.translate import translation_context
 
 
 class QtPlugin(Plugin):
@@ -32,36 +33,57 @@ class QtPlugin(Plugin):
     plugin or extension.
     """
     
-    def build(self, *args, **kwargs):
-        if self._runtime_cls is None:
-            resources.add_resource_folder(self.folder)
-            oslogger.debug(f'finding plugin gui class for {self.name}')
-            mod = import_module(
-                f'{self._mod.__package__}.{self.name}')
-            cls_name = f'Qt{camel_case(self.name)}'
-            if hasattr(mod, cls_name):
-                self._runtime_cls = getattr(mod, cls_name)
-            else:
-                oslogger.info(
-                    f'dynamically creating plugin gui class for {self.name}')
-                Runtime = getattr(mod, camel_case(self.name))
-                
-                def cls_init(self, name, experiment, script=None):
-                    Runtime.__init__(self, name, experiment, script)
-                    QtAutoPlugin.__init__(self, __file__)
-                    
-                self._runtime_cls = type(cls_name, (Runtime, QtAutoPlugin),
-                                         {'__init__': cls_init})
-            if not hasattr(self._runtime_cls, 'description'):
-                self._runtime_cls.description = self._mod.__doc__
-        oslogger.info(f'building plugin gui for {self.name}')
-        return self._runtime_cls(*args, **kwargs)
+    def __init__(self, mod):
+        super().__init__(mod)
+        # The main icon is set to the icon plugin attribute if available, and
+        # otherwise to a [plugin_name].png file in the plugin folder
+        self.icon = self._mod.icon if hasattr(self._mod, 'icon') \
+            else os.path.join(self.folder, f'{self.name}.png')
+        # The large icon is set to the large_icon plugin attribute if
+        # available, and otherwise to the main icon if specified through an
+        # attribute and otherwise to a [plugin_name]_large.png file.
+        if hasattr(self._mod, 'icon_large'):
+            self.icon_large = self._mod.icon_large
+        elif hasattr(self._mod, 'icon'):
+            self.icon_large = self._mod.icon
+        else:
+            self.icon_large = os.path.join(self.folder,
+                                           f'{self.name}_large.png')
+            
+    def _get_description(self):
+        # We translate the description
+        _ = translation_context(self.name, category='plugin')
+        return _(super()._get_description())
+    
+    def _get_cls(self, mod):
+        # If there is a class named Qt[PluginName], then is assumed to be
+        # the GUI class
+        cls_name = f'Qt{camel_case(self.name)}'
+        if hasattr(mod, cls_name):
+            return getattr(mod, cls_name)
+        # Otherwise, we dynamically create a class that inherits from the
+        # plugin runtime class and QtAutoPlugin. We also specify a custom
+        # __init__() function that calls the parent constructors correclty.
+        oslogger.info(
+            f'dynamically creating plugin gui class for {self.name}')
+        Runtime = getattr(mod, camel_case(self.name))
         
+        def cls_init(self, name, experiment, script=None):
+            Runtime.__init__(self, name, experiment, script)
+            QtAutoPlugin.__init__(self, __file__)
+            
+        return type(cls_name, (Runtime, QtAutoPlugin), {'__init__': cls_init})
+
 
 class QtOldStylePlugin(OldStylePlugin):
     """An extenion of the OldStylePlugin class that loads the Qt interface of a
     plugin or extension. This is deprecated and will be removed.
     """
+    
+    def __init__(self, name, type_):
+        super().__init__(name, type_)
+        self.icon = plugins.plugin_icon_small(name, _type=self.type_)
+        self.icon_large = plugins.plugin_icon_large(name, _type=self.type_)
     
     def build(self, *args, **kwargs):
         oslogger.debug(f'building old-style plugin gui for {self.name}')
@@ -71,20 +93,9 @@ class QtOldStylePlugin(OldStylePlugin):
 
 
 class QtPluginManager(PluginManager):
-    """An etxenion of the PluginManager that provdes access to the Qt
+    """An extension of the PluginManager that provdes access to the Qt
     interfaces of plugins and extensions.
     """
-
-    def _discover_plugin(self, name):
-        plugin = QtPlugin(import_module(name))
-        self._plugins[plugin.name] = plugin
-
-    def _discover_oldstyle(self):
-        type_ = 'plugins' if self._pkg.__name__ == 'opensesame_plugins' \
-            else 'extensions'
-        for plugin_name in plugins.list_plugins(_type=type_):
-            oslogger.warning(f'found deprecated old-style plugin {plugin_name}')
-            if plugin_name in self._plugins:
-                oslogger.warning(f'plugin {plugin_name} already found')
-                continue
-            self._plugins[plugin_name] = QtOldStylePlugin(plugin_name, type_)
+    
+    plugin_cls = QtPlugin
+    oldstyle_plugin_cls = QtOldStylePlugin

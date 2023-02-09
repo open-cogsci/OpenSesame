@@ -17,24 +17,20 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
+from libopensesame.item import Item
 
-from libopensesame.widgets._button import Button
-from libopensesame.widgets._checkbox import Checkbox
-from libopensesame.widgets._form import Form
-from libopensesame.widgets._image import Image
-from libopensesame.widgets._image_button import ImageButton
-from libopensesame.widgets._label import Label
-from libopensesame.widgets._rating_scale import RatingScale
-from libopensesame.widgets._text_input import TextInput
-from libopensesame.widgets._widget import Widget
 
-# alias for backwards compatibility
-button = Button
-checkbox = Checkbox
-form = Form
-image = Image
-image_button = ImageButton
-label = Label
-rating_scale = RatingScale
-text_input = TextInput
-widget = Widget
+class QuestStaircaseNext(Item):
+
+    def reset(self):
+        self.var.response_var = u'correct'
+
+    def run(self):
+        resp = self.var.get(self.var.response_var)
+        try:
+            resp = int(resp)
+        except (ValueError, TypeError):
+            # Don't process non-float responses
+            return
+        self.experiment.quest.update(self.var.quest_test_value, resp)
+        self.experiment.quest_set_next_test_value()
