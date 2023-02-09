@@ -20,6 +20,7 @@ from libopensesame.py3compat import *
 import os
 import pkgutil
 import pathlib
+from collections import OrderedDict
 from openexp import resources
 from importlib import import_module
 from libopensesame import plugins  # deprecated
@@ -47,6 +48,9 @@ class Plugin:
         self.name = mod.__package__.split('.')[-1]
         self._mod = mod
         self._cls = None
+        self._type = 'plugins' if \
+            self._mod.__package__.startswith('opensesame_plugins') else \
+            'extensions'
         self.folder = os.path.dirname(mod.__file__)
             
     def __contains__(self, attr):
@@ -124,7 +128,7 @@ class PluginManager:
     oldstyle_plugin_cls = OldStylePlugin
     
     def __init__(self, pkg):
-        self._plugins = {}
+        self._plugins = OrderedDict()
         self._pkg = pkg
         for importer, name, ispkg in pkgutil.iter_modules(
                 pkg.__path__, prefix=pkg.__name__ + '.'):
@@ -133,6 +137,11 @@ class PluginManager:
             oslogger.debug(f'found plugin package {name} in {importer.path}')
             self._discover_subpkg(name)
         self._discover_oldstyle()
+        # Sort all plugins by their priority, such that high priority values
+        # come first
+        self._plugins = OrderedDict(
+            sorted(self._plugins.items(),
+                   key=lambda plugin: -plugin[1].attribute('priority', 0)))
                 
     def _discover_subpkg(self, name):
         pkg = import_module(name)

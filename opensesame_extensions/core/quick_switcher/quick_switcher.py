@@ -17,28 +17,25 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
-from qtpy import QtWidgets
+from libqtopensesame.extensions import BaseExtension
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'quick_switcher', category=u'extension')
 
 
-class BaseWidget(QtWidgets.QWidget, BaseSubcomponent):
-    r"""A base class for widgets.
+class QuickSwitcher(BaseExtension):
 
-    Parameters
-    -----------
-    main_window : QtOpenSesame
-    ui : str, optional
-        An id for a user-interface file, for example 'dialogs.quick_switcher'.
-    *arglist:
-        passed onto parent constructors.
-    *kwdict:
-        passed onto parent constructors.
-    """
-    
-    def __init__(self, main_window, ui=None, *arglist, **kwdict):
-        super().__init__(main_window, *arglist, **kwdict)
-        self.setup(main_window, ui=ui)
+    r"""The quick-switcher allows you to quickly navigate to items."""
+    def activate(self):
 
-
-# Alias for backwards compatibility
-base_widget = BaseWidget
+        haystack = []
+        for item in self.experiment.items.values():
+            haystack.append((
+                u'{} ({})'.format(item.name, item.item_type),
+                item,
+                item.open_tab
+            ))
+        self.extension_manager.fire(
+            u'quick_select',
+            haystack=haystack,
+            placeholder_text=_(u'Search items …')
+        )

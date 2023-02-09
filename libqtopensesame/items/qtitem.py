@@ -285,7 +285,8 @@ class QtItem:
     @wait_cursor
     def init_script_widget(self):
 
-        from pyqode_extras.widgets import OpenSesameCodeEdit
+        from libqtopensesame.pyqode_extras.widgets import \
+            OpenSesameCodeEdit
 
         oslogger.debug(u'initializing script widget for {}'.format(self.name))
         self._script_widget = OpenSesameCodeEdit(self.main_window)

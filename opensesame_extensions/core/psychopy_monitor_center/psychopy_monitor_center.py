@@ -17,28 +17,18 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
-from qtpy import QtWidgets
+import warnings
+from libqtopensesame.extensions import BaseExtension
 
 
-class BaseWidget(QtWidgets.QWidget, BaseSubcomponent):
-    r"""A base class for widgets.
+class PsychopyMonitorCenter(BaseExtension):
 
-    Parameters
-    -----------
-    main_window : QtOpenSesame
-    ui : str, optional
-        An id for a user-interface file, for example 'dialogs.quick_switcher'.
-    *arglist:
-        passed onto parent constructors.
-    *kwdict:
-        passed onto parent constructors.
-    """
-    
-    def __init__(self, main_window, ui=None, *arglist, **kwdict):
-        super().__init__(main_window, *arglist, **kwdict)
-        self.setup(main_window, ui=ui)
-
-
-# Alias for backwards compatibility
-base_widget = BaseWidget
+    r"""Launches the PsychoPy monitor center."""
+    def activate(self):
+        r"""Is called when the extension is activated through the menu/ toolbar
+        action.
+        """
+        from psychopy.monitors.MonitorCenter import MonitorCenter
+        with warnings.catch_warnings(record=True) as w:
+            app = MonitorCenter(0)
+        app.MainLoop()

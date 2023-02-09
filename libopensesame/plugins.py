@@ -450,10 +450,7 @@ def load_extension(ext_name, main_window):
     sys.path.append(plugin_folder(ext_name, _type=u'extensions'))
     mod = import_plugin(ext_name, _type=u'extensions')
     cls = getattr(mod, ext_name)
-    ext = cls(
-        main_window,
-        info=plugin_properties(ext_name, _type=u'extensions')
-    )
+    ext = cls(main_window)
     set_plugin_property(ext_name, u'startup_time', time.time() - t0)
     return ext
 

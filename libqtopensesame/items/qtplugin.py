@@ -392,11 +392,14 @@ class QtPlugin(QtItem):
         """
         if syntax:
             if language == 'python':
-                from pyqode_extras.widgets import PythonCodeEdit as CodeEdit
+                from libqtopensesame.pyqode_extras.widgets import \
+                    PythonCodeEdit as CodeEdit
             else:
-                from pyqode_extras.widgets import FallbackCodeEdit as CodeEdit
+                from libqtopensesame.pyqode_extras.widgets import \
+                    FallbackCodeEdit as CodeEdit
         else:
-            from pyqode_extras.widgets import TextCodeEdit as CodeEdit
+            from libqtopensesame.pyqode_extras.widgets import \
+                TextCodeEdit as CodeEdit
         editor = CodeEdit(self.main_window)
         if syntax and language != 'python':
             editor.setPlainText(

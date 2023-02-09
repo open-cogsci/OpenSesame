@@ -34,7 +34,7 @@ class GeneralScriptEditor(BaseWidget):
         main_window
             A qtopensesame object.
         """
-        from pyqode_extras.widgets import OpenSesameCodeEdit
+        from libqtopensesame.pyqode_extras.widgets import OpenSesameCodeEdit
         super().__init__(main_window, ui=u'widgets.general_script_editor')
         self.ui.editor = OpenSesameCodeEdit()
         self.extension_manager.fire(

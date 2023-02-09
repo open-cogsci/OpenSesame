@@ -22,6 +22,7 @@ import time
 import functools
 from qtpy import QtWidgets, QtCore
 from openexp import resources
+from libopensesame.misc import snake_case
 from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception
 from libqtopensesame.misc.config import cfg
@@ -35,7 +36,7 @@ class BaseExtension(BaseSubcomponent):
     extension_filter = None
     preferences_ui = None
 
-    def __init__(self, main_window, info={}):
+    def __init__(self, main_window, info=None):
         r"""Constructor.
 
         Parameters
@@ -43,17 +44,23 @@ class BaseExtension(BaseSubcomponent):
         main_window
             The main-window object.
         info, optional
-            A dictionary with extension properties that have been read from
-            info.[json|txt].
+            deprecated
         """
         oslogger.debug(u'creating %s' % self.name())
+        if info is not None:
+            oslogger.warning('the info keyword is deprecated')
         if main_window.options.profile:
             # Use a special fire() function that keeps track of durations
             self._event_durations = {}
             self.fire = self._fire_and_time
         self._ = translation_context(self.name(), category=u'extension')
-        self.info = info
         self.setup(main_window)
+        if self.name() in self.unloaded_extension_manager:
+            self._unloaded_extension = \
+                self.unloaded_extension_manager[self.name()]
+        else:
+            self._unloaded_extension = \
+                self.unloaded_extension_manager[snake_case(self.name())]
         self.register_ui_files()
         self.create_action()
         self.register_config()
@@ -64,66 +71,48 @@ class BaseExtension(BaseSubcomponent):
         after a delay.
         """
         def inner(fnc):
-
             def innermost(self, *args, **kwargs):
-
-                QtCore.QTimer.singleShot(
-                    wait,
-                    functools.partial(fnc, self, *args, **kwargs)
-                )
-
+                QtCore.QTimer.singleShot(wait,
+                    functools.partial(fnc, self, *args, **kwargs))
             return innermost
-
         return inner
 
     @property
     def console(self):
-
         return self.main_window.console
 
     @property
     def menubar(self):
-        """
-        returns:
-                desc:    Gives the menubar.
-                type:    QMenuBar
-        """
         return self.main_window.menuBar()
 
     @property
     def toolbar(self):
-        """
-        returns:
-                desc:    Gives the main toolbar.
-                type:    QToolBar
-        """
         return self.main_window.ui.toolbar_main
 
     @property
     def tabwidget(self):
-        """
-        returns:
-                desc:    Gives the tab widget.
-                type:    QTabWidget
-        """
         return self.main_window.ui.tabwidget
 
     @property
     def statusbar(self):
-        """
-        returns:
-                desc:    Gives the statusbar.
-                type:    QStatusBar
-        """
         return self.main_window.statusBar()
 
     @property
     def set_busy(self):
-        """
-        returns:
-                desc:    A shortcut to `qtopensesame.set_busy`.
-        """
         return self.main_window.set_busy
+    
+    @property
+    def extension_attribute(self):
+        return self._unloaded_extension.attribute
+    
+    @property
+    def extension_folder(self):
+        return self._unloaded_extension.folder
+    
+    def folder(self):
+        oslogger.warning('BaseExtension.folder() is deprecated, use '
+                         'BaseExtension.extension_folder instead')
+        return self._unloaded_extension.folder
 
     def label(self):
         r"""Gives the label that is used for the menu and toolbar entry.
@@ -136,7 +125,7 @@ class BaseExtension(BaseSubcomponent):
             A label text or None.
         """
         if not hasattr(self, '_label'):
-            label = self.info.get(u'label', None)
+            label = self.extension_attribute('label', None)
             self._label = None if label is None else self._(label)
         return self._label
 
@@ -151,7 +140,7 @@ class BaseExtension(BaseSubcomponent):
             A tooltip text.
         """
         if not hasattr(self, '_tooltip'):
-            tooltip = self._(self.info.get(u'tooltip', None))
+            tooltip = self._(self.extension_attribute(u'tooltip', None))
             if not tooltip:
                 self._tooltip = None
             else:
@@ -171,7 +160,7 @@ class BaseExtension(BaseSubcomponent):
         -------
         bool
         """
-        return self.info.get(u'checkable', False)
+        return self.extension_attribute(u'checkable', False)
 
     def set_checked(self, checked):
         r"""Sets the checked status of the action. If there is no action, or if
@@ -209,7 +198,7 @@ class BaseExtension(BaseSubcomponent):
         unicode
             The name of an icon.
         """
-        return self.info.get(u'icon', u'applications-utilities')
+        return self.extension_attribute(u'icon', u'applications-utilities')
 
     def shortcut(self):
         r"""Gives the keyboard shortcut that activates the extension. Normally,
@@ -222,7 +211,7 @@ class BaseExtension(BaseSubcomponent):
         unicode
             The keyboard shortcut.
         """
-        return self.info.get(u'shortcut', None)
+        return self.extension_attribute(u'shortcut', None)
 
     def menu_pos(self):
         r"""Describes the position of the extension in the menu. Normally, this
@@ -235,7 +224,7 @@ class BaseExtension(BaseSubcomponent):
             A (submenu, menuindex, separator_before, separator_after) tuple, or
             None if the extension has no menu entry.
         """
-        menu_pos = self.info.get(u'menu', None)
+        menu_pos = self.extension_attribute(u'menu', None)
         if menu_pos is None:
             return None
         return (menu_pos.get(u'submenu', None),
@@ -254,7 +243,7 @@ class BaseExtension(BaseSubcomponent):
             An (index, separator_before, separator_after) tuple, or None if the
             extension has no toolbar entry.
         """
-        toolbar_pos = self.info.get(u'toolbar', None)
+        toolbar_pos = self.extension_attribute(u'toolbar', None)
         if toolbar_pos is None:
             return None
         return (toolbar_pos.get(u'index', -1),
@@ -340,51 +329,22 @@ class BaseExtension(BaseSubcomponent):
             setattr(self.main_window.ui, menu_name, menu)
         return getattr(self.main_window.ui, menu_name)
 
-    def folder(self):
-        """
-        returns:
-                desc:    The folder of the extension.
-                type:    unicode
-        """
-        return self.info[u'plugin_folder']
-
     def register_ui_files(self):
         r"""Registers all .ui files in the extension folder so that they can be
         retrieved as extensions.[extension name].[ui name].
         """
-        for path in os.listdir(self.info[u'plugin_folder']):
+        for path in os.listdir(self.extension_folder):
             if path.endswith(u'.ui'):
-                resources[f'extensions.{self.name()}.{os.path.splitext(path)[0]}'] \
-                    = os.path.join(self.info[u'plugin_folder'], path)
+                basename = os.path.splitext(path)[0]
+                resource_path = os.path.join(self.extension_folder, path)
+                name = self.name()
+                if not name.islower():
+                    name = snake_case(name)
+                resources[f'extensions.{name}.{basename}'] = resource_path
 
     def qaction(self, icon, label, target, checkable=False, tooltip=None,
                 shortcut=None):
-        """
-        arguments:
-                icon:
-                        desc:    An icon name.
-                        type:    str
-                label:
-                        desc:    A label
-                        type:    str
-                target:
-                        desc:    A function to be called when the action is triggered.
-                        type:    FunctionType
-
-        keywords:
-                checkable:
-                        desc:    The checkable status of the action.
-                        type:    bool
-                tooltip:
-                        desc:    A tooltip, or None for no tooltip.
-                        type:    [str, Nonetype]
-                shortcut:
-                        desc:    A keyboard shortcut, or None for no shortcut.
-                        type:    [str, NoneType]
-
-        returns:
-                type: QAction
-        """
+        """Creates a QAction for an extension."""
         action = QtWidgets.QAction(
             self.theme.qicon(icon), label, self.main_window)
         action.triggered.connect(target)
@@ -420,7 +380,7 @@ class BaseExtension(BaseSubcomponent):
 
     def register_config(self):
         r"""Registers the extension settings in the config object."""
-        for setting, default in self.info.get(u'settings', {}).items():
+        for setting, default in self.extension_attribute(u'settings', {}).items():
             if isinstance(default, dict):
                 default = default.get(self.main_window.mode, u'')
             cfg.register(setting, default=default)
@@ -520,11 +480,11 @@ class BaseExtension(BaseSubcomponent):
         unicode
             The full path to the resource.
         """
-        path = os.path.join(self.info[u'plugin_folder'], u'locale', self.locale,
+        path = os.path.join(self.extension_folder, u'locale', self.locale,
                             resource)
         if os.path.exists(path):
             return path
-        path = os.path.join(self.info[u'plugin_folder'], resource)
+        path = os.path.join(self.extension_folder, resource)
         if not os.path.exists(path):
             raise osexception(u'Extension resource not found: %s' % path)
         return path

@@ -17,28 +17,17 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from qtpy import QtWidgets
+from .variable_inspector_widget import VariableInspectorWidget
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context(u'variable_inspector', category=u'extension')
 
 
-class BaseWidget(QtWidgets.QWidget, BaseSubcomponent):
-    r"""A base class for widgets.
+class VariableInspectorDockWidget(QtWidgets.QDockWidget):
 
-    Parameters
-    -----------
-    main_window : QtOpenSesame
-    ui : str, optional
-        An id for a user-interface file, for example 'dialogs.quick_switcher'.
-    *arglist:
-        passed onto parent constructors.
-    *kwdict:
-        passed onto parent constructors.
-    """
-    
-    def __init__(self, main_window, ui=None, *arglist, **kwdict):
-        super().__init__(main_window, *arglist, **kwdict)
-        self.setup(main_window, ui=ui)
+    r"""A QDocktWidget that holds the variable inspector."""
+    def __init__(self, main_window, ext):
 
-
-# Alias for backwards compatibility
-base_widget = BaseWidget
+        super().__init__(_(u'Variable inspector'), main_window)
+        self.setWidget(VariableInspectorWidget(main_window, ext))
+        self.setObjectName(u'variable_inspector')

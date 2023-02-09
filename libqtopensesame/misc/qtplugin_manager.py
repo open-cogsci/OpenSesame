@@ -52,7 +52,7 @@ class QtPlugin(Plugin):
             
     def _get_description(self):
         # We translate the description
-        _ = translation_context(self.name, category='plugin')
+        _ = translation_context(self.name, category=self._type)
         return _(super()._get_description())
     
     def _get_cls(self, mod):
