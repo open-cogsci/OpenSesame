@@ -179,12 +179,7 @@ class BaseRunner:
             return None
         return subject_nr
 
-    def init_experiment(
-            self,
-            quick=False,
-            fullscreen=False,
-            auto_response=False
-    ):
+    def init_experiment(self, quick=False, fullscreen=False):
         """
         Initializes a new experiment, which is a newly generated instance of the
         experiment currently active in the user interface.
@@ -236,7 +231,6 @@ class BaseRunner:
                 pool_folder=self.main_window.experiment.pool.folder(),
                 experiment_path=experiment_path,
                 fullscreen=fullscreen,
-                auto_response=auto_response,
                 subject_nr=subject_nr,
                 logfile=logfile
             )
@@ -252,7 +246,7 @@ class BaseRunner:
             return False
         return True
 
-    def run(self, quick=False, fullscreen=False, auto_response=False):
+    def run(self, quick=False, fullscreen=False):
         """
         Runs the experiment.
 
@@ -261,19 +255,13 @@ class BaseRunner:
                                                 experiment. (default=False)
         fullscreen		--	Indicates whether the experiment should be run in
                                                 fullscreen. (default=False)
-        auto_response	--	Indicates whether auto-response mode should be
-                                                enabled. (default=False)
         """
         self.main_window.set_run_status(u'running')
         self.main_window.extension_manager.fire(
             u'run_experiment',
             fullscreen=fullscreen
         )
-        if not self.init_experiment(
-                quick=quick,
-                fullscreen=fullscreen,
-                auto_response=auto_response
-        ):
+        if not self.init_experiment(quick=quick, fullscreen=fullscreen):
             self.main_window.extension_manager.fire('run_experiment_canceled')
             return
         ret_val = self.execute()

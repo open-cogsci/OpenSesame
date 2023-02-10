@@ -94,7 +94,6 @@ class ExperimentProcess(multiprocessing.Process):
         self.experiment_path = exp.experiment_path
         self.fullscreen = exp.var.fullscreen == u'yes'
         self.logfile = exp.logfile
-        self.auto_response = exp.auto_response
         self.killed = False
 
     def run(self):
@@ -124,8 +123,8 @@ class ExperimentProcess(multiprocessing.Process):
             exp = experiment(
                 string=self.script, pool_folder=self.pool_folder,
                 experiment_path=self.experiment_path,
-                fullscreen=self.fullscreen, auto_response=self.auto_response,
-                subject_nr=self.subject_nr, logfile=self.logfile
+                fullscreen=self.fullscreen, subject_nr=self.subject_nr,
+                logfile=self.logfile
             )
         except Exception as e:
             if not isinstance(e, osexception):

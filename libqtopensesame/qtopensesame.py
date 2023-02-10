@@ -137,8 +137,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             self.run_experiment_in_window)
         self.ui.action_run_quick.triggered.connect(self.run_quick)
         self.ui.action_kill.triggered.connect(self.kill_experiment)
-        self.ui.action_enable_auto_response.triggered.connect(
-            self.set_auto_response)
         self.ui.action_close_current_tab.triggered.connect(
             self.ui.tabwidget.close_current)
         self.ui.action_close_all_tabs.triggered.connect(
@@ -399,7 +397,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             return
         self.resize(cfg.size)
         self.move(cfg.pos)
-        self.experiment.auto_response = cfg.auto_response
         # Set the keyboard shortcuts
         self.ui.shortcut_itemtree.setKey(QtGui.QKeySequence(
             cfg.shortcut_itemtree))
@@ -416,8 +413,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                     self.recent_files.append(path)
                 else:
                     oslogger.debug(u"missing recent file '%s'" % path)
-        self.ui.action_enable_auto_response.setChecked(
-            self.experiment.auto_response)
         # On Mac OS we always enable one-tab mode to deal with an issue in
         # Qt that makes the tabbar grow too large.
         if platform.system() == 'Darwin':
@@ -450,7 +445,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         cfg.pos = self.pos()
         cfg._initial_window_geometry = self.saveGeometry()
         cfg._initial_window_state = self.saveState()
-        cfg.auto_response = self.experiment.auto_response
         cfg.toolbar_text = self.ui.toolbar_main.toolButtonStyle() == \
             QtCore.Qt.ToolButtonTextUnderIcon
         cfg.recent_files = u";;".join(self.recent_files)
@@ -535,12 +529,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self._main_translator = self.translators.pop()
         self._main_translator.load(qm)
         QtWidgets.QApplication.installTranslator(self._main_translator)
-
-    def set_auto_response(self):
-        """Set the auto response based on the menu action"""
-        self.experiment.auto_response = \
-            self.ui.action_enable_auto_response.isChecked()
-        self.update_preferences_tab()
 
     def set_unsaved(self, unsaved_changes=True):
         r"""Sets the unsaved changes status.
@@ -772,7 +760,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         else:
             self.window_message(u"New experiment")
             self.current_path = None
-        self.set_auto_response()
         self.set_unsaved(False)
         self.ui.pool_widget.refresh()
         self.extension_manager.fire(u'open_experiment', path=path)
@@ -997,11 +984,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         print(u'\n')
         oslogger.debug(u'using %s runner' % cfg.runner)
         self._runner = self.runner_cls(self)
-        self._runner.run(
-            quick=quick,
-            fullscreen=fullscreen,
-            auto_response=self.experiment.auto_response
-        )
+        self._runner.run(quick=quick, fullscreen=fullscreen, )
         self.enable(True)
     
     def notify(self, msg, title=None, icon=None, **kwargs):

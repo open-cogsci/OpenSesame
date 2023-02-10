@@ -41,7 +41,6 @@ DEFAULT_CONFIG = {
     "_initial_window_geometry": QtCore.QByteArray(),
     "_initial_window_state": QtCore.QByteArray(),
     "auto_update_check": True,
-    "auto_response": False,
     "default_logfile_folder": libopensesame.misc.home_folder(),
     "default_pool_folder": libopensesame.misc.home_folder(),
     "disabled_plugins": "",

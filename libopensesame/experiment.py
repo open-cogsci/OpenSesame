@@ -44,9 +44,9 @@ class Experiment(Item):
     description = u'The main experiment item'
 
     def __init__(self, name=u'experiment', string=None, pool_folder=None,
-                 experiment_path=None, fullscreen=False, auto_response=False,
-                 logfile=u'defaultlog.csv', subject_nr=0, workspace=None, resources={},
-                 heartbeat_interval=1):
+                 experiment_path=None, fullscreen=False,
+                 logfile=u'defaultlog.csv', subject_nr=0, workspace=None,
+                 resources={}, heartbeat_interval=1):
         r"""Constructor. The experiment is created automatically be OpenSesame
         and you will generally not need to create it yourself.
 
@@ -65,8 +65,6 @@ class Experiment(Item):
             experiment is in, not the path to the experiment file.
         fullscreen : bool, optional
             Indicates whether the experiment should be executed in fullscreen.
-        auto_response : bool, optional
-            Indicates whether auto-response mode should be enabled.
         logfile : unicode, str, optional
             The logfile path.
         subject_nr : int, optional
@@ -101,7 +99,6 @@ class Experiment(Item):
         else:
             self._python_workspace = workspace
         self.running = False
-        self.auto_response = auto_response
         self.heartbeat_interval = heartbeat_interval
         self.plugin_folder = u'plugins'
         self._start_response_interval = None
