@@ -420,8 +420,9 @@ class BaseExtension(BaseSubcomponent):
         if self.preferences_ui is not None:
             return self._settings_widget_from_ui(self.preferences_ui)
         r = 10000000  # Maximumum range for spinbox widgets
-        if u'settings' not in self.info:
-            return None
+        settings = self.extension_attribute('settings', None)
+        if settings is None:
+            return
         group = QtWidgets.QGroupBox(
             self._(u'Extension: %s') % self.name(),
             self.main_window
@@ -429,7 +430,7 @@ class BaseExtension(BaseSubcomponent):
         group.__advanced__ = True
         layout = QtWidgets.QFormLayout(group)
         self.settings_controls = {}
-        for setting, default in self.info[u'settings'].items():
+        for setting, default in settings.items():
             value = cfg[setting]
             label = QtWidgets.QLabel(self._(setting))
             if isinstance(default, bool):
@@ -466,7 +467,8 @@ class BaseExtension(BaseSubcomponent):
         r"""Applies the settings widget. This function is called automatically
         when a default settings widget is created by [settings_widget].
         """
-        for setting, default in self.info[u'settings'].items():
+        
+        for setting, default in self.extension_attribute(u'settings', {}).items():
             control = self.settings_controls[setting]
             if isinstance(default, bool):
                 cfg[setting] = control.isChecked()

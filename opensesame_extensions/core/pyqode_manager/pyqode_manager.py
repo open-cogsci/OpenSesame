@@ -92,7 +92,7 @@ class PyqodeManager(BaseExtension):
 
     def settings_widget(self):
 
-        from pyqode_preferences import PyQodePreferences
+        from .pyqode_preferences import PyQodePreferences
         return PyQodePreferences(self.main_window)
 
     def event_startup(self):
