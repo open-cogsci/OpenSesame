@@ -37,59 +37,57 @@ import sys
 
 
 DEFAULT_CONFIG = {
-    u"cfg_ver": 0,
-    u"_initial_window_geometry": QtCore.QByteArray(),
-    u"_initial_window_state": QtCore.QByteArray(),
-    u"auto_update_check": True,
-    u"auto_response": False,
-    u"default_logfile_folder": libopensesame.misc.home_folder(),
-    u"default_pool_folder": libopensesame.misc.home_folder(),
-    u"disabled_plugins": "",
-    u"disabled_extensions": "",
-    u"file_dialog_path": "",
-    u"file_pool_size_warning": 104857600,
-    u"loop_wizard": None,
-    u"onetabmode": False,
-    u"quick_run_logfile": u"quickrun.csv",
-    u"recent_files": u"",
-    u"reset_console_on_experiment_start": True,
-    u"shortcut_itemtree": u"Ctrl+1",
-    u"shortcut_tabwidget": u"Ctrl+2",
-    u"shortcut_stdout": u"Ctrl+3",
-    u"shortcut_pool": u"Ctrl+4",
-    u"shortcut_copy_clipboard_unlinked": u"Ctrl+C",
-    u"shortcut_copy_clipboard_linked": u"Ctrl+Shift+C",
-    u"shortcut_paste_clipboard": u"Ctrl+V",
-    u"shortcut_delete": u"Del",
-    u"shortcut_permanently_delete": u"Shift+Del",
-    u"shortcut_context_menu": u"+",
-    u"shortcut_rename": u"F2",
-    u"shortcut_edit_runif": u"F3",
-    u"style": u"",
-    u"theme": u"default",
-    u"toolbar_size": 32,
-    u"toolbar_text": False,
-    u"runner": u"multiprocess",
-    u"opensesamerun_exec": u"",
-    u"start_drag_delay": 300,
-    u"pos": QtCore.QPoint(200, 200),
-    u"size": QtCore.QSize(1000, 600),
-    u"url_website": u"http://www.cogsci.nl/opensesame",
-    u"url_facebook": u"http://www.facebook.com/cognitivescience",
-    u"url_twitter": u"http://www.twitter.com/cogscinl",
-    u'sketchpad_placeholder_color': u'#00FF00',
-    u'sketchpad_grid_color': u'#00FF00',
-    u'sketchpad_grid_thickness_thin': 2,
-    u'sketchpad_grid_thickness_thick': 4,
-    u'sketchpad_grid_opacity': 32,
-    u'sketchpad_preview_color': u'#00FF00',
-    u'sketchpad_preview_penwidth': 2,
-    u'mode': u'default',
-    u'locale': u'',
+    "cfg_ver": 0,
+    "_initial_window_geometry": QtCore.QByteArray(),
+    "_initial_window_state": QtCore.QByteArray(),
+    "auto_update_check": True,
+    "auto_response": False,
+    "default_logfile_folder": libopensesame.misc.home_folder(),
+    "default_pool_folder": libopensesame.misc.home_folder(),
+    "disabled_plugins": "",
+    "disabled_extensions": "",
+    "file_dialog_path": "",
+    "file_pool_size_warning": 104857600,
+    "loop_wizard": None,
+    "onetabmode": False,
+    "quick_run_logfile": u"quickrun.csv",
+    "recent_files": u"",
+    "reset_console_on_experiment_start": True,
+    "shortcut_itemtree": u"Ctrl+1",
+    "shortcut_tabwidget": u"Ctrl+2",
+    "shortcut_stdout": u"Ctrl+3",
+    "shortcut_pool": u"Ctrl+4",
+    "shortcut_copy_clipboard_unlinked": u"Ctrl+C",
+    "shortcut_copy_clipboard_linked": u"Ctrl+Shift+C",
+    "shortcut_paste_clipboard": u"Ctrl+V",
+    "shortcut_delete": u"Del",
+    "shortcut_permanently_delete": u"Shift+Del",
+    "shortcut_context_menu": u"+",
+    "shortcut_rename": u"F2",
+    "shortcut_edit_runif": u"F3",
+    "style": u"",
+    "theme": u"default",
+    "toolbar_size": 32,
+    "toolbar_text": False,
+    "runner": u"multiprocess",
+    "opensesamerun_exec": u"",
+    "start_drag_delay": 300,
+    "pos": QtCore.QPoint(200, 200),
+    "size": QtCore.QSize(1000, 600),
+    "url_website": u"http://www.cogsci.nl/opensesame",
+    "url_facebook": u"http://www.facebook.com/cognitivescience",
+    "url_twitter": u"http://www.twitter.com/cogscinl",
+    'sketchpad_placeholder_color': u'#00FF00',
+    'sketchpad_grid_color': u'#00FF00',
+    'sketchpad_grid_thickness_thin': 2,
+    'sketchpad_grid_thickness_thick': 4,
+    'sketchpad_grid_opacity': 32,
+    'sketchpad_preview_color': u'#00FF00',
+    'sketchpad_preview_penwidth': 2,
+    'mode': u'default',
+    'locale': u'',
 }
-DEFAULT_CONFIG_LINUX = {
-    u"theme": u"gnome"
-}
+DEFAULT_CONFIG_LINUX = {}
 DEFAULT_CONFIG_MAC = {}
 DEFAULT_CONFIG_WINDOWS = {}
 
@@ -97,15 +95,9 @@ DEFAULT_CONFIG_WINDOWS = {}
 class Config:
 
     def __init__(self):
-        r"""Constructor."""
         self.reset()
 
     def __str__(self):
-
-        return self.__unicode__()
-
-    def __unicode__(self):
-
         s = u''
         for key, val in self.config.items():
             if not isinstance(val, str) and not isinstance(val, int) \
@@ -128,14 +120,7 @@ class Config:
         return self.config[setting]
 
     def __setattr__(self, setting, value):
-        """
-        desc:
-                A setter for settings, to allow for easy access
-
-        argumentsL
-                setting: 	The setting to set
-                value:		The value to set
-        """
+        """A setter for settings, to allow for easy access"""
         if setting not in self.config:
             raise osexception(u'The setting "%s" does not exist'
                               % setting)
@@ -179,13 +164,13 @@ class Config:
         qsettings.endGroup()
 
     def parse_cmdline_args(self, args):
-        """
-        desc:
-                Apply settings that were specified on the command line. The expected
-                format is as follows: [name]=[val];[name]=[val];...
+        """Apply settings that were specified on the command line. The expected
+        format is as follows: [name]=[val];[name]=[val];...
 
-        arguments:
-                args:	The string of command line arguments
+        Parameters
+        ----------
+        args: str
+            The string of command line arguments
         """
         if args is None:
             return
@@ -212,7 +197,7 @@ class Config:
                 except:
                     oslogger.error(u"Failed to parse argument: %s" % arg)
 
-    def type_qvariant(self, value, default):
+    def type_qvariant(self, value, default=None):
         r"""Typecasts a value to a normal type that matches the type of a
         default value. This is necessary, because under some combinations of
         Python 2/3 and PyQt 4/5 settings are returned as QVariant objects,
@@ -229,42 +214,43 @@ class Config:
         -------
         A value.
         """
-        if hasattr(QtCore, u'QPyNullVariant') and \
-                isinstance(value, QtCore.QPyNullVariant):
-            return default
-        if isinstance(default, bool):
-            if isinstance(value, str):
-                return value == u'true'
-            try:
-                return bool(value)
-            except:
-                oslogger.error('Failed to convert %s' % value)
-                return default
-        if isinstance(default, int):
+        if not isinstance(value, str):
+            return value
+        if (default is None or isinstance(default, bool)):
+            if value == 'true':
+                return True
+            if value == 'false':
+                return False
+        if (default is None or isinstance(default, int)):
             try:
                 return int(value)
-            except:
-                oslogger.error('Failed to convert %s' % value)
-                return default
-        if isinstance(default, float):
+            except (TypeError, ValueError):
+                pass
+        if (default is None or isinstance(default, float)):
             try:
                 return float(value)
-            except:
-                oslogger.error('Failed to convert %s' % value)
-                return default
+            except (TypeError, ValueError):
+                pass
         return value
 
     def restore(self, mode):
         r"""Restore settings from a QSettings."""
         oslogger.debug('restoring config profile {}'.format(mode))
         qsettings = QtCore.QSettings(u"cogscinl", mode)
-        qsettings.beginGroup(u'MainWindow')
+        qsettings.beginGroup('OpenSesame4')
         for setting, default in self.config.items():
             try:
                 value = qsettings.value(setting, default)
             except TypeError:
                 continue
             value = self.type_qvariant(value, default)
+            self.config[setting] = value
+        for setting in qsettings.allKeys():
+            if setting in self.config:
+                continue
+            oslogger.info(f'unregistered setting {setting}')
+            value = qsettings.value(setting)
+            value = self.type_qvariant(value, None)
             self.config[setting] = value
         self.mode = mode
         qsettings.endGroup()
@@ -273,7 +259,7 @@ class Config:
         r"""Save settings to a QSettings."""
         oslogger.debug('saving config profile {}'.format(self.mode))
         qsettings = QtCore.QSettings(u"cogscinl", self.mode)
-        qsettings.beginGroup(u'MainWindow')
+        qsettings.beginGroup('OpenSesame4')
         for setting, value in self.config.items():
             if setting != u"cfg_ver":
                 qsettings.setValue(setting, value)
@@ -282,7 +268,7 @@ class Config:
     def clear(self):
         r"""Clears all settings."""
         qsettings = QtCore.QSettings(u"cogscinl", self.mode)
-        qsettings.beginGroup(u'MainWindow')
+        qsettings.beginGroup('OpenSesame4')
         qsettings.clear()
         qsettings.endGroup()
 

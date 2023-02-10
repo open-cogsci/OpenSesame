@@ -46,6 +46,7 @@ class Plugin:
     
     def __init__(self, mod):
         self.name = mod.__package__.split('.')[-1]
+        self.icon = 'applications-utilities'
         self._mod = mod
         self._cls = None
         self._type = 'plugins' if \
@@ -70,11 +71,12 @@ class Plugin:
                 f'{self._mod.__package__}.{self.name}')
             self._cls = self._get_cls(mod)
             if not hasattr(self._cls, 'description'):
-                self._cls.description = self._get_description()
+                self._cls.description = self.description
         oslogger.debug(f'building plugin gui for {self.name}')
         return self._cls(*args, **kwargs)
         
-    def _get_description(self):
+    @property
+    def description(self):
         return self._mod.__doc__
         
     def _get_cls(self, mod):
@@ -93,6 +95,7 @@ class OldStylePlugin:
     def __init__(self, name, type_):
         self.name = name
         self.type_ = type_
+        self.icon = 'applications-utilities'
         self.folder = plugins.plugin_folder(name, _type=self.type_)
         
     def __getitem__(self, attr):
@@ -107,6 +110,10 @@ class OldStylePlugin:
         if self.type_ == 'plugins':
             return plugins.load_plugin(self.name, *args, **kwargs)
         return plugins.load_extension(self.name, *args, **kwargs)
+        
+    @property
+    def description(self):
+        return self.attribute('description', 'No description')
 
 
 class PluginManager:

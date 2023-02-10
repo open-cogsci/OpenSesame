@@ -49,11 +49,12 @@ class QtPlugin(Plugin):
         else:
             self.icon_large = os.path.join(self.folder,
                                            f'{self.name}_large.png')
-            
-    def _get_description(self):
+
+    @property
+    def description(self):
         # We translate the description
         _ = translation_context(self.name, category=self._type)
-        return _(super()._get_description())
+        return _(super().description)
     
     def _get_cls(self, mod):
         # If there is a class named Qt[PluginName], then is assumed to be

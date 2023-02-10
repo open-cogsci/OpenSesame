@@ -96,6 +96,7 @@ button_square,os-square,
 button_template,dialog-information,
 button_textline,os-textline,
 button_variables_clear,edit-clear,
+button_search_plugins_clear,edit-clear,
 button_white_noise,os-white_noise,
 clear,edit-clear,
 close,list-remove,
@@ -135,6 +136,7 @@ label_text_input,accessories-text-editor,32
 label_twitter,twitter,24
 label_update_dialog,system-software-update,32
 label_variables_search,edit-find,16
+label_search_plugins,edit-find,16
 label_variables,os-inspector,
 label_warning_icon,emblem-important,32
 label_website,os-experiment,24

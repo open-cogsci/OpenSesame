@@ -26,6 +26,7 @@ from libqtopensesame.misc.config import cfg
 from libopensesame.oslogging import oslogger
 from libqtopensesame.runners import RUNNER_LIST, DEFAULT_RUNNER
 from qtpy import QtCore, QtWidgets
+from qtpy.QtGui import QIcon
 import os
 
 
@@ -50,6 +51,8 @@ class PreferencesWidget(BaseWidget):
         self.ui.combobox_style.currentIndexChanged.connect(self.apply)
         self.ui.combobox_theme.currentIndexChanged.connect(self.apply)
         self.ui.combobox_locale.currentIndexChanged.connect(self.apply)
+        self.ui.edit_search_plugins.textChanged.connect(self._refresh_plugins)
+        
         self.set_controls()
         for ext in self.extensions:
             try:
@@ -57,12 +60,9 @@ class PreferencesWidget(BaseWidget):
             except Exception as e:
                 if not isinstance(e, osexception):
                     e = osexception(msg=u'Extension error', exception=e)
-                self.notify(
-                    (
-                        u'Extension %s failed to return settings widget '
-                        u'(see debug window for stack trace)'
-                    ) % ext.name(), category='warning'
-                )
+                self.notify(f'Extension {ext.name} failed to return settings '
+                            f'widget (see debug window for stack trace)',
+                            category='warning')
                 self.console.write(e)
                 continue
             if w is None:
@@ -72,6 +72,23 @@ class PreferencesWidget(BaseWidget):
             else:
                 self.ui.layout_preferences.addRow(w, None)
         self.ui.container_widget.adjustSize()
+        self._refresh_plugins()
+            
+    def _refresh_plugins(self):
+        while self.ui.layout_plugins.count():
+            child = self.ui.layout_plugins.takeAt(0)
+            if child.widget():
+                child.widget().deleteLater()
+        needle = self.ui.edit_search_plugins.text().strip()
+        plugins = list(self.plugin_manager) + \
+            list(self.unloaded_extension_manager)
+        for plugin in sorted(plugins, key=lambda plugin: plugin.name.lower()):
+            if needle and not (needle.lower() in plugin.name.lower() or 
+                               needle.lower() in plugin.description.lower()):
+                continue
+            widget = PluginInfoWidget(self.main_window, plugin)
+            self.ui.layout_plugins.addWidget(widget)
+        self.ui.layout_plugins.addStretch()
 
     def set_controls(self):
         r"""Updates the controls."""
@@ -116,7 +133,7 @@ class PreferencesWidget(BaseWidget):
             if cfg.theme == _theme:
                 self.ui.combobox_theme.setCurrentIndex(i)
         self.lock = False
-
+        
     def apply(self):
         """Apply the controls"""
         if self.lock:
@@ -144,7 +161,52 @@ class PreferencesWidget(BaseWidget):
         cfg.style = self.ui.combobox_style.currentText()
         self.main_window.save_state()
         self.lock = False
+        
 
+class PluginInfoWidget(BaseWidget):
+    """A widget that holds plugin and extension information for the preferences
+    widget. It also contains a button to enabled or disabled the plugin.
+    
+    Parameters
+    ----------
+    main_window
+    plugin: Plugin or OldStylePlugin
+    """
+
+    def __init__(self, main_window, plugin):
+        super().__init__(main_window, ui='widgets.plugin_info')
+        self._plugin = plugin
+        self._cfg_key = f'plugin_enabled_{plugin.name}'
+        if self._cfg_key not in cfg:
+            cfg.register(self._cfg_key, True)
+        self._toggle_enabled(cfg[self._cfg_key])
+        self.ui.title.setText(plugin.name)
+        self.ui.icon.setPixmap(self.theme.qpixmap(plugin.icon, size=16))
+        self.ui.toggle.clicked.connect(self._toggle_enabled)
+        self.ui.description.setText(plugin.description)
+        if plugin.attribute('__version__', False):
+            self.ui.version.setText(plugin['__version__'])
+        else:
+            self.ui.label_version.setVisible(False)
+            self.ui.version.setVisible(False)
+        if plugin.attribute('author', False):
+            self.ui.author.setText(plugin['author'])
+        else:
+            self.ui.label_author.setVisible(False)
+            self.ui.author.setVisible(False)
+        self.ui.folder.setText(plugin.folder)
+        self.adjustSize()
+        
+    def _toggle_enabled(self, enabled):
+        self.ui.toggle.setChecked(enabled)
+        cfg[self._cfg_key] = enabled
+        if enabled:
+            self.ui.toggle.setText(_('Enabled'))
+            self.ui.toggle.setIcon(self.theme.qicon('user-available'))
+            return
+        self.ui.toggle.setText(_('Disabled'))
+        self.ui.toggle.setIcon(self.theme.qicon('user-away'))
+        
 
 # Alias for backwards compatibility
 preferences_widget = PreferencesWidget
