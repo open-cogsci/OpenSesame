@@ -674,7 +674,7 @@ class QtItem:
                     try:
                         spinbox.setValue(val)
                     except Exception as e:
-                        self.experiment.notify(
+                        self.main_window.notify(
                             _(u"Failed to set control '%s': %s") % (var, e))
                 else:
                     if not spinbox.isEnabled():

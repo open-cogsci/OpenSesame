@@ -139,7 +139,7 @@ class GeneralProperties(BaseWidget):
             Color.to_hex(foreground)
         except Exception as e:
             if refs == []:
-                self.experiment.notify(e)
+                self.notify(e)
                 foreground = self.experiment.var.foreground
                 self.ui.edit_foreground.setText(foreground)
         self.experiment.var.foreground = foreground
@@ -152,7 +152,7 @@ class GeneralProperties(BaseWidget):
             Color.to_hex(background)
         except Exception as e:
             if refs == []:
-                self.experiment.notify(e)
+                self.notify(e)
                 background = self.experiment.var.background
                 self.ui.edit_background.setText(background)
         self.experiment.var.background = foreground

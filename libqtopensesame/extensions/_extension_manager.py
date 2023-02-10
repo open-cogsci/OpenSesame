@@ -155,7 +155,7 @@ class ExtensionManager(BaseSubcomponent):
                     e = osexception(msg=u'Extension error', exception=e)
                 self.notify(
                     u'Extension %s misbehaved on event %s (see debug window for stack trace)'
-                    % (ext.name(), event)
+                    % (ext.name(), event), category='warning'
                 )
                 self.console.write(e)
 
@@ -173,7 +173,7 @@ class ExtensionManager(BaseSubcomponent):
                 e = osexception(msg=u'Extension error', exception=e)
             self.notify(
                 u'Extension %s misbehaved on providing %s (see debug window for stack trace)'
-                % (ext.name(), provide)
+                % (ext.name(), provide), category='warning'
             )
             self.console.write(e)
 

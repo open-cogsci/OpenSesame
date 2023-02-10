@@ -824,7 +824,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             self.get_ready()
         except osexception as e:
             self.console.write(e)
-            self.experiment.notify(
+            self.notify(
                 _(u"The following error occured while trying to save:<br/>%s")
                 % e
             )
@@ -836,7 +836,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             self.set_busy(False)
         except Exception as e:
             self.console.write(e)
-            self.experiment.notify(
+            self.notify(
                 _(u"Failed to save file. Error: %s")
                 % safe_decode(e)
             )
@@ -948,7 +948,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                              experiment_path=self.experiment.experiment_path,
                              resources=self.experiment.resources)
         except osexception as error:
-            self.experiment.notify(_(u"Could not parse script: %s") % error)
+            self.notify(_(u"Could not parse script: %s") % error)
             self.edit_script.edit.setText(self.experiment.to_string())
             return
         self.experiment = tmp
@@ -1003,6 +1003,9 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             auto_response=self.experiment.auto_response
         )
         self.enable(True)
+    
+    def notify(self, msg, title=None, icon=None, **kwargs):
+        self.extension_manager.fire('notify', message=msg, **kwargs)
 
     @property
     def runner_cls(self):
@@ -1021,7 +1024,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                 getattr(sys, 'frozen', None) and
                 sys.version_info < (3, 4)
         ):
-            self.experiment.notify(
+            self.notify(
                 u'Multiprocessing does not work in the '
                 u'OSX app version yet. Please change the runner to '
                 u'\'inprocess\' in the preferences panel'

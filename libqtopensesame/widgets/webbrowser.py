@@ -270,7 +270,7 @@ class Webbrowser(BaseWidget):
             try:
                 action = getattr(self.main_window.ui, u'action_%s' % cmd[1])
             except:
-                self.experiment.notify(u'Invalid action: %s' % cmd[1])
+                self.notify(u'Invalid action: %s' % cmd[1])
                 return
             action.trigger()
             return

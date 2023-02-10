@@ -178,26 +178,25 @@ class Syntax:
                 % s, exception=e)
 
     def parse_cmd(self, cmd):
-        """
-        desc:
-                Parses OpenSesame command strings, which consist of a command,
-                optionally followed by arguments, optionally followed by keywords.
+        """Parses OpenSesame command strings, which consist of a command,
+        optionally followed by arguments, optionally followed by keywords.
 
-                For example:
+        For example:
 
-                        widget 0 0 1 1 label text="Demo text"
+            widget 0 0 1 1 label text="Demo text"
 
-                Here, `widget` is the command, `0` through `label` are arguments,
-                and `text` is a keyword.
+        Here, `widget` is the command, `0` through `label` are arguments,
+        and `text` is a keyword.
 
-        arguments:
-                cmd:
-                        desc:	The command string to parse.
-                        type:	[str, unicode]
+        Parameters
+        ----------
+        cmd: str
+            The command string to parse.
 
-        returns:
-                desc:	A (command, arglist, kwdict) tuple.
-                type:	tuple
+        Returns
+        -------
+        tuple
+            A (command, arglist, kwdict) tuple.
         """
         l = self.split(cmd)
         if len(l) == 0:
@@ -233,29 +232,36 @@ class Syntax:
         for key, val in sorted(kwdict.items()):
             l.append(u'%s=%s' % (key, self.safe_wrap(val)))
         return u' '.join(l)
+        
+    def contains_variables(self, txt):
+        """
+        Returns
+        -------
+        bool
+            True if txt contains any variables references, and False otherwise.
+        """
+        return self.re_txt.search(txt) is not None or \
+            self.re_txt_py.search(txt) is not None
 
     def eval_text(self, txt, round_float=False, var=None):
-        """
-        desc:
-                Evaluates variables and inline Python in a text string.
+        """Evaluates variables and inline Python in a text string.
 
-                Examples:
+        Examples
+        --------
+        The resolution is [width] by [height] pixels
+        This evaluates to 100: [=10x10]
 
-                        The resolution is [width] by [height] pixels
-                        This evaluates to 100: [=10x10]
+        Parameters
+        ----------
+        txt:
+            	The string to evaluate. If the input is not a string, then the
+             value will be returned unmodified.
+        round_float: bool, optional
+            Indicates whether floating point values should be rounded or not.
 
-        arguments:
-                txt:	The string to evaluate. If the input is not a string, then
-                                the value will be returned unmodified.
-
-        keywords:
-                round_float:
-                        desc:	Indicates whether floating point values should be
-                                        rounded or not.
-                        type:	bool
-
-        returns:
-                The evaluated string, or the input value for non-string input.
+        Returns
+        -------
+        The evaluated string, or the input value for non-string input.
         """
         def get_escape_sequence(m):
             return u'' if m.group(1) is None \
@@ -293,10 +299,11 @@ class Syntax:
 
     def quotable_symbol(self, s):
         """
-        returns:
-                desc:	True if s is a symbol that should be quoted in a conditional
-                                statement, and False otherwise.
-                type:	bool
+        Returns
+        -------
+        bool
+            True if s is a symbol that should be quoted in a conditional
+            statement, and False otherwise.
         """
         # Don't quote operators
         if s in [u'not', u'or', 'and']:
@@ -312,28 +319,25 @@ class Syntax:
             return True
 
     def compile_cond(self, cnd, bytecode=True):
-        """
-        desc:
-                Compiles OpenSesame conditional statements.
+        """Compiles OpenSesame conditional statements.
+        
+        Examples
+        --------
+        [width] > 100
+        =var.width > 100
 
-                Examples:
-                        [width] > 100
-                        =var.width > 100
+        Parameters
+        ----------
+        cnd: str
+            The conditional statement to compile.
+        bytecode: bool, optional
+            Indicates whether the conditional statement should be returned as 
+            bytecode (True) or a Python string (False).
 
-        arguments:
-                cnd:
-                        desc:	The conditional statement to compile.
-                        type:	[str, unicode]
-
-        keywords:
-                bytecode:
-                        desc:	Indicates whether the conditional statement should be
-                                        returned as bytecode (True) or a Python string (False).
-                        type:	bool
-
-        returns:
-                desc:	The conditional statement as a Python string or bytecode.
-                type:	[str, bytecode]
+        Returns
+        -------
+        str or bytecoode
+            The conditional statement as a Python string or bytecode.
         """
         # Python conditions `=True` don't have to be evaluated
         if cnd.startswith(u'='):
@@ -431,25 +435,24 @@ class Syntax:
         return s.replace(u'\[', u'[').replace(u'\]', u']')
 
     def safe_wrap(self, s):
-        """
-        desc:
-                Wraps and escapes a text so that it can safely be embedded in a
-                command string. For example:
+        """Wraps and escapes a text so that it can safely be embedded in a
+        command string. For example:
 
-                He said: "hi"
+        He said: "hi"
 
-                would become:
+        becomes:
 
-                "He said: \"hi\""
+        "He said: \"hi\""
 
-        arguments:
-                s:
-                        desc:	The text to wrap.
-                        type:	str
+        Parameters
+        ----------
+        s: str
+            The text to wrap.
 
-        returns:
-                desc:	The wrapped text.
-                type:	str
+        Returns
+        -------
+        str
+            The wrapped text.
         """
         s = safe_decode(s).replace(u'\\', u'\\\\')
         try:

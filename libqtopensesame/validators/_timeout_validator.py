@@ -31,7 +31,8 @@ class TimeoutValidator(BaseValidator):
 
     def is_valid(self, val):
 
-        if val == u'infinite' or self.experiment.varref(val):
+        if val == u'infinite' or \
+                self.experiment.syntax.contains_variables(val):
             return True
         try:
             int(val)

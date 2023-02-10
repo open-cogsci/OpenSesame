@@ -276,7 +276,7 @@ class BaseExtension(BaseSubcomponent):
                 e = osexception(msg=u'Extension error', exception=e)
             self.notify(
                 u'Extension %s misbehaved on activate (see debug window for stack trace)'
-                % self.name())
+                % self.name(), category='warning')
             self.console.write(e)
 
     def add_action(self, widget, action, index, separator_before,

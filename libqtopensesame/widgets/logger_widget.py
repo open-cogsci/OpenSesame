@@ -21,6 +21,7 @@ from qtpy import QtWidgets
 from libqtopensesame.widgets.base_widget import BaseWidget
 from libqtopensesame.misc.base_draggable import BaseDraggable
 from libqtopensesame.misc.translate import translation_context
+from libqtopensesame.dialogs.text_input import TextInput
 _ = translation_context(u'logger', category=u'item')
 
 
@@ -61,8 +62,9 @@ class LoggerWidget(BaseWidget, BaseDraggable):
 
     def add_custom_variable(self):
         r"""Provides a simple dialog for the user to add a custom variable."""
-        name = self.text_input(_(u'Add custom variable'),
-                               message=_(u'Which variable do you wish to log?'))
+        name = TextInput(
+            self.main_window,
+            msg=_('Which variable do you wish to log?')).get_input()
         if name is None:
             return
         if not self.experiment.syntax.valid_var_name(name):

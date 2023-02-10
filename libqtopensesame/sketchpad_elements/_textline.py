@@ -21,6 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import osexception
 from libqtopensesame.sketchpad_elements._base_element import BaseElement
 from libopensesame.sketchpad_elements import Textline as TextlineRuntime
+from libqtopensesame.dialogs.text_input import TextInput
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'sketchpad', category=u'item')
@@ -36,15 +37,10 @@ class Textline(BaseElement, TextlineRuntime):
         r"""The show-edit dialog for the textline only edits the text, not the
         full element script.
         """
-        text = self.experiment.text_input(
-            _(u'Edit text'),
-            message=_(u'Please enter a text for the textline'),
-            content=safe_decode(self.properties[u'text']).replace(
-                u'<br />',
-                u'\n'
-            ),
-            parent=self.sketchpad._edit_widget
-        )
+        content = safe_decode(self.properties['text']).replace('<br />', '\n')
+        text = TextInput(self.main_window,
+                         msg=_('Please enter a text for the textline'),
+                         content=content).get_input()
         if text is None:
             return
         self.properties[u'text'] = self.clean_text(text)
@@ -52,10 +48,7 @@ class Textline(BaseElement, TextlineRuntime):
 
     @classmethod
     def mouse_press(cls, sketchpad, pos):
-
-        text = sketchpad.experiment.text_input(title=_(u'New textline'),
-                                               message=_(u'Enter text'),
-                                               parent=sketchpad._edit_widget)
+        text = TextInput(self.main_window, msg=_('Enter text')).get_input()
         if text is None:
             return None
         properties = {

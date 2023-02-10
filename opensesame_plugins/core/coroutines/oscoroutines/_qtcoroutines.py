@@ -120,7 +120,7 @@ class QtCoroutines(Coroutines, Sequence):
 
     def insert_child_item(self, item_name, index=0):
         if not self.is_coroutine(item_name):
-            self.experiment.notify(
+            self.notify(
                 _(u'"%s" does not support coroutines.') % item_name)
             return
         super().insert_child_item(item_name, index=index)

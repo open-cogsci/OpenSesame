@@ -31,7 +31,7 @@ class DurationValidator(BaseValidator):
     def is_valid(self, val):
 
         if val in [u'keypress', u'mouseclick', u'sound'] \
-                or self.experiment.varref(val):
+                or self.experiment.syntax.contains_variables(val):
             return True
         try:
             int(val)

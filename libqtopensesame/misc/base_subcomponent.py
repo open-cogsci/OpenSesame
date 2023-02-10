@@ -133,11 +133,7 @@ class BaseSubcomponent(BaseComponent):
 
     @property
     def notify(self):
-        return self.main_window.experiment.notify
-
-    @property
-    def text_input(self):
-        return self.main_window.experiment.text_input
+        return self.main_window.notify
 
     @property
     def item_store(self):

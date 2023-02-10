@@ -142,7 +142,7 @@ class BaseRunner:
         try:
             open(logfile, u'w').close()
         except Exception:
-            self.main_window.experiment.notify(
+            self.main_window.notify(
                 _(
                     u"The logfile '%s' is not writable. Please choose "
                     u"another location for the logfile."

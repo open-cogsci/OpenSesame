@@ -61,7 +61,7 @@ class PreferencesWidget(BaseWidget):
                     (
                         u'Extension %s failed to return settings widget '
                         u'(see debug window for stack trace)'
-                    ) % ext.name()
+                    ) % ext.name(), category='warning'
                 )
                 self.console.write(e)
                 continue

@@ -134,10 +134,13 @@ class Experiment(ExperimentRuntime):
     def rename(self, from_name, to_name):
         """
         Renames an item.
-
-        Arguments:
-        from_name	--	The old name.
-        to_name		--	The new name.
+    
+        Parameters
+        ----------
+        from_name : str
+            The old name.
+        to_name : str
+            The new name.
         """
         if self.var.start == from_name:
             self.var.start = to_name
@@ -162,16 +165,16 @@ class Experiment(ExperimentRuntime):
         return True
 
     def delete(self, item_name, item_parent=None, index=None):
-        """
-        Deletes an item.
+        """Deletes an item.
 
-        Arguments:
-        item_name		--	The name of the item to be deleted.
-
-        Keywords arguments:
-        item_parent		--	The parent item. (default=None)
-        index			--	The index of the item in the parent sequence, if
-                                                applicable. (default=None)
+        Parameters
+        ----------
+        item_name: str
+            The name of the item to be deleted.
+        item_parent: str or None, optional
+            The parent item. (default=None)
+        index: int or None, optional
+            The index of the item in the parent sequence, if
         """
         if self.var.start == item_name:
             self.notify(
@@ -180,79 +183,6 @@ class Experiment(ExperimentRuntime):
         for item in self.items:
             self.items[item].delete(item_name, item_parent, index)
         self.main_window.close_item_tab(item_name)
-
-    def notify(self, msg, title=None, icon=None):
-        """
-        Presents a default notification dialog.
-
-        Arguments:
-        msg		--	The message to be shown.
-
-        Keyword arguments:
-        title	--	A title message or None for default title. (default=None)
-        icon	--	A custom icon or None for default icon. (default=None)
-        """
-        from libqtopensesame.dialogs.notification import notification
-        nd = notification(self.main_window, msg=safe_decode(msg), title=title,
-                          icon=icon)
-        nd.show()
-
-    def text_input(self, title, message=None, content=u'', parent=None):
-        """
-        dexc:
-                Pops up a text input dialog.
-
-        arguments:
-                title:		The title for the dialog.
-
-        keywords:
-                message:	A text message.
-                contents:	The initial contents.
-                parent:		A parent QWidget or None to use the main window as
-                                        parent.
-
-        returns:
-                A string of text or None if cancel was pressed.
-        """
-        from libqtopensesame.dialogs.text_input import text_input
-        if parent is None:
-            parent = self.main_window
-        tid = text_input(parent, msg=message, content=content)
-        return tid.get_input()
-
-    def monospace(self):
-        """
-        Returns the system-specific default monospace font.
-
-        Returns:
-        A QFont.
-        """
-        if os.name == u'posix':
-            font_family = u'mono'
-        else:
-            font_family = u'courier'
-        font = QtGui.QFont(font_family)
-        font.setFixedPitch(True)
-        return font
-
-    def varref(self, val):
-        r"""Checks whether a value contains a variable reference, for example:
-        'This is [width] px'
-
-        Parameters
-        ----------
-        val    The value to check. This can be any type, but only str and unicode
-            can contain variable references.
-
-        Returns
-        -------
-        bool
-            True if a variable reference was found, False otherwise.
-        """
-        if not isinstance(val, str):
-            return False
-        # TODO: Improve with regular expression
-        return u'[' in val
 
 
 # Alias for backwards compatibility

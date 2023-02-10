@@ -44,7 +44,6 @@ class TextInput(BaseDialog):
             self.ui.label_message.setText(msg)
         self._validator = validator
         self.ui.textedit_input.setPlainText(content)
-        self.ui.textedit_input.setFont(self.experiment.monospace())
         self.adjustSize()
 
     def get_input(self):

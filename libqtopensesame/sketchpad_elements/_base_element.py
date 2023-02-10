@@ -267,7 +267,7 @@ class BaseElement:
         try:
             self.from_string(string)
         except osexception as e:
-            self.experiment.notify(e)
+            self.main_window.notify(e)
             self.console.write(e)
             self.from_string(old_string)
             return
