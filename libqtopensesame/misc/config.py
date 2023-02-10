@@ -198,9 +198,7 @@ class Config:
 
     def type_qvariant(self, value, default=None):
         r"""Typecasts a value to a normal type that matches the type of a
-        default value. This is necessary, because under some combinations of
-        Python 2/3 and PyQt 4/5 settings are returned as QVariant objects,
-        whereas on other combinations the type casting occurs automatically.
+        default value, because QSettings returns str objects.
 
         Parameters
         ----------

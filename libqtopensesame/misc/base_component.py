@@ -19,11 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 
 import os
-if os.environ[u'QT_API'] == u'pyqt5':
-    from PyQt5 import uic
-else:
-    from PyQt4 import uic
-from qtpy import QtCore, QtWidgets
+from qtpy import QtCore, QtWidgets, uic
 from openexp import resources
 from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import osexception

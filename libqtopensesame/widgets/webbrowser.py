@@ -25,19 +25,10 @@ from libopensesame import plugins, misc
 from libqtopensesame.misc.markdown_parser import MarkdownParser
 from libqtopensesame.misc import display
 from libqtopensesame.misc.translate import translation_context
+from qtpy.QtWebEngineWidgets import QWebEngineView as WebView
+from qtpy.QtWebEngineWidgets import QWebEnginePage as WebPage
 _ = translation_context(u'webbrowser', category=u'core')
 
-if os.environ[u'QT_API'] == u'pyqt':
-    from PyQt4.QtWebKit import QWebView as WebView
-    from PyQt4.QtWebKit import QWebPage as WebPage
-else:
-    # QtWebKit is dropped in favour of QtWebEngine from Qt 5.6 on
-    try:
-        from PyQt5.QtWebKitWidgets import QWebView as WebView
-        from PyQt5.QtWebKitWidgets import QWebPage as WebPage
-    except ImportError as e:
-        from PyQt5.QtWebEngineWidgets import QWebEngineView as WebView
-        from PyQt5.QtWebEngineWidgets import QWebEnginePage as WebPage
 
 # These urls are viewed internally in the browser component. All other urls are
 # opened in an external browser.

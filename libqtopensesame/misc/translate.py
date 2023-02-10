@@ -31,7 +31,6 @@ Translation logic:
   and translated when automatic controls are defined
 - UI files are extracted, and translated fully automatically
 """
-import os
 from libopensesame.py3compat import *
 from qtpy.QtCore import QCoreApplication
 
@@ -52,9 +51,4 @@ def translation_context(name, category=u'core'):
         A translation function.
     """
     _context = u'%s_%s' % (category, name)
-    if os.environ[u'QT_API'] == u'pyqt5':
-        # PyQt5 3 doesn't require an encoding
-        return lambda s, context=None: QCoreApplication.translate(
-            _context, s)
-    return lambda s, context=None: QCoreApplication.translate(
-        _context, s, encoding=QCoreApplication.UnicodeUTF8)
+    return lambda s, context=None: QCoreApplication.translate(_context, s)

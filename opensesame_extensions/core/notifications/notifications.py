@@ -23,7 +23,6 @@ import time
 import platform
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import BaseExtension
-from qtpy.QtCore import PYQT_VERSION_STR
 
 
 __author__ = u"Daniel Schreij"
@@ -44,11 +43,6 @@ class Notifications(BaseExtension):
         self.notification_area.move(0, 15)
         self.notification_area.setEntryEffect(u'fadeIn', 200)
         self.notification_area.setExitEffect(u'fadeOut', 200)
-        # Filthly hack to make this work with Qt4 on the Mac
-        # Otherwise the notifications are not shown on top.
-        if platform.system() == "Darwin" and PYQT_VERSION_STR < '5':
-            self.notification_area.setParent(self.main_window)
-            self.notification_area.setParent(self.tabwidget)
 
     def event_notify(
             self,

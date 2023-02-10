@@ -167,11 +167,6 @@ def opensesame():
     # Parse the (optional) environment file that contains special paths, etc.
     from libopensesame import misc
     misc.parse_environment_file()
-    # Force the new-style Qt API
-    import sip
-    import qtpy
-    sip.setapi('QString', 2)
-    sip.setapi('QVariant', 2)
     # Do the basic window initialization
     from qtpy.QtWidgets import QApplication
     from qtpy.QtCore import Qt
@@ -229,14 +224,10 @@ def opensesamerun():
     # If the command line options haven't provided sufficient information to
     # run right away, present a GUI
     while not misc.opensesamerun_ready(options):
-        # If PyQt4 is not available (e.g., this might be the case on Mac OS)
+        # If PyQt is not available (e.g., this might be the case on Mac OS)
         # give an error instead of showing a GUI. This makes sure that even
-        # without PyQt4, people can still run experiments.
+        # without PyQt, people can still run experiments.
         try:
-            # Change Qt API
-            import sip
-            sip.setapi('QString', 2)
-            sip.setapi('QVariant', 2)
             from qtpy import QtGui, QtCore, QtWidgets
         except:
             misc.messagebox(u"OpenSesame Run", u"Incorrect or "
