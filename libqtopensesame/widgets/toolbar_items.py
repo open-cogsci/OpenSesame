@@ -24,6 +24,7 @@ from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.widgets.toolbar_items_label import ToolbarItemsLabel
 from libqtopensesame.widgets.toolbar_items_item import ToolbarItemsItem
 from libqtopensesame.misc.translate import translation_context
+from libqtopensesame.misc.config import cfg
 _ = translation_context(u'toolbar_items', category=u'core')
 
 
@@ -91,6 +92,10 @@ class ToolbarItems(BaseSubcomponent, QtWidgets.QToolBar):
         # to preserve the order of the categories.
         cat_dict = OrderedDict()
         for plugin in self.plugin_manager.filter(modes=self.main_window.mode):
+            # Ignoring disabled extensions
+            cfg_key = f'plugin_enabled_{plugin.name}'
+            if cfg_key in cfg and not cfg[cfg_key]:
+                continue
             cat = plugin['category']
             if cat not in cat_dict:
                 cat_dict[cat] = []

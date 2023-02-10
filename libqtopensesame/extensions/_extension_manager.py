@@ -24,6 +24,7 @@ from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.translate import translation_context
+from libqtopensesame.misc.config import cfg
 _ = translation_context(u'extension_manager', category=u'core')
 
 
@@ -65,6 +66,10 @@ class ExtensionManager(BaseSubcomponent):
         def extension_filter(ext_name): return False
         for ulext in self.unloaded_extension_manager.filter(
                 modes=self.main_window.mode):
+            # Ignoring disabled extensions
+            cfg_key = f'plugin_enabled_{ulext.name}'
+            if cfg_key in cfg and not cfg[cfg_key]:
+                continue
             if extension_filter(ulext.name):
                 oslogger.debug(u'filtering extension {}'.format(ulext.name))
                 continue

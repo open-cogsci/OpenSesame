@@ -20,6 +20,7 @@ from libopensesame.py3compat import *
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from qtpy import QtWidgets, QtGui
 from libqtopensesame.misc.translate import translation_context
+from libqtopensesame.misc.config import cfg
 _ = translation_context(u'tree_append_menu', category=u'core')
 
 
@@ -196,6 +197,10 @@ class TreeAppendMenu(BaseSubcomponent, QtWidgets.QMenu):
         self._new_items_menu = QtWidgets.QMenu(self)
         for item_type in self.experiment.core_items + [None] + \
                 [plugin.name for plugin in self.plugin_manager]:
+            # Ignoring disabled extensions
+            cfg_key = f'plugin_enabled_{item_type}'
+            if cfg_key in cfg and not cfg[cfg_key]:
+                continue
             if item_type is None:
                 self._new_items_menu.addSeparator()
             else:
