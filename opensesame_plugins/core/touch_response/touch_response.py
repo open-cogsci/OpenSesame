@@ -32,11 +32,8 @@ class TouchResponse(MouseResponse):
         response, pos, t1 = response_args
         if pos is not None:
             x, y = pos
-            if self.experiment.var.uniform_coordinates == u'yes':
-                _x = x+self.experiment.var.width/2
-                _y = y+self.experiment.var.height/2
-            else:
-                _x, _y = x, y
+            _x = x+self.experiment.var.width/2
+            _y = y+self.experiment.var.height/2
             col = _x // (self.experiment.var.width / self.var._ncol)
             row = _y // (self.experiment.var.height / self.var._nrow)
             response = row * self.var._ncol + col + 1

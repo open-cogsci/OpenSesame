@@ -48,9 +48,6 @@ class BaseElement:
             for var, val in properties.items():
                 string += u' %s="%s"' % (var, val)
         super(base_element, self).__init__(sketchpad, string)
-        # The GUI canvas uses the OpenSesame frame of reference, so we don't
-        # need to convert the coordinates.
-        self.fix_coordinates = False
         self.selected = False
         self.highlighted = False
         self.graphics_item = None

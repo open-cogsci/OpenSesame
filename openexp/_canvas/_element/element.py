@@ -152,10 +152,6 @@ class Element:
         return self._canvas.none_to_center
 
     @property
-    def uniform_coordinates(self):
-        return self._canvas.uniform_coordinates
-
-    @property
     def property_names(self):
         return (
             set(self._properties.keys())

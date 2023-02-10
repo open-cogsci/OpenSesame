@@ -37,14 +37,6 @@ class BaseElement:
             A list with (name, default_value) tuples for all keywords.
         """
         self._type = snake_case(self.__class__.__name__)
-        # These keywords provide compatibility with older versions of
-        # OpenSesame. `only_keywords` specifies whether all parameters should be
-        # written as keywords, which will prevent < 2.9.0 from reading the
-        # sketchpad elements. If not, keywords with a None default will be
-        # written value-only style. `fix_coordinates` specifies whether
-        # coordinates should be translated to top-left = 0,0.
-        self.only_keywords = False
-        self.fix_coordinates = sketchpad.var.uniform_coordinates != u'yes'
         self.defaults = defaults + [
             (u'z_index', 0),
             (u'show_if', u'always'),
@@ -212,11 +204,6 @@ class BaseElement:
                 round_float = False
             val = self.sketchpad.syntax.auto_type(
                 self.sketchpad.syntax.eval_text(val, round_float=round_float))
-            if self.fix_coordinates and type(val) in (int, float):
-                if var in [u'x', u'x1', u'x2']:
-                    val += xc
-                if var in [u'y', u'y1', u'y2']:
-                    val += yc
             properties[var] = val
         return properties
 

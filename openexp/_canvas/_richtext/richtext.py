@@ -171,10 +171,7 @@ class RichText(Element):
             t.setPlainText(self.text)
         mw = self.max_width
         if mw is None:
-            if self.uniform_coordinates:
-                mw = self._canvas.width // 2 - self.x
-            else:
-                mw = self._canvas.width - self.x
+            mw = self._canvas.width // 2 - self.x
         if self.center:
             mw *= 2
         t.setTextWidth(mw)

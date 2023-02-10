@@ -326,9 +326,8 @@ class Form:
                               u'widgets. Please modify the form geometry!')
         x = x1+self.margins[3]
         y = y1+self.margins[0]
-        if self.experiment.var.uniform_coordinates == u'yes':
-            x -= self.width/2
-            y -= self.height/2
+        x -= self.width/2
+        y -= self.height/2
         return x, y, w, h
 
     def set_widget(self, widget, pos, colspan=1, rowspan=1):

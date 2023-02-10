@@ -163,10 +163,6 @@ class Experiment(Item):
         self.var.round_decimals = 2
         self.var.form_clicks = u'no'
         self.var.disable_garbage_collection = u'yes'
-        # In version 2.9.X and before, the sketchpad used 0,0 for the screen
-        # center, whereas scripting items used 0,0 for the top-left. By setting
-        # uniform_coordinates to 'yes', 0,0 is used for the center in all cases.
-        self.var.uniform_coordinates = u'no'
         # Sound parameters
         self.var.sound_freq = 48000
         self.var.sound_sample_size = -16  # Negative values mean signed
@@ -353,12 +349,6 @@ class Experiment(Item):
         self.python_workspace.init_globals()
         self.reset_feedback()
         self.init_heartbeat()
-        if self.var.uniform_coordinates != u'yes':
-            oslogger.warning(
-                u'Uniform coordinates are disabled. This is deprecated, and '
-                u'will be removed in the future. Please enable uniform '
-                u'coordinates in the script of your experiment.'
-            )
         oslogger.info(u"experiment started")
         if self.var.start in self.items:
             item_stack_singleton.clear()

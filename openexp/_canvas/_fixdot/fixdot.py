@@ -27,9 +27,9 @@ class FixDot(Group):
     def __init__(self, canvas, x=None, y=None, style=u'default', **properties):
 
         if x is None:
-            x = 0 if canvas.uniform_coordinates else canvas._width/2
+            x = 0
         if y is None:
-            y = 0 if canvas.uniform_coordinates else canvas._height/2
+            y = 0
         h = 2
         if u'large' in style:
             s = 16

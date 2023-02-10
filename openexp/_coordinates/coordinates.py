@@ -27,21 +27,14 @@ class Coordinates:
     r"""A base class for classes that need to perform coordinate conversions."""
     def __init__(self):
         r"""Constructor."""
-        self.uniform_coordinates = \
-            self.experiment.var.uniform_coordinates == u'yes'
         self._width = self.experiment.var.width
         self._height = self.experiment.var.height
         self._xcenter = self._width/2
         self._ycenter = self._height/2
-        if self.uniform_coordinates:
-            self._bottom = self._ycenter
-            self._top = -self._ycenter
-            self._left = -self._xcenter
-            self._right = self._xcenter
-        else:
-            self._top = self._left = 0
-            self._bottom = self._height
-            self._right = self._width
+        self._bottom = self._ycenter
+        self._top = -self._ycenter
+        self._left = -self._xcenter
+        self._right = self._xcenter
         self._mouse_dev = isinstance(self, Mouse)
         self._canvas_dev = isinstance(self, Canvas)
         if not self._mouse_dev and not self._canvas_dev:
@@ -64,15 +57,9 @@ class Coordinates:
             An (x, y) coordinate tuple.
         """
         if x is None:
-            if not self.uniform_coordinates:
-                x = self._xcenter
-            else:
-                x = 0
+            x = 0
         if y is None:
-            if not self.uniform_coordinates:
-                y = self._ycenter
-            else:
-                y = 0
+            y = 0
         return x, y
 
     def to_xy(self, x, y=None):
