@@ -67,7 +67,7 @@
      <x>0</x>
      <y>0</y>
      <width>1042</width>
-     <height>27</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">
@@ -241,12 +241,10 @@
    <addaction name="action_save"/>
    <addaction name="separator"/>
    <addaction name="action_run"/>
-   <addaction name="action_run_in_window"/>
    <addaction name="action_run_quick"/>
    <addaction name="action_kill"/>
    <addaction name="separator"/>
    <addaction name="action_close_other_tabs"/>
-   <addaction name="action_onetabmode"/>
    <addaction name="separator"/>
    <addaction name="action_show_overview"/>
    <addaction name="action_show_pool"/>
@@ -367,6 +365,9 @@
    <property name="shortcut">
     <string>Ctrl+W</string>
    </property>
+   <property name="visible">
+    <bool>true</bool>
+   </property>
   </action>
   <action name="action_show_pool">
    <property name="checkable">
@@ -432,6 +433,9 @@
    </property>
    <property name="toolTip">
     <string>One-tab mode</string>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
    </property>
   </action>
   <action name="action_run_quick">

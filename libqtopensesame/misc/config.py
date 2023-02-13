@@ -48,7 +48,7 @@ DEFAULT_CONFIG = {
     "file_dialog_path": "",
     "file_pool_size_warning": 104857600,
     "loop_wizard": None,
-    "onetabmode": False,
+    "onetabmode": True,
     "quick_run_logfile": u"quickrun.csv",
     "recent_files": u"",
     "reset_console_on_experiment_start": True,
