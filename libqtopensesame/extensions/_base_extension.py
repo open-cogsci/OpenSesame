@@ -369,24 +369,26 @@ class BaseExtension(BaseSubcomponent):
         r"""Creates a QAction for the extension, and adds it to the menubar
         and/ or the toolbar.
         """
-        if self.label() is not None:
-            self.action = self.qaction(self.icon(), self.label(),
-                                       self._activate, checkable=self.checkable(),
-                                       tooltip=self.tooltip(), shortcut=self.shortcut())
-            # Insert the action into the menu
-            if self.menu_pos() is not None:
-                submenu_text, index, separator_before, separator_after = \
-                    self.menu_pos()
-                submenu = self.get_submenu(submenu_text)
-                self.add_action(submenu, self.action, index, separator_before,
-                                separator_after)
-            # Insert the action into the toolbar
-            if self.toolbar_pos() is not None:
-                index, separator_before, separator_after = self.toolbar_pos()
-                self.add_action(self.toolbar, self.action, index,
-                                separator_before, separator_after)
-        else:
+        label = self.label()
+        shortcut = self.shortcut()
+        if label is None and shortcut is None:
             self.action = None
+            return
+        self.action = self.qaction(self.icon(), label,
+                                   self._activate, checkable=self.checkable(),
+                                   tooltip=self.tooltip(), shortcut=shortcut)
+        # Insert the action into the menu
+        if self.menu_pos() is not None:
+            submenu_text, index, separator_before, separator_after = \
+                self.menu_pos()
+            submenu = self.get_submenu(submenu_text)
+            self.add_action(submenu, self.action, index, separator_before,
+                            separator_after)
+        # Insert the action into the toolbar
+        if self.toolbar_pos() is not None:
+            index, separator_before, separator_after = self.toolbar_pos()
+            self.add_action(self.toolbar, self.action, index,
+                            separator_before, separator_after)
 
     def register_config(self):
         r"""Registers the extension settings in the config object."""
