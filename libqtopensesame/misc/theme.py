@@ -20,6 +20,7 @@ from libopensesame.py3compat import *
 import os.path
 import sys
 import imp
+import qtawesome as qta
 from openexp import resources
 from libopensesame import misc
 from libopensesame.oslogging import oslogger
@@ -261,21 +262,32 @@ class Theme:
 
     def load_icons(self, ui):
         """
-        Add icons to all icon supporting widgets in a ui object
+        Add icons to all icon-supporting widgets in a ui object. Icons can
+        be specified through a `qta:[icon name]` text on the widget, or through
+        the icon_map, where the object name is the look-up key.
 
-        Arguments:
-        ui -- the ui object to load icons into
+        Parameters
+        ----------
+        ui
+            The ui object to load icons into
         """
-        for i in dir(ui):
-            # Oddly enough, it can happend that getattr() fails on items that
-            # have been returned by dir(). That's why we need a hasattr() as
-            # well.
-            if i in self.icon_map and hasattr(ui, i):
-                a = getattr(ui, i)
-                if hasattr(a, u"setIcon"):
-                    a.setIcon(self.qicon(i))
-                elif hasattr(a, u"setPixmap"):
-                    a.setPixmap(self.qpixmap(i))
+        if ui is None:
+            return
+        for key, value in ui.__dict__.items():
+            if not isinstance(value, QtCore.QObject):
+                continue
+            if hasattr(value, 'text') and value.text().startswith('qta:'):
+                try:
+                    value.setIcon(qta.icon(value.text()[4:]))
+                    value.setText('')
+                except Exception as e:
+                    oslogger.warning('failed to load qtawesome icon: {e}')
+                    
+            elif key in self.icon_map:
+                if hasattr(value, 'setIcon'):
+                    value.setIcon(self.qicon(key))
+                elif hasattr(value, 'setPixmap'):
+                    value.setPixmap(self.qpixmap(key))
 
     def set_toolbar_size(self, size):
         """
