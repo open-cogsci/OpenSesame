@@ -78,8 +78,8 @@ class ExtensionManager(BaseSubcomponent):
             except Exception as e:
                 if not isinstance(e, osexception):
                     e = osexception(msg=u'Extension error', exception=e)
-                self.notify(
-                    f'Failed to load extension {ulext.name} (see debug window for stack trace)')
+                oslogger.error(f'Failed to load extension {ulext.name} '
+                               f'(see debug window for stack trace)')
                 self.console.write(e)
             else:
                 self._extensions.append(ext)

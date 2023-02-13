@@ -64,21 +64,6 @@ class SmallWebpage(WebPage):
                 with the web browser backend being used, which can be QtWebKit or the
                 newer QtWebEngine.
 
-                Arguments (when used by QtWebKit):
-                        frame:
-                                desc: 	The frame that has to be changed depending on the
-                                                request
-                                type: 	QtWebKit.QWebFrame
-                        request:
-                                desc:	request containing information about the
-                                                navigation request, among which the url to change the
-                                                frame to.
-                                type: 	QtWebKit.QNetworkRequest
-                        navtype:
-                                desc: 	type of request has been received (such as link
-                                                clicked, form submitted)
-                                type: 	QtWebKit.NavigationType
-
                 Arguments (when used by QtWebEngine):
                         url:
                                 desc: 	url to navigate to
@@ -101,7 +86,7 @@ class SmallWebpage(WebPage):
             frame, request, navtype = args
             url = request.url()
 
-        if navtype == self.NavigationTypeLinkClicked:
+        if navtype == self.NavigationType.NavigationTypeLinkClicked:
             url = url.toString()
             if url.startswith(u'opensesame://'):
                 self.parent().command(url)

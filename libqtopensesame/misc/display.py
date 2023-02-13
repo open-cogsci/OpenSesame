@@ -22,5 +22,8 @@ from qtpy import QtCore
 # The DPI of the browser appears to be hard-set to 96, so we need adjust the
 # zooom of QWebView to correct for this.
 STANDARD_DPI = 96
-system_dpi = QtCore.QCoreApplication.instance().desktop().screen().logicalDpiX()
-display_scaling = 1.*system_dpi/STANDARD_DPI
+try:
+    system_dpi = QtCore.QCoreApplication.instance().desktop().screen().logicalDpiX()
+    display_scaling = 1. * system_dpi / STANDARD_DPI
+except Exception:
+    display_scaling = 1

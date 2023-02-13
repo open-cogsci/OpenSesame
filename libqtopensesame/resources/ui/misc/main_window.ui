@@ -138,9 +138,6 @@
      <height>124</height>
     </size>
    </property>
-   <property name="features">
-    <set>QDockWidget::AllDockWidgetFeatures</set>
-   </property>
    <property name="windowTitle">
     <string>Overview</string>
    </property>

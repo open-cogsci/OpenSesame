@@ -240,7 +240,7 @@ class PyqodeManager(BaseExtension):
                 del editor.backend.SHARE_COUNT[editor.backend._share_id]
             editor.backend._process = None
             editor.backend.resume()
-            editor.backend._process.error.connect(on_error)
+            editor.backend._process.errorOccurred.connect(on_error)
             editor.backend._process.finished.connect(on_finished)
             self._register_backend_process(editor)
 
@@ -250,7 +250,7 @@ class PyqodeManager(BaseExtension):
                     'backend crashed (exit status: {})'.format(exit_status))
                 on_error()
         try:
-            editor.backend._process.error.connect(on_error)
+            editor.backend._process.errorOccurred.connect(on_error)
             editor.backend._process.finished.connect(on_finished)
             self._register_backend_process(editor)
         except RuntimeError:

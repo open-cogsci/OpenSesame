@@ -19,19 +19,17 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import re
 from pyqode.core import api
-from pyqode.qt import QtWidgets
+from qtpy import QtWidgets
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'pyqode_manager', category=u'extension')
 
 
 class ConvertIndentationMode(api.Mode):
-
-    """Comments/uncomments a set of lines using Ctrl+/.
-    """
+    """Comments/uncomments a set of lines using Ctrl+/."""
+    
     def __init__(self):
-
-        super(ConvertIndentationMode, self).__init__()
+        super().__init__()
         self._action_tabs_to_spaces = QtWidgets.QAction(
             _('Convert tabs to spaces'),
             self.editor

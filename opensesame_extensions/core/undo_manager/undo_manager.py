@@ -34,10 +34,16 @@ class UndoManager(BaseExtension):
         self.undo_action = self.qaction(u'edit-undo', _(u'Undo'), self.undo,
                                         tooltip=_(u'Undo most recent action'),
                                         shortcut=u'Alt+Ctrl+Z')
-        for w in self.action.associatedWidgets():
-            if not isinstance(w, QMenu) and not isinstance(w, QToolBar):
-                continue
-            w.insertAction(self.action, self.undo_action)
+        # fThis extension has two actions instead of one. This is a hacky
+        # solution to insert the second action after the first one in both
+        # the toolbar and menu.
+        menu_pos = self.menu_pos()
+        if menu_pos is not None:
+            submenu_text, index, separator_before, separator_after = menu_pos
+            submenu = self.get_submenu(submenu_text)
+            submenu.insertAction(self.action, self.undo_action)
+        if self.toolbar_pos() is not None:
+            self.toolbar.insertAction(self.action, self.undo_action)
         self.initialize()
 
     def event_open_experiment(self, path):

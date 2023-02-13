@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from qtpy import QtCore, QtNetwork
+from qtpy import QtCore
 from libopensesame import metadata
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.widgets.webbrowser import WebView
@@ -62,8 +62,7 @@ class Analytics(BaseExtension):
             )
         )
         wv.hide()
-        if not QtNetwork.QNetworkConfigurationManager().isOnline() or \
-                not cfg.analytics_show_notification:
+        if not cfg.analytics_show_notification:
             return
         self.extension_manager.fire(
             u'notify',

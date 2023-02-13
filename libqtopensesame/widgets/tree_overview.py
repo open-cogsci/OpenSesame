@@ -49,18 +49,18 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         QtCore.Qt.Key_Return
     ]
 
-    def __init__(self, main_window, overview_mode=True):
+    def __init__(self, parent, overview_mode=True):
         r"""Constructor.
 
         Parameters
         ----------
-        main_window : qtopensesame
+        parent : qtopensesame
             The main window object.
         overview_mode : int, optional
             Indicates whether the tree should be overview-area style (True) or
             sequence style (False).
         """
-        super().__init__(main_window)
+        super().__init__(parent)
         self.locked = False
         self.overview_mode = overview_mode
         self.setAcceptDrops(True)
