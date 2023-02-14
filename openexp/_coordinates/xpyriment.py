@@ -17,15 +17,14 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
 from openexp._coordinates.coordinates import Coordinates
 
 
 class Xpyriment(Coordinates):
-
     r"""For function specifications and docstrings, see
     `openexp._coordinates.coordinates`.
     """
+    
     def __init__(self):
 
         Coordinates.__init__(self)
@@ -49,7 +48,7 @@ class Xpyriment(Coordinates):
         if isinstance(x, tuple):
             x, y = x
         if not self._mouse_dev:
-            raise osexception(u'Only mouse supported')
+            raise TypeError('Only mouse supported')
         return x - self._xwcenter, y - self._ywcenter
 
 

@@ -20,7 +20,6 @@ from libopensesame.py3compat import *
 from libqtopensesame.items.qtplugin import QtPlugin
 from libqtopensesame import validators
 from libqtopensesame.misc.translate import translation_context
-from libopensesame.exceptions import osexception
 _ = translation_context(u'qtautoplugin', category=u'core')
 
 
@@ -65,18 +64,18 @@ class QtAutoPlugin(QtPlugin):
         for c in self.plugin_attribute('controls'):
             # Check whether all required options have been specified
             if u'type' not in c:
-                raise osexception(
+                raise RuntimeError(
                     _(u'You must specify "type" for %s controls in info.yaml')
                     % option)
             for types, options in required:
                 if c[u'type'] in types:
                     for option in options:
                         if option not in c:
-                            raise osexception(
+                            raise RuntimeError(
                                 _(u'You must specify "%s" for %s controls in info.yaml')
                                 % (option, c[u'type']))
             if u'var' in c and not self.syntax.valid_var_name(c[u'var']):
-                raise osexception(
+                raise RuntimeError(
                     _(u'Invalid variable name (%s) specified in %s plugin info') %
                     (c[u'var'], self.item_type))
             # Set missing keywords to None
@@ -134,15 +133,16 @@ class QtAutoPlugin(QtPlugin):
                     validator = getattr(validators,
                                         u'%s_validator' % c[u'validator'])
                 except:
-                    raise osexception(
+                    raise RuntimeError(
                         u'Invalid validator: %s' % c[u'validator'])
                 widget.setValidator(validator(self.main_window))
             # Add the widget as an item property when the 'name' option is
             # specified.
             if u'name' in c:
                 if hasattr(self, c[u'name']):
-                    raise Exception(_(u'Name "%s" is already taken in qtautoplugin control')
-                                    % c[u'name'])
+                    raise RuntimeError(
+                        _(u'Name "%s" is already taken in qtautoplugin control')
+                        % c[u'name'])
                 setattr(self, c[u'name'], widget)
         if need_stretch:
             self.add_stretch()

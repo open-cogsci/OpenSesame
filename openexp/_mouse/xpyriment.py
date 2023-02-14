@@ -21,7 +21,6 @@ from pygame.locals import *
 from openexp._mouse.mouse import Mouse
 from openexp._mouse.legacy import Legacy
 from openexp.backend import configurable
-from libopensesame.exceptions import osexception
 import pygame
 from expyriment import stimuli
 from expyriment.misc.geometry import coordinates2position as c2p

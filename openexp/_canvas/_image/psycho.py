@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
 from openexp._canvas._image.image import Image
 from openexp._canvas._element.psycho import PsychoElement, RotatingElement
 from psychopy import visual

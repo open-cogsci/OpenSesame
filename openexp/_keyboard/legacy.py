@@ -21,7 +21,6 @@ import platform
 import pygame
 from pygame.locals import *
 from string import whitespace
-from libopensesame.exceptions import osexception
 from openexp._keyboard.keyboard import Keyboard
 from openexp.backend import configurable
 

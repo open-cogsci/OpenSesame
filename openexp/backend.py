@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from openexp import resources
-from libopensesame.exceptions import osexception
 from functools import partial
 import inspect
 try:
@@ -241,7 +240,7 @@ class Backend:
             The value of the configurable.
         """
         if not val is None and not isinstance(val, list):
-            raise osexception(
+            raise TypeError(
                 u'%s should be a list or None, not %s' % (key, val))
 
     @classmethod
@@ -256,7 +255,7 @@ class Backend:
             The value of the configurable.
         """
         if not isinstance(val, bool) and not isinstance(val, int):
-            raise osexception(
+            raise TypeError(
                 u'%s should be True or False, not %s' % (key, val))
 
     @classmethod
@@ -272,7 +271,7 @@ class Backend:
         """
         if not val is None and not isinstance(val, int) and \
                 not isinstance(val, float):
-            raise osexception(
+            raise TypeError(
                 u'%s should be numeric (float or int) or None, not %s'
                 % (key, val))
 
@@ -288,7 +287,7 @@ class Backend:
             The value of the configurable.
         """
         if not isinstance(val, int) and not isinstance(val, float):
-            raise osexception(
+            raise TypeError(
                 u'%s should be numeric (float or int), not %s' % (key, val))
 
     @classmethod
@@ -303,7 +302,7 @@ class Backend:
             The value of the configurable.
         """
         if not isinstance(val, str):
-            raise osexception(
+            raise TypeError(
                 u'%s should be string (str or unicode), not %s' % (key, val))
 
     def get_config(self):
@@ -327,7 +326,7 @@ class Backend:
         """
         for key in cfg:
             if key not in self.configurables:
-                raise osexception(u'Unknown argument: %s' % key)
+                raise RuntimeError(u'Unknown argument: %s' % key)
             assert_fnc = self.configurables[key]
             if assert_fnc is not None:
                 assert_fnc(key, cfg[key])
@@ -335,7 +334,7 @@ class Backend:
         # Check whether the config is valid
         for key in self.configurables:
             if key not in self.__cfg__:
-                raise osexception(u'Invalid config: %s' % str(self.__cfg__))
+                raise RuntimeError(u'Invalid config: %s' % str(self.__cfg__))
 
     def default_config(self):
         """

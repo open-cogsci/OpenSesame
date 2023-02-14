@@ -19,12 +19,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from openexp._canvas.canvas import Canvas
 from openexp._mouse.mouse import Mouse
-from libopensesame.exceptions import osexception
 
 
 class Coordinates:
-
-    r"""A base class for classes that need to perform coordinate conversions."""
+    r"""A base class for classes that need to perform coordinate conversions.
+    """
+    
     def __init__(self):
         r"""Constructor."""
         self._width = self.experiment.var.width
@@ -38,8 +38,8 @@ class Coordinates:
         self._mouse_dev = isinstance(self, Mouse)
         self._canvas_dev = isinstance(self, Canvas)
         if not self._mouse_dev and not self._canvas_dev:
-            raise osexception(
-                u'coordinates class should be coparent with canvas or mouse class')
+            raise TypeError('coordinates class should be coparent with canvas '
+                            'or mouse class')
 
     def none_to_center(self, x, y):
         r"""Interpretes None coordinates as the display center.

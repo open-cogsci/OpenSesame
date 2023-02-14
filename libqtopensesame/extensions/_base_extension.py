@@ -24,7 +24,6 @@ from qtpy import QtWidgets, QtCore
 from openexp import resources
 from libopensesame.misc import snake_case, camel_case
 from libopensesame.oslogging import oslogger
-from libopensesame.exceptions import osexception
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.translate import translation_context
@@ -272,12 +271,13 @@ class BaseExtension(BaseSubcomponent):
         try:
             self.activate()
         except Exception as e:
-            if not isinstance(e, osexception):
-                e = osexception(msg=u'Extension error', exception=e)
             self.notify(
-                u'Extension %s misbehaved on activate (see debug window for stack trace)'
-                % self.name(), category='warning')
+                f'Extension {self.name} misbehaved on activate '
+                f'(see debug window for stack trace)',
+                category='warning')
             self.console.write(e)
+            oslogger.error(
+                f'Extension {self.name} misbehaved on activate: {e}')
 
     def add_action(self, widget, action, index, separator_before,
                    separator_after):
@@ -481,8 +481,8 @@ class BaseExtension(BaseSubcomponent):
 
     def ext_resource(self, resource):
         r"""Finds an extension resource, i.e. a file in the extension folder,
-        and returns the full path to the resource. An `osexception` is raised
-        if the resource does not exist.
+        and returns the full path to the resource. An FileNotFoundError is 
+        raised if the resource does not exist.
 
         Parameters
         ----------
@@ -500,5 +500,5 @@ class BaseExtension(BaseSubcomponent):
             return path
         path = os.path.join(self.extension_folder, resource)
         if not os.path.exists(path):
-            raise osexception(u'Extension resource not found: %s' % path)
+            raise FileNotFoundError(f'Extension resource not found: {path}')
         return path

@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException
 from qtpy import QtWidgets, QtGui
 from libqtopensesame.misc.translate import translation_context
 from libqtopensesame.dialogs.text_input import TextInput
@@ -214,7 +214,7 @@ class BaseElement:
                     return False
                 return fallback
             return bool(val)
-        raise osexception(u'Unknown type: %s' % _type)
+        raise TypeError(f'{name} should be {_type} not {type(val)}')
 
     def set_property(self, name, val, yes_no=False):
         r"""Sets an element property.
@@ -263,7 +263,7 @@ class BaseElement:
             return
         try:
             self.from_string(string)
-        except osexception as e:
+        except OSException as e:
             self.main_window.notify(e)
             self.console.write(e)
             self.from_string(old_string)

@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import textwrap
 from qtpy import QtCore, QtWidgets
-from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
 from libqtopensesame.widgets.item_view_button import item_view_button
 from libqtopensesame.widgets.tree_item_item import tree_item_item
@@ -472,8 +471,6 @@ class QtItem:
                 try:
                     self.validator(self.name, self.experiment, test_script)
                 except Exception as e_:
-                    if not isinstance(e_, osexception):
-                        e_ = osexception(e_)
                     from pyqode.core.api.utils import TextHelper
                     TextHelper(self._script_widget).select_lines(
                         line_nr - 1,

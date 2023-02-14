@@ -21,7 +21,7 @@ import re
 import webcolors
 import colorsys
 import numbers
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException, InvalidColor
 
 RGB_HEX6 = r'#(?P<r>[0-9a-fA-F]{2})(?P<g>[0-9a-fA-F]{2})(?P<b>[0-9a-fA-F]{2})$'
 RGB_HEX3 = r'#(?P<r>[0-9a-fA-F])(?P<g>[0-9a-fA-F])(?P<b>[0-9a-fA-F])$'
@@ -42,13 +42,6 @@ def _is_rgb(colorspec):
             and 0 <= i <= 255
             for i in colorspec
         )
-    )
-
-
-def _raise_invalid(colorspec):
-
-    raise osexception(
-        u'Invalid color specification: {}'.format(safe_decode(colorspec))
     )
 
 
@@ -101,7 +94,7 @@ class Color:
         if _is_rgb(colorspec):
             return webcolors.rgb_to_hex(colorspec)
         if not isinstance(colorspec, str):
-            _raise_invalid(colorspec)
+            raise InvalidColor(colorspec)
         try:  # 0-255 luminance value passed as string
             colorspec = int(colorspec)
         except ValueError:
@@ -159,7 +152,7 @@ class Color:
             try:
                 from psychopy.tools import colorspacetools as cst
             except ImportError:
-                raise osexception(u'CIE L*a*b* color space requires PsychoPy')
+                raise OSException('CIE L*a*b* color space requires PsychoPy')
             # RGB values are between -1 and 1
             r, g, b = cst.cielab2rgb(
                 (
@@ -174,7 +167,7 @@ class Color:
                 int((g + 1) * 127.5),
                 int((b + 1) * 127.5),
             ))
-        _raise_invalid(colorspec)
+        raise InvalidColor(colorspec)
 
     def to_backend_color(self, hexcolor):
         r"""Converts a hexadecimal color string to a backend-specific color

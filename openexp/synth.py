@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException, InvalidValue
 from openexp.sampler import Sampler
 try:
     import numpy as np
@@ -48,13 +48,13 @@ def Synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
         A SAMPLER object.
     """
     if np is None:
-        raise osexception(
+        raise OSException(
             u'The synth is not available, because numpy is missing.')
     if attack < 0 or attack > length:
-        raise osexception(
+        raise InvalidValue(
             u'Attack must be a numeric value between 0 and the sound length')
     if decay < 0 or decay > length:
-        raise osexception(
+        raise InvalidValue(
             u'Decay must be a numeric value between 0 and the sound length')
     # We need to multiply the rate by two to get a stereo signal
     rate = 2*experiment.var.get(u'sound_freq', 48000)
@@ -87,13 +87,13 @@ def key_to_freq(key):
     if type(key) in [int, float]:
         return key
     if not isinstance(key, str) or len(key) < 2:
-        raise osexception(
+        raise InvalidValue(
             "synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")
     n = key[:-1].lower()
     try:
         o = int(key[-1])
     except:
-        raise osexception(
+        raise InvalidValue(
             "synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")
     if n == "a":
         f = 440.0
@@ -139,7 +139,7 @@ def osc_gen(_type, freq, length, rate):
         return np.sin(2 * np.pi * freq * t)
     if _type == u'white_noise':
         return np.random.random(int(length * rate)) * 2 - 1
-    raise osexception(u'Invalid oscillator: %s' % _type)
+    raise InvalidValue(u'Invalid oscillator: %s' % _type)
 
 
 def envelope(length, attack, decay, rate):

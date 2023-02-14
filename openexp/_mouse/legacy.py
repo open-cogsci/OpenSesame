@@ -20,7 +20,7 @@ from libopensesame.py3compat import *
 from pygame.locals import *
 from openexp._mouse.mouse import Mouse
 from openexp._coordinates.legacy import Legacy as LegacyCoordinates
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import UserAborted
 from openexp.backend import configurable
 import pygame
 
@@ -99,9 +99,8 @@ class Legacy(Mouse, LegacyCoordinates):
                                             event.pos[0] > self.experiment.var.width-64
                                             and event.pos[1] < 64
                                     ):
-                                        raise osexception(
-                                            u"The escape sequence was clicked/ tapped"
-                                        )
+                                        raise UserAborted(
+                                            "The escape sequence was clicked/ tapped")
                     if buttonlist is None or event.button in buttonlist:
                         pygame.mouse.set_visible(self._cursor_shown)
                         return event.button, self.from_xy(event.pos), time

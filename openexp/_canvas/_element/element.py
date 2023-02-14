@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 import copy
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue
 from functools import partial
 from openexp.color import color
 
@@ -251,12 +251,14 @@ class Element:
             try:
                 v = float(v)
             except ValueError:
-                raise osexception(
+                raise InvalidValue(
                     u'%s should be int or float, not %s' % (name, v))
             if v != v:
-                raise osexception(u'%s should be int or float, not nan' % name)
+                raise InvalidValue(
+                u'%s should be int or float, not nan' % name)
             if v == INF:
-                raise osexception(u'%s should be int or float, not inf' % name)
+                raise InvalidValue(
+                    u'%s should be int or float, not inf' % name)
 
     @staticmethod
     def _rect(x, y, w, h):

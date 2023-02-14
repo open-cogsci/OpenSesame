@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from collections import OrderedDict
 from libopensesame.oslogging import oslogger
+from libopensesame.exceptions import OSException, InvalidValue
 from openexp.backend import configurable
 from openexp._canvas.canvas import Canvas
 from openexp._coordinates.psycho import Psycho as PsychoCoordinates
@@ -162,7 +163,7 @@ class Psycho(Canvas, PsychoCoordinates):
             _old_gamma = experiment.window.gamma
             experiment.window.setGamma(gamma)
         elif gamma != u'unchanged':
-            raise osexception(
+            raise InvalidValue(
                 u'Gamma should be a positive numeric value or "unchanged"')
         core.quit = _psychopy_clean_quit
         # Optionally change the logging level to avoid a lot of warnings in the
@@ -211,7 +212,7 @@ def _psychopy_clean_quit():
     what we want, because it closes OpenSesame altogether. Instead, we nicely
     inform the user that PsychoPy has signalled an error.
     """
-    raise osexception(
+    raise OSException(
         u'PsychoPy encountered an error and aborted the program. See the debug window for PsychoPy error messages.')
 
 

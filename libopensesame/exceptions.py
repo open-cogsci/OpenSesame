@@ -35,20 +35,20 @@ import time
 
 
 class AbortCoroutines(Exception):
-
     r"""A messaging Exception to indicate that coroutines should be aborted.
     That is, if a task raises an AbortCoroutines, then the currently running
     coroutines should abort.
     """
+    
     pass
 
 
-class osexception(Exception):
-
+class OSException(BaseException):
     r"""A general Exception class for exceptions that occur within OpenSesame.
     Ideally, only `osexception`s should occur, all other exceptions indicate a
     (usually harmless) bug somewhere.
     """
+    
     def __init__(self, msg, exception=None, **info):
         r"""Constructor.
 
@@ -62,7 +62,7 @@ class osexception(Exception):
         **info : dict
             Optional additional info for the exception.
         """
-        super(osexception, self).__init__(msg)
+        super().__init__(msg)
         # Create both HTML and plain text representations of the Exception.
         self.enc = u'utf-8'
         self.user_triggered = info.get(u'user_triggered', False)
@@ -165,40 +165,66 @@ class osexception(Exception):
             info[u'exception message'] = u'Description unavailable'
         return info
 
-    def __unicode__(self):
-        """
-        returns:
-                desc:	A representation of the exception in plaintext.
-                type:	unicode
-        """
-        return self._plaintext
-
     def __str__(self):
-        """
-        returns:
-                desc:	A representation of the exception in plaintext.
-                type:	str
-        """
         return self._plaintext
 
     def plaintext(self):
-        """
-        returns:
-                desc:	A string representation of the exception in plaintext.
-                type:	unicode
-        """
         return str(self)
 
     def markdown(self):
-        """
-        returns:
-                desc:	A representation of the exception in Markdown format.
-                type:	unicode
-        """
         return self._md
+    
+    
+class InvalidKeyName(OSException):
+    """This exception is raised when the name of a key has been incorrectly
+    specified.
+    """
+    def __init__(self, key):
+        super().__init__(f'Invalid key name: {key}')
+        
+        
+class InvalidValue(OSException):
+    pass
+
+
+class InvalidColor(OSException):
+    """This exception is raised when a color has been incorrectly specified.
+    """
+    def __init__(self, color):
+        super().__init__(f'Invalid color specification: {color}')
+
+
+class UnsupportedImageFormat(OSException):
+    """This exception is raised when an image file has an unsupported format.
+    """
+    def __init__(self, path):
+        super().__init__(f'{path} is not a supported image file')
+        
+        
+class ImageDoesNotExist(OSException):
+    """This exception is raised when an image file does not exist."""
+    def __init__(self, path):
+        super().__init__(f'Cannot find image file {path}')
+        
+
+class UnsupportedSoundFileFormat(OSException):
+    """This exception is raised when a sound file has an unsupported format.
+    """
+    def __init__(self, path):
+        super().__init__(f'{path} is not a supported sound file')
+        
+        
+class SoundFileDoesNotExist(OSException):
+    """This exception is raised when an sound file does not exist."""
+    def __init__(self, path):
+        super().__init__(f'Cannot find sound file {path}')
+
+
+class UserAborted(OSException):
+    """This exception is raised when a user aborts an experiment."""
+    def __init__(self, msg):
+        super().__init__(msg, user_triggered=True)
 
 
 # For backwards compatibility, we should also define the old Exception classes
-runtime_error = osexception
-script_error = osexception
-form_error = osexception
+osexception = OSException

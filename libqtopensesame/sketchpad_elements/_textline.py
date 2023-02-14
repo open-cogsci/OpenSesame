@@ -18,7 +18,6 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
 from libqtopensesame.sketchpad_elements._base_element import BaseElement
 from libopensesame.sketchpad_elements import Textline as TextlineRuntime
 from libqtopensesame.dialogs.text_input import TextInput

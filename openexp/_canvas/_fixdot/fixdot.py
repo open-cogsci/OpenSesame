@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue
 from openexp._canvas._element.group import Group
 from openexp.canvas_elements import Line, Ellipse
 
@@ -38,7 +38,7 @@ class FixDot(Group):
         elif u'small' in style:
             s = 4
         else:
-            raise osexception(u'Unknown style: %s' % self.style)
+            raise InvalidValue(u'Unknown style: %s' % self.style)
         if u'open' in style or style == u'default':
             elements = [
                 Ellipse(x-s, y-s, 2*s, 2*s, fill=True, **properties)
@@ -58,7 +58,7 @@ class FixDot(Group):
                 Line(x-s, y, x+s, y, **properties).construct(canvas)
             ]
         else:
-            raise osexception(u'Unknown style: %s' % self.style)
+            raise InvalidValue(u'Unknown style: %s' % self.style)
         properties = properties.copy()
         properties.update({'x': x, 'y': y, u'style': style})
         Group.__init__(self, canvas, elements, **properties)

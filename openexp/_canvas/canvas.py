@@ -21,7 +21,6 @@ import warnings
 import random
 import itertools
 import math
-from libopensesame.exceptions import osexception
 from openexp.backend import Backend, configurable
 from openexp.color import Color
 from PIL import Image as PILImage
@@ -1302,7 +1301,7 @@ def _gabor(
         elif bgmode == u"col2":
             amp = amp * f
         else:
-            raise osexception(
+            raise ValueError(
                 u"Invalid argument for bgmode: %s "
                 u"(should be one of 'avg','col2')"
                 % bgmode
@@ -1363,7 +1362,7 @@ def _noise_patch(
         elif bgmode == u"col2":
             amp = amp * f
         else:
-            raise osexception(
+            raise ValueError(
                 u"Invalid argument for bgmode: %s "
                 u"(should be one of 'avg','col2')"
                 % bgmode
@@ -1390,7 +1389,7 @@ def _match_env(env):
         A standard envelope name ("c", "g", "r" or "l")
     """
     if env not in ENV_SYNONYMS:
-        raise osexception(u"'%s' is not a valid envelope" % env)
+        raise ValueError(u"'%s' is not a valid envelope" % env)
     return ENV_SYNONYMS[env]
 
 

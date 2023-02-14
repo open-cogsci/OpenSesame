@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidKeyName
 
 
 CHAR_TO_NAME = {
@@ -113,10 +113,7 @@ class KeyBabel:
             return self._keycode_synonyms(key)
         if isinstance(key, str):
             return self._str_synonyms(key)
-        raise osexception(
-            u'Key names should be string, numeric, or None, not %s'
-            % type(key)
-        )
+        raise InvalidKeyName(key)
 
     def _none_synonyms(self):
 

@@ -20,7 +20,6 @@ from libopensesame.py3compat import *
 import pygame
 from collections import OrderedDict
 from openexp._canvas.canvas import Canvas
-from libopensesame.exceptions import osexception
 from openexp.backend import configurable
 from expyriment import io, control, stimuli
 from libopensesame.oslogging import oslogger

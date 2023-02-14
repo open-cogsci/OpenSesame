@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
 from openexp._keyboard.keyboard import Keyboard
 from psychopy import event
 import pyglet.window.key
@@ -120,8 +119,7 @@ class Psycho(Keyboard):
 
         # Sanity check
         if not isinstance(key, str):
-            raise osexception(
-                u'Key names should be string or numeric, not %s' % type(key))
+            raise InvalidKeyName(key)
 
         # Make a list of all conceivable ways that a key might be referred to.
         l = [key]

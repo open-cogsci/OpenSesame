@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import os
 import pygame
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import UnsupportedImageFormat, ImageDoesNotExist
 from openexp._canvas._image.image import Image
 from openexp._canvas._element.legacy import LegacyElement
 
@@ -32,13 +32,12 @@ class Legacy(LegacyElement, Image):
             self._dirty = False
             fname = safe_decode(self.fname)
             if not os.path.isfile(fname):
-                raise osexception(u'"%s" does not exist' % fname)
+                raise ImageDoesNotExist(fname)
             with open(fname, u'rb') as fd:
                 try:
                     self._image_surface = pygame.image.load(fd)
                 except pygame.error:
-                    raise osexception(
-                        u"'%s' is not a supported image format" % fname)
+                    raise UnsupportedImageFormat(fname)
             # After rotation, the figure gets bigger. We therefore need to
             # compensate by moving it a bit
             if self.rotation is not None and self.rotation != 0:

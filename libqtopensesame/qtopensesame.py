@@ -23,7 +23,7 @@ from libqtopensesame.misc.base_component import BaseComponent
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.items.experiment import Experiment
 from libopensesame import metadata
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException
 from libopensesame.oslogging import oslogger
 from libopensesame import misc
 import os
@@ -736,8 +736,8 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             exp = Experiment(self, u"Experiment", path,
                              experiment_path=os.path.dirname(path))
         except Exception as e:
-            if not isinstance(e, osexception):
-                e = osexception(msg=u'Failed to open file', exception=e)
+            if not isinstance(e, OSException):
+                e = OSException(msg=u'Failed to open file', exception=e)
             md = _(
                 u'# Failed to open\n\nFailed to open the file for the '
                 u'following reason:\n\n- '
@@ -809,7 +809,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         # Get ready
         try:
             self.get_ready()
-        except osexception as e:
+        except OSException as e:
             self.console.write(e)
             self.notify(
                 _(u"The following error occured while trying to save:<br/>%s")
@@ -879,7 +879,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                              pool_folder=self.experiment.pool.folder(),
                              experiment_path=self.experiment.experiment_path,
                              resources=self.experiment.resources)
-        except osexception as e:
+        except OSException as e:
             md = _(
                 u'# Parsing error\n\nFailed to parse the script for the '
                 u'following reason:\n\n- '
@@ -908,8 +908,8 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         try:
             script = self.experiment.to_string()
         except Exception as e:
-            if not isinstance(e, osexception):
-                e = osexception(
+            if not isinstance(e, OSException):
+                e = OSException(
                     u'Failed to change the display resolution',
                     exception=e
                 )
@@ -934,7 +934,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                              pool_folder=self.experiment.pool.folder(),
                              experiment_path=self.experiment.experiment_path,
                              resources=self.experiment.resources)
-        except osexception as error:
+        except OSException as error:
             self.notify(_(u"Could not parse script: %s") % error)
             self.edit_script.edit.setText(self.experiment.to_string())
             return

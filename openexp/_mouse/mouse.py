@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from openexp.backend import Backend, configurable
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue
 import warnings
 
 
@@ -192,8 +192,8 @@ class Mouse(Backend):
                 cfg[u'buttonlist'] = \
                     [int(button) for button in cfg[u'buttonlist']]
             except:
-                raise osexception(
-                    u"buttonlist must be a list of numeric values, or None")
+                raise InvalidValue(f'buttonlist must be a list of numbers or '
+                                   f'None, not {cfg["buttonlist"]}')
         Backend.set_config(self, **cfg)
 
     def default_config(self):

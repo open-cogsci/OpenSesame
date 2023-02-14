@@ -20,7 +20,6 @@ from libopensesame.py3compat import *
 from qtpy import QtWidgets
 import opensesame_extensions
 from libopensesame.plugin_manager import PluginManager
-from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.translate import translation_context
@@ -76,10 +75,7 @@ class ExtensionManager(BaseSubcomponent):
             try:
                 ext = ulext.build(self.main_window)
             except Exception as e:
-                if not isinstance(e, osexception):
-                    e = osexception(msg=u'Extension error', exception=e)
-                oslogger.error(f'Failed to load extension {ulext.name} '
-                               f'(see debug window for stack trace)')
+                oslogger.error(f'Failed to load extension {ulext.name}: {e}')
                 self.console.write(e)
             else:
                 self._extensions.append(ext)
@@ -117,7 +113,7 @@ class ExtensionManager(BaseSubcomponent):
         for ext in self._extensions:
             if extension_name in ext.aliases:
                 return ext
-        raise osexception(u'Extension %s does not exist' % extension_name)
+        raise KeyError(f'Extension {extension_name} does not exist')
 
     def __contains__(self, extension_name):
         """
@@ -156,13 +152,13 @@ class ExtensionManager(BaseSubcomponent):
             try:
                 ext.fire(event, **kwdict)
             except Exception as e:
-                if not isinstance(e, osexception):
-                    e = osexception(msg=u'Extension error', exception=e)
                 self.notify(
-                    u'Extension %s misbehaved on event %s (see debug window for stack trace)'
-                    % (ext.name(), event), category='warning'
-                )
+                    f'Extension {ext.name} misbehaved on event {event} '
+                    f'(see debug window for stack trace)',
+                    category='warning')
                 self.console.write(e)
+                oslogger.error(f'Extension {ulext.name} misbehaved on event '
+                               f'{event}: {e}')
 
     def provide(self, provide, **kwdict):
 
@@ -174,13 +170,13 @@ class ExtensionManager(BaseSubcomponent):
         try:
             return ext.provide(provide, **kwdict)
         except Exception as e:
-            if not isinstance(e, osexception):
-                e = osexception(msg=u'Extension error', exception=e)
             self.notify(
-                u'Extension %s misbehaved on providing %s (see debug window for stack trace)'
-                % (ext.name(), provide), category='warning'
-            )
+                f'Extension {self.name} misbehaved on providing {provide} '
+                f'(see debug window for stack trace)',
+                category='warning')
             self.console.write(e)
+            oslogger.error(f'Extension {ulext.name} misbehaved on providing '
+                           f'{provide}: {e}')
 
     def activate(self, ext_name):
 

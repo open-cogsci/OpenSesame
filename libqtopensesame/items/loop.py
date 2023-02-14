@@ -20,7 +20,7 @@ from libopensesame.py3compat import *
 from qdatamatrix import QDataMatrix
 from pseudorandom import EnforceFailed
 from libopensesame.loop import Loop as LoopRuntime
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException
 from libqtopensesame.items.qtitem import QtItem
 from libqtopensesame.items.qtstructure_item import QtStructureItem
 from libqtopensesame.widgets.loop_widget import LoopWidget
@@ -85,7 +85,7 @@ class Loop(QtStructureItem, QtItem, LoopRuntime):
         l = [_(u'# Preview of loop table'), u'\n\n']
         try:
             dm = self._create_live_datamatrix()
-        except (osexception, EnforceFailed) as e:
+        except (OSException, EnforceFailed) as e:
             l.append(_(u'Failed to generate preview.'))
             l.append(u'\n~~~ .python\n%s\n~~~' % e)
         else:

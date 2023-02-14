@@ -20,7 +20,8 @@ from libopensesame.py3compat import *
 from pygame.locals import *
 import pygame
 from openexp._sampler.sampler import Sampler
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import SoundFileDoesNotExist, \
+    UnsupportedSoundFileFormat, InvalidValue
 from libopensesame.oslogging import oslogger
 from libopensesame import misc
 from openexp.keyboard import Keyboard
@@ -68,13 +69,9 @@ class Legacy(Sampler):
         if src is not None:
             if isinstance(src, str):
                 if not os.path.exists(src):
-                    raise osexception(
-                        u"openexp._sampler.legacy.__init__() the file '%s' does not exist"
-                        % src)
+                    raise SoundFileDoesNotExist(src)
                 if os.path.splitext(src)[1].lower() not in (".ogg", ".wav"):
-                    raise osexception(
-                        u"openexp._sampler.legacy.__init__() the file '%s' is not an .ogg or .wav file"
-                        % src)
+                    raise UnsupportedSoundFileFormat(src)
             self.sound = mixer.Sound(src)
         Sampler.__init__(self, experiment, src, **playback_args)
         self.keyboard = Keyboard(experiment)
@@ -99,8 +96,7 @@ class Legacy(Sampler):
         if numpy is None:
             return
         if type(p) not in (int, float) or p <= 0:
-            raise osexception(
-                u"openexp._sampler.legacy.pitch should be a positive number")
+            raise InvalidValue(f'pitch should be a positive number, not {p}')
         if p == 1:
             return
         buf = pygame.sndarray.array(self.sound)
@@ -116,8 +112,8 @@ class Legacy(Sampler):
         if numpy is None:
             return
         if type(p) not in (int, float) and p not in (u"left", u"right"):
-            raise osexception(
-                u"openexp._sampler.legacy.pan should be a number or 'left', 'right'")
+            raise InvalidValue(
+                f'pan should be a number, "left" or "right", not {p}')
         if p == 0:
             return
         buf = pygame.sndarray.array(self.sound)

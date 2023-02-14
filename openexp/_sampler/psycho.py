@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from openexp._sampler.sampler import Sampler
-from libopensesame.exceptions import osexception
 from libopensesame.oslogging import oslogger
 from openexp.backend import configurable
 from openexp.keyboard import Keyboard

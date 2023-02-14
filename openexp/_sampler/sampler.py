@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from openexp.backend import Backend, configurable
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue
 
 
 class Sampler(Backend):
@@ -212,7 +212,7 @@ class Sampler(Backend):
 
         if not isinstance(val, int) and not isinstance(val, float) \
                 and val not in [u'left', u'right']:
-            raise osexception(
+            raise InvalidValue(
                 u'pan should be numeric, \'left\', or \'right\', not %s' % val)
 
     @configurable
