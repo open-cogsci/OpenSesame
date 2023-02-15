@@ -21,7 +21,7 @@ import re
 import webcolors
 import colorsys
 import numbers
-from libopensesame.exceptions import OSException, InvalidColor
+from libopensesame.exceptions import MissingDependency, InvalidColor
 
 RGB_HEX6 = r'#(?P<r>[0-9a-fA-F]{2})(?P<g>[0-9a-fA-F]{2})(?P<b>[0-9a-fA-F]{2})$'
 RGB_HEX3 = r'#(?P<r>[0-9a-fA-F])(?P<g>[0-9a-fA-F])(?P<b>[0-9a-fA-F])$'
@@ -152,7 +152,8 @@ class Color:
             try:
                 from psychopy.tools import colorspacetools as cst
             except ImportError:
-                raise OSException('CIE L*a*b* color space requires PsychoPy')
+                raise MissingDependency(
+                    'CIE L*a*b* color space requires PsychoPy')
             # RGB values are between -1 and 1
             r, g, b = cst.cielab2rgb(
                 (

@@ -17,7 +17,10 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+import os
+from libopensesame.exceptions import InvalidOpenSesameScript, OSException, \
+    InvalidValue, MissingItem, LoopSourceFileDoesNotExist, \
+    UnsupportedLoopSourceFile
 from libopensesame.item import Item
 from datamatrix import operations, DataMatrix, functional
 from pseudorandom import Enforce, MaxRep, MinDist
@@ -25,8 +28,8 @@ from openexp.keyboard import Keyboard
 
 
 class Loop(Item):
-
     """A loop item runs a single other item multiple times"""
+    
     description = u'Repeatedly runs another item'
     valid_orders = u'sequential', u'random'
     commands = [
@@ -72,15 +75,16 @@ class Loop(Item):
             cmd, arglist, kwdict = self.syntax.parse_cmd(i)
             if cmd == u'run':
                 if len(arglist) != 1 or kwdict:
-                    raise osexception(u'Invalid run command: %s' % i)
+                    raise InvalidOpenSesameScript(f'Invalid run command: {i}')
                 self._item = arglist[0]
                 continue
             if cmd == u'setcycle':
                 if self.ef is not None or self._operations:
-                    raise osexception(
-                        u'setcycle must come before constraints and operations')
+                    raise InvalidOpenSesameScript(
+                        'setcycle must come before constraints and operations')
                 if len(arglist) != 3 or kwdict:
-                    raise osexception(u'Invalid setcycle command: %s' % i)
+                    raise InvalidOpenSesameScript(
+                        f'Invalid setcycle command: {i}')
                 row, var, val = tuple(arglist)
                 if row >= len(self.dm):
                     self.dm.length = row + 1
@@ -90,11 +94,11 @@ class Loop(Item):
                 continue
             if cmd == u'constrain':
                 if self._operations:
-                    raise osexception(
-                        u'constraints must come before operations'
-                    )
+                    raise InvalidOpenSesameScript(
+                        'constraints must come before operations')
                 if len(arglist) != 1:
-                    raise osexception(u'Invalid constrain command: %s' % i)
+                    raise InvalidOpenSesameScript(
+                        f'Invalid constrain command: {i}')
                 colname = arglist[0]
                 for constraint, value in kwdict.items():
                     if constraint == u'maxrep':
@@ -104,15 +108,13 @@ class Loop(Item):
                         constraint_cls = MinDist
                         kwargs = {u'mindist': value}
                     else:
-                        raise osexception(
-                            u'Unknown constraint: %s' % constraint
-                        )
+                        raise InvalidOpenSesameScript(
+                            f'Unknown constraint: {constraint}')
                     self._constraints.append((
                         constraint_cls,
                         colname,
                         kwargs
                     ))
-                    # raise osexception(u'Invalid constrain command: %s' % i)
                 continue
             if cmd in self.commands:
                 self._operations.append((cmd, arglist))
@@ -159,7 +161,8 @@ class Loop(Item):
             The argument list to check.
         """
         if len(arglist) < minlen:
-            raise osexception(u'Invalid argument list for %s' % cmd)
+            raise InvalidOpenSesameScript(
+                f'Invalid argument list for {cmd}')
 
     def _create_live_datamatrix(self):
         r"""Builds a live DataMatrix. That is, it takes the orignal DataMatrix
@@ -173,18 +176,15 @@ class Loop(Item):
         src_dm = self.dm if self.var.source == u'table' else self._read_file()
         for column_name in src_dm.column_names:
             if not self.syntax.valid_var_name(column_name):
-                raise osexception(
-                    u'The loop table contains an invalid column name: 'u'\'%s\''
-                    % column_name
-                )
+                raise InvalidOpenSesameScript(
+                    f'The loop table contains an invalid column name: '
+                    f'"{column_name}"')
         # The number of repeats should be numeric. If not, then give an error.
         # This can also occur when generating a preview of a loop table if
         # repeat is variable.
         if not isinstance(self.var.repeat, (int, float)):
-            raise osexception(
-                u'Don\'t know how to generate a DataMatrix for "%s" repeats'
-                % self.var.repeat
-            )
+            raise InvalidOpenSesameScript(
+                f'repeat should be numeric, not {self.var.repeat}')
         length = int(len(src_dm) * self.var.repeat)
         dm = DataMatrix(length=0)
         while len(dm) < length:
@@ -207,9 +207,8 @@ class Loop(Item):
                 try:
                     cols = dm[colname]
                 except AttributeError:
-                    raise osexception(
-                        u'Column %s does not exist' % colname
-                    )
+                    raise InvalidOpenSesameScript(
+                        f'Column {colname} does not exist')
                 self.ef.add_constraint(
                     constraint_cls, cols=cols, **kwargs
                 )
@@ -227,14 +226,13 @@ class Loop(Item):
                     if not isinstance(colname, int):
                         col = dm[colname]
                 except (IndexError, AttributeError):
-                    raise osexception(
-                        u'Column %s does not exist' % arglist[-1]
-                    )
+                    raise InvalidOpenSesameScript(
+                        f'Column {arglist[-1]} does not exist')
             if cmd == u'fullfactorial':
                 try:
                     dm = operations.fullfactorial(dm)
                 except MemoryError:
-                    raise osexception(u'DataMatrix too large for fullfact')
+                    raise OSException(u'DataMatrix too large for fullfact')
             elif cmd == u'shuffle':
                 if not arglist:
                     dm = operations.shuffle(dm)
@@ -251,10 +249,8 @@ class Loop(Item):
                         try:
                             dm[_colname]
                         except AttributeError:
-                            raise osexception(
-                                u'Column %s does not exist'
-                                % _colname
-                            )
+                            raise InvalidOpenSesameScript(
+                                f'Column {_colname} does not exist')
                     dm = operations.shuffle_horiz(
                         *[dm[_colname] for _colname in arglist]
                     )
@@ -276,7 +272,7 @@ class Loop(Item):
                 self._require_arglist(cmd, arglist)
                 steps = arglist[0]
                 if not isinstance(steps, int):
-                    raise osexception(u'roll steps should be numeric')
+                    raise InvalidValue('roll steps should be numeric')
                 if len(arglist) == 1:
                     dm = dm[-steps:] << dm[:-steps]
                 else:
@@ -293,9 +289,8 @@ class Loop(Item):
                 try:
                     dm = operations.weight(ecol)
                 except TypeError:
-                    raise osexception(
-                        u'weight values should be non-negative numeric values'
-                    )
+                    raise InvalidValue(
+                        'weight values should be non-negative numeric values')
         return dm
 
     def prepare(self):
@@ -318,10 +313,7 @@ class Loop(Item):
         self._keyboard = Keyboard(self.experiment)
         # Make sure the item to run exists
         if self._item not in self.experiment.items:
-            raise osexception(
-                u"Could not find item '%s', which is called by loop item '%s'"
-                % (self._item, self.name)
-            )
+            raise MissingItem(self._item)
 
     def run(self):
         """See item."""
@@ -379,7 +371,7 @@ class Loop(Item):
             self.live_dm = None
 
     def _read_file(self):
-        r"""Reads a source file and raises an osexception if this fails.
+        r"""Reads a source file and raises an exception if this fails.
 
         Returns
         -------
@@ -387,20 +379,20 @@ class Loop(Item):
         """
         from datamatrix import io
         src = self.experiment.pool[self.var.source_file]
+        if not os.path.exists(src):
+            raise LoopSourceFileDoesNotExist(self.var.source_file)
         if src.endswith(u'.xlsx'):
             try:
                 return io.readxlsx(src)
             except Exception as e:
-                raise osexception(u'Failed to read .xlsx file: %s' % src,
-                                  exception=e)
+                raise UnsupportedLoopSourceFile(f'Failed to read .xlsx file: '
+                                                f'{src}', exception=e)
         try:
             return io.readtxt(src)
         except Exception as e:
-            raise osexception(
-                (u'Failed to read text file (perhaps it has the '
-                 u'wrong format or it is not utf-8 encoded): %s') % src,
-                exception=e
-            )
+            raise UnsupportedLoopSourceFile(
+                f'Failed to read text file: {src}. Perhaps it has the wrong '
+                f'format or it is not utf-8 encoded', exception=e)
 
     def _var_info_table(self):
         """
@@ -418,7 +410,7 @@ class Loop(Item):
         """
         try:
             dm = self._read_file()
-        except osexception:
+        except Exception:
             return []
         return [(colname, safe_decode(col)) for colname, col in dm.columns]
 

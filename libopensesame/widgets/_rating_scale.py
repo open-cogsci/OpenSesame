@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue
 from libopensesame.widgets._widget import Widget
 from openexp.canvas_elements import RichText
 
@@ -136,8 +136,9 @@ class RatingScale(Widget):
         elif self.orientation == 'vertical':
             box_rect = cx-.5*bs, y, 2*bs, h
         else:
-            raise osexception((u'rating_scale orientation must be '
-                               '"horizontal" or "vertical", not "%s"') % self.orientation)
+            raise InvalidValue(f'rating_scale orientation must be '
+                               f'"horizontal" or "vertical", not '
+                               f'{self.orientation}')
         self.canvas.add_element(
             self.form.theme_engine.frame(*box_rect, style=u'light')
         )
@@ -188,9 +189,8 @@ class RatingScale(Widget):
             The value.
         """
         if val is not None and (val >= len(self.nodes) or val < 0):
-            raise osexception(
-                u'Trying to select a non-existing node (%s). Did you specify an incorrect default value?'
-                % val)
+            raise InvalidValue(f'Trying to select a non-existing node ({val}).'
+                               f'Did you specify an incorrect default value?')
         self.value = val
         self.set_var(val)
 

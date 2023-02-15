@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame import misc
 from libopensesame.oslogging import oslogger
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue
 import tempfile
 import os
 import sys
@@ -158,7 +158,7 @@ class FilePoolStore:
         """
         path = safe_decode(path)
         if path.strip() == u'':
-            raise osexception(u'Cannot get empty filename from file pool.')
+            raise InvalidValue(f'Cannot get empty filename from file pool')
         for folder in self.folders(include_experiment_path=True):
             _path = os.path.normpath(os.path.join(folder, path))
             if os.path.exists(_path):

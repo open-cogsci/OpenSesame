@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException, MissingItem, InvalidValue
 from libopensesame.base_response_item import BaseResponseItem
 from openexp._canvas.canvas import Canvas
 from openexp.mouse import Mouse
@@ -65,9 +65,9 @@ class MouseResponseMixin:
             return self._mouse.get_click
         if self.var.event_type == u'mouserelease':
             return self._mouse.get_click_release
-        raise osexception(
-            u'event_type should be "mouseclick" or "mouserelease"'
-        )
+        raise InvalidValue(
+            f'event_type should be "mouseclick" or "mouserelease", not '
+            f'{self.var.event_type}')
 
     def process_response(self, response_args):
         """See base_response_item."""
@@ -79,19 +79,13 @@ class MouseResponseMixin:
             self.experiment.var.cursor_x, self.experiment.var.cursor_y = pos
         if self.var.get(u'linked_sketchpad', default=u'') and pos is not None:
             if self.var.linked_sketchpad not in self.experiment.items:
-                raise osexception(
-                    u'Item does not exist: %s'
-                    % self.var.linked_sketchpad
-                )
+                raise MissingItem(self.var.linked_sketchpad)
             item = self.experiment.items[self.var.linked_sketchpad]
-            if (
-                    not hasattr(item, u'canvas')
-                    or not isinstance(item.canvas, Canvas)
-            ):
-                raise osexception(
-                    u'Item does not have a canvas: %s'
-                    % self.var.linked_sketchpad
-                )
+            if not hasattr(item, u'canvas') or \
+                    not isinstance(item.canvas, Canvas):
+                raise OSException(
+                    f'Linked sketchpad does not have a canvas: '
+                    f'{self.var.linked_sketchpad}')
             self.experiment.var.cursor_roi = u';'.join(
                 item.canvas.elements_at(*pos)
             )

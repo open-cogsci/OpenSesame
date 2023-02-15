@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue
 from openexp.sampler import Sampler as OpenExpSampler
 from libopensesame.item import Item
 from libopensesame.base_response_item import BaseResponseItem
@@ -58,20 +58,15 @@ class Sampler(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
             return MouseResponseMixin.prepare_response_func(self)
         if self.var.duration == u'sound':
             return lambda: None
-        raise osexception(u'Invalid duration: %s' % self.var.duration)
+        raise InvalidValue(f'Invalid duration: {self.var.duration}')
 
     def prepare(self):
         """See item."""
         super().prepare()
         if safe_decode(self.var.sample).strip() == u'':
-            raise osexception(
-                u'No sample has been specified in sampler "%s"' % self.name)
+            raise InvalidValue(f'No sample has been specified')
         sample = self.experiment.pool[self.var.sample]
-        try:
-            self.sampler = OpenExpSampler(self.experiment, sample)
-        except Exception as e:
-            raise osexception(u'Failed to load sample: %s' % sample,
-                              exception=e)
+        self.sampler = OpenExpSampler(self.experiment, sample)
         pan = self.var.pan
         if pan == -20:
             pan = u'left'

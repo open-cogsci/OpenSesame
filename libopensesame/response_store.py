@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue
 
 
 class ResponseInfo:
@@ -31,7 +31,8 @@ class ResponseInfo:
         # Sanity checks
         if not isinstance(response_time, (int, float)) and \
                 response_time is not None:
-            raise osexception(u'response should be a numeric value or None')
+            raise InvalidValue(f'response_time should be a numeric value or '
+                               f'None, not {response_time}')
         if response_time is None:
             self.response_time = None
         else:
@@ -40,8 +41,8 @@ class ResponseInfo:
         self.item = item
         self.feedback = feedback
         if correct not in (0, 1, True, False, None):
-            raise osexception(
-                u'correct should be 0, 1, True, False, or None')
+            raise InvalidValue(
+                f'correct should be 0, 1, True, False, or None, not {correct}')
         if correct is None:
             self.correct = None
         else:

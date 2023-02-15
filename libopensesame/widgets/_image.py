@@ -20,7 +20,7 @@ from libopensesame.py3compat import *
 from libopensesame import misc
 from libopensesame.widgets._widget import Widget
 from PIL import Image
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import ImageDoesNotExist, UnsupportedImageFormat
 from openexp.canvas_elements import Image as ImageElement
 import os
 
@@ -85,8 +85,7 @@ class ImageWidget(Widget):
         r"""Initializes all canvas elements."""
         _path = safe_str(self.path, enc=sys.getfilesystemencoding())
         if not os.path.exists(_path):
-            raise osexception(
-                u'No valid path has been specified in image widget')
+            raise ImageDoesNotExist(_path)
         x, y, w, h = self.rect
         x += w/2
         y += h/2
@@ -109,7 +108,7 @@ class ImageWidget(Widget):
         self.rect = rect
         _path = safe_str(self.path, enc=sys.getfilesystemencoding())
         if not os.path.isfile(_path):
-            raise osexception(u'"%s" does not exist' % _path)
+            raise ImageDoesNotExist(_path)
         if self.adjust:
             x, y, w, h = self.rect
             try:
@@ -120,9 +119,7 @@ class ImageWidget(Widget):
                     import pygame
                     img = pygame.image.load(_path)
                 except:
-                    raise osexception(
-                        u'Failed to open image "%s". Perhaps the file is not an image, or the image format is not supported.'
-                        % self.path)
+                    raise UnsupportedImageFormat(_path)
                 img_w, img_h = img.get_size()
             scale_x = 1.*w/img_w
             scale_y = 1.*h/img_h

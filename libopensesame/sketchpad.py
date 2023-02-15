@@ -19,7 +19,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libopensesame import sketchpad_elements
 from libopensesame.item import Item
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidSketchpadElementScript, \
+    InvalidValue
 from libopensesame.base_response_item import BaseResponseItem
 from libopensesame.keyboard_response import KeyboardResponseMixin
 from libopensesame.mouse_response import MouseResponseMixin
@@ -62,11 +63,12 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
             if cmd != u'draw':
                 continue
             if len(arglist) == 0:
-                raise osexception(u'Incomplete draw command: \'%s\'' % line)
+                raise InvalidSketchpadElementScript(
+                    f'Incomplete draw command: {line}')
             element_type = arglist[0]
             if not hasattr(self.element_module(), element_type):
-                raise osexception(
-                    u'Unknown sketchpad element: \'%s\'' % element_type)
+                raise InvalidSketchpadElementScript(
+                    f'Unknown sketchpad element: {element_type}')
             element_class = getattr(self.element_module(), element_type)
             element = element_class(self, line)
             self.elements.append(element)
@@ -95,7 +97,7 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
         if self.var.duration == u'mouseclick':
             self._flush = lambda: self._mouse.flush()
             return MouseResponseMixin.prepare_response_func(self)
-        raise osexception(u'Invalid duration: %s' % self.var.duration)
+        raise InvalidValue(f'Invalid duration: {self.var.duration}')
 
     def _elements(self):
         r"""Creates a list of sketchpad elements that are shown, sorted by
@@ -105,10 +107,7 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
         try:
             elements.sort(key=lambda e: -int(self.syntax.eval_text(e.z_index)))
         except ValueError as e:
-            raise osexception(
-                u'Invalid z_index for sketchpad element',
-                exception=e
-            )
+            raise InvalidValuei('Invalid z_index for sketchpad element')
         return elements
 
     def prepare(self):

@@ -18,14 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.item import Item
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue
 
 
 class BaseResponseItem(Item):
-
     r"""The base class for items that collect responses, such as
     keyboard_response, mouse_response, joystick, etc.
     """
+    
     # Override as True for objects that should be included in feedback
     process_feedback = False
 
@@ -145,10 +145,9 @@ class BaseResponseItem(Item):
         try:
             timeout = int(timeout)
             assert(timeout >= 0)
-        except:
-            raise osexception(
-                u"'%s' is not a valid timeout. Expecting a positive integer or 'infinite'."
-                % timeout)
+        except Exception:
+            raise InvalidValue(f'"{timeout}" is not a valid timeout. '
+                               f'Expecting a positive integer or "infinite".')
         return timeout
 
     def _prepare_responses(self, var):
@@ -170,13 +169,10 @@ class BaseResponseItem(Item):
         responses = [r.strip() for r in responses.split(';')]
         for r in responses:
             if not self.validate_response(r):
-                raise osexception(
-                    u'Invalid value in %s: %s'
-                    % (var, r)
-                )
+                raise InvalidValue(f'Invalid value in {var}: {r}')
         # If allowed responses are provided, the list should not be empty
         if not responses:
-            raise osexception(u'%s should not be an empty list' % var)
+            raise InvalidValue(f'{var} should not be an empty list')
         return responses
 
     def _prepare_sleep_func(self, duration):
@@ -196,7 +192,7 @@ class BaseResponseItem(Item):
             return lambda: None
         if self.var.duration > 0:
             return lambda: self.clock.sleep(self.var.duration)
-        raise osexception(u'Duration should not be negative')
+        raise InvalidValue('Duration should not be negative')
 
 
 # Alias for backwards compatibility

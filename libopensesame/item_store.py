@@ -20,7 +20,7 @@ from libopensesame.py3compat import *
 from libopensesame.misc import snake_case
 from libopensesame.cistr import CIStr
 from libopensesame.oslogging import oslogger
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import MissingItem
 from libopensesame.item_stack import item_stack_singleton
 
 
@@ -162,13 +162,8 @@ class ItemStore:
         else:
             name = CIStr(name)
         if _type in self.experiment.plugin_manager:
-            # Load a plug-in
-            try:
-                item = self.experiment.plugin_manager[_type].build(
-                    name, self.experiment, script)
-            except Exception as e:
-                raise osexception(u"Failed to load plugin '%s'" % _type,
-                                  exception=e)
+            item = self.experiment.plugin_manager[_type].build(
+                name, self.experiment, script)
             self.__items__[name] = item
             return item
         # Load one of the core items
@@ -298,7 +293,7 @@ class ItemStore:
         try:
             return self.__items__[name]
         except KeyError:
-            raise osexception(u'No item named "%s"' % name)
+            raise MissingItem(name)
 
 
 # Alias for backwards compatibility

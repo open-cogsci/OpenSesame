@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import OSException, InvalidValue
+from libopensesame.exceptions import InvalidValue, MissingDependency
 from openexp.sampler import Sampler
 try:
     import numpy as np
@@ -48,7 +48,7 @@ def Synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
         A SAMPLER object.
     """
     if np is None:
-        raise OSException(
+        raise MissingDependency(
             u'The synth is not available, because numpy is missing.')
     if attack < 0 or attack > length:
         raise InvalidValue(

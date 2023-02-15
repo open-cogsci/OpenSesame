@@ -22,16 +22,17 @@ desc:
 ---
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
 import random
 import math
 import warnings
 # The classes below are unused, but imported so that they are available in the
 # workspace.
 from openexp.canvas_elements import (Rect, Line, Text, Ellipse, Circle,
-                                     FixDot, Gabor, NoisePatch, Image, Arrow, Polygon)
+                                     FixDot, Gabor, NoisePatch, Image, Arrow,
+                                     Polygon)
 from libopensesame.widgets.widget_factory import (Label, Button, ImageWidget,
-                                                  ImageButton, TextInput, RatingScale, Checkbox)
+                                                  ImageButton, TextInput,
+                                                  RatingScale, Checkbox)
 
 
 # Factory functions
@@ -256,8 +257,8 @@ def sometimes(p=.5):
     >>>         print('Sometimes you loose')
     """
     if (not isinstance(p, float) and not isinstance(p, int)) or p < 0 or p > 1:
-        raise osexception(
-            u'p should be a numeric value between 0 and 1, not "%s"' % p)
+        raise ValueError(
+            f'p should be a numeric value between 0 and 1, not {p}')
     return random.random() < p
 
 
@@ -313,11 +314,11 @@ def xy_from_polar(rho, phi, pole=(0, 0)):
     try:
         rho = float(rho)
     except:
-        raise osexception(u'rho should be numeric in xy_from_polar()')
+        raise TypeError('rho should be numeric in xy_from_polar()')
     try:
         phi = float(phi)
     except:
-        raise osexception(u'phi should be numeric in xy_from_polar()')
+        raise TypeError('phi should be numeric in xy_from_polar()')
     phi = math.radians(phi)
     ox, oy = parse_pole(pole)
     x = rho * math.cos(phi) + ox
@@ -353,11 +354,11 @@ def xy_to_polar(x, y, pole=(0, 0)):
     try:
         x = float(x)
     except:
-        raise osexception(u'x should be numeric in xy_to_polar()')
+        raise TypeError('x should be numeric in xy_to_polar()')
     try:
         y = float(y)
     except:
-        raise osexception(u'y should be numeric in xy_to_polar()')
+        raise TypeError('y should be numeric in xy_to_polar()')
     ox, oy = parse_pole(pole)
     dx = x-ox
     dy = y-oy
@@ -391,7 +392,7 @@ def xy_distance(x1, y1, x2, y2):
         x2 = float(x2)
         y2 = float(y2)
     except:
-        raise osexception(u'Coordinates should be numeric in xy_distance()')
+        raise TypeError('Coordinates should be numeric in xy_distance()')
     return math.sqrt((x1-x2)**2+(y1-y2)**2)
 
 
@@ -432,11 +433,11 @@ def xy_circle(n, rho, phi0=0, pole=(0, 0)):
         if n < 0:
             raise ValueError()
     except (ValueError, TypeError):
-        raise osexception(u'n should be a non-negative integer in xy_circle()')
+        raise ValueError('n should be a non-negative integer in xy_circle()')
     try:
         phi0 = float(phi0)
     except (ValueError, TypeError):
-        raise osexception(u'phi0 should be numeric in xy_circle()')
+        raise TypeError('phi0 should be numeric in xy_circle()')
     l = []
     for i in range(n):
         l.append(xy_from_polar(rho, phi0, pole=pole))
@@ -484,8 +485,8 @@ def xy_grid(n, spacing, pole=(0, 0)):
         assert(n_col >= 0)
         assert(n_row >= 0)
     except:
-        raise osexception(u'n should be a non-negative integer or a tuple of '
-                          u'two non-negative integers in xy_grid()')
+        raise ValueError('n should be a non-negative integer or a tuple of '
+                         'two non-negative integers in xy_grid()')
     try:
         s_col, s_row = spacing
     except:
@@ -496,8 +497,8 @@ def xy_grid(n, spacing, pole=(0, 0)):
         assert(s_col >= 0)
         assert(s_row >= 0)
     except:
-        raise osexception(u'spacing should be a non-negative numeric or a '
-                          u'tuple of two non-negative numerics in xy_grid()')
+        raise ValueError('spacing should be a non-negative numeric or a '
+                         'tuple of two non-negative numerics in xy_grid()')
     pole = parse_pole(pole)
     l = []
     for row in range(n_row):
@@ -511,9 +512,9 @@ def xy_grid(n, spacing, pole=(0, 0)):
 def xy_random(n, width, height, min_dist=0, pole=(0, 0)):
     r"""Generates a list of random points (x,y coordinates) with a minimum
     spacing between each pair of points. This function will raise an
-    `osexception` when the coordinate list cannot be generated, typically
-    because there are too many points, the min_dist is set too high, or the
-    width or height are set too low.
+    Exception when the coordinate list cannot be generated,  typically because
+    there are too many points, the min_dist is set too high, or the width or
+    height are set too low.
 
     Parameters
     ----------
@@ -547,19 +548,19 @@ def xy_random(n, width, height, min_dist=0, pole=(0, 0)):
         if n < 0:
             raise ValueError()
     except (ValueError, TypeError):
-        raise osexception(u'n should be a non-negative integer in xy_circle()')
+        raise ValueError('n should be a non-negative integer in xy_circle()')
     try:
         width = float(width)
     except:
-        raise osexception(u'width should be numeric in xy_random()')
+        raise TypeError('width should be numeric in xy_random()')
     try:
         height = float(height)
     except:
-        raise osexception(u'height should be numeric in xy_random()')
+        raise TypeError('height should be numeric in xy_random()')
     try:
         min_dist = float(min_dist)
     except:
-        raise osexception(u'min_dist should be numeric in xy_random()')
+        raise TypeError('min_dist should be numeric in xy_random()')
     pole = parse_pole(pole)
     max_try = 1000
     for t1 in range(max_try):
@@ -583,8 +584,7 @@ def xy_random(n, width, height, min_dist=0, pole=(0, 0)):
             # All points have been successfully added, so return the list
             return l
     # All level-1 tries have failed
-    raise osexception(
-        u'Failed to generate random coordinates in xy_random()')
+    raise RuntimeError('Failed to generate random coordinates in xy_random()')
 
 
 # Helper functions that are not part of the public API
@@ -599,8 +599,8 @@ def parse_pole(pole):
         oy = float(pole[1])
         assert(len(pole) == 2)
     except:
-        raise osexception(u'pole should be a tuple (or similar) of length '
-                          u'with two numeric values')
+        raise ValueError('pole should be a tuple (or similar) of length '
+                         'with two numeric values')
     return ox, oy
 
 

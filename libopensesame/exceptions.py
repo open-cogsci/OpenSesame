@@ -15,16 +15,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
-
----
-desc: |
-	Provides the `osexception` class for throwing OpenSesame-specific
-	exceptions.
-
-example: |
-	from libopensesame.exceptions import osexception
-	raise osexception(u'This is a custom exception!')
----
 """
 import re
 from libopensesame.oslogging import oslogger
@@ -43,7 +33,7 @@ class AbortCoroutines(Exception):
     pass
 
 
-class OSException(BaseException):
+class OSException(Exception):
     r"""A general Exception class for exceptions that occur within OpenSesame.
     Ideally, only `osexception`s should occur, all other exceptions indicate a
     (usually harmless) bug somewhere.
@@ -75,9 +65,9 @@ class OSException(BaseException):
         self._md += tb_md
         self._plaintext += tb_plaintext
         # In some cases, the Exception is not pickleable, in which case it gets
-        # lost when sending it through the pipe to the GUI (in multiprocess), in
-        # turn resulting in a message that the experiment finished successfully.
-        # Therefore we delete the exception, just in case.
+        # lost when sending it through the pipe to the GUI (in multiprocess),
+        # in turn resulting in a message that the experiment finished 
+        # successfully. # Therefore we delete the exception, just in case.
         del self.exception
 
     def _traceback(self):
@@ -184,6 +174,8 @@ class InvalidKeyName(OSException):
         
         
 class InvalidValue(OSException):
+    """This exception is raised when a variable has an incorrect value or type.
+    """
     pass
 
 
@@ -192,6 +184,32 @@ class InvalidColor(OSException):
     """
     def __init__(self, color):
         super().__init__(f'Invalid color specification: {color}')
+        
+        
+class InvalidSketchpadElementScript(OSException):
+    """This exception is raised when a sketchpad element has been incorrectly
+    defined.
+    """
+    pass
+
+
+class InvalidOpenSesameScript(OSException):
+    """This exception is raised when there is an error in the OpenSesame script
+    that defines the experiment and the items.
+    """
+    pass
+
+
+class InvalidConditionalStatement(OSException):
+    """This exception is raised when a conditional statement, such as a run-if,
+    break-if, or show-if statement, is incorrectly defined.
+    """
+    pass
+
+
+class InvalidFormGeormetry(OSException):
+    """This exception is raised when a form has an invalid geometry."""
+    pass
 
 
 class UnsupportedImageFormat(OSException):
@@ -218,12 +236,49 @@ class SoundFileDoesNotExist(OSException):
     """This exception is raised when an sound file does not exist."""
     def __init__(self, path):
         super().__init__(f'Cannot find sound file {path}')
+        
+        
+class LoopSourceFileDoesNotExist(OSException):
+    """This exception is raised when an loop source file does not exist."""
+    def __init__(self, path):
+        super().__init__(f'Cannot find loop source file {path}')
+        
+
+class UnsupportedLoopSourceFile(OSException):
+    """This exception is raised when a loop source file has an unsupported
+    format.
+    """
+    def __init__(self, path):
+        super().__init__(f'{path} is not a supported loop source file')
 
 
 class UserAborted(OSException):
     """This exception is raised when a user aborts an experiment."""
     def __init__(self, msg):
         super().__init__(msg, user_triggered=True)
+        
+        
+class MissingDependency(OSException):
+    """This exception is raised when some functionality requires a package
+    that is not available.
+    """
+    pass
+
+
+class MissingItem(OSException):
+    """This exception is raised when an item that does not exist is referred
+    to.
+    """
+    def __init__(self, item_name):
+        super().__init__(f'Could not find item {item_name}')
+        
+        
+class VariableDoesNotExist(OSException):
+    """This exception is raised when a variable that does not exist is referred
+    to.
+    """
+    def __init__(self, var_name):
+        super().__init__(f'Variable {var_name} does not exist')
 
 
 # For backwards compatibility, we should also define the old Exception classes

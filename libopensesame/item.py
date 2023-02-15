@@ -20,7 +20,7 @@ from libopensesame.py3compat import *
 from libopensesame.var_store import var_store
 import warnings
 from libopensesame.misc import snake_case
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidOpenSesameScript, InvalidValue
 from libopensesame.oslogging import oslogger
 
 
@@ -125,8 +125,8 @@ class Item:
         l = self.syntax.split(line.strip())
         if len(l) > 0 and l[0] == u'set':
             if len(l) != 3:
-                raise osexception(
-                    u'Error parsing variable definition: "%s"' % line)
+                raise InvalidOpenSesameScript(
+                    f'Error parsing variable definition: {line}')
             else:
                 self.var.set(l[1], l[2])
                 return True
@@ -246,8 +246,9 @@ class Item:
             # The end of a textblock
             if line_stripped == u'__end__':
                 if textblock_var is None:
-                    raise osexception(u'It appears that a textblock has been '
-                                      u'closed without being opened.')
+                    raise InvalidOpenSesameScript(
+                        'It appears that a textblock has been closed without '
+                        'being opened')
                 self.var.set(textblock_var,
                              textblock_val.replace(u'\\__end__', u'__end__'))
                 textblock_var = None
@@ -275,9 +276,8 @@ class Item:
             elif not self.parse_variable(line):
                 self.parse_line(line)
         if textblock_var is not None:
-            raise osexception(
-                u'Missing __end__ block for multiline variable "%s" in item %s'
-                % (textblock_var, self.name))
+            raise InvalidOpenSesameScript(
+                'Missing __end__ block for multiline variable {textblock_var}')
 
     def to_string(self, item_type=None):
         """
@@ -323,8 +323,7 @@ class Item:
         w = self.var.get(u'width')
         h = self.var.get(u'height')
         if type(w) != int or type(h) != int:
-            raise osexception(
-                u'(%s, %s) is not a valid resolution' % (w, h))
+            raise InvalidValue(f'({w}, {h}) is not a valid resolution')
         return w, h
 
     def get_refs(self, text):
@@ -353,9 +352,8 @@ class Item:
                 break
             end = text.find(u']', start + 1)
             if end < 0:
-                raise osexception(
-                    u"Missing closing bracket ']' in string '%s', in item '%s'"
-                    % (text, self.name))
+                raise InvalidOpenSesameScript(
+                    f"Missing closing bracket ']' in: {text}")
             var = text[start+1:end]
             l.append(var)
             var = var[end:]

@@ -24,7 +24,8 @@ from libopensesame.item_store import ItemStore
 from libopensesame.response_store import ResponseStore
 from libopensesame.file_pool_store import FilePoolStore
 from libopensesame.syntax import Syntax
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import UserAborted, MissingItem, \
+    InvalidOpenSesameScript
 from libopensesame.item import Item
 from libopensesame import misc, metadata
 from libopensesame.item_stack import item_stack_singleton
@@ -270,20 +271,16 @@ class Experiment(Item):
             try:
                 l = self.syntax.split(line)
             except ValueError as e:
-                raise osexception(
-                    u'Failed to parse script. Maybe it contains '
-                    u'illegal characters or unclosed quotes?',
-                    exception=e
-                )
+                raise InvalidOpenSesameScript(
+                    f'Failed to parse script. Maybe it contains illegal '
+                    f'characters or unclosed quotes?', exception=e)
             if l:
                 self.parse_variable(line)
                 # Parse definitions
                 if l[0] == u"define":
                     if len(l) != 3:
-                        raise osexception(
-                            u'Failed to parse definition',
-                            line=line
-                        )
+                        raise InvalidOpenSesameScript(
+                            'Failed to parse definition', line=line)
                     item_type = l[1]
                     item_name = self.syntax.sanitize(l[2])
                     line, def_str = self.read_definition(s)
@@ -327,7 +324,7 @@ class Experiment(Item):
         output_channel    The output object, which must support a `put` method.
         """
         if not hasattr(output_channel, u'put'):
-            raise osexception(u'Invalid output_channel: %s' % output_channel)
+            raise RuntimeError(f'Invalid output_channel: {output_channel}')
         self.output_channel = output_channel
 
     def run(self):
@@ -357,10 +354,7 @@ class Experiment(Item):
                 gc.disable()
             self.items.execute(self.var.start)
         else:
-            raise osexception(
-                "Could not find item '%s', which is the entry point of the experiment"
-                % self.var.start
-            )
+            raise MissingItem(self.var.start)
         oslogger.info(u"experiment finished")
         self.end()
 
@@ -396,10 +390,7 @@ class Experiment(Item):
                 key, _time = pause_keyboard.get_key()
                 if key == u'q' or key == u'Q':
                     pause_keyboard.show_virtual_keyboard(False)
-                    raise osexception(
-                        u'The experiment was aborted',
-                        user_triggered=True
-                    )
+                    raise UserAborted('The experiment was aborted')
                 if key == u'space':
                     break
                 time.sleep(.25)

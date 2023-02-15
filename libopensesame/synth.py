@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException
 from libopensesame.base_response_item import BaseResponseItem
 from libopensesame.sampler import Sampler
 from openexp.synth import Synth as OpenExpSynth
@@ -50,7 +50,7 @@ class Synth(Sampler):
                                         attack=self.var.attack,
                                         decay=self.var.decay)
         except Exception as e:
-            raise osexception(u'Failed to generate sound', exception=e)
+            raise OSException(u'Failed to generate sound', exception=e)
         pan = self.var.pan
         if pan == -20:
             pan = u'left'

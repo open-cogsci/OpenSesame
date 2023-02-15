@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.item import Item
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidOpenSesameScript
 
 
 class Logger(Item):
@@ -66,7 +66,8 @@ class Logger(Item):
                 for var in arglist:
                     if not self.experiment.syntax.valid_var_name(
                             safe_decode(var)):
-                        raise osexception(u'Invalid variable name: %s' % var)
+                        raise InvalidOpenSesameScript(
+                            '{var} is not a valid variable name')
                 self.logvars += arglist
 
     def to_string(self):

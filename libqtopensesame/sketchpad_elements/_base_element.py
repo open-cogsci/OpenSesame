@@ -20,6 +20,7 @@ from libopensesame.py3compat import *
 from libopensesame.exceptions import OSException
 from qtpy import QtWidgets, QtGui
 from libqtopensesame.misc.translate import translation_context
+from libopensesame.misc import snake_case
 from libqtopensesame.dialogs.text_input import TextInput
 _ = translation_context(u'sketchpad', category=u'item')
 
@@ -44,9 +45,9 @@ class BaseElement:
             from the properties dict.
         """
         if properties is not None:
-            string = u'draw %s' % (self.__class__.__name__)
+            string = f'draw {snake_case(self.__class__.__name__)}'
             for var, val in properties.items():
-                string += u' %s="%s"' % (var, val)
+                string += f' {var}="{val}"'
         super(base_element, self).__init__(sketchpad, string)
         self.selected = False
         self.highlighted = False

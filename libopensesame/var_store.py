@@ -18,7 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 import warnings
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidOpenSesameScript, OSException, \
+    VariableDoesNotExist, InvalidValue
 
 
 class VarStore:
@@ -84,7 +85,7 @@ class VarStore:
 
     def _check_var_name(self, var):
         r"""Checks whether a variable name is valid, and raises an
-        `osexception` if it isn't.
+        Exception if it isn't.
 
         Parameters
         ----------
@@ -98,7 +99,7 @@ class VarStore:
         if isinstance(var, str) and \
                 self.__item__.experiment.syntax.valid_var_name(var):
             return
-        raise osexception(u'"%s" is not a valid variable name' % var)
+        raise InvalidOpenSesameScript(f'"{var}" is not a valid variable name')
 
     def __contains__(self, var):
         r"""Implements the `in` operator to check if a variable exists."""
@@ -175,12 +176,8 @@ class VarStore:
         """
         self._check_var_name(var)
         if self.__lock__ == var:
-            raise osexception(
-                (
-                    u"Recursion detected! Is variable '%s' defined in terms of "
-                    u"itself (e.g., 'var = [var]') in item '%s'"
-                ) % (var, self.name)
-            )
+            raise OSException(f"Recursion detected! Is variable {var} defined "
+                              f"in terms of itself (e.g., 'var = [var]')")
         if var in self.__vars__:
             val = self.__vars__[var]
         elif hasattr(self.__item__, var):
@@ -199,17 +196,10 @@ class VarStore:
         elif default is not None:
             val = default
         else:
-            raise osexception(
-                (
-                    u'The variable \'%s\' does not exist. Tip: Use '
-                    u'the variable inspector (Ctrl+I) to see all variables.'
-                ) % var
-            )
+            raise VariableDoesNotExist(var)
         if valid is not None and val not in valid:
-            raise osexception(
-                u'Variable %s should be in %s, not %s'
-                % (var, valid, val)
-            )
+            raise InvalidValue(
+                f'Variable {var} should be in {valid}, not {val}')
         if _eval:
             object.__setattr__(self, u'__lock__', var)
             val = self.__item__.syntax.eval_text(val)
@@ -402,7 +392,7 @@ class VarStorePickle(VarStore):
 
     def __setattr__(self, var, val):
 
-        raise osexception(u'This var object is read-only')
+        raise RuntimeError('This var object is read-only')
 
     def get(self, var, default=None, _eval=True, valid=None):
 

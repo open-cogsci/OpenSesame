@@ -17,38 +17,41 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue
 
 
 def float_list(l, desc, min_len=None, max_len=None):
-    """
-    Converts a variable to a list of floats if possible.
+    """Converts a variable to a list of floats if possible.
 
-    Arguments:
-    a		--	The variable to convert.
-    desc	--	A description to clarify the osexception.
+    Parameters
+    ----------
+    l
+        The variable to convert.
+    desc
+        A description to clarify the osexception.
+    min_len, optional
+        The minimum length of the list.
+    max_len, optional
+        The maximum length of the list.
 
-    Keyword arguments:
-    min_len	--	The minimum length of the list. (default=None)
-    max_len	--	The maximum length of the list. (default=None)
+    Raises
+    ------
+    InvalidValue
+        If the variable could not be converted.
 
-    Raises:
-    A osexception if the variable could not be converted.
-
-    Returns:
-    A list of floats.
+    Returns
+    -------
+    list of float
     """
     try:
         l = list(l)
     except:
-        raise osexception(
-            u'Expecting a list or compatible type not "%s" for "%s"' % (l,
-                                                                        desc))
+        raise InvalidValue(
+            f'Expecting a list or similar type not {l} for {desc}')
     if min_len is not None and len(l) < min_len:
-        raise osexception(
-            u'Expecting a list of at least %d items for "%s"' % (min_len, desc))
+        raise InvalidValue(
+            f'Expecting a list of at least {min_len} items for {desc}')
     if max_len is not None and len(l) > max_len:
-        raise osexception(
-            u'Expecting a list of at most %d items for "%s"' % (max_len, desc))
+        raise InvalidValue(
+            f'Expecting a list of at most {max_len} items for {desc}')
     return l

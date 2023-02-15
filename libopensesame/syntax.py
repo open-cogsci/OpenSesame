@@ -23,7 +23,8 @@ import os
 import yaml
 from distutils.version import StrictVersion
 from libopensesame import metadata
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidConditionalStatement, \
+    InvalidOpenSesameScript
 from libopensesame.py3compat import *
 
 
@@ -173,9 +174,9 @@ class Syntax:
         try:
             return shlex.split(s)
         except Exception as e:
-            raise osexception(
-                u'Failed to parse line "%s". Is there a closing quotation missing?'
-                % s, exception=e)
+            raise InvalidOpenSesameScript(f'Failed to parse line "{s}". Is '
+                                          f'there a closing quotation '
+                                          f'missing?', exception=e)
 
     def parse_cmd(self, cmd):
         """Parses OpenSesame command strings, which consist of a command,
@@ -413,9 +414,10 @@ class Syntax:
         if bytecode:
             try:
                 return compile(cnd, u"<conditional statement>", u"eval")
-            except:
-                raise osexception(
-                    u"'%s' is not a valid conditional statement" % cnd)
+            except Exception as e:
+                raise InvalidConditionalStatement(
+                    f'"{cnd}" is not a valid conditional statement',
+                    exception=e)
         return self.unescape(cnd)
 
     def unescape(self, s):
@@ -535,10 +537,6 @@ class Syntax:
             A string with all U+XXXX characters converted to the corresponding
             unicode characters.
         """
-        if not isinstance(s, str):
-            raise osexception(
-                u'from_ascii() expects first argument to be unicode or str, not "%s"'
-                % type(s))
         s = safe_decode(s)
         while True:
             m = self.re_from_ascii.search(s)

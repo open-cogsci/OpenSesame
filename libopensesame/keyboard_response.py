@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue
 from libopensesame.base_response_item import BaseResponseItem
 from openexp.keyboard import Keyboard
 
@@ -35,7 +35,8 @@ class KeyboardResponseMixin:
             return self._keyboard.get_key
         if self.var.event_type == u'keyrelease':
             return self._keyboard.get_key_release
-        raise osexception(u'event_type should be "keypress" or "keyrelease"')
+        raise InvalidValue(f'event_type should be "keypress" or "keyrelease", '
+                           f'not {self.var.event_type}')
 
 
 class KeyboardResponse(KeyboardResponseMixin, BaseResponseItem):

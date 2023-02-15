@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame import type_check
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidFormGeormetry
 from openexp.canvas import canvas
 from openexp.mouse import mouse
 from openexp.keyboard import keyboard
@@ -152,7 +152,7 @@ class Form:
         if focus_widget is not None:
             focus_widget.focus = True
         if len(self) == 0:
-            raise osexception(u'The form contains no widgets')
+            raise InvalidFormGeormetry('The form contains no widgets')
         ms = mouse(self.experiment, timeout=0)
         ms.show_cursor()
         kb = keyboard(self.experiment, timeout=0)
@@ -256,15 +256,9 @@ class Form:
             return pos
         if type(pos) in (tuple, list) and len(pos) == 2:
             return pos[1]*len(self.cols)+pos[0]
-        raise osexception(u'%s is an invalid position in the form' % pos)
+        raise InvalidFormGeormetry(f'{pos} is an invalid position in the form')
 
     def validate_geometry(self):
-        """
-        Checks whether the form has a valid geometry.
-
-        Exceptions:
-        osexception		--	When the geometry is invalid.
-        """
         for index1 in range(len(self.widgets)):
             if self.widgets[index1] is None:
                 continue
@@ -276,13 +270,13 @@ class Form:
                     if index1 == index2:
                         continue
                     if len(self.widgets) <= index2:
-                        raise osexception(
-                            u'The widget at position (%d, %s) falls outside of your form'
-                            % (l[0], l[1]))
+                        raise InvalidFormGeormetry(
+                            f'The widget at position ({l[0]}, {l[1]}) falls '
+                            f'outside of your form')
                     if self.widgets[index2] is not None:
-                        raise osexception(
-                            u'The widget at position (%d, %d) overlaps with another widget'
-                            % (l[0], l[1]))
+                        raise InvalidFormGeormetry(
+                            f'The widget at position ({l[0]}, {l[1]}) '
+                            f'overlaps with another widget')
 
     def get_cell(self, index):
         """
@@ -322,8 +316,9 @@ class Form:
         w = x2-x1
         h = y2-y1
         if w <= 0 or h <= 0:
-            raise osexception(u'There is not enough space to show some form '
-                              u'widgets. Please modify the form geometry!')
+            raise InvalidFormGeormetry('There is not enough space to show '
+                                       'some form widgets. Please modify the '
+                                       'form geometry!')
         x = x1+self.margins[3]
         y = y1+self.margins[0]
         x -= self.width/2
@@ -347,16 +342,16 @@ class Form:
         """
         index = self.cell_index(pos)
         if index >= len(self.widgets):
-            raise osexception(
-                u'Widget position (%s, %s) is outside of the form' % pos)
+            raise InvalidFormGeormetry(
+                f'Widget position ({pos}) is outside of the form')
         if not isinstance(colspan, int) or colspan < 1 or colspan > len(self.cols):
-            raise osexception(
-                u'Column span %s is invalid (i.e. too large, too small, or not a number)'
-                % colspan)
+            raise InvalidFormGeormetry(
+                f'Column span {colspan} is invalid (i.e. too large, too '
+                f'small, or not a number)')
         if not isinstance(rowspan, int) or rowspan < 1 or rowspan > len(self.rows):
-            raise osexception(
-                u'Row span %s is invalid (i.e. too large, too small, or not a number)'
-                % rowspan)
+            raise InvalidFormGeormetry(
+                f'Row span {rowspan} is invalid (i.e. too large, too '
+                f'small, or not a number)')
         if isinstance(widget, WidgetFactory):
             widget = widget.construct(self)
         self.widgets[index] = widget

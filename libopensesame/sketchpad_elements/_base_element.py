@@ -18,12 +18,12 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.misc import snake_case
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidSketchpadElementScript
 
 
 class BaseElement:
-
     r"""A base class from which all sketchpad elements are derived."""
+    
     def __init__(self, sketchpad, string, defaults=[]):
         r"""Constructor.
 
@@ -94,8 +94,8 @@ class BaseElement:
         """
         cmd, arglist, kwdict = self.syntax.parse_cmd(s)
         if cmd != u'draw' or len(arglist) == 0 or arglist[0] != self._type:
-            raise osexception(
-                u'Invalid sketchpad-element definition: \'%s\'' % s)
+            raise InvalidSketchpadElementScript(
+                f'Invalid script: "{s}"')
         # First load the default values
         self.properties = {}
         for var, val in self.defaults:
@@ -111,10 +111,9 @@ class BaseElement:
         # specified.
         for var, val in self.properties.items():
             if val is None:
-                raise osexception(
-                    (u'Required keyword \'%s\' has not been specified in '
-                     u'sketchpad element \'%s\' in item \'%s\'') % (var,
-                                                                    self._type, self.name))
+                raise InvalidSketchpadElementScript(
+                    f'Required keyword {var} has not been specified in '
+                    f'sketchpad element {self._type}')
         # Check if no non-existing keywords have been specified
         for var in self.properties.keys():
             valid = False
@@ -123,10 +122,9 @@ class BaseElement:
                     valid = True
                     break
             if not valid:
-                raise osexception(
-                    (u'The keyword \'%s\' is not applicable to '
-                     u'sketchpad element \'%s\' in item \'%s\'') % (var,
-                                                                    self._type, self.name))
+                raise InvalidSketchpadElementScript(
+                    f'The keyword {var} is not applicable to '
+                    f'sketchpad element {self._type}')
 
     def valid_keyword(self, keyword):
         r"""Checks whether a particular keyword is valid for this element.

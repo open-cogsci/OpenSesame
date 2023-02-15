@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.widgets._form import Form
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidOpenSesameScript
 from openexp.canvas_elements import Rect
 
 
@@ -41,9 +41,8 @@ class Widget:
         self.var = None
         # Check if the form parameter is valid
         if not isinstance(form, Form):
-            raise osexception(
-                u'The first parameter passed to the constructor of a form widget should be a form, not "%s"'
-                % form)
+            raise TypeError(f'The first parameter passed to the constructor '
+                            f'of a form widget should be a form, not {form}')
 
     @property
     def focus(self):

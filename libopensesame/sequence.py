@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import MissingItem
 from libopensesame.item import Item
 import gc
 from openexp.keyboard import Keyboard
@@ -103,9 +103,7 @@ class Sequence(Item):
         self._items = []
         for _item, cond in self.items:
             if _item not in self.experiment.items:
-                raise osexception(
-                    u"Could not find item '%s', which is called by sequence item '%s'"
-                    % (_item, self.name))
+                raise MissingItem(_item)
             self.experiment.items.prepare(_item)
             self._items.append((_item, self.syntax.compile_cond(cond)))
 
