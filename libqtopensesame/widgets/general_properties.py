@@ -21,6 +21,7 @@ from libopensesame.oslogging import oslogger
 from qtpy import QtWidgets
 from libqtopensesame.widgets.general_header_widget import GeneralHeaderWidget
 from libqtopensesame.widgets.base_widget import BaseWidget
+from libopensesame.exceptions import InvalidColor, MissingDependency
 from openexp._color.color import Color
 from openexp import backend
 from libqtopensesame.misc.translate import translation_context
@@ -130,32 +131,29 @@ class GeneralProperties(BaseWidget):
         if self.experiment.var.width != width or \
                 self.experiment.var.height != height:
             self.main_window.update_resolution(width, height)
-        # Set the foreground color
+        # Set the foreground color. If there are no variables in the color
+        # definition, then we check whether it is a valid color specification.
+        # If not, then we revert the change and notify the user.
         foreground = self.experiment.syntax.sanitize(
             self.ui.edit_foreground.text())
-        refs = []
-        try:
-            refs = self.experiment.get_refs(foreground)
-            Color.to_hex(foreground)
-        except Exception as e:
-            if refs == []:
-                self.notify(e)
+        if not self.experiment.syntax.contains_variables(foreground):
+            try:
+                Color.to_hex(foreground)
+            except (InvalidColor, MissingDependency) as e:
+                self.notify(f'Invalid color: {e}')
                 foreground = self.experiment.var.foreground
-                self.ui.edit_foreground.setText(foreground)
+        self.ui.edit_foreground.setText(foreground)
         self.experiment.var.foreground = foreground
         # Set the background color
         background = self.experiment.syntax.sanitize(
             self.ui.edit_background.text())
-        refs = []
-        try:
-            refs = self.experiment.get_refs(background)
-            Color.to_hex(background)
-        except Exception as e:
-            if refs == []:
-                self.notify(e)
+        if not self.experiment.syntax.contains_variables(background):
+            try:
+                Color.to_hex(background)
+            except (InvalidColor, MissingDependency) as e:
+                self.notify(f'Invalid color: {e}')
                 background = self.experiment.var.background
-                self.ui.edit_background.setText(background)
-        self.experiment.var.background = foreground
+        self.ui.edit_background.setText(background)
         self.experiment.var.background = background
         # Set the font
         self.experiment.var.font_family = self.ui.widget_font.family

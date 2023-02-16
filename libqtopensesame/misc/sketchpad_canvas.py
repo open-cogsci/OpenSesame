@@ -310,7 +310,7 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         """
         if not isinstance(val, str):
             return False
-        return len(self.sketchpad.get_refs(val)) > 0
+        return self.sketchpad.syntax.contains_variables(val)
 
     def _pixmap(self, fname):
         r"""Safely returns a QPixmap.

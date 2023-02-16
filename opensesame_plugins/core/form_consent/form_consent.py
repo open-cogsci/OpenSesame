@@ -65,4 +65,4 @@ class FormConsent(FormBase):
             c = Canvas(self.experiment)
             c.text(self.var.get(u'decline_message'))
             c.show()
-            self.sleep(5000)
+            self.clock.sleep(5000)

@@ -48,8 +48,8 @@ class AdvancedDelay(Item):
         self.experiment.var.set(f'delay_{self.name}', self._duration)
 
     def run(self):
-        self.set_item_onset(self.time())
-        self.sleep(self._duration)
+        self.set_item_onset(self.clock.time())
+        self.clock.sleep(self._duration)
 
     def var_info(self):
         return super().var_info() + \

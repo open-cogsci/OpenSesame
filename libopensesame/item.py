@@ -25,22 +25,21 @@ from libopensesame.oslogging import oslogger
 
 
 class Item:
-
-    """Abstract class that serves as the basis for all OpenSesame items."""
+    """Abstract class that serves as the basis for all OpenSesame items.
+    
+    Parameters
+    ----------
+    name: str
+        The name of the item
+    experiment: Experiment
+    string: str or None, optional
+        A definition string
+    """
+    
     encoding = u'utf-8'
     var = None
 
     def __init__(self, name, experiment, string=None):
-        """
-        Constructor.
-
-        Arguments:
-        name 		--	The name of the item.
-        experiment 	--	The experiment object.
-
-        Keyword arguments:
-        string		--	An definition string. (default=None).
-        """
         if self.var is None:
             self.var = var_store(self, parent=experiment.var)
         self.name = name
@@ -131,45 +130,6 @@ class Item:
                 self.var.set(l[1], l[2])
                 return True
         return False
-
-    def parse_keywords(self, line, _eval=False):
-        """
-        Parses keywords, e.g. 'my_keyword=my_value'.
-
-        Arguments:
-        line		--	A single definition line.
-
-        Keyword arguments:
-        _eval		--	Indicates whether the values should be evaluated.
-                                        (default=False)
-
-        Returns:
-        A value dictionary with keywords as keys and values as values.
-        """
-        # Parse keywords
-        l = self.syntax.split(line.strip())
-        keywords = {}
-        for i in l:
-            j = i.find(u'=')
-            if j != -1:
-                # UGLY HACK: if the string appears to be plain text,
-                # rather than a keyword, for example something like
-                # 'accuracy = [acc]%', do not parse it as a keyword-
-                # value pair. The string needs to occur only once in
-                # the full line, both quoted and unquoted.
-                q = u'"%s"' % i
-                if line.count(q) == 1 and line.count(i) == 1:
-                    oslogger.warning(
-                        u'"%s" does not appear to be a keyword-value pair in string "%s"'
-                        % (i, line)
-                    )
-                else:
-                    var = str(i[:j])
-                    val = self.auto_type(i[j+1:])
-                    if _eval:
-                        val = self.syntax.eval_text(val)
-                    keywords[var] = val
-        return keywords
 
     def parse_line(self, line):
         """
@@ -326,71 +286,6 @@ class Item:
             raise InvalidValue(f'({w}, {h}) is not a valid resolution')
         return w, h
 
-    def get_refs(self, text):
-        r"""Returns a list of variables that are referred to by a string of
-        text.
-
-        Parameters
-        ----------
-        text    A string of text. This can be any type, but will coerced to unicode
-            if it is not unicode.
-
-        Returns
-        -------
-        list
-            A list of variable names or an empty list if the string contains no
-            references.
-        """
-        text = safe_decode(text)
-
-        l = []
-        start = -1
-        while True:
-            # Find the start and end of a variable definition
-            start = text.find(u'[', start + 1)
-            if start < 0:
-                break
-            end = text.find(u']', start + 1)
-            if end < 0:
-                raise InvalidOpenSesameScript(
-                    f"Missing closing bracket ']' in: {text}")
-            var = text[start+1:end]
-            l.append(var)
-            var = var[end:]
-        return l
-
-    def auto_type(self, val):
-        r"""Converts a value into the 'best fitting' or 'simplest' type that is
-        compatible with the value.
-
-        Parameters
-        ----------
-        val    A value. This can be any type.
-
-        Returns
-        -------
-        unicode, int, float
-            The same value converted to the 'best fitting' type.
-        """
-        # Booleans are converted to True/ False
-        if type(val) == bool:
-            if val:
-                return u'yes'
-            else:
-                return u'no'
-        # Try to convert the value to a numeric type
-        try:
-            # Check if the value can be converted to an int without loosing
-            # precision. If so, convert to int
-            if int(float(val)) == float(val):
-                return int(float(val))
-            # Else convert to float
-            else:
-                return float(val)
-        except:
-            # Else, fall back to unicde
-            return safe_decode(val)
-
     def set_item_onset(self, time=None):
         r"""Set a timestamp for the onset time of the item's execution.
 
@@ -403,36 +298,20 @@ class Item:
         -------
         """
         if time is None:
-            time = self.time()
+            time = self.clock.time()
         self.experiment.var.set(u'time_%s' % self.name, time)
         return time
 
-    def dummy(self, **args):
-        """
-        Dummy function
-
-        Keyword arguments:
-        arguments -- accepts all keywords for compatibility
-        """
-        pass
-
     def var_info(self):
-        """
-        Give a list of dictionaries with variable descriptions
+        """Give a list of dictionaries with variable descriptions.
 
-        Returns:
-        A list of (variable, description) tuples
+        Returns
+        -------
+        list
+            A list of (variable, description) tuples
         """
         return [(u"time_%s" % self.name, u"[Timestamp of last item call]"),
                 (u"count_%s" % self.name, u"[Number of item calls]")]
-
-    def sleep(self, ms):
-
-        return self.clock.sleep(ms)
-
-    def time(self):
-
-        return self.clock.time()
 
 
 # alias for backwards compatibility
