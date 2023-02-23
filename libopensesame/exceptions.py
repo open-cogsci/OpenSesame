@@ -259,11 +259,23 @@ class PythonError(OSException):
         self._traceback = tb
         
     def __str__(self):
-        return f'{str(super())}\n\n{self._traceback}'
+        return f'{super().__str__()}\n\n{self._traceback}'
         
     def markdown(self):
-        return f'{super().markdown()}\n\n' \
-               f'~~~ .traceback\n{self._traceback}\n~~~'
+        
+        return f'''# {self.title()}
+        
+{self._msg}
+
+This error occurred in the __{self.phase}__ phase of item
+<u><a href="opensesame://item.{self.item}.{self.phase}">{self.item}</a></u>.
+
+~~~ .traceback
+{self._traceback}
+~~~
+
+{self._read_more}
+'''
 
 
 class PythonSyntaxError(PythonError):

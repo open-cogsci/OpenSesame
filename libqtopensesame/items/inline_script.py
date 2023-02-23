@@ -124,6 +124,12 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         if self.container_widget is None:
             return
         self.apply_edit_changes()
+        
+    def open_tab(self, select_in_tree=True, **kwargs):
+        super().open_tab(select_in_tree=select_in_tree, **kwargs)
+        if 'phase' in kwargs:
+            tab_index = 1 if kwargs['phase'] == 'run' else 0
+            self._pyqode_tab_widget.main_tab_widget.setCurrentIndex(tab_index)
 
 
 # Alias for backwards compatibility
