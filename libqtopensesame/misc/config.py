@@ -28,7 +28,6 @@ design pattern).
 	print(cfg.my_setting) # get
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
 from qtpy import QtCore
 import libopensesame.misc
 from libopensesame.oslogging import oslogger

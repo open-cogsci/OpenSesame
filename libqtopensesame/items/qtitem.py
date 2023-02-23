@@ -122,8 +122,8 @@ class QtItem:
     def default_description(self):
         return _(u'Default description')
 
-    def open_tab(self, select_in_tree=True):
-        r"""Opens the tab if it wasn't yet open, and switches to it."""
+    def open_tab(self, select_in_tree=True, **kwargs):
+        """Opens the tab if it wasn't yet open, and switches to it."""
         unsaved = self.main_window.unsaved_changes
         self.tabwidget.add(self.widget(), self.item_icon(), self.name)
         self.main_window.set_unsaved(unsaved)

@@ -20,7 +20,6 @@ import os
 from qtpy import QtWidgets
 from libqtopensesame.misc.config import cfg
 from libopensesame.oslogging import oslogger
-from libopensesame.exceptions import osexception
 from libopensesame.experiment import Experiment
 from libopensesame.py3compat import *
 from libqtopensesame.misc.translate import translation_context

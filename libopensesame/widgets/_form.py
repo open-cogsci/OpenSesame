@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame import type_check
-from libopensesame.exceptions import InvalidFormGeormetry
+from libopensesame.exceptions import InvalidFormGeometry
 from openexp.canvas import canvas
 from openexp.mouse import mouse
 from openexp.keyboard import keyboard
@@ -152,7 +152,7 @@ class Form:
         if focus_widget is not None:
             focus_widget.focus = True
         if len(self) == 0:
-            raise InvalidFormGeormetry('The form contains no widgets')
+            raise InvalidFormGeometry('The form contains no widgets')
         ms = mouse(self.experiment, timeout=0)
         ms.show_cursor()
         kb = keyboard(self.experiment, timeout=0)
@@ -256,7 +256,7 @@ class Form:
             return pos
         if type(pos) in (tuple, list) and len(pos) == 2:
             return pos[1]*len(self.cols)+pos[0]
-        raise InvalidFormGeormetry(f'{pos} is an invalid position in the form')
+        raise InvalidFormGeometry(f'{pos} is an invalid position in the form')
 
     def validate_geometry(self):
         for index1 in range(len(self.widgets)):
@@ -270,11 +270,11 @@ class Form:
                     if index1 == index2:
                         continue
                     if len(self.widgets) <= index2:
-                        raise InvalidFormGeormetry(
+                        raise InvalidFormGeometry(
                             f'The widget at position ({l[0]}, {l[1]}) falls '
                             f'outside of your form')
                     if self.widgets[index2] is not None:
-                        raise InvalidFormGeormetry(
+                        raise InvalidFormGeometry(
                             f'The widget at position ({l[0]}, {l[1]}) '
                             f'overlaps with another widget')
 
@@ -316,7 +316,7 @@ class Form:
         w = x2-x1
         h = y2-y1
         if w <= 0 or h <= 0:
-            raise InvalidFormGeormetry('There is not enough space to show '
+            raise InvalidFormGeometry('There is not enough space to show '
                                        'some form widgets. Please modify the '
                                        'form geometry!')
         x = x1+self.margins[3]
@@ -342,14 +342,14 @@ class Form:
         """
         index = self.cell_index(pos)
         if index >= len(self.widgets):
-            raise InvalidFormGeormetry(
+            raise InvalidFormGeometry(
                 f'Widget position ({pos}) is outside of the form')
         if not isinstance(colspan, int) or colspan < 1 or colspan > len(self.cols):
-            raise InvalidFormGeormetry(
+            raise InvalidFormGeometry(
                 f'Column span {colspan} is invalid (i.e. too large, too '
                 f'small, or not a number)')
         if not isinstance(rowspan, int) or rowspan < 1 or rowspan > len(self.rows):
-            raise InvalidFormGeormetry(
+            raise InvalidFormGeometry(
                 f'Row span {rowspan} is invalid (i.e. too large, too '
                 f'small, or not a number)')
         if isinstance(widget, WidgetFactory):

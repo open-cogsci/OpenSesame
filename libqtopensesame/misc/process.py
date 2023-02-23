@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.oslogging import oslogger
+from libopensesame.exceptions import OSException, UnexpectedError
 import platform
 import sys
 import os
@@ -107,7 +108,6 @@ class ExperimentProcess(multiprocessing.Process):
         import sys
         from libopensesame import misc
         from libopensesame.experiment import experiment
-        from libopensesame.exceptions import osexception
         # Under Windows, change the working directory to the OpenSesame folder,
         # so that the new process can find the main script.
         if os.name == u'nt':
@@ -127,6 +127,9 @@ class ExperimentProcess(multiprocessing.Process):
                 logfile=self.logfile
             )
         except Exception as e:
+            if not isinstance(e, OSException):
+                e = UnexpectedError('An unexpected error occurred while '
+                                    'building the experiment')
             # Communicate the exception and exit with error
             self.output.put(e)
             sys.exit(1)
@@ -138,6 +141,9 @@ class ExperimentProcess(multiprocessing.Process):
             exp.run()
             oslogger.info('experiment finished!')
         except Exception as e:
+            if not isinstance(e, OSException):
+                e = UnexpectedError('An unexpected error occurred while '
+                                    'running the experiment')
             e_run = e
         exp.transmit_workspace()
         # Communicate the exception. We do this before calling exp.end()

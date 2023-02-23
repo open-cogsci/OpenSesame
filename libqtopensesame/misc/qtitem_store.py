@@ -17,7 +17,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
 from libopensesame.item_store import ItemStore
 from libopensesame import plugins
 from libqtopensesame.misc.translate import translation_context
@@ -100,8 +99,6 @@ class QtItemStore(ItemStore):
                         allow_rename=allow_rename
                     )
                 except Exception as e:
-                    if not isinstance(e, osexception):
-                        e = osexception(e)
                     self.error_log.append(e)
                     return
             else:

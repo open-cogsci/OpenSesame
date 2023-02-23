@@ -100,7 +100,7 @@ class InlineScript(Item):
             except AbortCoroutines as e:
                 # If the inline_script is part of a coroutines, this signals
                 # that the coroutines should be aborted, so we don't wrap it
-                # into an osexception.
+                # into a PythonError.
                 raise
             except Exception as e:
                 raise PythonError(

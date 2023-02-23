@@ -17,12 +17,10 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-
 import os
 from qtpy import QtCore, QtWidgets, uic
 from openexp import resources
 from libopensesame.oslogging import oslogger
-from libopensesame.exceptions import osexception
 
 
 class BaseComponent:

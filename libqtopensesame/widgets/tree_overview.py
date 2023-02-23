@@ -27,7 +27,6 @@ from libqtopensesame.widgets.tree_append_button import TreeAppendButton
 from libqtopensesame._input.popup_menu import PopupMenu
 from libqtopensesame.items.qtstructure_item import QtStructureItem
 from libopensesame.oslogging import oslogger
-from libopensesame.exceptions import osexception
 from libopensesame.sequence import Sequence
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'tree_overview', category=u'core')

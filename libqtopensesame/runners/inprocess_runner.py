@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.oslogging import oslogger
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException
 from libqtopensesame.runners import BaseRunner
 
 
@@ -33,8 +33,8 @@ class InprocessRunner(BaseRunner):
         try:
             self.experiment.run()
         except Exception as e:
-            if not isinstance(e, osexception):
-                retval = osexception(u'Unexpected error', e)
+            if not isinstance(e, OSException):
+                retval = OSException('Unexpected error')
             else:
                 retval = e
         # Exceptions during the end phase are less important and only printed

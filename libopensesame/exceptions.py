@@ -34,9 +34,8 @@ class AbortCoroutines(Exception):
 
 
 class OSException(Exception):
-    """A general Exception class for exceptions that occur within OpenSesame.
-    Ideally, only `osexception`s should occur, all other exceptions indicate a
-    (usually harmless) bug somewhere.
+    """An OSException is raised when an error occurs that is not covered by
+    any of the other Exception classes.
     """
 
     def __init__(self, msg):
@@ -54,16 +53,25 @@ class OSException(Exception):
         except IndexError:
             # This may happen when the item stack is empty
             self.item = self.phase = 'unknown'
+        self._read_more = f'''<div id="more-information" style="display:none;">{self.__doc__}</div>
+
+<a id="read-more" class="button" onclick='document.getElementById("more-information").style.display = "block";document.getElementById("read-more").style.display = "none"'>Learn more about this error</a>'''
 
     def __str__(self):
-        return f'{self.title()}\n\n{self._msg}' \
-               f'\n\nThis error occurred in the {self.phase} phase of item ' \
-               f'{self.item}.'
+        return '''{self.title()}\n\n{self._msg}
+
+This error occurred in the {self.phase} phase of item {self.item}.
+'''
 
     def markdown(self):
-        return f'# {self.title()}\n\n{self._msg}' \
-               f'\n\nThis error occurred in the __{self.phase}__ phase of ' \
-               f'item __{self.item}__.'
+        return f'''# {self.title()}
+        
+{self._msg}
+
+This error occurred in the __{self.phase}__ phase of item <u><a href="opensesame://item.{self.item}.{self.phase}">{self.item}</a></u>.
+
+{self._read_more}
+'''
     
     def title(self):
         return f'Error: {self.__class__.__name__}'
@@ -76,92 +84,119 @@ class BackendNotSupported(OSException):
 
     
 class InvalidKeyName(OSException):
-    """This exception is raised when the name of a key has been incorrectly
-    specified.
+    """An `InvalidKeyName` is raised when the name of a key has been
+    incorrectly specified.
     """
     def __init__(self, key):
         super().__init__(f'Invalid key name: {key}')
         
         
 class InvalidValue(OSException):
-    """This exception is raised when a variable has an incorrect value or type.
+    """An `InvalidValue` is raised when an invalid value has been assigned to a
+    variable. This can occur in many situations and generally indicates a
+    mistake in the experiment. For example, you will get an `InvalidValue` if
+    you specify a negative `sketchpad` duration.
     """
     pass
 
 
 class InvalidColor(OSException):
-    """This exception is raised when a color has been incorrectly specified.
+    """An `InvalidColor` is raised when you have specified a color with an
+    incorrect. This generally indicates a mistake in the experiment, such as a
+    typo. For example, you will get an `InvalidColor` if you specify the color
+    'bleu' (as opposed to 'blue'). For a list of valid color specifications,
+    please visit see the documentation site.
     """
     def __init__(self, color):
         super().__init__(f'Invalid color specification: {color}')
         
         
 class InvalidSketchpadElementScript(OSException):
-    """This exception is raised when a sketchpad element has been incorrectly
-    defined.
+    """An `InvalidSketchpadElementScript` is raised when there is a mistake in
+    the script that defines a sketchpad element. This can happen when you
+    manually modify a `sketchpad` script.
     """
     pass
 
 
 class InvalidFormScript(OSException):
-    """This exception is raised when a form has been incorrectly defined."""
+    """An `InvalidFormScript` is raised when there is a mistake in a form
+    script. This can happen when you make a mistake while manually buidling a
+    form using the `form_base` item, or while modifying the script of other
+    form items.
+    """
     pass
 
 
 class InvalidOpenSesameScript(OSException):
-    """This exception is raised when there is an error in the OpenSesame script
-    that defines the experiment and the items.
+    """An `InvalidOpenSesameScript` is raised when there is an error in the 
+    OpenSesame script that defines the experiment and the items. This can 
+    happen when you make a mistake while modifying the experiment script.
     """
     pass
 
 
-class InvalidConditionalExpression(OSException):
-    """This exception is raised when a conditional statement, such as a run-if,
-    break-if, or show-if statement, is incorrectly defined.
+class InvalidFormGeometry(OSException):
+    """An `InvalidFormGeometry` is raised when a form has an impossible 
+    geometry. This can happen for different reasons. For example, you will get
+    an `InvalidFormGeometry` when a form is too small to fit
+    all of its widgets.
     """
-    pass
-
-
-class InvalidFormGeormetry(OSException):
-    """This exception is raised when a form has an invalid geometry."""
     pass
 
 
 class UnsupportedImageFormat(OSException):
-    """This exception is raised when an image file has an unsupported format.
+    """An `UnsupportedImageFormat` is raised when an image file does not have
+    a format that is supported by OpenSesame. It can also occur when a file
+    is not an image file at all. To solve this issue, make sure that the
+    indicated file is indeed an image, and if necessary convert it to a
+    standard format, such as `.png` or `.jpg`.
     """
     def __init__(self, path):
         super().__init__(f'{path} is not a supported image file')
         
         
 class ImageDoesNotExist(OSException):
-    """This exception is raised when an image file does not exist."""
+    """An `ImageDoesNotExist` is raised when you have specified an image file
+    that does not exist. This commonly reflects a mistake in the experiment,
+    such as a typo in a file name.
+    """
     def __init__(self, path):
         super().__init__(f'Cannot find image file {path}')
         
 
 class UnsupportedSoundFileFormat(OSException):
-    """This exception is raised when a sound file has an unsupported format.
+    """An `UnsupportedSoundFileFormat` is raised when a sound file does not
+    have a format that is supported by OpenSesame. It can also occur when a
+    file is not a sound image file at all. To solve this issue, make sure that
+    the indicated file is indeed a sound file, and if necessary convert it to a
+    standard format, such as `.wav` or `.mp3`.
     """
     def __init__(self, path):
         super().__init__(f'{path} is not a supported sound file')
         
         
 class SoundFileDoesNotExist(OSException):
-    """This exception is raised when an sound file does not exist."""
+    """A `SoundFileDoesNotExist` is raised when you have specified a sound file
+    that does not exist. This commonly reflects a mistake in the experiment,
+    such as a typo in a file name.
+    """
     def __init__(self, path):
         super().__init__(f'Cannot find sound file {path}')
         
         
 class LoopSourceFileDoesNotExist(OSException):
-    """This exception is raised when an loop source file does not exist."""
+    """A `LoopSourceFileDoesNotExist` is raised when you have specified a
+    non-existent source file for a loop item. This commonly reflects  mistake
+    in the experiment, such as a typo in a file name.
+    """
     def __init__(self, path):
         super().__init__(f'Cannot find loop source file {path}')
         
 
 class UnsupportedLoopSourceFile(OSException):
-    """This exception is raised when a loop source file has an unsupported
-    format.
+    """An `UnsupportedLoopSourceFile` is raised when you have specified a 
+    source file for a loop item that is not a `.csv` or `.xlsx` file.
     """
     def __init__(self, path):
         super().__init__(f'{path} is not a supported loop source file')
@@ -169,61 +204,52 @@ class UnsupportedLoopSourceFile(OSException):
 
 class UserAborted(OSException):
     """This exception is raised when a user aborts an experiment."""
-    def title(self):
-        return 'Aborted'
-        
     def __str__(self):
         return 'The experiment was aborted'
         
-    def markdown(self):
-        return '# Aborted\n\nThe experiment was aborted'
-        
 
 class UserKilled(UserAborted):
-    """This exception is raised when a user aborts an experiment."""
-    def title(self):
-        return 'Aborted'
-        
+    """This exception is raised when a user kills an experiment."""
     def __str__(self):
         return 'The experiment process was killed'
-        
-    def markdown(self):
-        return '# Aborted\n\nThe experiment process was killed'
 
         
 class MissingDependency(OSException):
-    """This exception is raised when some functionality requires a package
-    that is not available.
+    """A `MissingDependency` is raised when some functionality requires a
+    package that is not available.
     """
     pass
 
 
 class ItemDoesNotExist(OSException):
-    """This exception is raised when an item that does not exist is referred
-    to.
+    """An `ItemDoesNotExist` is raised when the experiment refers to an item
+    that does not exist. This can occur for different reasons.
     """
     def __init__(self, item_name):
         super().__init__(f'Item {item_name} does not exist')
         
         
 class VariableDoesNotExist(OSException):
-    """This exception is raised when a variable that does not exist is referred
-    to.
+    """A `VariableDoesNotExist` is raised when the experiment refers to a
+    variable that does not, or not yet, exist. This commonly reflects a mistake
+    in the experiment, such as a typo in the name of a variable, or referring
+    to a variable before it has been created. Note that variable names are case
+    sensitive.
     """
     def __init__(self, var_name):
         super().__init__(f'Variable {var_name} does not exist')
         
         
 class DeviceError(OSException):
-    """This exception is raised when an error occurs while connecting to, or
-    interacting with, an external device.
+    """A `DeviceError` is raised when an error occurs while connecting to, or
+    interacting with, an external device. This can occur for different reasons.
     """
     pass
 
 
 class PythonError(OSException):
-    """This exception is raised when an error occurs during execution of Python
-    code.
+    """A `PythonError` is raised when an error occurs during execution of 
+    Python code, typically in an `inline_script` item.
     """
     def __init__(self, msg):
         super().__init__(msg)
@@ -233,7 +259,7 @@ class PythonError(OSException):
         self._traceback = tb
         
     def __str__(self):
-        return f'{super()}\n\n{self._traceback}'
+        return f'{str(super())}\n\n{self._traceback}'
         
     def markdown(self):
         return f'{super().markdown()}\n\n' \
@@ -241,25 +267,57 @@ class PythonError(OSException):
 
 
 class PythonSyntaxError(PythonError):
-    """This exception is raised when there is a syntax error in Python code.
+    """A `PythonSyntaxError` is raised when a Python script, typically in an
+    `inline_script` item, is not syntactically correct.
+    """
+    pass
+
+
+class InvalidConditionalExpression(OSException):
+    """An `InvalidConditionalExpression` is raised when a conditional 
+    expresssion, such as a run-if, break-if, or show-if expression, is
+    syntactically incorrect. This generally reflects a mistake in the 
+    experiment, such as a typo in a conditional expression that renders it
+    invalid.
     """
     pass
 
 
 class ConditionalExpressionError(PythonError):
-    """This exception is raised when an error occurs during evaluation of a
-    conditional expression.
+    """A `ConditionalExpressionError` is raised when an occurs during the
+    evaluation of a conditional expression, such as run-if, break-if, or
+    show-if expression.
     """
     pass
 
 
 class ExperimentProcessDied(OSException):
-    """This exception is raised when the experiment process died. This is 
-    generally the result of a bug in one of the underlying libraries that
-    causes Python to crash. This should not happen! If you experinence this
-    error often, please report it on the support forum.
+    """An `ExperimentProcessDied` is raised when the experiment process died.
+    This is  generally the result of a bug in one of the underlying libraries 
+    that causes Python to crash. This should not happen! If you experinence 
+    this error often, please report it on the support forum.
     """
     pass
+
+
+class UnexpectedError(OSException):
+    """An `UnexpectedError` is raised when an error occurred that OpenSesame 
+    does not recognize. This can happen when there is a bug in a plugin, one of
+    the underlying Python libraries, or in OpenSesame itself. This should not
+    happen! If you experinence this error often, please report it on the
+    support forum.
+    """
+    def __init__(self, msg):
+        super().__init__(msg)
+        self._traceback = traceback.format_exc()
+        
+    def __str__(self):
+        return f'{self.title()}\n\n{self._msg}\n\n{self._traceback}'
+        
+    def markdown(self):
+        return f'# {self.title()}\n\n{self._msg}\n\n' \
+               f'~~~ .traceback\n{self._traceback}\n~~~\n\n{self._read_more}'
+
 
 # For backwards compatibility, we should also define the old Exception classes
 osexception = OSException

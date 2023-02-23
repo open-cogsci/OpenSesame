@@ -20,7 +20,7 @@ from libopensesame.py3compat import *
 import os
 import subprocess
 import tempfile
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
 from libqtopensesame.runners import BaseRunner
@@ -36,10 +36,9 @@ class ExternalRunner(BaseRunner):
         # Temporary file for the standard output and experiment
         self.stdout = tempfile.mktemp(suffix=u".stdout")
         if self.experiment.experiment_path is None:
-            return osexception(
-                u'Please save your experiment first, before running it using '
-                u'opensesamerun'
-            )
+            return OSException(
+                'Please save your experiment first, before running it using '
+                'opensesamerun')
         self.path = os.path.join(self.experiment.experiment_path,
                                  '.opensesamerun-tmp.osexp')
         self.experiment.save(self.path, True)
@@ -99,7 +98,7 @@ class ExternalRunner(BaseRunner):
                 os.remove(self.stdout)
             except:
                 pass
-            return osexception(e)
+            return e
         # Wait for OpenSesame run to complete, process events in the meantime,
         # to make sure that the new process is shown (otherwise it will crash
         # on Windows).

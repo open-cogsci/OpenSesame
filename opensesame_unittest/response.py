@@ -19,7 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 import unittest
 from openexp._color.color import color
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException
 from libopensesame.experiment import experiment
 
 class check_response(unittest.TestCase):
@@ -46,9 +46,9 @@ class check_response(unittest.TestCase):
 		"""
 		print(u'Checking response handling')
 		self.exp = experiment()
-		with self.assertRaises(osexception) as cm:
+		with self.assertRaises(OSException) as cm:
 			self.exp.set_response(correct=u'A')
-		with self.assertRaises(osexception) as cm:
+		with self.assertRaises(OSException) as cm:
 			self.exp.set_response(response_time=u'A')
 		for i in range(2):
 			self.exp.reset_feedback()

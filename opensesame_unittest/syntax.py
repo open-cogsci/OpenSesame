@@ -21,7 +21,7 @@ import os
 import yamldoc
 import unittest
 from libopensesame.experiment import experiment
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException
 
 class check_syntax(unittest.TestCase):
 
@@ -78,7 +78,7 @@ class check_syntax(unittest.TestCase):
 			[u'textline'],
 			{u'text': ' 1 '}
 		)
-		with self.assertRaises(osexception):
+		with self.assertRaises(OSException):
 			print(u'Testing exception ...')
 			self.checkCmd(u'widget 0 0 1 1 label text="Tést 123',
 				u'widget', [0, 0, 1, 1, u'label'],

@@ -20,7 +20,7 @@ import time
 import os
 import json
 from libopensesame.py3compat import *
-from libopensesame.exceptions import OSException, UserAborted
+from libopensesame.exceptions import UserAborted
 from libqtopensesame.extensions import BaseExtension
 from libopensesame import misc
 from libqtopensesame.misc.translate import translation_context
@@ -131,16 +131,10 @@ class AfterExperiment(BaseExtension):
         e : Exception
             The Exception that caused the experiment to stop.
         """
-        if not isinstance(e, OSException):
-            e = OSException(msg=u'Unexpected error')
         if isinstance(e, UserAborted):
-            icon = u'os-finished-user-interrupt'
-            # title = _(u'Aborted')
-            # md = _(u'# Aborted\n\n- ') + e.markdown()
-        else:
-            icon = u'os-finished-error'
-            # title = _(u'Stopped')
-            # md = _(u'# Stopped\n\nThe experiment did not finish normally for the following reason:\n\n- ') \
-            #     + e.markdown()
+            self.extension_manager.fire('notify', message=str(e),
+                                        always_show=True)
+            return
         self.console.write(e)
-        self.tabwidget.open_markdown(e.markdown(), icon, e.title())
+        self.tabwidget.open_markdown(e.markdown(), 'os-finished-error',
+                                     e.title())

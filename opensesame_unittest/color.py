@@ -20,7 +20,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 from libopensesame.py3compat import *
 from openexp._color.color import color
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException
 
 
 class CheckColor(unittest.TestCase):
@@ -91,7 +91,7 @@ class CheckColor(unittest.TestCase):
 				u'Checking incorrect %s (%s)'
 				% (str(colorspec), type(colorspec))
 			)
-			self.assertRaises(osexception, color.to_hex, colorspec)
+			self.assertRaises(OSException, color.to_hex, colorspec)
 
 
 if __name__ == '__main__':

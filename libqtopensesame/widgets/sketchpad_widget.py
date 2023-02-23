@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtGui
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException
 from libqtopensesame import sketchpad_elements
 from libqtopensesame.widgets.sketchpad_element_button import \
     SketchpadElementButton
@@ -225,7 +225,7 @@ class SketchpadWidget(BaseWidget):
             # variably defined, or it has an invalid type.
             try:
                 val = element.get_property(prop, _type=_type)
-            except osexception:
+            except OSException:
                 continue
             # Adjust the widget
             if _type in (int, float):
