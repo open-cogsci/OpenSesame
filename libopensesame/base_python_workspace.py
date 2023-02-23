@@ -85,10 +85,6 @@ class BasePythonWorkspace:
         code
             The compiled script.
         """
-        # Prepend source encoding (PEP 0263) and encode scripts. This is
-        # necessary, because the exec statement doesn't take kindly to Unicode.
-        script = (u'#-*- coding:%s -*-\n' % self.experiment.encoding + script) \
-            .encode(self.experiment.encoding)
         return compile(script, u'<string>', u'exec')
 
     def _exec(self, bytecode):

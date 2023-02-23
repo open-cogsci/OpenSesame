@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import OSException
 from ._base_task import BaseTask
 import inspect
 
@@ -43,10 +43,10 @@ class InlineTask(BaseTask):
     def launch(self):
         """See base_task."""
         if self.function_name not in self.python_workspace._globals:
-            raise osexception(u'"%s" is not defined' % self.function_name)
+            raise OSException(u'"%s" is not defined' % self.function_name)
         self.coroutine = self.python_workspace._globals[self.function_name]
         if not inspect.isgeneratorfunction(self.coroutine):
-            raise osexception(
+            raise OSException(
                 u'"%s" is not a generator function' % self.function_name)
         self.coroutines.event('launching %s' % self.coroutine)
         self.coroutine = self.coroutine()

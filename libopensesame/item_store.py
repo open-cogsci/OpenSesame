@@ -20,7 +20,7 @@ from libopensesame.py3compat import *
 from libopensesame.misc import snake_case
 from libopensesame.cistr import CIStr
 from libopensesame.oslogging import oslogger
-from libopensesame.exceptions import MissingItem
+from libopensesame.exceptions import ItemDoesNotExist
 from libopensesame.item_stack import item_stack_singleton
 
 
@@ -293,7 +293,7 @@ class ItemStore:
         try:
             return self.__items__[name]
         except KeyError:
-            raise MissingItem(name)
+            raise ItemDoesNotExist(name)
 
 
 # Alias for backwards compatibility

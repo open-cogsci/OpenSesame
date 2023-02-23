@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import OSException, MissingItem, InvalidValue
+from libopensesame.exceptions import OSException, ItemDoesNotExist, InvalidValue
 from libopensesame.base_response_item import BaseResponseItem
 from openexp._canvas.canvas import Canvas
 from openexp.mouse import Mouse
@@ -79,7 +79,7 @@ class MouseResponseMixin:
             self.experiment.var.cursor_x, self.experiment.var.cursor_y = pos
         if self.var.get(u'linked_sketchpad', default=u'') and pos is not None:
             if self.var.linked_sketchpad not in self.experiment.items:
-                raise MissingItem(self.var.linked_sketchpad)
+                raise ItemDoesNotExist(self.var.linked_sketchpad)
             item = self.experiment.items[self.var.linked_sketchpad]
             if not hasattr(item, u'canvas') or \
                     not isinstance(item.canvas, Canvas):

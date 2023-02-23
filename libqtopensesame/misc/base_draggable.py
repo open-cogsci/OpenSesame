@@ -27,7 +27,7 @@ class BaseDraggable:
     def set_supported_drop_types(self, types=None):
 
         if not hasattr(self, u'setAcceptDrops'):
-            raise osexception(u'Object does not support drops')
+            raise TypeError(u'Object does not support drops')
         if types is None:
             self.setAcceptDrops(False)
             self.supported_drop_types = None

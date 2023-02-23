@@ -34,136 +34,46 @@ class AbortCoroutines(Exception):
 
 
 class OSException(Exception):
-    r"""A general Exception class for exceptions that occur within OpenSesame.
+    """A general Exception class for exceptions that occur within OpenSesame.
     Ideally, only `osexception`s should occur, all other exceptions indicate a
     (usually harmless) bug somewhere.
     """
-    
-    def __init__(self, msg, exception=None, **info):
-        r"""Constructor.
+
+    def __init__(self, msg):
+        """Constructor.
 
         Parameters
         ----------
         msg : str, unicode
-            An Exception message.
-        exception : Exception, NoneType, optional
-            An exception that was intercepted or None for self-generated
-            exceptions.
-        **info : dict
-            Optional additional info for the exception.
+            An error message.
         """
         super().__init__(msg)
-        # Create both HTML and plain text representations of the Exception.
-        self.enc = u'utf-8'
-        self.user_triggered = info.get(u'user_triggered', False)
-        self.exception = exception
-        info = self._exception_info(msg, info)
-        self._md, self._plaintext = self._exception_details(msg, info)
-        if self.exception is None:
-            return
-        tb_md, tb_plaintext = self._parse_traceback(info)
-        self._md += tb_md
-        self._plaintext += tb_plaintext
-        # In some cases, the Exception is not pickleable, in which case it gets
-        # lost when sending it through the pipe to the GUI (in multiprocess),
-        # in turn resulting in a message that the experiment finished 
-        # successfully. # Therefore we delete the exception, just in case.
-        del self.exception
-
-    def _traceback(self):
-        r"""Returns the traceback as a formatted string."""
-        return traceback.format_exc()
-
-    def _parse_traceback(self, info):
-        r"""Processes the traceback by replacing generic <string> references to
-        Inline script, and by correct the line offset to compensate for the
-        added utf-8 encoding header, which increments the line number by one.
-        """
-        tb = self._traceback()
-        md = u'## Traceback (also in debug window)\n\n'
-        plaintext = u'\nTraceback:\n'
-        _tb = u''
-        for l in tb.split(u'\n')[1:]:
-            if u'line_offset' in info:
-                for g in re.finditer(
-                        u'File "<string>", line (?P<linenr>\d+)', l):
-                    try:
-                        l = l.replace(g.group(), u'%s, line %d' %
-                                      (info.get(u'item_type', u'Inline script'),
-                                       int(g.group(u'linenr')) + info[u'line_offset'])
-                                      )
-                    except:
-                        oslogger.error(
-                            u'failed to correct inline_script exception'
-                        )
-            _tb += l + u'\n'
-        plaintext += _tb
-        md += u'~~~ .traceback\n%s\n~~~\n' % _tb
-        return md, plaintext
-
-    def _exception_details(self, msg, info):
-        r"""Provides a markdown and plaintext overview of relevant information."""
-        md = u'%s\n\n## Details\n\n' % msg
-        plaintext = u'\n%s\n\n' % msg
-        for key, val in info.items():
-            if key == u'line_offset':  # For internal use only
-                continue
-            md += u'- %s: `%s`\n' % (key, val)
-            plaintext += u'%s: %s\n' % (key, val)
-        md += u'\n'
-        return md, plaintext
-
-    def _exception_info(self, msg, info):
-        r"""Updates the info dict based on the type of Exception and the
-        exception message.
-        """
-        if isinstance(self.exception, SyntaxError):
-            return self._syntaxerror_info(msg, info)
-        return self._defaultexception_info(msg, info)
-
-    def _syntaxerror_info(self, msg, info):
-        r"""Updates the info dict specifically for SyntaxErrors"""
-        info = self._defaultexception_info(msg, info)
-        # Syntax errors are dealt with specially, because they provide
-        # introspective information.
-        for g in re.finditer(u'<string>, line (?P<linenr>\d+)', msg):
-            msg = msg.replace(g.group(), u'%s, line %d' % (
-                info.get(u'item_type', u'Inline script'),
-                int(g.group(u'linenr'))
-                + info.get(u'line_offset', -1))
-            )
-        info[u'exception message'] = msg
-        info[u'line'] = self.exception.lineno + info.get(u'line_offset', -1)
-        if self.exception.text is not None:
-            info[u'code'] = safe_decode(self.exception.text, enc=self.enc,
-                                        errors=u'ignore')
-        return info
-
-    def _defaultexception_info(self, msg, info):
-        r"""Updates the info dict for all Exceptions."""
-        info[u'item-stack'] = str(item_stack_singleton)
-        info[u'time'] = time.ctime()
-        if self.exception is None:
-            return info
-        info[u'exception type'] = safe_decode(
-            self.exception.__class__.__name__, enc=self.enc,
-            errors=u'ignore')
+        self._msg = msg
         try:
-            info[u'exception message'] = safe_decode(
-                self.exception, errors=u'ignore')
-        except:
-            info[u'exception message'] = u'Description unavailable'
-        return info
+            self.item, self.phase = item_stack_singleton[-1]
+        except IndexError:
+            # This may happen when the item stack is empty
+            self.item = self.phase = 'unknown'
 
     def __str__(self):
-        return self._plaintext
-
-    def plaintext(self):
-        return str(self)
+        return f'{self.title()}\n\n{self._msg}' \
+               f'\n\nThis error occurred in the {self.phase} phase of item ' \
+               f'{self.item}.'
 
     def markdown(self):
-        return self._md
+        return f'# {self.title()}\n\n{self._msg}' \
+               f'\n\nThis error occurred in the __{self.phase}__ phase of ' \
+               f'item __{self.item}__.'
     
+    def title(self):
+        return f'Error: {self.__class__.__name__}'
+
+
+class BackendNotSupported(OSException):
+    """This exception is raised when functionality is not supported backend.
+    """
+    pass
+
     
 class InvalidKeyName(OSException):
     """This exception is raised when the name of a key has been incorrectly
@@ -193,6 +103,11 @@ class InvalidSketchpadElementScript(OSException):
     pass
 
 
+class InvalidFormScript(OSException):
+    """This exception is raised when a form has been incorrectly defined."""
+    pass
+
+
 class InvalidOpenSesameScript(OSException):
     """This exception is raised when there is an error in the OpenSesame script
     that defines the experiment and the items.
@@ -200,7 +115,7 @@ class InvalidOpenSesameScript(OSException):
     pass
 
 
-class InvalidConditionalStatement(OSException):
+class InvalidConditionalExpression(OSException):
     """This exception is raised when a conditional statement, such as a run-if,
     break-if, or show-if statement, is incorrectly defined.
     """
@@ -254,9 +169,27 @@ class UnsupportedLoopSourceFile(OSException):
 
 class UserAborted(OSException):
     """This exception is raised when a user aborts an experiment."""
-    def __init__(self, msg):
-        super().__init__(msg, user_triggered=True)
+    def title(self):
+        return 'Aborted'
         
+    def __str__(self):
+        return 'The experiment was aborted'
+        
+    def markdown(self):
+        return '# Aborted\n\nThe experiment was aborted'
+        
+
+class UserKilled(UserAborted):
+    """This exception is raised when a user aborts an experiment."""
+    def title(self):
+        return 'Aborted'
+        
+    def __str__(self):
+        return 'The experiment process was killed'
+        
+    def markdown(self):
+        return '# Aborted\n\nThe experiment process was killed'
+
         
 class MissingDependency(OSException):
     """This exception is raised when some functionality requires a package
@@ -265,12 +198,12 @@ class MissingDependency(OSException):
     pass
 
 
-class MissingItem(OSException):
+class ItemDoesNotExist(OSException):
     """This exception is raised when an item that does not exist is referred
     to.
     """
     def __init__(self, item_name):
-        super().__init__(f'Could not find item {item_name}')
+        super().__init__(f'Item {item_name} does not exist')
         
         
 class VariableDoesNotExist(OSException):
@@ -279,7 +212,54 @@ class VariableDoesNotExist(OSException):
     """
     def __init__(self, var_name):
         super().__init__(f'Variable {var_name} does not exist')
+        
+        
+class DeviceError(OSException):
+    """This exception is raised when an error occurs while connecting to, or
+    interacting with, an external device.
+    """
+    pass
 
+
+class PythonError(OSException):
+    """This exception is raised when an error occurs during execution of Python
+    code.
+    """
+    def __init__(self, msg):
+        super().__init__(msg)
+        tb = traceback.format_exc().splitlines()
+        tb = tb[:1] + tb[5:]
+        tb = '\n'.join(tb).replace('<string>', f'<{self.item}.{self.phase}>')
+        self._traceback = tb
+        
+    def __str__(self):
+        return f'{super()}\n\n{self._traceback}'
+        
+    def markdown(self):
+        return f'{super().markdown()}\n\n' \
+               f'~~~ .traceback\n{self._traceback}\n~~~'
+
+
+class PythonSyntaxError(PythonError):
+    """This exception is raised when there is a syntax error in Python code.
+    """
+    pass
+
+
+class ConditionalExpressionError(PythonError):
+    """This exception is raised when an error occurs during evaluation of a
+    conditional expression.
+    """
+    pass
+
+
+class ExperimentProcessDied(OSException):
+    """This exception is raised when the experiment process died. This is 
+    generally the result of a bug in one of the underlying libraries that
+    causes Python to crash. This should not happen! If you experinence this
+    error often, please report it on the support forum.
+    """
+    pass
 
 # For backwards compatibility, we should also define the old Exception classes
 osexception = OSException

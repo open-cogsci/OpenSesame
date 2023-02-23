@@ -127,8 +127,6 @@ class ExperimentProcess(multiprocessing.Process):
                 logfile=self.logfile
             )
         except Exception as e:
-            if not isinstance(e, osexception):
-                e = osexception(u'Unexpected error', exception=e)
             # Communicate the exception and exit with error
             self.output.put(e)
             sys.exit(1)
@@ -140,10 +138,7 @@ class ExperimentProcess(multiprocessing.Process):
             exp.run()
             oslogger.info('experiment finished!')
         except Exception as e:
-            if not isinstance(e, osexception):
-                e_run = osexception(u'Unexpected error', exception=e)
-            else:
-                e_run = e
+            e_run = e
         exp.transmit_workspace()
         # Communicate the exception. We do this before calling exp.end()
         # because Python may crash in this step and we need to send the

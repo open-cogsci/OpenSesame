@@ -24,7 +24,7 @@ from libopensesame.item_store import ItemStore
 from libopensesame.response_store import ResponseStore
 from libopensesame.file_pool_store import FilePoolStore
 from libopensesame.syntax import Syntax
-from libopensesame.exceptions import UserAborted, MissingItem, \
+from libopensesame.exceptions import UserAborted, ItemDoesNotExist, \
     InvalidOpenSesameScript
 from libopensesame.item import Item
 from libopensesame import misc, metadata
@@ -268,12 +268,7 @@ class Experiment(Item):
         line = next(s, None)
         while line is not None:
             get_next = True
-            try:
-                l = self.syntax.split(line)
-            except ValueError as e:
-                raise InvalidOpenSesameScript(
-                    f'Failed to parse script. Maybe it contains illegal '
-                    f'characters or unclosed quotes?', exception=e)
+            l = self.syntax.split(line)
             if l:
                 self.parse_variable(line)
                 # Parse definitions
@@ -354,7 +349,7 @@ class Experiment(Item):
                 gc.disable()
             self.items.execute(self.var.start)
         else:
-            raise MissingItem(self.var.start)
+            raise ItemDoesNotExist(self.var.start)
         oslogger.info(u"experiment finished")
         self.end()
 

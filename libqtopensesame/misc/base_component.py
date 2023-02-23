@@ -96,8 +96,6 @@ class BaseComponent:
                 _parent = main_window.main_window
             else:
                 _parent = main_window.parent()
-                if _parent is None:
-                    raise osexception(u'Invalid main_window')
             main_window = _parent
         return main_window
 

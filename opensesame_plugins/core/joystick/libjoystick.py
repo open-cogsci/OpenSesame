@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import BackendNotSupported
 from libopensesame.misc import camel_case
 from importlib import import_module
 from . import _libjoystick
@@ -34,9 +34,8 @@ def LibJoystick(experiment, **kwargs):
         Keyords to be passed on the joystick init.
     """
     if experiment.var.canvas_backend == u'psycho':
-        raise osexception(
-            u'The joystick plug-in does not yet support the psycho back-end'
-        )
+        raise BackendNotSupported(
+            'The joystick plug-in does not yet support the psycho back-end')
     backend = u'legacy'
     mod = import_module(f'{_libjoystick.__package__}.{backend}')
     cls = getattr(mod, camel_case(backend))

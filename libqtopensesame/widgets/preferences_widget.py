@@ -58,8 +58,6 @@ class PreferencesWidget(BaseWidget):
             try:
                 w = ext.settings_widget()
             except Exception as e:
-                if not isinstance(e, osexception):
-                    e = osexception(msg=u'Extension error', exception=e)
                 self.notify(f'Extension {ext.name} failed to return settings '
                             f'widget (see debug window for stack trace)',
                             category='warning')

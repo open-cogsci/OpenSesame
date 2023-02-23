@@ -50,7 +50,7 @@ class Synth(Sampler):
                                         attack=self.var.attack,
                                         decay=self.var.decay)
         except Exception as e:
-            raise OSException(u'Failed to generate sound', exception=e)
+            raise OSException(f'Failed to generate sound')
         pan = self.var.pan
         if pan == -20:
             pan = u'left'

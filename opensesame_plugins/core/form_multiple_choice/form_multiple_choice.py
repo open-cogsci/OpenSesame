@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue, InvalidFormScript
 from libopensesame.item import Item
 from libopensesame import widgets
 from libqtopensesame.items.qtautoplugin import QtAutoPlugin
@@ -46,13 +46,8 @@ class FormMultipleChoice(Item):
         # Filter out empty options
         option_list = list(filter(lambda option: option != u'', option_list))
         if not option_list:
-            raise osexception(
-                (
-                    u'You must specify at least one response option in'
-                    u'form_multiple_choice item "%s"'
-                )
-                % self.name
-            )
+            raise InvalidFormScript(
+                'You must specify at least one response option')
         # Determine whether a button is shown and determine the number of rows
         rows = len(option_list) + 2
         if (
@@ -78,8 +73,8 @@ class FormMultipleChoice(Item):
                 float(i) for i in safe_decode(self.var.margins).split(u';')
             ]
         except (ValueError, TypeError):
-            raise osexception(
-                u'margins should be numeric values separated by a semi-colon')
+            raise InvalidValue(
+                'margins should be numeric values separated by a semi-colon')
         if self.var.timeout == u'infinite':
             timeout = None
         else:

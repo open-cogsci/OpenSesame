@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-
-from libopensesame.exceptions import MissingItem
+from libopensesame.exceptions import ItemDoesNotExist, \
+    InvalidConditionalExpression, ConditionalExpressionError
 from libopensesame.item import Item
 import gc
 from openexp.keyboard import Keyboard
@@ -42,7 +42,12 @@ class Sequence(Item):
             self._keyboard.flush()
         for _item, cond in self._items:
             self.python_workspace[u'self'] = self
-            if self.python_workspace._eval(cond):
+            try:
+                run = self.python_workspace._eval(cond)
+            except Exception as e:
+                raise ConditionalExpressionError(
+                    'Error while evaluating run-if expression')
+            if run:
                 self.experiment.items.run(_item)
         if not gc.isenabled():
             gc.collect()
@@ -52,14 +57,17 @@ class Sequence(Item):
         self.validator = sequence
 
     def parse_run(self, i):
-        """
-        Parses a run line from the definition script.
+        """Parses a run line from the definition script.
 
-        Arguments:
-        i 		-- 	A list of words, corresponding to a single script line.
+        Parameters
+        ----------
+        i : list
+            A list of words, corresponding to a single script line.
 
-        Returns:
-        An (item_name, conditional) tuple.
+        Returns
+        -------
+        tuple
+            An (item_name, conditional) tuple.
         """
         name = i[1]
         cond = u'always'
@@ -103,7 +111,7 @@ class Sequence(Item):
         self._items = []
         for _item, cond in self.items:
             if _item not in self.experiment.items:
-                raise MissingItem(_item)
+                raise ItemDoesNotExist(_item)
             self.experiment.items.prepare(_item)
             self._items.append((_item, self.syntax.compile_cond(cond)))
 

@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.widgets._form import Form
-from libopensesame.exceptions import InvalidOpenSesameScript
 from openexp.canvas_elements import Rect
 
 

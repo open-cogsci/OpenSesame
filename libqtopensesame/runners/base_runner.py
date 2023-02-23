@@ -196,8 +196,6 @@ class BaseRunner:
         try:
             script = self.main_window.experiment.to_string()
         except Exception as e:
-            if not isinstance(e, osexception):
-                e = osexception(u'Unexpected error', exception=e)
             md = _(
                 u'# Error\n\nFailed to generate experiment for the '
                 u'following reason:\n\n- '
@@ -235,8 +233,6 @@ class BaseRunner:
                 logfile=logfile
             )
         except Exception as e:
-            if not isinstance(e, osexception):
-                e = osexception(u'Unexpected error', exception=e)
             md = _(
                 u'# Error\n\nFailed to parse experiment for the '
                 u'following reason:\n\n- '

@@ -157,7 +157,7 @@ class ExtensionManager(BaseSubcomponent):
                     f'(see debug window for stack trace)',
                     category='warning')
                 self.console.write(e)
-                oslogger.error(f'Extension {ulext.name} misbehaved on event '
+                oslogger.error(f'Extension {ext.name} misbehaved on event '
                                f'{event}: {e}')
 
     def provide(self, provide, **kwdict):

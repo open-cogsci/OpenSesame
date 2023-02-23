@@ -21,7 +21,7 @@ import sys
 import time
 from libqtopensesame.runners import BaseRunner
 from qtpy import QtWidgets
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import UserKilled, ExperimentProcessDied
 from libopensesame.oslogging import oslogger
 
 JOIN_TIMEOUT = 3  # Seconds to wait for the process to end cleanly
@@ -53,10 +53,7 @@ class MultiprocessRunner(BaseRunner):
                 self.channel
             )
         except Exception as e:
-            return osexception(
-                _(u'Failed to initialize experiment process'),
-                exception=e
-            )
+            return e
         self.console.set_workspace_globals({u'process': self.exp_process})
         # Start process!
         self.exp_process.start()
@@ -93,8 +90,7 @@ class MultiprocessRunner(BaseRunner):
                     # terminate the process.
                     self.exp_process.terminate()
                     oslogger.warning(
-                        'experiment process was forcibly terminated'
-                    )
+                        'experiment process was forcibly terminated')
                 return msg
             # The workspace globals are sent as a dict. A special __pause__ key
             # indicates whether the experiment should be paused or resumed.
@@ -118,10 +114,9 @@ class MultiprocessRunner(BaseRunner):
                 continue
             # Anything that is not a string, not an Exception, and not None is
             # unexpected
-            return osexception(
-                u"Illegal message type received from child process: %s (%s)"
-                % (msg, type(msg))
-            )
+            return ValueError(
+                f'Illegal message type received from child process: {msg} '
+                f'({type(msg)})')
         self.exp_process.join(JOIN_TIMEOUT)
         try:
             self.exp_process.close()
@@ -136,11 +131,10 @@ class MultiprocessRunner(BaseRunner):
         if finished:
             return
         if self.exp_process.killed:
-            return osexception(u'The experiment process was killed.')
-        return osexception(
-            u'Python seems to have crashed. This should not happen. If Python '
-            u'crashes often, please report it on the OpenSesame forum.'
-        )
+            return UserKilled('The experiment process was killed.')
+        return ExperimentProcessDied(
+            'The experiment process seems to have died as the result of an '
+            'unknown problem. This should not happen!')
 
     def kill(self):
         """See base_runner."""

@@ -23,7 +23,7 @@ import os
 import yaml
 from distutils.version import StrictVersion
 from libopensesame import metadata
-from libopensesame.exceptions import InvalidConditionalStatement, \
+from libopensesame.exceptions import InvalidConditionalExpression, \
     InvalidOpenSesameScript
 from libopensesame.py3compat import *
 
@@ -176,7 +176,7 @@ class Syntax:
         except Exception as e:
             raise InvalidOpenSesameScript(f'Failed to parse line "{s}". Is '
                                           f'there a closing quotation '
-                                          f'missing?', exception=e)
+                                          f'missing?', line=s)
 
     def parse_cmd(self, cmd):
         """Parses OpenSesame command strings, which consist of a command,
@@ -414,10 +414,9 @@ class Syntax:
         if bytecode:
             try:
                 return compile(cnd, u"<conditional statement>", u"eval")
-            except Exception as e:
-                raise InvalidConditionalStatement(
-                    f'"{cnd}" is not a valid conditional statement',
-                    exception=e)
+            except SyntaxError as e:
+                raise InvalidConditionalExpression(
+                    f'"{cnd}" is not a valid conditional expression')
         return self.unescape(cnd)
 
     def unescape(self, s):

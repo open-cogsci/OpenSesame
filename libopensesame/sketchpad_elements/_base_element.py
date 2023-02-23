@@ -18,7 +18,8 @@ along with openexp.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.misc import snake_case
-from libopensesame.exceptions import InvalidSketchpadElementScript
+from libopensesame.exceptions import InvalidSketchpadElementScript, \
+    ConditionalExpressionError
 
 
 class BaseElement:
@@ -215,8 +216,13 @@ class BaseElement:
             A bool indicating whether the element should be shown.
         """
         self.experiment.python_workspace[u'self'] = self.sketchpad
-        return self.experiment.python_workspace._eval(
-            self.experiment.syntax.compile_cond(self.properties[u'show_if']))
+        bytecode = self.experiment.syntax.compile_cond(
+            self.properties[u'show_if'])
+        try:
+            return self.experiment.python_workspace._eval(bytecode)
+        except Exception as e:
+            raise ConditionalExpressionError(
+                'Error while evaluating show-if expression')
 
 
 # Alias for backwards compatibility

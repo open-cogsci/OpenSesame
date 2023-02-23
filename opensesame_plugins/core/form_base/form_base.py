@@ -17,7 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidFormScript, OSException, \
+    InvalidValue
 from libopensesame.item import Item
 from libopensesame import widgets
 
@@ -45,7 +46,7 @@ class FormBase(Item):
         if cmd != u'widget':
             return
         if len(arglist) != 5:
-            raise osexception(u'Invalid widget specification: %s' % line)
+            raise InvalidFormScript(f'Invalid widget specification: {line}')
         self._widgets.append((arglist, kwdict))
         if u'var' in kwdict:
             self._variables.append(kwdict[u'var'])
@@ -72,8 +73,8 @@ class FormBase(Item):
             rows = [float(i) for i in str(self.var.rows).split(u';')]
             margins = [float(i) for i in str(self.var.margins).split(u';')]
         except:
-            raise osexception(
-                u'cols, rows, and margins should be numeric values separated by a semi-colon')
+            raise InvalidValue('cols, rows, and margins should be numeric '
+                               'values separated by a semi-colon')
         if self.var.timeout == u'infinite':
             timeout = None
         else:
@@ -107,22 +108,22 @@ class FormBase(Item):
                 row = int(arglist[1])
                 colspan = int(arglist[2])
                 rowspan = int(arglist[3])
-            except:
-                raise osexception(
-                    u'In a form widget col, row, colspan, and rowspan should be integer')
+            except (ValueError, TypeError):
+                raise InvalidValue('In a form widget col, row, colspan, and '
+                                   'rowspan should be integer')
             # Create the widget and add it to the form
             try:
-                _w = getattr(widgets, _type)(self._form, **kwdict)
-            except Exception as e:
-                raise osexception(
-                    u'Failed to create widget "%s": %s' % (_type, e))
+                cls = getattr(widgets, _type)
+            except AttributeError:
+                raise InvalidFormScript(f'{_type} is not a valid form widget')
+            _w = cls(self._form, **kwdict)
             self._form.set_widget(_w, (col, row), colspan=colspan,
                                   rowspan=rowspan)
             # Add as focus widget
             if focus:
                 if self.focus_widget is not None:
-                    raise osexception(
-                        u'You can only specify one focus widget')
+                    raise InvalidFormScript(
+                        'You can only specify one focus widget')
                 self.focus_widget = _w
 
     def var_info(self):

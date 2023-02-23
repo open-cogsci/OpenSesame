@@ -125,7 +125,7 @@ class Item:
         if len(l) > 0 and l[0] == u'set':
             if len(l) != 3:
                 raise InvalidOpenSesameScript(
-                    f'Error parsing variable definition: {line}')
+                    'Error parsing variable definition', line=line)
             else:
                 self.var.set(l[1], l[2])
                 return True

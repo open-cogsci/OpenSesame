@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue
 from libopensesame.item import Item
 import random
 
@@ -33,7 +33,7 @@ class AdvancedDelay(Item):
         super().prepare()
         if not isinstance(self.var.duration, (int, float)) \
                 or self.var.duration < 0:
-            raise osexception('Duration should be a positive numeric value')
+            raise InvalidValue('Duration should be a positive numeric value')
         if self.var.jitter_mode == u'Uniform':
             self._duration = random.uniform(
                 self.var.duration-self.var.jitter / 2,
@@ -41,7 +41,7 @@ class AdvancedDelay(Item):
         elif self.var.jitter_mode == u'Std. Dev.':
             self._duration = random.gauss(self.var.duration, self.var.jitter)
         else:
-            raise osexception(f'Unknown jitter mode: {self.var.jitter_mode}')
+            raise InvalidValue(f'Unknown jitter mode: {self.var.jitter_mode}')
         if self._duration < 0:
             self._duration = 0
         self._duration = int(self._duration)

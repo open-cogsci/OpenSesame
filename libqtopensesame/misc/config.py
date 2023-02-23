@@ -114,15 +114,13 @@ class Config:
             The setting to get
         """
         if setting not in self.config:
-            raise osexception(u'The setting "%s" does not exist'
-                              % setting)
+            raise KeyError(f'The setting {setting} does not exist')
         return self.config[setting]
 
     def __setattr__(self, setting, value):
         """A setter for settings, to allow for easy access"""
         if setting not in self.config:
-            raise osexception(u'The setting "%s" does not exist'
-                              % setting)
+            raise KeyError(f'The setting {setting} does not exist')
         self.config[setting] = value
         self.config[u'cfg_ver'] += 1
 

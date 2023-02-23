@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import DeviceError
 from libopensesame.oslogging import oslogger
 import serial
 import os
@@ -99,7 +99,7 @@ class LibSrbox:
             try:
                 self._srbox = serial.Serial(dev, timeout=0, baudrate=19200)
             except Exception as e:
-                raise osexception(
+                raise DeviceError(
                     "Failed to open device port '%s' in libsrbox: '%s'"
                     % (dev, e)
                 )
@@ -136,12 +136,12 @@ class LibSrbox:
                             self._srbox = None
                             pass
             else:
-                raise osexception(
+                raise DeviceError(
                     u"libsrbox does not know how to auto-detect the SR Box on "
                     u"your platform. Please specify a device."
                 )
         if self._srbox is None:
-            raise osexception(
+            raise DeviceError(
                 u"libsrbox failed to auto-detect an SR Box. Please specify a "
                 u"device."
             )
@@ -211,7 +211,7 @@ class LibSrbox:
             was pressed (i.e. a timeout occurred).
         """
         if not self._started:
-            raise osexception(
+            raise DeviceError(
                 u'Please call srbox.start() before srbox.get_button_press()')
         t0 = self.experiment.time()
         # Create a list of buttonr, bytemask tuples.

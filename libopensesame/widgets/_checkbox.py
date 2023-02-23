@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import InvalidOpenSesameScript
+from libopensesame.exceptions import InvalidFormScript
 from libopensesame.widgets._button import Button
 
 
@@ -177,9 +177,9 @@ class Checkbox(Button):
             ):
                 continue
             if widget.group != self.group and self.group is not None:
-                raise InvalidOpenSesameScript('All checkbox widgets without a '
-                                              'group or within the same group '
-                                              'should have the same variable.')
+                raise InvalidFormScript('All checkbox widgets without a '
+                                        'group or within the same group '
+                                        'should have the same variable.')
             # Ignore the checkbox if it isn't checked
             if not widget.checked and widget.checked != u'yes':
                 continue

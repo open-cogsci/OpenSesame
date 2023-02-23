@@ -20,7 +20,8 @@ from libopensesame.py3compat import *
 import warnings
 import re
 from libopensesame.item import Item
-from libopensesame.exceptions import osexception, AbortCoroutines
+from libopensesame.exceptions import PythonError, PythonSyntaxError, \
+    AbortCoroutines
 
 extract_old_style = re.compile(
     r'(self.experiment.set|exp.set|var.set)\(u?[\'"]([_a-zA-Z]+[_a-zA-Z0-9]*)[\'"]')
@@ -56,37 +57,22 @@ class InlineScript(Item):
         try:
             self.cprepare = self.workspace._compile(
                 self.var.get(u'_prepare', _eval=False))
-        except Exception as e:
-            raise osexception(
-                u'Failed to compile inline script',
-                line_offset=-1,
-                item=self.name,
-                phase=u'prepare',
-                exception=e
-            )
+        except SyntaxError as e:
+            raise PythonSyntaxError(
+                'Syntax error in inline script (prepare phase)')
         # Compile run script
         try:
             self.crun = self.workspace._compile(
                 self.var.get(u'_run', _eval=False))
-        except Exception as e:
-            raise osexception(
-                u'Failed to compile inline script',
-                line_offset=-1,
-                item=self.name,
-                phase=u'run',
-                exception=e
-            )
+        except SyntaxError as e:
+            raise PythonSyntaxError(
+                'Syntax error in inline script (run phase)')
         # Run prepare script
         try:
             self.workspace._exec(self.cprepare)
         except Exception as e:
-            raise osexception(
-                u'Error while executing inline script',
-                line_offset=-1,
-                item=self.name,
-                phase=u'prepare',
-                exception=e
-            )
+            raise PythonError(
+                'Error while executing inline script (prepare phase)')
 
     def run(self):
         r"""Executes the run script. The code that you enter in the 'run' tab
@@ -100,13 +86,8 @@ class InlineScript(Item):
         try:
             self.workspace._exec(self.crun)
         except Exception as e:
-            raise osexception(
-                u'Error while executing inline script',
-                line_offset=-1,
-                item=self.name,
-                phase=u'run',
-                exception=e
-            )
+            raise PythonError(
+                'Error while executing inline script (run phase)')
 
     def coroutine(self, coroutines):
         """See coroutines plug-in"""
@@ -122,13 +103,8 @@ class InlineScript(Item):
                 # into an osexception.
                 raise
             except Exception as e:
-                raise osexception(
-                    u'Error while executing inline script',
-                    line_offset=-1,
-                    item=self.name,
-                    phase=u'run',
-                    exception=e
-                )
+                raise PythonError(
+                    'Error while executing inline script (coroutines)')
             yield
 
     def var_info(self):

@@ -19,8 +19,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import os
 from libopensesame.exceptions import InvalidOpenSesameScript, OSException, \
-    InvalidValue, MissingItem, LoopSourceFileDoesNotExist, \
-    UnsupportedLoopSourceFile
+    InvalidValItemDoesNotExistItem, LoopSourceFileDoesNotExist, \
+    UnsupportedLoopSourceFile, InvalidConditionalExpression, PythonError, \
+    InvalidValue, ConditionalExpressionError
 from libopensesame.item import Item
 from datamatrix import operations, DataMatrix, functional
 from pseudorandom import Enforce, MaxRep, MinDist
@@ -75,16 +76,18 @@ class Loop(Item):
             cmd, arglist, kwdict = self.syntax.parse_cmd(i)
             if cmd == u'run':
                 if len(arglist) != 1 or kwdict:
-                    raise InvalidOpenSesameScript(f'Invalid run command: {i}')
+                    raise InvalidOpenSesameScript('Invalid run command', 
+                                                  line=i)
                 self._item = arglist[0]
                 continue
             if cmd == u'setcycle':
                 if self.ef is not None or self._operations:
                     raise InvalidOpenSesameScript(
-                        'setcycle must come before constraints and operations')
+                        'setcycle must come before constraints and operations',
+                        line=i)
                 if len(arglist) != 3 or kwdict:
                     raise InvalidOpenSesameScript(
-                        f'Invalid setcycle command: {i}')
+                        'Invalid setcycle command', line=i)
                 row, var, val = tuple(arglist)
                 if row >= len(self.dm):
                     self.dm.length = row + 1
@@ -95,10 +98,10 @@ class Loop(Item):
             if cmd == u'constrain':
                 if self._operations:
                     raise InvalidOpenSesameScript(
-                        'constraints must come before operations')
+                        'constraints must come before operations', line=i)
                 if len(arglist) != 1:
                     raise InvalidOpenSesameScript(
-                        f'Invalid constrain command: {i}')
+                        'Invalid constrain command', line=i)
                 colname = arglist[0]
                 for constraint, value in kwdict.items():
                     if constraint == u'maxrep':
@@ -109,7 +112,7 @@ class Loop(Item):
                         kwargs = {u'mindist': value}
                     else:
                         raise InvalidOpenSesameScript(
-                            f'Unknown constraint: {constraint}')
+                            'Unknown constraint', line=i)
                     self._constraints.append((
                         constraint_cls,
                         colname,
@@ -183,7 +186,7 @@ class Loop(Item):
         # This can also occur when generating a preview of a loop table if
         # repeat is variable.
         if not isinstance(self.var.repeat, (int, float)):
-            raise InvalidOpenSesameScript(
+            raise InvalidValue(
                 f'repeat should be numeric, not {self.var.repeat}')
         length = int(len(src_dm) * self.var.repeat)
         dm = DataMatrix(length=0)
@@ -299,21 +302,14 @@ class Loop(Item):
         # Compile break-if statement
         break_if = self.var.get(u'break_if', _eval=False)
         if break_if not in (u'never', u''):
-            try:
-                self._break_if = self.syntax.compile_cond(break_if)
-            except osexception as e:
-                raise osexception(
-                    u'Error compiling break-if expression',
-                    item=self.name,
-                    exception=e
-                )
+            self._break_if = self.syntax.compile_cond(break_if)
         else:
             self._break_if = None
         # Create a keyboard to flush responses between cycles
         self._keyboard = Keyboard(self.experiment)
         # Make sure the item to run exists
         if self._item not in self.experiment.items:
-            raise MissingItem(self._item)
+            raise ItemDoesNotExist(self._item)
 
     def run(self):
         """See item."""
@@ -331,13 +327,8 @@ class Loop(Item):
                     try:
                         val = self.python_workspace._eval(val[1:])
                     except Exception as e:
-                        raise osexception(
-                            u'Error evaluating Python expression in loop table',
-                            line_offset=0,
-                            item=self.name,
-                            phase=u'run',
-                            exception=e
-                        )
+                        raise PythonError(
+                            'Error evaluating Python expression in loop table')
                 self.experiment.var.set(name, val)
             # Evaluate the run if statement
             if (
@@ -348,12 +339,9 @@ class Loop(Item):
                 try:
                     if self.python_workspace._eval(self._break_if):
                         break
-                except osexception as e:
-                    raise osexception(
-                        u'Error evaluating break-if expression',
-                        item=self.name,
-                        exception=e
-                    )
+                except Exception as e:
+                    raise ConditionalExpressionError(
+                        'Error evaluating break-if expression')
             # Run the item!
             self.experiment.items.execute(self._item)
             # If the repeat_cycle flag was set, run the item again later
@@ -385,14 +373,14 @@ class Loop(Item):
             try:
                 return io.readxlsx(src)
             except Exception as e:
-                raise UnsupportedLoopSourceFile(f'Failed to read .xlsx file: '
-                                                f'{src}', exception=e)
+                raise UnsupportedLoopSourceFile(
+                    f'Failed to read .xlsx file: {src}')
         try:
             return io.readtxt(src)
         except Exception as e:
             raise UnsupportedLoopSourceFile(
                 f'Failed to read text file: {src}. Perhaps it has the wrong '
-                f'format or it is not utf-8 encoded', exception=e)
+                f'format or it is not utf-8 encoded')
 
     def _var_info_table(self):
         """

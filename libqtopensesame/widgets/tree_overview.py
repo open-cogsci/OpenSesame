@@ -515,7 +515,7 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         """
         for item_dict in data[u'items']:
             if not self.experiment.items.valid_type(item_dict[u'item-type']):
-                raise osexception(
+                raise TypeError(
                     _(u'Unknown item type: %s') % item_dict[u'item-type'])
         rename = []
         new_items = []
@@ -554,30 +554,25 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
             existing-item drops.
         """
         if data[u'item-name'] not in self.experiment.items:
-            raise osexception(u'Unknown item: %s' % data[u'item-name'])
+            raise NameError(u'Unknown item: %s' % data[u'item-name'])
         return self.experiment.items[data[u'item-name']], []
 
     def drop_event_item_new(self, data, e=None, target_treeitem=None):
-        """
-        desc:
-                Handles drop events for item creation.
+        """Handles drop events for item creation.
 
-        arguments:
-                data:
-                        desc:	A drop-data dictionary.
-                        type:	dict:
+        Parameters
+        ----------
+        data : dict
+            A drop-data dictionary.
+        e : QDropEvent or None, optional
+            A drop event or None if a target treeitem is provided.
+        target_treeite : TreeBaseItem or None, optional
+            A target tree item or None in a drop event is specified.
 
-        keywords:
-                e:
-                        desc:	A drop event or None if a target treeitem is provided.
-                        type:	[QDropEvent, NoneType]
-                target_treeitem:
-                        desc:	A target tree item or None in a drop event is specified.
-                        type:	[tree_base_item, NoneType]
-
-        returns:
-                desc:	True if the drop was successful, False otherwise.
-                type:	bool
+        Returns
+        -------
+        bool
+            True if the drop was successful, False otherwise.
         """
         self.main_window.set_busy(True)
         if not drag_and_drop.matches(data, [u'item-snippet', u'item-existing']):
@@ -597,7 +592,14 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
             return False
         # Ignore drops on non-droppable tree items.
         if target_treeitem is None:
-            target_treeitem = self.itemAt(e.pos())
+            try:
+                pos = e.pos()
+            except AttributeError:
+                # This seems to be a backwards-incompatibility bug in PyQt6,
+                # which has not implemented the pos() function
+                pos = e.position().toPoint()
+            target_treeitem = self.itemAt(pos)
+            # target_treeitem = self.itemAt(e.position().toPoint())
         if not self.droppable(target_treeitem, data):
             if e is not None:
                 e.ignore()
@@ -769,7 +771,13 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
             e.accept()
             self.end_drag()
             return
-        target = self.itemAt(e.pos())
+        try:
+            pos = e.pos()
+        except AttributeError:
+            # This seems to be a backwards-incompatibility bug in PyQt6,
+            # which has not implemented the pos() function
+            pos = e.position().toPoint()
+        target = self.itemAt(pos)
         if not self.droppable(target, data):
             self.end_drag()
             e.ignore()

@@ -736,8 +736,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             exp = Experiment(self, u"Experiment", path,
                              experiment_path=os.path.dirname(path))
         except Exception as e:
-            if not isinstance(e, OSException):
-                e = OSException(msg=u'Failed to open file', exception=e)
             md = _(
                 u'# Failed to open\n\nFailed to open the file for the '
                 u'following reason:\n\n- '

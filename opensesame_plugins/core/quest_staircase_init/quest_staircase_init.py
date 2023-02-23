@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception
+from libopensesame.exceptions import InvalidValue
 from libopensesame.oslogging import oslogger
 from libopensesame.item import Item
 try:
@@ -49,9 +49,8 @@ class QuestStaircaseInit(Item):
         elif self.var.test_value_method == u'mode':
             self.experiment.quest_test_value = self.experiment.quest.mode
         else:
-            raise osexception(
-                u'Unknown test_value_method \'%s\' in quest_staircase_init'
-                % self.var.test_value_method)
+            raise InvalidValue(
+                f'Unknown test_value_method {self.var.test_value_method}')
         test_value = max(self.var.min_test_value, min(
             self.var.max_test_value, self.experiment.quest_test_value()))
         oslogger.debug(u'quest_test_value = %s' % test_value)

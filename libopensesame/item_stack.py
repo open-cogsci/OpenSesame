@@ -53,10 +53,10 @@ class ItemStack:
     def __str__(self):
 
         return '.'.join(['%s[%s]' % i for i in self.l])
+        
+    def __getitem__(self, key):
+        return self.l[key]
 
-    def __unicode__(self):
-
-        return u'.'.join([u'%s[%s]' % i for i in self.l])
 
 
 # Create a single instance of the stack

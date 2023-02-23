@@ -17,7 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.exceptions import osexception, AbortCoroutines
+from libopensesame.exceptions import InvalidValue, AbortCoroutines
 
 
 class BaseTask:
@@ -42,10 +42,10 @@ class BaseTask:
         """
         if not (isinstance(start_time, (int, float)) and start_time >= 0) or \
                 not (isinstance(end_time, (int, float)) and end_time >= start_time):
-            raise osexception(
-                (u'Start (now: %s) and end (now: %s) time need to be '
-                 u'non-negative numeric values and end time needs to be equal to '
-                 u' or higher than start time') % (start_time, end_time))
+            raise InvalidValue(f'Start (now: {start_time}) and end (now: '
+                               f'{end_time}) times need to be non-negative '
+                               f'numeric values and end time needs to be '
+                               f'equal to higher than start time')
         self.start_time = start_time
         self.end_time = end_time
         self.coroutines = coroutines
