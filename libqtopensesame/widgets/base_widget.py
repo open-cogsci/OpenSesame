@@ -35,9 +35,9 @@ class BaseWidget(QtWidgets.QWidget, BaseSubcomponent):
         passed onto parent constructors.
     """
     
-    def __init__(self, main_window, ui=None, *arglist, **kwdict):
-        super().__init__(main_window, *arglist, **kwdict)
-        self.setup(main_window, ui=ui)
+    def __init__(self, parent, ui=None, *arglist, **kwdict):
+        super().__init__(parent, *arglist, **kwdict)
+        self.setup(parent, ui=ui)
 
 
 # Alias for backwards compatibility

@@ -168,7 +168,7 @@ class FontWidgetBase(BaseWidget):
 
 class FontWidgetHorizontal(FontWidgetBase):
 
-    def __init__(self, main_window):
+    def __init__(self, parent):
         """
         Constructor.
 
@@ -178,12 +178,12 @@ class FontWidgetHorizontal(FontWidgetBase):
         Keywords arguments:
         parent		--	The parent QWidget. (default=None)
         """
-        super().__init__(main_window, ui=u'widgets.font_widget_horizontal')
+        super().__init__(parent, ui=u'widgets.font_widget_horizontal')
 
 
 class FontWidget(FontWidgetBase):
 
-    def __init__(self, main_window):
+    def __init__(self, parent):
         """
         Constructor.
 
@@ -193,7 +193,7 @@ class FontWidget(FontWidgetBase):
         Keywords arguments:
         parent		--	The parent QWidget. (default=None)
         """
-        super().__init__(main_window, ui=u'widgets.font_widget')
+        super().__init__(parent, ui=u'widgets.font_widget')
 
 
 # Alias for backwards compatibility

@@ -102,7 +102,12 @@ class RichText(Element):
             app = QApplication([])
         # Register the fonts bundled with OpenSesame
         if font_database is None:
-            font_database = QFontDatabase()
+            try:
+                font_database = QFontDatabase()
+            except TypeError:
+                # PyQt6 the class is used directly, without creating an
+                # instance
+                font_database = QFontDatabase
             for font in FONTS:
                 self._register_font(exp, font)
 

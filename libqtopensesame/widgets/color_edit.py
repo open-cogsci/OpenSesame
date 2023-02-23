@@ -29,7 +29,7 @@ class ColorEdit(BaseWidget):
     textChanged = QtCore.Signal('QString')
     textEdited = QtCore.Signal('QString')
 
-    def __init__(self, main_window):
+    def __init__(self, parent):
         r"""Constructor.
 
         Parameters
@@ -37,7 +37,7 @@ class ColorEdit(BaseWidget):
         main_window : qtopensesame
             The main-window object.
         """
-        super().__init__(main_window)
+        super().__init__(parent)
         self.edit = QtWidgets.QLineEdit()
         self._parent = None
         self.edit.setSizePolicy(QtWidgets.QSizePolicy.Minimum,
