@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 import re
+import sys
 from libopensesame.oslogging import oslogger
 from libopensesame.item_stack import item_stack_singleton
 from libopensesame.py3compat import *
@@ -253,13 +254,32 @@ class PythonError(OSException):
     """
     def __init__(self, msg):
         super().__init__(msg)
-        tb = traceback.format_exc().splitlines()
-        tb = tb[:1] + tb[5:]
-        tb = '\n'.join(tb).replace('<string>', f'<{self.item}.{self.phase}>')
-        self._traceback = tb
+        tb_lines = traceback.format_exc().splitlines()
+        # Get the line number of most recent stack from the traceback. If no
+        # traceback exists, fall back to line number 1
+        tb = sys.exc_info()[2]
+        if tb is None:
+            self.line_nr = 1
+        else:
+            while tb.tb_next is not None:
+                print(tb, tb.tb_lineno)
+                tb = tb.tb_next
+            self.line_nr = tb.tb_lineno
+        # The second through fourth line refer to the OpenSesame source code
+        # and are therefore confusing to the user. Therefore we strip them.
+        tb_lines = tb_lines[:1] + tb_lines[5:]
+        self._traceback = '\n'.join(tb_lines).replace(
+            '<string>', f'<{self.item}.{self.phase}>')
         
     def __str__(self):
-        return f'{super().__str__()}\n\n{self._traceback}'
+        return f'''{self.title()}
+        
+{self._msg}
+
+This error occurred on line {self.line_nr} in the {self.phase} phase of item {self.item}.
+
+{self._traceback}
+'''
         
     def markdown(self):
         
@@ -267,8 +287,8 @@ class PythonError(OSException):
         
 {self._msg}
 
-This error occurred in the __{self.phase}__ phase of item
-<u><a href="opensesame://item.{self.item}.{self.phase}">{self.item}</a></u>.
+This error occurred on __line {self.line_nr}__ in the __{self.phase}__ phase of item
+<u><a href="opensesame://item.{self.item}.{self.phase}.{self.line_nr - 1}">{self.item}</a></u>.
 
 ~~~ .traceback
 {self._traceback}
@@ -282,7 +302,15 @@ class PythonSyntaxError(PythonError):
     """A `PythonSyntaxError` is raised when a Python script, typically in an
     `inline_script` item, is not syntactically correct.
     """
-    pass
+    def __init__(self, msg, line_nr=1):
+        super().__init__(msg)
+        tb_lines = traceback.format_exc().splitlines()
+        self.line_nr = line_nr
+        # The second through sixth line refer to the OpenSesame source code
+        # and are therefore confusing to the user. Therefore we strip them.
+        tb_lines = tb_lines[:1] + tb_lines[7:]
+        self._traceback = '\n'.join(tb_lines).replace(
+            '<string>', f'<{self.item}.{self.phase}>')
 
 
 class InvalidConditionalExpression(OSException):

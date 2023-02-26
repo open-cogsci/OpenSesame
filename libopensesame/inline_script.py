@@ -59,14 +59,16 @@ class InlineScript(Item):
                 self.var.get(u'_prepare', _eval=False))
         except SyntaxError as e:
             raise PythonSyntaxError(
-                'Syntax error in inline script (prepare phase)')
+                'Syntax error in inline script (prepare phase)',
+                line_nr=e.lineno)
         # Compile run script
         try:
             self.crun = self.workspace._compile(
                 self.var.get(u'_run', _eval=False))
         except SyntaxError as e:
             raise PythonSyntaxError(
-                'Syntax error in inline script (run phase)')
+                'Syntax error in inline script (run phase)',
+                line_nr=e.lineno)
         # Run prepare script
         try:
             self.workspace._exec(self.cprepare)

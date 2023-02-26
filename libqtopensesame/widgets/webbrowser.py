@@ -253,8 +253,8 @@ class Webbrowser(BaseWidget):
         if len(cmd) == 2 and cmd[0] == u'event':
             self.main_window.extension_manager.fire(cmd[1])
             return
-        if len(cmd) == 3 and cmd[0] == u'item':
-            self.experiment.items[cmd[1]].open_tab(phase=cmd[2])
+        if len(cmd) > 2 and cmd[0] == u'item':
+            self.experiment.items[cmd[1]].open_tab(phase=cmd[2], args=cmd[3:])
             return
         if len(cmd) > 1 and cmd[0] == u'help':
             if len(cmd) == 2:

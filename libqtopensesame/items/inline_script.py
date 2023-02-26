@@ -23,6 +23,7 @@ from libopensesame.inline_script import InlineScript as InlineScriptRuntime
 from libopensesame.oslogging import oslogger
 from libqtopensesame.items.qtplugin import QtPlugin
 from libqtopensesame.misc.translate import translation_context
+from pyqode.core.api.utils import TextHelper
 _ = translation_context(u'inline_script', category=u'item')
 
 
@@ -127,9 +128,15 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         
     def open_tab(self, select_in_tree=True, **kwargs):
         super().open_tab(select_in_tree=select_in_tree, **kwargs)
-        if 'phase' in kwargs:
-            tab_index = 1 if kwargs['phase'] == 'run' else 0
-            self._pyqode_tab_widget.main_tab_widget.setCurrentIndex(tab_index)
+        if 'phase' not in kwargs:
+            return
+        tab_index = 1 if kwargs['phase'] == 'run' else 0
+        self._pyqode_tab_widget.main_tab_widget.setCurrentIndex(tab_index)
+        # The line number is allways passed as the first optional argument
+        if 'args' in kwargs:
+            line = int(kwargs['args'][0])
+            edit = self._pyqode_tab_widget.main_tab_widget.currentWidget()
+            TextHelper(edit).goto_line(line, move=True)
 
 
 # Alias for backwards compatibility
