@@ -30,23 +30,26 @@ from libopensesame.py3compat import *
 
 class Syntax:
 
-    r"""The `syntax` class implement text operations, including those that are
+    """The `syntax` class implement text operations, including those that are
     necessary for interpreting OpenSesame script.
+    
+    Parameters
+    ----------
+    experiment
+        The experiment object.
     """
     def __init__(self, experiment):
-        r"""Constructor.
 
-        Parameters
-        ----------
-        experiment
-            The experiment object.
-        """
         self.experiment = experiment
         # A regular expression to match keywords, which are characterized by:
         # - Start with a letter or underscore
         # - Consists only of letters, numbers, or underscores, except for
         # - The last character, which is an equals sign
         self.re_cmd = re.compile(r'\A[_a-zA-Z]+[_a-zA-Z0-9]*=')
+        # A regular expression to detect whether a string corresponds to an
+        # f-string. This is done by detecting the presence of a single
+        # unescaped {.
+        self.re_fstring = re.compile(r'(?<!{){(?!{)')
         # A regular expression to match [variables] in text. The first part
         # indictates that we don't match items preceded by a slash
         # (\[variables]). This introduces a problem in that the slash itself can
@@ -264,13 +267,15 @@ class Syntax:
         -------
         The evaluated string, or the input value for non-string input.
         """
-        def get_escape_sequence(m):
-            return u'' if m.group(1) is None \
-                else m.group(1)[:len(m.group(1))//2]
 
         if not isinstance(txt, str):
             return txt
-        txt = safe_decode(txt)
+        if self.re_fstring.search(txt):
+            return self.experiment.python_workspace.eval_fstring(txt)
+        
+        def get_escape_sequence(m):
+            return u'' if m.group(1) is None \
+                else m.group(1)[:len(m.group(1))//2]
         if var is None:
             var = self.experiment.var
         if round_float:

@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
+from libopensesame.exceptions import FStringError, FStringSyntaxError
 import warnings
 
 
@@ -110,6 +111,28 @@ class BasePythonWorkspace:
         The evaluated value of the bytecode
         """
         return eval(bytecode, self._globals)
+        
+    def eval_fstring(self, fs):
+        """Evaluates an f-string.
+        
+        Parameters
+        ----------
+        fs : str
+            An f-string.
+
+        Returns
+        -------
+        A string corresponding to the evaluated f-string.
+        """
+        fs_escaped = fs.replace(r"'''", r"\'\'\'")
+        try:
+            return eval(f"f'''{fs_escaped}'''", self._globals)
+        except SyntaxError:
+            raise FStringSyntaxError(
+                f'The following text contains invalid f-string expression:\n\n~~~ .text\n{fs}\n~~~\n\n')
+        except Exception:
+            raise FStringError(
+                f'Failed to evaluate f-string expression in the following text:\n\n~~~ .text\n{fs}\n~~~\n\n')
 
     # The properties below emulate a dict interface.
 

@@ -54,22 +54,31 @@ class OSException(Exception):
         except IndexError:
             # This may happen when the item stack is empty
             self.item = self.phase = 'unknown'
-        self._read_more = f'''<div id="more-information" style="display:none;">{self.__doc__}</div>
+        self._read_more = f'''
+<div id="more-information"
+style="display:none;">{self.__doc__}</div>
 
-<a id="read-more" class="button" onclick='document.getElementById("more-information").style.display = "block";document.getElementById("read-more").style.display = "none"'>Learn more about this error</a>'''
+<a id="read-more" class="button"
+onclick='document.getElementById("more-information").style.display = "block";document.getElementById("read-more").style.display = "none"'>
+Learn more about this error</a>
+'''
 
     def __str__(self):
-        return '''{self.title()}\n\n{self._msg}
+        return f'''
+{self.title()}\n\n{self._msg}
 
 This error occurred in the {self.phase} phase of item {self.item}.
 '''
 
     def markdown(self):
-        return f'''# {self.title()}
-        
+        return f'''
+# {self.title()}
+
 {self._msg}
 
-This error occurred in the __{self.phase}__ phase of item <u><a href="opensesame://item.{self.item}.{self.phase}">{self.item}</a></u>.
+This error occurred in the __{self.phase}__ phase of item 
+<u><a href="opensesame://item.{self.item}.{self.phase}">
+{self.item}</a></u>.
 
 {self._read_more}
 '''
@@ -262,7 +271,6 @@ class PythonError(OSException):
             self.line_nr = 1
         else:
             while tb.tb_next is not None:
-                print(tb, tb.tb_lineno)
                 tb = tb.tb_next
             self.line_nr = tb.tb_lineno
         # The second through fourth line refer to the OpenSesame source code
@@ -272,8 +280,9 @@ class PythonError(OSException):
             '<string>', f'<{self.item}.{self.phase}>')
         
     def __str__(self):
-        return f'''{self.title()}
-        
+        return f'''
+{self.title()}
+
 {self._msg}
 
 This error occurred on line {self.line_nr} in the {self.phase} phase of item {self.item}.
@@ -283,11 +292,13 @@ This error occurred on line {self.line_nr} in the {self.phase} phase of item {se
         
     def markdown(self):
         
-        return f'''# {self.title()}
-        
+        return f'''
+# {self.title()}
+
 {self._msg}
 
-This error occurred on __line {self.line_nr}__ in the __{self.phase}__ phase of item
+This error occurred on __line {self.line_nr}__ in the
+__{self.phase}__ phase of item
 <u><a href="opensesame://item.{self.item}.{self.phase}.{self.line_nr - 1}">{self.item}</a></u>.
 
 ~~~ .traceback
@@ -324,9 +335,54 @@ class InvalidConditionalExpression(OSException):
 
 
 class ConditionalExpressionError(PythonError):
-    """A `ConditionalExpressionError` is raised when an occurs during the
+    """A `ConditionalExpressionError` is raised when an error occurs during the
     evaluation of a conditional expression, such as run-if, break-if, or
     show-if expression.
+    """
+    pass
+
+
+class BaseFStringError:
+
+
+    def __str__(self):
+        return f'''
+{self.title()}
+
+{self._msg}
+
+This error occurred in the {self.phase} phase of item {self.item}.
+
+{self._traceback}
+'''
+        
+    def markdown(self):
+        return f'''
+# {self.title()}
+
+{self._msg}
+
+This error occurred in the __{self.phase}__ phase of item
+<u><a href="opensesame://item.{self.item}">{self.item}</a></u>.
+
+~~~ .traceback
+{self._traceback}
+~~~
+
+{self._read_more}
+'''
+
+
+class FStringError(BaseFStringError, PythonError):
+    """An `FStringError` is raised when an error occurs during the evaluation
+    of an f-string.
+    """
+    pass
+
+
+class FStringSyntaxError(BaseFStringError, PythonSyntaxError):
+    """An `FStringSyntaxError` is raised when text contains an f-string 
+    expression that is not syntactically valid Python.
     """
     pass
 
