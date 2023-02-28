@@ -47,7 +47,8 @@ class Textline(BaseElement, TextlineRuntime):
 
     @classmethod
     def mouse_press(cls, sketchpad, pos):
-        text = TextInput(self.main_window, msg=_('Enter text')).get_input()
+        text = TextInput(sketchpad.main_window,
+                         msg=_('Enter text')).get_input()
         if text is None:
             return None
         properties = {
