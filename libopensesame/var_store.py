@@ -24,7 +24,12 @@ from libopensesame.exceptions import InvalidOpenSesameScript, OSException, \
 
 class VarStore:
 
-    r"""The `var` object provides access to experimental variables.
+    r"""As of OpenSesame 4.0, all experimental variables are also available
+    in the Python workspace. This means that you therefore generally don't need
+    to interact with the `var` object anymore.
+    
+    
+    The `var` object provides access to experimental variables.
     Experimental variables are the variables that live in the GUI, and are
     commonly set as independent variables in the LOOP item, referred
     to using

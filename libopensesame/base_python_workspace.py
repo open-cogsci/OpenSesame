@@ -35,7 +35,10 @@ class BasePythonWorkspace:
             The experiment object.
         """
         self.experiment = experiment
-        self._globals = {}
+        
+    @property
+    def _globals(self):
+        return self.experiment.var.__vars__
 
     def check_syntax(self, script):
         r"""Checks whether a Python script is syntactically correct.
