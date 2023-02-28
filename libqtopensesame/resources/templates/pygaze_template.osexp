@@ -50,32 +50,32 @@ define loop block_loop
 define sequence block_sequence
 	set flush_keyboard "yes"
 	set description "A sequence containing a single block of trials followed by feedback to the participant"
-	run reset_feedback "always"
-	run block_loop "always"
-	run feedback "always"
+	run reset_feedback "True"
+	run block_loop "True"
+	run feedback "True"
 
 define sketchpad end_of_experiment
 	set start_response_interval "no"
 	set duration "keypress"
 	set description "A sketchpad notifying the participant that the experiment is finished"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Press any key to exit" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="Press any key to exit" x=0 y=0 z_index=0
 
 define sketchpad end_of_practice
 	set start_response_interval "no"
 	set duration "keypress"
 	set description "A sketchpad notifying the participant that the practice phase is finished"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Press any key to continue" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="Press any key to continue" x=0 y=0 z_index=0
 
 define sequence experiment
 	set flush_keyboard "yes"
 	set description "The main sequence of the experiment"
-	run about_this_template "always"
-	run pygaze_init "always"
-	run instructions "always"
-	run practice_loop "always"
-	run end_of_practice "always"
-	run experimental_loop "always"
-	run end_of_experiment "always"
+	run about_this_template "True"
+	run pygaze_init "True"
+	run instructions "True"
+	run practice_loop "True"
+	run end_of_practice "True"
+	run experimental_loop "True"
+	run end_of_experiment "True"
 
 define loop experimental_loop
 	set skip 0
@@ -94,15 +94,15 @@ define feedback feedback
 	set reset_variables "yes"
 	set duration "keypress"
 	set description "Provides feedback to the participant"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Your average response time was [avg_rt]ms" x=0 y=-96 z_index=0
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Press any key to continue" x=0 y=32 z_index=0
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Your accuracy was [acc]%" x=0 y=-32 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="Your average response time was [avg_rt]ms" x=0 y=-96 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="Press any key to continue" x=0 y=32 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="Your accuracy was [acc]%" x=0 y=-32 z_index=0
 
 define sketchpad instructions
 	set start_response_interval "no"
 	set duration "keypress"
 	set description "A sketchpad containing the instructions for the participant"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Press any key to begin!" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="Press any key to begin!" x=0 y=0 z_index=0
 
 define keyboard_response keyboard_response
 	set timeout "infinite"
@@ -171,15 +171,15 @@ define sketchpad sketchpad
 	set start_response_interval "no"
 	set duration 0
 	set description "Displays stimuli"
-	draw fixdot color=white show_if=always style=default x=0 y=0 z_index=0
+	draw fixdot color=white show_if=True style=default x=0 y=0 z_index=0
 
 define sequence trial_sequence
 	set flush_keyboard "yes"
 	set description "A single trial"
-	run pygaze_drift_correct "always"
-	run pygaze_start_recording "always"
-	run sketchpad "always"
-	run keyboard_response "always"
-	run logger "always"
-	run pygaze_log "always"
-	run pygaze_stop_recording "always"
+	run pygaze_drift_correct "True"
+	run pygaze_start_recording "True"
+	run sketchpad "True"
+	run keyboard_response "True"
+	run logger "True"
+	run pygaze_log "True"
+	run pygaze_stop_recording "True"

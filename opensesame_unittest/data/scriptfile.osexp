@@ -35,12 +35,11 @@ set background black
 define sequence experiment
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run welcome always
+	run welcome True
 
 define sketchpad welcome
 	set start_response_interval no
 	set reset_variables no
 	set duration keypress
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text="OpenSesame 3.1 <i>Jazzy James</i>" x=0 y=0 z_index=0
-
+	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=True text="OpenSesame 3.1 <i>Jazzy James</i>" x=0 y=0 z_index=0

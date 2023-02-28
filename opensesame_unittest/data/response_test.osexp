@@ -35,8 +35,8 @@ set background black
 define sequence experiment
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run loop always
-	run validate always
+	run loop True
+	run validate True
 
 define keyboard_response keyboard_response
 	set timeout 20
@@ -65,8 +65,8 @@ define loop loop
 define sequence sequence
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run target always
-	run keyboard_response always
+	run target True
+	run keyboard_response True
 
 define sketchpad target
 	set duration 0
@@ -81,4 +81,3 @@ define inline_script validate
 	assert(var.avg_rt >= 18 and var.avg_rt <= 22)
 	__end__
 	set _prepare ""
-

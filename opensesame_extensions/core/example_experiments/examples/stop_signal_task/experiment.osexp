@@ -109,32 +109,32 @@ define loop block_loop
 define sketchpad error_feedback
 	set duration 1000
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Mistake!" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="Mistake!" x=0 y=0 z_index=0
 
 define sequence experiment
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run about_this_example always
-	run instructions always
-	run block_loop always
-	run finished always
+	run about_this_example True
+	run instructions True
+	run block_loop True
+	run finished True
 
 define sketchpad finished
 	set duration keypress
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="The experiment is finished!<br /><br />Press any key to exit." x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="The experiment is finished!<br /><br />Press any key to exit." x=0 y=0 z_index=0
 
 define sketchpad fixdot
 	set duration 500
 	set description "Displays stimuli"
-	draw fixdot color=white show_if=always style=default x=0 y=0 z_index=0
+	draw fixdot color=white show_if=True style=default x=0 y=0 z_index=0
 
 define sketchpad instructions
 	set start_response_interval no
 	set reset_variables no
 	set duration keypress
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text="<b>Instructions</b><br /><br />On each trial, you will see an arrow.<br />Press the left arrow key if the arrow points to the left.<br />Press the right arrow key if the arrow points to the right.<br /><br />Unless you see a red square,<br />in which case you should withhold your response.<br /><br />Press any key to begin!" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=True text="<b>Instructions</b><br /><br />On each trial, you will see an arrow.<br />Press the left arrow key if the arrow points to the left.<br />Press the right arrow key if the arrow points to the right.<br /><br />Unless you see a red square,<br />in which case you should withhold your response.<br /><br />Press any key to begin!" x=0 y=0 z_index=0
 
 define keyboard_response kb_response
 	set timeout infinite
@@ -151,7 +151,7 @@ define logger logger
 define sketchpad stop_signal
 	set duration keypress
 	set description "Displays stimuli"
-	draw rect color=red fill=1 h=64 penwidth=1 show_if=always w=64 x=-32 y=-32 z_index=0
+	draw rect color=red fill=1 h=64 penwidth=1 show_if=True w=64 x=-32 y=-32 z_index=0
 
 define coroutines stop_signal_coroutines
 	set function_name ""
@@ -160,8 +160,8 @@ define coroutines stop_signal_coroutines
 	set duration 2000
 	set description "Run items simultaneously"
 	run stop_signal end="[stop_after]" runif="[stop_after] != \"\"" start="[stop_after]"
-	run target end=0 runif=always start=0
-	run kb_response end=2000 runif=always start=0
+	run target end=0 runif=True start=0
+	run kb_response end=2000 runif=True start=0
 
 define sketchpad target
 	set duration keypress
@@ -172,9 +172,8 @@ define sketchpad target
 define sequence trial_sequence
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run fixdot always
-	run stop_signal_coroutines always
+	run fixdot True
+	run stop_signal_coroutines True
 	run error_feedback "[correct] = 0"
-	run blank always
-	run logger always
-
+	run blank True
+	run logger True

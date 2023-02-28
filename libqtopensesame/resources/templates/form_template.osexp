@@ -37,10 +37,10 @@ define notepad about_this_template
 define sequence experiment
 	set flush_keyboard "yes"
 	set description "Runs a number of items in sequence"
-	run about_this_template "always"
-	run instructions "always"
-	run question_loop "always"
-	run goodbye "always"
+	run about_this_template "True"
+	run instructions "True"
+	run question_loop "True"
+	run goodbye "True"
 
 define form_text_display goodbye
 	set timeout "infinite"
@@ -162,4 +162,4 @@ define sequence question_sequence
 	set description "Runs a number of items in sequence"
 	run mc_question "[question_type] = mc"
 	run open_question "[question_type] = open"
-	run logger "always"
+	run logger "True"

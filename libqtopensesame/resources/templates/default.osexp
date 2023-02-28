@@ -16,8 +16,8 @@ set background "black"
 
 define sequence experiment
 	set flush_keyboard "yes"
-	run getting_started "always"
-	run welcome "always"
+	run getting_started "True"
+	run welcome "True"
 
 define notepad getting_started
 	__note__
@@ -43,4 +43,4 @@ define sketchpad welcome
 	set start_response_interval "no"
 	set reset_variables "no"
 	set duration "keypress"
-	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=always text="OpenSesame 3.3 <i>Lentiform Loewenfeld</i>" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=True text="OpenSesame 3.3 <i>Lentiform Loewenfeld</i>" x=0 y=0 z_index=0

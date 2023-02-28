@@ -21,11 +21,23 @@ import re
 import codecs
 import os
 import yaml
+import warnings
 from distutils.version import StrictVersion
 from libopensesame import metadata
 from libopensesame.exceptions import InvalidConditionalExpression, \
     InvalidOpenSesameScript
 from libopensesame.py3compat import *
+
+
+SQUARE_BRACKET_TEXT_DEPRECATION_WARNING = 'The square-bracket notation is ' \
+    'deprecated and will be removed in future versions of OpenSesame. ' \
+    'Use f-string notation instead.'
+PYTHON_CONDITIONAL_DEPRECATION_WARNING = 'Starting a conditiional statement ' \
+    'with an equals sign is no longer necessary and will be removed in ' \
+    'future versions of OpenSesame.'
+SQUARE_BRACKET_CONDITIONAL_DEPRECATION_WARNING = 'The square-bracket ' \
+    'notation is deprecated and will be removed in future versions of ' \
+    'OpenSesame. Use Python expressions instead.'
 
 
 class Syntax:
@@ -284,6 +296,8 @@ class Syntax:
             m = self.re_txt.search(txt)
             if m is None:
                 break
+            warnings.warn(SQUARE_BRACKET_TEXT_DEPRECATION_WARNING,
+                          category=DeprecationWarning)
             varname = m.group(2)[1:-1]
             val = var.get(varname)
             if round_float and isinstance(val, float):
@@ -297,6 +311,8 @@ class Syntax:
             m = self.re_txt_py.search(txt)
             if m is None:
                 break
+            warnings.warn(SQUARE_BRACKET_TEXT_DEPRECATION_WARNING,
+                          category=DeprecationWarning)
             py = self.unescape(m.group(2)[2:-1])
             val = self.experiment.python_workspace._eval(py)
             txt = txt[:m.start(0)] + get_escape_sequence(m) + safe_decode(val) \
@@ -347,8 +363,12 @@ class Syntax:
         """
         # Python conditions `=True` don't have to be evaluated
         if cnd.startswith(u'='):
+            warnings.warn(PYTHON_CONDITIONAL_DEPRECATION_WARNING,
+                          category=DeprecationWarning)
             cnd = cnd[1:]
-        else:
+        elif self.re_txt.search(cnd) or 'always' in cnd or 'never' in cnd:
+            warnings.warn(SQUARE_BRACKET_CONDITIONAL_DEPRECATION_WARNING,
+                          category=DeprecationWarning)
             # Quote all non-quoted symbols. This can be probably be done through
             # a clever regular expression, but for now we use a simple loop.
             while True:

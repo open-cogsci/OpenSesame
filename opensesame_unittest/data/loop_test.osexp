@@ -277,12 +277,12 @@ define inline_script check_weight
 define sequence experiment
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run init always
-	run test_from_file always
-	run test_repeat always
-	run test_resume always
-	run test_constraints always
-	run test_operations always
+	run init True
+	run test_from_file True
+	run test_repeat True
+	run test_resume True
+	run test_constraints True
+	run test_operations True
 
 define inline_script init
 	set description "Executes Python code"
@@ -390,11 +390,11 @@ define loop test_constrain_var
 define sequence test_constraints
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run test_constrain always
-	run check_constrain always
-	run set_constrain_vars always
-	run test_constrain_var always
-	run check_constrain always
+	run test_constrain True
+	run check_constrain True
+	run set_constrain_vars True
+	run test_constrain_var True
+	run check_constrain True
 
 define loop test_from_csv
 	set source_file "test.csv"
@@ -412,9 +412,9 @@ define loop test_from_csv
 define sequence test_from_file
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run test_from_xlsx always
-	run test_from_csv always
-	run check_from_file always
+	run test_from_xlsx True
+	run test_from_csv True
+	run check_from_file True
 
 define loop test_from_xlsx
 	set source_file "test.xlsx"
@@ -454,41 +454,41 @@ define loop test_fullfactorial
 define sequence test_operations
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run test_fullfactorial always
-	run check_full_factorial always
-	run test_shuffle_all always
-	run check_shuffle_all always
-	run test_shuffle_column always
-	run check_shuffle_column always
-	run test_shuffle_horiz_all always
-	run check_shuffle_horiz_all always
-	run test_shuffle_horiz_column always
-	run check_shuffle_horiz_column always
-	run test_slice always
-	run check_slice always
-	run test_sort always
-	run check_sort always
-	run test_sortby always
-	run check_sortby always
-	run test_reverse_all always
-	run check_reverse_all always
-	run test_reverse_column always
-	run check_reverse_column always
-	run test_roll_all always
-	run check_roll_all always
-	run test_roll_column always
-	run check_roll_column always
-	run set_roll_vars always
-	run test_roll_column_var always
-	run check_roll_column always
-	run test_weight always
-	run check_weight always
+	run test_fullfactorial True
+	run check_full_factorial True
+	run test_shuffle_all True
+	run check_shuffle_all True
+	run test_shuffle_column True
+	run check_shuffle_column True
+	run test_shuffle_horiz_all True
+	run check_shuffle_horiz_all True
+	run test_shuffle_horiz_column True
+	run check_shuffle_horiz_column True
+	run test_slice True
+	run check_slice True
+	run test_sort True
+	run check_sort True
+	run test_sortby True
+	run check_sortby True
+	run test_reverse_all True
+	run check_reverse_all True
+	run test_reverse_column True
+	run check_reverse_column True
+	run test_roll_all True
+	run check_roll_all True
+	run test_roll_column True
+	run check_roll_column True
+	run set_roll_vars True
+	run test_roll_column_var True
+	run check_roll_column True
+	run test_weight True
+	run check_weight True
 
 define sequence test_repeat
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run test_repeat_loop always
-	run check_repeat always
+	run test_repeat_loop True
+	run check_repeat True
 
 define loop test_repeat_loop
 	set source_file ""
@@ -509,10 +509,10 @@ define loop test_repeat_loop
 define sequence test_resume
 	set flush_keyboard yes
 	set description "Runs a number of items in sequence"
-	run test_resume_loop always
-	run test_resume_loop always
-	run test_resume_loop always
-	run check_resume always
+	run test_resume_loop True
+	run test_resume_loop True
+	run test_resume_loop True
+	run check_resume True
 
 define loop test_resume_loop
 	set source_file ""
@@ -816,4 +816,3 @@ define loop test_weight
 	setcycle 2 weight 2
 	weight weight
 	run logger
-

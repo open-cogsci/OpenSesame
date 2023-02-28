@@ -105,7 +105,7 @@ define notepad about_this_template
 	Task: Name white letter and indicate whether probe was present
 	Letters randomly chosen from all letters in alphabet
 	Nr of pre-target letters random between 7 and 15
-	Nr of post-target letters always 8
+	Nr of post-target letters True 8
 	Target dur = 15 ms
 	ISI (offset - onset) = 75 ms
 	
@@ -122,13 +122,13 @@ define sketchpad ask_T1
 	set reset_variables no
 	set duration 0
 	set description "Displays stimuli"
-	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Which letter was <span color=white>white</span>?" x=0 y=0 z_index=0
+	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="Which letter was <span color=white>white</span>?" x=0 y=0 z_index=0
 
 define sketchpad ask_T2
 	set reset_variables no
 	set duration 0
 	set description "Displays stimuli"
-	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Did you see an X?<br />(y/n)" x=0 y=0 z_index=0
+	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="Did you see an X?<br />(y/n)" x=0 y=0 z_index=0
 
 define inline_script assertions
 	set description "Executes Python code"
@@ -199,9 +199,9 @@ define sequence block_sequence
 	set description "A sequence containing a single block of trials followed by feedback to the participant"
 	run instructions_experimental "[condition] = experimental"
 	run instructions_control "[condition] = control"
-	run reset_feedback always
-	run block_loop always
-	run feedback always
+	run reset_feedback True
+	run block_loop True
+	run feedback True
 
 define inline_script counterbalance
 	set description "Executes Python code"
@@ -219,25 +219,25 @@ define sketchpad end_of_experiment
 	set start_response_interval no
 	set duration keypress
 	set description "A sketchpad notifying the participant that the experiment is finished"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Press any key to exit" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="Press any key to exit" x=0 y=0 z_index=0
 
 define sketchpad end_of_practice
 	set start_response_interval no
 	set reset_variables no
 	set duration keypress
 	set description "A sketchpad notifying the participant that the practice phase is finished"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Press any key to continue" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="Press any key to continue" x=0 y=0 z_index=0
 
 define sequence experiment
 	set flush_keyboard yes
 	set description "The main sequence of the experiment"
-	run counterbalance always
-	run about_this_template always
-	run instructions always
-	run practice_loop always
-	run end_of_practice always
-	run experimental_loop always
-	run end_of_experiment always
+	run counterbalance True
+	run about_this_template True
+	run instructions True
+	run practice_loop True
+	run end_of_practice True
+	run experimental_loop True
+	run end_of_experiment True
 
 define loop experimental_loop
 	set source_file ""
@@ -289,32 +289,32 @@ define feedback feedback
 	set reset_variables yes
 	set duration keypress
 	set description "Provides feedback to the participant"
-	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=24 html=yes show_if=always text="<b>End of block</b><br /><br />Your accuracy was [acc] %<br /><br />Press any key to continue ..." x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=24 html=yes show_if=True text="<b>End of block</b><br /><br />Your accuracy was [acc] %<br /><br />Press any key to continue ..." x=0 y=0 z_index=0
 
 define sketchpad fixation
 	set reset_variables no
 	set duration 995
 	set description "Displays stimuli"
-	draw fixdot color=white show_if=always style=default x=0 y=0 z_index=0
+	draw fixdot color=white show_if=True style=default x=0 y=0 z_index=0
 
 define sketchpad instructions
 	set start_response_interval no
 	set reset_variables no
 	set duration keypress
 	set description "A sketchpad containing the instructions for the participant"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=always text="Press any key to begin!" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=18 html=yes show_if=True text="Press any key to begin!" x=0 y=0 z_index=0
 
 define sketchpad instructions_control
 	set reset_variables no
 	set duration keypress
 	set description "Displays stimuli"
-	draw textline center=1 color=black font_bold=no font_family=sans font_italic=no font_size=24 html=yes show_if=always text="INSTRUCTIONS<br /><br />You will see a series of letters. Please report only<br /><br /><b>whether an 'X' was present</b><br /><br />Press any key to begin ..." x=0 y=0 z_index=0
+	draw textline center=1 color=black font_bold=no font_family=sans font_italic=no font_size=24 html=yes show_if=True text="INSTRUCTIONS<br /><br />You will see a series of letters. Please report only<br /><br /><b>whether an 'X' was present</b><br /><br />Press any key to begin ..." x=0 y=0 z_index=0
 
 define sketchpad instructions_experimental
 	set reset_variables no
 	set duration keypress
 	set description "Displays stimuli"
-	draw textline center=1 color=black font_bold=no font_family=sans font_italic=no font_size=24 html=yes show_if=always text="INSTRUCTIONS<br /><br />You will see a series of letters. Please report<br /><br /><b>the identity of the <span color=white>white</span> letter</b><br /><br />and<br /><br /><b>whether an 'X' was present</b><br /><br />Press any key to begin ..." x=0 y=-32 z_index=0
+	draw textline center=1 color=black font_bold=no font_family=sans font_italic=no font_size=24 html=yes show_if=True text="INSTRUCTIONS<br /><br />You will see a series of letters. Please report<br /><br /><b>the identity of the <span color=white>white</span> letter</b><br /><br />and<br /><br /><b>whether an 'X' was present</b><br /><br />Press any key to begin ..." x=0 y=-32 z_index=0
 
 define logger logger
 	set description "Logs experimental data"
@@ -365,12 +365,11 @@ define keyboard_response response_T2
 define sequence trial_sequence
 	set flush_keyboard yes
 	set description "A single trial"
-	run assertions always
-	run fixation always
-	run RSVP always
+	run assertions True
+	run fixation True
+	run RSVP True
 	run ask_T1 "[condition] = experimental"
 	run response_T1 "[condition] = experimental"
-	run ask_T2 always
-	run response_T2 always
-	run logger always
-
+	run ask_T2 True
+	run response_T2 True
+	run logger True

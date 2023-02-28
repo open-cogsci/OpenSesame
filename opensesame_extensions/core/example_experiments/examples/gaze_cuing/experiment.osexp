@@ -104,21 +104,21 @@ define loop block_loop
 define sequence block_sequence
 	set flush_keyboard yes
 	set description "A block of trials, followed by feedback"
-	run reset_feedback always
-	run block_loop always
-	run feedback always
+	run reset_feedback True
+	run block_loop True
+	run feedback True
 
 define sketchpad cue
 	set start_response_interval no
 	set duration "[soa]"
 	set description "A gaze cue. Click on 'Edit script' to see the definition."
-	draw image center=1 file="[gaze]" scale=2 show_if=always x=0 y=0 z_index=0
+	draw image center=1 file="[gaze]" scale=2 show_if=True x=0 y=0 z_index=0
 
 define sketchpad end_of_practice
 	set start_response_interval no
 	set duration mouseclick
 	set description "Indicate that the practice phase has ended"
-	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=always text="The practice phase is finished<br /><br />Tap the screen to continue ..." x=0 y=0 z_index=0
+	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=True text="The practice phase is finished<br /><br />Tap the screen to continue ..." x=0 y=0 z_index=0
 
 define sampler error_sound
 	set volume 1
@@ -133,11 +133,11 @@ define sampler error_sound
 define sequence experiment
 	set flush_keyboard yes
 	set description "The main sequence of the experiment"
-	run form_instructions always
-	run practice_loop always
-	run end_of_practice always
-	run experimental_loop always
-	run goodbye always
+	run form_instructions True
+	run practice_loop True
+	run end_of_practice True
+	run experimental_loop True
+	run goodbye True
 
 define loop experimental_loop
 	set source_file ""
@@ -160,13 +160,13 @@ define feedback feedback
 	set reset_variables yes
 	set duration mouseclick
 	set description "Provides feedback to the participant"
-	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=always text="End of block<br /><br />Your average reaction time was [avg_rt] ms<br />Your accuracy was [acc]%<br /><br />Tap the screen to continue!" x=0 y=0 z_index=0
+	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=True text="End of block<br /><br />Your average reaction time was [avg_rt] ms<br />Your accuracy was [acc]%<br /><br />Tap the screen to continue!" x=0 y=0 z_index=0
 
 define sketchpad fixdot
 	set start_response_interval no
 	set duration 750
 	set description "A fixation dot"
-	draw fixdot color=black show_if=always style=default x=0 y=0 z_index=0
+	draw fixdot color=black show_if=True style=default x=0 y=0 z_index=0
 
 define form_text_display form_instructions
 	set timeout infinite
@@ -197,7 +197,7 @@ define sketchpad goodbye
 	set start_response_interval no
 	set duration mouseclick
 	set description "Say goodbye"
-	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=always text="The experiment is finished<br /><br />Tap the screen to exit ..." x=0 y=0 z_index=0
+	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=True text="The experiment is finished<br /><br />Tap the screen to exit ..." x=0 y=0 z_index=0
 
 define logger logger
 	set description "Logs experimental data"
@@ -207,7 +207,7 @@ define sketchpad neutral_gaze
 	set start_response_interval no
 	set duration 1000
 	set description "A neutral gaze"
-	draw image center=1 file="neutral.png" scale=2 show_if=always x=0 y=0 z_index=0
+	draw image center=1 file="neutral.png" scale=2 show_if=True x=0 y=0 z_index=0
 
 define loop practice_loop
 	set source_file ""
@@ -233,9 +233,9 @@ define sketchpad target
 	set start_response_interval yes
 	set duration 100
 	set description "A gaze cue and a target. Click on 'Edit script' to see the definition."
-	draw image center=1 file="[gaze]" scale=2 show_if=always x=0 y=0 z_index=0
-	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=48 html=yes show_if=always text="[left_letter]" x=-288 y=0 z_index=0
-	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=48 html=yes show_if=always text="[right_letter]" x=288 y=0 z_index=0
+	draw image center=1 file="[gaze]" scale=2 show_if=True x=0 y=0 z_index=0
+	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=48 html=yes show_if=True text="[left_letter]" x=-288 y=0 z_index=0
+	draw textline center=1 color=black font_bold=no font_family=mono font_italic=no font_size=48 html=yes show_if=True text="[right_letter]" x=288 y=0 z_index=0
 
 define touch_response touch_response
 	set timeout 3000
@@ -251,12 +251,11 @@ define touch_response touch_response
 define sequence trial_sequence
 	set flush_keyboard yes
 	set description "A single trial"
-	run fixdot always
-	run neutral_gaze always
-	run cue always
-	run target always
-	run touch_response always
+	run fixdot True
+	run neutral_gaze True
+	run cue True
+	run target True
+	run touch_response True
 	run error_sound "[correct] = 0"
-	run blank always
-	run logger always
-
+	run blank True
+	run logger True
