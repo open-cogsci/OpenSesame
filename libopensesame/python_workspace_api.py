@@ -36,6 +36,71 @@ from libopensesame.widgets.widget_factory import (Label, Button, ImageWidget,
 
 
 # Factory functions
+def Experiment(osexp_path=None, log_path='defaultlog.csv', fullscreen=False,
+               subject_nr=0, **kwargs):
+    """A factory function that creates a new `Experiment` object. This is only
+    useful when implementing an experiment entirely through a Python script,
+    rather than through the user interface.
+    
+    Parameters
+    ----------
+    osexp_path : str or Path or None, optional
+        If a path to an `.osexp` file is specified, this file is opened and
+        can be run directly by calling `Experiment.run()`. If no experiment
+        file is specified, an empty experiment is initialized.
+    log_path : str or Path, optional
+    fullscreen : bool, optional
+    subject_nr : int, optional
+    kwargs : dict, optional
+        Optional keyword arguments that are interpreted as experimental
+        variables. The main use of this is to specify the backend through
+        the `canvas_backend` keyword.
+        
+    Examples
+    --------
+    To implement an experiment fully programatically:
+    
+    >>> from libopensesame.python_workspace_api import Experiment, Canvas, \
+    >>>     Text, Keyboard
+    >>> exp, win, clock, log = Experiment(canvas_backend='legacy')
+    >>> c = Canvas()
+    >>> c += Text('Press any key')
+    >>> c.show()
+    >>> kb = Keyboard()
+    >>> kb.get_key()
+    >>> exp.end()
+    
+    To load an experiment file and run it:
+
+    >>> from libopensesame.python_workspace_api import Experiment
+    >>> exp, win, clock, log = Experiment(osexp_path='my_experiment.osexp',
+    >>>                                   subject_nr=2)
+    >>> exp.run()
+    
+    Returns
+    -------
+    tuple
+        An (exp, win, clock, log) tuple corresponding to the Experiment,
+        window handle (backend-specific), Clock, and Log objects.
+    """
+    global experiment
+    from libopensesame.experiment import Experiment as RuntimeExperiment
+    if osexp_path is None:
+        from libopensesame.syntax import Syntax
+        syntax = Syntax(None)
+        string = '\n'.join([syntax.create_cmd('set', [key, value])
+                            for key, value in kwargs.items()])
+    else:
+        string = osexp_path
+    experiment = RuntimeExperiment(experiment_path=osexp_path,
+                                   logfile=log_path, fullscreen=fullscreen,
+                                   subject_nr=subject_nr, string=string)
+    experiment.init_random()
+    experiment.init_display()
+    experiment.init_clock()
+    experiment.init_sound()
+    experiment.init_log()
+    return experiment, experiment.window, experiment.clock, experiment.log
 
 
 def Form(*args, **kwargs):
