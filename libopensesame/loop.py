@@ -19,9 +19,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import os
 from libopensesame.exceptions import InvalidOpenSesameScript, OSException, \
-    InvalidValItemDoesNotExistItem, LoopSourceFileDoesNotExist, \
-    UnsupportedLoopSourceFile, InvalidConditionalExpression, PythonError, \
-    InvalidValue, ConditionalExpressionError
+    ItemDoesNotExist, LoopSourceFileDoesNotExist, UnsupportedLoopSourceFile, \
+    InvalidConditionalExpression, PythonError, InvalidValue, \
+    ConditionalExpressionError
 from libopensesame.item import Item
 from datamatrix import operations, DataMatrix, functional
 from pseudorandom import Enforce, MaxRep, MinDist

@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.exceptions import ItemDoesNotExist, \
-    InvalidConditionalExpression, ConditionalExpressionError
+    ConditionalExpressionError
 from libopensesame.item import Item
 import gc
 from openexp.keyboard import Keyboard

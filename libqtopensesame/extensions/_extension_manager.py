@@ -153,11 +153,11 @@ class ExtensionManager(BaseSubcomponent):
                 ext.fire(event, **kwdict)
             except Exception as e:
                 self.notify(
-                    f'Extension {ext.name} misbehaved on event {event} '
+                    f'Extension {ext.name()} misbehaved on event {event} '
                     f'(see debug window for stack trace)',
                     category='warning')
                 self.console.write(e)
-                oslogger.error(f'Extension {ext.name} misbehaved on event '
+                oslogger.error(f'Extension {ext.name()} misbehaved on event '
                                f'{event}: {e}')
 
     def provide(self, provide, **kwdict):

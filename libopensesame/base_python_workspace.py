@@ -89,7 +89,7 @@ class BasePythonWorkspace:
         code
             The compiled script.
         """
-        return compile(script, u'<string>', u'exec')
+        return compile(script, '<string>', 'exec')  # __ignore_traceback__
 
     def _exec(self, bytecode):
         r"""Executes bytecode.
@@ -99,7 +99,7 @@ class BasePythonWorkspace:
         bytecode : code
             A chunk of bytecode.
         """
-        exec(bytecode, self._globals)
+        exec(bytecode, self._globals)  # __ignore_traceback__
 
     def _eval(self, bytecode):
         r"""Evaluates bytecode.
@@ -113,7 +113,7 @@ class BasePythonWorkspace:
         -------
         The evaluated value of the bytecode
         """
-        return eval(bytecode, self._globals)
+        return eval(bytecode, self._globals)  # __ignore_traceback__
         
     def eval_fstring(self, fs):
         """Evaluates an f-string.
@@ -129,7 +129,7 @@ class BasePythonWorkspace:
         """
         fs_escaped = fs.replace(r"'''", r"\'\'\'")
         try:
-            return eval(f"f'''{fs_escaped}'''", self._globals)
+            return eval(f"f'''{fs_escaped}'''", self._globals)  # __ignore_traceback__
         except SyntaxError:
             raise FStringSyntaxError(
                 f'The following text contains invalid f-string expression:\n\n~~~ .text\n{fs}\n~~~\n\n')

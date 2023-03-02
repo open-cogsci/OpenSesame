@@ -765,9 +765,9 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         # Process non-fatal errors
         if exp.items.error_log:
             self.tabwidget.open_markdown(
-                _(u'Errors occurred while opening the file:\n\n') +
-                u'\n---\n'.join(
-                    [exc.markdown() for exc in exp.items.error_log]
+                _(f'Errors occurred while opening the file:\n\n') +
+                '\n\n'.join(
+                    [str(exc) for exc in exp.items.error_log]
                 ),
                 title=_(u'Error'),
                 icon=u'dialog-error'
@@ -968,21 +968,24 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         """
         Runs the current experiment.
 
-        Keyword arguments:
-        dummy 		--	A dummy argument that is passed by signaler.
+        Parameters
+        ----------
+        dummy
+            A dummy argument that is passed by signaler.
                                         (default=None)
-        fullscreen	--	A boolean to indicate whether the window should be
-                                        fullscreen. (default=True)
-        quick		--	A boolean to indicate whether default should be used for
-                                        the log-file and subject number. Mostly useful while
-                                        testing the experiment. (default=False)
+        fullscreen : bool, optional
+            A boolean to indicate whether the window should be fullscreen.
+        quick : bool, optional
+            A boolean to indicate whether default should be used for the
+            log-file and subject number. Mostly useful while testing the
+            experiment.
         """
         self.get_ready()
         self.enable(False)
         print(u'\n')
         oslogger.debug(u'using %s runner' % cfg.runner)
         self._runner = self.runner_cls(self)
-        self._runner.run(quick=quick, fullscreen=fullscreen, )
+        self._runner.run(fullscreen=fullscreen, quick=quick)
         self.enable(True)
     
     def notify(self, msg, title=None, icon=None, **kwargs):
@@ -991,25 +994,14 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
     @property
     def runner_cls(self):
         """
-        returns:
-                desc:	A runner class.
-                type:	base_runner
+        Returns
+        -------
+        BaseRunner
+            A runner class.
         """
-        # Multiprocessing dus not work if opensesame is packaged as an app
-        # under OSX. For now just display a warning message and do nothing
-        # For the same reason, inOSX the default runner is set to inprocess
-        # for now in misc.config
-        if (
-                cfg.runner == u'multiprocess' and
-                sys.platform == "darwin" and
-                getattr(sys, 'frozen', None) and
-                sys.version_info < (3, 4)
-        ):
-            self.notify(
-                u'Multiprocessing does not work in the '
-                u'OSX app version yet. Please change the runner to '
-                u'\'inprocess\' in the preferences panel'
-            )
+        runner = self.extension_manager.provide('runner')
+        if runner is not None:
+            return runner
         from libqtopensesame import runners
         return getattr(runners, u'%s_runner' % cfg.runner)
 

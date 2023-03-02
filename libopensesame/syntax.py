@@ -438,10 +438,10 @@ class Syntax:
             cnd = self.re_always.sub(u'True', cnd)
         if bytecode:
             try:
-                return compile(cnd, u"<conditional statement>", u"eval")
+                return compile(cnd, '<conditional statement>', 'eval')  # __ignore_traceback__
             except SyntaxError as e:
                 raise InvalidConditionalExpression(
-                    f'"{cnd}" is not a valid conditional expression')
+                    'Syntax error in conditional expression')
         return self.unescape(cnd)
 
     def unescape(self, s):

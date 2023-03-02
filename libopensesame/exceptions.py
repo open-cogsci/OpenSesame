@@ -215,13 +215,12 @@ class UnsupportedLoopSourceFile(OSException):
 class UserAborted(OSException):
     """This exception is raised when a user aborts an experiment."""
     def __str__(self):
-        return 'The experiment was aborted'
+        return self._msg
         
 
 class UserKilled(UserAborted):
     """This exception is raised when a user kills an experiment."""
-    def __str__(self):
-        return 'The experiment process was killed'
+    pass
 
         
 class MissingDependency(OSException):
@@ -273,11 +272,20 @@ class PythonError(OSException):
             while tb.tb_next is not None:
                 tb = tb.tb_next
             self.line_nr = tb.tb_lineno
-        # The second through fourth line refer to the OpenSesame source code
-        # and are therefore confusing to the user. Therefore we strip them.
-        tb_lines = tb_lines[:1] + tb_lines[5:]
-        self._traceback = '\n'.join(tb_lines).replace(
-            '<string>', f'<{self.item}.{self.phase}>')
+        self._traceback = self.clean_traceback(tb_lines)
+
+        
+    def clean_traceback(self, tb_lines):
+        # The __ignore_traceback__ comment serves as a marker to indicate which
+        # parts of the error message should be hidden from the user because
+        # they relate to the insides of OpenSesame, rather than to the user
+        # error.
+        for line_nr, tb_line in enumerate(tb_lines):
+            if '# __ignore_traceback__' in tb_line:
+                tb_lines = tb_lines[:1] + tb_lines[line_nr + 1:]
+                break
+        return '\n'.join(tb_lines).replace('<string>',
+                                           f'<{self.item}.{self.phase}>')
         
     def __str__(self):
         return f'''
@@ -317,21 +325,33 @@ class PythonSyntaxError(PythonError):
         super().__init__(msg)
         tb_lines = traceback.format_exc().splitlines()
         self.line_nr = line_nr
-        # The second through sixth line refer to the OpenSesame source code
-        # and are therefore confusing to the user. Therefore we strip them.
-        tb_lines = tb_lines[:1] + tb_lines[7:]
-        self._traceback = '\n'.join(tb_lines).replace(
-            '<string>', f'<{self.item}.{self.phase}>')
+        self._traceback = self.clean_traceback(tb_lines)
 
 
-class InvalidConditionalExpression(OSException):
+class InvalidConditionalExpression(PythonSyntaxError):
     """An `InvalidConditionalExpression` is raised when a conditional 
     expresssion, such as a run-if, break-if, or show-if expression, is
     syntactically incorrect. This generally reflects a mistake in the 
     experiment, such as a typo in a conditional expression that renders it
     invalid.
     """
-    pass
+    def markdown(self):
+        
+        return f'''
+# {self.title()}
+
+{self._msg}
+
+This error occurred in the
+__{self.phase}__ phase of item
+<u><a href="opensesame://item.{self.item}.{self.phase}.{self.line_nr - 1}">{self.item}</a></u>.
+
+~~~ .traceback
+{self._traceback}
+~~~
+
+{self._read_more}
+'''
 
 
 class ConditionalExpressionError(PythonError):
@@ -339,7 +359,23 @@ class ConditionalExpressionError(PythonError):
     evaluation of a conditional expression, such as run-if, break-if, or
     show-if expression.
     """
-    pass
+    def markdown(self):
+        
+        return f'''
+# {self.title()}
+
+{self._msg}
+
+This error occurred in the
+__{self.phase}__ phase of item
+<u><a href="opensesame://item.{self.item}.{self.phase}.{self.line_nr - 1}">{self.item}</a></u>.
+
+~~~ .traceback
+{self._traceback}
+~~~
+
+{self._read_more}
+'''
 
 
 class BaseFStringError:
