@@ -32,7 +32,7 @@ if strict_version.prerelease is None:
 else:
     deb_version = main_version + u'+%s%d' % strict_version.prerelease
 python_version = u'%d.%d.%d' % sys.version_info[:3]
-codename = u'Codename to be determined'
+codename = u'Melodramatic Milgram'
 channel = u'dev'
 api = StrictVersion(u'2.1')
 platform = sys.platform
