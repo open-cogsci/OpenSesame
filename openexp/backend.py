@@ -32,7 +32,7 @@ _backend_types = [u'canvas', u'keyboard', u'mouse', u'sampler', u'color',
                   u'clock', u'log']
 
 
-def backend_info(experiment):
+def backend_info():
     """
     arguments:
             experiment:
@@ -67,7 +67,7 @@ def backend_guess(experiment, _type):
     """
     if u'%s_backend' % _type in experiment.var:
         return experiment.var.get(u'%s_backend' % _type)
-    d = backend_info(experiment)
+    d = backend_info()
     return d[experiment.var.canvas_backend][_type]
 
 
@@ -85,7 +85,7 @@ def backend_match(experiment):
     str
         The name of a backend combination, e.g. 'legacy'.
     """
-    for name, info in backend_info(experiment).items():
+    for name, info in backend_info().items():
         for _type in _backend_types:
             if backend_guess(experiment, _type) != info[_type]:
                 break

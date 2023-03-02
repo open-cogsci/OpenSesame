@@ -94,7 +94,7 @@
            <property name="bottomMargin">
             <number>12</number>
            </property>
-           <item row="0" column="0">
+           <item row="1" column="0">
             <widget class="QGroupBox" name="groupbox_appearance">
              <property name="title">
               <string>Application appearance</string>
@@ -165,7 +165,7 @@
              </layout>
             </widget>
            </item>
-           <item row="1" column="0">
+           <item row="2" column="0">
             <widget class="QGroupBox" name="groupbox_runner">
              <property name="title">
               <string>Running experiments</string>
@@ -218,6 +218,47 @@
              </layout>
             </widget>
            </item>
+           <item row="0" column="0">
+            <widget class="QGroupBox" name="groupBox">
+             <property name="title">
+              <string>Experiment settings</string>
+             </property>
+             <layout class="QFormLayout" name="formLayout_3">
+              <property name="horizontalSpacing">
+               <number>12</number>
+              </property>
+              <property name="leftMargin">
+               <number>12</number>
+              </property>
+              <property name="topMargin">
+               <number>12</number>
+              </property>
+              <property name="rightMargin">
+               <number>12</number>
+              </property>
+              <property name="bottomMargin">
+               <number>12</number>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Settings that are specific to an experiment (backend, background color, etc.) are available under Experiment properties</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QPushButton" name="button_experiment_properties">
+                <property name="text">
+                 <string>Experiment properties</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
           </layout>
          </widget>
         </widget>
@@ -257,8 +298,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>100</width>
-            <height>30</height>
+            <width>769</width>
+            <height>559</height>
            </rect>
           </property>
           <layout class="QFormLayout" name="layout_advanced"/>

@@ -29,9 +29,7 @@ _ = translation_context(u'general_properties', category=u'core')
 
 
 class GeneralProperties(BaseWidget):
-
     """The QWidget for the general properties tab."""
-    backend_format = u'%s [%s]'
 
     def __init__(self, main_window):
         r"""Constructor.
@@ -59,11 +57,14 @@ class GeneralProperties(BaseWidget):
         self.ui.edit_background.initialize(self.experiment)
         self.ui.widget_font.initialize(self.experiment)
         # Set the backend combobox
-        for name, info in backend.backend_info(self.experiment).items():
-            desc = info[u"description"]
-            icon = info[u"icon"]
-            self.ui.combobox_backend.addItem(self.main_window.theme.qicon(
-                icon), self.backend_format % (name, desc))
+        self._backend_button_group = QtWidgets.QButtonGroup()
+        self._backend_button_group.buttonToggled.connect(self.apply_changes)
+        for id_, (name, info) in enumerate(backend.backend_info().items()):
+            radio_button = QtWidgets.QRadioButton(
+                f'{info["description"]} ({name})')
+            self._backend_button_group.addButton(radio_button)
+            self._backend_button_group.setId(radio_button, id_)
+            self.ui.layout_backend_list.addWidget(radio_button)
         self.quick_connect(
             slot=self.main_window.ui.tabwidget.open_general_script,
             signals=[self.ui.button_script_editor.clicked],
@@ -75,13 +76,13 @@ class GeneralProperties(BaseWidget):
         self.quick_connect(
             slot=self.apply_changes,
             signals=[
-                self.ui.combobox_backend.currentIndexChanged,
                 self.ui.spinbox_width.editingFinished,
                 self.ui.spinbox_height.editingFinished,
                 self.ui.checkbox_disable_garbage_collection.stateChanged,
                 self.ui.edit_foreground.textEdited,
                 self.ui.edit_background.textEdited,
                 self.ui.widget_font.font_changed,
+                self._backend_button_group.idToggled,
             ])
         self.tab_name = u'__general_properties__'
         self.on_activate = self.refresh
@@ -112,19 +113,20 @@ class GeneralProperties(BaseWidget):
             self.header_widget.edit_desc.text())
         self.experiment.var.description = desc
         # Set the backend
-        if self.ui.combobox_backend.isEnabled():
-            i = self.ui.combobox_backend.currentIndex()
-            _backend = list(backend.backend_info(self.experiment).values())[i]
+        if self.ui.widget_backend_list.isEnabled():
+            i = self._backend_button_group.checkedId()
+            _backend = list(backend.backend_info().values())[i]
             self.experiment.var.canvas_backend = _backend[u"canvas"]
             self.experiment.var.keyboard_backend = _backend[u"keyboard"]
             self.experiment.var.mouse_backend = _backend[u"mouse"]
             self.experiment.var.sampler_backend = _backend[u"sampler"]
             self.experiment.var.clock_backend = _backend[u"clock"]
             self.experiment.var.color_backend = _backend[u"color"]
+            self.ui.button_backend_settings.setEnabled(_backend['settings'])
         else:
             oslogger.debug(
-                u'not setting back-end, because a custom backend is selected'
-            )
+                u'not setting back-end, because a custom backend is selected')
+            self.ui.button_backend_settings.setEnabled(False)
         # Set the display width
         width = self.ui.spinbox_width.value()
         height = self.ui.spinbox_height.value()
@@ -175,16 +177,19 @@ class GeneralProperties(BaseWidget):
         # Set the header containing the titel etc
         self.set_header_label()
         # Select the backend
-        _backend = backend.backend_match(self.experiment)
-        if _backend == u"custom":
-            self.ui.combobox_backend.setDisabled(True)
+        backend_name = backend.backend_match(self.experiment)
+        if backend_name == u"custom":
+            self.ui.widget_backend_list.setDisabled(True)
+            self.ui.button_backend_settings.setDisabled(True)
         else:
-            self.ui.combobox_backend.setDisabled(False)
-            desc = backend.backend_info(self.experiment)[
-                _backend][u"description"]
-            i = self.ui.combobox_backend.findText(
-                self.backend_format % (_backend, desc))
-            self.ui.combobox_backend.setCurrentIndex(i)
+            backend_info = backend.backend_info()[backend_name]
+            backend_desc = backend_info['description']
+            backend_settings = backend_info['settings']
+            self.ui.button_backend_settings.setEnabled(backend_settings)
+            self.ui.widget_backend_list.setDisabled(False)
+            for radio_button in self._backend_button_group.buttons():
+                if radio_button.text().startswith(backend_desc):
+                    radio_button.setChecked(True)
         # Set the resolution
         try:
             self.ui.spinbox_width.setValue(int(self.experiment.var.width))

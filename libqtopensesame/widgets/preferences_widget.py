@@ -44,6 +44,8 @@ class PreferencesWidget(BaseWidget):
         self.tab_name = u'__preferences__'
         self.lock = False
         # Connect the controls
+        self.ui.button_experiment_properties.clicked.connect(
+            self.tabwidget.open_general)
         self.ui.checkbox_toolbar_text.toggled.connect(self.apply)
         self.ui.checkbox_small_toolbar.toggled.connect(self.apply)
         self.ui.combobox_runner.currentIndexChanged.connect(self.apply)

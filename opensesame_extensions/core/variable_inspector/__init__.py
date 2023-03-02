@@ -9,7 +9,7 @@ menu = {
     "submenu": "View"
 }
 toolbar = {
-    "index": 13
+    "index": 11
 }
 settings = {
     "variable_inspector_visible": False,

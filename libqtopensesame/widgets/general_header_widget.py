@@ -44,6 +44,18 @@ class GeneralHeaderWidget(HeaderWidget):
         r"""Updates the header so that it's content match the item."""
         self.set_name(self.experiment.var.title)
         self.set_desc(self.experiment.var.description)
+        
+    def set_name(self, name):
+        """Sets the name.
+
+        Parameters
+        ----------
+        name
+            A name
+        """
+        self.label_name.setText(name)
+        self.label_type.setText('— experiment properties')
+        self.edit_name.setText(name)
 
     def apply_name(self):
         r"""Applies the name change and revert the edit control back to the

@@ -10,7 +10,7 @@ menu = {
     "submenu": "View"
 }
 toolbar = {
-    "index": 10,
+    "index": 9,
     "separator_after": False,
     "separator_before": False
 }

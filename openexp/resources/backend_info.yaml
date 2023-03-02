@@ -1,15 +1,5 @@
-legacy:
-  description: uses PyGame, maximum stability
-  canvas: legacy
-  keyboard: legacy
-  mouse: legacy
-  sampler: legacy
-  color: legacy
-  clock: legacy
-  log: csv
-  icon: os-pygame
 psycho:
-  description: uses PsychoPy, powerful stimulus generation
+  description: On the desktop with PsychoPy
   canvas: psycho
   keyboard: psycho
   mouse: psycho
@@ -18,18 +8,9 @@ psycho:
   clock: psycho
   log: csv
   icon: os-psychopy
-psycho_legacy:
-  description: uses PsychoPy with PyGame sound backend
-  canvas: psycho
-  keyboard: psycho
-  mouse: psycho
-  sampler: legacy
-  color: psycho
-  clock: psycho
-  log: csv
-  icon: os-psychopy
+  settings: true
 xpyriment:
-  description: uses Expyriment
+  description: On the desktop with Expyriment
   canvas: xpyriment
   keyboard: legacy
   mouse: xpyriment
@@ -41,3 +22,15 @@ xpyriment:
   icon: os-expyriment
   py2: true
   py3: true
+  settings: true
+legacy:
+  description: On the desktop with PyGame
+  canvas: legacy
+  keyboard: legacy
+  mouse: legacy
+  sampler: legacy
+  color: legacy
+  clock: legacy
+  log: csv
+  icon: os-pygame
+  settings: true

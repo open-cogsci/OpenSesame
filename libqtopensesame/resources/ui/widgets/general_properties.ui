@@ -71,15 +71,12 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label_backend">
         <property name="text">
-         <string>Back-end</string>
+         <string>Run experiment</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
         </property>
        </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="combobox_backend"/>
       </item>
       <item row="1" column="1">
        <widget class="QPushButton" name="button_backend_settings">
@@ -337,6 +334,24 @@
          <property name="spacing">
           <number>0</number>
          </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QWidget" name="widget_backend_list" native="true">
+        <layout class="QVBoxLayout" name="layout_backend_list">
          <property name="leftMargin">
           <number>0</number>
          </property>

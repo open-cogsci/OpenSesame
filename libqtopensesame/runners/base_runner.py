@@ -27,24 +27,21 @@ _ = translation_context(u'base_runner', category=u'core')
 
 
 class BaseRunner:
-
     """
     A runner implements a specific way to execute an OpenSesame experiment from
     within the GUI. The base_runner is an abstract runner that is inherited by
     actual runners.
+
+    Parameters
+    ----------
+    main_window : QtOpenSesame
     """
+    
     valid_logfile_extensions = u'.csv', u'.txt', u'.dat', u'.log'
     default_logfile_extension = u'.csv'
     supports_kill = False
 
     def __init__(self, main_window):
-        """
-        Constructor.
-
-        Arguments:
-        main_window		--	An QtWidgets.QMainWindow object. Typically this will be
-                                                the qtopensesame object.
-        """
         self.main_window = main_window
         self.paused = False
 
@@ -72,15 +69,19 @@ class BaseRunner:
         Gets the logfile for the current session, either by falling back to a
         default value ('quickrun.csv') or through a pop-up dialogue.
 
-        Keyword arguments:
-        quick		--	Indicates whether we are quickrunning the experiment.
-                                        (default=False)
-        subject_nr	--	Indicates the subject number, which is used to
-                                        suggest a logfile. (default=0)
+        Parameters
+        ----------
+        quick : bool, optional
+            A boolean to indicate whether default should be used for the
+            log-file and subject number. Mostly useful while testing the
+            experiment.
+        subject_nr : int, optional
 
-        Returns:
-        A pathname for the logfile or None if no logfile was chosen (i.e. the
-        dialogue was cancelled).
+        Returns
+        -------
+        str or None
+            A pathname for the logfile or None if no logfile was chosen (i.e.
+            the dialogue was cancelled).
         """
         remember_logfile = True
         if quick:
@@ -120,8 +121,8 @@ class BaseRunner:
                 suggested_path,
                 filter=csv_filter
             )
-            # In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of
-            # a string, of which the first position contains the path.
+            # In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead
+            # of a string, of which the first position contains the path.
             if isinstance(logfile, tuple):
                 logfile = logfile[0]
             # An empty string indicates that the dialogue was cancelled, in
@@ -131,8 +132,8 @@ class BaseRunner:
                     cfg.default_logfile_folder,
                     u'defaultlog.csv'
                 )
-            # If a logfile was provided, but it did not have a proper extension,
-            # we add a `.csv` extension.
+            # If a logfile was provided, but it did not have a proper
+            # extension, we add a `.csv` extension.
             else:
                 if os.path.splitext(logfile)[1].lower() not in \
                         self.valid_logfile_extensions:
@@ -154,17 +155,22 @@ class BaseRunner:
         return logfile
 
     def get_subject_nr(self, quick=False):
-        """
-        Gets the subject number for the current session, either by falling back
-        to a default value of 999 (in quickmode) or through a pop-up dialogue.
+        """Gets the subject number for the current session, either by falling 
+        back to a default value of 999 (in quickmode) or through a pop-up 
+        dialogue.
 
-        Keyword arguments:
-        quick	--	Indicates whether we are quickrunning the experiment.
-                                (default=False)
+        Parameters
+        ----------
+        quick : bool, optional
+            A boolean to indicate whether default should be used for the
+            log-file and subject number. Mostly useful while testing the
+            experiment.
 
-        Returns:
-        A subject number or None if no subject number was chosen (i.e. the
-        dialogue was cancelled).
+        Returns
+        -------
+        int or None
+            A subject number or None if no subject number was chosen (i.e. the
+            dialogue was cancelled).
         """
         if quick:
             return 999
@@ -179,16 +185,23 @@ class BaseRunner:
         return subject_nr
 
     def init_experiment(self, quick=False, fullscreen=False):
-        """
-        Initializes a new experiment, which is a newly generated instance of the
-        experiment currently active in the user interface.
+        """Initializes a new experiment, which is a newly generated instance of
+        the experiment currently active in the user interface.
+        
+        Parameters
+        ----------
+        quick : bool, optional
+            A boolean to indicate whether default should be used for the
+            log-file and subject number. Mostly useful while testing the
+            experiment.
+        fullscreen : bool, optional
+            A boolean to indicate whether the window should be fullscreen.
 
-        Keyword arguments:
-        quick		--	Indicates whether we are quickrunning the experiment.
-                                        (default=False)
-
-        Returns:
-        True if the experiment was successfully initiated, False it was not.
+        Returns
+        -------
+        bool
+            True if the experiment was successfully initiated, False it was
+            not.
         """
         # First tell the experiment to get ready, to apply any pending changes,
         # and then initialize the script. This can trigger errors.
@@ -241,15 +254,17 @@ class BaseRunner:
             return False
         return True
 
-    def run(self, quick=False, fullscreen=False):
-        """
-        Runs the experiment.
+    def run(self, fullscreen=False, quick=False):
+        """Runs the experiment.
 
-        Keyword arguments:
-        quick			--	Indicates whether we are quickrunning the
-                                                experiment. (default=False)
-        fullscreen		--	Indicates whether the experiment should be run in
-                                                fullscreen. (default=False)
+        Parameters
+        ----------
+        fullscreen : bool, optional
+            A boolean to indicate whether the window should be fullscreen.
+        quick : bool, optional
+            A boolean to indicate whether default should be used for the
+            log-file and subject number. Mostly useful while testing the
+            experiment.
         """
         self.main_window.set_run_status(u'running')
         self.main_window.extension_manager.fire(
