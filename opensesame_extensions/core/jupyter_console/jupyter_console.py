@@ -31,7 +31,7 @@ _ = translation_context(u'JupyterConsole', category=u'extension')
 
 class JupyterConsole(BaseExtension):
     
-    preferences_ui = 'extensions.JupyterConsole.preferences'
+    preferences_ui = 'extensions.jupyter_console.preferences'
 
     @BaseExtension.as_thread(wait=500)
     def event_startup(self):
