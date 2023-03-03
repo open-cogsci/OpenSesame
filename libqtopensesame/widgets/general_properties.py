@@ -58,7 +58,6 @@ class GeneralProperties(BaseWidget):
         self.ui.widget_font.initialize(self.experiment)
         # Set the backend combobox
         self._backend_button_group = QtWidgets.QButtonGroup()
-        self._backend_button_group.buttonToggled.connect(self.apply_changes)
         for id_, (name, info) in enumerate(backend.backend_info().items()):
             radio_button = QtWidgets.QRadioButton(
                 f'{info["description"]} ({name})')
@@ -82,7 +81,7 @@ class GeneralProperties(BaseWidget):
                 self.ui.edit_foreground.textEdited,
                 self.ui.edit_background.textEdited,
                 self.ui.widget_font.font_changed,
-                self._backend_button_group.idToggled,
+                self._backend_button_group.idClicked,
             ])
         self.tab_name = u'__general_properties__'
         self.on_activate = self.refresh
@@ -115,14 +114,15 @@ class GeneralProperties(BaseWidget):
         # Set the backend
         if self.ui.widget_backend_list.isEnabled():
             i = self._backend_button_group.checkedId()
-            _backend = list(backend.backend_info().values())[i]
-            self.experiment.var.canvas_backend = _backend[u"canvas"]
-            self.experiment.var.keyboard_backend = _backend[u"keyboard"]
-            self.experiment.var.mouse_backend = _backend[u"mouse"]
-            self.experiment.var.sampler_backend = _backend[u"sampler"]
-            self.experiment.var.clock_backend = _backend[u"clock"]
-            self.experiment.var.color_backend = _backend[u"color"]
-            self.ui.button_backend_settings.setEnabled(_backend['settings'])
+            name, info = list(backend.backend_info().items())[i]
+            oslogger.info(f'setting backend to {name}')
+            self.experiment.var.canvas_backend = info["canvas"]
+            self.experiment.var.keyboard_backend = info["keyboard"]
+            self.experiment.var.mouse_backend = info["mouse"]
+            self.experiment.var.sampler_backend = info["sampler"]
+            self.experiment.var.clock_backend = info["clock"]
+            self.experiment.var.color_backend = info["color"]
+            self.ui.button_backend_settings.setEnabled(info['settings'])
         else:
             oslogger.debug(
                 u'not setting back-end, because a custom backend is selected')
