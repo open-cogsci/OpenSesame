@@ -57,8 +57,8 @@ def wait_cursor(fnc):
 
 
 class QtItem:
-
     """Base class for the GUI controls of other items"""
+    
     initial_view = u'controls'
     label_align = u'right'
     help_url = None
@@ -66,6 +66,7 @@ class QtItem:
 
     def __init__(self):
         """Constructor"""
+        
         # The auto-widgets are stored in name -> (var, widget) dictionaries
         self.auto_line_edit = {}
         self.auto_combobox = {}
@@ -153,7 +154,8 @@ class QtItem:
             Indicates whether the focus widget should be changed if there
             already is a focus widget.
         """
-        if override or not hasattr(self, u'focus_widget') or self.focus_widget is None:
+        if override or not hasattr(self, u'focus_widget') or \
+                self.focus_widget is None:
             self.focus_widget = widget
 
     def update_item_icon(self):
@@ -172,7 +174,7 @@ class QtItem:
         return self.item_type
 
     def show_tab(self):
-        r"""Is called when the tab becomes visible, and updated the contents."""
+        """Is called when the tab becomes visible, and updated the contents."""
         # The first time that the tab is shown, the view is determined. For
         # the controls view, nothing needs to be done, because this is the
         # default view after initialization.
@@ -266,8 +268,8 @@ class QtItem:
         # This will happen only when the script is shown.
         self._script_widget = None
         self._script_frame = QtWidgets.QWidget()
-        # The container_widget is the top-level widget that is actually inserted
-        # into the tab widget.
+        # The container_widget is the top-level widget that is actually
+        # inserted into the tab widget.
         self.splitter = qtitem_splitter(self)
         self.set_view_controls()
         self.splitter.splitterMoved.connect(self.splitter_moved)
@@ -537,9 +539,10 @@ class QtItem:
             self.main_window.block_close_event = True
             self.container_widget.closeEvent = lambda e: e.ignore()
             self.container_widget.setParent(None)
-            self.container_widget.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint |
-                                                 QtCore.Qt.WindowMaximizeButtonHint |
-                                                 QtCore.Qt.CustomizeWindowHint)
+            self.container_widget.setWindowFlags(
+                QtCore.Qt.WindowStaysOnTopHint |
+                QtCore.Qt.WindowMaximizeButtonHint |
+                QtCore.Qt.CustomizeWindowHint)
             self.container_widget.showMaximized()
             self.container_widget.show()
             self.button_toggle_maximize.setIcon(
@@ -653,10 +656,11 @@ class QtItem:
             else:
                 if combobox.isEnabled():
                     combobox.setDisabled(True)
-                    self.extension_manager.fire(u'notify',
-                                                message=_(u'"%s" is set to a variable or '
-                                                          u'unknown value and can only be edited through '
-                                                          u'the script.') % var, category=u'info')
+                    self.extension_manager.fire(
+                        u'notify',
+                        message=_('"%s" is set to a variable or unknown '
+                                  'value and can only be edited through '
+                                  'the script.') % var, category=u'info')
 
         for var, spinbox in list(self.auto_spinbox.items()) \
                 + list(self.auto_slider.items()):
@@ -677,10 +681,11 @@ class QtItem:
                     if not spinbox.isEnabled():
                         continue
                     spinbox.setDisabled(True)
-                    self.extension_manager.fire(u'notify',
-                                                message=_(u'"%s" is defined using '
-                                                          'variables and can only be edited through the '
-                                                          'script.') % var, category=u'info')
+                    self.extension_manager.fire(
+                        u'notify',
+                        message=_('"%s" is defined using variables and can '
+                                  'only be edited through the script.') % var,
+                        category=u'info')
 
         for var, checkbox in self.auto_checkbox.items():
             if isinstance(var, int):
@@ -694,11 +699,12 @@ class QtItem:
                         checkbox.setChecked(checked)
                 else:
                     checkbox.setDisabled(True)
-                    self.extension_manager.fire(u'notify',
-                                                message=_(u'"%s" is defined using '
-                                                          u'variables or has an invalid value, and can only be '
-                                                          u'edited through the script.') % var,
-                                                category=u'info')
+                    self.extension_manager.fire(
+                        u'notify',
+                        message=_('"%s" is defined using variables or has an '
+                                  'invalid value, and can only be edited '
+                                  'through the script.') % var,
+                        category=u'info')
 
         for var, editor in self.auto_editor.items():
             if isinstance(var, int):

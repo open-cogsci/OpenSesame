@@ -17,6 +17,8 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 import warnings
+from numbers import Number
+from types import NoneType
 from libopensesame.py3compat import *
 from libopensesame.exceptions import InvalidOpenSesameScript, OSException, \
     VariableDoesNotExist, InvalidValue
@@ -333,6 +335,24 @@ class VarStore:
         >>>         print(varname, value)
         """
         return list(self.__vars__.items())
+        
+    def is_default_loggable(self, var, val):
+        """Checks whether a value is loggable by default. This includes int,
+        str, byes, float, bool, and None values, as well as any type that is 
+        derived from numbers.Number. Variable names that start with '_' are
+        not logged by default.
+
+        Parameters
+        ----------
+        var : str
+        val
+
+        Returns
+        -------
+        bool
+        """
+        return not var.startswith('_') and \
+            isinstance(val, (str, bytes, NoneType, Number))
 
     def inspect(self):
         r"""Generates a description of all experimental variables, both alive
@@ -348,17 +368,22 @@ class VarStore:
         for item_name, item in list(self.__item__.items.items()) \
                 + [(u'global', self.__item__)]:
             for var, desc in item.var_info():
-                if not self.__item__.experiment.syntax.valid_var_name(var):
-                    continue
                 if var not in d:
                     d[var] = {u'source': []}
                 d[var][u'source'].append(item_name)
                 d[var][u'value'] = None
                 d[var][u'alive'] = False
         for var in self:
+            val = self.get(var, _eval=False)
             if var not in d:
+                # If a variable is not explicitly defined through var_info()
+                # functions, and it's not a default-loggable type, then we
+                # ignore it. This will for example ignore numpy arrays that
+                # are defined in a script.
+                if not self.is_default_loggable(var, val):
+                    continue
                 d[var] = {u'source': [u'?']}
-            d[var][u'value'] = self.get(var, _eval=False)
+            d[var][u'value'] = val
             d[var][u'alive'] = True
         return d
 

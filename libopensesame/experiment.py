@@ -497,7 +497,9 @@ class Experiment(Item):
         """
         l = []
         for var in self.var:
-            l.append((var, self.var.get(var, _eval=False)))
+            val = self.var.get(var, _eval=False)
+            if self.var.is_default_loggable(var, val):
+                l.append((var, val))
         return l
 
     def init_heartbeat(self):

@@ -25,27 +25,46 @@ _ = translation_context(u'logger', category=u'item')
 
 
 class Logger(LoggerRuntime, QtPlugin):
-
-    r"""GUI controls for the logger item."""
+    """GUI controls for the logger item."""
+    
     description = _(u'Logs experimental data')
     help_url = u'manual/logging'
     lazy_init = True
 
     def __init__(self, name, experiment, string=None):
-        """See item."""
         LoggerRuntime.__init__(self, name, experiment, string)
         QtPlugin.__init__(self)
 
     def init_edit_widget(self):
-        """See qtitem."""
         super().init_edit_widget(stretch=False)
         self.logger_widget = LoggerWidget(self)
         self.add_widget(self.logger_widget)
         self.auto_add_widget(self.logger_widget.ui.checkbox_auto_log,
-                             u'auto_log')
+                             'auto_log')
+        # To avoid recursion, we connect to the parent function which doesn't
+        # update the text edits
+        self.logger_widget.update()
+        self.logger_widget.ui.textedit_include.textChanged.connect(
+            self._update_logvars)
+        self.logger_widget.ui.textedit_exclude.textChanged.connect(
+            self._update_logvars)
+        
+    def _extract_variables(self, script):
+        variables = []
+        for var in script.splitlines():
+            var = var.strip()
+            if var:
+                variables.append(var)
+        return variables
+            
+    def _update_logvars(self):
+        self.logvars = self._extract_variables(
+            self.logger_widget.ui.textedit_include.toPlainText())
+        self.exclude_vars = self._extract_variables(
+            self.logger_widget.ui.textedit_exclude.toPlainText())
+        self.update_script()
 
     def edit_widget(self):
-        """See qtitem."""
         super().edit_widget()
         for item in self.experiment.items.values():
             if item.item_type == self.item_type and item is not self:
@@ -56,7 +75,6 @@ class Logger(LoggerRuntime, QtPlugin):
         self.logger_widget.update()
 
     def apply_edit_changes(self):
-        """See qtitem."""
         super().apply_edit_changes()
         self.logger_widget.update()
 

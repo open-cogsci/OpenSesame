@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qtpy.QtWidgets import QSizePolicy
 from qtpy.QtCore import Qt
+import ast
 from libopensesame.inline_script import InlineScript as InlineScriptRuntime
 from libopensesame.oslogging import oslogger
 from libqtopensesame.items.qtplugin import QtPlugin
@@ -28,20 +29,19 @@ _ = translation_context(u'inline_script', category=u'item')
 
 
 class InlineScript(InlineScriptRuntime, QtPlugin):
-
     """The inline_script GUI controls"""
+    
     description = _(u'Executes Python code')
     help_url = u'manual/python/about'
     ext = u'.py'
     mime_type = u'text/x-python'
 
     def __init__(self, name, experiment, string=None):
-        """See item."""
+        self._var_cache = None
         InlineScriptRuntime.__init__(self, name, experiment, string)
         QtPlugin.__init__(self)
 
     def apply_edit_changes(self):
-        """See qtitem."""
         sp = self._pyqode_prepare_editor.toPlainText()
         sr = self._pyqode_run_editor.toPlainText()
         self._set_modified()
@@ -50,24 +50,17 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         super().apply_edit_changes()
 
     def _set_modified(self, prepare=False, run=False):
-        r"""Sets the modified status of the editors."""
         self._pyqode_prepare_editor.document().setModified(prepare)
         self._pyqode_run_editor.document().setModified(run)
         self._pyqode_tab_bar.setTabText(
-            0,
-            (u'* ' if prepare else u'') + _(u'Prepare')
-        )
+            0, ('* ' if prepare else '') + _('Prepare'))
         self._pyqode_tab_bar.setTabText(
-            1,
-            (u'* ' if prepare else u'') + _(u'Run')
-        )
+            1, ('* ' if prepare else '') + _('Run'))
 
     def set_focus(self):
-        r"""Allows the item to focus the most important widget."""
         self._pyqode_tab_widget.setFocus()
 
     def init_edit_widget(self):
-        """See qtitem."""
         from pyqode.core.widgets import SplittableCodeEditTabWidget
 
         super().init_edit_widget(stretch=False)
@@ -105,7 +98,6 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
             self._pyqode_tab_widget.main_tab_widget.setCurrentIndex(1)
 
     def edit_widget(self):
-        """See qtitem."""
         super().edit_widget()
         _prepare = safe_decode(self.var._prepare)
         if _prepare != self._pyqode_prepare_editor.toPlainText():
@@ -121,7 +113,6 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
             )
 
     def get_ready(self):
-
         if self.container_widget is None:
             return
         self.apply_edit_changes()
@@ -137,6 +128,50 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
             line = int(kwargs['args'][0])
             edit = self._pyqode_tab_widget.main_tab_widget.currentWidget()
             TextHelper(edit).goto_line(line, move=True)
+
+    def var_info(self):
+        if self._var_cache is None:
+            script = self.var.get('_prepare', _eval=False, default='') + \
+                self.var.get('_run', _eval=False, default='')
+            self._var_cache = [
+                (key, None) for key in self._extract_assignments(script)]
+        return super().var_info() + self._var_cache
+    
+    def _extract_assignments(self, script):
+        """Extracts variables that are assigned in the script.
+        
+        Parameters
+        ----------
+        script: str
+        
+        Returns
+        -------
+        list
+            A list of extracted variable names
+        """
+        def inner(body, only_globals=False):
+            assignments = []
+            for element in body:
+                if isinstance(element, ast.Attribute):
+                    assignments += [target.attr for target in element.targets
+                                    if element.value == 'var']
+                elif isinstance(element, ast.Assign) and not only_globals:
+                    for target in element.targets:
+                        if isinstance(target, ast.Attribute):
+                            # Oldschool assignments to variable store
+                            if target.value.id == 'var':
+                                assignments.append(target.attr)
+                        else:
+                            assignments.append(target.id)
+                elif isinstance(element, ast.Global):
+                    assignments += element.names
+                elif hasattr(element, 'body'):
+                    assignments += inner(
+                        element.body,
+                        only_globals=isinstance(element, ast.FunctionDef))
+            return assignments
+        
+        return inner(ast.parse(script).body)
 
 
 # Alias for backwards compatibility

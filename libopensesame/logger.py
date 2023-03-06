@@ -18,64 +18,74 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.item import Item
+import re
 from libopensesame.exceptions import InvalidOpenSesameScript
 
 
 class Logger(Item):
-
-    r"""The logger item logs experimental data (i.e. variables)."""
-    description = u'Logs experimental data'
+    """The logger item logs experimental data (i.e. variables)."""
+    
+    description = 'Logs experimental data'
     is_oneshot_coroutine = True
 
     def reset(self):
-        """See item."""
         self.logvars = []
         self._logvars = None
-        self.var.auto_log = u'yes'
+        self.var.auto_log = 'yes'
+        self.exclude_vars = []
 
     def run(self):
-        """See item."""
         self.set_item_onset()
         if self._logvars is None:
-            if self.var.auto_log == u'yes':
+            if self.var.auto_log == 'yes':
                 self._logvars = self.experiment.log.all_vars()
             else:
                 self._logvars = []
             for var in self.logvars:
                 if var not in self._logvars:
                     self._logvars.append(var)
+            excludes = []
+            for ref_var in self.exclude_vars:
+                for test_var in self._logvars:
+                    if re.fullmatch(ref_var, test_var):
+                        excludes.append(test_var)
+            for exclude in excludes:
+                self._logvars.remove(exclude)
             self._logvars.sort()
         self.experiment.log.write_vars(self._logvars)
 
     def coroutine(self, coroutines):
-        """See coroutines plug-in."""
         yield
         self.run()
 
     def from_string(self, string):
-        """See item."""
         self.var.clear()
         self.comments = []
         self.reset()
         if string is None:
             return
-        for line in string.split(u'\n'):
+        for line in string.split('\n'):
             self.parse_variable(line)
             cmd, arglist, kwdict = self.experiment.syntax.parse_cmd(line)
-            if cmd == u'log' and len(arglist) > 0:
-                for var in arglist:
-                    if not self.experiment.syntax.valid_var_name(
-                            safe_decode(var)):
-                        raise InvalidOpenSesameScript(
-                            '{var} is not a valid variable name')
-                self.logvars += arglist
+            if cmd in ('log', 'exclude') and len(arglist) > 0:
+                if cmd == 'log':
+                    for var in arglist:
+                        if not self.experiment.syntax.valid_var_name(
+                                safe_decode(var)):
+                            raise InvalidOpenSesameScript(
+                                '{var} is not a valid variable name')
+                    self.logvars += arglist
+                else:
+                    self.exclude_vars += arglist
 
     def to_string(self):
-        """See item."""
         s = super().to_string('logger')
-        for logvar in self.logvars:
-            s += u'\t' + self.experiment.syntax.create_cmd(
-                u'log', [logvar]) + u'\n'
+        for var in self.logvars:
+            s += '\t' + self.experiment.syntax.create_cmd(
+                'log', [var]) + '\n'
+        for var in self.exclude_vars:
+            s += '\t' + self.experiment.syntax.create_cmd(
+                'exclude', [var]) + '\n'
         return s
 
 
