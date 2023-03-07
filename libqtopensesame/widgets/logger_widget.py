@@ -40,7 +40,7 @@ class LoggerWidget(BaseWidget):
     def update(self):
         self.ui.textedit_include.setPlainText('\n'.join(self.logger.logvars))
         self.ui.textedit_exclude.setPlainText(
-            '\n'.join(self.logger.exclude_vars))
+            '\n'.join(self.logger.exclude_patterns))
 
 
 # Alias for backwards compatibility

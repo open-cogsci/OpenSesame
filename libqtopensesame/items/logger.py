@@ -60,7 +60,7 @@ class Logger(LoggerRuntime, QtPlugin):
     def _update_logvars(self):
         self.logvars = self._extract_variables(
             self.logger_widget.ui.textedit_include.toPlainText())
-        self.exclude_vars = self._extract_variables(
+        self.exclude_patterns = self._extract_variables(
             self.logger_widget.ui.textedit_exclude.toPlainText())
         self.update_script()
 

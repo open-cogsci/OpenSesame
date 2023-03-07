@@ -18,7 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.item import Item
-import re
+import fnmatch
 from libopensesame.exceptions import InvalidOpenSesameScript
 
 
@@ -32,7 +32,7 @@ class Logger(Item):
         self.logvars = []
         self._logvars = None
         self.var.auto_log = 'yes'
-        self.exclude_vars = []
+        self.exclude_patterns = []
 
     def run(self):
         self.set_item_onset()
@@ -44,11 +44,11 @@ class Logger(Item):
             for var in self.logvars:
                 if var not in self._logvars:
                     self._logvars.append(var)
-            excludes = []
-            for ref_var in self.exclude_vars:
-                for test_var in self._logvars:
-                    if re.fullmatch(ref_var, test_var):
-                        excludes.append(test_var)
+            excludes = set()
+            for pattern in self.exclude_patterns:
+                for var in self._logvars:
+                    if fnmatch.fnmatch(var, pattern):
+                        excludes.add(var)
             for exclude in excludes:
                 self._logvars.remove(exclude)
             self._logvars.sort()
@@ -76,14 +76,14 @@ class Logger(Item):
                                 '{var} is not a valid variable name')
                     self.logvars += arglist
                 else:
-                    self.exclude_vars += arglist
+                    self.exclude_patterns += arglist
 
     def to_string(self):
         s = super().to_string('logger')
         for var in self.logvars:
             s += '\t' + self.experiment.syntax.create_cmd(
                 'log', [var]) + '\n'
-        for var in self.exclude_vars:
+        for var in self.exclude_patterns:
             s += '\t' + self.experiment.syntax.create_cmd(
                 'exclude', [var]) + '\n'
         return s

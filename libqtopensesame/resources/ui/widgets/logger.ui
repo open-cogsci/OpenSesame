@@ -83,7 +83,7 @@
       <item>
        <widget class="QLabel" name="label_summary">
         <property name="text">
-         <string>Add variables when they are not automatically logged or when automatic logging is disabled</string>
+         <string>Add variables if they are not automatically logged or if automatic logging is disabled</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -133,14 +133,14 @@
          </size>
         </property>
         <property name="placeholderText">
-         <string>Add one variable name per line. You can also use regular expressions.</string>
+         <string>Add one variable name per line</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="item_desc">
         <property name="text">
-         <string>Exclude variabels that are not generally useful to keep log files clean</string>
+         <string>Exclude variables to keep log files clean. Use &quot;*&quot; to match anything.</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
