@@ -47,6 +47,7 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         self._set_modified()
         self.var._prepare = sp
         self.var._run = sr
+        self._var_cache = None
         super().apply_edit_changes()
 
     def _set_modified(self, prepare=False, run=False):
@@ -137,7 +138,8 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
                 (key, None) for key in self._extract_assignments(script)]
         return super().var_info() + self._var_cache
     
-    def _extract_assignments(self, script):
+    @staticmethod
+    def _extract_assignments(script):
         """Extracts variables that are assigned in the script.
         
         Parameters
@@ -171,7 +173,11 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
                         only_globals=isinstance(element, ast.FunctionDef))
             return assignments
         
-        return inner(ast.parse(script).body)
+        try:
+            return inner(ast.parse(script).body)
+        except Exception as e:
+            oslogger.debug(f'failed to extract assignments: {e}')
+            return []
 
 
 # Alias for backwards compatibility
