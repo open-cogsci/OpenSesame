@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 import os
+import sys
 import tarfile
 from libopensesame import misc
 from libopensesame.osexpfile import OSExpBase

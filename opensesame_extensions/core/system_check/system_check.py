@@ -16,6 +16,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
+from libopensesame.py3compat import *
 from libqtopensesame.extensions import BaseExtension
 from libqtopensesame.misc import display
 from libqtopensesame.misc.translate import translation_context

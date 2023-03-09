@@ -191,7 +191,7 @@ class Syntax:
         except Exception as e:
             raise InvalidOpenSesameScript(f'Failed to parse line "{s}". Is '
                                           f'there a closing quotation '
-                                          f'missing?', line=s)
+                                          f'missing?')
 
     def parse_cmd(self, cmd):
         """Parses OpenSesame command strings, which consist of a command,
@@ -366,7 +366,8 @@ class Syntax:
             warnings.warn(PYTHON_CONDITIONAL_DEPRECATION_WARNING,
                           category=DeprecationWarning)
             cnd = cnd[1:]
-        elif self.re_txt.search(cnd) or 'always' in cnd or 'never' in cnd:
+        elif self.re_txt.search(cnd) or 'always' in cnd.lower() or \
+                'never' in cnd.lower():
             warnings.warn(SQUARE_BRACKET_CONDITIONAL_DEPRECATION_WARNING,
                           category=DeprecationWarning)
             # Quote all non-quoted symbols. This can be probably be done through

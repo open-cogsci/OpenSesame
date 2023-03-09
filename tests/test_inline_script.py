@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #-*- coding:utf-8 -*-
 
 """
@@ -17,11 +18,28 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 import unittest
-from opensesame_unittest import backends, compilable, color, syntax, response, \
-	headless, translations, readandwrite
+from libopensesame.py3compat import *
+from libqtopensesame.items.inline_script import InlineScript
 
-for mod in (backends, compilable, color, syntax, response, headless, \
-	translations, readandwrite):
-	res = unittest.main(mod, exit=False)
-	if len(res.result.errors) > 0 or len(res.result.failures) > 0:
-		exit(1)
+
+test_script = '''
+
+def fnc():
+    global d
+    d = 1
+    x = 1
+
+a = 1
+var.b = 1
+while True:
+    c = 1
+for i in range(10):
+    e = 1
+'''
+
+
+class CheckInlineScript(unittest.TestCase):
+    
+    def runTest(self):
+        assignments = InlineScript._extract_assignments(test_script)
+        assert sorted(assignments) == ['a', 'b', 'c', 'd', 'e']
