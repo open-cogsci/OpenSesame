@@ -223,6 +223,14 @@ class QtItemStore(ItemStore):
         for item in self.values():
             item._children = None
 
+    def is_supported(self, _type):
+        supported = self.extension_manager.provide(
+            'item_supported', experiment=self.experiment, item_type=_type)
+        if supported is not None:
+            return supported
+        if _type in self.plugin_manager:
+            return self.plugin_manager[_type].supports(self.experiment)
+        return True
 
 # Alias for backwards compatibility
 qtitem_store = QtItemStore

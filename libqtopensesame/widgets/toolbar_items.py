@@ -44,10 +44,12 @@ class ToolbarItems(BaseSubcomponent, QtWidgets.QToolBar):
         super().__init__(parent)
         self.setup(parent)
         self.orientationChanged.connect(self.build)
+        self._items = []
         for child in self.children():
             if isinstance(child, QtWidgets.QToolButton):
                 self._expand_button = child
                 break
+
 
     def add_content(self, content):
         r"""Add double rows of content to the toolbar.
@@ -57,6 +59,7 @@ class ToolbarItems(BaseSubcomponent, QtWidgets.QToolBar):
         content : list
             A list of content widgets.
         """
+        self._items += content
         for i, c in enumerate(content):
             if not i % 2:
                 if i > 0:
@@ -116,6 +119,14 @@ class ToolbarItems(BaseSubcomponent, QtWidgets.QToolBar):
         r"""Collapses the item toolbar if is was expanded."""
         if self._expand_button.isChecked():
             self._expand_button.click()
+            
+    def _refresh_enabled(self):
+        for item in self._items:
+            item.setEnabled(self.experiment.items.is_supported(item.item))
+
+    def event_change_experiment(self): self._refresh_enabled()
+    def event_open_experiment(self, path): self._refresh_enabled()
+    def event_startup(self): self._refresh_enabled()
 
 
 # Alias for backwards compatibility

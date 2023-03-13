@@ -25,10 +25,10 @@ _ = translation_context(u'tree_append_menu', category=u'core')
 
 
 class AppendExistingAction(BaseSubcomponent, QtWidgets.QAction):
-
     r"""An action for appending existing items, either as linked or unlinked
     copies.
     """
+    
     def __init__(self, append_menu, menu, item_name):
         r"""Constructor.
 
@@ -63,20 +63,19 @@ class AppendExistingAction(BaseSubcomponent, QtWidgets.QAction):
 
 
 class AppendNewAction(BaseSubcomponent, QtWidgets.QAction):
-
-    r"""An action for appending a new item."""
+    """An action for appending a new item.
+    
+    Parameters
+    ----------
+    append_menu : tree_append_menu
+        The main menu.
+    menu : QMenu
+        The submenu for this action.
+    item_type : unicode
+        The type of item to be created and appended.
+    """
+    
     def __init__(self, append_menu, menu, item_type):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        append_menu : tree_append_menu
-            The main menu.
-        menu : QMenu
-            The submenu for this action.
-        item_type : unicode
-            The type of item to be created and appended.
-        """
         super().__init__(menu)
         self.setup(append_menu)
         self.item_type = item_type
@@ -104,33 +103,34 @@ class AppendNewAction(BaseSubcomponent, QtWidgets.QAction):
 
 
 class TreeAppendMenu(BaseSubcomponent, QtWidgets.QMenu):
-
-    r"""An append item menu."""
+    """An append item menu.
+    
+    Parameters
+    ----------
+    tree_overview : tree_overview
+        The tree_overview with which this menu is associated.
+    target_treeitem : tree_item_item, optional
+        The treewidget item which corresponds to the sequence to which the
+        append operation should be applied. If `None`, the top-level item
+        from the tree_overview is used.
+    """
+    
     def __init__(self, tree_overview, target_treeitem=None):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        tree_overview : tree_overview
-            The tree_overview with which this menu is associated.
-        target_treeitem : tree_item_item, optional
-            The treewidget item which corresponds to the sequence to which the
-            append operation should be applied. If `None`, the top-level item
-            from the tree_overview is used.
-        """
         super().__init__(tree_overview)
         self.setup(tree_overview)
         self.target_treeitem = target_treeitem
         self.tree_overview = tree_overview
-        self.action_new_items = QtWidgets.QAction(self.theme.qicon(u'list-add'),
-                                                  _(u'Append new item'), self)
+        self.action_new_items = QtWidgets.QAction(
+            self.theme.qicon(u'list-add'), _(u'Append new item'), self)
         self.addAction(self.action_new_items)
-        self.action_linked_copy = QtWidgets.QAction(self.theme.qicon(u'edit-copy'),
-                                                    _(u'Append existing item (linked)'), self)
+        self.action_linked_copy = QtWidgets.QAction(
+            self.theme.qicon(u'edit-copy'),
+            _(u'Append existing item (linked)'), self)
         self.addAction(self.action_linked_copy)
         self.aboutToShow.connect(self.refresh)
         self.triggered.connect(self.append_item)
         self._new_items_menu = None
+        self.extension_manager.register_extension(self)
 
     def append_item(self, action):
         r"""Performs the append action.
@@ -201,12 +201,19 @@ class TreeAppendMenu(BaseSubcomponent, QtWidgets.QMenu):
             cfg_key = f'plugin_enabled_{item_type}'
             if cfg_key in cfg and not cfg[cfg_key]:
                 continue
+            # Ignoring unsupported items
+            if not self.experiment.items.is_supported(item_type):
+                continue
             if item_type is None:
                 self._new_items_menu.addSeparator()
             else:
                 self._new_items_menu.addAction(
                     AppendNewAction(self, self._new_items_menu, item_type))
         return self._new_items_menu
+
+    def event_change_experiment(self): self._new_items_menu = None
+    def event_open_experiment(self, path): self._new_items_menu = None
+    def event_startup(self): self._new_items_menu = None
 
 
 # Alias for backwards compatibility

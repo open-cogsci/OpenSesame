@@ -74,6 +74,12 @@ class QtPlugin(Plugin):
             QtAutoPlugin.__init__(self, __file__)
             
         return type(cls_name, (Runtime, QtAutoPlugin), {'__init__': cls_init})
+        
+    def supports(self, experiment):
+        fnc = self.attribute('supports', None)
+        if callable(fnc):
+            return fnc(experiment)
+        return True
 
 
 class QtOldStylePlugin(OldStylePlugin):
@@ -92,6 +98,8 @@ class QtOldStylePlugin(OldStylePlugin):
             return plugins.load_plugin(self.name, *args, prefix='qt', **kwargs)
         return plugins.load_extension(self.name, *args, **kwargs)
 
+    def supports(self, experiment):
+        return True
 
 class QtPluginManager(PluginManager):
     """An extension of the PluginManager that provdes access to the Qt

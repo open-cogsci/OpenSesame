@@ -190,6 +190,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.console = ConsoleBridge(self)
         self._unloaded_extension_manager = PluginManager(opensesame_extensions)
         self.extension_manager = ExtensionManager(self)
+        self.extension_manager.register_extension(self.ui.toolbar_items)
         self.extension_manager.fire(u'startup')
 
     @property
