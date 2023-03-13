@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "opensesame-ide"
+version = "4.0.0a1"
+description = "A graphical experiment builder for the social sciences"
+authors = ["Sebastiaan Mathôt <s.mathot@cogsci.nl>"]
+readme = "readme.md"
+license = {file = "COPYING"}
+packages = [
+    {include = "openexp"},
+    {include = "libopensesame"},
+    {include = "libqtopensesame"},
+    {include = "opensesame_extensions"},
+    {include = "opensesame_plugins"}
+]
+include = [
+    "libqtopensesame/resources/theme/default/Faba/index.theme",
+    "libqtopensesame/resources/theme/default/Faba/**/*.png",
+    "libqtopensesame/resources/theme/default/Faba/**/*.svg",
+    "libqtopensesame/resources/theme/default/MokaSesame/index.theme",
+    "libqtopensesame/resources/theme/default/MokaSesame/**/*.png",
+    "libqtopensesame/resources/theme/default/MokaSesame/**/*.svg"
+]
+
+[tool.poetry.dependencies]
+python = ">= 3.7"
+"pyqode.python" = ">= 4"
+qdatamatrix = ">= 0.1.34"
+python-pseudorandom = ">= 0.3.2"
+python-qnotifications = ">= 2.0.6"
+python-fileinspector = ">= 1.0.2"
+PyYAML = "*"
+webcolors = "*"
+pillow = "*"
+markdown = "*"
+PyQt6-WebEngine = "*"
+PyQt6 = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+opensesame = 'libqtopensesame.__main__:opensesame'

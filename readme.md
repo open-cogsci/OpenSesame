@@ -4,7 +4,7 @@
 
 OpenSesame is a tool to create experiments for psychology, neuroscience, and experimental economics.
 
-Copyright, 2010-2022, Sebastiaan Mathôt and contributors.
+Copyright, 2010-2023, Sebastiaan Mathôt and contributors.
 
 <http://osdoc.cogsci.nl/>
 
@@ -43,7 +43,7 @@ In addition to this repository, OpenSesame relies on a number repositories that 
 
 ## Branches
 
-Each major version of OpenSesame lives in its own branch. The default branch is currently `loewenfeld`.
+Each major version of OpenSesame lives in its own branch. The default branch is currently `4.0`.
 
 - `gibson` - 2.8
 - `heisenberg` - 2.9
@@ -51,6 +51,7 @@ Each major version of OpenSesame lives in its own branch. The default branch is 
 - `james` - 3.1
 - `kuhn` - 3.2
 - `loewenfeld` - 3.3
+- `milgram` - 4.0
 
 
 ## Citations
