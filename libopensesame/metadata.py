@@ -34,6 +34,6 @@ else:
 python_version = u'%d.%d.%d' % sys.version_info[:3]
 codename = u'Melodramatic Milgram'
 channel = u'dev'
-api = StrictVersion(u'2.1')
+api = StrictVersion(u'3.0')
 platform = sys.platform
 identity = u'OpenSesame {} {}'.format(__version__, codename)
