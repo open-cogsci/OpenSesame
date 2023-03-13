@@ -3,16 +3,11 @@ API: 2
 ---
 set is_template 1
 set width 1024
-set uniform_coordinates "yes"
-set subject_parity "even"
-set subject_nr 0
 set start "experiment"
 set height 768
 set foreground "white"
-set coordinates "uniform"
-set compensation 0
 set canvas_backend "psycho"
-set background "black"
+set background "gray"
 
 define sequence experiment
 	set flush_keyboard "yes"

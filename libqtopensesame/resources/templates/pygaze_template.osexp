@@ -3,23 +3,13 @@ API: 2
 ---
 set is_template 1
 set width 1024
-set uniform_coordinates "yes"
-set title "PyGaze eye-tracking template"
-set subject_parity "even"
-set subject_nr 0
 set start "experiment"
 set height 768
 set foreground "white"
-set font_size 18
-set font_italic "no"
-set font_family "mono"
-set font_bold "no"
-set description "A template for eye-tracking experiments"
-set coordinates "relative"
-set compensation 0
 set canvas_backend "psycho"
-set bidi "yes"
-set background "black"
+set background "gray"
+set title "PyGaze eye-tracking template"
+set description "A template for eye-tracking experiments"
 
 define notepad about_this_template
 	__note__
@@ -113,6 +103,53 @@ define keyboard_response keyboard_response
 define logger logger
 	set description "Logs experimental data"
 	set auto_log "yes"
+	set description "Logs experimental data"
+	set auto_log "yes"
+	exclude "*_backend"
+	exclude PERSISTENT
+	exclude TEMPORARY
+	exclude acc
+	exclude accuracy
+	exclude average_response_time
+	exclude avg_rt
+	exclude background
+	exclude closed
+	exclude "count_*"
+	exclude credentialless
+	exclude crossOriginIsolated
+	exclude datetime
+	exclude description
+	exclude devicePixelRatio
+	exclude disable_garbage_collection
+	exclude experiment_file
+	exclude experiment_path
+	exclude "font_*"
+	exclude foreground
+	exclude form_clicks
+	exclude fullscreen
+	exclude height
+	exclude innerHeight
+	exclude innerWidth
+	exclude isSecureContext
+	exclude length
+	exclude logfile
+	exclude opensesame_codename
+	exclude origin
+	exclude originAgentCluster
+	exclude outerHeight
+	exclude outerWidth
+	exclude "page?Offset"
+	exclude round_decimals
+	exclude "screen*"
+	exclude "scroll?"
+	exclude "sound_*"
+	exclude start
+	exclude status
+	exclude "time_*"
+	exclude total_correct
+	exclude total_response_time
+	exclude total_responses
+	exclude width
 
 define loop practice_loop
 	set skip 0
