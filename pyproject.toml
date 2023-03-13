@@ -4,7 +4,7 @@ version = "4.0.0a1"
 description = "A graphical experiment builder for the social sciences"
 authors = ["Sebastiaan Mathôt <s.mathot@cogsci.nl>"]
 readme = "readme.md"
-license = {file = "COPYING"}
+license = "COPYING"
 packages = [
     {include = "openexp"},
     {include = "libopensesame"},
