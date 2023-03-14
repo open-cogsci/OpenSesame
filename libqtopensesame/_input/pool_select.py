@@ -32,10 +32,10 @@ class PoolSelect(QtWidgets.QWidget, BaseSubcomponent):
     editingFinished = QtCore.Signal()
     textEdited = QtCore.Signal()
 
-    def __init__(self, main_window):
+    def __init__(self, parent=None):
 
-        QtWidgets.QComboBox.__init__(self, main_window)
-        self.setup(main_window)
+        QtWidgets.QComboBox.__init__(self, parent)
+        self.setup(parent)
         self.edit = QtWidgets.QLineEdit()
         self.edit.editingFinished.connect(self.editingFinished.emit)
         self.edit.textEdited.connect(self.textEdited.emit)

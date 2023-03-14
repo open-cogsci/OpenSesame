@@ -26,10 +26,10 @@ _ = translation_context(u'item_combobox', category=u'core')
 class ItemComboBox(QtWidgets.QComboBox, BaseSubcomponent):
 
     r"""A combobox to select existing items."""
-    def __init__(self, main_window, filter_fnc=None):
+    def __init__(self, parent=None, filter_fnc=None):
 
-        QtWidgets.QComboBox.__init__(self, main_window)
-        self.setup(main_window)
+        QtWidgets.QComboBox.__init__(self, parent)
+        self.setup(parent)
         self.filter_fnc = filter_fnc
         self.refresh()
 
