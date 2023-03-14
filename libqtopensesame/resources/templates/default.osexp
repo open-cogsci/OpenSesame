@@ -1,5 +1,5 @@
 ---
-API: 2
+API: 3.0
 ---
 set is_template 1
 set width 1024

@@ -155,7 +155,7 @@ define loop block_loop
 	set continuous no
 	set column_order "lag;T2_present"
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 T2_present y
 	setcycle 0 lag 0
 	setcycle 1 T2_present y
@@ -252,7 +252,7 @@ define loop experimental_loop
 	set continuous no
 	set column_order "practice;condition;block_repeat"
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 block_repeat 2
 	setcycle 0 practice no
 	setcycle 0 condition "[condition1]"
@@ -333,7 +333,7 @@ define loop practice_loop
 	set continuous no
 	set column_order "practice;condition;block_repeat"
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 block_repeat 0.5
 	setcycle 0 practice yes
 	setcycle 0 condition "[condition1]"

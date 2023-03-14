@@ -1,5 +1,5 @@
 ---
-API: 2
+API: 3.0
 ---
 set is_template 1
 set width 1024
@@ -176,7 +176,7 @@ define loop question_loop
 	set description "Repeatedly runs another item"
 	set cycles 3
 	set column_order "question_type;question_text;question_option1;question_option2;question_option3"
-	set break_if "never"
+	set break_if False
 	setcycle 0 question_option1 ""
 	setcycle 0 question_option2 ""
 	setcycle 0 question_option3 ""

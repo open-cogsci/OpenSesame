@@ -1,5 +1,5 @@
 ---
-API: 2
+API: 3.0
 ---
 set is_template 1
 set width 1024
@@ -34,7 +34,7 @@ define loop block_loop
 	set description "A single block of trials"
 	set cycles 1
 	set column_order ""
-	set break_if "never"
+	set break_if False
 	run trial_sequence
 
 define sequence block_sequence
@@ -76,7 +76,7 @@ define loop experimental_loop
 	set description "A loop containing one or more experimental blocks"
 	set cycles 1
 	set column_order "practice"
-	set break_if "never"
+	set break_if False
 	setcycle 0 practice "no"
 	run block_sequence
 
@@ -160,7 +160,7 @@ define loop practice_loop
 	set description "A loop containing one or more practice blocks"
 	set cycles 1
 	set column_order "practice"
-	set break_if "never"
+	set break_if False
 	setcycle 0 practice "yes"
 	run block_sequence
 

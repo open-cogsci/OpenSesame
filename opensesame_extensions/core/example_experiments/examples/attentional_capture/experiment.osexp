@@ -72,7 +72,7 @@ define loop block_loop
 	set continuous no
 	set column_order distractor
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 distractor present
 	setcycle 1 distractor absent
 	run trial_sequence
@@ -142,7 +142,7 @@ define loop experimental_loop
 	set continuous no
 	set column_order practice
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 practice no
 	run block_sequence
 
@@ -289,7 +289,7 @@ define loop practice_loop
 	set continuous no
 	set column_order practice
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 practice yes
 	run block_sequence
 

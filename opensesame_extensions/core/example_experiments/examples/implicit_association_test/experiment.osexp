@@ -85,7 +85,7 @@ define loop combined_loop
 	set continuous no
 	set column_order "category;item;correct_response"
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 category british
 	setcycle 0 item Jack
 	setcycle 0 correct_response "[british_response]"
@@ -244,7 +244,7 @@ define loop funny_loop
 	set continuous no
 	set column_order "category;item;correct_response"
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 category funny
 	setcycle 0 item Joke
 	setcycle 0 correct_response "[funny_response]"
@@ -347,7 +347,7 @@ define loop name_loop
 	set continuous no
 	set column_order "category;item;correct_response"
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 category british
 	setcycle 0 item Jack
 	setcycle 0 correct_response "[british_response]"

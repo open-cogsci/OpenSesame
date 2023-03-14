@@ -57,7 +57,7 @@ define loop loop
 	set continuous no
 	set column_order correct_response
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 correct_response None
 	setcycle 1 correct_response space
 	run sequence

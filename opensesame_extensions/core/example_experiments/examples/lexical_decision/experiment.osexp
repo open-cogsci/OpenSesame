@@ -63,7 +63,7 @@ define loop block_loop
 	set continuous no
 	set column_order "correct_response;target;category"
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 correct_response "[word_response]"
 	setcycle 0 category word
 	setcycle 0 target apple
@@ -132,7 +132,7 @@ define loop experimental_loop
 	set continuous no
 	set column_order practice
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 practice no
 	run block_sequence
 
@@ -191,7 +191,7 @@ define loop practice_loop
 	set continuous no
 	set column_order practice
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 practice yes
 	run block_sequence
 

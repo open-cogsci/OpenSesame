@@ -335,7 +335,7 @@ define loop test_constrain
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word cat
 	setcycle 0 category w
 	setcycle 1 word cat
@@ -366,7 +366,7 @@ define loop test_constrain_var
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word cat
 	setcycle 0 category w
 	setcycle 1 word cat
@@ -405,7 +405,7 @@ define loop test_from_csv
 	set cycles 1
 	set continuous no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 empty_column ""
 	run logger
 
@@ -425,7 +425,7 @@ define loop test_from_xlsx
 	set cycles 1
 	set continuous no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 empty_column ""
 	run logger
 
@@ -439,7 +439,7 @@ define loop test_fullfactorial
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 category dog
 	setcycle 0 word p
 	setcycle 1 category deg
@@ -499,7 +499,7 @@ define loop test_repeat_loop
 	set cycles 4
 	set continuous no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word dog
 	setcycle 1 word deg
 	setcycle 2 word cat
@@ -541,7 +541,7 @@ define loop test_reverse_all
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word dog
 	setcycle 0 category w
 	setcycle 1 word deg
@@ -563,7 +563,7 @@ define loop test_reverse_column
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word dog
 	setcycle 0 category w
 	setcycle 1 word deg
@@ -585,7 +585,7 @@ define loop test_roll_all
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word dog
 	setcycle 0 category w
 	setcycle 1 word deg
@@ -607,7 +607,7 @@ define loop test_roll_column
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word dog
 	setcycle 0 category w
 	setcycle 1 word deg
@@ -629,7 +629,7 @@ define loop test_roll_column_var
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word dog
 	setcycle 0 category w
 	setcycle 1 word deg
@@ -651,7 +651,7 @@ define loop test_shuffle_all
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word dog
 	setcycle 0 category w
 	setcycle 1 word deg
@@ -673,7 +673,7 @@ define loop test_shuffle_column
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word dog
 	setcycle 0 category w
 	setcycle 1 word deg
@@ -695,7 +695,7 @@ define loop test_shuffle_horiz_all
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 category cat
 	setcycle 0 word w
 	setcycle 1 category cat
@@ -717,7 +717,7 @@ define loop test_shuffle_horiz_column
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 category cat
 	setcycle 0 word w
 	setcycle 0 prime yes
@@ -743,7 +743,7 @@ define loop test_slice
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word cat
 	setcycle 1 word cat
 	setcycle 2 word dog
@@ -763,7 +763,7 @@ define loop test_sort
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word dog
 	setcycle 0 category w
 	setcycle 1 word deg
@@ -785,7 +785,7 @@ define loop test_sortby
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word dog
 	setcycle 0 category w
 	setcycle 1 word deg
@@ -807,7 +807,7 @@ define loop test_weight
 	set continuous no
 	set checkbox_break_if_on_first no
 	set break_if_on_first yes
-	set break_if never
+	set break_if False
 	setcycle 0 word dog
 	setcycle 0 weight 0
 	setcycle 1 word deg
