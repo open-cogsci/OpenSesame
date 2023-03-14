@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "opensesame-ide"
+name = "opensesame-core"
 version = "4.0.0a1"
 description = "A graphical experiment builder for the social sciences"
 authors = ["Sebastiaan Mathôt <s.mathot@cogsci.nl>"]
