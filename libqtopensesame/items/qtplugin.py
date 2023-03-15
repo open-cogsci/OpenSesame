@@ -325,7 +325,7 @@ class QtPlugin(QtItem):
         slider.setSingleStep(1000)
         # Take care of layout
         layout = QtWidgets.QHBoxLayout()
-        layout.setMargin(0)
+        layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(5)
         if left_label:
             llabel = QtWidgets.QLabel()
