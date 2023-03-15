@@ -20,6 +20,9 @@ include = [
     "libqtopensesame/resources/theme/default/MokaSesame/**/*.png",
     "libqtopensesame/resources/theme/default/MokaSesame/**/*.svg"
 ]
+homepage = "https://osdoc.cogsci.nl"
+repository = "https://github.com/open-cogsci/OpenSesame/"
+
 
 [tool.poetry.dependencies]
 python = ">= 3.7"
