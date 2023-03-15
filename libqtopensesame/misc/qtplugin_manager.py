@@ -101,6 +101,7 @@ class QtOldStylePlugin(OldStylePlugin):
     def supports(self, experiment):
         return True
 
+
 class QtPluginManager(PluginManager):
     """An extension of the PluginManager that provdes access to the Qt
     interfaces of plugins and extensions.

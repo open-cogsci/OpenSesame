@@ -138,6 +138,7 @@ class PluginManager:
         self._plugins = OrderedDict()
         self._pkg = pkg
         self._aliases = {}
+        self.sub_packages = []
         for importer, name, ispkg in pkgutil.iter_modules(
                 pkg.__path__, prefix=pkg.__name__ + '.'):
             if not ispkg:
@@ -153,6 +154,7 @@ class PluginManager:
         
     def _discover_subpkg(self, name):
         pkg = import_module(name)
+        self.sub_packages.append(pkg)
         for importer, plugin_name, ispkg in pkgutil.iter_modules(
                 pkg.__path__, prefix=name + '.'):
             if not ispkg:
