@@ -23,7 +23,6 @@ include = [
 homepage = "https://osdoc.cogsci.nl"
 repository = "https://github.com/open-cogsci/OpenSesame/"
 
-
 [tool.poetry.dependencies]
 python = ">= 3.7"
 "pyqode.python" = ">= 4"
@@ -35,8 +34,20 @@ PyYAML = "*"
 webcolors = "*"
 pillow = "*"
 markdown = "*"
-PyQt6-WebEngine = "*"
-PyQt6 = "*"
+
+[tool.wheel2deb.dependencies]
+python = ">= 3.7"
+"pyqode-python" = ">= 4"
+qdatamatrix = ">= 0.1.34"
+pseudorandom = "*"
+qnotifications = ">= 2.0.6"
+fileinspector = ">= 1.0.2"
+yaml = "*"
+webcolors = "*"
+pil = "*"
+markdown = "*"
+pyqt5 = "*"
+"pyqt5.qtwebengine" = "*"
 
 [build-system]
 requires = ["poetry-core"]
