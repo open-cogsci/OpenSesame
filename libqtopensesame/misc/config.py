@@ -242,7 +242,7 @@ class Config:
         for setting in qsettings.allKeys():
             if setting in self.config:
                 continue
-            oslogger.info(f'unregistered setting {setting}')
+            oslogger.debug(f'unregistered setting {setting}')
             value = qsettings.value(setting)
             value = self.type_qvariant(value, None)
             self.config[setting] = value
