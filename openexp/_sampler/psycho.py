@@ -189,13 +189,18 @@ class Psycho(Sampler):
         self._sound.play()
 
     def is_playing(self):
-
-        return self._sound.status == PLAYING
+        if hasattr(self._sound, 'isPlaying'):
+            return self._sound.isPlaying
+        else:
+            return self._sound.status == PLAYING
 
     def wait(self):
-
-        while self._sound.status == PLAYING:
-            self._keyboard.flush()
+        if hasattr(self._sound, 'isPlaying'):
+            while self._sound.isPlaying:
+                self._keyboard.flush()
+        else:
+            while self._sound.status == PLAYING:
+                self._keyboard.flush()
 
     @staticmethod
     def init_sound(experiment):
@@ -207,7 +212,8 @@ class Psycho(Sampler):
             experiment.var.get('psycho_audiolib', 'sounddevice')
         ]
         from psychopy import constants
-        PLAYING = constants.PLAYING
+        if hasattr(constants, 'PLAYING'):
+            PLAYING = constants.PLAYING
         from psychopy.sound import Sound
 
     @staticmethod
