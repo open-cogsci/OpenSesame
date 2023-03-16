@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "opensesame-core"
-version = "4.0.0a1"
+version = "4.0.0a2"
 description = "A graphical experiment builder for the social sciences"
 authors = ["Sebastiaan Mathôt <s.mathot@cogsci.nl>"]
 readme = "readme.md"
@@ -25,7 +25,8 @@ repository = "https://github.com/open-cogsci/OpenSesame/"
 
 [tool.poetry.dependencies]
 python = ">= 3.7"
-"pyqode.python" = ">= 4"
+"pyqode3-core" = ">= 4"
+"pyqode3-python" = ">= 4"
 qdatamatrix = ">= 0.1.34"
 python-pseudorandom = ">= 0.3.2"
 python-qnotifications = ">= 2.0.6"
@@ -38,6 +39,7 @@ markdown = "*"
 [tool.wheel2deb.dependencies]
 python = ">= 3.7"
 "pyqode-python" = ">= 4"
+"pyqode-core" = ">= 4"
 qdatamatrix = ">= 0.1.34"
 pseudorandom = "*"
 qnotifications = ">= 2.0.6"
