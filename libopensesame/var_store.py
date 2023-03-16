@@ -18,7 +18,10 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 import warnings
 from numbers import Number
-from types import NoneType
+try:
+    from types import NoneType
+except ImportError:  # Python <= 3.9
+    NoneType = type(None)
 from libopensesame.py3compat import *
 from libopensesame.exceptions import InvalidOpenSesameScript, OSException, \
     VariableDoesNotExist, InvalidValue
