@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "opensesame-core"
-version = "4.0.0a3"
+version = "4.0.0a4"
 description = "A graphical experiment builder for the social sciences"
 authors = ["Sebastiaan Mathôt <s.mathot@cogsci.nl>"]
 readme = "readme.md"
@@ -18,7 +18,9 @@ include = [
     "libqtopensesame/resources/theme/default/Faba/**/*.svg",
     "libqtopensesame/resources/theme/default/MokaSesame/index.theme",
     "libqtopensesame/resources/theme/default/MokaSesame/**/*.png",
-    "libqtopensesame/resources/theme/default/MokaSesame/**/*.svg"
+    "libqtopensesame/resources/theme/default/MokaSesame/**/*.svg",
+    "mime/opensesame.svg",
+    "mime/opensesame.desktop"
 ]
 homepage = "https://osdoc.cogsci.nl"
 repository = "https://github.com/open-cogsci/OpenSesame/"
