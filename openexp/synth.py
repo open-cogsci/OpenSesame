@@ -22,19 +22,17 @@ from openexp.sampler import Sampler
 try:
     import numpy as np
     from scipy import signal
-except:
+except ImportError:
     np = None
     signal = None
 
 
 def Synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
     r"""A factory that synthesizes a sound and returns it as a `sampler
-    object`.
-    For a full description of keywords, see
+    object`. For a full description of keywords, see
     `python_workspace_api.synth`.
 
-    For backwards compatibility, this function
-    behaves as though it is a
+    For backwards compatibility, this function behaves as though it is a
     back-end.
 
     Parameters
@@ -49,15 +47,15 @@ def Synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
     """
     if np is None:
         raise MissingDependency(
-            u'The synth is not available, because numpy is missing.')
+            'The synth is not available, because numpy is missing.')
     if attack < 0 or attack > length:
         raise InvalidValue(
-            u'Attack must be a numeric value between 0 and the sound length')
+            'Attack must be a numeric value between 0 and the sound length')
     if decay < 0 or decay > length:
         raise InvalidValue(
-            u'Decay must be a numeric value between 0 and the sound length')
+            'Decay must be a numeric value between 0 and the sound length')
     # We need to multiply the rate by two to get a stereo signal
-    rate = 2*experiment.var.get(u'sound_freq', 48000)
+    rate = 2*experiment.var.get('sound_freq', 48000)
     signal = osc_gen(osc, key_to_freq(freq), length, rate)
     _envelope = envelope(length, attack, decay, rate)
     sound = to_int_16(signal * _envelope)
@@ -131,15 +129,15 @@ def osc_gen(_type, freq, length, rate):
 
     length *= .001
     t = np.linspace(0, length, int(length*rate))
-    if _type == u'square':
+    if _type == 'square':
         return signal.square(2 * np.pi * freq * t)
-    if _type == u'saw':
+    if _type == 'saw':
         return signal.sawtooth(2 * np.pi * freq * t)
-    if _type == u'sine':
+    if _type == 'sine':
         return np.sin(2 * np.pi * freq * t)
-    if _type == u'white_noise':
+    if _type == 'white_noise':
         return np.random.random(int(length * rate)) * 2 - 1
-    raise InvalidValue(u'Invalid oscillator: %s' % _type)
+    raise InvalidValue('Invalid oscillator: %s' % _type)
 
 
 def envelope(length, attack, decay, rate):

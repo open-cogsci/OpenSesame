@@ -33,8 +33,7 @@ PLAYING = None
 
 
 class Psycho(Sampler):
-
-    r"""This is a sampler backend built on top of PsychoPy. For function
+    """This is a sampler backend built on top of PsychoPy. For function
     specifications and docstrings, see `openexp._sampler.sampler`.
     """
     # The settings variable is used by the GUI to provide a list of back-end
@@ -43,58 +42,48 @@ class Psycho(Sampler):
         'psycho_audiolib': {
             'name': 'Sound library',
             'description': 'Can be sounddevice, pyo, pygame, or PTB',
-                    'default': 'sounddevice'
-        },
+            'default': 'sounddevice'},
         'sound_freq': {
             'name': 'Sampling frequency for synth',
             'description': 'Determines the sampling rate of synthesized sounds',
-                    'default': DEFAULT_SOUND_FREQ
-        },
+            'default': DEFAULT_SOUND_FREQ},
         'block_size': {
             'name': 'Buffer size',
             'description': 'Low values for low latency. High values for stability.',
-                    'default': DEFAULT_BLOCK_SIZE
-        }
-    }
+            'default': DEFAULT_BLOCK_SIZE}}
 
     def __init__(self, experiment, src, **playback_args):
 
-        if (
-                isinstance(src, np.ndarray) and
-                src.dtype == np.int16 and
-                src.ndim == 1
-        ):
+        if (isinstance(src, np.ndarray) and src.dtype == np.int16 and
+                src.ndim == 1):
             # The Synth provides the data as a 1D array with int values between
             # 0 and 32767. The signal is stereo but flattened into a single
             # trace, so we expand it here.
             self._data = np.array(src, dtype=np.float64) / 32767
             self._data = self._data.reshape((self._data.shape[0] // 2, 2))
-            self._samplerate = experiment.var.get(
-                'sound_freq',
-                DEFAULT_SOUND_FREQ
-            )
+            self._samplerate = experiment.var.get('sound_freq',
+                                                  DEFAULT_SOUND_FREQ)
         else:
             self._data, self._samplerate = sf.read(src)
         # Create keyword arguments, which depend on the sound backend
         kwargs = {}
-        if (
-                experiment.var.get('psycho_audiolib', 'sounddevice')
-                in NEEDS_BLOCK_SIZE
-        ):
-            kwargs['blockSize'] = experiment.var.get(
-                'block_size',
-                DEFAULT_BLOCK_SIZE
-            )
+        if (experiment.var.get('psycho_audiolib', 'sounddevice')
+                in NEEDS_BLOCK_SIZE):
+            kwargs['blockSize'] = experiment.var.get('block_size',
+                                                     DEFAULT_BLOCK_SIZE)
         # Make sure that the data is a [samples, 2] array for stereo data
         if self._data.ndim == 1:
             self._data.shape = [len(self._data), 1]
         if self._data.shape[1] == 1:
             self._data = self._data.repeat(2, axis=1)
-        self._sound = Sound(
-            self._data,
-            sampleRate=self._samplerate,
-            **kwargs
-        )
+        self._sound = Sound(self._data, sampleRate=self._samplerate, **kwargs)
+        # isPlaying() was introduced recently. For older versions of psychopy
+        # we monkeypatch this function into existence using the older status
+        # property
+        # - https://github.com/psychopy/psychopy/commit/\
+        #   50a730b7be0bb1a219d5666d657bad4c8cc121d1
+        if not hasattr(self._sound, 'isPlaying'):
+            self._sound.isPlaying = lambda self: self.status == PLAYING
         self._keyboard = Keyboard(experiment)
         Sampler.__init__(self, experiment, src, **playback_args)
 
@@ -190,11 +179,11 @@ class Psycho(Sampler):
 
     def is_playing(self):
 
-        return self._sound.status == PLAYING
+        return self._sound.isPlaying
 
     def wait(self):
 
-        while self._sound.status == PLAYING:
+        while self._sound.isPlaying:
             self._keyboard.flush()
 
     @staticmethod
@@ -204,10 +193,15 @@ class Psycho(Sampler):
 
         from psychopy import prefs
         prefs.hardware['audioLib'] = [
-            experiment.var.get('psycho_audiolib', 'sounddevice')
-        ]
+            experiment.var.get('psycho_audiolib', 'sounddevice')]
         from psychopy import constants
         PLAYING = constants.PLAYING
+        # Fixes a regression in psychopy introduced in
+        # - https://github.com/psychopy/psychopy/commit/\
+        #   45ed546b8e0a25ddb87156ef400687aaf31baf39
+        # Should be removed as soon as this is fixed upstream
+        import psychopy.sound._base
+        psychopy.sound._base.defaultStim = []
         from psychopy.sound import Sound
 
     @staticmethod

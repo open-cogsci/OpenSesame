@@ -24,24 +24,22 @@ from openexp.synth import Synth as OpenExpSynth
 
 
 class Synth(Sampler):
-
-    r"""An item for synthesized-sound playback."""
-    description = u'A basic sound synthesizer'
+    """An item for synthesized-sound playback."""
+    
+    description = 'A basic sound synthesizer'
 
     def reset(self):
-        """See item."""
         self.var.freq = 440
         self.var.length = 100
-        self.var.osc = u'sine'
+        self.var.osc = 'sine'
         self.var.pan = 0
         self.var.attack = 0
         self.var.decay = 5
         self.var.volume = 1.0
-        self.var.duration = u'sound'
+        self.var.duration = 'sound'
         self.block = False
 
     def prepare(self):
-        """Prepares for playback."""
         BaseResponseItem.prepare(self)
         try:
             self.sampler = OpenExpSynth(self.experiment, osc=self.var.osc,
@@ -50,15 +48,15 @@ class Synth(Sampler):
                                         attack=self.var.attack,
                                         decay=self.var.decay)
         except Exception as e:
-            raise OSException(f'Failed to generate sound')
+            raise OSException(f'Failed to generate sound: {e}')
         pan = self.var.pan
         if pan == -20:
-            pan = u'left'
+            pan = 'left'
         elif pan == 20:
-            pan = u'right'
+            pan = 'right'
         self.sampler.pan = pan
         self.sampler.volume = self.var.volume
-        self.sampler.block = self.var.duration == u'sound'
+        self.sampler.block = self.var.duration == 'sound'
 
 
 # Alias for backwards compatibility

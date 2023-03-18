@@ -21,43 +21,45 @@ from libopensesame.synth import Synth as SynthRuntime
 from libqtopensesame.items.qtplugin import QtPlugin
 from libqtopensesame.validators import DurationValidator
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'synth', category=u'item')
+_ = translation_context('synth', category='item')
 
 
 class Synth(SynthRuntime, QtPlugin):
-
-    r"""GUI controls for the synth item."""
-    description = _(u'A basic sound synthesizer')
-    help_url = u'manual/stimuli/sound'
+    """GUI controls for the synth item."""
+    
+    description = _('A basic sound synthesizer')
+    help_url = 'manual/stimuli/sound'
     lazy_init = True
 
     def __init__(self, name, experiment, string=None):
-        """See item."""
         SynthRuntime.__init__(self, name, experiment, string)
         QtPlugin.__init__(self)
 
     def init_edit_widget(self):
-        """See qtitem."""
-        QtPlugin.init_edit_widget(self)
-        self.add_combobox_control(u'osc', _(u'Waveform'),
-                                  [u'sine', u'saw', u'square', u'white_noise'])
-        self.add_line_edit_control(u'freq',
-                                   _(u'Frequency'),
-                                   info=_(u'In Hertz or as note, e.g. "A1"'))
-        self.add_spinbox_control(u'attack', _(u'Attack'),
-                                 min_val=0, max_val=10000000, suffix=_(u' ms'))
-        self.add_spinbox_control(u'decay', _(u'Decay'),
-                                 min_val=0, max_val=10000000, suffix=_(u' ms'))
-        self.add_doublespinbox_control(u'volume', _(u'Volume'),
-                                       min_val=0, max_val=1, suffix=_(u' x maximum'))
-        self.add_line_edit_control(u'pan', _(u'Panning'),
-                                   info=_(u'Positive values toward the right; "left" or "right" for full panning'))
-        self.add_spinbox_control(u'length', _(u'Length'),
-                                 min_val=0, max_val=10000000, suffix=_(u' ms'))
-        self.add_line_edit_control(u'duration', _(u'Duration'),
-                                   info=_(
-                                       u'In milliseconds, "sound", "keypress", or "mouseclick"'),
-                                   validator=duration_validator(self, default=u'sound'))
+        super().init_edit_widget()
+        self.add_combobox_control(
+            'osc', _('Waveform'),
+            ['sine', 'saw', 'square', 'white_noise'])
+        self.add_line_edit_control(
+            'freq', _('Frequency'), info=_('In Hertz or as note, e.g. "A1"'))
+        self.add_spinbox_control(
+            'attack', _('Attack'), min_val=0, max_val=10000000,
+            suffix=_(' ms'))
+        self.add_spinbox_control(
+            'decay', _('Decay'), min_val=0, max_val=10000000, suffix=_(' ms'))
+        self.add_doublespinbox_control(
+            'volume', _('Volume'), min_val=0, max_val=1,
+            suffix=_(' x maximum'))
+        self.add_line_edit_control(
+            'pan', _('Panning'),
+            info=_('Positive values toward the right; "left" or "right" for full panning'))
+        self.add_spinbox_control(
+            'length', _('Length'), min_val=0, max_val=10000000,
+            suffix=_(' ms'))
+        self.add_line_edit_control(
+            'duration', _('Duration'),
+            info=_('In milliseconds, "sound", "keypress", or "mouseclick"'),
+            validator=DurationValidator(self, default='sound'))
 
 
 # Alias for backwards compatibility
