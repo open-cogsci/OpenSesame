@@ -256,8 +256,8 @@ class Syntax:
         bool
             True if txt contains any variables references, and False otherwise.
         """
-        return self.re_txt.search(txt) is not None or \
-            self.re_txt_py.search(txt) is not None
+        return any([self.re_fstring.search(txt), self.re_txt.search(txt),
+                    self.re_txt_py.search(txt)])
 
     def eval_text(self, txt, round_float=False, var=None):
         """Evaluates variables and inline Python in a text string.

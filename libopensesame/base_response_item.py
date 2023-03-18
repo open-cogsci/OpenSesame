@@ -91,20 +91,17 @@ class BaseResponseItem(Item):
             correct = None
         self.responses.add(
             response=response, response_time=t1-self._t0, correct=correct,
-            item=self.name, feedback=self.process_feedback
-        )
+            item=self.name, feedback=self.process_feedback)
 
     def prepare(self):
-        """See item."""
         super().prepare()
         self._timeout = self._prepare_timeout()
-        self._allowed_responses = self._prepare_responses(u'allowed_responses')
-        self._correct_responses = self._prepare_responses(u'correct_response')
+        self._allowed_responses = self._prepare_responses('allowed_responses')
+        self._correct_responses = self._prepare_responses('correct_response')
         self._collect_response = self.prepare_response_func()
         self._t0 = None
 
     def run(self):
-        """See item."""
         super().run()
         if self._t0 is None:
             self._t0 = self.set_item_onset()
@@ -114,19 +111,18 @@ class BaseResponseItem(Item):
         self.process_response(retval)
 
     def var_info(self):
-        """See item."""
         l = []
-        l.append((u"response", u"[Depends on response]"))
-        l.append((u"response_time", u"[Depends on response]"))
-        l.append((u"response_%s" % self.name, u"[Depends on response]"))
-        l.append(("response_time_%s" % self.name, u"[Depends on response]"))
+        l.append(("response", "[Depends on response]"))
+        l.append(("response_time", "[Depends on response]"))
+        l.append(("response_%s" % self.name, "[Depends on response]"))
+        l.append(("response_time_%s" % self.name, "[Depends on response]"))
         if self.process_feedback:
-            l.append((u"correct", u"[Depends on response]"))
-            l.append((u"correct_%s" % self.name, u"[Depends on response]"))
-            l.append((u"average_response_time", u"[Depends on response]"))
-            l.append((u"avg_rt", u"[Depends on response]"))
-            l.append((u"accuracy", u"[Depends on response]"))
-            l.append((u"acc", u"[Depends on response]"))
+            l.append(("correct", "[Depends on response]"))
+            l.append(("correct_%s" % self.name, "[Depends on response]"))
+            l.append(("average_response_time", "[Depends on response]"))
+            l.append(("avg_rt", "[Depends on response]"))
+            l.append(("accuracy", "[Depends on response]"))
+            l.append(("acc", "[Depends on response]"))
         return super().var_info() + l
 
     # Private functions
@@ -139,8 +135,8 @@ class BaseResponseItem(Item):
         float
             A timeout value.
         """
-        timeout = self.var.get(u'timeout', default=u'infinite')
-        if timeout == u'infinite':
+        timeout = self.var.get('timeout', default='infinite')
+        if timeout == 'infinite':
             return
         try:
             timeout = int(timeout)
@@ -163,8 +159,8 @@ class BaseResponseItem(Item):
         -------
         NoneType, list
         """
-        responses = safe_decode(self.var.get(var, default=u''))
-        if responses == u'':
+        responses = safe_decode(self.var.get(var, default=''))
+        if responses == '':
             return
         responses = [r.strip() for r in responses.split(';')]
         for r in responses:

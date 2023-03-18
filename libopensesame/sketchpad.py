@@ -29,13 +29,11 @@ from openexp.canvas import Canvas
 
 class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
-    r"""The runtime part of the sketchpad item."""
-    description = u'Displays stimuli'
+    description = 'Displays stimuli'
     is_oneshot_coroutine = True
 
     def reset(self):
-        """See item."""
-        self.var.duration = u'keypress'
+        self.var.duration = 'keypress'
         self.elements = []
 
     def element_module(self):
@@ -50,17 +48,16 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
         return sketchpad_elements
 
     def from_string(self, string):
-        """See item."""
         self.var.clear()
         self.comments = []
         self.reset()
         if string is None:
             return
-        for line in string.split(u'\n'):
+        for line in string.split('\n'):
             if self.parse_variable(line):
                 continue
             cmd, arglist, kwdict = self.syntax.parse_cmd(line)
-            if cmd != u'draw':
+            if cmd != 'draw':
                 continue
             if len(arglist) == 0:
                 raise InvalidSketchpadElementScript(
@@ -81,7 +78,7 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
 
     def process_response(self, response_args):
         """See base_response_item."""
-        if self.var.duration == u'mouseclick':
+        if self.var.duration == 'mouseclick':
             MouseResponseMixin.process_response(self, response_args)
             return
         super().process_response(response_args)
@@ -91,10 +88,10 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
         if isinstance(self.var.duration, (int, float)):
             self._flush = lambda: None
             return self._prepare_sleep_func(self.var.duration)
-        if self.var.duration == u'keypress':
+        if self.var.duration == 'keypress':
             self._flush = lambda: self._keyboard.flush()
             return KeyboardResponseMixin.prepare_response_func(self)
-        if self.var.duration == u'mouseclick':
+        if self.var.duration == 'mouseclick':
             self._flush = lambda: self._mouse.flush()
             return MouseResponseMixin.prepare_response_func(self)
         raise InvalidValue(f'Invalid duration: {self.var.duration}')
@@ -111,7 +108,6 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
         return elements
 
     def prepare(self):
-        """See item."""
         super().prepare()
         self.canvas = Canvas(self.experiment, color=self.var.foreground,
                              background_color=self.var.background)
@@ -122,27 +118,23 @@ class Sketchpad(BaseResponseItem, KeyboardResponseMixin, MouseResponseMixin):
                     self.canvas.rename_element(temp_name, element.element_name)
 
     def run(self):
-        """See item."""
         self._t0 = self.set_item_onset(self.canvas.show())
         self._flush()
         super().run()
 
     def coroutine(self):
-        """See coroutines plug-in."""
         yield
         self.set_item_onset(self.canvas.show())
 
     def to_string(self):
-        """See item."""
         s = super().to_string()
         for element in self.elements:
-            s += u'\t%s\n' % element.to_string()
+            s += '\t%s\n' % element.to_string()
         return s
 
     def var_info(self):
-        """See item."""
-        if self.var.get(u'duration', _eval=False, default=u'') in \
-                [u'keypress', u'mouseclick']:
+        if self.var.get('duration', _eval=False, default='') in \
+                ['keypress', 'mouseclick']:
             return super().var_info()
         return Item.var_info(self)
 

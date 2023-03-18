@@ -212,10 +212,9 @@ class VarStore:
                 f'Variable {var} should be in {valid}, not {val}')
         if _eval:
             object.__setattr__(self, u'__lock__', var)
-            val = self.__item__.syntax.eval_text(val)
+            val = self.__item__.syntax.auto_type(
+                self.__item__.syntax.eval_text(val))
             object.__setattr__(self, u'__lock__', None)
-        if isinstance(val, bool):
-            return u'yes' if val else u'no'
         return val
 
     def has(self, var):

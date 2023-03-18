@@ -108,47 +108,54 @@ class Item:
         pass
 
     def parse_variable(self, line):
-        """
-        Reads a single variable from a single definition line.
+        """Reads a single variable from a single definition line.
 
-        Arguments:
-        line	--	A single definition line.
+        Parameters
+        ----------
+        line
+            A single definition line.
 
-        Returns:
-        True on succes, False on failure.
+        Returns
+        -------
+        bool
+            True on succes, False on failure.
         """
         # It is a little ugly to call parse_comment() here, but otherwise
         # all from_string() derivatives need to be modified
         if self.parse_comment(line):
             return True
         l = self.syntax.split(line.strip())
-        if len(l) > 0 and l[0] == u'set':
-            if len(l) != 3:
-                raise InvalidOpenSesameScript(
-                    'Error parsing variable definition', line=line)
-            else:
-                self.var.set(l[1], l[2])
-                return True
-        return False
+        if len(l) == 0 or l[0] != u'set':
+            return False
+        if len(l) != 3:
+            raise InvalidOpenSesameScript(
+                'Error parsing variable definition', line=line)
+        self.var.set(l[1], l[2])
+        return True
 
     def parse_line(self, line):
-        """
-        Allows for arbitrary line parsing, for item-specific requirements.
+        """Allows for arbitrary line parsing, for item-specific requirements.
 
-        Arguments:
-        line	--	A single definition line.
+        Parameters
+        ----------
+        line
+            A single definition line.
         """
         pass
 
     def parse_comment(self, line):
-        """
-        Parses comments from a single definition line, indicated by # // or '.
+        """Parses comments from a single definition line, indicated by 
+        # // or '.
 
-        Arguments:
-        line	--	A single definition line.
+        Parameters
+        ----------
+        line
+            A single definition line.
 
-        Returns:
-        True on succes, False on failure.
+        Returns
+        -------
+        bool
+            True on succes, False on failure.
         """
         line = line.strip()
         if len(line) > 0 and line[0] == u'#':
