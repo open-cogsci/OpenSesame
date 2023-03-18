@@ -7,7 +7,7 @@ set start "experiment"
 set height 768
 set foreground "white"
 set canvas_backend "psycho"
-set background "gray"
+set background "#3d3846"
 
 define sequence experiment
 	set flush_keyboard "yes"
@@ -16,7 +16,7 @@ define sequence experiment
 
 define notepad getting_started
 	__note__
-	Welcome to OpenSesame 4.0 "Codename TBA"!
+	Welcome to OpenSesame 4.0 "Melodramatic Milgram"!
 
 	If you are new to OpenSesame, it is a good idea to follow one of the tutorials,
 	which can be found on the documentation site:
@@ -38,4 +38,4 @@ define sketchpad welcome
 	set start_response_interval "no"
 	set reset_variables "no"
 	set duration "keypress"
-	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=True text="OpenSesame 4.0 <i>Codename TBA</i>" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=True text="OpenSesame 4.0 <i>Melodramatic Milgram</i>" x=0 y=0 z_index=0

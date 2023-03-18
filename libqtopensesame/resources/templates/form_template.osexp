@@ -7,7 +7,7 @@ set start "experiment"
 set height 768
 set foreground "black"
 set canvas_backend "psycho"
-set background "white"
+set background "#deddda"
 set title "Form template"
 set description "A simple template for form-based questionnaires"
 

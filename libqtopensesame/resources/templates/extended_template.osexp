@@ -7,7 +7,7 @@ set start "experiment"
 set height 768
 set foreground "white"
 set canvas_backend "psycho"
-set background "gray"
+set background "#3d3846"
 set description "A template containing a practice and an experimental phase"
 
 define notepad about_this_template

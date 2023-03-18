@@ -7,7 +7,7 @@ set start "experiment"
 set height 768
 set foreground "white"
 set canvas_backend "psycho"
-set background "gray"
+set background "#3d3846"
 set title "PyGaze eye-tracking template"
 set description "A template for eye-tracking experiments"
 
