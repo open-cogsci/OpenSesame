@@ -30,7 +30,6 @@ _ = translation_context(u'analytics', category=u'extension')
 HTML = u'''<!DOCTYPE html>
 <html>
 <head>
-<script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-TPL6TXE7KL">
 </script>
@@ -48,19 +47,13 @@ HTML = u'''<!DOCTYPE html>
 
 
 class Analytics(BaseExtension):
-
-    r"""Sends a ping to Google Analytics when OpenSesame is started."""
+    """Sends a ping to Google Analytics when OpenSesame is started."""
+    
     def event_startup(self):
-
         wv = WebView(self.main_window)
         wv.setHtml(
-            HTML,
-            QtCore.QUrl(
-                u'http://opensesame.app.cogsci.nl/{}/{}'.format(
-                    self.main_window.mode,
-                    metadata.__version__)
-            )
-        )
+            HTML, QtCore.QUrl(
+                f'http://opensesame.app.cogsci.nl/{self.main_window.mode}/{metadata.__version__}'))
         wv.hide()
         if not cfg.analytics_show_notification:
             return
