@@ -392,17 +392,14 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         return treeitem is not None and treeitem.draggable()
 
     def drop_event_item_existing(self, data, e=None, target_treeitem=None):
-        """
-        desc:
-                Handles drop events for item moves.
+        """Handles drop events for item moves.
 
-        arguments:
-                data:
-                        desc:	A drop-data dictionary.
-                        type:	dict:
-                e:
-                        desc:	A drop event.
-                        type:	QDropEvent
+        Parameters
+        ----------
+        data: dict
+            A drop-data dictionary
+        e: QDropEvent, optional
+        target_tree_item: TreeItemItem, optional
         """
         if not drag_and_drop.matches(data, [u'item-existing']):
             if e is not None:
@@ -415,7 +412,13 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
                 e.ignore()
             return
         if target_treeitem is None:
-            target_treeitem = self.itemAt(e.pos())
+            try:
+                pos = e.pos()
+            except AttributeError:
+                # This seems to be a backwards-incompatibility bug in PyQt6,
+                # which has not implemented the pos() function
+                pos = e.position().toPoint()
+            target_treeitem = self.itemAt(pos)
         if not self.droppable(target_treeitem, data):
             oslogger.debug(u'Drop ignored: target not droppable')
             if e is not None:
