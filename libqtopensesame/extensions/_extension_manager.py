@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
+import traceback
 import opensesame_extensions
 from libopensesame.plugin_manager import PluginManager
 from libopensesame.oslogging import oslogger
@@ -76,6 +77,7 @@ class ExtensionManager(BaseSubcomponent):
                 ext = ulext.build(self.main_window)
             except Exception as e:
                 oslogger.error(f'Failed to load extension {ulext.name}: {e}')
+                traceback.print_exc()
                 self.console.write(e)
             else:
                 self._extensions.append(ext)
@@ -117,13 +119,10 @@ class ExtensionManager(BaseSubcomponent):
 
     def __contains__(self, extension_name):
         """
-        arguments:
-                extension_name:
-                        desc:    The extension name.
-                        type:    str
-
-        returns:
-                True if the extension exists, False otherwise.
+        Returns
+        -------
+        bool
+            True if the extension exists, False otherwise.
         """
         return any(extension_name in ext.aliases for ext in self._extensions)
 
@@ -157,6 +156,7 @@ class ExtensionManager(BaseSubcomponent):
                     f'(see debug window for stack trace)',
                     category='warning')
                 self.console.write(e)
+                traceback.print_exc()
                 oslogger.error(f'Extension {ext.name()} misbehaved on event '
                                f'{event}: {e}')
 
@@ -175,6 +175,7 @@ class ExtensionManager(BaseSubcomponent):
                 f'(see debug window for stack trace)',
                 category='warning')
             self.console.write(e)
+            traceback.print_exc()
             oslogger.error(f'Extension {ulext.name} misbehaved on providing '
                            f'{provide}: {e}')
 
