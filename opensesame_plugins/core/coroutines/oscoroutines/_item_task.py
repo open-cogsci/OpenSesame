@@ -23,17 +23,10 @@ from libopensesame.item_stack import item_stack_singleton
 
 
 class ItemTask(BaseTask):
+    """A task controls the coroutine for one item."""
 
-    r"""A task controls the coroutine for one item."""
     def __init__(self, coroutines, _item, start_time, end_time,
                  abort_on_end=False):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        item : item
-            An item object.
-        """
         if not hasattr(_item, u'coroutine'):
             raise OSException(f'{_item.item_type} not supported by coroutines')
         self._item = _item
@@ -41,14 +34,12 @@ class ItemTask(BaseTask):
         self.coroutines.event(u'initialize %s' % _item.coroutine)
 
     def step(self):
-        """See base_task."""
         item_stack_singleton.push(self._item.name, u'coroutines_step')
-        retval = base_task.step(self)
+        retval = super().step()
         item_stack_singleton.pop()
         return retval
 
     def launch(self):
-        """See base_task."""
         item_stack_singleton.push(self._item.name, u'coroutines_prepare')
         self._item.prepare()
         item_stack_singleton.pop()
