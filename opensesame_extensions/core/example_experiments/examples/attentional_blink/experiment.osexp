@@ -1,10 +1,10 @@
 ---
-API: 2.1
+API: 3
 Citation: 'Raymond, J. E., Shapiro, K. L., & Arnell, K. M. (1992). Temporary suppression
   of visual processing in an RSVP task: An attentional blink? *Journal of Experimental
   Psychology: Human Perception and Performance*, *18*(3), 849-860. <http://doi.org/10.1037/0096-1523.18.3.849>'
 Description: Experiment from the attentional-blink tutorial
-OpenSesame: 3.3.0a49
+OpenSesame: 4.0.0a17
 Platform: posix
 Title: Attentional blink
 ---
@@ -28,7 +28,7 @@ set font_size 32
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "/home/sebastiaan/git/OpenSesame/opensesame_extensions/example_experiments/examples/attentional_blink"
+set experiment_path "/home/sebastiaan/git/OpenSesame/opensesame_extensions/core/example_experiments/examples/attentional_blink"
 set disable_garbage_collection yes
 set description "Based on Experiment 2 from Raymond et al. (1992, JEP HPP)"
 set coordinates relative
@@ -43,9 +43,9 @@ define inline_script RSVP
 	# Loop through all canvas objects and present them, separate by a blank canvas
 	for letter_canvas in letter_canvas_list:
 		letter_canvas.show()
-		clock.sleep(var.letter_dur)
+		clock.sleep(letter_dur)
 		blank_canvas.show()
-		clock.sleep(var.isi)
+		clock.sleep(isi)
 	__end__
 	___prepare__
 	# We're going to use the random and string modules
@@ -53,29 +53,29 @@ define inline_script RSVP
 	import string
 	
 	# Set variables that are fixed throughout the experiment
-	var.T1_color = 'white'
-	var.letter_dur = 10
-	var.isi = 70
-	var.max_lag = 8
+	T1_color = 'white'
+	letter_dur = 10
+	isi = 70
+	max_lag = 8
 	
 	# Choose a random position for the T1, and use this to determine the length of
 	# the stream
-	var.T1_pos = random.randint(7, 15)
-	var.stream_len = var.T1_pos + var.max_lag + 1
+	T1_pos = random.randint(7, 15)
+	stream_len = T1_pos + max_lag + 1
 	
 	# Randomly sample letters from all uppercase letters, except for the X, which
 	# is used for the T2 (when present).
 	letters = list(string.ascii_uppercase)
 	letters.remove('X')
-	stim_list = random.sample(letters, var.stream_len)
+	stim_list = random.sample(letters, stream_len)
 	
 	# Determine the T1
-	var.T1 = stim_list[var.T1_pos].lower()
+	T1 = stim_list[T1_pos].lower()
 	
 	# Replace the letter at the T2 position by an X
-	if var.T2_present == 'y':
-		var.T2_pos = var.T1_pos + var.lag
-		stim_list[var.T2_pos] = 'X'
+	if T2_present == 'y':
+		T2_pos = T1_pos + lag
+		stim_list[T2_pos] = 'X'
 	
 	# Create a list of canvas objects, one for each letter. For the T1, we
 	# explicitly need to set color, because it has a different color from the other
@@ -83,10 +83,10 @@ define inline_script RSVP
 	letter_canvas_list = []
 	for i, stim in enumerate(stim_list):
 		letter_canvas = Canvas()
-		if i == var.T1_pos:
-			color = var.T1_color
+		if i == T1_pos:
+			color = T1_color
 		else:
-			color = var.foreground
+			color = foreground
 		letter_canvas += Text(stim, color=color)
 		letter_canvas_list.append(letter_canvas)
 		
@@ -136,10 +136,10 @@ define inline_script assertions
 	___prepare__
 	# These are sanity checks: They are things that should be true, and, if not,
 	# indicate a bug in the experiment somewhere.
-	assert(var.condition in ['experimental', 'control'])
-	assert(var.T2_present in ['y', 'n'])
-	assert(var.lag in [''] + list(range(0, 9)))
-	assert((var.lag == '') != (var.T2_present == 'y'))
+	assert(condition in ['experimental', 'control'])
+	assert(T2_present in ['y', 'n'])
+	assert(lag in [''] + list(range(0, 9)))
+	assert((lag == '') != (T2_present == 'y'))
 	__end__
 
 define loop block_loop
@@ -197,8 +197,8 @@ define loop block_loop
 define sequence block_sequence
 	set flush_keyboard yes
 	set description "A sequence containing a single block of trials followed by feedback to the participant"
-	run instructions_experimental "[condition] = experimental"
-	run instructions_control "[condition] = control"
+	run instructions_experimental "condition == 'experimental'"
+	run instructions_control "condition == 'control'"
 	run reset_feedback True
 	run block_loop True
 	run feedback True
@@ -207,12 +207,12 @@ define inline_script counterbalance
 	set description "Executes Python code"
 	set _run ""
 	___prepare__
-	if var.subject_parity == 'even':
-		var.condition1 = 'experimental'
-		var.condition2 = 'control'
+	if subject_parity == 'even':
+		condition1 = 'experimental'
+		condition2 = 'control'
 	else:
-		var.condition1 = 'control'
-		var.condition2 = 'experimental'
+		condition1 = 'control'
+		condition2 = 'experimental'
 	__end__
 
 define sketchpad end_of_experiment
@@ -255,41 +255,41 @@ define loop experimental_loop
 	set break_if False
 	setcycle 0 block_repeat 2
 	setcycle 0 practice no
-	setcycle 0 condition "[condition1]"
+	setcycle 0 condition "{condition1}"
 	setcycle 1 block_repeat 2
 	setcycle 1 practice no
-	setcycle 1 condition "[condition1]"
+	setcycle 1 condition "{condition1}"
 	setcycle 2 block_repeat 2
 	setcycle 2 practice no
-	setcycle 2 condition "[condition1]"
+	setcycle 2 condition "{condition1}"
 	setcycle 3 block_repeat 2
 	setcycle 3 practice no
-	setcycle 3 condition "[condition1]"
+	setcycle 3 condition "{condition1}"
 	setcycle 4 block_repeat 2
 	setcycle 4 practice no
-	setcycle 4 condition "[condition1]"
+	setcycle 4 condition "{condition1}"
 	setcycle 5 block_repeat 2
 	setcycle 5 practice no
-	setcycle 5 condition "[condition2]"
+	setcycle 5 condition "{condition2}"
 	setcycle 6 block_repeat 2
 	setcycle 6 practice no
-	setcycle 6 condition "[condition2]"
+	setcycle 6 condition "{condition2}"
 	setcycle 7 block_repeat 2
 	setcycle 7 practice no
-	setcycle 7 condition "[condition2]"
+	setcycle 7 condition "{condition2}"
 	setcycle 8 block_repeat 2
 	setcycle 8 practice no
-	setcycle 8 condition "[condition2]"
+	setcycle 8 condition "{condition2}"
 	setcycle 9 block_repeat 2
 	setcycle 9 practice no
-	setcycle 9 condition "[condition2]"
+	setcycle 9 condition "{condition2}"
 	run block_sequence
 
 define feedback feedback
 	set reset_variables yes
 	set duration keypress
 	set description "Provides feedback to the participant"
-	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=24 html=yes show_if=True text="<b>End of block</b><br /><br />Your accuracy was [acc] %<br /><br />Press any key to continue ..." x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=24 html=yes show_if=True text="<b>End of block</b><br /><br />Your accuracy was {acc} %<br /><br />Press any key to continue ..." x=0 y=0 z_index=0
 
 define sketchpad fixation
 	set reset_variables no
@@ -336,10 +336,10 @@ define loop practice_loop
 	set break_if False
 	setcycle 0 block_repeat 0.5
 	setcycle 0 practice yes
-	setcycle 0 condition "[condition1]"
+	setcycle 0 condition "{condition1}"
 	setcycle 1 block_repeat 0.5
 	setcycle 1 practice yes
-	setcycle 1 condition "[condition2]"
+	setcycle 1 condition "{condition2}"
 	run block_sequence
 
 define reset_feedback reset_feedback
@@ -351,7 +351,7 @@ define keyboard_response response_T1
 	set event_type keypress
 	set duration keypress
 	set description "Collects keyboard responses"
-	set correct_response "[T1]"
+	set correct_response "{T1}"
 
 define keyboard_response response_T2
 	set timeout infinite
@@ -359,7 +359,7 @@ define keyboard_response response_T2
 	set event_type keypress
 	set duration keypress
 	set description "Collects keyboard responses"
-	set correct_response "[T2_present]"
+	set correct_response "{T2_present}"
 	set allowed_responses "y;n"
 
 define sequence trial_sequence
@@ -368,8 +368,9 @@ define sequence trial_sequence
 	run assertions True
 	run fixation True
 	run RSVP True
-	run ask_T1 "[condition] = experimental"
-	run response_T1 "[condition] = experimental"
+	run ask_T1 "condition == 'experimental'"
+	run response_T1 "condition == 'experimental'"
 	run ask_T2 True
 	run response_T2 True
 	run logger True
+

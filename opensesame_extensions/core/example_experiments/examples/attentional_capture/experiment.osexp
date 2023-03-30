@@ -1,11 +1,11 @@
 ---
-API: 2.1
+API: 3
 Citation: 'Theeuwes, J. (1992). Perceptual selectivity for color and form. *Perception
   & Psychophysics*, *51*(6), 599–606. <http://doi.org/10.3758/BF03211656>
 
   '
 Description: An attentional capture experiment, loosely based on Theeuwes (1992)
-OpenSesame: 3.3.0a49
+OpenSesame: 4.0.0a17
 Platform: posix
 Title: Attentional capture
 ---
@@ -32,7 +32,7 @@ set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "/home/sebastiaan/git/OpenSesame/opensesame_extensions/example_experiments/examples/attentional_capture"
+set experiment_path "/home/sebastiaan/git/OpenSesame/opensesame_extensions/core/example_experiments/examples/attentional_capture"
 set disable_garbage_collection yes
 set description "Loosely based on Theeuwes (1992)"
 set coordinates relative
@@ -61,6 +61,7 @@ define notepad about_this_example
 	set description "Some pointers to help you gest started!"
 
 define loop block_loop
+	set source_file ""
 	set source table
 	set skip 0
 	set repeat 10
@@ -131,6 +132,7 @@ define sequence experiment
 	run end_of_experiment True
 
 define loop experimental_loop
+	set source_file ""
 	set source table
 	set skip 0
 	set repeat 5
@@ -150,7 +152,7 @@ define feedback feedback
 	set reset_variables yes
 	set duration keypress
 	set description "Provides feedback to the participant"
-	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="End of block [=var.count_block_loop+1]<br /><br />Your average response time was [avg_rt] ms<br />Your accuracy was [acc] %<br /><br />Press any key to continue" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="End of block {count_block_loop + 1}<br /><br />Your average response time was {avg_rt} ms<br />Your accuracy was {acc} %<br /><br />Press any key to continue" x=0 y=0 z_index=0
 
 define sketchpad fixdot
 	set duration 495
@@ -172,15 +174,15 @@ define inline_script functions
 	        y:		The y coordinate.
 	    """
 	    
-	    if var.target_shape == 'circle':
-	        cnvs += Circle(x, y, stim_size/2, color=var.target_color)
+	    if target_shape == 'circle':
+	        cnvs += Circle(x, y, stim_size/2, color=target_color)
 	    else:
 	        cnvs += Rect(
 	            x-stim_size/2,
 	            y-stim_size/2,
 	            stim_size,
 	            stim_size,
-	            color=var.target_color
+	            color=target_color
 	        )
 	    for orientation in all_orientations:
 	        dx, dy = xy_from_polar(line_size/2, orientation)
@@ -199,15 +201,15 @@ define inline_script functions
 	        y:		The y coordinate.
 	    """
 	    
-	    if var.target_shape == 'circle':
-	        cnvs += Circle(x, y, stim_size/2, color=var.target_color)
+	    if target_shape == 'circle':
+	        cnvs += Circle(x, y, stim_size/2, color=target_color)
 	    else:
 	        cnvs += Rect(
 	            x-stim_size/2,
 	            y-stim_size/2,
 	            stim_size,
 	            stim_size,
-	            color=var.target_color
+	            color=target_color
 	        )
 	    dx, dy = xy_from_polar(line_size/2, target_orientation)
 	    cnvs += Line(x+dx, y+dy, x-dx, y-dy)
@@ -226,7 +228,7 @@ define inline_script functions
 	        color:	The shape color.
 	    """	
 	    
-	    if var.nontarget_shape == 'circle':
+	    if nontarget_shape == 'circle':
 	        cnvs += Circle(x, y, stim_size/2, color=color)
 	    else:
 	        cnvs += Rect(
@@ -315,22 +317,22 @@ define inline_script trial_script
 	# i.e. values between 0 and the number of items.
 	positions = list(range(set_size))
 	random.shuffle(positions)
-	var.target_pos = positions[0]
-	if var.distractor == 'present':
-	    var.distractor_pos = positions[1]
+	target_pos = positions[0]
+	if distractor == 'present':
+	    distractor_pos = positions[1]
 	else:
-	    var.distractor_pos = None
+	    distractor_pos = None
 	
 	# Get a random target orientation, and the associated correct response
-	var.correct_response, target_orientation = random.choice(target_orientations)
+	correct_response, target_orientation = random.choice(target_orientations)
 	
 	# Determine the target color and shape
 	random.shuffle(colors)
-	var.target_color = colors[0]
-	var.distractor_color = colors[1]
+	target_color = colors[0]
+	distractor_color = colors[1]
 	random.shuffle(shapes)
-	var.target_shape = shapes[0]
-	var.nontarget_shape = shapes[1]
+	target_shape = shapes[0]
+	nontarget_shape = shapes[1]
 	
 	# Draw the premask canvas. Premasks have the target shape and color, and have
 	# all possible line segments in it.
@@ -350,15 +352,15 @@ define inline_script trial_script
 	target_canvas.penwidth = penwidth
 	target_canvas += FixDot()
 	for pos, (x, y) in enumerate(xy_circle(set_size, eccentricity)):
-	    if pos == var.target_pos:
+	    if pos == target_pos:
 	        # defined in the `functions` item
 	        draw_target(target_canvas, x, y)
-	    elif pos == var.distractor_pos:
+	    elif pos == distractor_pos:
 	        # defined in the `functions` item
-	        draw_nontarget(target_canvas, x, y, color=var.distractor_color)
+	        draw_nontarget(target_canvas, x, y, color=distractor_color)
 	    else:
 	        # defined in the `functions` item:
-	        draw_nontarget(target_canvas, x, y, color=var.target_color)
+	        draw_nontarget(target_canvas, x, y, color=target_color)
 	__end__
 
 define sequence trial_sequence
@@ -367,6 +369,7 @@ define sequence trial_sequence
 	run fixdot True
 	run trial_script True
 	run keyboard_response True
-	run green_fixdot "[correct] = 1"
-	run red_fixdot "[correct] = 0"
+	run green_fixdot "correct == 1"
+	run red_fixdot "correct == 0"
 	run logger True
+

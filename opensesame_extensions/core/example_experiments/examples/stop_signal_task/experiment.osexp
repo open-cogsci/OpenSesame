@@ -1,10 +1,10 @@
 ---
-API: 2.1
+API: 3
 Citation: 'Logan, G. D., Cowan, W. B., & Davis, K. A. (1984). On the ability to inhibit
   simple and choice reaction time responses: a model and a method. *Journal of Experimental
   Psychology: Human Perception and Performance*, *10*(2), 276. <http://doi.org/10.1037/0096-1523.10.2.276>'
 Description: Loosely based on Logan et al. (1984)
-OpenSesame: 3.3.0a49
+OpenSesame: 4.0.0a17
 Platform: posix
 Title: Stop-Signal Task
 ---
@@ -31,7 +31,7 @@ set font_size 18
 set font_italic no
 set font_family mono
 set font_bold no
-set experiment_path "/home/sebastiaan/git/OpenSesame/opensesame_extensions/example_experiments/examples/stop_signal_task"
+set experiment_path "/home/sebastiaan/git/OpenSesame/opensesame_extensions/core/example_experiments/examples/stop_signal_task"
 set disable_garbage_collection yes
 set description "Loosely based on Logan (1984) Journal of Experimental Psychology: Human Perception and Performance"
 set coordinates uniform
@@ -159,7 +159,10 @@ define coroutines stop_signal_coroutines
 	set end_after_item kb_response
 	set duration 2000
 	set description "Run items simultaneously"
-	run stop_signal end="[stop_after]" runif="[stop_after] != \"\"" start="[stop_after]"
+	run stop_signal "stop_after != \"\""
+	run target True
+	run kb_response True
+	run stop_signal end="{stop_after}" runif="stop_after != \"\"" start="{stop_after}"
 	run target end=0 runif=True start=0
 	run kb_response end=2000 runif=True start=0
 
@@ -174,6 +177,7 @@ define sequence trial_sequence
 	set description "Runs a number of items in sequence"
 	run fixdot True
 	run stop_signal_coroutines True
-	run error_feedback "[correct] = 0"
+	run error_feedback "correct == 0"
 	run blank True
 	run logger True
+

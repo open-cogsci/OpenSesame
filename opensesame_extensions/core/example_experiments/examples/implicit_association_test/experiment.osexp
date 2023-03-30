@@ -1,11 +1,11 @@
 ---
-API: 2.1
+API: 3
 Citation: 'Greenwald, A. G., McGhee, D. E., & Schwartz, J. K. L. (1998). Measuring
   individual differences in implicit cognition: The Implicit Association Test. *Journal
   of Personality and Social Psychology*, *74*, 1464-1480. <http://doi.org/10.1037/0022-3514.74.6.1464>'
 Description: 'How strongly do you associate British with funny, and German with boring?
   (Note to Germans: This is a joke.) Method based on Greenwald et al. (1998).'
-OpenSesame: 3.3.0a49
+OpenSesame: 4.0.0a17
 Platform: posix
 Title: Implicit-association test
 ---
@@ -33,7 +33,7 @@ set font_size 32
 set font_italic no
 set font_family sans
 set font_bold no
-set experiment_path "/home/sebastiaan/git/OpenSesame/opensesame_extensions/example_experiments/examples/implicit_association_test"
+set experiment_path "/home/sebastiaan/git/OpenSesame/opensesame_extensions/core/example_experiments/examples/implicit_association_test"
 set disable_garbage_collection yes
 set description "An example of an implicit-association test"
 set coordinates relative
@@ -69,7 +69,7 @@ define feedback combined_instructions
 	set reset_variables no
 	set duration keypress
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="Your will now do both tasks at the same time.<br /><br />Classify British/ German names:<br /><br />If you see a <b>British</b> name press the <b>[british_response]</b> key<br />If you see a <b>German</b> name press the <b>[german_response]</b> key<br /><br />And classify funny/ boring words:<br /><br />If you see a <b>funny</b> word press the <b>[funny_response]</b> key<br />If you see a <b>boring</b> word press the <b>[boring_response]</b> key<br />" x=0 y=-64 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="Your will now do both tasks at the same time.<br /><br />Classify British/ German names:<br /><br />If you see a <b>British</b> name press the <b>{british_response}</b> key<br />If you see a <b>German</b> name press the <b>{german_response}</b> key<br /><br />And classify funny/ boring words:<br /><br />If you see a <b>funny</b> word press the <b>{funny_response}</b> key<br />If you see a <b>boring</b> word press the <b>{boring_response}</b> key<br />" x=0 y=-64 z_index=0
 	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="Press any key to continue" x=0 y=288 z_index=0
 
 define loop combined_loop
@@ -88,76 +88,76 @@ define loop combined_loop
 	set break_if False
 	setcycle 0 category british
 	setcycle 0 item Jack
-	setcycle 0 correct_response "[british_response]"
+	setcycle 0 correct_response "{british_response}"
 	setcycle 1 category british
 	setcycle 1 item George
-	setcycle 1 correct_response "[british_response]"
+	setcycle 1 correct_response "{british_response}"
 	setcycle 2 category british
 	setcycle 2 item Harry
-	setcycle 2 correct_response "[british_response]"
+	setcycle 2 correct_response "{british_response}"
 	setcycle 3 category british
 	setcycle 3 item Grace
-	setcycle 3 correct_response "[british_response]"
+	setcycle 3 correct_response "{british_response}"
 	setcycle 4 category british
 	setcycle 4 item Abigail
-	setcycle 4 correct_response "[british_response]"
+	setcycle 4 correct_response "{british_response}"
 	setcycle 5 category british
 	setcycle 5 item Daisy
-	setcycle 5 correct_response "[british_response]"
+	setcycle 5 correct_response "{british_response}"
 	setcycle 6 category german
 	setcycle 6 item Niklas
-	setcycle 6 correct_response "[german_response]"
+	setcycle 6 correct_response "{german_response}"
 	setcycle 7 category german
 	setcycle 7 item Jannik
-	setcycle 7 correct_response "[german_response]"
+	setcycle 7 correct_response "{german_response}"
 	setcycle 8 category german
 	setcycle 8 item Niels
-	setcycle 8 correct_response "[german_response]"
+	setcycle 8 correct_response "{german_response}"
 	setcycle 9 category german
 	setcycle 9 item Leonie
-	setcycle 9 correct_response "[german_response]"
+	setcycle 9 correct_response "{german_response}"
 	setcycle 10 category german
 	setcycle 10 item Nele
-	setcycle 10 correct_response "[german_response]"
+	setcycle 10 correct_response "{german_response}"
 	setcycle 11 category german
 	setcycle 11 item Pia
-	setcycle 11 correct_response "[german_response]"
+	setcycle 11 correct_response "{german_response}"
 	setcycle 12 category funny
 	setcycle 12 item Joke
-	setcycle 12 correct_response "[funny_response]"
+	setcycle 12 correct_response "{funny_response}"
 	setcycle 13 category funny
 	setcycle 13 item Laugh
-	setcycle 13 correct_response "[funny_response]"
+	setcycle 13 correct_response "{funny_response}"
 	setcycle 14 category funny
 	setcycle 14 item Humor
-	setcycle 14 correct_response "[funny_response]"
+	setcycle 14 correct_response "{funny_response}"
 	setcycle 15 category funny
 	setcycle 15 item Comedian
-	setcycle 15 correct_response "[funny_response]"
+	setcycle 15 correct_response "{funny_response}"
 	setcycle 16 category funny
 	setcycle 16 item 9gag
-	setcycle 16 correct_response "[funny_response]"
+	setcycle 16 correct_response "{funny_response}"
 	setcycle 17 category funny
 	setcycle 17 item Meme
-	setcycle 17 correct_response "[funny_response]"
+	setcycle 17 correct_response "{funny_response}"
 	setcycle 18 category boring
 	setcycle 18 item Tedious
-	setcycle 18 correct_response "[boring_response]"
+	setcycle 18 correct_response "{boring_response}"
 	setcycle 19 category boring
 	setcycle 19 item Sleepy
-	setcycle 19 correct_response "[boring_response]"
+	setcycle 19 correct_response "{boring_response}"
 	setcycle 20 category boring
 	setcycle 20 item Lesson
-	setcycle 20 correct_response "[boring_response]"
+	setcycle 20 correct_response "{boring_response}"
 	setcycle 21 category boring
 	setcycle 21 item Repetition
-	setcycle 21 correct_response "[boring_response]"
+	setcycle 21 correct_response "{boring_response}"
 	setcycle 22 category boring
 	setcycle 22 item Queue
-	setcycle 22 correct_response "[boring_response]"
+	setcycle 22 correct_response "{boring_response}"
 	setcycle 23 category boring
 	setcycle 23 item Waiting
-	setcycle 23 correct_response "[boring_response]"
+	setcycle 23 correct_response "{boring_response}"
 	run combined_sequence
 
 define sequence combined_sequence
@@ -165,15 +165,15 @@ define sequence combined_sequence
 	set description "Runs a number of items in sequence"
 	run combined_target True
 	run keyboard_response True
-	run correct_feedback "[correct] = 1"
-	run incorrect_feedback "[correct] = 0"
+	run correct_feedback "correct == 1"
+	run incorrect_feedback "correct == 0"
 	run logger True
 
 define sketchpad combined_target
 	set duration 0
 	set description "Displays stimuli"
 	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=True text="[item]" x=0 y=0 z_index=0
-	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=16 html=yes show_if=True text="Funny: [funny_response]<br />Boring: [boring_response]<br />British: [british_response]<br />German: [german_response]" x=0 y=-288 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=16 html=yes show_if=True text="Funny: {funny_response}<br />Boring: {boring_response}<br />British: {british_response}<br />German: {german_response}" x=0 y=-288 z_index=0
 	draw rect color=white fill=0 h=128 penwidth=1 show_if=True w=320 x=-160 y=-352 z_index=0
 
 define sequence combined_task
@@ -211,15 +211,15 @@ define feedback first_instructions
 define inline_script first_response_mapping
 	set description "Executes Python code"
 	___run__
-	if var.subject_parity == 'even':
-	    var.british_response = 'left'
-	    var.german_response = 'right'
+	if subject_parity == 'even':
+	    british_response = 'left'
+	    german_response = 'right'
 	else:
-	    var.german_response = 'left'
-	    var.british_response = 'right'
+	    german_response = 'left'
+	    british_response = 'right'
 	
-	var.funny_response = 'left'
-	var.boring_response = 'right'
+	funny_response = 'left'
+	boring_response = 'right'
 	__end__
 	set _prepare ""
 
@@ -228,7 +228,7 @@ define feedback funny_instructions
 	set reset_variables no
 	set duration keypress
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="Your task is to say wether a word is associated with<br /><b>funny</b> or <b>boring</b><br /><br />If you see a <b>funny</b> word press the <b>[funny_response]</b> key<br />If you see a <b>boring</b> word press the <b>[boring_response]</b> key<br />" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="Your task is to say wether a word is associated with<br /><b>funny</b> or <b>boring</b><br /><br />If you see a <b>funny</b> word press the <b>{funny_response}</b> key<br />If you see a <b>boring</b> word press the <b>{boring_response}</b> key<br />" x=0 y=0 z_index=0
 	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="Press any key to continue" x=0 y=288 z_index=0
 
 define loop funny_loop
@@ -247,40 +247,40 @@ define loop funny_loop
 	set break_if False
 	setcycle 0 category funny
 	setcycle 0 item Joke
-	setcycle 0 correct_response "[funny_response]"
+	setcycle 0 correct_response "{funny_response}"
 	setcycle 1 category funny
 	setcycle 1 item Laugh
-	setcycle 1 correct_response "[funny_response]"
+	setcycle 1 correct_response "{funny_response}"
 	setcycle 2 category funny
 	setcycle 2 item Humor
-	setcycle 2 correct_response "[funny_response]"
+	setcycle 2 correct_response "{funny_response}"
 	setcycle 3 category funny
 	setcycle 3 item Comedian
-	setcycle 3 correct_response "[funny_response]"
+	setcycle 3 correct_response "{funny_response}"
 	setcycle 4 category funny
 	setcycle 4 item 9gag
-	setcycle 4 correct_response "[funny_response]"
+	setcycle 4 correct_response "{funny_response}"
 	setcycle 5 category funny
 	setcycle 5 item Meme
-	setcycle 5 correct_response "[funny_response]"
+	setcycle 5 correct_response "{funny_response}"
 	setcycle 6 category boring
 	setcycle 6 item Tedious
-	setcycle 6 correct_response "[boring_response]"
+	setcycle 6 correct_response "{boring_response}"
 	setcycle 7 category boring
 	setcycle 7 item Sleepy
-	setcycle 7 correct_response "[boring_response]"
+	setcycle 7 correct_response "{boring_response}"
 	setcycle 8 category boring
 	setcycle 8 item Lesson
-	setcycle 8 correct_response "[boring_response]"
+	setcycle 8 correct_response "{boring_response}"
 	setcycle 9 category boring
 	setcycle 9 item Repetition
-	setcycle 9 correct_response "[boring_response]"
+	setcycle 9 correct_response "{boring_response}"
 	setcycle 10 category boring
 	setcycle 10 item Queue
-	setcycle 10 correct_response "[boring_response]"
+	setcycle 10 correct_response "{boring_response}"
 	setcycle 11 category boring
 	setcycle 11 item Waiting
-	setcycle 11 correct_response "[boring_response]"
+	setcycle 11 correct_response "{boring_response}"
 	run funny_sequence
 
 define sequence funny_sequence
@@ -288,14 +288,14 @@ define sequence funny_sequence
 	set description "Runs a number of items in sequence"
 	run funny_target True
 	run keyboard_response True
-	run correct_feedback "[correct] = 1"
-	run incorrect_feedback "[correct] = 0"
+	run correct_feedback "correct == 1"
+	run incorrect_feedback "correct == 0"
 
 define sketchpad funny_target
 	set duration 0
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=True text="[item]" x=0 y=0 z_index=0
-	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=16 html=yes show_if=True text="Funny: [funny_response]<br />Boring: [boring_response]" x=0 y=-288 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=True text="{item}" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=16 html=yes show_if=True text="Funny: {funny_response}<br />Boring: {boring_response}" x=0 y=-288 z_index=0
 	draw rect color=white fill=0 h=128 penwidth=1 show_if=True w=320 x=-160 y=-352 z_index=0
 
 define sequence funny_task
@@ -331,7 +331,7 @@ define feedback name_instructions
 	set reset_variables no
 	set duration keypress
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="Your task is to classify names as <br /><b>British</b> or <b>German</b><br /><br />If you see a <b>British</b> name press the <b>[british_response]</b> key<br />If you see a <b>German</b> name press the <b>[german_response]</b> key<br />" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="Your task is to classify names as <br /><b>British</b> or <b>German</b><br /><br />If you see a <b>British</b> name press the <b>{british_response}</b> key<br />If you see a <b>German</b> name press the <b>{german_response}</b> key<br />" x=0 y=0 z_index=0
 	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="Press any key to continue" x=0 y=288 z_index=0
 
 define loop name_loop
@@ -350,40 +350,40 @@ define loop name_loop
 	set break_if False
 	setcycle 0 category british
 	setcycle 0 item Jack
-	setcycle 0 correct_response "[british_response]"
+	setcycle 0 correct_response "{british_response}"
 	setcycle 1 category british
 	setcycle 1 item George
-	setcycle 1 correct_response "[british_response]"
+	setcycle 1 correct_response "{british_response}"
 	setcycle 2 category british
 	setcycle 2 item Harry
-	setcycle 2 correct_response "[british_response]"
+	setcycle 2 correct_response "{british_response}"
 	setcycle 3 category british
 	setcycle 3 item Grace
-	setcycle 3 correct_response "[british_response]"
+	setcycle 3 correct_response "{british_response}"
 	setcycle 4 category british
 	setcycle 4 item Abigail
-	setcycle 4 correct_response "[british_response]"
+	setcycle 4 correct_response "{british_response}"
 	setcycle 5 category british
 	setcycle 5 item Daisy
-	setcycle 5 correct_response "[british_response]"
+	setcycle 5 correct_response "{british_response}"
 	setcycle 6 category german
 	setcycle 6 item Niklas
-	setcycle 6 correct_response "[german_response]"
+	setcycle 6 correct_response "{german_response}"
 	setcycle 7 category german
 	setcycle 7 item Jannik
-	setcycle 7 correct_response "[german_response]"
+	setcycle 7 correct_response "{german_response}"
 	setcycle 8 category german
 	setcycle 8 item Niels
-	setcycle 8 correct_response "[german_response]"
+	setcycle 8 correct_response "{german_response}"
 	setcycle 9 category german
 	setcycle 9 item Leonie
-	setcycle 9 correct_response "[german_response]"
+	setcycle 9 correct_response "{german_response}"
 	setcycle 10 category german
 	setcycle 10 item Nele
-	setcycle 10 correct_response "[german_response]"
+	setcycle 10 correct_response "{german_response}"
 	setcycle 11 category german
 	setcycle 11 item Pia
-	setcycle 11 correct_response "[german_response]"
+	setcycle 11 correct_response "{german_response}"
 	run name_sequence
 
 define sequence name_sequence
@@ -391,14 +391,14 @@ define sequence name_sequence
 	set description "Runs a number of items in sequence"
 	run name_target True
 	run keyboard_response True
-	run correct_feedback "[correct] = 1"
-	run incorrect_feedback "[correct] = 0"
+	run correct_feedback "correct == 1"
+	run incorrect_feedback "correct == 0"
 
 define sketchpad name_target
 	set duration 0
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=True text="[item]" x=0 y=0 z_index=0
-	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=16 html=yes show_if=True text="British name: [british_response]<br />German name: [german_response]" x=0 y=-288 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=32 html=yes show_if=True text="{item}" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=16 html=yes show_if=True text="British name: {british_response}<br />German name: {german_response}" x=0 y=-288 z_index=0
 	draw rect color=white fill=0 h=128 penwidth=1 show_if=True w=384 x=-192 y=-352 z_index=0
 
 define sequence name_task
@@ -427,3 +427,4 @@ define inline_script second_response_mapping
 	var.boring_response = 'right'
 	__end__
 	set _prepare ""
+

@@ -274,7 +274,6 @@ class PythonError(OSException):
             self.line_nr = tb.tb_lineno
         self._traceback = self.clean_traceback(tb_lines)
 
-        
     def clean_traceback(self, tb_lines):
         # The __ignore_traceback__ comment serves as a marker to indicate which
         # parts of the error message should be hidden from the user because
