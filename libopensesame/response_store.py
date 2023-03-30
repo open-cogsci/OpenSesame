@@ -124,7 +124,7 @@ class ResponseStore:
         l = self._select(feedback=True)._selectnot(correct=None).correct
         if not l:
             return u'undefined'
-        return 100.*sum(l)/len(l)
+        return int(100 * sum(l) / len(l))
 
     @property
     def avg_rt(self):
@@ -140,7 +140,7 @@ class ResponseStore:
                 .response_time
         if not l:
             return u'undefined'
-        return 1.*sum(l)/len(l)
+        return int(sum(l) / len(l))
 
     @property
     def response(self):
@@ -243,11 +243,9 @@ class ResponseStore:
             self.var.set(u'response_time_%s' % item, r.response_time)
             self.var.set(u'correct_%s' % item, correct)
         self.var.acc = self.var.accuracy = self.acc
-        self.var.avg_rt = self.avg_rt
+        self.var.avg_rt = self.var.average_response_time = self.avg_rt
         # Old variables, mostly for backwards compatibility
         rs = self._select(feedback=True)
-        self.var.accuracy = self.var.acc
-        self.var.average_response_time = self.var.avg_rt
         self.var.total_response_time = sum(
             rs._selectnot(response_time=None).response_time)
         self.var.total_responses = len(rs)
