@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
-import sip
 from libqtopensesame.widgets.base_widget import BaseWidget
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from openexp import backend
@@ -45,7 +44,6 @@ class BackendSettings(BaseWidget):
                 w = layout.itemAt(1)
                 layout.removeItem(w)
                 w.widget().hide()
-                sip.delete(w)
             if _backend is None:
                 label.setText(_(u"Failed to load backend"))
             elif not hasattr(_backend, u"settings") or _backend.settings == \
