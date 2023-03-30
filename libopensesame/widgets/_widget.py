@@ -126,7 +126,8 @@ class Widget:
             var = self.var
         if var is None:
             return
-        self.form.experiment.var.set(var, val)
+        self.form.experiment.var.set(
+            self.form.experiment.syntax.eval_text(var), val)
 
     def on_key_press(self, key):
         r"""Is called whenever the widget is focused and the users enters a

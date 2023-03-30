@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
+from libopensesame.oslogging import oslogger
 import warnings
 
 
@@ -74,7 +75,14 @@ class Log:
                 A list of all variables that exist in the experiment.
         """
         if self._all_vars is None:
-            self._all_vars = list(self.experiment.var.inspect().keys())
+            self._all_vars = []
+            for key in self.experiment.var.inspect().keys():
+                try:
+                    key = self.experiment.syntax.eval_text(key)
+                except Exception:
+                    oslogger.warning(f'cannot evaluate variable name {key}')
+                else:
+                    self._all_vars.append(key)
         return self._all_vars
 
     def open(self, path):
