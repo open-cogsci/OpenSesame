@@ -597,7 +597,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="edit_show_if">
+             <widget class="ConditionalExpression" name="edit_show_if">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -941,6 +941,11 @@
   </layout>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>ConditionalExpression</class>
+   <extends>QLineEdit</extends>
+   <header>libqtopensesame/_input/conditional_expression.h</header>
+  </customwidget>
   <customwidget>
    <class>color_edit</class>
    <extends>QWidget</extends>

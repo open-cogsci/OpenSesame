@@ -234,8 +234,8 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
                 treeitem.name = to_name
                 self.text_change.emit()
         elif col == 1:
-            # Don't allow editing the run-if statement of the top-level sequence
-            # if we are in non-overview mode.
+            # Don't allow editing the run-if statement of the top-level
+            # sequence if we are in non-overview mode.
             if treeitem.parent() is None:
                 self.itemChanged.disconnect()
                 treeitem.setText(1, u'')
@@ -246,12 +246,9 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
                 parent_item_name, index = self.parent_from_ancestry(ancestry)
                 parent_item = self.experiment.items[parent_item_name]
                 if parent_item.item_type == u'sequence':
-                    cond = str(treeitem.text(1))
-                    if cond.strip() == u'':
-                        cond = u'always'
-                    parent_item.set_run_if(index, cond)
                     self.itemChanged.disconnect()
-                    treeitem.setText(1, cond)
+                    cond = treeitem.set_extra_info(treeitem.text(1).strip())
+                    parent_item.set_run_if(index, cond)
                     self.itemChanged.connect(self.text_edited)
                 self.text_change.emit()
 

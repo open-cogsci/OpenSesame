@@ -5,8 +5,9 @@ icon = "os-repeat_cycle"
 controls = [
     {
         "label": "Repeat if",
-        "tooltip": "A conditional statement that determines when the cycle is repeated",
-        "type": "line_edit",
-        "var": "condition"
+        "tooltip": "A conditional expression that determines when the cycle is repeated",
+        "type": "conditional_expression",
+        "var": "condition",
+        "verb": "repeat"
     }
 ]

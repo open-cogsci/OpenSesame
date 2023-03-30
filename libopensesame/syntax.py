@@ -366,8 +366,16 @@ class Syntax:
             warnings.warn(PYTHON_CONDITIONAL_DEPRECATION_WARNING,
                           category=DeprecationWarning)
             cnd = cnd[1:]
-        elif self.re_txt.search(cnd) or 'always' in cnd.lower() or \
-                'never' in cnd.lower():
+        # The logic for determining whether a conditional expression
+        # corresponds to an old-style expression is a bit convoluted, but the
+        # idea is that old-style expressions either contain square brackets or
+        # the literal 'always' or 'never' but only if there are not hashtags in
+        # there, because in that case the always and never are likely suffixes
+        # in a comment ('True  # always').
+        elif self.re_txt.search(cnd) or (
+                ('always' in cnd.lower() or 'never' in cnd.lower())
+                 and '#' not in cnd
+            ):
             warnings.warn(SQUARE_BRACKET_CONDITIONAL_DEPRECATION_WARNING,
                           category=DeprecationWarning)
             # Quote all non-quoted symbols. This can be probably be done through

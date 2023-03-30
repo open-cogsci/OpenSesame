@@ -28,6 +28,7 @@ from libqtopensesame.widgets.color_edit import ColorEdit
 from libopensesame import misc
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.translate import translation_context
+from libqtopensesame._input.conditional_expression import ConditionalExpression
 _ = translation_context(u'qtplugin', category=u'core')
 
 
@@ -166,6 +167,37 @@ class QtPlugin(QtItem):
         edit.setMinimumWidth(200)
         if validator is not None:
             edit.setValidator(validator)
+        self.add_control(label, edit, **kwdict)
+        if var is not None:
+            self.auto_line_edit[var] = edit
+        return edit
+    
+    def add_conditional_expression_control(self, var, label, verb, **kwdict):
+        """Adds a line-edit control that is linked to a variable and is
+        customized for conditional expressions.
+
+        Parameters
+        ----------
+        var
+            The associated variable.
+        label
+            The label text.
+        verb
+            A verb that describes the expression, such as 'repeat' for a
+            repeat-if expression.
+        **kwdict : dict
+            A keyword dict to be passed on to add_control().
+
+
+        Returns
+        -------
+        ConditionalExpression
+        """
+        edit = ConditionalExpression()
+        edit.verb = f' {verb}'
+        edit.editingFinished.connect(self.apply_edit_changes)
+        edit.textEdited.connect(self.set_dirty)
+        edit.setMinimumWidth(200)
         self.add_control(label, edit, **kwdict)
         if var is not None:
             self.auto_line_edit[var] = edit

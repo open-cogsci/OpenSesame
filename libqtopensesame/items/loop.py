@@ -60,6 +60,7 @@ class Loop(QtStructureItem, QtItem, LoopRuntime):
                              apply_func=self._apply_source)
         self.auto_add_widget(
             self.loop_widget.ui.edit_source_file, u'source_file')
+        self.loop_widget.ui.edit_break_if.verb = ' break'
         self.auto_add_widget(self.loop_widget.ui.edit_break_if, u'break_if')
         self.auto_add_widget(self.loop_widget.ui.checkbox_break_if_on_first,
                              u'break_if_on_first')

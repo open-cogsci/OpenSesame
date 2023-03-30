@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
+from qtpy.QtGui import QColor, QBrush
 from libqtopensesame.widgets.tree_base_item import TreeBaseItem
 from libqtopensesame.items.qtstructure_item import QtStructureItem
 from libqtopensesame.misc.translate import translation_context
@@ -25,27 +26,24 @@ _ = translation_context(u'tree_item_item', category=u'core')
 
 
 class TreeItemItem(TreeBaseItem):
+    """Corresponds to an item widget in the overview area.
 
-    r"""Corresponds to an item widget in the overview area."""
-    def __init__(self, item, extra_info=None, parent_item=None, index=None):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        item : qtitem
-            An item.
-        extra_info : NoneType, unicode, optional
-            Extra info that is shown in the second column. Not shown in
-            overview mode.
-        """
+    Parameters
+    ----------
+    item : qtitem
+        An item.
+    extra_info : None or unicode, optional
+        Extra info that is shown in the second column. Not shown in
+        overview mode.
+    """
+    def __init__(self, item, extra_info=None):
         super().__init__()
         self.setup(item.main_window)
         self.item = item
         tooltip = _(u"Type: %s\nDescription: %s") % (item.item_type,
                                                      item.var.description)
         self.setText(0, item.name)
-        if extra_info is not None:
-            self.setText(1, safe_decode(extra_info))
+        self.set_extra_info(extra_info)
         self.setFlags(QtCore.Qt.ItemIsEditable | self.flags())
         self.setIcon(0, self.theme.qicon(item.item_icon()))
         self.name = item.name
@@ -205,14 +203,14 @@ class TreeItemItem(TreeBaseItem):
         r"""Permanently deletes the item, if possible."""
         if not self.is_deletable() and not self.is_unused():
             return
-        if QtWidgets.QMessageBox.question(self.treeWidget(),
-                                          _(u'Permanently delete item'),
-                                          _(u'Are you sure you want to permanently delete <b>%s</b>? All linked copies of <b>%s</b> will be deleted. You will not be able to undo this.')
-                                          % (self.name, self.name),
-                                          buttons=(
-                                              QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No),
-                                          defaultButton=QtWidgets.QMessageBox.No) \
-                != QtWidgets.QMessageBox.Yes:
+        if QtWidgets.QMessageBox.question(
+                self.treeWidget(), 
+                _(u'Permanently delete item'), 
+                _(u'Are you sure you want to permanently delete <b>%s</b>? All linked copies of <b>%s</b> will be deleted. You will not be able to undo this.')
+                  % (self.name, self.name),
+                buttons=(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No), 
+                defaultButton=QtWidgets.QMessageBox.No
+            ) != QtWidgets.QMessageBox.Yes:
             return
         del self.item_store[self.name]
         self.close_tab()
@@ -293,6 +291,23 @@ class TreeItemItem(TreeBaseItem):
         if drag_and_drop.matches(data, [u'item-snippet', u'item-existing']):
             return data
         return None
+    
+    def set_extra_info(self, extra_info=None):
+        if extra_info is None:
+            self.setText(1, '')
+            return
+        extra_info = extra_info.strip()
+        color = None
+        if extra_info.lower() in ('always', '', 'true'):
+            extra_info = 'True  # always run'
+            color = QColor('green')
+        if extra_info.lower() in ('never', 'false'):
+            extra_info = 'False  # never run'
+            color = QColor('red')
+        self.setText(1, extra_info)
+        if color is not None:
+            self.setForeground(1, QBrush(color))
+        return extra_info
 
 
 # Alias for backwards compatibility

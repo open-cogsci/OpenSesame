@@ -17,7 +17,16 @@
    <property name="spacing">
     <number>12</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -56,7 +65,16 @@
          <property name="horizontalSpacing">
           <number>12</number>
          </property>
-         <property name="margin">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
           <number>0</number>
          </property>
          <item row="0" column="0">
@@ -128,8 +146,7 @@
             </property>
             <property name="icon">
              <iconset theme="media-playlist-shuffle">
-              <normaloff/>
-             </iconset>
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -138,8 +155,7 @@
             </property>
             <property name="icon">
              <iconset theme="media-playlist-repeat">
-              <normaloff/>
-             </iconset>
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
           </widget>
@@ -164,8 +180,7 @@
             </property>
             <property name="icon">
              <iconset theme="x-office-spreadsheet">
-              <normaloff/>
-             </iconset>
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
            <item>
@@ -174,8 +189,7 @@
             </property>
             <property name="icon">
              <iconset theme="folder-open">
-              <normaloff/>
-             </iconset>
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </item>
           </widget>
@@ -234,7 +248,16 @@
          <property name="horizontalSpacing">
           <number>12</number>
          </property>
-         <property name="margin">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
           <number>0</number>
          </property>
          <item row="0" column="0">
@@ -254,7 +277,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QLineEdit" name="edit_break_if">
+          <widget class="ConditionalExpression" name="edit_break_if">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -268,7 +291,7 @@
             </size>
            </property>
            <property name="text">
-            <string>never</string>
+            <string>False</string>
            </property>
           </widget>
          </item>
@@ -305,8 +328,7 @@
            </property>
            <property name="icon">
             <iconset theme="help-about">
-             <normaloff/>
-            </iconset>
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
@@ -323,8 +345,7 @@
            </property>
            <property name="icon">
             <iconset theme="x-office-spreadsheet">
-             <normaloff/>
-            </iconset>
+             <normaloff>.</normaloff>.</iconset>
            </property>
           </widget>
          </item>
@@ -366,6 +387,11 @@
    <class>pool_select</class>
    <extends>QLineEdit</extends>
    <header>libqtopensesame/_input/pool_select.h</header>
+  </customwidget>
+  <customwidget>
+   <class>ConditionalExpression</class>
+   <extends>QLineEdit</extends>
+   <header>libqtopensesame/_input/conditional_expression.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
