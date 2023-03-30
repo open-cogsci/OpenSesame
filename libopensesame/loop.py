@@ -312,7 +312,6 @@ class Loop(Item):
             raise ItemDoesNotExist(self._item)
 
     def run(self):
-        """See item."""
         self.set_item_onset()
         if self.live_dm is None or self.var.continuous == u'no':
             self.live_dm = self._create_live_datamatrix()
@@ -323,13 +322,12 @@ class Loop(Item):
             self.experiment.var.live_row = self.live_row
             self.experiment.var.set('live_row_%s' % self.name, self.live_row)
             for name, val in self.live_dm[self.live_row]:
-                if isinstance(val, str) and val.startswith(u'='):
-                    try:
-                        val = self.python_workspace._eval(val[1:])
-                    except Exception as e:
-                        raise PythonError(
-                            'Error evaluating Python expression in loop table')
-                self.experiment.var.set(name, val)
+                # For backwards compatibility, values prefixed by '=' are
+                # interpreted as Python code. We rewrite this to f-string
+                # notation
+                if isinstance(val, str) and val.startswith('='):
+                    val = f'{val[1:]}'
+                self.experiment.var.set(name, self.syntax.eval_text(val))
             # Evaluate the run if statement
             if (
                     self._break_if is not None and
