@@ -41,6 +41,7 @@ class TextSH(SyntaxHighlighter):
 class TextCodeEdit(CodeEdit):
 
     mimetypes = ['text/x-plain', 'text/x-log', 'text/plain']
+    language = 'text'
 
     def __init__(self, parent=None):
 
