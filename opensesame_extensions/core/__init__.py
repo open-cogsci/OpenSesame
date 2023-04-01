@@ -4,6 +4,6 @@ from libopensesame.metadata import __version__
 
 # The name of the packages to check for updates on conda and pip
 packages = ['opensesame', 'opensesame-core', 'datamatrix', 'qdatamatrix',
-            'python-pseudorandom', 'python-qnotifications',
-            'python-fileinspector', 'pyqode.python', 'pyqode.core',
-            'pyqode3-python', 'pyqode3-core']
+            'python-pseudorandom', 'pseudorandom', 'python-qnotifications',
+            'qnotifications', 'python-fileinspector', 'fileinspector',
+            'pyqode.python', 'pyqode.core', 'pyqode3-python', 'pyqode3-core']
