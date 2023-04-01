@@ -307,6 +307,8 @@ class TreeItemItem(TreeBaseItem):
         self.setText(1, extra_info)
         if color is not None:
             self.setForeground(1, QBrush(color))
+        else:
+            self.setForeground(1, self.main_window.palette().text())
         return extra_info
 
 
