@@ -61,10 +61,10 @@ class QtCoroutines(Coroutines, Sequence):
         r"""A setter that maps an items list to a schedule list."""
         self.schedule = self.schedule[:len(val)]
         self._items = ItemsAdapter(self.schedule)
-        for i, (item_name, cond) in enumerate(val):
+        for i, (item_name, cond, enabled) in enumerate(val):
             start_time = self.schedule[i][1]
             end_time = self.schedule[i][2]
-            self.schedule[i] = item_name, start_time, end_time, cond
+            self.schedule[i] = item_name, start_time, end_time, cond, enabled
 
     def init_edit_widget(self):
         super(Sequence, self).init_edit_widget(stretch=False)
@@ -104,14 +104,20 @@ class QtCoroutines(Coroutines, Sequence):
         widget = TreeItemItem(self, extra_info=extra_info)
         items.append(self.name)
         if max_depth < 0 or max_depth > 1:
-            for item, start_time, end_time, cond in self.schedule:
+            for item, start_time, end_time, cond, enabled in self.schedule:
                 if item in self.experiment.items:
-                    self.experiment.items[item].build_item_tree(widget, items,
-                                                                max_depth=max_depth-1, extra_info=cond)
+                    self.experiment.items[item].build_item_tree(
+                        widget, items, max_depth=max_depth-1, extra_info=cond)
                     child = widget.child(widget.childCount()-1)
-                    child.setText(2, safe_decode(start_time))
-                    if not self.is_oneshot_coroutine(item):
-                        child.setText(3, safe_decode(end_time))
+                    if enabled:
+                        child.setText(2, safe_decode(start_time))
+                        if not self.is_oneshot_coroutine(item):
+                            child.setText(3, safe_decode(end_time))
+                    else:
+                        child.setDisabled(True)
+                        child.setText(1, None)
+                        child.setText(2, None)
+                        child.setText(3, None)
         if toplevel is not None:
             toplevel.addChild(widget)
         else:
@@ -120,8 +126,9 @@ class QtCoroutines(Coroutines, Sequence):
 
     def insert_child_item(self, item_name, index=0):
         if not self.is_coroutine(item_name):
-            self.notify(
-                _(u'"%s" does not support coroutines.') % item_name)
+            self.extension_manager.fire(
+                'notify',
+                message=_('"%s" does not support coroutines.') % item_name)
             return
         super().insert_child_item(item_name, index=index)
         self._refresh()
@@ -142,11 +149,10 @@ class QtCoroutines(Coroutines, Sequence):
         self._combobox_end_after_item.clear()
         self._combobox_end_after_item.addItem(u'')
         current_index = 0
-        for i, (item_name, st, et, cond) in enumerate(self.schedule):
+        for i, (item_name, st, et, cond, enabled) in enumerate(self.schedule):
             if self.var.end_after_item == item_name:
                 current_index = i+1
             self._combobox_end_after_item.addItem(
                 self.theme.qicon(self.experiment.items[item_name].item_icon()),
-                item_name
-            )
+                item_name)
         self._combobox_end_after_item.setCurrentIndex(current_index)

@@ -26,9 +26,9 @@ class Coroutines(Item):
     def reset(self):
         """See item."""
         self.var.duration = 5000
-        self.var.flush_keyboard = u'yes'
-        self.var.function_name = u''
-        self.var.end_after_item = u''
+        self.var.flush_keyboard = 'yes'
+        self.var.function_name = ''
+        self.var.end_after_item = ''
         self.schedule = []
         self._events = []
         self.pre_cycle_functions = []
@@ -41,10 +41,10 @@ class Coroutines(Item):
     @property
     def event_log(self):
 
-        return u'\n'.join([u'%d: %s' % (t, msg) for t, msg in self._events])
+        return '\n'.join(['%d: %s' % (t, msg) for t, msg in self._events])
 
     def is_coroutine(self, item_name):
-        return hasattr(self.experiment.items[item_name], u'coroutine')
+        return hasattr(self.experiment.items[item_name], 'coroutine')
 
     def is_oneshot_coroutine(self, item_name):
         try:
@@ -58,50 +58,51 @@ class Coroutines(Item):
         self.reset()
         if string is None:
             return
-        for s in string.split(u'\n'):
+        for s in string.split('\n'):
             self.parse_variable(s)
             # run item_name start=1000 end=2000 runif="always"
             cmd, arglist, kwdict = self.syntax.parse_cmd(s)
-            if cmd != u'run' or not len(arglist):
+            if cmd != 'run' or not len(arglist):
                 continue
             item_name = arglist[0]
-            start_time = kwdict.get(u'start', 0)
-            end_time = kwdict.get(u'end', 0)
-            cond = kwdict.get(u'runif', u'always')
-            self.schedule.append((item_name, start_time, end_time, cond))
+            start_time = kwdict.get('start', 0)
+            end_time = kwdict.get('end', 0)
+            cond = kwdict.get('runif', 'always')
+            enabled = kwdict.get('enabled', 'yes') == 'yes'
+            self.schedule.append((item_name, start_time, end_time, cond, enabled))
 
     def to_string(self):
-        s = super().to_string()
-        for item_name, start_time, end_time, cond in self.schedule:
+        s = Item.to_string(self)
+        for item_name, start_time, end_time, cond, enabled in self.schedule:
             # If the item doesn't exist yet, then we simply go with the times
             # from the schedule. This happens during loading, if the
             # coroutines script is parsed before the scripts of the items that
             # are in it.
-            if (
-                    item_name in self.experiment.items and
-                    self.is_oneshot_coroutine(item_name)
-            ):
+            if (item_name in self.experiment.items and 
+                    self.is_oneshot_coroutine(item_name)):
                 end_time = start_time
-            s += u'\t' + self.syntax.create_cmd(u'run', [item_name], {
-                u'start': start_time,
-                u'end': end_time,
-                u'runif': cond
-            }) + u'\n'
+            s += '\t' + self.syntax.create_cmd('run', [item_name], {
+                'start': start_time,
+                'end': end_time,
+                'runif': cond,
+                'enabled': 'yes' if enabled else 'no'
+            }) + '\n'
         return s
 
     def prepare(self):
         super().prepare()
         self.event('prepare coroutines')
         self._schedule = []
-        for item_name, start_time, end_time, cond in self.schedule:
+        for item_name, start_time, end_time, cond, enabled in self.schedule:
+            if not enabled:
+                continue
             if not self.python_workspace._eval(self.syntax.compile_cond(cond)):
                 continue
             t = ItemTask(
                 self, self.experiment.items[item_name],
                 self.syntax.auto_type(self.syntax.eval_text(start_time)),
                 self.syntax.auto_type(self.syntax.eval_text(end_time)),
-                abort_on_end=item_name == self.var.end_after_item
-            )
+                abort_on_end=item_name == self.var.end_after_item)
             self._schedule.append(t)
         if self.var.function_name != u"":
             t = InlineTask(self, self.var.function_name, self.python_workspace,
@@ -109,7 +110,6 @@ class Coroutines(Item):
             self._schedule.append(t)
 
     def run(self):
-        """See item."""
         # Launch all coroutines
         for task in self._schedule:
             task.launch()

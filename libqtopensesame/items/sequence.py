@@ -125,6 +125,7 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
                         widget, items, max_depth=max_depth-1, extra_info=cond)
                     if not enabled:
                         tree_widget.setDisabled(True)
+                        tree_widget.set_extra_info(None)
                     
         if toplevel is not None:
             toplevel.addChild(widget)

@@ -159,9 +159,6 @@ define coroutines stop_signal_coroutines
 	set end_after_item kb_response
 	set duration 2000
 	set description "Run items simultaneously"
-	run stop_signal "stop_after != \"\""
-	run target True
-	run kb_response True
 	run stop_signal end="{stop_after}" runif="stop_after != \"\"" start="{stop_after}"
 	run target end=0 runif=True start=0
 	run kb_response end=2000 runif=True start=0
@@ -180,4 +177,3 @@ define sequence trial_sequence
 	run error_feedback "correct == 0"
 	run blank True
 	run logger True
-

@@ -50,7 +50,8 @@ class TreeOverviewAdapter(TreeOverview):
         _time = treeitem.text(col).strip()
         if _time == u'':
             _time = 0
-        item_name, start_time, end_time, cond = self.coroutines.schedule[index]
+        item_name, start_time, end_time, cond, enabled = \
+            self.coroutines.schedule[index]
         if col == 2:
             start_time = _time
         elif col == 3:
@@ -64,7 +65,8 @@ class TreeOverviewAdapter(TreeOverview):
                 end_time = _time
         else:
             raise TypeError(u'col should be in 0-3 range')
-        self.coroutines.schedule[index] = item_name, start_time, end_time, cond
+        self.coroutines.schedule[index] = \
+            item_name, start_time, end_time, cond, enabled
         self.itemChanged.disconnect()
         treeitem.setText(col, str(_time))
         self.itemChanged.connect(self.text_edited)

@@ -20,9 +20,9 @@ from libopensesame.py3compat import *
 
 
 class ItemsAdapter:
-    r"""Gives an editable view on (item_name, start_time, end_time, cond) tuple
-    (schedule) used by coroutines that funtions like an (item_name, cond) tuple
-    as used by sequences.
+    """Gives an editable view on (item_name, start_time, end_time, cond, 
+    enabled) tuple (schedule) used by coroutines that funtions like an
+    (item_name, cond) tuple as used by sequences.
     """
     def __init__(self, schedule):
 
@@ -34,17 +34,18 @@ class ItemsAdapter:
 
     def __getitem__(self, index):
 
-        return self.schedule[index][0], self.schedule[index][3]
+        item = self.schedule[index]
+        return item[0], item[3], item[4]
 
     def __setitem__(self, index, val):
 
         self.schedule[index] = (val[0],) + \
-            self.schedule[index][1:3] + (val[1],)
+            self.schedule[index][1:3] + (val[1],) + (val[2],)
 
     def __iter__(self):
 
-        for item_name, start_time, end_time, cond in self.schedule:
-            yield item_name, cond
+        for item_name, start_time, end_time, cond, enabled in self.schedule:
+            yield item_name, cond, enabled
 
     def __len__(self):
 
@@ -52,8 +53,10 @@ class ItemsAdapter:
 
     def insert(self, index, item):
 
-        self.schedule.insert(index, ((item[0],) + (0, 0) + (item[1],)))
+        self.schedule.insert(
+            index, ((item[0],) + (0, 0) + (item[1],) + (item[2],)))
 
     def append(self, item):
 
-        self.schedule.append(((item[0],) + (0, 0) + (item[1],)))
+        self.schedule.append(
+            ((item[0],) + (0, 0) + (item[1],) + (item[2],)))
