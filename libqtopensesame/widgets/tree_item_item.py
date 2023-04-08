@@ -188,6 +188,19 @@ class TreeItemItem(TreeBaseItem):
         if not getattr(self.parent(), u'item').item_type == u'sequence':
             return False
         return True
+    
+    def disable(self):
+        self._set_enabled(False)
+
+    def enable(self):
+        self._set_enabled(True)
+        
+    def _set_enabled(self, enabled):
+        index = self.parent().indexOfChild(self)
+        parent_item = self.parent().item
+        parent_item.enable_child_item(self.item.name, index, enabled)
+        parent_item.update()
+        self.experiment.build_item_tree()
 
     def delete(self):
         r"""Deletes the item, if possible."""

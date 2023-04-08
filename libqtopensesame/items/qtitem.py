@@ -874,6 +874,20 @@ class QtItem:
             indicates all instances.
         """
         pass
+    
+    def enable_child_item(self, item_name, index=0, enabled=True):
+        r"""Enables a child item, if applicable to the item type.
+
+        Parameters
+        ----------
+        item_name : unicode
+            The name of the child item.
+        index : int, optional
+            The index of the child item, if applicable. A negative value
+            indicates all instances.
+        enabled : bool, optional
+        """
+        pass
 
 
 # Alias for backwards compatibility

@@ -84,7 +84,7 @@ class QtItemStore(ItemStore):
         self.experiment.build_item_tree()
         self.extension_manager.fire(u'delete_item', name=name)
 
-    def new(self, _type, name=None, script=None, catch_exceptions=True,
+    def new(self, _type, name=None, script=None, catch_exceptions=False,
             allow_rename=True):
         """See item_store."""
         import warnings

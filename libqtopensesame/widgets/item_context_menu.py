@@ -80,6 +80,13 @@ class ItemContextMenu(BaseSubcomponent, QtWidgets.QMenu):
             self.addSeparator()
             self.addAction(action)
         self.addSeparator()
+        if self.treeitem.isDisabled():
+            self.add_action('media-playback-pause', _('Enable'),
+                            self.treeitem.enable)
+        else:
+            self.add_action('media-playback-pause', _('Disable'),
+                            self.treeitem.disable)
+        self.addSeparator()
         self.add_action(u"help", _("Help"), self.item.open_help_tab)
 
     def add_action(self, icon, text, func, shortcut=None):

@@ -29,31 +29,29 @@ _ = translation_context(u'sequence', category=u'item')
 
 
 class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
-
-    r"""GUI controls for the sequence item."""
+    """GUI controls for the sequence item.
+    
+    Parameters
+    ----------
+    name
+        The item name.
+    experiment
+        The experiment object.
+    string, optional
+        A definition string.
+    """
+    
     description = _(u'Runs a number of items in sequence')
     help_url = u'manual/structure/sequence'
     lazy_init = True
 
     def __init__(self, name, experiment, string=None):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        name
-            The item name.
-        experiment
-            The experiment object.
-        string, optional
-            A definition string.
-        """
         SequenceRuntime.__init__(self, name, experiment, string)
         QtStructureItem.__init__(self)
         QtPlugin.__init__(self)
         self.last_removed_child = None, None
 
     def init_edit_widget(self):
-        """See qtitem."""
         super().init_edit_widget(False)
         self.checkbox_flush_keyboard = QtWidgets.QCheckBox(
             _(u'Flush pending key presses at sequence start'))
@@ -72,16 +70,15 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
             _(u'<b>Important</b>: A sequence has <a href="http://osdoc.cogsci.nl/usage/prepare-run">a variable preparation time</a>.'))
 
     def edit_widget(self):
-        """See qtitem."""
         super().edit_widget()
         if self.treewidget.locked:
             return
-        for item, cond in self.items:
+        for item, cond, enabled in self.items:
             if item not in self.experiment.items:
-                self.extension_manager.fire(u'notify',
-                                            message=_(
-                                                u'Sequence contains non-existing item: %s') % item,
-                                            category=u'warning')
+                self.extension_manager.fire(
+                    u'notify',
+                    message=_(u'Sequence contains non-existing item: %s') % item,
+                    category=u'warning')
         self.treewidget.clear()
         self.toplevel_treeitem = self.build_item_tree(max_depth=2)
         self.treewidget.addTopLevelItem(self.toplevel_treeitem)
@@ -92,20 +89,18 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
     @requires_init
     @QtStructureItem.clears_children_cache
     def rename(self, from_name, to_name):
-        """See qtitem."""
         QtPlugin.rename(self, from_name, to_name)
         new_items = []
-        for item, cond in self.items:
+        for item, cond, enabled in self.items:
             if item == from_name:
-                new_items.append((to_name, cond))
+                new_items.append((to_name, cond, enabled))
             else:
-                new_items.append((item, cond))
+                new_items.append((item, cond, enabled))
         self.items = new_items
         self.treewidget.rename(from_name, to_name)
 
     @QtStructureItem.clears_children_cache
     def delete(self, item_name, item_parent=None, index=None):
-        """See qtitem."""
         if item_parent is None or (item_parent == self.name and index is None):
             while True:
                 for i, (child_item_name, child_run_if) in enumerate(self.items):
@@ -121,14 +116,16 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
 
     def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
                         extra_info=None):
-        """See qtitem."""
         widget = TreeItemItem(self, extra_info=extra_info)
         items.append(self.name)
         if max_depth < 0 or max_depth > 1:
-            for item, cond in self.items:
+            for item, cond, enabled in self.items:
                 if item in self.experiment.items:
-                    self.experiment.items[item].build_item_tree(widget, items,
-                                                                max_depth=max_depth-1, extra_info=cond)
+                    tree_widget = self.experiment.items[item].build_item_tree(
+                        widget, items, max_depth=max_depth-1, extra_info=cond)
+                    if not enabled:
+                        tree_widget.setDisabled(True)
+                    
         if toplevel is not None:
             toplevel.addChild(widget)
         else:
@@ -145,56 +142,64 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
         cond : unicode, optional
             The run-if statement.
         """
-        self.items[index] = self.items[index][0], cond
+        self.items[index] = self.items[index][0], cond, self.items[index][2]
 
     @QtStructureItem.cached_children
     def children(self):
         """See qtitem."""
         self._children = []
-        for item, cond in self.items:
+        for item, _, _ in self.items:
             if item not in self.experiment.items:
                 continue
             self._children += [item] + self.experiment.items[item].children()
         return self._children
 
     def direct_children(self):
-
-        return [
-            item
-            for item, cond in self.items
-            if item in self.experiment.items
-        ]
+        return [item for item, _, _ in self.items
+                if item in self.experiment.items]
 
     def is_child_item(self, item):
-        """See qtitem."""
         return item in self.children()
 
     @QtStructureItem.clears_children_cache
     def insert_child_item(self, item_name, index=0):
-        """See qtitem."""
         if item_name == self.last_removed_child[0]:
             # If this item was just removed, re-add it and preserve its run-if
             # statement.
             self.items.insert(index, self.last_removed_child)
         else:
-            self.items.insert(index, (item_name, u'always'))
+            self.items.insert(index, (item_name, 'True', True))
         self.update()
         self.main_window.set_unsaved(True)
 
     @QtStructureItem.clears_children_cache
     def remove_child_item(self, item_name, index=0):
-        """See qtitem."""
         if index < 0:
             items = []
-            for item, cond in self.items:
+            for item, cond, enabled in self.items:
                 if item != item_name:
-                    items.append((item, cond))
+                    items.append((item, cond, enabled))
             self.items = items
         elif len(self.items) > index and self.items[index][0] == item_name:
             # We remember the last removed child item, because we will re-use
             # it's run-if statement if it is re-added.
             self.last_removed_child = self.items[index]
             del self.items[index]
+        if not self.update():
+            self.extension_manager.fire(u'change_item', name=self.name)
+        self.main_window.set_unsaved(True)
+
+    def enable_child_item(self, item_name, index=0, enabled=True):
+        # If no index is specified, we set the disabled status of all children
+        if index < 0:
+            items = []
+            for item, cond, _enabled in self.items:
+                if item == item_name:
+                    _enabled = enabled
+                items.append((item, cond, _enabled))
+            self.items = items
+        elif len(self.items) > index and self.items[index][0] == item_name:
+            self.items[index] = item_name, self.items[index][1], enabled
         if not self.update():
             self.extension_manager.fire(u'change_item', name=self.name)
         self.main_window.set_unsaved(True)

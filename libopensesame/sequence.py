@@ -26,16 +26,13 @@ from openexp.keyboard import Keyboard
 
 class Sequence(Item):
 
-    """The sequence item"""
-    description = u'Runs a number of items in sequence'
+    description = 'Runs a number of items in sequence'
 
     def reset(self):
-        """See item."""
         self.items = []
-        self.var.flush_keyboard = u'yes'
+        self.var.flush_keyboard = 'yes'
 
     def run(self):
-        """Runs the sequence."""
         self.set_item_onset()
         # Optionally flush the responses to catch escape presses
         if self._keyboard is not None:
@@ -53,35 +50,9 @@ class Sequence(Item):
             gc.collect()
 
     def set_validator(self):
-        r"""See qtitem."""
         self.validator = sequence
 
-    def parse_run(self, i):
-        """Parses a run line from the definition script.
-
-        Parameters
-        ----------
-        i : list
-            A list of words, corresponding to a single script line.
-
-        Returns
-        -------
-        tuple
-            An (item_name, conditional) tuple.
-        """
-        name = i[1]
-        cond = u'always'
-        if len(i) > 2:
-            cond = i[2]
-        return name, cond
-
     def from_string(self, string):
-        """
-        Parses a definition string.
-
-        Arguments:
-        string 	--	A definition string.
-        """
         self.var.clear()
         self.comments = []
         self.reset()
@@ -90,41 +61,40 @@ class Sequence(Item):
         for s in string.split(u'\n'):
             self.parse_variable(s)
             cmd, arglist, kwdict = self.syntax.parse_cmd(s)
-            if cmd != u'run' or not len(arglist):
+            if cmd != 'run' or not len(arglist):
                 continue
             _item = arglist[0]
             if len(arglist) == 1:
-                cond = u'always'
+                cond = 'True'
             else:
                 cond = arglist[1]
-            self.items.append((_item, cond))
+            enabled = len(arglist) < 3 or arglist[2].lower() != 'disabled'
+            self.items.append((_item, cond, enabled))
 
     def prepare(self):
-        """Prepares the sequence."""
         super().prepare()
-        if self.var.flush_keyboard == u'yes':
+        if self.var.flush_keyboard == 'yes':
             # Create a keyboard to flush responses at the start of the run
             # phase
             self._keyboard = Keyboard(self.experiment)
         else:
             self._keyboard = None
         self._items = []
-        for _item, cond in self.items:
+        for _item, cond, enabled in self.items:
+            if not enabled:
+                continue
             if _item not in self.experiment.items:
                 raise ItemDoesNotExist(_item)
             self.experiment.items.prepare(_item)
             self._items.append((_item, self.syntax.compile_cond(cond)))
 
     def to_string(self):
-        """
-        Encodes the sequence as a definition string.
-
-        Returns:
-        A definition string.
-        """
         s = super().to_string(self.item_type)
-        for _item, cond in self.items:
-            s += u'\t' + self.syntax.create_cmd(u'run', [_item, cond]) + u'\n'
+        for _item, cond, enabled in self.items:
+            arglist = [_item, cond]
+            if not enabled:
+                arglist.append('disabled')
+            s += '\t' + self.syntax.create_cmd('run', arglist) + '\n'
         return s
 
 
