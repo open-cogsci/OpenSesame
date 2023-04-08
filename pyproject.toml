@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "opensesame-core"
-version = "4.0.0a21"
+version = "4.0.0a22"
 description = "A graphical experiment builder for the social sciences"
 authors = ["Sebastiaan Mathôt <s.mathot@cogsci.nl>"]
 readme = "readme.md"
