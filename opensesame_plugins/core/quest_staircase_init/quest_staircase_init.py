@@ -36,37 +36,42 @@ class QuestStaircaseInit(Item):
         self.var.beta = 3.5
         self.var.delta = .01
         self.var.gamma = .5
-        self.var.test_value_method = u'quantile'
+        self.var.quest_name = 'default'
+        self.var.test_value_method = 'quantile'
         self.var.min_test_value = 0
         self.var.max_test_value = 1
-        self.var.var_test_value = u'quest_test_value'
+        self.var.var_test_value = 'quest_test_value'
 
     def quest_set_next_test_value(self):
-        if self.var.test_value_method == u'quantile':
-            self.experiment.quest_test_value = self.experiment.quest.quantile
-        elif self.var.test_value_method == u'mean':
-            self.experiment.quest_test_value = self.experiment.quest.mean
-        elif self.var.test_value_method == u'mode':
-            self.experiment.quest_test_value = self.experiment.quest.mode
+        quest = self.experiment.quest[self.var.quest_name]
+        if self.var.test_value_method == 'quantile':
+            fnc = quest.quantile
+        elif self.var.test_value_method == 'mean':
+            fnc = quest.mean
+        elif self.var.test_value_method == 'mode':
+            fnc = quest.mode
         else:
             raise InvalidValue(
                 f'Unknown test_value_method {self.var.test_value_method}')
-        test_value = max(self.var.min_test_value, min(
-            self.var.max_test_value, self.experiment.quest_test_value()))
-        oslogger.debug(u'quest_test_value = %s' % test_value)
+        test_value = max(self.var.min_test_value,
+                         min(self.var.max_test_value, fnc()))
+        oslogger.debug(f'quest_test_value = {test_value}')
         self.experiment.var.quest_test_value = test_value
         self.experiment.var.set(self.var.var_test_value, test_value)
 
     def prepare(self):
-        self.experiment.quest = Quest.QuestObject(self.var.t_guess,
-                                                  self.var.t_guess_sd, self.var.p_threshold, self.var.beta,
-                                                  self.var.delta, self.var.gamma)
-        self.experiment.quest_set_next_test_value = \
+        if not hasattr(self.experiment, 'quest'):
+            self.experiment.quest = {}
+            self.experiment.quest_set_next_test_value = {}
+        self.experiment.quest[self.var.quest_name] = Quest.QuestObject(
+            self.var.t_guess, self.var.t_guess_sd, self.var.p_threshold,
+            self.var.beta, self.var.delta, self.var.gamma)
+        self.experiment.quest_set_next_test_value[self.var.quest_name] = \
             self.quest_set_next_test_value
-        self.experiment.quest_set_next_test_value()
+        self.quest_set_next_test_value()
 
     def var_info(self):
-        r"""Gives a list of dictionaries with variable descriptions.
+        """Gives a list of dictionaries with variable descriptions.
 
         Returns
         -------

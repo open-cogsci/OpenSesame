@@ -18,12 +18,20 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.item import Item
+from libopensesame.exceptions import OSException
+
+
+class QuestNotInitialized(OSException):
+    """This exception is raised when a Quest staircase hasn't been intialized.
+    """
+    pass
 
 
 class QuestStaircaseNext(Item):
 
     def reset(self):
-        self.var.response_var = u'correct'
+        self.var.response_var = 'correct'
+        self.var.quest_name = 'default'
 
     def run(self):
         resp = self.var.get(self.var.response_var)
@@ -32,5 +40,10 @@ class QuestStaircaseNext(Item):
         except (ValueError, TypeError):
             # Don't process non-float responses
             return
-        self.experiment.quest.update(self.var.quest_test_value, resp)
-        self.experiment.quest_set_next_test_value()
+        if not hasattr(self.experiment, 'quest') or \
+                self.var.quest_name not in self.experiment.quest:
+            raise QuestNotInitialized(
+                f'quest staircase {self.var.quest_name} has not been initialized with a quest_staircase_init')
+        self.experiment.quest[self.var.quest_name].update(
+            self.var.quest_test_value, resp)
+        self.experiment.quest_set_next_test_value[self.var.quest_name]()
