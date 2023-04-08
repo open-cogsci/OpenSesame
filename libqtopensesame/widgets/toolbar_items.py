@@ -29,18 +29,15 @@ _ = translation_context(u'toolbar_items', category=u'core')
 
 
 class ToolbarItems(BaseSubcomponent, QtWidgets.QToolBar):
-
-    r"""The item toolbar, which allows you to insert items into the experiment
+    """The item toolbar, which allows you to insert items into the experiment
     through drag and drop.
+    
+    Parameters
+    ----------
+    parent : QWidget
+        The parent.
     """
     def __init__(self, parent):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        parent : QWidget
-            The parent.
-        """
         super().__init__(parent)
         self.setup(parent)
         self.orientationChanged.connect(self.build)
@@ -49,7 +46,6 @@ class ToolbarItems(BaseSubcomponent, QtWidgets.QToolBar):
             if isinstance(child, QtWidgets.QToolButton):
                 self._expand_button = child
                 break
-
 
     def add_content(self, content):
         r"""Add double rows of content to the toolbar.
