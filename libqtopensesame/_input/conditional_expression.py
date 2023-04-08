@@ -18,7 +18,8 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from qtpy.QtWidgets import QLineEdit
-from qtpy.QtGui import QColor, QBrush
+from qtpy.QtGui import QColor, QBrush, QPainter, QPen, QFont
+from qtpy.QtCore import Qt
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context('conditional_expression', category='core')
@@ -32,20 +33,57 @@ class ConditionalExpression(QLineEdit, BaseSubcomponent):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.textChanged.connect(self._set_conditional_expression)
-        self.verb = ''
+        self._verb = ''
+        self._font = QFont('Roboto Condensed')
+        self._pen = QPen(QColor('#78909c'))
+        self._margin = 16
+        self._width = None
+        self._flags = Qt.AlignLeft | Qt.AlignVCenter
+        self._annotations = {'True': 'Always', 'False': 'Never'}
+        
+    @property
+    def verb(self):
+        return self._verb
+    
+    @verb.setter
+    def verb(self, value):
+        self._verb = value
+        self._annotations = {'True': f'Always {value}',
+                             'False': f'Never {value}'}
     
     def _set_conditional_expression(self, cond):
         self.textChanged.disconnect(self._set_conditional_expression)
-        print('setting text')
         clean_cond = cond.strip().lower()
         color = None
-        if clean_cond in ('always', '', 'true'):
-            self.setText('True  # always' + self.verb)
+        if clean_cond in ('always', 'true'):
+            self.setText('True')
             color = 'green'
         elif clean_cond in ('never', 'false'):
-            self.setText('False  # never' + self.verb)
+            self.setText('False')
         if color is not None:
             self.setStyleSheet(f'color: {color}')
         else:
             self.setStyleSheet(None)
         self.textChanged.connect(self._set_conditional_expression)
+
+    def paintEvent(self, event):
+        """Draws annotations to describe the conditional expressions for the
+        user.
+        """
+        super().paintEvent(event)
+        painter = QPainter(self)
+        data = self.text()
+        annotation = self._annotations.get(data, None)
+        if annotation is None:
+            return
+        # The first time that we draw an annotation, we determine how far from
+        # the left we need to draw it. This depends on the margin and the size
+        # of the text
+        event_rect = event.rect()
+        if self._width is None:
+            rect = painter.boundingRect(event_rect, 0, data)
+            self._width = rect.right() + self._margin
+        event_rect.setLeft(self._width)
+        painter.setFont(self._font)
+        painter.setPen(self._pen)
+        painter.drawText(event_rect, self._flags, annotation)

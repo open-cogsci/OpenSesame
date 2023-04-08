@@ -52,7 +52,7 @@ class SketchpadWidget(BaseWidget):
         self.ui.spinbox_rotation.valueChanged.connect(self.apply_rotation)
         self.ui.spinbox_penwidth.valueChanged.connect(self.apply_penwidth)
         self.ui.edit_color.textEdited.connect(self.apply_color)
-        self.ui.edit_show_if.verb = ' show'
+        self.ui.edit_show_if.verb = 'show'
         self.ui.edit_show_if.editingFinished.connect(self.apply_show_if)
         self.ui.edit_show_if.setValidator(
             CondValidator(self, default='always'))

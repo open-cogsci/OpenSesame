@@ -297,13 +297,13 @@ class TreeItemItem(TreeBaseItem):
             self.setText(1, '')
             return
         extra_info = extra_info.strip()
+        extra_info_lower = extra_info.lower()
         color = None
-        if extra_info.lower() in ('always', '', 'true'):
-            extra_info = 'True  # always run'
+        if extra_info_lower in ('always', '', 'true'):
+            extra_info = 'True'
             color = QColor('green')
-        if extra_info.lower() in ('never', 'false'):
-            extra_info = 'False  # never run'
-            color = QColor('red')
+        elif extra_info_lower in ('never', 'false'):
+            extra_info = 'False'
         self.setText(1, extra_info)
         if color is not None:
             self.setForeground(1, QBrush(color))

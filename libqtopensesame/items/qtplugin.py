@@ -194,7 +194,7 @@ class QtPlugin(QtItem):
         ConditionalExpression
         """
         edit = ConditionalExpression()
-        edit.verb = f' {verb}'
+        edit.verb = verb
         edit.editingFinished.connect(self.apply_edit_changes)
         edit.textEdited.connect(self.set_dirty)
         edit.setMinimumWidth(200)
