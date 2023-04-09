@@ -30,6 +30,7 @@ import os
 import sys
 import warnings
 import platform
+import traceback
 from libqtopensesame.misc.translate import translation_context
 _ = translation_context(u'qtopensesame', category=u'core')
 oslogger.start(u'gui')
@@ -740,8 +741,9 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             md = _(
                 u'# Failed to open\n\nFailed to open the file for the '
                 u'following reason:\n\n- '
-            ) + e.markdown()
+            ) + safe_decode(e)
             self.tabwidget.open_markdown(md)
+            traceback.print_exc()
             self.console.write(e)
             self.set_busy(False)
             return
