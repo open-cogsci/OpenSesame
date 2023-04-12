@@ -22,18 +22,15 @@ import warnings
 
 
 class Log:
-
-    r"""The `log` object provides data logging. A `log` object is created
+    """The `log` object provides data logging. A `log` object is created
     automatically when the experiment starts.
 
-    __Example__:
+    __Example__
 
     ~~~ .python
-    #
-    Write one line of text
-    log.write(u'My custom log message')
-    # Write all
-    variables
+    # Write one line of text
+    log.write('My custom log message')
+    # Write all variables
     log.write_vars()
     ~~~
 
@@ -68,9 +65,8 @@ class Log:
         pass
 
     def all_vars(self):
-        """
-        visible: False
-
+        """{nodoc}
+        
         returns:
                 A list of all variables that exist in the experiment.
         """
@@ -98,7 +94,7 @@ class Log:
         Examples
         --------
         >>> # Open a new log
-        >>> log.open(u'/path/to/new/logfile.csv')
+        >>> log.open('/path/to/new/logfile.csv')
         """
         pass
 
@@ -117,7 +113,7 @@ class Log:
         Examples
         --------
         >>> # Write a single string of text
-        >>> log.write(u'time = %s' % clock.time())
+        >>> log.write(f'time = {clock.time()}')
         """
         pass
 

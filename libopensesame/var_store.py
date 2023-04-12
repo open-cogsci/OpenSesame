@@ -28,10 +28,9 @@ from libopensesame.exceptions import InvalidOpenSesameScript, OSException, \
 
 
 class VarStore:
-
-    r"""As of OpenSesame 4.0, all experimental variables are also available
-    in the Python workspace. This means that you therefore generally don't need
-    to interact with the `var` object anymore.
+    """__New in 4.0.0__: As of OpenSesame 4.0, all experimental variables are
+    also available in the Python workspace. This means that you therefore 
+    don't need the `var` object anymore.
     
     
     The `var` object provides access to experimental variables.
@@ -342,7 +341,7 @@ class VarStore:
         """Checks whether a value is loggable by default. This includes int,
         str, byes, float, bool, and None values, as well as any type that is 
         derived from numbers.Number. Variable names that start with '_' are
-        not logged by default.
+        not logged by default. {nodoc}
 
         Parameters
         ----------

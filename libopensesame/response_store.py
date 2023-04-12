@@ -70,29 +70,23 @@ class ResponseInfo:
 
 
 class ResponseStore:
-
-    r"""The `responses` object contains the history of the responses that were
+    """The `responses` object contains the history of the responses that were
     collected during the experiment.
 
-    A `responses` object is created
-    automatically when the experiment starts.
+    A `responses` object is created automatically when the experiment starts.
 
-    In addition to the functions
-    listed below, the following semantics are
+    In addition to the functions listed below, the following semantics are
     supported:
 
-    __Example__:
+    __Example__
 
-    ~~~
-    .python
+    ~~~ .python
     # Loop through all responses, where last-given responses come first
     # Each response has correct, response, response_time, item, and feedback
-    #
-    attributes.
+    # attributes.
     for response in responses:
-            print(response.correct)
-    #
-    Print the two last-given respones
+        print(response.correct)
+    # Print the two last-given respones
     print('last_two responses:')
     print(responses[:2])
     ~~~

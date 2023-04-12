@@ -32,41 +32,34 @@ INVALID_NAMES = [
 
 
 class ItemStore:
-
-    r"""The `items` object provides dict-like access to the items. It's mainly
+    """The `items` object provides dict-like access to the items. It's mainly
     useful for programatically executing items.
 
-    An `items` object is created
-    automatically when the experiment starts.
+    An `items` object is created automatically when the experiment starts.
 
-    In addition to the functions
-    listed below, the following semantics are
+    In addition to the functions listed below, the following semantics are
     supported:
 
-    __Example__:
+    __Example__
 
-    ~~~
-    .python
+    ~~~ .python
     # Programmatically prepare and run a sketchpad item.
-    items.execute(u'my_sketchpad')
+    items.execute('my_sketchpad')
     # Check if an item exists
-    if u'my_sketchpad'
-    in items:
-            print(u'my_sketchpad exists')
+    if 'my_sketchpad' in items:
+        print('my_sketchpad exists')
     # Delete an item
-    del
-    items[u'my_sketchpad']
+    del items['my_sketchpad']
     # Walk through all item names
-    for item_name in
-    items:
-            print(item_name)
+    for item_name in items:
+        print(item_name)
     ~~~
 
     [TOC]
     """
-    built_in_types = [u'sequence', u'loop', u'sketchpad', u'feedback',
-                      u'keyboard_response', u'mouse_response', u'sampler',
-                      u'synth', u'inline_script', u'logger']
+    built_in_types = ['sequence', 'loop', 'sketchpad', 'feedback',
+                      'keyboard_response', 'mouse_response', 'sampler',
+                      'synth', 'inline_script', 'logger']
 
     def __init__(self, experiment):
         r"""Constructor.
@@ -90,7 +83,7 @@ class ItemStore:
 
         Examples
         --------
-        >>> items.execute(u'target_sketchpad')
+        >>> items.execute('target_sketchpad')
         """
         self.prepare(name)
         self.run(name)
@@ -108,7 +101,7 @@ class ItemStore:
         >>> items.prepare('target_sketchpad')
         >>> items.run('target_sketchpad')
         """
-        item_stack_singleton.push(name, u'run')
+        item_stack_singleton.push(name, 'run')
         self[name].run()
         item_stack_singleton.pop()
 
@@ -125,7 +118,7 @@ class ItemStore:
         >>> items.prepare('target_sketchpad')
         >>> items.run('target_sketchpad')
         """
-        item_stack_singleton.push(name, u'prepare')
+        item_stack_singleton.push(name, 'prepare')
         self[name].prepare()
         item_stack_singleton.pop()
 
@@ -169,7 +162,7 @@ class ItemStore:
         # Load one of the core items
         oslogger.debug(u"loading core item '%s' from '%s'" % (
             _type, self.experiment.module_container()))
-        item_module = __import__(self.item_module(_type), fromlist=[u'dummy'])
+        item_module = __import__(self.item_module(_type), fromlist=['dummy'])
         item_class = getattr(item_module, _type)
         item = item_class(name, self.experiment, script)
         self.__items__[name] = item
@@ -194,10 +187,10 @@ class ItemStore:
 
         Examples
         --------
-        >>> valid_name = items.valid_name(u'sketchpad', u'an invalid name')
+        >>> valid_name = items.valid_name('sketchpad', 'an invalid name')
         """
         if suggestion is None:
-            name = u'new_%s' % item_type
+            name = 'new_%s' % item_type
         else:
             name = self.experiment.syntax.sanitize(suggestion, strict=True,
                                                    allow_vars=False)
@@ -207,12 +200,12 @@ class ItemStore:
             # Names cannot start with a number, and are therefore prefixed by
             # an underscore.
             elif name[0].isnumeric():
-                name = u'_' + name
+                name = '_' + name
         _name = name
         invalid_names = list(self) + INVALID_NAMES
         i = 1
         while _name in invalid_names:
-            _name = u'%s_%d' % (name, i)
+            _name = '%s_%d' % (name, i)
             i += 1
         return CIStr(_name)
 

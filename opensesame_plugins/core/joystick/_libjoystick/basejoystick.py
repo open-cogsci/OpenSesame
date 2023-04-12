@@ -23,18 +23,12 @@ class BaseJoystick:
 
     r"""If you insert the JOYSTICK plugin at the start of your experiment, a
     JOYSTICK object automatically becomes part of the experiment object
-    and can
-    be used within an inline_script item as JOYSTICK.
+    and can be used within an inline_script item as JOYSTICK.
 
-    %--
-    constant:
-    arg_joybuttonlist: |
-                    A list of buttons that are accepted or
-    `None` to accept all
-                    buttons.
-            arg_timeout: |
-    A timeout value in milliseconds or `None` for no timeout.
-    --%
+    {% set arg_joybuttonlist = "A list of buttons that are accepted or " +
+    "`None` to accept all buttons." %}
+    {% set arg_timeout = "A timeout value in milliseconds or `None` for no " +
+    "timeout." %}
 
     [TOC]
     """
@@ -48,9 +42,9 @@ class BaseJoystick:
         device : int, optional
             The joystick device number.
         joybuttonlist : list, NoneType, optional
-            %arg_joybuttonlist
+            {{arg_joybuttonlist}}
         timeout : int, float, NoneType, optional
-            %arg_timeout
+            {{arg_timeout}}
         """
         raise NotImplementedError()
 
@@ -60,7 +54,7 @@ class BaseJoystick:
         Parameters
         ----------
         joybuttonlist : list, NoneType, optional
-            %arg_joybuttonlist
+            {{arg_joybuttonlist}}
         """
         if joybuttonlist is None or joybuttonlist == []:
             self._joybuttonlist = None
@@ -75,7 +69,7 @@ class BaseJoystick:
         Parameters
         ----------
         timeout : int, float, NoneType, optional
-            %arg_timeout
+            {{arg_timeout}}
         """
         self.timeout = timeout
 

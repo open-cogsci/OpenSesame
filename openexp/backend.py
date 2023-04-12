@@ -306,7 +306,7 @@ class Backend:
                 u'%s should be string (str or unicode), not %s' % (key, val))
 
     def get_config(self):
-        """
+        """{nodoc}
         visible:	False
 
         returns:

@@ -20,21 +20,18 @@ from libopensesame.py3compat import *
 
 
 class Clock:
-
-    r"""The `clock` object offers basic time functions. A `clock` object is
+    """The `clock` object offers basic time functions. A `clock` object is
     created automatically when the experiment starts.
 
-    __Example__:
+    __Example__
 
-    ~~~
-    .python
+    ~~~ .python
     # Get the timestamp before and after sleeping for 1000 ms
-    t0 =
-    clock.time()
+    t0 = clock.time()
     clock.sleep(1000)
     t1 = clock.time()
     time_passed = t1 - t0
-    print(u'This should be 1000: %s' % time_passed)
+    print(f'This should be 1000: {time_passed}')
     ~~~
 
     [TOC]
@@ -64,7 +61,7 @@ class Clock:
         Examples
         --------
         >>> t = clock.time()
-        >>> print(u'The current time is %f' % t)
+        >>> print(f'The current time is {t}')
         """
         raise NotImplementedError()
 
@@ -80,9 +77,9 @@ class Clock:
         --------
         >>> # Create two canvas objects ...
         >>> my_canvas1 = Canvas()
-        >>> my_canvas1.text(u'1')
+        >>> my_canvas1.text('1')
         >>> my_canvas2 = Canvas()
-        >>> my_canvas2.text(u'2')
+        >>> my_canvas2.text('2')
         >>> # ... and show them with 1 s in between
         >>> my_canvas1.show()
         >>> clock.sleep(1000)
@@ -111,7 +108,7 @@ class Clock:
         Examples
         --------
         >>> for ms in clock.loop_for(100, throttle=10):
-        >>>         print(ms)
+        >>>     print(ms)
         """
         if t0 is None:
             t0 = self.time()
@@ -148,9 +145,9 @@ class Clock:
         Examples
         --------
         >>> for i in range(1000000):
-        >>>         if clock.once_in_a_while(ms=50):
-        >>>                 # Execute this code only once every 50 ms
-        >>>                 print(clock.time())
+        >>>     if clock.once_in_a_while(ms=50):
+        >>>         # Execute this code only once every 50 ms
+        >>>         print(clock.time())
         """
         now = self.time()
         if self._last_tick is not None and now - self._last_tick < ms:

@@ -15,11 +15,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
-
----
-desc:
-	Functions that are globally accessible in `inline_script` items.
----
 """
 from libopensesame.py3compat import *
 import random
@@ -60,22 +55,26 @@ def Experiment(osexp_path=None, log_path='defaultlog.csv', fullscreen=False,
     --------
     To implement an experiment fully programatically:
     
-    >>> from libopensesame.python_workspace_api import Experiment, Canvas, \
-    >>>     Text, Keyboard
-    >>> exp, win, clock, log = Experiment(canvas_backend='legacy')
-    >>> c = Canvas()
-    >>> c += Text('Press any key')
-    >>> c.show()
-    >>> kb = Keyboard()
-    >>> kb.get_key()
-    >>> exp.end()
+    ~~~ .python
+    from libopensesame.python_workspace_api import (
+        Experiment, Canvas, Text, Keyboard)
+    exp, win, clock, log = Experiment(canvas_backend='legacy')
+    c = Canvas()
+    c += Text('Press any key')
+    c.show()
+    kb = Keyboard()
+    kb.get_key()
+    exp.end()
+    ~~~
     
     To load an experiment file and run it:
 
-    >>> from libopensesame.python_workspace_api import Experiment
-    >>> exp, win, clock, log = Experiment(osexp_path='my_experiment.osexp',
-    >>>                                   subject_nr=2)
-    >>> exp.run()
+    ~~~ .python
+    from libopensesame.python_workspace_api import Experiment
+    exp, win, clock, log = Experiment(osexp_path='my_experiment.osexp',
+                                      subject_nr=2)
+    exp.run()
+    ~~~
     
     Returns
     -------
@@ -656,9 +655,6 @@ def xy_random(n, width, height, min_dist=0, pole=(0, 0)):
 
 
 def parse_pole(pole):
-    """
-    visible: False
-    """
     try:
         ox = float(pole[0])
         oy = float(pole[1])
@@ -670,9 +666,6 @@ def parse_pole(pole):
 
 
 def set_aliases():
-    """
-    visible: False
-    """
     # Non PEP-8 alias for backwards compatibility
     global canvas, sampler, synth, keyboard, mouse
     canvas = Canvas

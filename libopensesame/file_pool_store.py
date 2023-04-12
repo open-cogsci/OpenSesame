@@ -27,8 +27,7 @@ import shutil
 
 
 class FilePoolStore:
-
-    r"""The `pool` object provides dict-like access to the file pool. When
+    """The `pool` object provides dict-like access to the file pool. When
     checking whether a file is in the file pool, several folders are
     searched.
     For more details, see `pool.folders()`.
@@ -40,45 +39,34 @@ class FilePoolStore:
     listed below, the following semantics are
     supported:
 
-    __Example 1__:
-
-    ~~~
-    .python
-    # Get the full path to a file in the file pool
-    print(u'The full
-    path to img.png is %s' %  pool[u'img.png'])
-    # Check if a file is in the
-    file pool
-    if u'img.png' in pool:
-            print(u'img.png is in the file
-    pool')
-    # Delete a file from the file pool
-    del pool[u'img.png']
-    # Walk
-    through all files in the file pool. This retrieves the full
-    # paths.
-    for
-    path in pool:
-            print(path)
-    # Check the number of files in the file
-    pool
-    print(u'There are %d files in the file pool' % len(pool))
-    ~~~
-    __Example 2__:
+    __Examples__
+    
+    Basic use:
 
     ~~~ .python
-    # Get the full path to an image from the file
-    pool and show it
-    if u'img.png' in pool:
-            print(u'img.png could not
-    be found!')
-    else:
-            image_path = pool[u'img.png']
-            my_canvas =
-    Canvas()
-            my_canvas.image(image_path)
-            my_canvas.show()
+    # Get the full path to a file in the file pool
+    print(f'The full path to img.png is {pool["img.png"]}')
+    # Check if a file is in the file pool
+    if 'img.png' in pool:
+        print('img.png is in the file pool')
+    # Delete a file from the file pool
+    del pool['img.png']
+    # Walk through all files in the file pool. This retrieves the full paths.
+    for path in pool:
+        print(path)
+    # Check the number of files in the file pool
+    print(f'There are {len(pool)} files in the file pool')
     ~~~
+    
+    Get an image from the file pool and use a `Canvas` to show it.
+
+    ~~~ .python
+    image_path = pool['img.png']
+    my_canvas = Canvas()
+    my_canvas.image(image_path)
+    my_canvas.show()
+    ~~~
+    
     [TOC]
     """
     def __init__(self, experiment, folder=None):
@@ -99,24 +87,24 @@ class FilePoolStore:
             # string. This fix has been adapted from:
             # - <http://bugs.python.org/issue1681974>
             self.__folder__ = tempfile.mkdtemp(
-                suffix=u'.opensesame_pool',
+                suffix='.opensesame_pool',
                 dir=safe_decode(
                     tempfile.gettempdir(),
                     enc=sys.getfilesystemencoding()
                 )
             )
-            oslogger.debug(u'creating new pool folder')
+            oslogger.debug('creating new pool folder')
         else:
-            oslogger.debug(u'reusing existing pool folder')
+            oslogger.debug('reusing existing pool folder')
             self.__folder__ = folder
-        oslogger.debug(u'pool folder is \'%s\'' % self.__folder__)
+        oslogger.debug('pool folder is \'%s\'' % self.__folder__)
 
     def clean_up(self):
         r"""Removes the pool folder."""
         try:
             shutil.rmtree(self.__folder__)
         except Exception:
-            oslogger.error(u'Failed to remove %s' % self.__folder__)
+            oslogger.error('Failed to remove %s' % self.__folder__)
 
     def __contains__(self, path):
         r"""Checks if a file is in the file pool.
@@ -126,7 +114,7 @@ class FilePoolStore:
         bool
             A bool indicating if the file is in the pool.
         """
-        if path == u'':
+        if path == '':
             return False
         return os.path.exists(self[path])
 
@@ -157,7 +145,7 @@ class FilePoolStore:
             type:unicode
         """
         path = safe_decode(path)
-        if path.strip() == u'':
+        if path.strip() == '':
             raise InvalidValue(f'Cannot get empty filename from file pool')
         for folder in self.folders(include_experiment_path=True):
             _path = os.path.normpath(os.path.join(folder, path))
@@ -185,8 +173,7 @@ class FilePoolStore:
         return len(self.files())
 
     def count_included(self):
-        """
-        visible: False
+        """{nodoc}
 
         returns:
             desc: The number of files that are in the main pool folder, i.e.
@@ -225,10 +212,10 @@ class FilePoolStore:
         Examples
         --------
         >>> for path in pool.files():
-        >>>         print(path)
+        >>>     print(path)
         >>> # Equivalent to:
         >>> for path in pool:
-        >>>         print(path)
+        >>>     print(path)
         """
         _files = []
         for _folder in self.folders():
@@ -238,21 +225,22 @@ class FilePoolStore:
         return sorted(_files)
 
     def fallback_folder(self):
-        """
-        returns:
-            desc:
-                The full path to the fallback pool folder, which is the
-                `__pool__` subfolder of the current experiment folder, or
-                `None` if this folder does not exist. The fallback pool
-                folder is mostly useful in combination with a versioning
-                system, such as git, because it allows you to save the
-                experiment as a plain-text file, even when having files
-                in the file pool.
-            type: [unicode, NoneType]
-
-        example: |
-            if pool.fallback_folder() is not None:
-                print('There is a fallback pool folder!')
+        """The full path to the fallback pool folder, which is the
+        `__pool__` subfolder of the current experiment folder, or
+        `None` if this folder does not exist. The fallback pool
+        folder is mostly useful in combination with a versioning
+        system, such as git, because it allows you to save the
+        experiment as a plain-text file, even when having files
+        in the file pool.
+        
+        Examples
+        --------
+        >>> if pool.fallback_folder() is not None:
+        >>>     print('There is a fallback pool folder!')
+        
+        Returns
+        -------
+        str
         """
         _folders = self.folders()
         if len(_folders) < 2:
@@ -273,7 +261,7 @@ class FilePoolStore:
         >>> print(f'The pool folder is here: {pool.folder()}')
         """
         if not os.path.exists(self.__folder__):
-            oslogger.warning(u'recreating missing file-pool folder')
+            oslogger.warning('recreating missing file-pool folder')
             os.mkdir(self.__folder__)
         return self.__folder__
 
@@ -334,7 +322,7 @@ class FilePoolStore:
                 not os.path.exists(self.experiment.experiment_path):
             return _folders
         fallback_folder = os.path.join(self.experiment.experiment_path,
-                                       u'__pool__')
+                                       '__pool__')
         if include_fallback_folder and os.path.exists(fallback_folder):
             _folders.append(fallback_folder)
         if include_experiment_path:
@@ -353,20 +341,22 @@ class FilePoolStore:
 
         Examples
         --------
-        >>> pool.rename(u'my_old_img.png', u'my_new_img.png')
+        >>> pool.rename('my_old_img.png', 'my_new_img.png')
         """
         path = self[old_path]
         dirname, basename = os.path.split(path)
         os.rename(path, os.path.join(dirname, new_path))
 
     def size(self):
-        """
-        returns:
-                desc:	The combined size in bytes of all files in the file pool.
-                type:	int
-
-        example:
-                print(u'The size of the file pool is %d bytes' % pool.size())
+        """Gets the combined size in bytes of all files in the file pool.
+        
+        Examples
+        --------
+        >>> print(f'The size of the file pool is {pool.size()} bytes')
+                
+        Returns
+        -------
+        int
         """
         return sum([os.path.getsize(self[path]) for path in self])
 

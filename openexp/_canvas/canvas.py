@@ -44,244 +44,182 @@ from openexp._canvas._element.group import Group
 
 
 class Canvas(Backend):
+    """
+    {% set arg_max_width = "The maximum width of the text in pixels, " +
+    "before wrapping to a new line, or `None` to wrap at screen edge." %}
+    
+    {% set arg_bgmode = "Specifies whether the background is the average of " +
+    "col1 and col2 ('avg', corresponding to a typical Gabor patch), or " + 
+    "equal to col2 ('col2'), useful for blending into the background. Note: " +
+    "this parameter is ignored by the psycho backend, which uses increasing " + 
+    "transparency for the background." %}
+    
+    {% set arg_style = "Optional [style keywords](#style-keywords) that " + 
+    "specify the style of the current drawing operation. This does not " + 
+    "affect subsequent drawing operations." %}
+    
+    {% set arg_center = "A bool indicating whether the coordinates reflect " + 
+    "the center (`True`) or top-left (`False`) of the text." %}
 
-    r"""The `Canvas` class is used to present visual stimuli. You generally
-    create a `Canvas` object with the `Canvas()` factory function, as
-    described
-    in the section [Creating a Canvas](#creating-a-canvas).
 
+    The `Canvas` class is used to present visual stimuli. You generally create a
+    `Canvas` object with the `Canvas()` factory function, as described in the section
+    [Creating a Canvas](#creating-a-canvas).
+    
     __Example__:
-
-    ~~~
-    .python
+    
+    ~~~ .python
     # Create and show a canvas with a central fixation dot
-    my_canvas =
-    Canvas()
+    my_canvas = Canvas()
     my_canvas.fixdot()
     my_canvas.show()
     ~~~
-
+    
     __Example__:
-
-    As of
-    OpenSesame 3.2, you can also add `Canvas` elements as objects.
-    See also the
-    section on [Naming, accessing, and modifying elements](#naming-accessing-
-    and-modifying-elements).
-
+    
+    You can also add `Canvas` elements as objects. See also the section on [Naming,
+    accessing, and modifying elements](#naming-accessing-and-modifying-elements).
+    
     ~~~ .python
-    # Create a canvas with a fixation dot
-    and a rectangle
+    # Create a canvas with a fixation dot and a rectangle
     my_canvas = Canvas()
     my_canvas['my_fixdot'] = FixDot()
     my_canvas.show()
     ~~~
-
+    
     [TOC]
-
+    
     ## Things to know
-
+    
     ### Creating a Canvas
-
-    You
-    generally create a `Canvas` with the `Canvas()` factory function:
-
-    ~~~
-    .python
+    
+    You generally create a `Canvas` with the `Canvas()` factory function:
+    
+    ~~~ .python
     my_canvas = Canvas()
     ~~~
-
-    Optionally, you can pass [Style
-    keywords](#style-keywords) to `Canvas()`
-    to set the default style:
-
-    ~~~
-    .python
+    
+    Optionally, you can pass [Style keywords](#style-keywords) to `Canvas()` to set
+    the default style:
+    
+    ~~~ .python
     my_canvas = Canvas(color='green')
-    my_canvas.fixdot() # Will be
-    green
+    my_canvas.fixdot() # Will be green
     ~~~
-
+    
     ### Style keywords
-
-    All functions that accept `**style_args`
-    take the following keyword
-    arguments:
-
-    - `color` specifies the foreground
-    color. For valid color
-            specifications, see [colors](#colors).
-    -
-    `background_color` specifies the background color. For valid color
-    specifications, see [colors](#colors).
-    - `fill` indicates whether
-    rectangles, circles, polygons, and ellipses
-            are filled (`True`), or
-    drawn as an outline (`False`).
-    - `penwidth` indicates a penwidth in pixels
-    and should be `int` or
-            `float`.
-    - `html` indicates whether HTML-
-    tags are interpreted, and should be
-            `True` or `False`. For
-    supported tags, see [/usage/text/]().
-    - `font_family` is the name of a font
-    family, such as 'sans'.
+    
+    All functions that accept `**style_args` take the following keyword arguments:
+    
+    - `color` specifies the foreground color. For valid color specifications, see
+      [colors](#colors).
+    - `background_color` specifies the background color. For valid color
+      specifications, see [colors](#colors).
+    - `fill` indicates whether rectangles, circles, polygons, and ellipses are
+      filled (`True`), or drawn as an outline (`False`).
+    - `penwidth` indicates a penwidth in pixels and should be `int` or `float`.
+    - `html` indicates whether HTML-tags are interpreted, and should be `True` or
+      `False`.
+    - `font_family` is the name of a font family, such as 'sans'.
     - `font_size` is a font size in pixels.
-    -
-    `font_italic` indicates whether text should italics, and should be
-    `True` or `False`.
-    - `font_bold` indicates whether text should bold, and
-    should be
-            `True` or `False`.
-    - `font_underline` indicates whether
-    text should underlined, and should
-            be `True` or `False`.
-
-    ~~~
-    .python
+    - `font_italic` indicates whether text should italics, and should be `True` or
+      `False`.
+    - `font_bold` indicates whether text should bold, and should be `True` or
+      `False`.
+    - `font_underline` indicates whether text should underlined, and should be
+      `True` or `False`.
+    
+    ~~~ .python
     # Draw a green fixation dot
     my_canvas = Canvas()
     my_canvas.fixdot(color='green')
     my_canvas.show()
     ~~~
-
-    Style keywords only
-    affect the current drawing operation (except when
-    passed to `Canvas()`
-    while creating the `Canvas`). To change the style
-    for all subsequent
-    drawing operations, set style properties, such as
-    `canvas.color`, directly:
+    
+    Style keywords only affect the current drawing operation (except when passed to
+    `Canvas()` while creating the `Canvas`). To change the style for all subsequent
+    drawing operations, set style properties, such as `canvas.color`, directly:
+    
     ~~~ .python
     # Draw a red cross with a 2px penwidth
     my_canvas = Canvas()
-    my_canvas.color = u'red'
+    my_canvas.color = 'red'
     my_canvas.penwidth = 2
-    my_canvas.line(-10, -10,
-    10, 10)
+    my_canvas.line(-10, -10, 10, 10)
     my_canvas.line(-10, 10, 10, -10)
     my_canvas.show()
     ~~~
-
-    Or pass the
-    style properties to `Canvas()`:
-
+    
+    Or pass the style properties to `Canvas()`:
+    
     ~~~ .python
-    # Draw a red cross with a 2px
-    penwidth
-    my_canvas = Canvas(color=u'red', penwidth=2)
-    my_canvas.line(-10,
-    -10, 10, 10)
+    # Draw a red cross with a 2px penwidth
+    my_canvas = Canvas(color='red', penwidth=2)
+    my_canvas.line(-10, -10, 10, 10)
     my_canvas.line(-10, 10, 10, -10)
     my_canvas.show()
     ~~~
-
-
-    ###
-    Colors
-
-    You can specify colors in the following ways. This includes
-    CSS3-type
-    color specifications, but also supports some extra
-    specifications,
-    such as CIE l\* a\* b\* color space.
-
-    __Version note:__ The
-    `hsv`, `hsl`, and `lab` color spaces are new in
-    v3.3.0.
-
-    - __Color names:__
-    'red', 'black', etc. A full list of valid color names
-            can be found
-    [here](http://www.w3.org/TR/SVG11/types.html#ColorKeywords).
-    - __Seven-
-    character hexadecimal strings:__ `#FF0000`, `#000000`, etc.
-            Here,
-    values range from `00` to `FF`, so that `#FF0000` is bright red.
-    - __Four-
-    character hexadecimal strings:__ `#F00`, `#000`, etc. Here,
-            values
-    range from '0' to 'F' so that `#F00` is bright red.
-    - __RGB strings:__
-    `rgb(255,0,0)`, `rgb(0,0,0)`, etc. Here, values
-            range from 0 to 255
-    so that `rgb(255,0,0)` is bright red.
-    - __RGB percentage strings:__
-    `rgb(100%,0%,0%)`, `rgb(0%,0%,0%)`, etc.
-            Here, values range from 0%
-    to 100% so that `rgb(100%,0%,0%)` is
-            bright red.
-    - __RGB tuples:__
-    `(255, 0, 0)`, `(0, 0 ,0)`, etc. Here, values range
-            from `0` to
-    `255` so that `(255,0,0)' is bright red.
-    - __HSV strings:__ `hsv(120, 100%,
-    100%)`. In the [HSV](https://en.wikipedia.org/wiki/HSL_and_HSV)
-    color space, the hue parameter is an angle from 0 to 359, and the
-    saturation and value parameters are percentages from 0% to 100%.
-    - __HSL
-    strings:__ `hsl(120, 100%, 50%)`. In the
-    [HSL](https://en.wikipedia.org/wiki/HSL_and_HSV)
-            color space, the
-    hue parameter is an angle from 0 to 359, and the
-            saturation and
-    lightness parameters are percentages from 0% to 100%.
-    - __LAB strings:__
-    `lab(53, -20, 0)`. In the
-    [CIELAB](https://en.wikipedia.org/wiki/CIELAB_color_space)
-            color
-    space, the parameters reflect lightness (`l*`),
-            green-red axis
-    (`a*`, negative is green), and blue-yellow axis
-            (`b*`, negative is
-    blue). This uses the D65 white point and the
-            sRGB transfer
-    function, as implemented [here](https://www.psychopy.org/_modules/psychopy/
-    tools/colorspacetools.html).
-    - __Luminance values:__  `255`, `0`, etc.
-    Here, values range from `0` to
-            `255` so that `255` is white.
-
-    ~~~
-    .python
+    
+    ### Colors
+    
+    You can specify colors in the following ways. This includes CSS3-type color
+    specifications, but also supports some extra specifications, such as CIE l* a*
+    b* color space.
+    
+    __Version note:__ The `hsv`, `hsl`, and `lab` color spaces are new in v3.3.0.
+    
+    - __Color names:__ 'red', 'black', etc. A full list of valid color names can be
+      found [here](http://www.w3.org/TR/SVG11/types.html#ColorKeywords).
+    - __Seven-character hexadecimal strings:__ `#FF0000`, `#000000`, etc. Here,
+      values range from `00` to `FF`, so that `#FF0000` is bright red.
+    - __Four-character hexadecimal strings:__ `#F00`, `#000`, etc. Here, values
+      range from '0' to 'F' so that `#F00` is bright red.
+    - __RGB strings:__ `rgb(255,0,0)`, `rgb(0,0,0)`, etc. Here, values range from
+      0 to 255 so that `rgb(255,0,0)` is bright red.
+    - __RGB percentage strings:__ `rgb(100%,0%,0%)`, `rgb(0%,0%,0%)`, etc. Here,
+      values range from 0% to 100% so that `rgb(100%,0%,0%)` is bright red.
+    - __RGB tuples:__ `(255, 0, 0)`, `(0, 0 ,0)`, etc. Here, values range from `0`
+      to `255` so that `(255,0,0)' is bright red.
+    - __HSV strings:__ `hsv(120, 100%, 100%)`. In the [HSV](https://en.wikipedia.org/
+      wiki/HSL_and_HSV) color space, the hue parameter is an angle from 0 to 359,
+      and the saturation and value parameters are percentages from 0% to 100%.
+    - __HSL strings:__ `hsl(120, 100%, 50%)`. In the [HSL](https://en.wikipedia.org/
+      wiki/HSL_and_HSV) color space, the hue parameter is an angle from 0 to 359,
+      and the saturation and lightness parameters are percentages from 0% to 100%.
+    - __LAB strings:__ `lab(53, -20, 0)`. In the [CIELAB](https://en.wikipedia.org/
+      wiki/CIELAB_color_space) color space, the parameters reflect lightness (`l*`),
+      green-red axis (`a*`, negative is green), and blue-yellow axis (`b*`, negative
+      is blue). This uses the D65 white point and the sRGB transfer function, as
+      implemented [here](https://www.psychopy.org/_modules/psychopy/tools/
+      colorspacetools.html).
+    - __Luminance values:__  `255`, `0`, etc. Here, values range from `0` to `255`
+      so that `255` is white.
+    
+    ~~~ .python
     # Various ways to specify green
-    my_canvas.fixdot(color='green')  #
-    Dark green
+    my_canvas.fixdot(color='green')  # Dark green
     my_canvas.fixdot(color='#00ff00')
     my_canvas.fixdot(color='#0f0')
     my_canvas.fixdot(color='rgb(0, 255, 0)')
-    my_canvas.fixdot(color='rgb(0%,
-    100%, 0%)')
+    my_canvas.fixdot(color='rgb(0%, 100%, 0%)')
     my_canvas.fixdot(color='hsl(100, 100%, 50%)')
     my_canvas.fixdot(color='hsv(0, 100%, 100%)')
     my_canvas.fixdot(color='lab(53, -20, 0)')  # Dark green
-    my_canvas.fixdot(color=(0, 255, 0))
-    # Specify a luminance value (white)
-    my_canvas.fixdot(color=255)
+    my_canvas.fixdot(color=(0, 255, 0))  # Specify a luminance value (white)
     ~~~
-
-
-    ### Naming, accessing, and modifying
-    elements
-
-    As of OpenSesame 3.2, the `Canvas` supports an object-based
-    interface
-    that allows you to name elements, and to access and modify
-    elements
-    individually, without having to redraw the entire `Canvas`.
-
-    For
-    example, the following will first add a red `Line` element to a
-    `Canvas`
-    and show it, then change the color of the line to green and
-    show it again,
-    and then finally delete the line and show the canvas
-    again (which is now
-    blank). The name of the element (`my_line`) is used
-    to refer to the element
-    for all the operations.
-
+    
+    ### Naming, accessing, and modifying elements
+    
+    As of OpenSesame 3.2, the `Canvas` supports an object-based interface that allows
+    you to name elements, and to access and modify elements individually, without
+    having to redraw the entire `Canvas`.
+    
+    For example, the following will first add a red `Line` element to a `Canvas`
+    and show it, then change the color of the line to green and show it again,
+    and then finally delete the line and show the canvas again (which is now blank).
+    The name of the element (`my_line`) is used to refer to the element for all the
+    operations.
+    
     ~~~ .python
     my_canvas = Canvas()
     my_canvas['my_line'] = Line(-100, -100, 100, 100, color='red')
@@ -293,77 +231,42 @@ class Canvas(Backend):
     del my_canvas['my_line']
     my_canvas.show()
     ~~~
-
-    You can also add an element without explicitly
-    providing a name for it.
-    In that case, a name is generated automatically
-    (e.g. `stim0`).
-
+    
+    You can also add an element without explicitly providing a name for it. In that
+    case, a name is generated automatically (e.g. `stim0`).
+    
     ~~~ .python
     my_canvas = Canvas()
     my_canvas += FixDot()
     my_canvas.show()
     ~~~
-
-    If you add a list of elements, they will be
-    automatically grouped
-    together, and you can refer to the entire group by
-    name.
-
+    
+    If you add a list of elements, they will be automatically grouped together, and
+    you can refer to the entire group by name.
+    
     ~~~ .python
     my_canvas = Canvas()
-    my_canvas['my_cross'] = [
-    Line(-100, 0, 100, 0),
-            Line(0, -100, 0, 100)
-    ]
+    my_canvas['my_cross'] = [    Line(-100, 0, 100, 0),    Line(0, -100, 0, 100)]
     my_canvas.show()
     ~~~
+    
     To check whether a particular `x,y` coordinate falls within the bounding
     rectangle of an element, you can use `in`:
-
+    
     ~~~ .python
-    my_mouse =
-    Mouse(visible=True)
+    my_mouse = Mouse(visible=True)
     my_canvas = Canvas()
-    my_canvas['rect'] = Rect(-100,
-    -100, 200, 200)
+    my_canvas['rect'] = Rect(-100, -100, 200, 200)
     my_canvas.show()
-    button, (x, y), time =
-    my_mouse.get_click()
+    button, (x, y), time = my_mouse.get_click()
     if (x, y) in my_canvas['rect']:
-            print('Clicked
-    in rectangle')
+        print('Clicked in rectangle')
     else:
-            print('Clicked outside of rectangle')
+        print('Clicked outside of rectangle')
     ~~~
-
-    You
-    can also get a list of the names of all elements that contain an
-    `x,y`
-    coordinate, using the `Canvas.elements_at()` function, documented
-    below.
-    %--
-    constant:
-            arg_max_width: |
-                    The maximum width of
-    the text in pixels, before wrapping to a
-                    new line, or
-    `None` to wrap at screen edge.
-            arg_bgmode: |
-    Specifies whether the background is the average of col1 col2
-    ('avg', corresponding to a typical Gabor patch), or equal to
-    col2 ('col2'), useful for blending into the background. Note:
-    this parameter is ignored by the psycho backend, which uses
-    increasing transparency for the background.
-            arg_style: |
-    Optional [style keywords](#style-keywords) that specify the
-    style of the current drawing operation. This does not affect
-    subsequent drawing operations.
-            arg_center: |
-                    A bool
-    indicating whether the coordinates reflect the center
-    (`True`) or top-left (`False`) of the text.
-    --%
+    
+    You can also get a list of the names of all elements that contain an `x,y`
+    coordinate, using the `Canvas.elements_at()` function, documented below.
     """
     # The maximum duration that Canvas.show() should take, which is set to one
     # frame duration on a 60 Hz monitor. If Canvas.show() takes longer, a
@@ -371,7 +274,7 @@ class Canvas(Backend):
     MAX_SHOW_DT = 16
 
     def __init__(self, experiment, auto_prepare=True, **style_args):
-        r"""Constructor to create a new `Canvas` object. You do not generally
+        """Constructor to create a new `Canvas` object. You do not generally
         call this constructor directly, but use the `Canvas()` factory
         function, which is described here: [/python/common/]().
 
@@ -403,22 +306,22 @@ class Canvas(Backend):
         self._height = self.experiment.var.height
         self.auto_prepare = auto_prepare
         Backend.__init__(self, configurables={
-            u'color': None,
-            u'background_color': None,
-            u'fill': self.assert_bool,
-            u'penwidth': self.assert_numeric,
-            u'html': self.assert_bool,
-            u'font_family': self.assert_string,
-            u'font_size': self.assert_numeric,
-            u'font_italic': self.assert_bool,
-            u'font_bold': self.assert_bool,
-            u'font_underline': self.assert_bool,
+            'color': None,
+            'background_color': None,
+            'fill': self.assert_bool,
+            'penwidth': self.assert_numeric,
+            'html': self.assert_bool,
+            'font_family': self.assert_string,
+            'font_size': self.assert_numeric,
+            'font_italic': self.assert_bool,
+            'font_bold': self.assert_bool,
+            'font_underline': self.assert_bool,
         }, **style_args)
         self._elements = OrderedDict()
         self._stimnr = 0
 
     def __enter__(self):
-        r"""The context manager provides an elegant way to disable auto
+        """The context manager provides an elegant way to disable auto
         preparation. However, it is hidden for now because none of the backends
         require it.
         """
@@ -427,7 +330,7 @@ class Canvas(Backend):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        r"""The context manager provides an elegant way to disable auto
+        """The context manager provides an elegant way to disable auto
         preparation. However, it is hidden for now because none of the backends
         require it.
         """
@@ -435,7 +338,7 @@ class Canvas(Backend):
         self.prepare()
 
     def __setitem__(self, key, value):
-        r"""Sets a named element. If a list of elements is provided, a Group is
+        """Sets a named element. If a list of elements is provided, a Group is
         automatically created.
         """
         if key in self._elements:
@@ -452,35 +355,35 @@ class Canvas(Backend):
         self._elements[key] = value
 
     def __delitem__(self, key):
-        r"""Deletes an element by name."""
+        """Deletes an element by name."""
         del self._elements[key]
 
     def __getitem__(self, key):
-        r"""Retrieves an element by name."""
+        """Retrieves an element by name."""
         return self._elements[key]
 
     def __len__(self):
-        r"""Gets the number of elements, where a Group counts as 1."""
+        """Gets the number of elements, where a Group counts as 1."""
         return len(self._elements)
 
     def __contains__(self, key):
-        r"""Checks whether a named element is in the Canvas."""
+        """Checks whether a named element is in the Canvas."""
         return key in self._elements
 
     def __iter__(self):
-        r"""Iterates over the elements."""
+        """Iterates over the elements."""
         for name, stim in self._elements.items():
             yield name, stim
 
     def __iadd__(self, element):
-        r"""Adds an unnamed element."""
+        """Adds an unnamed element."""
         while 'stim%d' % self._stimnr in self._elements:
             self._stimnr += 1
         self['stim%d' % self._stimnr] = element
         return self
 
     def _get_name_element(self, element):
-        r"""Gets a name, element tuple for an element or element name (i.e. get
+        """Gets a name, element tuple for an element or element name (i.e. get
         both if you have only one).
 
         Parameters
@@ -500,7 +403,7 @@ class Canvas(Backend):
         raise ValueError('"%s" not found in canvas"' % element)
 
     def elements_at(self, x, y):
-        r"""*New in v3.2.0*
+        """*New in v3.2.0*
 
         Gets the names of elements that contain a
         particular `x, y`
@@ -543,7 +446,7 @@ class Canvas(Backend):
         return elements
 
     def lower_to_bottom(self, element):
-        r"""Lowers an element to the bottom, so that it is drawn first; that
+        """Lowers an element to the bottom, so that it is drawn first; that
         is, it becomes the background.
 
         Parameters
@@ -560,7 +463,7 @@ class Canvas(Backend):
         self._elements = _elements
 
     def raise_to_top(self, element):
-        r"""Raises an element to the top, so that it is drawn last; that is, it
+        """Raises an element to the top, so that it is drawn last; that is, it
         becomes the foreground.
 
         Parameters
@@ -577,14 +480,14 @@ class Canvas(Backend):
         self._elements = _elements
 
     def add_element(self, element, name=None):
-        r"""An alternative to the dict and += API. For internal use."""
+        """An alternative to the dict and += API. For internal use. {nodoc}"""
         if name is None:
             self.__iadd__(element)
             return
         self._elements[name] = element
 
     def rename_element(self, old_name, new_name):
-        r"""Renames an element."""
+        """Renames an element."""
         element = self._elements.pop(old_name)
         i = 1
         name = new_name
@@ -596,84 +499,83 @@ class Canvas(Backend):
     def set_config(self, **cfg):
 
         # Convert color to backend specific colors
-        if u'color' in cfg and not hasattr(cfg[u'color'], u'backend_color'):
-            cfg[u'color'] = Color(self.experiment, cfg[u'color'])
-        if u'background_color' in cfg \
-                and not hasattr(cfg[u'background_color'], u'backend_color'):
-            cfg[u'background_color'] = Color(self.experiment,
-                                             cfg[u'background_color'])
+        if 'color' in cfg and not hasattr(cfg['color'], 'backend_color'):
+            cfg['color'] = Color(self.experiment, cfg['color'])
+        if 'background_color' in cfg \
+                and not hasattr(cfg['background_color'], 'backend_color'):
+            cfg['background_color'] = Color(self.experiment,
+                                             cfg['background_color'])
         Backend.set_config(self, **cfg)
 
     def default_config(self):
 
         return {
-            u'penwidth': 1,
-            u'fill': False,
-            u'html': True,
-            u'color': self.experiment.var.foreground,
-            u'background_color': self.experiment.var.background,
-            u'font_size': self.experiment.var.font_size,
-            u'font_family': self.experiment.var.font_family,
-            u'font_bold': self.experiment.var.font_bold == u'yes',
-            u'font_italic': self.experiment.var.font_italic == u'yes',
-            u'font_underline': self.experiment.var.font_underline == u'yes',
+            'penwidth': 1,
+            'fill': False,
+            'html': True,
+            'color': self.experiment.var.foreground,
+            'background_color': self.experiment.var.background,
+            'font_size': self.experiment.var.font_size,
+            'font_family': self.experiment.var.font_family,
+            'font_bold': self.experiment.var.font_bold == 'yes',
+            'font_italic': self.experiment.var.font_italic == 'yes',
+            'font_underline': self.experiment.var.font_underline == 'yes',
         }
 
     @property
     def size(self):
-        r"""The size of the canvas as a `(width, height)` tuple. This is a
+        """The size of the canvas as a `(width, height)` tuple. This is a
         read-only property.
         """
         return self._width, self._height
 
     @property
     def width(self):
-        r"""The width of the canvas. This is a read-only property."""
+        """The width of the canvas. This is a read-only property."""
         return self._width
 
     @property
     def height(self):
-        r"""The height of the canvas. This is a read-only property."""
+        """The height of the canvas. This is a read-only property."""
         return self._height
 
     @property
     def left(self):
-        r"""The x coordinate of the left edge of the display. This is a read-
+        """The x coordinate of the left edge of the display. This is a read-
         only property.
         """
         return self._left
 
     @property
     def right(self):
-        r"""The x coordinate of the right edge of the display. This is a read-
+        """The x coordinate of the right edge of the display. This is a read-
         only property.
         """
         return self._right
 
     @property
     def top(self):
-        r"""The y coordinate of the top edge of the display. This is a read-
+        """The y coordinate of the top edge of the display. This is a read-
         only property.
         """
         return self._top
 
     @property
     def bottom(self):
-        r"""The y coordinate of the bottom edge of the display. This is a read-
+        """The y coordinate of the bottom edge of the display. This is a read-
         only property.
         """
         return self._bottom
 
     def copy(self, canvas):
-        r"""Turns the current `Canvas` into a copy of the passed `Canvas`.
+        """Turns the current `Canvas` into a copy of the passed `Canvas`.
+        
         __Warning:__
 
-        Copying `Canvas` objects can result in unpredictable
-        behavior. In
-        many cases, a better solution is to recreate multiple
-        `Canvas`
-        objects from scratch, and/ or to use the element interface to
-        update `Canvas` elements individually.
+        Copying `Canvas` objects can result in unpredictable behavior. In many
+        cases, a better solution is to recreate multiple `Canvas` objects from
+        scratch, and/ or to use the element interface to update `Canvas`
+        elements individually.
 
         Parameters
         ----------
@@ -696,16 +598,17 @@ class Canvas(Backend):
         self.set_config(**canvas.get_config())
 
     def prepare(self):
-        r"""Finishes pending canvas operations (if any), so that a subsequent
+        """Finishes pending canvas operations (if any), so that a subsequent
         call to [canvas.show] is extra fast. It's only necessary to call this
-        function if you have disabled `auto_prepare` in [canvas.__init__].
+        function if you have disabled `auto_prepare` when initializing the
+        `Canvas`.
         """
         for name, element in self._elements.items():
             if element.visible:
                 element.prepare()
 
     def show(self):
-        r"""Shows, or 'flips', the canvas on the screen.
+        """Shows, or 'flips', the canvas on the screen.
 
         Returns
         -------
@@ -726,14 +629,14 @@ class Canvas(Backend):
 
     @configurable
     def clear(self, **style_args):
-        r"""Clears the canvas with the current background color. Note that it
+        """Clears the canvas with the current background color. Note that it
         is generally faster to use a different canvas for each experimental
         display than to use a single canvas and repeatedly clear and redraw it.
 
         Parameters
         ----------
         **style_args : dict
-            %arg_style
+            {{arg_style}}
 
 
         Examples
@@ -748,8 +651,8 @@ class Canvas(Backend):
         """
         raise NotImplementedError()
 
-    def fixdot(self, x=None, y=None, style=u'default', **style_args):
-        r"""Draws a fixation dot. The default style is medium-open.
+    def fixdot(self, x=None, y=None, style='default', **style_args):
+        """Draws a fixation dot. The default style is medium-open.
 
         - 'large-
         filled' is a filled circle with a 16px radius.
@@ -784,7 +687,7 @@ class Canvas(Backend):
             cross, medium-cross, or small-cross.
             default equals medium-open.
         **style_args : dict
-            %arg_style
+            {{arg_style}}
 
 
         Examples
@@ -799,7 +702,7 @@ class Canvas(Backend):
         return 'stim%d' % self._stimnr
 
     def circle(self, x, y, r, **style_args):
-        r"""Draws a circle.
+        """Draws a circle.
 
         Parameters
         ----------
@@ -810,7 +713,7 @@ class Canvas(Backend):
         r : int
             The radius of the circle.
         **style_args : dict
-            %arg_style
+            {{arg_style}}
 
 
         Examples
@@ -825,7 +728,7 @@ class Canvas(Backend):
         return 'stim%d' % self._stimnr
 
     def line(self, sx, sy, ex, ey, **style_args):
-        r"""Draws a line.
+        """Draws a line.
 
         Parameters
         ----------
@@ -838,14 +741,14 @@ class Canvas(Backend):
         ey : int
             The bottom Y coordinate.
         **style_args : dict
-            %arg_style
+            {{arg_style}}
         """
         self += Line(sx, sy, ex, ey, **style_args)
         return 'stim%d' % self._stimnr
 
     def arrow(self, sx, sy, ex, ey, body_length=0.8, body_width=.5,
               head_width=30, **style_args):
-        r"""Draws an arrow. An arrow is a polygon consisting of 7 vertices,
+        """Draws an arrow. An arrow is a polygon consisting of 7 vertices,
         with an arrowhead pointing at (ex, ey).
 
         Parameters
@@ -872,7 +775,7 @@ class Canvas(Backend):
         return 'stim%d' % self._stimnr
 
     def rect(self, x, y, w, h, **style_args):
-        r"""Draws a rectangle.
+        """Draws a rectangle.
 
         Parameters
         ----------
@@ -885,7 +788,7 @@ class Canvas(Backend):
         h : int
             The height.
         **style_args : dict
-            %arg_style
+            {{arg_style}}
 
 
         Examples
@@ -900,7 +803,7 @@ class Canvas(Backend):
         return 'stim%d' % self._stimnr
 
     def ellipse(self, x, y, w, h, **style_args):
-        r"""Draws an ellipse.
+        """Draws an ellipse.
 
         Parameters
         ----------
@@ -913,7 +816,7 @@ class Canvas(Backend):
         h : int
             The height.
         **style_args : dict
-            %arg_style
+            {{arg_style}}
 
 
         Examples
@@ -928,7 +831,7 @@ class Canvas(Backend):
         return 'stim%d' % self._stimnr
 
     def polygon(self, vertices, **style_args):
-        r"""Draws a polygon that defined by a list of vertices. I.e. a shape of
+        """Draws a polygon that defined by a list of vertices. I.e. a shape of
         points connected by lines.
 
         Parameters
@@ -937,7 +840,7 @@ class Canvas(Backend):
             A list of tuples, where each tuple corresponds to a vertex. For
             example, [(100,100), (200,100), (100,200)] will draw a triangle.
         **style_args : dict
-            %arg_style
+            {{arg_style}}
 
 
         Examples
@@ -955,18 +858,18 @@ class Canvas(Backend):
         return 'stim%d' % self._stimnr
 
     def text_size(self, text, center=True, max_width=None, **style_args):
-        r"""Determines the size of a text string in pixels.
+        """Determines the size of a text string in pixels.
 
         Parameters
         ----------
         text : str, unicode
             A string of text.
         center : bool, optional
-            %arg_center
+            {{arg_center}}
         max_width : int, NoneType, optional
-            %arg_max_width
+            {{arg_max_width}}
         **style_args : dict
-            %arg_style
+            {{arg_style}}
 
 
         Returns
@@ -992,7 +895,7 @@ class Canvas(Backend):
 
     def text(self, text, center=True, x=None, y=None, max_width=None,
              **style_args):
-        r"""Draws text.
+        """Draws text.
 
         Parameters
         ----------
@@ -1001,15 +904,15 @@ class Canvas(Backend):
             `unicode` or a utf-8-encoded `str`. When using Python 3, this
             should be either `str` or a utf-8-encoded `bytes`.
         center : bool, optional
-            %arg_center
+            {{arg_center}}
         x : int, NoneType, optional
             The X coordinate, or None to draw horizontally centered text.
         y : int, NoneType, optional
             The Y coordinate, or None to draw vertically centered text.
         max_width : int, NoneType, optional
-            %arg_max_width
+            {{arg_max_width}}
         **style_args : dict
-            %arg_style
+            {{arg_style}}
 
 
         Examples
@@ -1026,7 +929,7 @@ class Canvas(Backend):
 
     def image(self, fname, center=True, x=None, y=None, scale=None,
               rotation=None):
-        r"""Draws an image from file. This function does not look in the file
+        """Draws an image from file. This function does not look in the file
         pool, but takes an absolute path.
 
         Parameters
@@ -1053,7 +956,7 @@ class Canvas(Backend):
         --------
         >>> my_canvas = Canvas()
         >>> # Determine the absolute path:
-        >>> path = exp.pool[u'image_in_pool.png']
+        >>> path = exp.pool['image_in_pool.png']
         >>> # Function interface
         >>> my_canvas.image(path)
         >>> # Element interface
@@ -1064,9 +967,9 @@ class Canvas(Backend):
         )
         return 'stim%d' % self._stimnr
 
-    def gabor(self, x, y, orient, freq, env=u'gaussian', size=96, stdev=12,
-              phase=0, col1=u'white', col2=u'black', bgmode=u'avg'):
-        r"""Draws a Gabor patch. Note: The exact rendering of the Gabor patch
+    def gabor(self, x, y, orient, freq, env='gaussian', size=96, stdev=12,
+              phase=0, col1='white', col2='black', bgmode='avg'):
+        """Draws a Gabor patch. Note: The exact rendering of the Gabor patch
         depends on the back-end.
 
         Parameters
@@ -1077,17 +980,7 @@ class Canvas(Backend):
             The center Y coordinate.
         orient : float, int
             Orientation in degrees [0 .. 360]. This refers to a
-            clockwise
-            rotation from a vertical.
-
-            __Version note:__ In version 3.2.6 and
-            earlier, the
-            orientation was *counterclockwise* for the *legacy*
-            and
-            *xpyriment* backends, and clockwise for the *psycho*
-            backends.
-            As of 3.2.7, the orientation is *clockwise*
-            for all backends.
+            clockwise rotation from a vertical.
         freq : float, int
             Frequency in cycles/px of the sinusoid.
         env : str, unicode, optional
@@ -1108,7 +1001,7 @@ class Canvas(Backend):
             parameter and always uses the inverse of
             `col1` for the throughs.
         bgmode : str, unicode, optional
-            %arg_bgmode
+            {{arg_bgmode}}
 
         Examples
         --------
@@ -1122,9 +1015,9 @@ class Canvas(Backend):
                       stdev=stdev, phase=phase, col1=col1, col2=col2, bgmode=bgmode)
         return 'stim%d' % self._stimnr
 
-    def noise_patch(self, x, y, env=u'gaussian', size=96, stdev=12,
-                    col1=u'white', col2=u'black', bgmode=u'avg'):
-        r"""Draws a patch of noise, with an envelope. The exact rendering of
+    def noise_patch(self, x, y, env='gaussian', size=96, stdev=12,
+                    col1='white', col2='black', bgmode='avg'):
+        """Draws a patch of noise, with an envelope. The exact rendering of
         the noise patch depends on the back-end.
 
         Parameters
@@ -1148,7 +1041,7 @@ class Canvas(Backend):
             parameter
             and always uses the inverse of `col1`.
         bgmode : str, unicode, optional
-            %arg_bgmode
+            {{arg_bgmode}}
 
         Examples
         --------
@@ -1164,7 +1057,7 @@ class Canvas(Backend):
 
     @staticmethod
     def init_display(experiment):
-        r"""Initializes the display before the experiment begins.
+        """{nodoc}Initializes the display before the experiment begins.
 
         Parameters
         ----------
@@ -1175,7 +1068,7 @@ class Canvas(Backend):
 
     @staticmethod
     def close_display(experiment):
-        r"""Closes the display after the experiment is finished.
+        """Closes the display after the experiment is finished. {nodoc}
 
         Parameters
         ----------
@@ -1187,32 +1080,32 @@ class Canvas(Backend):
 
 # Translation mapping from envelope names
 ENV_SYNONYMS = {
-    u"c": u"c",
-    u"circular": u"c",
-    u"round": u"c",
-    u"g": u"g",
-    u"gaussian": u"g",
-    u"gauss": u"g",
-    u"normal": u"g",
-    u"r": u"r",
-    u"rectangular": u"r",
-    u"rectangle": u"r",
-    u"g": u"g",
-    u"rect": u"g",
-    u"square": u"g",
-    None: u"g",
-    u"l": u"l",
-    u"linear": u"l",
-    u"lin": u"l",
-    u"ln": u"l",
-    u"l": u"l"
+    "c": "c",
+    "circular": "c",
+    "round": "c",
+    "g": "g",
+    "gaussian": "g",
+    "gauss": "g",
+    "normal": "g",
+    "r": "r",
+    "rectangular": "r",
+    "rectangle": "r",
+    "g": "g",
+    "rect": "g",
+    "square": "g",
+    None: "g",
+    "l": "l",
+    "linear": "l",
+    "lin": "l",
+    "ln": "l",
+    "l": "l"
 }
 
 canvas_cache = {}
 
 
 def _color(col):
-    r"""Wrapper function for _gabor and _noise_patch to convert color names to
+    """Wrapper function for _gabor and _noise_patch to convert color names to
     PyGame color objects.
 
     Parameters
@@ -1229,7 +1122,7 @@ def _color(col):
 
 
 def _xyr(x, y, size, orient=0):
-    r"""Gets the coordinates relative to the center and compensating for the
+    """Gets the coordinates relative to the center and compensating for the
     rotation.
     """
     dx = x - 0.5 * size
@@ -1242,15 +1135,15 @@ def _xyr(x, y, size, orient=0):
 def _gabor(
         orient,
         freq,
-        env=u"gaussian",
+        env="gaussian",
         size=96,
         stdev=12,
         phase=0,
-        col1=u"white",
-        col2=u"black",
-        bgmode=u"avg"
+        col1="white",
+        col2="black",
+        bgmode="avg"
 ):
-    r"""Returns a pygame surface containing a Gabor patch. For arguments, see
+    """Returns a pygame surface containing a Gabor patch. For arguments, see
     [canvas.gabor].
     """
     env = _match_env(env)
@@ -1258,7 +1151,7 @@ def _gabor(
     # a cache of previously generated Gabor patches to speed up
     # the process.
     global canvas_cache
-    key = u"gabor_%s_%s_%s_%s_%s_%s_%s_%s_%s" % (
+    key = "gabor_%s_%s_%s_%s_%s_%s_%s_%s_%s" % (
         orient,
         freq,
         env,
@@ -1271,7 +1164,7 @@ def _gabor(
     )
     if key in canvas_cache:
         return canvas_cache[key]
-    im = PILImage.new(u'RGB', (size, size))
+    im = PILImage.new('RGB', (size, size))
     px = im.load()
     # Conver the orientation to radians
     orient = math.radians(-orient)
@@ -1296,14 +1189,14 @@ def _gabor(
         else:
             f = 1.0
         # Apply the envelope
-        if bgmode == u"avg":
+        if bgmode == "avg":
             amp = amp * f + 0.5 * (1.0 - f)
-        elif bgmode == u"col2":
+        elif bgmode == "col2":
             amp = amp * f
         else:
             raise ValueError(
-                u"Invalid argument for bgmode: %s "
-                u"(should be one of 'avg','col2')"
+                "Invalid argument for bgmode: %s "
+                "(should be one of 'avg','col2')"
                 % bgmode
             )
         r = col1.r * amp + col2.r * (1.0 - amp)
@@ -1315,14 +1208,14 @@ def _gabor(
 
 
 def _noise_patch(
-        env=u"gaussian",
+        env="gaussian",
         size=96,
         stdev=12,
-        col1=u"white",
-        col2=u"black",
-        bgmode=u"avg"
+        col1="white",
+        col2="black",
+        bgmode="avg"
 ):
-    r"""Returns a pygame surface containing a noise patch. For arguments, see
+    """Returns a pygame surface containing a noise patch. For arguments, see
     [canvas.noise_patch].
     """
     env = _match_env(env)
@@ -1330,11 +1223,11 @@ def _noise_patch(
     # a cache of previously generated noise patches to speed up
     # the process.
     global canvas_cache
-    key = u"noise_%s_%s_%s_%s_%s_%s" % (env, size, stdev, col1, col2, bgmode)
+    key = "noise_%s_%s_%s_%s_%s_%s" % (env, size, stdev, col1, col2, bgmode)
     if key in canvas_cache:
         return canvas_cache[key]
     # Create a surface
-    im = PILImage.new(u'RGB', (size, size))
+    im = PILImage.new('RGB', (size, size))
     px = im.load()
     col1 = _color(col1)
     col2 = _color(col2)
@@ -1345,11 +1238,11 @@ def _noise_patch(
         # Get the amplitude without the envelope (0 .. 1)
         amp = random.random()
         # The envelope adjustment
-        if env == u"g":
+        if env == "g":
             f = math.exp(-0.5 * (ux / stdev) ** 2 - 0.5 * (uy / stdev) ** 2)
-        elif env == u"l":
+        elif env == "l":
             f = max(0, (0.5 * size - r) / (0.5 * size))
-        elif env == u"c":
+        elif env == "c":
             if (r > 0.5 * size):
                 f = 0.0
             else:
@@ -1357,14 +1250,14 @@ def _noise_patch(
         else:
             f = 1.0
         # Apply the envelope
-        if bgmode == u"avg":
+        if bgmode == "avg":
             amp = amp * f + 0.5 * (1.0 - f)
-        elif bgmode == u"col2":
+        elif bgmode == "col2":
             amp = amp * f
         else:
             raise ValueError(
-                u"Invalid argument for bgmode: %s "
-                u"(should be one of 'avg','col2')"
+                "Invalid argument for bgmode: %s "
+                "(should be one of 'avg','col2')"
                 % bgmode
             )
         r = col1.r * amp + col2.r * (1.0 - amp)
@@ -1376,7 +1269,7 @@ def _noise_patch(
 
 
 def _match_env(env):
-    r"""Translation between various envelope names.
+    """Translation between various envelope names.
 
     Parameters
     ----------
@@ -1389,7 +1282,7 @@ def _match_env(env):
         A standard envelope name ("c", "g", "r" or "l")
     """
     if env not in ENV_SYNONYMS:
-        raise ValueError(u"'%s' is not a valid envelope" % env)
+        raise ValueError("'%s' is not a valid envelope" % env)
     return ENV_SYNONYMS[env]
 
 
