@@ -23,14 +23,7 @@ import platform
 import sys
 import os
 import signal
-
-if platform.system() == 'Darwin' and \
-        sys.version_info < (3, 4):
-    # In OS X Python < 3.4 the multiprocessing module is horribly broken,
-    # but a fixed version has been released as the 'billiard' module
-    import billiard as multiprocessing
-else:
-    import multiprocessing
+import multiprocessing
 
 
 class OutputChannel:

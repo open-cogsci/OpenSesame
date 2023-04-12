@@ -35,14 +35,7 @@ class MultiprocessRunner(BaseRunner):
     def execute(self):
         """See base_runner.execute()."""
         import platform
-        if platform.system() == 'Darwin' and sys.version_info < (3, 4):
-            # In OS X the multiprocessing module is horribly broken,
-            # for python 2.7 but a fixed version has been released
-            # as the 'billiard' module
-            import billiard as multiprocessing
-        else:
-            import multiprocessing
-
+        import multiprocessing
         from libqtopensesame.misc import process, _
 
         self._workspace_globals = {}

@@ -36,8 +36,8 @@ class Psycho(PsychoElement, RichText):
             # between reported sizes by the ratios calculated below. If the
             # sizes reported by win and experiment are equal, the ratio values
             # should end up as 1, and nothing changes.
-            x_ratio = int(self.win.size[0] / self.experiment.width)
-            y_ratio = int(self.win.size[1] / self.experiment.height)
+            x_ratio = int(self.win.size[0] / self.experiment.var.width)
+            y_ratio = int(self.win.size[1] / self.experiment.var.height)
             # Only resize if necessary to prevent unnecessary operations
             if x_ratio != 1 or y_ratio != 1:
                 im = im.resize((im.width * x_ratio, im.height * y_ratio))
