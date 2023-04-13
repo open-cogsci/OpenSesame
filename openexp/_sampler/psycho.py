@@ -21,6 +21,7 @@ from openexp._sampler.sampler import Sampler
 from libopensesame.oslogging import oslogger
 from openexp.backend import configurable
 from openexp.keyboard import Keyboard
+import sys
 import soundfile as sf
 import numpy as np
 
@@ -42,7 +43,7 @@ class Psycho(Sampler):
         'psycho_audiolib': {
             'name': 'Sound library',
             'description': 'Can be sounddevice, pyo, pygame, or PTB',
-            'default': 'sounddevice'},
+            'default': 'pygame' if sys.platform == 'darwin' else 'sounddevice'},
         'sound_freq': {
             'name': 'Sampling frequency for synth',
             'description': 'Determines the sampling rate of synthesized sounds',
