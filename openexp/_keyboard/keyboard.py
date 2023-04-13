@@ -33,8 +33,8 @@ class Keyboard(Backend):
     my_keyboard = Keyboard(keylist=['z', 'x'], timeout=3000)
     start_time = clock.time()
     key, end_time = my_keyboard.get_key()
-    var.response = key
-    var.response_time = end_time - start_time
+    response = key
+    response_time = end_time - start_time
     ~~~
     
     [TOC]

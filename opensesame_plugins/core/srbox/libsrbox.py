@@ -25,13 +25,12 @@ import os
 
 class LibSrbox:
 
-    r"""If you insert the srbox plugin at the start of your experiment, an
+    """If you insert the srbox plugin at the start of your experiment, an
     instance of SRBOX automatically becomes part of the experiment
     object and
     can be accessed within an inline_script item as SRBOX.
 
-    __Important note
-    1:__
+    __Important note1:__
 
     If you do not specify a device, the plug-in will try to autodetect
     the
@@ -49,12 +48,11 @@ class LibSrbox:
     ~~~ .python
     t0 = clock.time()
     srbox.start()
-    button, t1 =
-    srbox.get_button_press(allowed_buttons=[1,2],
-    require_state_change=True)
+    button, t1 = srbox.get_button_press(allowed_buttons=[1, 2],
+                                        require_state_change=True)
     if button == 1:
-            response_time = t1 - t0
-    print('Button 1 was pressed in %d ms!' % response_time)
+        response_time = t1 - t0
+    print(f'Button 1 was pressed in {response_time} ms!')
     srbox.stop()
     ~~~
     [TOC]
@@ -81,7 +79,7 @@ class LibSrbox:
     ]
 
     def __init__(self, experiment, dev=None):
-        r"""Constructor. An SRBOX object is created automatically by the SRBOX
+        """Constructor. An SRBOX object is created automatically by the SRBOX
         plug-in, and you do not generally need to call the constructor
         yourself.
 
@@ -151,19 +149,22 @@ class LibSrbox:
             self._srbox.write(b'\x60')
 
     def send(self, ch):
-        r"""Sends a single character to the SR Box. Send '\x60' to turn off all
+        """Sends a single character to the SR Box. Send '\x60' to turn off all
         lights, '\x61' for light 1 on, '\x62' for light 2 on,'\x63' for lights
         1 and 2 on etc.
 
         Parameters
         ----------
-        ch : str
-            The character to send.
+        ch : str or bytes
+            The character to send. If a `str` is passed, it is encoded to
+            `bytes` using utf-8 encoding.
         """
+        if isinstance(ch, str):
+            ch = ch.encode('utf-8')
         self._srbox.write(ch)
 
     def start(self):
-        r"""Turns on sending mode, so that the SR Box starts to send output.
+        """Turns on sending mode, so that the SR Box starts to send output.
         The SR Box must be in sending mode when you call
         [srbox.get_button_press].
         """
@@ -176,7 +177,7 @@ class LibSrbox:
         self._started = True
 
     def stop(self):
-        r"""Turns off sending mode, so that the SR Box stops giving output."""
+        """Turns off sending mode, so that the SR Box stops giving output."""
         if not self._started:
             return
         # Write the stop byte and flush the input
@@ -185,13 +186,9 @@ class LibSrbox:
         self._srbox.write(b'\x20')
         self._started = False
 
-    def get_button_press(
-            self,
-            allowed_buttons=None,
-            timeout=None,
-            require_state_change=False
-    ):
-        r"""Collects a button press from the SR box.
+    def get_button_press(self, allowed_buttons=None, timeout=None,
+                         require_state_change=False):
+        """Collects a button press from the SR box.
 
         Parameters
         ----------
@@ -207,12 +204,12 @@ class LibSrbox:
         Returns
         -------
         tuple
-            A button_list, timestamp tuple. button_list is None if no button
-            was pressed (i.e. a timeout occurred).
+            A `(button_list, timestamp)` tuple. `button_list` is `None` if no 
+            button was pressed (i.e. a timeout occurred).
         """
         if not self._started:
             raise DeviceError(
-                u'Please call srbox.start() before srbox.get_button_press()')
+                'Please call srbox.start() before srbox.get_button_press()')
         t0 = self.experiment.time()
         # Create a list of buttonr, bytemask tuples.
         bytemasks = []
@@ -262,8 +259,8 @@ class LibSrbox:
         return None, t1
 
     def close(self):
-        r"""Closes the connection to the srbox. This is done automatically by
-        the SRBOX plugin when the experiment finishes.
+        """Closes the connection to the srbox. This is done automatically by
+        the SRBOX plugin when the experiment finishes. {nodoc}
         """
         self._srbox.close()
         self._started = False

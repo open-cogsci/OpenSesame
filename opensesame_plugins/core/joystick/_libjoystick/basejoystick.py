@@ -20,10 +20,9 @@ from libopensesame.py3compat import *
 
 
 class BaseJoystick:
-
-    r"""If you insert the JOYSTICK plugin at the start of your experiment, a
+    """If you insert the JOYSTICK plugin at the start of your experiment, a
     JOYSTICK object automatically becomes part of the experiment object
-    and can be used within an inline_script item as JOYSTICK.
+    and can be used within an INLINE_SCRIPT item as `joystick`.
 
     {% set arg_joybuttonlist = "A list of buttons that are accepted or " +
     "`None` to accept all buttons." %}
@@ -33,7 +32,7 @@ class BaseJoystick:
     [TOC]
     """
     def __init__(self, experiment, device=0, joybuttonlist=None, timeout=None):
-        r"""Intializes the joystick object.
+        """Intializes the joystick object.
 
         Parameters
         ----------
