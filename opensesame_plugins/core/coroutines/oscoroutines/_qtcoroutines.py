@@ -84,8 +84,6 @@ class QtCoroutines(Coroutines, Sequence):
             u'end_after_item', _(u'End after item (optional)'),
             options=[s[0] for s in self.schedule]
         )
-        self.add_line_edit_control(u'function_name',
-                                   _(u'Generator function name (optional)'))
         self.add_checkbox_control(u'flush_keyboard',
                                   _(u'Flush pending key presses at coroutines start'))
 
