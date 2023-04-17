@@ -40,8 +40,8 @@ class PreferencesWidget(BaseWidget):
         main_window
             A qtopensesame object.
         """
-        super().__init__(main_window, ui=u'widgets.preferences_widget')
-        self.tab_name = u'__preferences__'
+        super().__init__(main_window, ui='widgets.preferences_widget')
+        self.tab_name = '__preferences__'
         self.lock = False
         # Connect the controls
         self.ui.button_experiment_properties.clicked.connect(
@@ -66,7 +66,7 @@ class PreferencesWidget(BaseWidget):
                 continue
             if w is None:
                 continue
-            if hasattr(w, u'__advanced__'):
+            if hasattr(w, '__advanced__'):
                 self.ui.layout_advanced.addRow(w, None)
             else:
                 self.ui.layout_preferences.addRow(w, None)
@@ -106,14 +106,14 @@ class PreferencesWidget(BaseWidget):
             runner_index = RUNNER_LIST.index(DEFAULT_RUNNER)
         self.ui.combobox_runner.setCurrentIndex(runner_index)
         # Set the locale combobox
-        self.ui.combobox_locale.addItem(u'[Default]')
+        self.ui.combobox_locale.addItem('[Default]')
         self.ui.combobox_locale.setCurrentIndex(0)
         locales = sorted(
             [
                 locale[:-3]
                 for locale in os.listdir(resources['locale'])
-                if locale != u'translatables.qm'
-            ] + [u'en_US']
+                if locale != 'translatables.qm'
+            ] + ['en']
         )
         for i, locale in enumerate(locales):
             self.ui.combobox_locale.addItem(locale)
@@ -145,8 +145,8 @@ class PreferencesWidget(BaseWidget):
         )
         # Apply locale
         cfg.locale = self.ui.combobox_locale.currentText()
-        if cfg.locale == u'[Default]':
-            cfg.locale = u''
+        if cfg.locale == '[Default]':
+            cfg.locale = ''
         # Apply toolbar size
         old_size = cfg.toolbar_size
         new_size = 16 if self.ui.checkbox_small_toolbar.isChecked() else 32

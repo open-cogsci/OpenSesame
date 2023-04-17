@@ -488,11 +488,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             return self._locale
         # If a locale has been explicitly specified, use it; otherwise, use the
         # system default locale.
-        locale = (
-            cfg.locale
-            if cfg.locale
-            else QtCore.QLocale().system().name()
-        )
+        locale = (cfg.locale if cfg.locale else QtCore.QLocale().bcp47Name())
         # If a locale has been specified on the command line, it overrides.
         for i, argv in enumerate(sys.argv[:-1]):
             if argv == '--locale':
@@ -500,17 +496,8 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         try:
             qm = resources[f'locale/{locale}.qm']
         except FileNotFoundError:
-            # Say that we're trying to load de_AT, and it is not found, then
-            # we'll try de_DE as fallback.
-            loctuple = locale.split(u'_')
-            if loctuple:
-                _locale = loctuple[0] + u'_' + loctuple[0].upper()
-                try:
-                    qm = resources[f'locale/{_locale}.qm']
-                except FileNotFoundError:
-                    pass
-                else:
-                    locale = _locale
+            oslogger.warning(f'no translation file found for {locale}')
+            pass
         self._locale = locale
         return self._locale
 

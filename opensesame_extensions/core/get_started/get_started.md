@@ -13,11 +13,12 @@ Start a new experiment:<br />
 
 </td></tr></table>
 
-Have you considered supporting OpenSesame? It's easy and quick.
+Good software needs awake developers:
 
-[Donate through PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=QEWKSAY4WMKRW){: .important-button}
+[&#x2615;&nbsp;&nbsp; Buy us a coffee!](https://www.buymeacoffee.com/cogsci){: .button}
 
-Or learn more:
+Or:
 
-[Read the documentation](http://osdoc.cogsci.nl){: .button}<br />
-[Ask a question on the forum](http://forum.cogsci.nl){: .button}<br />
+[&#x1F440;&nbsp;&nbsp; Read the documentation](http://osdoc.cogsci.nl){: .button}<br />
+[&#x1F4AC;&nbsp;&nbsp; Ask a question on the forum](http://forum.cogsci.nl){: .button}<br />
+[&#x1F9D0;&nbsp;&nbsp; Get professional support](http://professional.cogsci.nl){: .button}<br />

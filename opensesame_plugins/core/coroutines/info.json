@@ -1,9 +1,0 @@
-{
- "category": "Flow control",
- "version": "0.2.0",
- "author": "Sebastiaan Math\u00f4t",
- "priority": 100,
- "url": "https://github.com/smathot/opensesame_coroutines/",
- "icon": "os-coroutines",
- "type": "plugins"
-}

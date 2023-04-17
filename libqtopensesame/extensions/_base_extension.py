@@ -52,7 +52,8 @@ class BaseExtension(BaseSubcomponent):
             # Use a special fire() function that keeps track of durations
             self._event_durations = {}
             self.fire = self._fire_and_time
-        self._ = translation_context(self.name(), category=u'extension')
+        self._ = translation_context(snake_case(self.name()),
+                                     category='extension')
         self.setup(main_window)
         if self.name() in self.unloaded_extension_manager:
             self._unloaded_extension = \

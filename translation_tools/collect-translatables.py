@@ -25,8 +25,9 @@ import sys
 import subprocess
 import argparse
 from pathlib import Path
+from translation_utils import *
 
-EXCLUDE_FOLDERS = ['build', 'dist', 'deb_dist', 'pgs4a-0.9.4']
+EXCLUDE_FOLDERS = ['build', 'dist', 'deb_dist', 'pgs4a-0.9.4', 'doc']
 LUPDATE = ['pylupdate5']
 TRANSLATABLES_PY = Path('translatables.py')
 TRANSLATE_PRO = Path('translate.pro')
@@ -90,8 +91,8 @@ def parse_py(path, t):
 
 def parse_init(path, t):
     print(f'parsing init file {path}')
-    context = path.parts[-2]
     category = path.parts[-4].split('_')[1]
+    context = f'{category[:-1]}_{path.parts[-2]}'
     d = {}
     exec(path.read_text(), d)
     for field in ['label', 'description', 'tooltip', '__doc__']:
@@ -135,25 +136,16 @@ def compile_ts(t, ui_list, ts_folder, fname=TRANSLATE_PRO):
     pro = pro_tmpl.format(
         ui_list=' \\\n\t'.join([str(p) for p in ui_list]),
         sources=TRANSLATABLES_PY,
-        translatables=translatables)
+        translatables=TRANSLATABLES)
     with open(fname, 'w') as fd:
         fd.write(pro)
     cmd = LUPDATE + [fname]
     subprocess.call(cmd)
 
 
-parser = argparse.ArgumentParser(
-    description='Update ts and qm files for OpenSesame-related projects')
-parser.add_argument('--ts_folder', type=str,
-                    default='../libqtopensesame/resources/ts',
-                    help='The folder that contains the ts files')
-parser.add_argument('--qm_folder', type=str,
-                    default='../libqtopensesame/resources/locale',
-                    help='The folder that contains the qm files')
-args = parser.parse_args()
 translatables = Translatables()
 ui_list = []
 print('Parsing folders …')
-parse_folder(Path('..'), translatables, ui_list)
+parse_folder(Path(args.src_folder), translatables, ui_list)
 print('Compiling ts …')
 compile_ts(translatables, ui_list, Path(args.ts_folder))

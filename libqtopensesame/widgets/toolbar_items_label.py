@@ -20,22 +20,20 @@ from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'item_category', category=u'core')
+_ = translation_context('item_category', category='core')
 
 
 class ToolbarItemsLabel(BaseSubcomponent, QtWidgets.QFrame):
-
-    r"""A label for the item toolbar."""
+    """A label for the item toolbar.
+    
+    Parameters
+    ----------
+    parent : QWidget
+        The parent.
+    label : unicode
+        Label text.
+    """
     def __init__(self, parent, label):
-        r"""Constructor
-
-        Parameters
-        ----------
-        parent : QWidget
-            The parent.
-        label : unicode
-            Label text.
-        """
         super().__init__(parent)
         self.setup(parent)
         l = QtWidgets.QLabel(_(label))
