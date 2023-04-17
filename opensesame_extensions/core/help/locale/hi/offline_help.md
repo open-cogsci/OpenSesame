@@ -1,65 +1,61 @@
-# OpenSesame help
+# OpenSesame सहायता
 
-*This is the offline help page. If you are connected to the Internet,
-you can find the online documentation at <http://osdoc.cogsci.nl>.*
+*यह ऑफ़लाइन सहायता पृष्ठ है। यदि आप इंटरनेट से जुड़े हैं,
+तो आप ऑनलाइन प्रलेखन <http://osdoc.cogsci.nl> पर देख सकते हैं।*
 
-## Introduction
+## परिचय
 
-OpenSesame is a graphical experiment builder for the social sciences. With OpenSesame you can easily create experiments using a point-and-click graphical interface. For complex tasks, OpenSesame supports [Python] scripting.
+OpenSesame सामाजिक विज्ञान के लिए एक ग्राफ़िकल प्रयोग निर्माता है। OpenSesame के साथ आप आसानी से प्वाइंट-एंड-क्लिक ग्राफ़िकल इंटरफ़ेस का उपयोग करके प्रयोगों को बना सकते हैं। जटिल कार्यों के लिए, OpenSesame [Python] स्क्रिप्टिंग का समर्थन करता है।
 
-## Getting started
+## शुरू करने का तरीका
 
-The best way to get started is by walking through a tutorial. Tutorials, and much more, can be found online:
+शुरू करने का सबसे अच्छा तरीका एक ट्यूटोरियल के माध्यम से चलना है। ट्यूटोरियल, और बहुत कुछ, ऑनलाइन देखा जा सकता है:
 
 - <http://osdoc.cogsci.nl/tutorials/>
 
-## Citation
+## उद्धरण
 
-To cite OpenSesame in your work, please use the following reference:
+अपने काम में OpenSesame का उद्धरण देने के लिए, कृपया निम्न संदर्भ का उपयोग करें:
 
 - Mathôt, S., Schreij, D., & Theeuwes, J. (2012). OpenSesame: An open-source, graphical experiment builder for the social sciences. *Behavior Research Methods*, *44*(2), 314-324. doi:[10.3758/s13428-011-0168-7](http://dx.doi.org/10.3758/s13428-011-0168-7)
 
-## Interface
+## इंटरफ़ेस
 
-The graphical interface has the following components. You can get
-context-sensitive help by clicking on the help icons at the top-right of
-each tab.
+ग्राफ़िकल इंटरफ़ेस में निम्नलिखित कौम्पोनॅन्ट होते हैं। आप प्रत्येक टैब के दाएं ऊपरी कोने पर मदद आइकन पर क्लिक करके संदर्भ-संवेदी मदद प्राप्त कर सकते हैं।
 
-- The *menu* (at the top of the window) shows common options, such as opening and saving files, closing the program, and showing this help page.
-- The *main toolbar* (the big buttons below the menu) offers a selection of the most relevant options from the menu.
-- The *item toolbar* (the big buttons on the left of the window) shows available items. To add an item to your experiment, drag it from the item toolbar onto the overview area.
-- The *overview area* (Control + \\) shows a tree-like overview of your experiment.
-- The *tab area* contains the tabs for editing items. If you click on an item in the overview area, a corresponding tab opens in the tab area. Help is displayed in the tab area as well.
-- The [file pool](opensesame://help.pool) (Control + P) shows files that are bundled with your experiment.
--   The [variable inspector](opensesame://help.extension.variable_inspector) (Control + I) shows all detected variables.
--   The [debug window](opensesame://help.stdout). (Control + D) is an [IPython] terminal. Everything that your experiment prints to the standard output (i.e. using `print()`) is shown here.
+- *मेन्यू* (विंडो के शीर्ष पर) सामान्य विकल्प दिखाता है, जैसे कि फ़ाइलें खोलना और सहेजना, प्रोग्राम बंद करना, और इस मदद पृष्ठ को दिखा रहा है।
+- *मुख्य टूलबार* (मेन्यू के नीचे बड़े बटन) मेन्यू से सबसे प्रासंगिक विकल्पों का चयन प्रदान करता है।
+- *आइटम टूलबार* (विंडो के बाएं बड़े बटन) उपलब्ध आइटम दिखाता है। अपने प्रयोग में आइटम जोड़ने के लिए, आइटम टूलबार से आइटम को ओवरव्यू क्षेत्र पर खींचें।
+- *ओवरव्यू क्षेत्र* (Control + \\) आपके प्रयोग का वृक्ष-सदृश ओवरव्यू दिखाता है।
+- *टैब क्षेत्र* में आइटम संपादित करने के लिए टैब होती हैं। यदि आप ओवरव्यू क्षेत्र में किसी आइटम पर क्लिक क
 
-## Items
+## आइटम्स
 
-Items are the building blocks of your experiment. Ten core items provide basic functionality for creating an experiment. To add items to your experiment, drag them from the item toolbar into the overview area.
+आइटम्स आपके प्रयोग के निर्माण के बेसिक ब्लॉक हैं। दस कोर आइटम्स एक प्रयोग बनाने के लिए बेसिक कार्यक्षमता प्रदान करते हैं। अपने प्रयोग में आइटम्स जोड़ने के लिए, आइटम टूलबार से उन्हें ओवरव्यू क्षेत्र में खींचें।
 
-- The [loop](opensesame://help.loop) item runs another item multiple times. You can also define independent variables in the LOOP item.
-- The [sequence](opensesame://help.sequence) item runs multiple other items in sequence.
-- The [sketchpad](opensesame://help.sketchpad) item presents visual stimuli. Built-in drawing tools allow you to easily create stimulus displays.
-- The [feedback](opensesame://help.feedback) item is similar to the `sketchpad`, but is not prepared in advance. Therefore, FEEDBACK items can be used to provide feedback to participants.
-- The [sampler](opensesame://help.sampler) item plays a single sound file.
-- The [synth](opensesame://help.synth) item generates a single sound.
-- The [keyboard_response](opensesame://help.keyboard_response) item collects key-press responses.
-- The [mouse_response](opensesame://help.mouse_response) item collects mouse-click responses.
-- The [logger](opensesame://help.logger) item writes variables to the log file.
-- The [inline_script](opensesame://help.inline_script) embeds Python code in your experiment.
+- [loop](opensesame://help.loop) आइटम एक अन्य आइटम को कई बार चलाता है। LOOP आइटम में आप स्वतंत्र चर भी परिभाषित कर सकते हैं।
+- [sequence](opensesame://help.sequence) आइटम अन्य कई आइटम्स को क्रम में चलाता है।
+- [sketchpad](opensesame://help.sketchpad) आइटम दृश्य प्रेरक प्रस्तुत करता है। बिल्ट-इन ड्राइंग टूल्स आपको स्टिमुलस डिस्प्ले आसानी से बनाने देते हैं।
+- [feedback](opensesame://help.feedback) आइटम `sketchpad` के समान होता है, लेकिन इसे पहले से तैयार नहीं किया जाता है। इसलिए, FEEDBACK आइटम्स को प्रतिभागियों को प्रतिक्रिया प्रदान करने के लिए इस्तेमाल किया जा सकता है।
+- [sampler](opensesame://help.sampler) आइटम एक सिंगल साउंड फ़ाइल चलाता है।
+- [synth](opensesame://help.synth) आइटम एक अकेली ध्वनि उत्पन्न करता है।
+- [keyboard_response](opensesame://help.keyboard_response) आइटम कुंजी-दबाव प्रतिक्रियाओं को संग्रहीत करता है।
+- [mouse_response](opensesame://help.mouse_response) आइटम माउस-क्लिक प्रतिक्रियाओं को संग्रहीत करता है।
+- [logger](opensesame://help.logger) आइटम लॉग फ़ाइल में वेरिएबल्स लिखता है।
+- [inline_script](opensesame://help.inline_script) आपके प्रयोग में पाइथन कोड को एम्बेड करता है।
 
-If installed, plug-in items provide additional functionality. Plug-ins appear alongside the core items in the item toolbar.
+यदि स्थापित है, तो प्लग-इन आइटम अतिरिक्त कार्यक्षमता प्रदान करते हैं। प्लग-इन्स कोर आइटम्स के साथ आइटम टूलबार में दिखाई देते हैं।
 
-## Running your experiment
 
-You can run your experiment in:
+## अपनी प्रयोग को चलाना
 
-- Full-screen mode (*Control+R* or *Run -> Run fullscreen*)
-- Window mode (*Control+W* or *Run -> Run in window*)
-- Quick-run mode (*Control+Shift+W* or *Run -> Quick run*)
+आप अपनी प्रयोग को इन मोड में चला सकते हैं:
 
-In quick-run mode, the experiments starts immediately in a window, using log file `quickrun.csv`, and subject number 999. This is useful during development.
+- पूर्ण-स्क्रीन मोड (*Control+R* या *Run -> Run fullscreen*)
+- विंडो मोड (*Control+W* या *Run -> Run in window*)
+- क्विक-रन मोड (*Control+Shift+W* या *Run -> Quick run*)
+
+क्विक-रन मोड में, प्रयोग तुरंत विंडो में शुरू होता है, लॉग फ़ाइल `quickrun.csv` का उपयोग करते हुए, और विषय संख्या 999। यह विकास के दौरान उपयोगी होता है।
 
 [python]: http://www.python.org/
 [ipython]: http://www.ipython.org/
