@@ -618,11 +618,9 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             return True
         resp = confirmation(
             self,
-            msg=_(
-                u'Your experiment contains unsaved changes. Do you want to save your experiment?'),
-            title=_(u'Save changes?'), allow_cancel=True,
-            default=u'cancel'
-        ).show()
+            msg=_('Your experiment contains unsaved changes. Do you want to save your experiment?'),
+            title=_('Save changes?'), allow_cancel=True,
+            default='cancel').show()
         if resp is None:
             return False
         if resp:

@@ -71,7 +71,7 @@ class QtPlugin(Plugin):
         
         def cls_init(self, name, experiment, script=None):
             Runtime.__init__(self, name, experiment, script)
-            QtAutoPlugin.__init__(self, __file__)
+            QtAutoPlugin.__init__(self, mod.__file__)
             
         return type(cls_name, (Runtime, QtAutoPlugin), {'__init__': cls_init})
         

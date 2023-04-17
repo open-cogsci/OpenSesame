@@ -26,7 +26,7 @@ LOCALES = [
     ('Portuguese', 'pt'),
     ('Chinese', 'zh'),
     ('Cantonese', 'yue'),
-    ('Japanese', 'jp'),
+    ('Japanese', 'ja'),
     ('Korean', 'ko'),
     ('Indonesian', 'id'),
     ('Hindi', 'hi'),

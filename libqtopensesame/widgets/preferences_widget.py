@@ -108,19 +108,19 @@ class PreferencesWidget(BaseWidget):
         # Set the locale combobox
         self.ui.combobox_locale.addItem('[Default]')
         self.ui.combobox_locale.setCurrentIndex(0)
-        locales = sorted(
-            [
-                locale[:-3]
-                for locale in os.listdir(resources['locale'])
-                if locale != 'translatables.qm'
-            ] + ['en']
-        )
-        for i, locale in enumerate(locales):
+        locales = []
+        for locale in os.listdir(resources['locale']):
+            if locale == 'translatables.qm':
+                continue
+            locale = locale[:-3]
+            locales.append(
+                f'{locale} ({QtCore.QLocale(locale).nativeLanguageName()})')
+        for i, locale in enumerate(sorted(locales)):
             self.ui.combobox_locale.addItem(locale)
-            if cfg.locale == locale:
+            if cfg.locale == locale[:2]:
                 self.ui.combobox_locale.setCurrentIndex(i + 1)
         # Set the style combobox
-        self.ui.combobox_style.addItem(u"[Default]")
+        self.ui.combobox_style.addItem("[Default]")
         self.ui.combobox_style.setCurrentIndex(0)
         for i, style in enumerate(QtWidgets.QStyleFactory.keys()):
             self.ui.combobox_style.addItem(style)
@@ -144,8 +144,8 @@ class PreferencesWidget(BaseWidget):
             QtCore.Qt.ToolButtonIconOnly
         )
         # Apply locale
-        cfg.locale = self.ui.combobox_locale.currentText()
-        if cfg.locale == '[Default]':
+        cfg.locale = self.ui.combobox_locale.currentText()[:2]
+        if cfg.locale == '[De':  # default
             cfg.locale = ''
         # Apply toolbar size
         old_size = cfg.toolbar_size

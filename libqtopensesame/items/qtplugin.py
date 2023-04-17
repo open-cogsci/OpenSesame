@@ -33,34 +33,34 @@ _ = translation_context(u'qtplugin', category=u'core')
 
 
 class QtPlugin(QtItem):
-
-    """Provides basic functionality for plugin GUIs"""
+    """Provides basic functionality for plugin GUIs.
+    
+    Parameters
+    ----------
+    plugin_file
+        The location of the plugin script file.
+    """
     def __init__(self, plugin_file=None):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        plugin_file
-            The location of the plugin script file.
-        """
         if plugin_file is not None:
-            # The __file__ variable is generally a str, which will cause unicode
-            # errors. Therefore, convert this here if necessary.
-            plugin_file = safe_decode(plugin_file,
-                                      enc=sys.getfilesystemencoding())
-            # These lines makes sure that the icons and help file are recognized
-            # by OpenSesame.
+            # These lines makes sure that the icons and help file are
+            # recognized
             self.plugin_folder = os.path.dirname(plugin_file)
-            for ext in [u'.html', u'.md']:
+            for ext in ['.html', '.md']:
                 basename = self.item_type + ext
+                path = os.path.join(self.plugin_folder, 'locale',
+                                    self.main_window._locale, basename)
+                if os.path.exists(path):
+                    resources[basename] = path
+                    continue
                 path = os.path.join(self.plugin_folder, basename)
                 if os.path.exists(path):
                     resources[basename] = path
             # Install a translation file if there is one. Most plugins have
             # their translations as part of the OpenSesame main translations.
             # However, separate plugins can bring their own translation.
-            translation_file = os.path.join(self.plugin_folder, u'resources',
-                                            u'locale', u'%s.qm' % self.main_window._locale)
+            translation_file = os.path.join(
+                self.plugin_folder, 'resources', 'locale',
+                f'{self.main_window._locale}.qm')
             if os.path.exists(translation_file):
                 translator = QtCore.QTranslator()
                 translator.load(translation_file)

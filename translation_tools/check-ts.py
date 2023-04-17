@@ -84,6 +84,9 @@ def check_translations(file_path):
                               f"  Original: {key}\n"
                               f"  Translation: {translation}")
                 values[lang] = None
+        if 'jp' in values:
+            values['ja'] = values['jp']
+            del values['jp']
     return translations
 
 
