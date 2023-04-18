@@ -6,6 +6,9 @@ from bs4 import BeautifulSoup, Tag
 from translation_utils import *
 
 
+PUNCTUATION_CHECK = ['nl', 'de', 'fr', 'es', 'it', 'pt', 'ru', 'tr']
+
+
 def extract_formatting_chars(text):
     formatting_chars = re.findall(r'%\w|%\.\d\w|{(?:\d*:)?[\w\s]*}', text)
     return set(formatting_chars)
@@ -24,11 +27,24 @@ def html_structure_equal(html1, html2):
 
 
 def fix_whitespace(original, translation):
+    # Fix extraneous whitespace in the translation
+    if original == original.strip() and translation != translation.strip():
+        return translation.strip()
+    # Check and potential fix missing whitespace in the translation
     leading_whitespace = re.search(r'^\s*', original).group()
     trailing_whitespace = re.search(r'\s*$', original).group()
     fixed_translation = re.sub(r'^\s*', leading_whitespace, translation)
     fixed_translation = re.sub(r'\s*$', trailing_whitespace, fixed_translation)
     return fixed_translation
+
+
+def fix_punctuation(original, translation):
+    if original.endswith('.') and not translation.endswith('.') and \
+            not original.endswith('nr.'):
+        return translation + '.'
+    if translation.endswith('.') and not original.endswith('.'):
+        return translation[:-1]
+    return translation
 
 
 def fix_french_spacing(text):
@@ -61,13 +77,22 @@ def check_translations(file_path):
             if fixed_translation != translation:
                 warnings.warn(f"Fixed whitespace for '{key}' in {lang}: "
                               f"Updated translation: {fixed_translation}")
-                translation = fixed_translation            
+                translation = fixed_translation
+                values[lang] = translation
+            if lang in PUNCTUATION_CHECK:
+                fixed_translation = fix_punctuation(key, translation)
+                if fixed_translation != translation:
+                    warnings.warn(f"Fixed punctuation for '{key}' in {lang}: "
+                                  f"Updated translation: {fixed_translation}")
+                    translation = fixed_translation
+                    values[lang] = translation
             if lang == 'fr':
                 fixed_translation = fix_french_spacing(translation)
                 if fixed_translation != translation:
                     warnings.warn(f"Fixed spacing for '{key}' in {lang}: "
                                   f"Updated translation: {fixed_translation}")
                     translation = fixed_translation
+                    values[lang] = translation
             translated_formatting_chars = extract_formatting_chars(translation)
             if original_formatting_chars != translated_formatting_chars:
                 warnings.warn(f"Error: Translation for '{key}' in {lang} is incorrect (formatting_chars):\n"

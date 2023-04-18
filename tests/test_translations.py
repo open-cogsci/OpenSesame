@@ -23,68 +23,67 @@ import unittest
 from libopensesame.py3compat import *
 
 
-NO_PUNCTUATION_CHECK = [
-    u'zh_CN',
-    u'ja_JP'
-    ]
+PUNCTUATION_CHECK = ['nl', 'de', 'fr', 'es', 'it', 'pt', 'ru', 'tr']
 
 
 class check_translations(unittest.TestCase):
 
     def check_punctuation(self, path):
 
-        for locale in NO_PUNCTUATION_CHECK:
-            if path.endswith(locale + u'.ts'):
-                return False
-        return True
+        for locale in PUNCTUATION_CHECK:
+            if path.endswith(locale + '.ts'):
+                return True
+        return False
 
     def extractWildcards(self, s):
 
         return re.findall('(?<!%)%(\(\w+\)){0,1}([dfs]){1}', s)
 
-    def validateTranslation(self, original, translation, punctuation=True):
+    def validateTranslation(self, original, translation, punctuation=True,
+                            whitespace=True):
 
-        print(u'"%s" -> "%s"' % (safe_decode(original), safe_decode(translation)))
+        print('"%s" -> "%s"' % (safe_decode(original), safe_decode(translation)))
         self.assertEqual(
             self.extractWildcards(original), self.extractWildcards(translation))
-        self.assertEqual(original[-1] == u' ', translation[-1] == u' ')
-        self.assertEqual(original[-1] == u'\n', translation[-1] == u'\n')
-        self.assertEqual(original[:1] == u' ', translation[:1] == u' ')
+        if whitespace:
+            self.assertEqual(original[-1] == ' ', translation[-1] == ' ')
+            self.assertEqual(original[-1] == '\n', translation[-1] == '\n')
+            self.assertEqual(original[:1] == ' ', translation[:1] == ' ')
         if not punctuation:
             return
-        if not original.endswith(u'nr.'):
-            self.assertEqual(original[-1] == u'.', translation[-1] == u'.')
-        self.assertEqual(original[-1] == u'?', translation[-1] == u'?')
-        self.assertEqual(original[-1] == u'…', translation[-1] == u'…')
-        self.assertEqual(original[-1] == u':', translation[-1] == u':')
+        if not original.endswith('nr.'):
+            self.assertEqual(original[-1] == '.', translation[-1] == '.')
+        self.assertEqual(original[-1] == '?', translation[-1] == '?')
+        self.assertEqual(original[-1] == '…', translation[-1] == '…')
+        self.assertEqual(original[-1] == ':', translation[-1] == ':')
 
     def checkMarkdown(self, dirname):
 
         for basename in os.listdir(dirname):
-            if basename == u'locale':
+            if basename == 'locale':
                 continue
             path = os.path.join(dirname, basename)
             if os.path.isdir(path):
                 self.checkMarkdown(path)
                 continue
-            if not path.endswith(u'.md'):
+            if not path.endswith('.md'):
                 continue
             print(path)
-            localedirname = os.path.join(dirname, u'locale')
+            localedirname = os.path.join(dirname, 'locale')
             if not os.path.exists(localedirname):
-                print(u'-> no translations')
+                print('-> no translations')
                 continue
             for locale in os.listdir(localedirname):
                 localepath = os.path.join(localedirname, locale, basename)
                 if not os.path.exists(localepath):
                     continue
-                print(u'-> '+localepath)
+                print('-> '+localepath)
                 with open(path) as fd:
                     original = safe_decode(fd.read())
                 with open(localepath) as fd:
                     translation = safe_decode(fd.read())
                 self.validateTranslation(original, translation,
-                    self.check_punctuation(localepath))
+                    self.check_punctuation(localepath), whitespace=False)
 
     def checkXML(self, path):
 
@@ -94,12 +93,12 @@ class check_translations(unittest.TestCase):
         root = tree.getroot()
         for context in root:
             for message in context:
-                if message.tag != u'message':
+                if message.tag != 'message':
                     continue
-                _translation = message.find(u'translation')
-                if _translation.attrib.get(u'type', u'?') == u'obsolete':
+                _translation = message.find('translation')
+                if _translation.attrib.get('type', '?') == 'obsolete':
                     continue
-                original = message.find(u'source').text
+                original = message.find('source').text
                 translation = _translation.text
                 if translation is None:
                     continue
@@ -109,7 +108,7 @@ class check_translations(unittest.TestCase):
     def checkTs(self, dirname):
 
         for basename in os.listdir(dirname):
-            if not basename.endswith(u'.ts'):
+            if not basename.endswith('.ts'):
                 continue
             path = os.path.join(dirname, basename)
             print(path)
@@ -117,10 +116,10 @@ class check_translations(unittest.TestCase):
 
     def runTest(self):
 
-        self.checkMarkdown(u'libqtopensesame/resources')
-        self.checkMarkdown(u'opensesame_plugins')
-        self.checkMarkdown(u'opensesame_extensions')
-        self.checkTs(u'libqtopensesame/resources/ts')
+        self.checkMarkdown('libqtopensesame/resources')
+        self.checkMarkdown('opensesame_plugins')
+        self.checkMarkdown('opensesame_extensions')
+        self.checkTs('libqtopensesame/resources/ts')
 
 
 if __name__ == '__main__':

@@ -43,4 +43,5 @@ for message in root.iter("message"):
                 translation = translation + ' '
             print(f'- {lang[0]}: "{translation}"')
             translation_dict[source_text][lang[1]] = translation
-    TRANSLATIONS.write_text(json.dumps(translation_dict))
+    TRANSLATIONS.write_text(json.dumps(translation_dict, ensure_ascii=False,
+                                       indent=2))
