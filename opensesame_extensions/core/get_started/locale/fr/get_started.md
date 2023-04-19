@@ -1,4 +1,4 @@
-# Commencez!
+# Commencez !
 
 Bienvenue sur OpenSesame ! Comment puis-je vous aider ?
 
