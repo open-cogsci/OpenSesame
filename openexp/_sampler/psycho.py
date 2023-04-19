@@ -72,7 +72,7 @@ class Psycho(Sampler):
             self._data, self._samplerate = sf.read(src)
         # Create keyword arguments, which depend on the sound backend
         kwargs = {}
-        if (experiment.var.get('psycho_audiolib', 'sounddevice')
+        if (experiment.var.get('psycho_audiolib', DEFAULT_AUDIOLIB)
                 in NEEDS_BLOCK_SIZE):
             kwargs['blockSize'] = experiment.var.get('block_size',
                                                      DEFAULT_BLOCK_SIZE)
