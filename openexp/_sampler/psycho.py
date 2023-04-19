@@ -28,9 +28,13 @@ import numpy as np
 DEFAULT_SOUND_FREQ = 48000
 DEFAULT_BLOCK_SIZE = 256
 NEEDS_BLOCK_SIZE = 'sounddevice', 'PTB'
+# Due to issues with sounddevice/ portaudio on Mac OS, we fall back to
+# pygame on that platform
+DEFAULT_AUDIOLIB = 'pygame' if sys.platform == 'darwin' else 'sounddevice'
 # Will be intialized during init_sound()
 Sound = None
 PLAYING = None
+
 
 
 class Psycho(Sampler):
@@ -43,7 +47,7 @@ class Psycho(Sampler):
         'psycho_audiolib': {
             'name': 'Sound library',
             'description': 'Can be sounddevice, pyo, pygame, or PTB',
-            'default': 'pygame' if sys.platform == 'darwin' else 'sounddevice'},
+            'default': DEFAULT_AUDIOLIB},
         'sound_freq': {
             'name': 'Sampling frequency for synth',
             'description': 'Determines the sampling rate of synthesized sounds',
@@ -194,7 +198,7 @@ class Psycho(Sampler):
 
         from psychopy import prefs
         prefs.hardware['audioLib'] = [
-            experiment.var.get('psycho_audiolib', 'sounddevice')]
+            experiment.var.get('psycho_audiolib', DEFAULT_AUDIOLIB)]
         from psychopy import constants
         PLAYING = constants.PLAYING
         # Fixes a regression in psychopy introduced in

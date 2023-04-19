@@ -170,7 +170,7 @@ class Experiment(Item):
         self.var.sound_channels = 2
         self.var.sound_buf_size = 1024
         # Default backend
-        self.var.canvas_backend = u'xpyriment'
+        self.var.canvas_backend = u'psycho'
         # Display parameters
         self.var.width = 1024
         self.var.height = 768
