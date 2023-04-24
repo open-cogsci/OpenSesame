@@ -202,7 +202,7 @@ class PoolWidget(BaseWidget):
         if item is None:
             return
         path = item.path
-        pm = popup_menu(self, [
+        pm = PopupMenu(self, [
             (0, _(u'Open'), item.icon),
             (1, _(u'Remove from pool'), u'delete'),
             (2, _(u'Rename'), u'rename'),
