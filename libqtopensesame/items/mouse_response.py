@@ -99,18 +99,15 @@ class MouseResponse(MouseResponseRuntime, QtPlugin):
         )
 
     def edit_widget(self):
-        """See qtplugin."""
         self._combobox_sketchpad.refresh()
-        qtplugin.edit_widget(self)
+        QtPlugin.edit_widget(self)
 
     def rename(self, from_name, to_name):
-        """See qtplugin."""
-        qtplugin.rename(self, from_name, to_name)
+        QtPlugin.rename(self, from_name, to_name)
         if self.var.linked_sketchpad == from_name:
             self.var.linked_sketchpad = to_name
 
     def delete(self, item_name, item_parent=None, index=None):
-        """See qtplugin."""
         if self.var.linked_sketchpad == item_name:
             self.var.linked_sketchpad = u''
 
