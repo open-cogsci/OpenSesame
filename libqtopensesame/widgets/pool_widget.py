@@ -230,7 +230,7 @@ class PoolWidget(BaseWidget):
                 (len(self.ui.list_pool.selectedItems())-self.max_len)
         msg = _(u"<p>Are you sure you want to remove the following files?</p>"
                 u"<p>- %s</p> <p>%s</p>") % (u"<br /> - ".join(l), suffix)
-        c = confirmation(self.main_window, msg)
+        c = Confirmation(self.main_window, msg)
         if not c.show():
             return
         # Create a list of files to be removed
