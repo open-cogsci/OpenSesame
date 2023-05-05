@@ -93,13 +93,7 @@ class VariableInspectorWidget(BaseWidget):
             return
         row = self.ui.table_variables.row(item)
         var = self.ui.table_variables.item(row, 0).text()
-        drag_and_drop.send(
-            self.ui.table_variables,
-            {
-                u'type': u'variable',
-                u'variable': var
-            }
-        )
+        drag_and_drop.send(self.ui.table_variables, var)
 
     def refresh(self):
         r"""Refreshes the table."""

@@ -132,16 +132,17 @@ def send(drag_src, data):
     ----------
     drag_src : QWidget
         The source widget.
-    data : dict
-        A data dictionary. The 'type' key identifies the type of data that is
-        being dropped.
+    data : dict or str
+        The data to be sent. If this is a dict, then it is converted to str
+        in json format. Otherwise the data is sent as is.
 
     Returns
     -------
     QDrag
         A drag object. The start function is called automatically.
     """
-    text = safe_decode(json.dumps(data), enc=u'utf-8')
+    text = safe_decode(json.dumps(data) if isinstance(data, dict) else data,
+                       enc='utf-8')
     mimedata = QtCore.QMimeData()
     mimedata.setText(text)
     drag = QtGui.QDrag(drag_src)
