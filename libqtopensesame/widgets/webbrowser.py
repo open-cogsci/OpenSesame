@@ -20,6 +20,7 @@ from libopensesame.py3compat import *
 import os
 import platform
 from qtpy import QtCore
+from libopensesame.exceptions import ItemDoesNotExist
 from libqtopensesame.widgets.base_widget import BaseWidget
 from libopensesame import plugins, misc
 from libqtopensesame.misc.markdown_parser import MarkdownParser
@@ -27,7 +28,7 @@ from libqtopensesame.misc import display
 from libqtopensesame.misc.translate import translation_context
 from qtpy.QtWebEngineWidgets import QWebEngineView as WebView
 from qtpy.QtWebEngineWidgets import QWebEnginePage as WebPage
-_ = translation_context(u'webbrowser', category=u'core')
+_ = translation_context('webbrowser', category='core')
 
 
 # These urls are viewed internally in the browser component. All other urls are
@@ -36,12 +37,11 @@ INTERNAL_URLS = []
 
 
 class SmallWebview(WebView):
-
-    r"""A wrapper around QWebView too override the sizeHint, which prevents the
+    """A wrapper around QWebView too override the sizeHint, which prevents the
     browser from resizing to small sizes.
     """
     def sizeHint(self):
-        r"""Gives a size hint.
+        """Gives a size hint.
 
         Returns
         -------
@@ -51,47 +51,36 @@ class SmallWebview(WebView):
 
 
 class SmallWebpage(WebPage):
-
-    r"""A wrapper around QWeb(Engine)Page, to overload the
+    """A wrapper around QWeb(Engine)Page, to overload the
     acceptNavigationRequest function, which determines what needs to be done
     after a link is clicked.
     """
     def acceptNavigationRequest(self, *args):
-        """
-        desc:
-                Handles navigation requests to the browser, which can originate from
-                link clicks, or other sources. the arguments and their order differ
-                with the web browser backend being used, which can be QtWebKit or the
-                newer QtWebEngine.
+        """Handles navigation requests to the browser, which can originate from
+        link clicks, or other sources. the arguments and their order differ
+        with the web browser backend being used, which can be QtWebKit or the
+        newer QtWebEngine.
 
-                Arguments (when used by QtWebEngine):
-                        url:
-                                desc: 	url to navigate to
-                                type: 	QtCore.QUrl
-                        navtype:
-                                desc: 	type of request has been received (such as link
-                                                clicked, form submitted)
-                                type: 	QtWebEngine.NavigationType
-                        isMainFrame:
-                                desc: 	indicating whether the request corresponds
-                                                to the main frame or a child frame.
-                                type: 	boolean
+        Parameters
+        ----------
+        url: QtCore.QUrl
+        navtype: QtWebEngine.NavigationType
+        isMainFrame: bool
         """
         # Check if the first argument is a QUrl. If so, then
-        # QWebEngine is used, if not, then QWebKit must be used. This way, the order
-        # of received arguments can be determined.
+        # QWebEngine is used, if not, then QWebKit must be used. This way, the
+        # order # of received arguments can be determined.
         if isinstance(args[0], QtCore.QUrl):
             url, navtype, isMainFrame = args
         else:
             frame, request, navtype = args
             url = request.url()
-
         if navtype == self.NavigationType.NavigationTypeLinkClicked:
             url = url.toString()
-            if url.startswith(u'opensesame://'):
+            if url.startswith('opensesame://'):
                 self.parent().command(url)
                 return False
-            if url.startswith(u'new:'):
+            if url.startswith('new:'):
                 self.parent().main_window.tabwidget.open_browser(url[4:])
                 return False
             for internal_url in INTERNAL_URLS:
@@ -104,18 +93,15 @@ class SmallWebpage(WebPage):
 
 
 class Webbrowser(BaseWidget):
-
-    r"""A browser widget used to display online and offline help pages."""
+    """A browser widget used to display online and offline help pages.
+    
+    Parameters
+    ----------
+    main_window: QtOpenSesame, optional
+    """
     def __init__(self, main_window):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        main_window, optional
-            A qtopensesame object.
-        """
-        super().__init__(main_window, ui=u'widgets.webbrowser_widget')
-        self._current_url = u''
+        super().__init__(main_window, ui='widgets.webbrowser_widget')
+        self._current_url = ''
         self._cache = None
         self.ui.webview = SmallWebview(self)
         # Set webpage which handles link clicks
@@ -137,7 +123,7 @@ class Webbrowser(BaseWidget):
         self.markdown_parser = MarkdownParser(self)
 
     def load(self, url, tmpl=None):
-        r"""Loads a webpage.
+        """Loads a webpage.
 
         Parameters
         ----------
@@ -149,8 +135,8 @@ class Webbrowser(BaseWidget):
         """
         if isinstance(url, QtCore.QUrl):
             url = url.toString()
-        if url.endswith(u'.md') and not url.startswith(u'http://') \
-                and not url.startswith(u'https://'):
+        if url.endswith('.md') and not url.startswith('http://') \
+                and not url.startswith('https://'):
             self.ui.top_widget.hide()
             self.load_markdown(
                 safe_read(url), url=os.path.basename(url),
@@ -162,7 +148,7 @@ class Webbrowser(BaseWidget):
         self.ui.webview.load(QtCore.QUrl(url))
 
     def load_markdown(self, md, url=None, tmpl=None):
-        r"""Loads a Markdown text string.
+        """Loads a Markdown text string.
 
         Parameters
         ----------
@@ -174,44 +160,44 @@ class Webbrowser(BaseWidget):
             A template to be wrapped around the html.
         """
         if url is None:
-            url = u'untitled'
-        url = QtCore.QUrl(u'http://opensesame.app.cogsci.nl/%s' % url)
+            url = 'untitled'
+        url = QtCore.QUrl('http://opensesame.app.cogsci.nl/%s' % url)
         self.ui.top_widget.hide()
         html = self.markdown_parser.to_html(md)
         if tmpl is not None:
-            html = tmpl % {u'body': html}
+            html = tmpl % {'body': html}
         self.ui.webview.setHtml(html, baseUrl=url)
         self.ui.webview.setZoomFactor(display.display_scaling)
 
     def load_finished(self, ok):
-        r"""Hides the statusbar to indicate that loading is finished."""
-        self.ui.label_load_progress.setText(_(u'Done'))
+        """Hides the statusbar to indicate that loading is finished."""
+        self.ui.label_load_progress.setText(_('Done'))
         self.ui.webview.setZoomFactor(display.display_scaling)
 
     def update_progressbar(self, progress):
-        r"""Updates the progressbar to indicate the load progress.
+        """Updates the progressbar to indicate the load progress.
 
         Parameters
         ----------
         progress
             The load progress.
         """
-        self.ui.label_load_progress.setText(u'%d%%' % progress)
+        self.ui.label_load_progress.setText('%d%%' % progress)
 
     def load_started(self):
-        r"""Shows the statusbar to indicate that loading has started."""
-        self.ui.label_load_progress.setText(_(u'Loading …'))
+        """Shows the statusbar to indicate that loading has started."""
+        self.ui.label_load_progress.setText(_('Loading …'))
 
     def open_osdoc(self):
-        r"""Opens osdoc.cogsci.nl."""
-        self.load(u'http://osdoc.cogsci.nl/')
+        """Opens osdoc.cogsci.nl."""
+        self.load('http://osdoc.cogsci.nl/')
 
     def open_forum(self):
-        r"""Opens forum.cogsci.nl."""
-        self.load(u'http://forum.cogsci.nl/')
+        """Opens forum.cogsci.nl."""
+        self.load('http://forum.cogsci.nl/')
 
     def url_changed(self, url):
-        r"""Updates the url bar.
+        """Updates the url bar.
 
         Parameters
         ----------
@@ -221,7 +207,7 @@ class Webbrowser(BaseWidget):
         self.ui.edit_url.setText(url.toString())
 
     def command(self, cmd):
-        r"""Processes commands that are embedded in urls to trigger actions and
+        """Processes commands that are embedded in urls to trigger actions and
         events.
 
         Parameters
@@ -234,32 +220,39 @@ class Webbrowser(BaseWidget):
         # automatically transformed into a Unix-like slashforward format.
         # Windows therefore cannot find the paths anymomre. To fix this, we
         # insert a colon, and normpath it.
-        if platform.system() == u'Windows':
-            _cmd = os.path.normpath(cmd[0] + u':' + cmd[1:])
+        if platform.system() == 'Windows':
+            _cmd = os.path.normpath(cmd[0] + ':' + cmd[1:])
         else:
             _cmd = cmd
         if os.path.exists(_cmd):
             self.main_window.open_file(path=_cmd, add_to_recent=False)
             return
-        cmd = cmd.split(u'.')
-        if len(cmd) == 2 and cmd[0] == u'action':
+        cmd = cmd.split('.')
+        if len(cmd) == 2 and cmd[0] == 'action':
             try:
-                action = getattr(self.main_window.ui, u'action_%s' % cmd[1])
+                action = getattr(self.main_window.ui, 'action_%s' % cmd[1])
             except:
-                self.notify(u'Invalid action: %s' % cmd[1])
+                self.notify('Invalid action: %s' % cmd[1])
                 return
             action.trigger()
             return
-        if len(cmd) == 2 and cmd[0] == u'event':
+        if len(cmd) == 2 and cmd[0] == 'event':
             self.main_window.extension_manager.fire(cmd[1])
             return
-        if len(cmd) > 2 and cmd[0] == u'item':
-            self.experiment.items[cmd[1]].open_tab(phase=cmd[2], args=cmd[3:])
+        if len(cmd) > 2 and cmd[0] == 'item':
+            try:
+                self.experiment.items[cmd[1]].open_tab(phase=cmd[2],
+                                                       args=cmd[3:])
+            except ItemDoesNotExist:
+                # The most likely case in which an item does not exist is when
+                # there is an error from an Unknown item. We don't want to
+                # give an error when participants click on this.
+                pass
             return
-        if len(cmd) > 1 and cmd[0] == u'help':
+        if len(cmd) > 1 and cmd[0] == 'help':
             if len(cmd) == 2:
                 self.main_window.ui.tabwidget.open_help(cmd[1])
-            elif len(cmd) == 3 and cmd[1] in [u'extension', u'plugin']:
+            elif len(cmd) == 3 and cmd[1] in ['extension', 'plugin']:
                 if cmd[1] == 'extension':
                     folder == self.extension_manager[cmd[2]].folder
                 else:
