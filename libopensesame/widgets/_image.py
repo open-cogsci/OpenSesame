@@ -23,6 +23,7 @@ from PIL import Image
 from libopensesame.exceptions import ImageDoesNotExist, UnsupportedImageFormat
 from openexp.canvas_elements import Image as ImageElement
 import os
+import sys
 
 
 class ImageWidget(Widget):
