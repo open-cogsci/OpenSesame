@@ -60,7 +60,7 @@ class FormConsent(FormBase):
             super().run()
             if self.var.get(u'checkbox_status') == \
                     self.var.get(u'checkbox_text') and \
-                    self.var.get(u'accept_status') == u'yes':
+                    self.var.get(u'accept_status') == 1:
                 break
             c = Canvas(self.experiment)
             c.text(self.var.get(u'decline_message'))
