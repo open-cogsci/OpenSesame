@@ -197,6 +197,6 @@ define loop question_loop
 define sequence question_sequence
 	set flush_keyboard "yes"
 	set description "Runs a number of items in sequence"
-	run mc_question "{question_type} = mc"
-	run open_question "{question_type} = open"
+	run mc_question "question_type == 'mc'"
+	run open_question "question_type == 'open'"
 	run logger "True"
