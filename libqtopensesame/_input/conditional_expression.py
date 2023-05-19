@@ -32,6 +32,7 @@ class ConditionalExpression(QLineEdit, BaseSubcomponent):
     
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.setup(parent)
         self.textChanged.connect(self._set_conditional_expression)
         self._verb = ''
         self._font = QFont('Roboto Condensed')
@@ -53,17 +54,21 @@ class ConditionalExpression(QLineEdit, BaseSubcomponent):
     
     def _set_conditional_expression(self, cond):
         self.textChanged.disconnect(self._set_conditional_expression)
-        clean_cond = cond.strip().lower()
-        color = None
-        if clean_cond in ('always', 'true'):
-            self.setText('True')
-            color = 'green'
-        elif clean_cond in ('never', 'false'):
-            self.setText('False')
-        if color is not None:
-            self.setStyleSheet(f'color: {color}')
+        fixed_cond = self.experiment.syntax.fix_conditional_expression(cond)
+        if cond != fixed_cond:
+            self.setText(fixed_cond)
         else:
-            self.setStyleSheet(None)
+            clean_cond = cond.strip().lower()
+            color = None
+            if clean_cond in ('always', 'true'):
+                self.setText('True')
+                color = 'green'
+            elif clean_cond in ('never', 'false'):
+                self.setText('False')
+            if color is not None:
+                self.setStyleSheet(f'color: {color}')
+            else:
+                self.setStyleSheet(None)
         self.textChanged.connect(self._set_conditional_expression)
 
     def paintEvent(self, event):

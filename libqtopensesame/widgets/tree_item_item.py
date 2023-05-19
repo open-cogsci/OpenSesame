@@ -309,6 +309,10 @@ class TreeItemItem(TreeBaseItem):
         if extra_info is None:
             self.setText(1, '')
             return
+        fixed_cond = self.item.syntax.fix_conditional_expression(extra_info)
+        if fixed_cond != extra_info:
+            self.setText(1, fixed_cond)
+            return fixed_cond
         extra_info = extra_info.strip()
         extra_info_lower = extra_info.lower()
         color = None

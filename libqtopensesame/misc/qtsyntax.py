@@ -18,13 +18,18 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.syntax import Syntax
+import re
+
+FIX_CURLY_BRACES = re.compile(r'\{([a-zA-Z_][a-zA-Z0-9_]*)\}')
 
 
 class QtSyntax(Syntax):
 
     def eval_text(self, txt, round_float=False):
-
         return txt
+    
+    def fix_conditional_expression(self, cond):
+        return FIX_CURLY_BRACES.sub(r'\1', cond)
     
 
 # Alias for backwards compatibility
