@@ -38,11 +38,11 @@ set accept_text 'Participate!'
 set decline_text 'Do not participate'
 set decline_message 'You need to accept the consent form to participate!'
 set rows 1;4;1;1
-widget 0 0 2 1 label text=[form_title]
-widget 0 1 2 1 label text=[form_text] center=no
-widget 0 2 2 1 checkbox text=[checkbox_text] var=checkbox_status
-widget 0 3 1 1 button text=[accept_text] var=accept_status
-widget 1 3 1 1 button text=[decline_text]
+widget 0 0 2 1 label text={form_title}
+widget 0 1 2 1 label text={form_text} center=no
+widget 0 2 2 1 checkbox text={checkbox_text} var=checkbox_status
+widget 0 3 1 1 button text={accept_text} var=accept_status
+widget 1 3 1 1 button text={decline_text}
 """
 
 

@@ -89,9 +89,10 @@ class FormBase(Item):
         for arglist, orig_kwdict in self._widgets:
             kwdict = orig_kwdict.copy()
             # Evaluate all values
-            arglist = [self.syntax.eval_text(arg) for arg in arglist]
+            arglist = [self.syntax.eval_text(arg, include_local=True)
+                       for arg in arglist]
             for key, val in kwdict.items():
-                kwdict[key] = self.syntax.eval_text(val, var=self.var)
+                kwdict[key] = self.syntax.eval_text(val, include_local=True)
             # Translate paths into full file names
             if u'path' in kwdict:
                 kwdict[u'path'] = self.experiment.pool[kwdict[u'path']]

@@ -25,9 +25,9 @@ set form_title 'Title'
 set ok_text 'Ok'
 set rows 1;4;1
 set cols 1;1;1
-widget 0 0 3 1 label text=[form_title]
-widget 0 1 3 1 label text=[form_text] center=no
-widget 1 2 1 1 button text=[ok_text]
+widget 0 0 3 1 label text={form_title}
+widget 0 1 3 1 label text={form_text} center=no
+widget 1 2 1 1 button text={ok_text}
 """
 
 

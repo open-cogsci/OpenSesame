@@ -44,9 +44,9 @@ define form_text_display goodbye
 	set description "A simple text display form"
 	set cols "1;1;1"
 	set _theme "gray"
-	widget 0 0 3 1 label text="[form_title]"
-	widget 0 1 3 1 label center=no text="[form_text]"
-	widget 1 2 1 1 button text="[ok_text]"
+	widget 0 0 3 1 label text="{form_title}"
+	widget 0 1 3 1 label center=no text="{form_text}"
+	widget 1 2 1 1 button text="{ok_text}"
 
 
 define form_text_display instructions
@@ -63,9 +63,9 @@ define form_text_display instructions
 	set description "A simple text display form"
 	set cols "1;1;1"
 	set _theme "gray"
-	widget 0 0 3 1 label text="[form_title]"
-	widget 0 1 3 1 label center=no text="[form_text]"
-	widget 1 2 1 1 button text="[ok_text]"
+	widget 0 0 3 1 label text="{form_title}"
+	widget 0 1 3 1 label center=no text="{form_text}"
+	widget 1 2 1 1 button text="{ok_text}"
 
 
 define logger logger
@@ -132,12 +132,12 @@ define form_multiple_choice mc_question
 	set timeout "infinite"
 	set spacing 10
 	__question__
-	[question_text]
+	{question_text}
 	__end__
 	__options__
-	[question_option1]
-	[question_option2]
-	[question_option3]
+	{question_option1}
+	{question_option2}
+	{question_option3}
 	__end__
 	set margins "50;50;50;50"
 	set form_var "response"
@@ -157,14 +157,14 @@ define form_text_input open_question
 	set form_var "response"
 	set form_title "Open question"
 	__form_question__
-	[question_text]
+	{question_text}
 	__end__
 	set description "A simple text input form"
 	set cols 1
 	set _theme "gray"
-	widget 0 0 1 1 label text="[form_title]"
-	widget 0 1 1 1 label center=no text="[form_question]"
-	widget 0 2 1 1 text_input focus=yes return_accepts=yes stub="" var="[form_var]"
+	widget 0 0 1 1 label text="{form_title}"
+	widget 0 1 1 1 label center=no text="{form_question}"
+	widget 0 2 1 1 text_input focus=yes return_accepts=yes stub="" var="{form_var}"
 
 
 define loop question_loop
@@ -197,6 +197,6 @@ define loop question_loop
 define sequence question_sequence
 	set flush_keyboard "yes"
 	set description "Runs a number of items in sequence"
-	run mc_question "[question_type] = mc"
-	run open_question "[question_type] = open"
+	run mc_question "{question_type} = mc"
+	run open_question "{question_type} = open"
 	run logger "True"
