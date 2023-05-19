@@ -133,7 +133,6 @@ class BasePythonWorkspace:
         A string corresponding to the evaluated f-string.
         """
         if include_local:
-            
             item_name, phase = item_stack_singleton[-1]
             _globals = self._globals.copy()
             _globals.update(self.experiment.items[item_name].var.__vars__)
