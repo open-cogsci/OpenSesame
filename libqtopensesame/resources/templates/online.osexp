@@ -1,0 +1,41 @@
+---
+API: 3.0
+---
+set is_template 1
+set width 1024
+set start "experiment"
+set height 768
+set foreground "white"
+set canvas_backend "osweb"
+set background "#3d3846"
+
+define sequence experiment
+	set flush_keyboard "yes"
+	run getting_started "True"
+	run welcome "True"
+
+define notepad getting_started
+	__note__
+	Welcome to OpenSesame 4.0 "Melodramatic Milgram"!
+
+	If you are new to OpenSesame, it is a good idea to follow one of the tutorials,
+	which can be found on the documentation site:
+
+	- <http://osdoc.cogsci.nl/>
+
+	You can also check out the examples. These can be opened via:
+
+	- Menu -> Tools -> Example experiments.
+
+	And feel free to ask for help on the forum:
+
+	- <http://forum.cogsci.nl/>
+
+	Have fun with OpenSesame!
+	__end__
+
+define sketchpad welcome
+	set start_response_interval "no"
+	set reset_variables "no"
+	set duration "keypress"
+	draw textline center=1 color=white font_bold=no font_family=serif font_italic=no font_size=32 html=yes show_if=True text="OpenSesame 4.0 <i>Melodramatic Milgram</i>" x=0 y=0 z_index=0

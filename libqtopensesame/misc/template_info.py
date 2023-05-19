@@ -18,11 +18,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'template', category=u'core')
+_ = translation_context('template', category='core')
 
 templates = [
-    (u'templates/default.osexp', _(u'Default template')),
-    (u'templates/extended_template.osexp', _(u'Extended template')),
-    (u'templates/form_template.osexp', _(u'Questionnaire template')),
-    (u'templates/pygaze_template.osexp', _(u'Eye-tracking template')),
+    ('templates/default.osexp', _('Default template')),
+    ('templates/online.osexp', _('OSWeb (online) template')),
+    ('templates/extended_template.osexp', _('Extended template')),
+    ('templates/form_template.osexp', _('Questionnaire template')),
+    ('templates/pygaze_template.osexp', _('Eye-tracking template')),
 ]
