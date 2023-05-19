@@ -259,7 +259,7 @@ class Syntax:
         return any([self.re_fstring.search(txt), self.re_txt.search(txt),
                     self.re_txt_py.search(txt)])
 
-    def eval_text(self, txt, round_float=False, var=None):
+    def eval_text(self, txt, round_float=False, var=None, include_local=False):
         """Evaluates variables and inline Python in a text string.
 
         Examples
@@ -274,6 +274,13 @@ class Syntax:
              value will be returned unmodified.
         round_float: bool, optional
             Indicates whether floating point values should be rounded or not.
+        var: VarStore or None, optional
+            A deprecated option that specific var store for evaluating the
+            string. This does not apply to f-strings.
+        include_local : bool, optional
+            If True, the variable store of the current item is merged into the
+            Python workspace. This allows items to evaluate f-strings that
+            take into account the item's local variables.
 
         Returns
         -------
@@ -283,7 +290,8 @@ class Syntax:
         if not isinstance(txt, str):
             return txt
         if self.re_fstring.search(txt):
-            return self.experiment.python_workspace.eval_fstring(txt)
+            return self.experiment.python_workspace.eval_fstring(
+                txt, include_local=include_local)
         
         def get_escape_sequence(m):
             return u'' if m.group(1) is None \

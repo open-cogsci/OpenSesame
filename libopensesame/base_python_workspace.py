@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libopensesame.exceptions import FStringError, FStringSyntaxError
+from libopensesame.item_stack import item_stack_singleton
 import warnings
 
 
@@ -115,21 +116,32 @@ class BasePythonWorkspace:
         """
         return eval(bytecode, self._globals)  # __ignore_traceback__
         
-    def eval_fstring(self, fs):
+    def eval_fstring(self, fs, include_local=False):
         """Evaluates an f-string.
-        
+
         Parameters
         ----------
         fs : str
-            An f-string.
+            An f-string
+        include_local : bool, optional
+            If True, the variable store of the current item is merged into the
+            Python workspace. This allows items to evaluate f-strings that
+            take into account the item's local variables.
 
         Returns
         -------
         A string corresponding to the evaluated f-string.
         """
+        if include_local:
+            
+            item_name, phase = item_stack_singleton[-1]
+            _globals = self._globals.copy()
+            _globals.update(self.experiment.items[item_name].var.__vars__)
+        else:
+            _globals = self._globals
         fs_escaped = fs.replace(r"'''", r"\'\'\'")
         try:
-            return eval(f"f'''{fs_escaped}'''", self._globals)  # __ignore_traceback__
+            return eval(f"f'''{fs_escaped}'''", _globals)  # __ignore_traceback__
         except SyntaxError:
             raise FStringSyntaxError(
                 f'The following text contains invalid f-string expression:\n\n~~~ .text\n{fs}\n~~~\n\n')
