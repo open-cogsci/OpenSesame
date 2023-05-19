@@ -126,6 +126,8 @@ class Widget:
             var = self.var
         if var is None:
             return
+        if isinstance(val, bool):
+            val = 'yes' if val else 'no'
         self.form.experiment.var.set(
             self.form.experiment.syntax.eval_text(var), val)
 
