@@ -261,7 +261,7 @@ class VarStore:
             pass
         try:
             ival = int(val)
-        except (ValueError, ArithmeticError):
+        except (TypeError, ValueError, ArithmeticError):
             # A float can always be converted to an int, except nan values,
             # which result in ValueError, or inf values, which result in an
             # OverFlowError (which is a subclass of ArithmeticError).
