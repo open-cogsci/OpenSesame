@@ -11520,5 +11520,24 @@
     "he": "ניסוי שלך מכיל שינויים שלא נשמרו. האם ברצונך לשמור את הניסוי?",
     "ru": "Ваш эксперимент содержит несохраненные изменения. Вы хотите сохранить эксперимент?",
     "tr": "Deneyinizde kaydedilmemiş değişiklikler bulunmaktadır. Deneyinizi kaydetmek istiyor musunuz?"
+  },
+  "OSWeb (online) template": {
+    "nl": "OSWeb (online) sjabloon",
+    "de": "OSWeb (online) Vorlage",
+    "fr": "OSWeb (online) modèle",
+    "es": "OSWeb (online) plantilla",
+    "it": "OSWeb (online) modello",
+    "pt": "OSWeb (online) modelo",
+    "zh": "OSWeb (online) 模板",
+    "yue": "OSWeb (online) 模板",
+    "ja": "OSWeb (online) テンプレート",
+    "ko": "OSWeb (online) 템플릿",
+    "id": "OSWeb (online) templat",
+    "hi": "OSWeb (online) टेम्प्लेट",
+    "bn": "OSWeb (online) টেমপ্লেট",
+    "ar": "OSWeb (online) قالب",
+    "he": "OSWeb (online) תבנית",
+    "ru": "OSWeb (online) шаблон",
+    "tr": "OSWeb (online) şablon"
   }
 }

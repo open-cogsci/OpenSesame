@@ -239,17 +239,17 @@
 <context>
     <name>core_backend_settings</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="384" />
+        <location filename="../../../translation_tools/translatables.py" line="383" />
         <source>Settings for %s:</source>
         <translation>%s 的设置：</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="382" />
+        <location filename="../../../translation_tools/translatables.py" line="384" />
         <source>Failed to load backend</source>
         <translation>加载后端失败</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="383" />
+        <location filename="../../../translation_tools/translatables.py" line="385" />
         <source>No settings for %s</source>
         <translation>没有 %s 的设置</translation>
     </message>
@@ -257,12 +257,12 @@
 <context>
     <name>core_base_runner</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="296" />
+        <location filename="../../../translation_tools/translatables.py" line="297" />
         <source>Choose location for logfile (press 'escape' for default location)</source>
         <translation>选择日志文件位置（按'escape'选择默认位置）</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="294" />
+        <location filename="../../../translation_tools/translatables.py" line="296" />
         <source>Please enter the subject number</source>
         <translation>请输入受试者编号</translation>
     </message>
@@ -275,7 +275,7 @@
 <context>
     <name>core_color_edit</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="332" />
+        <location filename="../../../translation_tools/translatables.py" line="333" />
         <source>Pick a color</source>
         <translation>选择一种颜色</translation>
     </message>
@@ -283,7 +283,7 @@
 <context>
     <name>core_confirmation</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="308" />
+        <location filename="../../../translation_tools/translatables.py" line="309" />
         <source>Please confirm</source>
         <translation>请确认</translation>
     </message>
@@ -291,7 +291,7 @@
 <context>
     <name>core_font_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="335" />
+        <location filename="../../../translation_tools/translatables.py" line="336" />
         <source>other ...</source>
         <translation>其他 ...</translation>
     </message>
@@ -299,7 +299,7 @@
 <context>
     <name>core_general_properties</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="341" />
+        <location filename="../../../translation_tools/translatables.py" line="342" />
         <source>Failed to parse the resolution. Expecting positive numeric values.</source>
         <translation>无法解析分辨率。期望正数值。</translation>
     </message>
@@ -307,12 +307,12 @@
 <context>
     <name>core_general_script_editor</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="395" />
+        <location filename="../../../translation_tools/translatables.py" line="396" />
         <source>Apply?</source>
         <translation>应用？</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="396" />
+        <location filename="../../../translation_tools/translatables.py" line="397" />
         <source>Are you sure you want to apply the changes to the general script?</source>
         <translation>您确定要将更改应用于常规脚本吗？</translation>
     </message>
@@ -320,7 +320,7 @@
 <context>
     <name>core_header_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="311" />
+        <location filename="../../../translation_tools/translatables.py" line="312" />
         <source>Click to edit</source>
         <translation>点击编辑</translation>
     </message>
@@ -328,7 +328,7 @@
 <context>
     <name>core_item_combobox</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="305" />
+        <location filename="../../../translation_tools/translatables.py" line="306" />
         <source>No item selected</source>
         <translation>未选择项目</translation>
     </message>
@@ -336,17 +336,17 @@
 <context>
     <name>core_item_context_menu</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="325" />
+        <location filename="../../../translation_tools/translatables.py" line="320" />
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="321" />
+        <location filename="../../../translation_tools/translatables.py" line="326" />
         <source>Enable</source>
         <translation>启用</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="326" />
+        <location filename="../../../translation_tools/translatables.py" line="323" />
         <source>Copy (unlinked)</source>
         <translation>复制 (未链接)</translation>
     </message>
@@ -356,32 +356,32 @@
         <translation>永久删除所有链接副本</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="323" />
+        <location filename="../../../translation_tools/translatables.py" line="328" />
         <source>Paste</source>
         <translation>粘贴</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="320" />
+        <location filename="../../../translation_tools/translatables.py" line="330" />
         <source>Disable</source>
         <translation>禁用</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="318" />
+        <location filename="../../../translation_tools/translatables.py" line="329" />
         <source>Copy (linked)</source>
         <translation>复制 (链接)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="327" />
+        <location filename="../../../translation_tools/translatables.py" line="321" />
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="322" />
+        <location filename="../../../translation_tools/translatables.py" line="325" />
         <source>Permanently delete</source>
         <translation>永久删除</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="329" />
+        <location filename="../../../translation_tools/translatables.py" line="322" />
         <source>Open</source>
         <translation>打开</translation>
     </message>
@@ -391,7 +391,7 @@
         <translation>编辑 run-if 语句</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="328" />
+        <location filename="../../../translation_tools/translatables.py" line="327" />
         <source>Help</source>
         <translation>帮助</translation>
     </message>
@@ -399,22 +399,22 @@
 <context>
     <name>core_item_view_button</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="370" />
+        <location filename="../../../translation_tools/translatables.py" line="372" />
         <source>View script</source>
         <translation>查看脚本</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="372" />
+        <location filename="../../../translation_tools/translatables.py" line="371" />
         <source>View controls</source>
         <translation>查看控件</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="373" />
+        <location filename="../../../translation_tools/translatables.py" line="374" />
         <source>Select view</source>
         <translation>选择视图</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="371" />
+        <location filename="../../../translation_tools/translatables.py" line="373" />
         <source>Split view</source>
         <translation>分割视图</translation>
     </message>
@@ -422,7 +422,7 @@
 <context>
     <name>core_markdown</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="287" />
+        <location filename="../../../translation_tools/translatables.py" line="288" />
         <source>Dismiss this message</source>
         <translation>忽略此消息</translation>
     </message>
@@ -430,7 +430,7 @@
 <context>
     <name>core_pool_select</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="302" />
+        <location filename="../../../translation_tools/translatables.py" line="303" />
         <source>Browse</source>
         <translation>浏览</translation>
     </message>
@@ -438,62 +438,62 @@
 <context>
     <name>core_pool_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="410" />
+        <location filename="../../../translation_tools/translatables.py" line="413" />
         <source>Failed to rename "%s" to "%s".</source>
         <translation>将 "%s" 重命名为 "%s" 失败。</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="409" />
+        <location filename="../../../translation_tools/translatables.py" line="408" />
         <source>Select</source>
         <translation>选择</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="411" />
+        <location filename="../../../translation_tools/translatables.py" line="414" />
         <source>Select file from pool</source>
         <translation>从文件池中选择文件</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="408" />
+        <location filename="../../../translation_tools/translatables.py" line="406" />
         <source>Remove from pool</source>
         <translation>从文件池中移除</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="406" />
+        <location filename="../../../translation_tools/translatables.py" line="410" />
         <source>There already is a file named '%s' in the file pool</source>
         <translation>文件池中已存在名为 '%s' 的文件</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="407" />
+        <location filename="../../../translation_tools/translatables.py" line="415" />
         <source>Add files to pool</source>
         <translation>将文件添加到文件池</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="415" />
+        <location filename="../../../translation_tools/translatables.py" line="407" />
         <source>Failed to refresh file pool</source>
         <translation>刷新文件池失败</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="414" />
+        <location filename="../../../translation_tools/translatables.py" line="411" />
         <source>Rename</source>
         <translation>重命名</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="405" />
+        <location filename="../../../translation_tools/translatables.py" line="416" />
         <source>Failed to copy %s to file pool</source>
         <translation>复制 %s 到文件池失败</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="412" />
+        <location filename="../../../translation_tools/translatables.py" line="417" />
         <source>And %d more file(s)</source>
         <translation>还有 %d 个文件</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="416" />
+        <location filename="../../../translation_tools/translatables.py" line="412" />
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="413" />
+        <location filename="../../../translation_tools/translatables.py" line="409" />
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -501,7 +501,7 @@
 <context>
     <name>core_popup_menu</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="299" />
+        <location filename="../../../translation_tools/translatables.py" line="300" />
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -509,22 +509,22 @@
 <context>
     <name>core_qtautoplugin</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="219" />
+        <location filename="../../../translation_tools/translatables.py" line="220" />
         <source>You must specify "type" for %s controls in info.yaml</source>
         <translation>您必须在 info.yaml 中为 %s 控件指定 “类型”</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="220" />
+        <location filename="../../../translation_tools/translatables.py" line="216" />
         <source>"%s" is not a valid qtautoplugin control</source>
         <translation>“%s”不是有效的 qtautoplugin 控件</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="216" />
+        <location filename="../../../translation_tools/translatables.py" line="217" />
         <source>You must specify "%s" for %s controls in info.yaml</source>
         <translation>您必须在 info.yaml 中为 %s 控件指定 “%s”</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="217" />
+        <location filename="../../../translation_tools/translatables.py" line="219" />
         <source>Name "%s" is already taken in qtautoplugin control</source>
         <translation>“%s”名称已在 qtautoplugin 控件中占用</translation>
     </message>
@@ -537,17 +537,17 @@
 <context>
     <name>core_qtitem</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="209" />
+        <location filename="../../../translation_tools/translatables.py" line="210" />
         <source>Failed to set control '%s': %s</source>
         <translation>无法设置控件 '%s'：%s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="210" />
+        <location filename="../../../translation_tools/translatables.py" line="209" />
         <source>Apply</source>
         <translation>应用</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="212" />
+        <location filename="../../../translation_tools/translatables.py" line="213" />
         <source>Default description</source>
         <translation>默认描述</translation>
     </message>
@@ -557,7 +557,7 @@
         <translation>切换弹出窗口</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="213" />
+        <location filename="../../../translation_tools/translatables.py" line="212" />
         <source>Tell me more about the %s item</source>
         <translation>请告诉我有关 %s 项目的更多信息</translation>
     </message>
@@ -565,12 +565,12 @@
 <context>
     <name>core_qtitem_store</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="291" />
+        <location filename="../../../translation_tools/translatables.py" line="292" />
         <source>An item name cannot be empty.</source>
         <translation>项目名称不能为空。</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="290" />
+        <location filename="../../../translation_tools/translatables.py" line="291" />
         <source>An item with that name already exists.</source>
         <translation>已存在具有该名称的项目。</translation>
     </message>
@@ -578,7 +578,7 @@
 <context>
     <name>core_qtopensesame</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="138" />
+        <location filename="../../../translation_tools/translatables.py" line="129" />
         <source> [read only]</source>
         <translation> [只读]</translation>
     </message>
@@ -588,37 +588,37 @@
         <translation>保存文件失败。错误：%s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="129" />
+        <location filename="../../../translation_tools/translatables.py" line="131" />
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="133" />
+        <location filename="../../../translation_tools/translatables.py" line="137" />
         <source>Save changes?</source>
         <translation>保存更改？</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="132" />
+        <location filename="../../../translation_tools/translatables.py" line="136" />
         <source>Save as…</source>
         <translation>另存为…</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="136" />
+        <location filename="../../../translation_tools/translatables.py" line="138" />
         <source>Open file</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="131" />
+        <location filename="../../../translation_tools/translatables.py" line="134" />
         <source>New experiment</source>
         <translation>新实验</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="134" />
+        <location filename="../../../translation_tools/translatables.py" line="132" />
         <source>(No recent files)</source>
         <translation>(没有最近的文件)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="137" />
+        <location filename="../../../translation_tools/translatables.py" line="128" />
         <source>The following error occured while trying to save:&lt;br/&gt;%s</source>
         <translation>尝试保存时发生以下错误：&lt;br/&gt;%s</translation>
     </message>
@@ -628,7 +628,7 @@
         <translation>无法解析脚本：%s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="128" />
+        <location filename="../../../translation_tools/translatables.py" line="133" />
         <source>Your experiment contains unsaved changes. Do you want to save your experiment?</source>
         <translation>您的实验包含未保存的更改。您要保存实验吗？</translation>
     </message>
@@ -636,22 +636,22 @@
 <context>
     <name>core_tab_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="359" />
+        <location filename="../../../translation_tools/translatables.py" line="355" />
         <source>Unused items</source>
         <translation>未使用的项目</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="355" />
+        <location filename="../../../translation_tools/translatables.py" line="358" />
         <source>Preferences</source>
         <translation>首选项</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="354" />
+        <location filename="../../../translation_tools/translatables.py" line="356" />
         <source>Back-end settings</source>
         <translation>后端设置</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="356" />
+        <location filename="../../../translation_tools/translatables.py" line="360" />
         <source>General script editor</source>
         <translation>通用脚本编辑器</translation>
     </message>
@@ -661,7 +661,7 @@
         <translation>一般属性</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="358" />
+        <location filename="../../../translation_tools/translatables.py" line="359" />
         <source>Help</source>
         <translation>帮助</translation>
     </message>
@@ -669,7 +669,7 @@
 <context>
     <name>core_template</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="281" />
+        <location filename="../../../translation_tools/translatables.py" line="283" />
         <source>Questionnaire template</source>
         <translation>问卷模板</translation>
     </message>
@@ -679,20 +679,25 @@
         <translation>默认模板</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="284" />
+        <location filename="../../../translation_tools/translatables.py" line="281" />
         <source>Eye-tracking template</source>
         <translation>眼动追踪模板</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="283" />
+        <location filename="../../../translation_tools/translatables.py" line="285" />
         <source>Extended template</source>
         <translation>扩展模板</translation>
+    </message>
+    <message>
+        <location filename="../../../translation_tools/translatables.py" line="284" />
+        <source>OSWeb (online) template</source>
+        <translation>OSWeb (online) 模板</translation>
     </message>
 </context>
 <context>
     <name>core_toolbar_items</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="344" />
+        <location filename="../../../translation_tools/translatables.py" line="345" />
         <source>Commonly used</source>
         <translation>常用</translation>
     </message>
@@ -700,7 +705,7 @@
 <context>
     <name>core_toolbar_items_item</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="338" />
+        <location filename="../../../translation_tools/translatables.py" line="339" />
         <source>Drag this &lt;b&gt;%s&lt;/b&gt; item to the intended location in the overview area or into the item list of a sequence tab</source>
         <translation>将此 &lt;b&gt;%s&lt;/b&gt; 项目拖到概览区域中的预定位置或拖到序列标签页的项目列表中</translation>
     </message>
@@ -708,7 +713,7 @@
 <context>
     <name>core_tree_append_menu</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="362" />
+        <location filename="../../../translation_tools/translatables.py" line="364" />
         <source>Append new item</source>
         <translation>添加新项目</translation>
     </message>
@@ -721,7 +726,7 @@
 <context>
     <name>core_tree_general_item</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="379" />
+        <location filename="../../../translation_tools/translatables.py" line="380" />
         <source>General options</source>
         <translation>通用选项</translation>
     </message>
@@ -729,33 +734,33 @@
 <context>
     <name>core_tree_item_item</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="388" />
+        <location filename="../../../translation_tools/translatables.py" line="391" />
         <source>Permanently delete item</source>
         <translation>永久删除项目</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="389" />
+        <location filename="../../../translation_tools/translatables.py" line="393" />
         <source>Are you sure you want to permanently delete &lt;b&gt;%s&lt;/b&gt;? All linked copies of &lt;b&gt;%s&lt;/b&gt; will be deleted. You will not be able to undo this.</source>
         <translation>确定要永久删除&lt;b&gt;%s&lt;/b&gt;吗？所有与&lt;b&gt;%s&lt;/b&gt;关联的副本都将被删除。此操作无法撤销。</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="387" />
+        <location filename="../../../translation_tools/translatables.py" line="388" />
         <source>Set as item to run for %s</source>
         <translation>设置为%s要运行的项目</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="390" />
+        <location filename="../../../translation_tools/translatables.py" line="389" />
         <source>Type: %s
 Description: %s</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="392" />
+        <location filename="../../../translation_tools/translatables.py" line="390" />
         <source>Drop below %s</source>
         <translation>放在%s下方</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="391" />
+        <location filename="../../../translation_tools/translatables.py" line="392" />
         <source>Insert into %s</source>
         <translation>插入到 %s</translation>
     </message>
@@ -763,7 +768,7 @@ Description: %s</source>
 <context>
     <name>core_tree_overview</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="347" />
+        <location filename="../../../translation_tools/translatables.py" line="352" />
         <source>Insert after %s</source>
         <translation>在 %s 后插入</translation>
     </message>
@@ -778,12 +783,12 @@ Description: %s</source>
         <translation>项目名称</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="350" />
+        <location filename="../../../translation_tools/translatables.py" line="349" />
         <source>Run if</source>
         <translation>如果运行</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="349" />
+        <location filename="../../../translation_tools/translatables.py" line="350" />
         <source>Insert into %s</source>
         <translation>插入到 %s</translation>
     </message>
@@ -791,7 +796,7 @@ Description: %s</source>
 <context>
     <name>core_tree_recursion_error_item</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="376" />
+        <location filename="../../../translation_tools/translatables.py" line="377" />
         <source>Recursion detected</source>
         <translation>检测到递归</translation>
     </message>
@@ -799,12 +804,12 @@ Description: %s</source>
 <context>
     <name>core_tree_unused_items_item</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="314" />
+        <location filename="../../../translation_tools/translatables.py" line="315" />
         <source>Unused items</source>
         <translation>未使用的项目</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="315" />
+        <location filename="../../../translation_tools/translatables.py" line="316" />
         <source>Move to unused items</source>
         <translation>移到未使用的项目</translation>
     </message>
@@ -817,12 +822,12 @@ Description: %s</source>
         <translation>永久删除项目？</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="401" />
+        <location filename="../../../translation_tools/translatables.py" line="403" />
         <source>Are you sure you want to permanently delete all unused items? This action cannot be undone.</source>
         <translation>您确定要永久删除所有未使用的项目吗？此操作无法撤消。</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="399" />
+        <location filename="../../../translation_tools/translatables.py" line="401" />
         <source>Permanently delete unused items</source>
         <translation>永久删除未使用项目</translation>
     </message>
@@ -835,7 +840,7 @@ Description: %s</source>
 <context>
     <name>core_webbrowser</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="366" />
+        <location filename="../../../translation_tools/translatables.py" line="368" />
         <source>Loading …</source>
         <translation>加载中 …</translation>
     </message>
@@ -848,22 +853,22 @@ Description: %s</source>
 <context>
     <name>extension_JupyterConsole</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="109" />
+        <location filename="../../../translation_tools/translatables.py" line="108" />
         <source>The {} (inprocess={}) kernel does not support debugging</source>
         <translation>{} (inprocess={}) 内核不支持调试</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="107" />
+        <location filename="../../../translation_tools/translatables.py" line="106" />
         <source>Restart kernel</source>
         <translation>重新启动内核</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="108" />
+        <location filename="../../../translation_tools/translatables.py" line="109" />
         <source>Start new console</source>
         <translation>启动新控制台</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="106" />
+        <location filename="../../../translation_tools/translatables.py" line="107" />
         <source>Failed to get workspace variable</source>
         <translation>无法获取工作区变量</translation>
     </message>
@@ -884,12 +889,12 @@ Description: %s</source>
         <translation>创建了以下额外的数据文件：</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="103" />
+        <location filename="../../../translation_tools/translatables.py" line="101" />
         <source>Finished</source>
         <translation>完成</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="101" />
+        <location filename="../../../translation_tools/translatables.py" line="103" />
         <source>Handles the end of an experimental run</source>
         <translation>处理实验运行结束</translation>
     </message>
@@ -897,12 +902,12 @@ Description: %s</source>
 <context>
     <name>extension_analytics</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="97" />
+        <location filename="../../../translation_tools/translatables.py" line="98" />
         <source>Got it!</source>
         <translation>明白了！</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="98" />
+        <location filename="../../../translation_tools/translatables.py" line="97" />
         <source>Sends a ping to Google Analytics when OpenSesame is started</source>
         <translation>在启动OpenSesame时向Google分析发送ping</translation>
     </message>
@@ -910,12 +915,12 @@ Description: %s</source>
 <context>
     <name>extension_automatic_backup</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="58" />
+        <location filename="../../../translation_tools/translatables.py" line="59" />
         <source>Periodically saves your experiment to a back-up folder.</source>
         <translation>定期将实验保存到备份文件夹。</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="59" />
+        <location filename="../../../translation_tools/translatables.py" line="58" />
         <source>Open backup folder</source>
         <translation>打开备份文件夹</translation>
     </message>
@@ -923,27 +928,27 @@ Description: %s</source>
 <context>
     <name>extension_bug_report</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="16" />
+        <location filename="../../../translation_tools/translatables.py" line="18" />
         <source>Oops ...</source>
         <translation>哎呀 …</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="19" />
+        <location filename="../../../translation_tools/translatables.py" line="17" />
         <source>Bug report sent</source>
         <translation>错误报告已发送</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="18" />
+        <location filename="../../../translation_tools/translatables.py" line="20" />
         <source>Bug report not sent</source>
         <translation>错误报告未发送</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="17" />
+        <location filename="../../../translation_tools/translatables.py" line="16" />
         <source>Bug report</source>
         <translation>错误报告</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="20" />
+        <location filename="../../../translation_tools/translatables.py" line="19" />
         <source>Sends a bug report when an exception occurs</source>
         <translation>在发生异常时发送错误报告</translation>
     </message>
@@ -951,12 +956,12 @@ Description: %s</source>
 <context>
     <name>extension_command_palette</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="50" />
+        <location filename="../../../translation_tools/translatables.py" line="51" />
         <source>Trigger menu actions</source>
         <translation>触发菜单操作</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="51" />
+        <location filename="../../../translation_tools/translatables.py" line="50" />
         <source>Command palette</source>
         <translation>命令调色板</translation>
     </message>
@@ -990,27 +995,27 @@ Description: %s</source>
 <context>
     <name>extension_get_started</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="26" />
+        <location filename="../../../translation_tools/translatables.py" line="25" />
         <source>Get started!</source>
         <translation>开始吧！</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="24" />
+        <location filename="../../../translation_tools/translatables.py" line="26" />
         <source>Continue with a recent experiment:</source>
         <translation>继续进行最近的实验：</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="25" />
+        <location filename="../../../translation_tools/translatables.py" line="24" />
         <source>New…</source>
         <translation>新…</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="27" />
+        <location filename="../../../translation_tools/translatables.py" line="23" />
         <source>Start a new experiment</source>
         <translation>开始一个新实验</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="23" />
+        <location filename="../../../translation_tools/translatables.py" line="27" />
         <source>Shows the get-started tab and opens an experiment on startup, if one was
 passed on the command line
 </source>
@@ -1020,7 +1025,7 @@ passed on the command line
 <context>
     <name>extension_help</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="31" />
+        <location filename="../../../translation_tools/translatables.py" line="34" />
         <source>PsychoPy API</source>
         <translation>PsychoPy API</translation>
     </message>
@@ -1040,7 +1045,7 @@ passed on the command line
         <translation>帮助</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="34" />
+        <location filename="../../../translation_tools/translatables.py" line="31" />
         <source>Adds a Help menu</source>
         <translation>添加帮助菜单</translation>
     </message>
@@ -1048,17 +1053,17 @@ passed on the command line
 <context>
     <name>extension_jupyter_console</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="112" />
+        <location filename="../../../translation_tools/translatables.py" line="114" />
         <source>Show console</source>
         <translation>显示控制台</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="113" />
+        <location filename="../../../translation_tools/translatables.py" line="112" />
         <source>Show Jupyter/ IPython console</source>
         <translation>显示Jupyter/IPython控制台</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="114" />
+        <location filename="../../../translation_tools/translatables.py" line="113" />
         <source>A Jupyter console</source>
         <translation>一个Jupyter控制台</translation>
     </message>
@@ -1066,12 +1071,12 @@ passed on the command line
 <context>
     <name>extension_notifications</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="54" />
+        <location filename="../../../translation_tools/translatables.py" line="55" />
         <source>Notifications</source>
         <translation>通知</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="55" />
+        <location filename="../../../translation_tools/translatables.py" line="54" />
         <source>Pretty notifications for OpenSesame</source>
         <translation>漂亮的OpenSesame通知</translation>
     </message>
@@ -1095,12 +1100,12 @@ of OpenSesame.
 <context>
     <name>extension_preload_items</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="9" />
+        <location filename="../../../translation_tools/translatables.py" line="8" />
         <source>Preload items</source>
         <translation>预加载项目</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="8" />
+        <location filename="../../../translation_tools/translatables.py" line="9" />
         <source>Preloads items in the background for smoother use</source>
         <translation>在后台预加载项目以实现更流畅的使用</translation>
     </message>
@@ -1108,7 +1113,7 @@ of OpenSesame.
 <context>
     <name>extension_psychopy_monitor_center</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="5" />
+        <location filename="../../../translation_tools/translatables.py" line="3" />
         <source>Launch the PsychoPy monitor center</source>
         <translation>启动PsychoPy监视中心</translation>
     </message>
@@ -1118,7 +1123,7 @@ of OpenSesame.
         <translation>PsychoPy监视中心</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="3" />
+        <location filename="../../../translation_tools/translatables.py" line="5" />
         <source>Launches the PsychoPy monitor center</source>
         <translation>启动 PsychoPy 监视器中心</translation>
     </message>
@@ -1126,7 +1131,7 @@ of OpenSesame.
 <context>
     <name>extension_pyqode_manager</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="93" />
+        <location filename="../../../translation_tools/translatables.py" line="91" />
         <source>Convert spaces to tabs</source>
         <translation>将空格转换为制表符</translation>
     </message>
@@ -1141,7 +1146,7 @@ of OpenSesame.
         <translation>管理 PyQode，代码编辑器组件</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="91" />
+        <location filename="../../../translation_tools/translatables.py" line="93" />
         <source>PyQode manager</source>
         <translation>PyQode 管理器</translation>
     </message>
@@ -1167,12 +1172,12 @@ of OpenSesame.
         <translation>搜索项目 …</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="87" />
+        <location filename="../../../translation_tools/translatables.py" line="86" />
         <source>Quickly open items</source>
         <translation>快速打开项目</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="86" />
+        <location filename="../../../translation_tools/translatables.py" line="87" />
         <source>Quick switcher</source>
         <translation>快速切换器</translation>
     </message>
@@ -1209,12 +1214,12 @@ of OpenSesame.
         <translation>选项卡切换到 dockwidget</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="118" />
+        <location filename="../../../translation_tools/translatables.py" line="119" />
         <source>Turn tab into dockwidget</source>
         <translation>将选项卡变为 dockwidget</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="119" />
+        <location filename="../../../translation_tools/translatables.py" line="118" />
         <source>Turns a tab into a dockwidget</source>
         <translation>将选项卡变成 dockwidget</translation>
     </message>
@@ -1222,22 +1227,22 @@ of OpenSesame.
 <context>
     <name>extension_toolbar_menu</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="38" />
+        <location filename="../../../translation_tools/translatables.py" line="39" />
         <source>Menu</source>
         <translation>菜单</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="39" />
+        <location filename="../../../translation_tools/translatables.py" line="38" />
         <source>Integrates the menu into the toolbar</source>
         <translation>将菜单集成到工具栏中。</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="40" />
+        <location filename="../../../translation_tools/translatables.py" line="37" />
         <source>Integrate menu and toolbar</source>
         <translation>集成菜单和工具栏</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="37" />
+        <location filename="../../../translation_tools/translatables.py" line="40" />
         <source>Integrates the menu into the toolbar.</source>
         <translation>将菜单集成到工具栏中。</translation>
     </message>
@@ -1250,22 +1255,22 @@ of OpenSesame.
         <translation>撤销</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="70" />
+        <location filename="../../../translation_tools/translatables.py" line="66" />
         <source>Undo most recent action</source>
         <translation>撤销最近的操作</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="69" />
+        <location filename="../../../translation_tools/translatables.py" line="70" />
         <source>Implements undo/ redo</source>
         <translation>实现撤消/重做</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="66" />
+        <location filename="../../../translation_tools/translatables.py" line="67" />
         <source>Redo</source>
         <translation>重做</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="67" />
+        <location filename="../../../translation_tools/translatables.py" line="69" />
         <source>Redo most recently undone action</source>
         <translation>重做最近撤消的操作</translation>
     </message>
@@ -1273,12 +1278,12 @@ of OpenSesame.
 <context>
     <name>extension_variable_inspector</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="123" />
+        <location filename="../../../translation_tools/translatables.py" line="122" />
         <source>Experiment status: &lt;b&gt;%s&lt;/b&gt;</source>
         <translation>实验状态：&lt;b&gt;%s&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="125" />
+        <location filename="../../../translation_tools/translatables.py" line="123" />
         <source>Variable inspector</source>
         <translation>变量检查器</translation>
     </message>
@@ -1288,7 +1293,7 @@ of OpenSesame.
         <translation>图形变量检查器</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="122" />
+        <location filename="../../../translation_tools/translatables.py" line="125" />
         <source>Show variable inspector</source>
         <translation>显示变量检查器</translation>
     </message>
@@ -1317,17 +1322,17 @@ of OpenSesame.
 <context>
     <name>item_inline_script</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="204" />
+        <location filename="../../../translation_tools/translatables.py" line="205" />
         <source>Run</source>
         <translation>运行</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="206" />
+        <location filename="../../../translation_tools/translatables.py" line="204" />
         <source>Prepare</source>
         <translation>准备</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="205" />
+        <location filename="../../../translation_tools/translatables.py" line="206" />
         <source>Executes Python code</source>
         <translation>执行 Python 代码</translation>
     </message>
@@ -1335,62 +1340,62 @@ of OpenSesame.
 <context>
     <name>item_keyboard_response</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="191" />
+        <location filename="../../../translation_tools/translatables.py" line="194" />
         <source>Leave empty to use "correct_response"</source>
         <translation>留空以使用“correct_response”</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="190" />
+        <location filename="../../../translation_tools/translatables.py" line="198" />
         <source>Flush pending key events</source>
         <translation>清除等待中的按键事件</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="194" />
+        <location filename="../../../translation_tools/translatables.py" line="193" />
         <source>Collects keyboard responses</source>
         <translation>收集键盘响应</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="197" />
+        <location filename="../../../translation_tools/translatables.py" line="191" />
         <source>Correct response</source>
         <translation>正确回应</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="201" />
+        <location filename="../../../translation_tools/translatables.py" line="192" />
         <source>Allowed responses</source>
         <translation>允许的回应</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="195" />
+        <location filename="../../../translation_tools/translatables.py" line="201" />
         <source>Timeout</source>
         <translation>超时</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="196" />
+        <location filename="../../../translation_tools/translatables.py" line="199" />
         <source>Key names</source>
         <translation>键名</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="198" />
+        <location filename="../../../translation_tools/translatables.py" line="196" />
         <source>The following key names are valid:</source>
         <translation>以下键名有效：</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="199" />
+        <location filename="../../../translation_tools/translatables.py" line="197" />
         <source>In milliseconds or "infinite"</source>
         <translation>以毫秒或“无限”</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="193" />
+        <location filename="../../../translation_tools/translatables.py" line="190" />
         <source>Event type</source>
         <translation>事件类型</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="192" />
+        <location filename="../../../translation_tools/translatables.py" line="200" />
         <source>Separated by semicolons, e.g. "z;/"</source>
         <translation>以分号分隔，例如 "z;/"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="200" />
+        <location filename="../../../translation_tools/translatables.py" line="195" />
         <source>List available keys</source>
         <translation>列出可用按键</translation>
     </message>
@@ -1398,12 +1403,12 @@ of OpenSesame.
 <context>
     <name>item_logger</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="258" />
+        <location filename="../../../translation_tools/translatables.py" line="257" />
         <source>You have multiple unlinked loggers. This can lead to messy log files.</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="257" />
+        <location filename="../../../translation_tools/translatables.py" line="258" />
         <source>Logs experimental data</source>
         <translation>记录实验数据</translation>
     </message>
@@ -1416,7 +1421,7 @@ of OpenSesame.
         <translation>注意：循环数据将从文件中读取</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="237" />
+        <location filename="../../../translation_tools/translatables.py" line="230" />
         <source># Preview of loop table</source>
         <translation># 循环表预览</translation>
     </message>
@@ -1426,62 +1431,62 @@ of OpenSesame.
         <translation>曾经</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="230" />
+        <location filename="../../../translation_tools/translatables.py" line="226" />
         <source>Summary: &lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; order.</source>
         <translation>摘要：&lt;b&gt;%s&lt;/b&gt;将在&lt;b&gt;%s&lt;/b&gt;顺序中称为&lt;b&gt;%s&lt;/b&gt;。</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="227" />
+        <location filename="../../../translation_tools/translatables.py" line="229" />
         <source>Warning: No item to run has been specified</source>
         <translation>警告：未指定要运行的项目</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="233" />
+        <location filename="../../../translation_tools/translatables.py" line="234" />
         <source>This means that %s %s and %s %s.</source>
         <translation>这意味着 %s %s 和 %s %s。</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="236" />
+        <location filename="../../../translation_tools/translatables.py" line="227" />
         <source>The number of rows is %s.</source>
         <translation>行数是 %s。</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="235" />
+        <location filename="../../../translation_tools/translatables.py" line="224" />
         <source>one row occurs</source>
         <translation>出现一行</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="228" />
+        <location filename="../../../translation_tools/translatables.py" line="233" />
         <source>two rows occur</source>
         <translation>出现两行</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="229" />
+        <location filename="../../../translation_tools/translatables.py" line="232" />
         <source>twice</source>
         <translation>两次</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="232" />
+        <location filename="../../../translation_tools/translatables.py" line="235" />
         <source>Failed to generate preview.</source>
         <translation>无法生成预览。</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="226" />
+        <location filename="../../../translation_tools/translatables.py" line="236" />
         <source>never</source>
         <translation>从不</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="224" />
+        <location filename="../../../translation_tools/translatables.py" line="231" />
         <source>Note: Order or repeat is unknown or variably defined</source>
         <translation>注意：顺序或重复是未知的或可变的定义</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="234" />
+        <location filename="../../../translation_tools/translatables.py" line="228" />
         <source>All rows occur %s.</source>
         <translation>所有行发生 %s。</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="231" />
+        <location filename="../../../translation_tools/translatables.py" line="237" />
         <source>Repeatedly runs another item</source>
         <translation>重复运行另一个项目</translation>
     </message>
@@ -1489,7 +1494,7 @@ of OpenSesame.
 <context>
     <name>item_mouse_response</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="243" />
+        <location filename="../../../translation_tools/translatables.py" line="245" />
         <source>Leave empty to use "correct_response"</source>
         <translation>留空以使用“correct_response”</translation>
     </message>
@@ -1499,27 +1504,27 @@ of OpenSesame.
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="244" />
+        <location filename="../../../translation_tools/translatables.py" line="243" />
         <source>Flush pending mouse clicks</source>
         <translation>清除等待中的鼠标点击</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="249" />
+        <location filename="../../../translation_tools/translatables.py" line="241" />
         <source>Correct response</source>
         <translation>正确回应</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="251" />
+        <location filename="../../../translation_tools/translatables.py" line="244" />
         <source>Allowed responses</source>
         <translation>允许的回应</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="247" />
+        <location filename="../../../translation_tools/translatables.py" line="249" />
         <source>Timeout</source>
         <translation>超时</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="245" />
+        <location filename="../../../translation_tools/translatables.py" line="251" />
         <source>Elements define regions of interest</source>
         <translation>元素定义感兴趣的区域</translation>
     </message>
@@ -1529,22 +1534,22 @@ of OpenSesame.
         <translation>收集鼠标响应</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="240" />
+        <location filename="../../../translation_tools/translatables.py" line="250" />
         <source>Visible mouse cursor</source>
         <translation>可见的鼠标光标</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="250" />
+        <location filename="../../../translation_tools/translatables.py" line="247" />
         <source>In milliseconds or "infinite"</source>
         <translation>以毫秒或“无限”</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="246" />
+        <location filename="../../../translation_tools/translatables.py" line="240" />
         <source>Event type</source>
         <translation>事件类型</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="241" />
+        <location filename="../../../translation_tools/translatables.py" line="246" />
         <source>Separated by semicolons, e.g. "left_button;right_button"</source>
         <translation>用分号隔开，例如“left_button;right_button”</translation>
     </message>
@@ -1552,27 +1557,27 @@ of OpenSesame.
 <context>
     <name>item_sampler</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="186" />
+        <location filename="../../../translation_tools/translatables.py" line="187" />
         <source>Sound file</source>
         <translation>声音文件</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="175" />
+        <location filename="../../../translation_tools/translatables.py" line="177" />
         <source>Volume</source>
         <translation>音量</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="176" />
+        <location filename="../../../translation_tools/translatables.py" line="175" />
         <source> ms</source>
         <translation> 毫秒</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="183" />
+        <location filename="../../../translation_tools/translatables.py" line="186" />
         <source>Panning</source>
         <translation>声像控制</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="179" />
+        <location filename="../../../translation_tools/translatables.py" line="180" />
         <source>Stop after</source>
         <translation>在之后停止</translation>
     </message>
@@ -1582,37 +1587,37 @@ of OpenSesame.
         <translation>正值向右；完全平移时使用"left"或"right"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="184" />
+        <location filename="../../../translation_tools/translatables.py" line="179" />
         <source>Pitch</source>
         <translation>音高</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="185" />
+        <location filename="../../../translation_tools/translatables.py" line="181" />
         <source>In milliseconds, "sound", "keypress", or "mouseclick"</source>
         <translation>以毫秒为单位，"sound"，"keypress" 或 "mouseclick"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="181" />
+        <location filename="../../../translation_tools/translatables.py" line="184" />
         <source>In .ogg or .wav format</source>
         <translation>以 .ogg 或 .wav 格式</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="178" />
+        <location filename="../../../translation_tools/translatables.py" line="176" />
         <source> x original</source>
         <translation> x 原始</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="180" />
+        <location filename="../../../translation_tools/translatables.py" line="183" />
         <source>Fade in</source>
         <translation>淡入</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="177" />
+        <location filename="../../../translation_tools/translatables.py" line="178" />
         <source>Duration</source>
         <translation>持续时间</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="187" />
+        <location filename="../../../translation_tools/translatables.py" line="185" />
         <source>Plays a sound file in .wav or .ogg format</source>
         <translation>播放 .wav 或 .ogg 格式的声音文件</translation>
     </message>
@@ -1620,7 +1625,7 @@ of OpenSesame.
 <context>
     <name>item_sequence</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="172" />
+        <location filename="../../../translation_tools/translatables.py" line="171" />
         <source>Sequence contains non-existing item: %s</source>
         <translation>序列包含不存在的项目：%s</translation>
     </message>
@@ -1630,12 +1635,12 @@ of OpenSesame.
         <translation>依次运行一些项目</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="170" />
+        <location filename="../../../translation_tools/translatables.py" line="172" />
         <source>Flush pending key presses at sequence start</source>
         <translation>在序列开始时清除等待中的按键</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="171" />
+        <location filename="../../../translation_tools/translatables.py" line="170" />
         <source>&lt;b&gt;Important&lt;/b&gt;: A sequence has &lt;a href="http://osdoc.cogsci.nl/usage/prepare-run"&gt;a variable preparation time&lt;/a&gt;.</source>
         <translation>&lt;b&gt;重要&lt;/b&gt;：序列具有&lt;a href="http://osdoc.cogsci.nl/usage/prepare-run"&gt;可变的准备时间&lt;/a&gt;。</translation>
     </message>
@@ -1643,112 +1648,112 @@ of OpenSesame.
 <context>
     <name>item_sketchpad</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="156" />
+        <location filename="../../../translation_tools/translatables.py" line="162" />
         <source>Some properties of a noise patch are unknown or variably defined, using fallback image</source>
         <translation>一个噪声补丁的某些属性未知或可变地定义，使用后备图像</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="142" />
+        <location filename="../../../translation_tools/translatables.py" line="161" />
         <source>Penwidth "%s" is unknown or variably defined, using 1</source>
         <translation>画笔宽度“%s”未知或可变定义，使用 1</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="149" />
+        <location filename="../../../translation_tools/translatables.py" line="147" />
         <source>Width "%s" is unknown or variably defined, using 100</source>
         <translation>宽度“%s”未知或可变地定义，使用100</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="153" />
+        <location filename="../../../translation_tools/translatables.py" line="164" />
         <source>Enter text</source>
         <translation>输入文字</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="141" />
+        <location filename="../../../translation_tools/translatables.py" line="143" />
         <source>Lower to bottom</source>
         <translation>下放到底部</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="147" />
+        <location filename="../../../translation_tools/translatables.py" line="149" />
         <source>Please enter a text for the textline</source>
         <translation>请输入要输入的文本行</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="159" />
+        <location filename="../../../translation_tools/translatables.py" line="163" />
         <source>Rotation "%s" is unknown or variably defined, using 0</source>
         <translation>旋转“%s”未知或可变定义，使用 0</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="160" />
+        <location filename="../../../translation_tools/translatables.py" line="144" />
         <source>Proportion "%s" is unknown or variably defined, using .5</source>
         <translation>比例“%s”未知或可变地定义，使用.5</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="145" />
+        <location filename="../../../translation_tools/translatables.py" line="157" />
         <source>Color "%s" is unknown or variably defined, using placeholder color</source>
         <translation>颜色“%s”未知或可变定义，使用占位符颜色</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="163" />
+        <location filename="../../../translation_tools/translatables.py" line="166" />
         <source>Y coordinate "%s" is unknown or variably defined, using display center</source>
         <translation>Y坐标“%s”未知或可变定义，使用显示器中心</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="143" />
+        <location filename="../../../translation_tools/translatables.py" line="160" />
         <source>Scale "%s" is unknown or variably defined, using 1</source>
         <translation>比例“%s”未知或可变定义，使用 1</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="165" />
+        <location filename="../../../translation_tools/translatables.py" line="159" />
         <source>X coordinate "%s" is unknown or variably defined, using display center</source>
         <translation>X坐标“%s”未知或可变定义，使用显示器中心</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="155" />
+        <location filename="../../../translation_tools/translatables.py" line="141" />
         <source>Specify polar coordinates</source>
         <translation>指定极坐标</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="161" />
+        <location filename="../../../translation_tools/translatables.py" line="151" />
         <source>Fill "%s" is unknown or variably defined, assuming filled</source>
         <translation>填充“%s”未知或不确定定义，假设已填充</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="144" />
+        <location filename="../../../translation_tools/translatables.py" line="156" />
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="158" />
+        <location filename="../../../translation_tools/translatables.py" line="146" />
         <source>Displays stimuli</source>
         <translation>显示刺激</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="148" />
+        <location filename="../../../translation_tools/translatables.py" line="165" />
         <source>Height "%s" is unknown or variably defined, using 100</source>
         <translation>高度“%s”未知或可变地定义，使用100</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="151" />
+        <location filename="../../../translation_tools/translatables.py" line="142" />
         <source>Element script</source>
         <translation>元素脚本</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="154" />
+        <location filename="../../../translation_tools/translatables.py" line="148" />
         <source>Draw %s element</source>
         <translation>绘制 %s 元素</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="162" />
+        <location filename="../../../translation_tools/translatables.py" line="150" />
         <source>Fixdot style "%s" is unknown or variably defined</source>
         <translation>Fixdot样式“%s”未知或可变地定义</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="166" />
+        <location filename="../../../translation_tools/translatables.py" line="158" />
         <source>Image name "%s" is unknown or variably defined, using fallback image</source>
         <translation>图片名称“%s”未知或可变定义，使用备用图片</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="157" />
+        <location filename="../../../translation_tools/translatables.py" line="154" />
         <source>Some properties of a Gabor patch are unknown or variably defined, using fallback image</source>
         <translation>一个 Gabor 补丁的某些属性未知或可变地定义，使用后备图像</translation>
     </message>
@@ -1758,17 +1763,17 @@ of OpenSesame.
         <translation>半径“%s”未知或可变地定义，使用50</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="150" />
+        <location filename="../../../translation_tools/translatables.py" line="153" />
         <source>Font size "%s" is invalid or variably defined, using 18</source>
         <translation>字体大小“%s”无效或可变地定义，使用18</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="164" />
+        <location filename="../../../translation_tools/translatables.py" line="155" />
         <source>Raise to front</source>
         <translation>上提到前台</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="146" />
+        <location filename="../../../translation_tools/translatables.py" line="145" />
         <source>Edit script</source>
         <translation>编辑脚本</translation>
     </message>
@@ -1786,7 +1791,7 @@ of OpenSesame.
         <translation>音量</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="265" />
+        <location filename="../../../translation_tools/translatables.py" line="261" />
         <source> ms</source>
         <translation> 毫秒</translation>
     </message>
@@ -1796,52 +1801,52 @@ of OpenSesame.
         <translation>声像控制</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="264" />
+        <location filename="../../../translation_tools/translatables.py" line="270" />
         <source>Attack</source>
         <translation>攻击</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="270" />
+        <location filename="../../../translation_tools/translatables.py" line="269" />
         <source>Positive values toward the right; "left" or "right" for full panning</source>
         <translation>正值向右；完全平移时使用"left"或"right"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="269" />
+        <location filename="../../../translation_tools/translatables.py" line="266" />
         <source>In milliseconds, "sound", "keypress", or "mouseclick"</source>
         <translation>以毫秒为单位，"sound"，"keypress" 或 "mouseclick"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="268" />
+        <location filename="../../../translation_tools/translatables.py" line="264" />
         <source>Length</source>
         <translation>长度</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="266" />
+        <location filename="../../../translation_tools/translatables.py" line="262" />
         <source>Duration</source>
         <translation>持续时间</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="261" />
+        <location filename="../../../translation_tools/translatables.py" line="265" />
         <source>Decay</source>
         <translation>衰减</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="267" />
+        <location filename="../../../translation_tools/translatables.py" line="274" />
         <source>A basic sound synthesizer</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="262" />
+        <location filename="../../../translation_tools/translatables.py" line="268" />
         <source>Waveform</source>
         <translation>波形</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="271" />
+        <location filename="../../../translation_tools/translatables.py" line="267" />
         <source>In Hertz or as note, e.g. "A1"</source>
         <translation>以赫兹或音符表示，例如“A1”</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="274" />
+        <location filename="../../../translation_tools/translatables.py" line="271" />
         <source>Frequency</source>
         <translation>频率</translation>
     </message>
@@ -1854,42 +1859,42 @@ of OpenSesame.
         <translation>平均持续时间（以毫秒为单位）</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="421" />
+        <location filename="../../../translation_tools/translatables.py" line="420" />
         <source> ms</source>
         <translation> 毫秒</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="420" />
+        <location filename="../../../translation_tools/translatables.py" line="424" />
         <source>A random delay sampled from either a normal or uniform distribution</source>
         <translation>从正态分布或均匀分布中采样的随机延迟</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="424" />
+        <location filename="../../../translation_tools/translatables.py" line="425" />
         <source>Jitter mode</source>
         <translation>抖动模式</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="425" />
+        <location filename="../../../translation_tools/translatables.py" line="422" />
         <source>The mode for determining the actual duration (see Help)</source>
         <translation>确定实际持续时间的模式（参见帮助）</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="422" />
+        <location filename="../../../translation_tools/translatables.py" line="421" />
         <source>Duration</source>
         <translation>持续时间</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="423" />
+        <location filename="../../../translation_tools/translatables.py" line="428" />
         <source>The jitter of the actual duration in milliseconds (depends on Jitter mode)</source>
         <translation>实际持续时间的抖动（以毫秒为单位）（取决于抖动模式）</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="419" />
+        <location filename="../../../translation_tools/translatables.py" line="427" />
         <source>Jitter</source>
         <translation>抖动</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="427" />
+        <location filename="../../../translation_tools/translatables.py" line="423" />
         <source>Flow control</source>
         <translation>流控制</translation>
     </message>
@@ -1897,12 +1902,12 @@ of OpenSesame.
 <context>
     <name>plugin_coroutines</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="453" />
+        <location filename="../../../translation_tools/translatables.py" line="454" />
         <source>Run items simultaneously</source>
         <translation>同时运行项目</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="452" />
+        <location filename="../../../translation_tools/translatables.py" line="453" />
         <source>Flow control</source>
         <translation>流控制</translation>
     </message>
@@ -1910,7 +1915,7 @@ of OpenSesame.
 <context>
     <name>plugin_form_base</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="516" />
+        <location filename="../../../translation_tools/translatables.py" line="517" />
         <source>Form</source>
         <translation>表单</translation>
     </message>
@@ -1920,7 +1925,7 @@ of OpenSesame.
         <translation>编辑脚本以修改表单</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="514" />
+        <location filename="../../../translation_tools/translatables.py" line="516" />
         <source>A generic form plug-in</source>
         <translation>通用表单插件</translation>
     </message>
@@ -1928,7 +1933,7 @@ of OpenSesame.
 <context>
     <name>plugin_form_consent</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="529" />
+        <location filename="../../../translation_tools/translatables.py" line="531" />
         <source>Text to display in the form body</source>
         <translation>表单正文中显示的文本</translation>
     </message>
@@ -1938,27 +1943,27 @@ of OpenSesame.
         <translation>拒绝按钮文字</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="520" />
+        <location filename="../../../translation_tools/translatables.py" line="529" />
         <source>Text for the decline button</source>
         <translation>拒绝按钮的文字</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="526" />
+        <location filename="../../../translation_tools/translatables.py" line="527" />
         <source>Title to appear above the form text</source>
         <translation>在表单文本上方显示的标题</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="528" />
+        <location filename="../../../translation_tools/translatables.py" line="530" />
         <source>A simple consent form</source>
         <translation>简单的同意表单</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="524" />
+        <location filename="../../../translation_tools/translatables.py" line="523" />
         <source>Form title</source>
         <translation>表单标题</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="532" />
+        <location filename="../../../translation_tools/translatables.py" line="528" />
         <source>Accept-button text</source>
         <translation>接受按钮文字</translation>
     </message>
@@ -1968,32 +1973,32 @@ of OpenSesame.
         <translation>拒绝时的消息</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="531" />
+        <location filename="../../../translation_tools/translatables.py" line="532" />
         <source>Text for the accept button</source>
         <translation>接受按钮的文字</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="530" />
+        <location filename="../../../translation_tools/translatables.py" line="521" />
         <source>Checkbox text</source>
         <translation>复选框文本</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="523" />
+        <location filename="../../../translation_tools/translatables.py" line="533" />
         <source>Consent form text</source>
         <translation>同意表单文本</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="521" />
+        <location filename="../../../translation_tools/translatables.py" line="526" />
         <source>Form</source>
         <translation>表单</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="527" />
+        <location filename="../../../translation_tools/translatables.py" line="524" />
         <source>A message shown when the participant declines</source>
         <translation>当参与者拒绝时显示的消息</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="519" />
+        <location filename="../../../translation_tools/translatables.py" line="520" />
         <source>Text for the checkbox</source>
         <translation>复选框文本</translation>
     </message>
@@ -2001,57 +2006,57 @@ of OpenSesame.
 <context>
     <name>plugin_form_multiple_choice</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="591" />
+        <location filename="../../../translation_tools/translatables.py" line="589" />
         <source>A simple multiple choice item</source>
         <translation>简单的多项选择题</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="586" />
+        <location filename="../../../translation_tools/translatables.py" line="582" />
         <source>Form title</source>
         <translation>表单标题</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="582" />
+        <location filename="../../../translation_tools/translatables.py" line="587" />
         <source>Response options</source>
         <translation>回答选项</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="585" />
+        <location filename="../../../translation_tools/translatables.py" line="591" />
         <source>Response variable</source>
         <translation>响应变量</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="589" />
+        <location filename="../../../translation_tools/translatables.py" line="593" />
         <source>Response options (different options on different lines)</source>
         <translation>回答选项</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="581" />
+        <location filename="../../../translation_tools/translatables.py" line="592" />
         <source>Your question</source>
         <translation>你的问题</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="584" />
+        <location filename="../../../translation_tools/translatables.py" line="586" />
         <source>Response timeout</source>
         <translation>回应超时</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="580" />
+        <location filename="../../../translation_tools/translatables.py" line="584" />
         <source>Button text</source>
         <translation>按钮文字</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="590" />
+        <location filename="../../../translation_tools/translatables.py" line="581" />
         <source>Text for the button to advance to the next item</source>
         <translation>下一个</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="592" />
+        <location filename="../../../translation_tools/translatables.py" line="590" />
         <source>Allow multiple options to be selected</source>
         <translation>允许选择多个选项</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="587" />
+        <location filename="../../../translation_tools/translatables.py" line="588" />
         <source>Timeout</source>
         <translation>超时</translation>
     </message>
@@ -2061,7 +2066,7 @@ of OpenSesame.
         <translation>表单</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="588" />
+        <location filename="../../../translation_tools/translatables.py" line="585" />
         <source>Advance immediately to the next item once a selection has been made</source>
         <translation>一旦完成选择，立即前进到下一个项目</translation>
     </message>
@@ -2069,27 +2074,27 @@ of OpenSesame.
 <context>
     <name>plugin_form_text_display</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="561" />
+        <location filename="../../../translation_tools/translatables.py" line="560" />
         <source>Ok-button text</source>
         <translation>确定按钮文字</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="555" />
+        <location filename="../../../translation_tools/translatables.py" line="562" />
         <source>Main form text</source>
         <translation>主要表单文字</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="560" />
+        <location filename="../../../translation_tools/translatables.py" line="557" />
         <source>Text for the Ok button</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="559" />
+        <location filename="../../../translation_tools/translatables.py" line="561" />
         <source>Text to display in the form body</source>
         <translation>表单正文中显示的文本</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="558" />
+        <location filename="../../../translation_tools/translatables.py" line="559" />
         <source>Title to appear above the form text</source>
         <translation>在表单文本上方显示的标题</translation>
     </message>
@@ -2099,12 +2104,12 @@ of OpenSesame.
         <translation>表单标题</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="557" />
+        <location filename="../../../translation_tools/translatables.py" line="555" />
         <source>A simple text display form</source>
         <translation>简单文本显示表单</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="554" />
+        <location filename="../../../translation_tools/translatables.py" line="558" />
         <source>Form</source>
         <translation>表单</translation>
     </message>
@@ -2112,52 +2117,52 @@ of OpenSesame.
 <context>
     <name>plugin_form_text_input</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="486" />
+        <location filename="../../../translation_tools/translatables.py" line="485" />
         <source>Title to appear above the form text</source>
         <translation>在表单文本上方显示的标题</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="484" />
+        <location filename="../../../translation_tools/translatables.py" line="483" />
         <source>Form title</source>
         <translation>表单标题</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="490" />
+        <location filename="../../../translation_tools/translatables.py" line="486" />
         <source>The experimental variable to save the response in</source>
         <translation>将响应保存在实验变量中</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="485" />
+        <location filename="../../../translation_tools/translatables.py" line="490" />
         <source>Response variable</source>
         <translation>响应变量</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="482" />
+        <location filename="../../../translation_tools/translatables.py" line="491" />
         <source>Your question</source>
         <translation>你的问题</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="481" />
+        <location filename="../../../translation_tools/translatables.py" line="482" />
         <source>A simple text input form</source>
         <translation>简单文本输入表单</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="488" />
+        <location filename="../../../translation_tools/translatables.py" line="489" />
         <source>A question text</source>
         <translation>问题文本</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="489" />
+        <location filename="../../../translation_tools/translatables.py" line="487" />
         <source>A response timeout</source>
         <translation>回应超时</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="487" />
+        <location filename="../../../translation_tools/translatables.py" line="488" />
         <source>Timeout</source>
         <translation>超时</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="483" />
+        <location filename="../../../translation_tools/translatables.py" line="484" />
         <source>Form</source>
         <translation>表单</translation>
     </message>
@@ -2165,17 +2170,17 @@ of OpenSesame.
 <context>
     <name>plugin_joystick</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="430" />
+        <location filename="../../../translation_tools/translatables.py" line="431" />
         <source>Identifies the joystick, in case there are multiple joysticks</source>
         <translation>在有多个游戏杆的情况下识别游戏杆</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="434" />
+        <location filename="../../../translation_tools/translatables.py" line="436" />
         <source>Expecting a comma-separated list of numbers between 1 and the number of joybuttons</source>
         <translation>等待一个由1和喜悦按钮数量之间的逗号分隔的数字列表</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="438" />
+        <location filename="../../../translation_tools/translatables.py" line="435" />
         <source>Enable dummy mode to test the experiment using a keyboard</source>
         <translation>启用虚拟模式使用键盘测试实验</translation>
     </message>
@@ -2185,37 +2190,37 @@ of OpenSesame.
         <translation>收集操纵杆或游戏手柄的输入</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="440" />
+        <location filename="../../../translation_tools/translatables.py" line="441" />
         <source>Device nr.</source>
         <translation>设备号</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="431" />
+        <location filename="../../../translation_tools/translatables.py" line="440" />
         <source>Expecting a value in milliseconds of 'infinite'</source>
         <translation>期待一个以毫秒为单位的'无限'值</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="439" />
+        <location filename="../../../translation_tools/translatables.py" line="434" />
         <source>Allowed responses</source>
         <translation>允许的回应</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="433" />
+        <location filename="../../../translation_tools/translatables.py" line="439" />
         <source>Timeout</source>
         <translation>超时</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="432" />
+        <location filename="../../../translation_tools/translatables.py" line="433" />
         <source>Response collection</source>
         <translation>响应收集</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="435" />
+        <location filename="../../../translation_tools/translatables.py" line="438" />
         <source>Dummy mode (use keyboard instead of joystick)</source>
         <translation>虚拟模式（使用键盘代替操纵杆）</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="436" />
+        <location filename="../../../translation_tools/translatables.py" line="432" />
         <source>Correct response</source>
         <translation>正确回应</translation>
     </message>
@@ -2223,27 +2228,27 @@ of OpenSesame.
 <context>
     <name>plugin_notepad</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="575" />
+        <location filename="../../../translation_tools/translatables.py" line="574" />
         <source>A simple notepad to document your experiment. This plug-in does nothing.</source>
         <translation>一个简单的记事本，用于记录您的实验。此插件无任何功能。</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="573" />
+        <location filename="../../../translation_tools/translatables.py" line="576" />
         <source>None</source>
         <translation>无</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="577" />
+        <location filename="../../../translation_tools/translatables.py" line="575" />
         <source>Miscellaneous</source>
         <translation>杂项</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="574" />
+        <location filename="../../../translation_tools/translatables.py" line="577" />
         <source>Note</source>
         <translation>备注</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="576" />
+        <location filename="../../../translation_tools/translatables.py" line="578" />
         <source>Type your note here</source>
         <translation>在这里键入您的备注</translation>
     </message>
@@ -2251,72 +2256,72 @@ of OpenSesame.
 <context>
     <name>plugin_quest_staircase_init</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="495" />
+        <location filename="../../../translation_tools/translatables.py" line="504" />
         <source>Name</source>
         <translation>姓名</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="493" />
+        <location filename="../../../translation_tools/translatables.py" line="494" />
         <source>Initializes a new Quest staircase procedure</source>
         <translation>初始化新的 Quest 梯级程序</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="500" />
+        <location filename="../../../translation_tools/translatables.py" line="505" />
         <source>β</source>
         <translation>β</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="510" />
+        <location filename="../../../translation_tools/translatables.py" line="511" />
         <source>Estimated threshold</source>
         <translation>估计的阈值</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="505" />
+        <location filename="../../../translation_tools/translatables.py" line="510" />
         <source>Staircase</source>
         <translation>楼梯</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="494" />
+        <location filename="../../../translation_tools/translatables.py" line="502" />
         <source>Use different names to run multiple independent Quest procedures</source>
         <translation>使用不同的名称运行多个独立的 Quest 程序</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="497" />
+        <location filename="../../../translation_tools/translatables.py" line="508" />
         <source>Std. dev. of estimated threshold</source>
         <translation>估计阈值的标准差</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="508" />
+        <location filename="../../../translation_tools/translatables.py" line="496" />
         <source>Minimum test value</source>
         <translation>最小测试值</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="503" />
+        <location filename="../../../translation_tools/translatables.py" line="497" />
         <source>Used for initial test value</source>
         <translation>用于初始测试值</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="504" />
+        <location filename="../../../translation_tools/translatables.py" line="506" />
         <source>Proportion of random responses at maximum stimulus intensity</source>
         <translation>随机响应在最大刺激强度下的比例</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="496" />
+        <location filename="../../../translation_tools/translatables.py" line="495" />
         <source>Desired proportion of correct responses</source>
         <translation>期望的正确回答比例</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="501" />
+        <location filename="../../../translation_tools/translatables.py" line="512" />
         <source>Experimental variable for test value</source>
         <translation>实验变量用于测试值</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="499" />
+        <location filename="../../../translation_tools/translatables.py" line="500" />
         <source>Maximum test value</source>
         <translation>最大测试值</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="506" />
+        <location filename="../../../translation_tools/translatables.py" line="498" />
         <source>Steepness of the Weibull psychometric function</source>
         <translation>Weibull心理测量函数的陡度</translation>
     </message>
@@ -2326,22 +2331,22 @@ of OpenSesame.
         <translation>确定最佳测试值的方法</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="509" />
+        <location filename="../../../translation_tools/translatables.py" line="501" />
         <source>Target</source>
         <translation>目标</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="511" />
+        <location filename="../../../translation_tools/translatables.py" line="503" />
         <source>Method</source>
         <translation>方法</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="502" />
+        <location filename="../../../translation_tools/translatables.py" line="509" />
         <source>Chance level (γ)</source>
         <translation>偶然水平 (γ)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="498" />
+        <location filename="../../../translation_tools/translatables.py" line="499" />
         <source>δ</source>
         <translation>δ</translation>
     </message>
@@ -2349,27 +2354,27 @@ of OpenSesame.
 <context>
     <name>plugin_quest_staircase_next</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="569" />
+        <location filename="../../../translation_tools/translatables.py" line="567" />
         <source>Staircase</source>
         <translation>楼梯</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="567" />
+        <location filename="../../../translation_tools/translatables.py" line="568" />
         <source>Updates the Quest test value based on a response</source>
         <translation>根据响应更新Quest测试值</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="564" />
+        <location filename="../../../translation_tools/translatables.py" line="566" />
         <source>Should match a name specified in a quest_staircase_init</source>
         <translation>应与quest_staircase_init中指定的名称相匹配</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="568" />
+        <location filename="../../../translation_tools/translatables.py" line="569" />
         <source>Responses should be coded as 0 (incorrect) or 1 (correct)</source>
         <translation>响应应编码为0（错误）或1（正确）</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="566" />
+        <location filename="../../../translation_tools/translatables.py" line="570" />
         <source>Response variable</source>
         <translation>响应变量</translation>
     </message>
@@ -2382,17 +2387,17 @@ of OpenSesame.
 <context>
     <name>plugin_repeat_cycle</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="457" />
+        <location filename="../../../translation_tools/translatables.py" line="460" />
         <source>Repeat if</source>
         <translation>重复如果</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="456" />
+        <location filename="../../../translation_tools/translatables.py" line="458" />
         <source>A conditional expression that determines when the cycle is repeated</source>
         <translation>确定何时重复循环的条件表达式</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="458" />
+        <location filename="../../../translation_tools/translatables.py" line="457" />
         <source>Optionally repeat a cycle from a loop</source>
         <translation>从循环中可选地重复一个周期</translation>
     </message>
@@ -2405,17 +2410,17 @@ of OpenSesame.
 <context>
     <name>plugin_reset_feedback</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="549" />
+        <location filename="../../../translation_tools/translatables.py" line="550" />
         <source>Response collection</source>
         <translation>响应收集</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="550" />
+        <location filename="../../../translation_tools/translatables.py" line="551" />
         <source>This plug-in has no settings</source>
         <translation>此插件没有设置</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="551" />
+        <location filename="../../../translation_tools/translatables.py" line="552" />
         <source>A very simple plug-in to reset feedback variables</source>
         <translation>一个非常简单的插件，用于重置反馈变量</translation>
     </message>
@@ -2428,84 +2433,84 @@ of OpenSesame.
         <translation>期望以毫秒或“无限”为单位的值</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="476" />
+        <location filename="../../../translation_tools/translatables.py" line="465" />
         <source>Correct response</source>
         <translation>正确回应</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="473" />
+        <location filename="../../../translation_tools/translatables.py" line="463" />
         <source>Expecting a valid device name. Leave empty for autodetect.</source>
         <translation>期望有效的设备名称。留空以自动检测。</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="470" />
+        <location filename="../../../translation_tools/translatables.py" line="476" />
         <source>Expecting a semicolon-separated list of button numbers, e.g., 1;3;4</source>
         <translation>期望用分号分隔的按钮编号列表，例如 1;3;4</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="475" />
+        <location filename="../../../translation_tools/translatables.py" line="478" />
         <source>Ignore buttons that are already pressed</source>
         <translation>忽略已经按下的按钮</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="474" />
+        <location filename="../../../translation_tools/translatables.py" line="471" />
         <source>Dummy mode (use keyboard instead)</source>
         <translation>虚拟模式（改用键盘）</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="464" />
+        <location filename="../../../translation_tools/translatables.py" line="479" />
         <source>Device name</source>
         <translation>设备名称</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="465" />
+        <location filename="../../../translation_tools/translatables.py" line="470" />
         <source>Expecting a button number (1 .. 5)</source>
         <translation>期望一个按钮编号（1 .. 5）</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="478" />
+        <location filename="../../../translation_tools/translatables.py" line="468" />
         <source>Allowed responses</source>
         <translation>允许的回应</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="466" />
+        <location filename="../../../translation_tools/translatables.py" line="474" />
         <source>&lt;small&gt;&lt;b&gt;Note:&lt;/b&gt; If there are multiple srbox items in the experiment, the first srbox item determines the device name and whether dummy mode is enabled&lt;/small&gt;
 </source>
         <translation>&lt;small&gt;&lt;b&gt;注意：&lt;/b&gt;如果实验中有多个 srbox 项目，则第一个 srbox 项目决定设备名称以及是否启用虚拟模式&lt;/small&gt;
 </translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="463" />
+        <location filename="../../../translation_tools/translatables.py" line="469" />
         <source>Require a button-state change, so that already-pressed buttons are ignored</source>
         <translation>需要更改按钮状态，以便忽略已经按下的按钮</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="471" />
+        <location filename="../../../translation_tools/translatables.py" line="477" />
         <source>Timeout</source>
         <translation>超时</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="477" />
+        <location filename="../../../translation_tools/translatables.py" line="475" />
         <source>Enable to respond with the keyboard instead of an SR Box</source>
         <translation>启用使用键盘而不是 SR Box 进行回应</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="467" />
+        <location filename="../../../translation_tools/translatables.py" line="464" />
         <source>Turn on lights</source>
         <translation>打开灯光</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="468" />
+        <location filename="../../../translation_tools/translatables.py" line="467" />
         <source>Response collection</source>
         <translation>响应收集</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="469" />
+        <location filename="../../../translation_tools/translatables.py" line="473" />
         <source>Expecting a semicolon-separated list of light numbers, e.g., 1;3;4</source>
         <translation>期望用分号分隔的光编号列表，例如 1;3;4</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="462" />
+        <location filename="../../../translation_tools/translatables.py" line="466" />
         <source>A plug-in for using the serial response box.</source>
         <translation>用于使用串行响应框的插件。</translation>
     </message>
@@ -2513,62 +2518,62 @@ of OpenSesame.
 <context>
     <name>plugin_touch_response</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="537" />
+        <location filename="../../../translation_tools/translatables.py" line="538" />
         <source>Specifies the number of rows</source>
         <translation>指定行数</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="543" />
+        <location filename="../../../translation_tools/translatables.py" line="540" />
         <source>Expecting a value in milliseconds or 'infinite'</source>
         <translation>期望以毫秒或“无限”为单位的值</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="538" />
+        <location filename="../../../translation_tools/translatables.py" line="543" />
         <source>Show a mouse cursor (if supported on device)</source>
         <translation>显示鼠标光标（如果设备支持）</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="536" />
+        <location filename="../../../translation_tools/translatables.py" line="544" />
         <source>Number of columns</source>
         <translation>列数</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="545" />
+        <location filename="../../../translation_tools/translatables.py" line="536" />
         <source>A grid-based response item, convenient for touch screens</source>
         <translation>基于网格的响应项目，适用于触摸屏</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="544" />
+        <location filename="../../../translation_tools/translatables.py" line="541" />
         <source>Number of rows</source>
         <translation>行数</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="540" />
+        <location filename="../../../translation_tools/translatables.py" line="542" />
         <source>Show cursor</source>
         <translation>显示光标</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="542" />
+        <location filename="../../../translation_tools/translatables.py" line="546" />
         <source>Timeout</source>
         <translation>超时</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="535" />
+        <location filename="../../../translation_tools/translatables.py" line="545" />
         <source>Set the correct response</source>
         <translation>设置正确的回应</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="541" />
+        <location filename="../../../translation_tools/translatables.py" line="539" />
         <source>Response collection</source>
         <translation>响应收集</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="539" />
+        <location filename="../../../translation_tools/translatables.py" line="547" />
         <source>Specifies the number of columns</source>
         <translation>指定列数</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="546" />
+        <location filename="../../../translation_tools/translatables.py" line="537" />
         <source>Correct response</source>
         <translation>正确回应</translation>
     </message>
@@ -2576,17 +2581,17 @@ of OpenSesame.
 <context>
     <name>plugins_coroutines</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="447" />
+        <location filename="../../../translation_tools/translatables.py" line="445" />
         <source>"%s" does not support coroutines.</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="443" />
+        <location filename="../../../translation_tools/translatables.py" line="448" />
         <source>End after item (optional)</source>
         <translation>在项目之后结束（可选）</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="446" />
+        <location filename="../../../translation_tools/translatables.py" line="449" />
         <source>Item name</source>
         <translation>项目名称</translation>
     </message>
@@ -2596,17 +2601,17 @@ of OpenSesame.
         <translation>持续时间</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="445" />
+        <location filename="../../../translation_tools/translatables.py" line="447" />
         <source>End time (if applicable)</source>
         <translation>结束时间（如适用）</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="448" />
+        <location filename="../../../translation_tools/translatables.py" line="450" />
         <source>Start time</source>
         <translation>开始时间</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="449" />
+        <location filename="../../../translation_tools/translatables.py" line="446" />
         <source>Flush pending key presses at coroutines start</source>
         <translation />
     </message>
