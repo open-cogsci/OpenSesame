@@ -28,8 +28,13 @@ if platform.system() == 'Linux':
     # However, setting the OPENSESAME_MULTIPROCESSING_METHOD environment
     # variable allows users to customize this. See also:
     # - <https://github.com/open-cogsci/OpenSesame/issues/782>
-    multiprocessing.set_start_method(
-        os.environ.get('OPENSESAME_MULTIPROCESSING_METHOD', 'spawn'))
+    try:
+        multiprocessing.set_start_method(
+            os.environ.get('OPENSESAME_MULTIPROCESSING_METHOD', 'spawn'))
+    except RuntimeError as e:
+        print(f'failed to change multiprocessing start method: {e}')
+    except ValueError as e:
+        print(f'invalid multiprocessing start method: {e}')
     # solves a library conflict for Linux with Nvidia drivers
     # See https://forum.qt.io/topic/81328/ubuntu-qopenglshaderprogram-shader-program-is-not-linked/2
     try:
