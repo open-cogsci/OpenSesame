@@ -193,7 +193,7 @@ class QtPlugin(QtItem):
         -------
         ConditionalExpression
         """
-        edit = ConditionalExpression()
+        edit = ConditionalExpression(self.main_window)
         edit.verb = verb
         edit.editingFinished.connect(self.apply_edit_changes)
         edit.textEdited.connect(self.set_dirty)
