@@ -23,6 +23,7 @@ from libopensesame.item_stack import item_stack_singleton
 from libopensesame.py3compat import *
 import traceback
 import time
+import markdown
 
 
 class AbortCoroutines(Exception):
@@ -56,7 +57,7 @@ class OSException(Exception):
             self.item = self.phase = 'unknown'
         self._read_more = f'''
 <div id="more-information"
-style="display:none;">{self.__doc__}</div>
+style="display:none;">{markdown.markdown(self.__doc__)}</div>
 
 <a id="read-more" class="button"
 onclick='document.getElementById("more-information").style.display = "block";document.getElementById("read-more").style.display = "none"'>
