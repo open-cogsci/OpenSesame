@@ -19,36 +19,35 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.widgets.base_widget import BaseWidget
+from libqtopensesame.misc.item_name_delegate import ItemNameEditor
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'header_widget', category=u'core')
+_ = translation_context('header_widget', category='core')
 
 
 class HeaderWidget(BaseWidget):
-
-    r"""Editable labels for an item's name and description."""
+    """Editable labels for an item's name and description.
+    
+    Parameters
+    ----------
+    item
+        A qtitem object.
+    """
     def __init__(self, item):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        item
-            A qtitem object.
-        """
         super().__init__(item.main_window)
         self.setCursor(QtCore.Qt.IBeamCursor)
-        self.setToolTip(_(u"Click to edit"))
+        self.setToolTip(_("Click to edit"))
         self.item = item
         self.label_name = QtWidgets.QLabel()
-        self.label_name.setObjectName(u'item_name')
+        self.label_name.setObjectName('item_name')
         self.label_name.setSizePolicy(QtWidgets.QSizePolicy.Fixed,
                                       QtWidgets.QSizePolicy.Fixed)
         self.label_type = QtWidgets.QLabel()
-        self.label_type.setObjectName(u'item_type')
-        self.edit_name = QtWidgets.QLineEdit()
+        self.label_type.setObjectName('item_type')
+        self.edit_name = ItemNameEditor()
         self.edit_name.editingFinished.connect(self.apply_name)
         self.edit_name.hide()
         self.label_desc = QtWidgets.QLabel()
-        self.label_desc.setObjectName(u'item_desc')
+        self.label_desc.setObjectName('item_desc')
         self.label_desc.setWordWrap(True)
         self.edit_desc = QtWidgets.QLineEdit()
         self.edit_desc.editingFinished.connect(self.apply_desc)
@@ -90,7 +89,7 @@ class HeaderWidget(BaseWidget):
         """
         self.label_name.setText(safe_decode(name))
         self.label_type.setText(
-            u' — ' + self.item.item_type.replace(u"_", u" "))
+            ' — ' + self.item.item_type.replace("_", " "))
         self.edit_name.setText(safe_decode(name))
 
     def set_desc(self, desc):

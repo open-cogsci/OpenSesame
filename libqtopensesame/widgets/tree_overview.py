@@ -24,6 +24,7 @@ from libqtopensesame.misc.shortcut import Shortcut
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.misc.base_draggable import BaseDraggable
 from libqtopensesame.misc.run_if_delegate import RunIfDelegate
+from libqtopensesame.misc.item_name_delegate import ItemNameDelegate
 from libqtopensesame.widgets.tree_append_button import TreeAppendButton
 from libqtopensesame._input.popup_menu import PopupMenu
 from libqtopensesame.items.qtstructure_item import QtStructureItem
@@ -64,6 +65,7 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         self.locked = False
         self.overview_mode = overview_mode
         self.setAcceptDrops(True)
+        self.setItemDelegateForColumn(0, ItemNameDelegate(self))
         if self.overview_mode:
             self.setHeaderHidden(True)
         else:

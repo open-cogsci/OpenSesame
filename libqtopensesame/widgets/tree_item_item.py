@@ -66,30 +66,20 @@ class TreeItemItem(TreeBaseItem):
         return self.item.item_type == u'sequence'
 
     def ancestry(self):
-        """
-        desc:
-                Gets the full ancestry of a tree item, i.e. a sequence of items that
-                are above the item in the hierarchy. The index of the item in the
-                parent is indicated by a ':'. The index is 0 in the case of most
-                items, but is mostly necessary for indicating the position in
-                sequence items.
+        """Gets the full ancestry of a tree item, i.e. a sequence of items that
+        are above the item in the hierarchy. The index of the item in the
+        parent is indicated by a ':'. The index is 0 in the case of most items,
+        but is mostly necessary for indicating the position in sequence items.
 
-                For example:
+        For example:
 
-                        fixdot:2.trial_sequence:0.block_loop:0.experiment:0
-
-        arguments:
-                treeitem:
-                        desc:	The tree item that contains the item.
-                        type:	QTreeWidgetItem
-
-        returns:
-                desc:	A (item name, ancestry) tuple. For example:
-
-                                        (u'trial_sequence',
-                                        u'trial_sequence:0.block_loop:0.experiment:0')
-
-                type:	tuple
+            fixdot:2.trial_sequence:0.block_loop:0.experiment:0
+            
+        Returns
+        -------
+        tuple
+            A (item name, ancestry) tuple. For example:
+            ('trial_sequence', 'trial_sequence:0.block_loop:0.experiment:0')
         """
         treeitem = self
         item_name = str(treeitem.text(0))
