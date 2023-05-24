@@ -169,7 +169,7 @@ class ItemStore:
         return item
 
     def valid_name(self, item_type, suggestion=None):
-        r"""Generates a unique name that is valid and resembles the desired
+        """Generates a unique name that is valid and resembles the desired
         name.
 
         Parameters
@@ -190,7 +190,7 @@ class ItemStore:
         >>> valid_name = items.valid_name('sketchpad', 'an invalid name')
         """
         if suggestion is None:
-            name = 'new_%s' % item_type
+            name = f'new_{item_type}'
         else:
             name = self.experiment.syntax.sanitize(suggestion, strict=True,
                                                    allow_vars=False)
@@ -205,7 +205,7 @@ class ItemStore:
         invalid_names = list(self) + INVALID_NAMES
         i = 1
         while _name in invalid_names:
-            _name = '%s_%d' % (name, i)
+            _name = f'new_{i}_{item_type}'
             i += 1
         return CIStr(_name)
 
