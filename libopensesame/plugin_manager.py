@@ -170,17 +170,7 @@ class PluginManager:
                 f'already found at '
                 f'{self._plugins[self._aliases[plugin.name]].folder}')
             return
-        self._plugins[plugin.name] = plugin
-        # We remember the plugin under various aliases, which are either
-        # specified as a plugin attribute, or derived by turning the name into
-        # snake_case or CamelCase if it wasn't already.
-        self._aliases[plugin.name] = plugin.name
-        for alias in plugin.attribute('aliases', []):
-            self._aliases[alias] = plugin.name
-        if plugin.name.islower():
-            self._aliases[camel_case(plugin.name)] = plugin.name
-        else:
-            self._aliases[snake_case(plugin.name)] = plugin.name
+        self._register(plugin)
         
     def _discover_oldstyle(self):
         type_ = 'plugins' if self._pkg.__name__ == 'opensesame_plugins' \
@@ -196,7 +186,23 @@ class PluginManager:
                     f'already found at '
                     f'{self._plugins[self._aliases[plugin.name]].folder}')
                 continue
-            self._plugins[plugin.name] = plugin
+            self._register(plugin)
+
+    def _register(self, plugin):
+        """Registers a plugin and also stores various aliases to deal with
+        irregular naming.
+        """
+        self._plugins[plugin.name] = plugin
+        # We remember the plugin under various aliases, which are either
+        # specified as a plugin attribute, or derived by turning the name into
+        # snake_case or CamelCase if it wasn't already.
+        self._aliases[plugin.name] = plugin.name
+        for alias in plugin.attribute('aliases', []):
+            self._aliases[alias] = plugin.name
+        if plugin.name.islower():
+            self._aliases[camel_case(plugin.name)] = plugin.name
+        else:
+            self._aliases[snake_case(plugin.name)] = plugin.name
         
     def filter(self, **kwargs):
         for plugin in self:
@@ -213,7 +219,7 @@ class PluginManager:
         return name in self._plugins
     
     def __getitem__(self, name):
-        return self._plugins[name]
+        return self._plugins[self._aliases[name]]
         
     def __iter__(self):
         for plugin in self._plugins.values():
