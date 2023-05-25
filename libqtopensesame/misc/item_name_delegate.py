@@ -33,6 +33,11 @@ class ItemNameEditor(QLineEdit):
     def focusInEvent(self, event):
         super().focusInEvent(event)
         item_name = self.text()
+        items = self.parent().experiment.items
+        # When used in the context of the general properties widget, there is
+        # actually no item name, but rather the name of the experiment
+        if item_name not in items:
+            return
         item_type = self.parent().experiment.items[item_name].item_type
         item_suffix = f'_{item_type}'
         if item_name.endswith(item_suffix):
