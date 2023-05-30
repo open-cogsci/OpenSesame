@@ -20,7 +20,8 @@ from libopensesame.py3compat import *
 from libopensesame.var_store import var_store
 import warnings
 from libopensesame.misc import snake_case
-from libopensesame.exceptions import InvalidOpenSesameScript, InvalidValue
+from libopensesame.exceptions import InvalidOpenSesameScript, InvalidValue, \
+    IncompatibilityError
 from libopensesame.oslogging import oslogger
 
 
@@ -319,6 +320,16 @@ class Item:
         """
         return [(u"time_%s" % self.name, u"[Timestamp of last item call]"),
                 (u"count_%s" % self.name, u"[Number of item calls]")]
+        
+    def get(self, *args, **kwargs):
+        raise IncompatibilityError(
+            'Item.get() has been removed in OpenSesame 4. Please see '
+            'the section in the documentation on using variables.')
+
+    def set(self, *args, **kwargs):
+        raise IncompatibilityError(
+            'Item.set() has been removed in OpenSesame 4. Please see '
+            'the section in the documentation on using variables.')
 
 
 # alias for backwards compatibility

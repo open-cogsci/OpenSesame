@@ -25,7 +25,7 @@ from libopensesame.response_store import ResponseStore
 from libopensesame.file_pool_store import FilePoolStore
 from libopensesame.syntax import Syntax
 from libopensesame.exceptions import UserAborted, ItemDoesNotExist, \
-    InvalidOpenSesameScript, IncompatibilityError
+    InvalidOpenSesameScript
 from libopensesame.item import Item
 from libopensesame import misc, metadata
 from libopensesame.item_stack import item_stack_singleton
@@ -553,16 +553,6 @@ class Experiment(Item):
         """Initializes the log backend."""
         from openexp.log import log
         self._log = log(self, self.logfile)
-
-    def get(self, *args, **kwargs):
-        raise IncompatibilityError(
-            'Experiment.get() has been removed in OpenSesame 4. Please see '
-            'the section in the documentation on using variables.')
-
-    def set(self, *args, **kwargs):
-        raise IncompatibilityError(
-            'Experiment.set() has been removed in OpenSesame 4. Please see '
-            'the section in the documentation on using variables.')
 
 # Alias for backwards compatibility
 experiment = Experiment
