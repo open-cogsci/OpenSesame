@@ -70,7 +70,7 @@ class Psycho(Mouse, PsychoCoordinates):
 
     def get_pos(self):
 
-        return self.from_xy(self.mouse.getPos()), self.experiment.time()
+        return self.from_xy(self.mouse.getPos()), self.experiment.clock.time()
 
     def set_pos(self, pos=(0, 0)):
 

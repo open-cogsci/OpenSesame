@@ -112,7 +112,7 @@ class Legacy(Mouse, LegacyCoordinates):
     def get_pos(self):
 
         pygame.event.get()
-        return self.from_xy(pygame.mouse.get_pos()), self.experiment.time()
+        return self.from_xy(pygame.mouse.get_pos()), self.experiment.clock.time()
 
     def get_pressed(self):
 

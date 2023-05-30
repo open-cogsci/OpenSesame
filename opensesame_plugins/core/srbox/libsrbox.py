@@ -210,7 +210,7 @@ class LibSrbox:
         if not self._started:
             raise DeviceError(
                 'Please call srbox.start() before srbox.get_button_press()')
-        t0 = self.experiment.time()
+        t0 = self.experiment.clock.time()
         # Create a list of buttonr, bytemask tuples.
         bytemasks = []
         for buttonnr, bytemask in enumerate(self.BYTEMASKS):
@@ -224,7 +224,7 @@ class LibSrbox:
                 continue
             inputbyte1 = ord(inputchar)
             # Check for a timeout
-            t1 = self.experiment.time()
+            t1 = self.experiment.clock.time()
             if timeout is not None and t1 - t0 > timeout:
                 break
             # To check for state changes, we need an old and a new state.
