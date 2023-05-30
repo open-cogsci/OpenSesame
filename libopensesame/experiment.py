@@ -25,7 +25,7 @@ from libopensesame.response_store import ResponseStore
 from libopensesame.file_pool_store import FilePoolStore
 from libopensesame.syntax import Syntax
 from libopensesame.exceptions import UserAborted, ItemDoesNotExist, \
-    InvalidOpenSesameScript
+    InvalidOpenSesameScript, IncompatibilityError
 from libopensesame.item import Item
 from libopensesame import misc, metadata
 from libopensesame.item_stack import item_stack_singleton
@@ -41,14 +41,14 @@ import gc
 
 class Experiment(Item):
 
-    r"""A special item that controls the flow of the experiment."""
-    description = u'The main experiment item'
+    """A special item that controls the flow of the experiment."""
+    description = 'The main experiment item'
 
-    def __init__(self, name=u'experiment', string=None, pool_folder=None,
+    def __init__(self, name='experiment', string=None, pool_folder=None,
                  experiment_path=None, fullscreen=False,
-                 logfile=u'defaultlog.csv', subject_nr=0, workspace=None,
+                 logfile='defaultlog.csv', subject_nr=0, workspace=None,
                  resources={}, heartbeat_interval=1):
-        r"""Constructor. The experiment is created automatically be OpenSesame
+        """Constructor. The experiment is created automatically be OpenSesame
         and you will generally not need to create it yourself.
 
         Parameters
@@ -101,7 +101,7 @@ class Experiment(Item):
             self._python_workspace = workspace
         self.running = False
         self.heartbeat_interval = heartbeat_interval
-        self.plugin_folder = u'plugins'
+        self.plugin_folder = 'plugins'
         self._start_response_interval = None
         self.cleanup_functions = []
         self.restart = False
@@ -127,7 +127,7 @@ class Experiment(Item):
         self.set_subject(subject_nr)
         # Fullscreen needs to be set after the experiment has been parsed from
         # script, otherwise it will be overridden by the script.
-        self.var.fullscreen = u'yes' if fullscreen else u'no'
+        self.var.fullscreen = 'yes' if fullscreen else 'no'
         # Restore experiment path, which is either the full path (including
         # filename), only the folder, or None.
         if experiment_path is not None:
@@ -145,57 +145,55 @@ class Experiment(Item):
         if self.var.get('is_template', 0):
             self.experiment_path = self.var.experiment_path = None
             del self.var.is_template
-        if not py3 and backend.backend_guess(self, 'sampler') == u'psycho':
+        if not py3 and backend.backend_guess(self, 'sampler') == 'psycho':
             self.var.sampler_backend = 'legacy'
             oslogger.warning(
-                u'The psycho sampler backend is not compatible with Python 2. '
-                u'Falling back to legacy sampler backend'
+                'The psycho sampler backend is not compatible with Python 2. '
+                'Falling back to legacy sampler backend'
             )
 
     @property
     def default_title(self):
-        return u'New experiment'
+        return 'New experiment'
 
     def reset(self):
-        """See item."""
         # Set default variables
-        self.var.start = u'experiment'
+        self.var.start = 'experiment'
         self.var.title = self.default_title
         self.var.round_decimals = 2
-        self.var.form_clicks = u'no'
-        self.var.disable_garbage_collection = u'yes'
+        self.var.form_clicks = 'no'
+        self.var.disable_garbage_collection = 'yes'
         # Sound parameters
         self.var.sound_freq = 48000
         self.var.sound_sample_size = -16  # Negative values mean signed
         self.var.sound_channels = 2
         self.var.sound_buf_size = 1024
         # Default backend
-        self.var.canvas_backend = u'psycho'
+        self.var.canvas_backend = 'psycho'
         # Display parameters
         self.var.width = 1024
         self.var.height = 768
-        self.var.background = u'black'
-        self.var.foreground = u'white'
+        self.var.background = 'black'
+        self.var.foreground = 'white'
         # Font parameters
         self.var.font_size = 18
-        self.var.font_family = u'mono'
-        self.var.font_italic = u'no'
-        self.var.font_bold = u'no'
-        self.var.font_underline = u'no'
+        self.var.font_family = 'mono'
+        self.var.font_italic = 'no'
+        self.var.font_bold = 'no'
+        self.var.font_underline = 'no'
 
     def module_container(self):
         """Specify the module that contains the item modules"""
-        return u'libopensesame'
+        return 'libopensesame'
 
     def item_prefix(self):
+        """A prefix for the plug-in classes, so that [prefix][plugin] class is
+        used instead of the [plugin] class.
         """
-        A prefix for the plug-in classes, so that [prefix][plugin] class is used
-        instead of the [plugin] class.
-        """
-        return u''
+        return ''
 
     def set_subject(self, nr):
-        r"""Sets the subject number and parity (even/ odd). This function is
+        """Sets the subject number and parity (even/ odd). This function is
         called automatically when an experiment is started, so you do not
         generally need to call it yourself.
 
@@ -213,58 +211,61 @@ class Experiment(Item):
         # Set the subject nr and parity
         self.var.subject_nr = nr
         if nr % 2 == 0:
-            self.var.subject_parity = u'even'
+            self.var.subject_parity = 'even'
         else:
-            self.var.subject_parity = u'odd'
+            self.var.subject_parity = 'odd'
 
     def read_definition(self, s):
-        """
-        Extracts a the definition of a single item from the string.
+        """Extracts a the definition of a single item from the string.
 
-        Arguments:
-        s	--	The definition string.
+        Parameters
+        ----------
+        s: str
+            The definition string.
 
-        Returns:
-        A (str, str) tuple with the full string minus the definition string
-        and the definition string.
+        Returns
+        -------
+        tuple
+            A (str, str) tuple with the full string minus the definition string
+            and the definition string.
         """
         # Read the string until the end of the definition
-        def_str = u''
+        def_str = ''
         line = next(s, None)
         if line is None:
-            return None, u''
+            return None, ''
         get_next = False
         while True:
             if len(line) > 0:
-                if line[0] != u'\t':
+                if line[0] != '\t':
                     break
                 else:
-                    def_str += line + u'\n'
+                    def_str += line + '\n'
             line = next(s, None)
             if line is None:
                 break
         return line, def_str
 
     def from_string(self, string):
-        r"""Reads the entire experiment from a string.
+        """Reads the entire experiment from a string.
 
         Parameters
         ----------
         string
             The definition string.
         """
-        self.var.clear(preserve=[u'experiment_path', u'experiment_file'])
+        self.var.clear(preserve=['experiment_path', 'experiment_file'])
         self.reset()
         self.comments = []
         oslogger.debug(u"building experiment")
         if string is None:
             return
         self.front_matter, string = self._syntax.parse_front_matter(string)
-        if self.experiment.front_matter[u'API'].version[0] < 2:
+        if self.experiment.front_matter['API'].version[0] < 2:
             # Old experiment scripts were saved in ASCII, and require decoding
             # of U+XXXX unicode characters.
             string = self.syntax.from_ascii(string)
-        s = iter(string.split(u'\n'))
+        s = iter(string.split('\n'))
         line = next(s, None)
         while line is not None:
             get_next = True
@@ -291,7 +292,7 @@ class Experiment(Item):
                 line = next(s, None)
 
     def transmit_workspace(self, **extra):
-        r"""Sends the current workspace through the output channel. If there is
+        """Sends the current workspace through the output channel. If there is
         no output channel, this function does nothing.
 
         Parameters
@@ -311,14 +312,14 @@ class Experiment(Item):
         self.output_channel.put(d)
 
     def set_output_channel(self, output_channel):
-        r"""Sets the output channel, which is used to communicate the workspace
+        """Sets the output channel, which is used to communicate the workspace
         between the experiment and the launch process (typically the GUI).
 
         Parameters
         ----------
         output_channel    The output object, which must support a `put` method.
         """
-        if not hasattr(output_channel, u'put'):
+        if not hasattr(output_channel, 'put'):
             raise RuntimeError(f'Invalid output_channel: {output_channel}')
         self.output_channel = output_channel
 
@@ -326,9 +327,9 @@ class Experiment(Item):
         """Runs the experiment."""
         # Save the date and time, and the version of OpenSesame
         self.var.datetime = safe_decode(
-            time.strftime(u'%c'),
+            time.strftime('%c'),
             enc=self.encoding,
-            errors=u'ignore'
+            errors='ignore'
         )
         self.var.opensesame_version = metadata.__version__
         self.var.opensesame_codename = metadata.codename
@@ -344,7 +345,7 @@ class Experiment(Item):
         oslogger.info(u"experiment started")
         if self.var.start in self.items:
             item_stack_singleton.clear()
-            if self.var.disable_garbage_collection == u'yes':
+            if self.var.disable_garbage_collection == 'yes':
                 oslogger.info('disabling garbage collection')
                 gc.disable()
             self.items.execute(self.var.start)
@@ -354,7 +355,7 @@ class Experiment(Item):
         self.end()
 
     def pause(self):
-        r"""Pauses the experiment, sends the Python workspace to the GUI, and
+        """Pauses the experiment, sends the Python workspace to the GUI, and
         waits for the GUI to send a resume signal. This requires an output
         channel.
         """
@@ -369,13 +370,13 @@ class Experiment(Item):
         self.transmit_workspace(__pause__=True)
         pause_canvas = Canvas(self)
         pause_canvas['msg'] = Text(
-            u'The experiment has been paused<br /><br />'
-            u'Press spacebar to resume<br />'
-            u'Press Q to quit'
+            'The experiment has been paused<br /><br />'
+            'Press spacebar to resume<br />'
+            'Press Q to quit'
         ).construct(pause_canvas)
         pause_keyboard = Keyboard(
             self,
-            keylist=[u'space', u'q', u'Q'],
+            keylist=['space', 'q', 'Q'],
             timeout=0
         )
         pause_keyboard.show_virtual_keyboard()
@@ -383,17 +384,17 @@ class Experiment(Item):
         try:
             while True:
                 key, _time = pause_keyboard.get_key()
-                if key == u'q' or key == u'Q':
+                if key == 'q' or key == 'Q':
                     pause_keyboard.show_virtual_keyboard(False)
                     raise UserAborted('The experiment was aborted')
-                if key == u'space':
+                if key == 'space':
                     break
                 time.sleep(.25)
         finally:
             self.paused = False
             self.transmit_workspace(__pause__=False)
         pause_keyboard.show_virtual_keyboard(False)
-        pause_canvas['msg'].text = u'Resuming ...'
+        pause_canvas['msg'].text = 'Resuming ...'
         pause_canvas.show()
 
     def cleanup(self):
@@ -429,13 +430,13 @@ class Experiment(Item):
         s = self._syntax.generate_front_matter()
         for var in self.var:
             s += self.variable_to_string(var)
-        s += u'\n'
+        s += '\n'
         for _item in sorted(self.items):
-            s += self.items[_item].to_string() + u'\n'
+            s += self.items[_item].to_string() + '\n'
         return s
 
     def save(self, path, overwrite=False, update_path=True):
-        r"""Saves the experiment to file.
+        """Saves the experiment to file.
 
         Parameters
         ----------
@@ -461,7 +462,7 @@ class Experiment(Item):
         return path
 
     def open(self, src):
-        r"""Opens an experiment. The source can be any of the following:
+        """Opens an experiment. The source can be any of the following:
 
         - An
         OpenSesame script (ie. not a file)
@@ -488,8 +489,7 @@ class Experiment(Item):
         self.responses.reset_feedback()
 
     def var_info(self):
-        """
-        Returns a list of (name, value) tuples with variable descriptions
+        """Returns a list of (name, value) tuples with variable descriptions
         for the main experiment.
 
         Returns:
@@ -503,8 +503,8 @@ class Experiment(Item):
         return l
 
     def init_heartbeat(self):
-        r"""Initializes heartbeat."""
-        if self.heartbeat_interval <= 0 or self.var.fullscreen == u'yes' or \
+        """Initializes heartbeat."""
+        if self.heartbeat_interval <= 0 or self.var.fullscreen == 'yes' or \
                 self.output_channel is None:
             self.heartbeat = None
             return
@@ -513,18 +513,16 @@ class Experiment(Item):
         self.heartbeat.start()
 
     def init_random(self):
-        """
-        desc:
-                Initializes the random number generators. For some reason, the numpy
-                random seed is not re-initialized when the experiment is started
-                again with the multiprocess runner, resulting in identical random
-                runs. The standard random module doesn't suffer from this problem.
-                But to be on the safe side, we now explicitly re-initialize the
-                random seed.
+        """Initializes the random number generators. For some reason, the numpy
+        random seed is not re-initialized when the experiment is started
+        again with the multiprocess runner, resulting in identical random
+        runs. The standard random module doesn't suffer from this problem.
+        But to be on the safe side, we now explicitly re-initialize the
+        random seed.
 
-                See also:
+        See also:
 
-                - <http://forum.cogsci.nl/index.php?p=/discussion/1441/>
+        - <http://forum.cogsci.nl/index.php?p=/discussion/1441/>
         """
         import random
         random.seed()
@@ -544,7 +542,7 @@ class Experiment(Item):
         """Initializes the canvas backend."""
         from openexp import canvas
         canvas.init_display(self)
-        self.python_workspace[u'win'] = self.window
+        self.python_workspace['win'] = self.window
 
     def init_clock(self):
         """Initializes the clock backend."""
@@ -556,6 +554,15 @@ class Experiment(Item):
         from openexp.log import log
         self._log = log(self, self.logfile)
 
+    def get(self, *args, **kwargs):
+        raise IncompatibilityError(
+            'Experiment.get() has been removed in OpenSesame 4. Please see '
+            'the section in the documentation on using variables.')
+
+    def set(self, *args, **kwargs):
+        raise IncompatibilityError(
+            'Experiment.set() has been removed in OpenSesame 4. Please see '
+            'the section in the documentation on using variables.')
 
 # Alias for backwards compatibility
 experiment = Experiment

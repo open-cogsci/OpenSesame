@@ -451,5 +451,12 @@ class UnexpectedError(OSException):
                f'~~~ .traceback\n{self._traceback}\n~~~\n\n{self._read_more}'
 
 
+class IncompatibilityError(OSException):
+    """An `IncompatibilityError` is raised when the experiment uses 
+    functionality that is not compatible with the current version of OpenSeame.
+    """
+    pass
+
+
 # For backwards compatibility, we should also define the old Exception classes
 osexception = OSException
