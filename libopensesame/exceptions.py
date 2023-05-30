@@ -280,8 +280,16 @@ class PythonError(OSException):
         # parts of the error message should be hidden from the user because
         # they relate to the insides of OpenSesame, rather than to the user
         # error.
+        print(tb_lines)
         for line_nr, tb_line in enumerate(tb_lines):
             if '# __ignore_traceback__' in tb_line:
+                # If the traceback has ^^^^ indicators below the lines of code
+                # to indicate the offending part of the line, then this 
+                # indicator needs to be skipped too. The code below checks 
+                # whether the string consists only of ^ characters.
+                caret_line = tb_lines[line_nr + 1].strip()
+                if caret_line.count('^') == len(caret_line):
+                    line_nr += 1
                 tb_lines = tb_lines[:1] + tb_lines[line_nr + 1:]
                 break
         return '\n'.join(tb_lines).replace('<string>',
