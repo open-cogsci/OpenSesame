@@ -91,7 +91,7 @@ class PoolWidget(BaseWidget):
             else:
                 msg = _(
                     u"The file pool already contains files with the same names. Do you want to overwrite {} files?")
-            c = confirmation(self.main_window, msg.format(n_replace))
+            c = Confirmation(self.main_window, msg.format(n_replace))
             if not c.show():
                 return
         for path in files:
