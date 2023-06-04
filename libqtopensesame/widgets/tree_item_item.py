@@ -22,7 +22,7 @@ from qtpy.QtGui import QColor, QBrush
 from libqtopensesame.widgets.tree_base_item import TreeBaseItem
 from libqtopensesame.items.qtstructure_item import QtStructureItem
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'tree_item_item', category=u'core')
+_ = translation_context('tree_item_item', category='core')
 
 
 class TreeItemItem(TreeBaseItem):
@@ -62,8 +62,7 @@ class TreeItemItem(TreeBaseItem):
         return self.item.close_tab
 
     def has_append_menu(self):
-
-        return self.item.item_type == u'sequence'
+        return self.item.item_type == 'sequence'
 
     def ancestry(self):
         """Gets the full ancestry of a tree item, i.e. a sequence of items that
@@ -89,14 +88,14 @@ class TreeItemItem(TreeBaseItem):
                 index = treeitem.parent().indexOfChild(treeitem)
             else:
                 index = 0
-            l.append(str(treeitem.text(0))+u':'+str(index))
+            l.append(str(treeitem.text(0))+':'+str(index))
             treeitem = treeitem.parent()
             if treeitem is None or not treeitem.droppable:
                 break
-        return item_name, u'.'.join(l)
+        return item_name, '.'.join(l)
 
     def show_context_menu(self, pos):
-        r"""Pops up the item context menu.
+        """Pops up the item context menu.
 
         Parameters
         ----------
@@ -108,7 +107,7 @@ class TreeItemItem(TreeBaseItem):
         menu.popup(pos)
 
     def rename(self, from_name, to_name):
-        r"""Renames an item.
+        """Renames an item.
 
         Parameters
         ----------
@@ -123,11 +122,11 @@ class TreeItemItem(TreeBaseItem):
             self.name = to_name
 
     def start_rename(self):
-        r"""Goes into edit mode for the item's name."""
+        """Goes into edit mode for the item's name."""
         self.treeWidget().editItem(self, 0)
 
     def start_edit_runif(self):
-        r"""Goes into edit mode for the item's run-if statement. This is only
+        """Goes into edit mode for the item's run-if statement. This is only
         applicable to sequences, i.e. not if the treewidget is in overview
         mode.
         """
@@ -135,47 +134,47 @@ class TreeItemItem(TreeBaseItem):
             self.treeWidget().editItem(self, 1)
 
     def set_icon(self, name, icon):
-        """See tree_base_item."""
         super().set_icon(name, icon)
         if str(self.text(0)) == name:
             self.setIcon(0, self.theme.qicon(icon))
 
     def drop_hint(self):
-
         if self.treeWidget().overview_mode or self.parent() is None:
-            if self.item.item_type == u'loop':
-                return _(u'Set as item to run for %s') % self.name
-            if self.item.item_type == u'sequence':
-                return _(u'Insert into %s') % self.name
-        return _(u'Drop below %s') % self.name
+            if self.item.item_type == 'loop':
+                return _('Set as item to run for %s') % self.name
+            if self.item.item_type == 'sequence':
+                return _('Insert into %s') % self.name
+        return _('Drop below %s') % self.name
 
     def is_deletable(self):
         """
-        returns:
-                desc:	True if the item for this treeitem can be deleted, False
-                                otherwise.
-                type:	bool
+        Returns
+        -------
+        bool
+            True if the item for this treeitem can be deleted, False otherwise.
         """
-        return hasattr(self.parent(), u'item')
+        return hasattr(self.parent(), 'item')
 
     def is_unused(self):
         """
-        returns:
-                desc:	True if the item is unused, False otherwise.
-                type:	bool
+        Returns
+        -------
+        bool
+            True if the item is unused, False otherwise.
         """
-        return self.parent() is not None and self.parent().name == u'__unused__'
+        return self.parent() is not None and self.parent().name == '__unused__'
 
     def is_cloneable(self):
         """
-        returns:
-                desc:	True if the item for this treeitem can be cloned, False
-                                otherwise. An item can be cloned if it is in a sequence.
-                type:	bool
+        Returns
+        -------
+        bool
+            True if the item for this treeitem can be cloned, False otherwise.
+            An item can be cloned if it is in a sequence.
         """
-        if not hasattr(self.parent(), u'item'):
+        if not hasattr(self.parent(), 'item'):
             return False
-        if not getattr(self.parent(), u'item').item_type == u'sequence':
+        if not getattr(self.parent(), 'item').item_type == 'sequence':
             return False
         return True
     
@@ -193,7 +192,7 @@ class TreeItemItem(TreeBaseItem):
         self.experiment.build_item_tree()
 
     def delete(self):
-        r"""Deletes the item, if possible."""
+        """Deletes the item, if possible."""
         if not self.is_deletable():
             return
         index = self.parent().indexOfChild(self)
@@ -203,13 +202,13 @@ class TreeItemItem(TreeBaseItem):
         self.experiment.build_item_tree()
 
     def permanently_delete(self):
-        r"""Permanently deletes the item, if possible."""
+        """Permanently deletes the item, if possible."""
         if not self.is_deletable() and not self.is_unused():
             return
         if QtWidgets.QMessageBox.question(
                 self.treeWidget(), 
-                _(u'Permanently delete item'), 
-                _(u'Are you sure you want to permanently delete <b>%s</b>? All linked copies of <b>%s</b> will be deleted. You will not be able to undo this.')
+                _('Permanently delete item'), 
+                _('Are you sure you want to permanently delete <b>%s</b>? All linked copies of <b>%s</b> will be deleted. You will not be able to undo this.')
                   % (self.name, self.name),
                 buttons=(QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No), 
                 defaultButton=QtWidgets.QMessageBox.No
@@ -223,60 +222,61 @@ class TreeItemItem(TreeBaseItem):
             # structure_change has to be emitted, otherwise the GUI doesn't
             # update properly.
             self.treeWidget().structure_change.emit()
-        except:
+        except Exception as e:
             pass
 
     def copy_unlinked(self):
-        r"""Copies a snippet of the current item plus children to the keyboard."""
+        """Copies a snippet of the current item plus children to the keyboard.
+        """
         import json
 
         data = {
-            u'type': u'item-snippet',
-            u'main-item-name': self.item.name,
-            u'items': [],
+            'type': 'item-snippet',
+            'main-item-name': self.item.name,
+            'items': [],
         }
 
         for item_name in [self.item.name] \
                 + self.experiment.items[self.item.name].children():
             item = self.experiment.items[item_name]
-            data[u'items'].append({
-                u'item-name': item_name,
-                u'item-type': item.item_type,
-                u'script': item.to_string()
+            data['items'].append({
+                'item-name': item_name,
+                'item-type': item.item_type,
+                'script': item.to_string()
             })
 
         text = safe_decode(json.dumps(data))
         QtWidgets.QApplication.clipboard().setText(text)
 
     def copy_linked(self):
-        r"""Copies a linked copy to the keyboard"""
+        """Copies a linked copy to the keyboard"""
         import json
 
         data = {
-            u'type': u'item-existing',
-            u'item-name': self.item.name,
-            u'item-type': self.item.item_type,
-            u'move': False,
-            u'application-id': self.main_window._id(),
-            u'ancestry': self.ancestry()[1],
-            u'structure-item': isinstance(self.item, QtStructureItem),
+            'type': 'item-existing',
+            'item-name': self.item.name,
+            'item-type': self.item.item_type,
+            'move': False,
+            'application-id': self.main_window._id(),
+            'ancestry': self.ancestry()[1],
+            'structure-item': isinstance(self.item, QtStructureItem),
         }
         text = safe_decode(json.dumps(data))
         QtWidgets.QApplication.clipboard().setText(text)
 
     def paste(self):
-        r"""Pastes clipboard data onto the current item, if possible."""
+        """Pastes clipboard data onto the current item, if possible."""
         data = self.clipboard_data()
         if data is None:
             return
-        if data[u'type'] == u'item-existing':
+        if data['type'] == 'item-existing':
             self.treeWidget().drop_event_item_existing(data,
                                                        target_treeitem=self)
         else:
             self.treeWidget().drop_event_item_new(data, target_treeitem=self)
 
     def clipboard_data(self):
-        r"""Gets an item data dictionary from the clipboard.
+        """Gets an item data dictionary from the clipboard.
 
         Returns
         -------
@@ -289,9 +289,9 @@ class TreeItemItem(TreeBaseItem):
         text = QtWidgets.QApplication.clipboard().text()
         try:
             data = json.loads(text)
-        except:
+        except Exception as e:
             return None
-        if drag_and_drop.matches(data, [u'item-snippet', u'item-existing']):
+        if drag_and_drop.matches(data, ['item-snippet', 'item-existing']):
             return data
         return None
     

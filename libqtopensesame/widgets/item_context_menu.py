@@ -22,60 +22,63 @@ from libqtopensesame.misc.config import cfg
 from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 from libqtopensesame.widgets.tree_append_menu import TreeAppendMenu
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'item_context_menu', category=u'core')
+_ = translation_context('item_context_men', category='core')
 
 
 class ItemContextMenu(BaseSubcomponent, QtWidgets.QMenu):
-
-    r"""Provides a basic context menu for an item."""
+    """Provides a basic context menu for an item.
+    
+    Parameters
+    ----------
+    main_window : QtOpenSesame
+    treeitem : TreeItemItem
+    """
+    
     def __init__(self, main_window, treeitem):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        main_window : qtopensesame
-            The main-window object.
-        treeitem : tree_item_item
-            The tree item.
-        """
         super().__init__(main_window)
         self.setup(main_window)
         self.treeitem = treeitem
         self.addAction(self.theme.qicon(self.item.item_icon()), _('Open'),
                        self.item.open_tab)
         self.addSeparator()
-        self.add_action(u"accessories-text-editor", _("Rename"),
-                        self.treeitem.start_rename, cfg.shortcut_rename)
-        if not self.treewidget.overview_mode and self.treeitem.parent() is not None:
-            self.add_action(u"accessories-text-editor",
+        self.add_action(
+            "accessories-text-editor", _("Rename"), self.treeitem.start_rename,
+            cfg.shortcut_rename)
+        if not self.treewidget.overview_mode and \
+                self.treeitem.parent() is not None:
+            self.add_action("accessories-text-editor",
                             _("Edit run-if statement"),
-                            self.treeitem.start_edit_runif, cfg.shortcut_edit_runif)
+                            self.treeitem.start_edit_runif,
+                            cfg.shortcut_edit_runif)
         self.addSeparator()
-        self.add_action(u"edit-copy", _("Copy (unlinked)"),
-                        self.treeitem.copy_unlinked, cfg.shortcut_copy_clipboard_unlinked)
-        self.add_action(u"edit-copy", _("Copy (linked)"),
-                        self.treeitem.copy_linked, cfg.shortcut_copy_clipboard_linked)
+        self.add_action("edit-copy", _("Copy (unlinked)"),
+                        self.treeitem.copy_unlinked,
+                        cfg.shortcut_copy_clipboard_unlinked)
+        self.add_action("edit-copy", _("Copy (linked)"),
+                        self.treeitem.copy_linked,
+                        cfg.shortcut_copy_clipboard_linked)
         if self.treeitem.clipboard_data() is not None:
-            self.add_action(u"edit-paste", _("Paste"),
-                            self.treeitem.paste, cfg.shortcut_paste_clipboard)
+            self.add_action("edit-paste", _("Paste"),
+                            self.treeitem.paste,
+                            cfg.shortcut_paste_clipboard)
         if self.treeitem.is_deletable():
             self.addSeparator()
-            self.add_action(u"list-remove", _("Delete"),
+            self.add_action("list-remove", _("Delete"),
                             self.treeitem.delete, cfg.shortcut_delete)
-            self.add_action(u"list-remove",
+            self.add_action("list-remove",
                             _("Permanently delete all linked copies"),
                             self.treeitem.permanently_delete,
                             cfg.shortcut_permanently_delete)
         elif self.treeitem.is_unused():
             self.addSeparator()
-            self.add_action(u"list-remove", _("Permanently delete"),
+            self.add_action("list-remove", _("Permanently delete"),
                             self.treeitem.permanently_delete,
                             cfg.shortcut_permanently_delete)
         if self.treeitem.has_append_menu():
             # An append menu for sequence items
             menu = TreeAppendMenu(self.treeitem.treeWidget(), self.treeitem)
-            action = QtWidgets.QAction(self.theme.qicon(u'list-add'),
-                                       u'Append item', self)
+            action = QtWidgets.QAction(self.theme.qicon('list-add'),
+                                       'Append item', self)
             action.setMenu(menu)
             self.addSeparator()
             self.addAction(action)
@@ -87,10 +90,10 @@ class ItemContextMenu(BaseSubcomponent, QtWidgets.QMenu):
             self.add_action('media-playback-pause', _('Disable'),
                             self.treeitem.disable)
         self.addSeparator()
-        self.add_action(u"help", _("Help"), self.item.open_help_tab)
+        self.add_action("help", _("Help"), self.item.open_help_tab)
 
     def add_action(self, icon, text, func, shortcut=None):
-        r"""A convenience function for adding menu actions.
+        """A convenience function for adding menu actions.
 
         Parameters
         ----------
