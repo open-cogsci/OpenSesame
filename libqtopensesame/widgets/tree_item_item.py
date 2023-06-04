@@ -230,21 +230,25 @@ class TreeItemItem(TreeBaseItem):
         """
         import json
 
-        data = {
-            'type': 'item-snippet',
-            'main-item-name': self.item.name,
-            'items': [],
-        }
-
+        data = {'type': 'item-snippet',
+                'main-item-name': self.item.name,
+                'items': []}
         for item_name in [self.item.name] \
                 + self.experiment.items[self.item.name].children():
+            # Don't create multiple linked copies of the same object. This
+            # avoids for example, a sequence with two copies of the same item
+            # from being copied as a sequence with two disconnected items. In
+            # general, the user will want to preserve linked copies at this
+            # level.
+            if any(item_name == item_dict['item-name']
+                   for item_dict in data['items']):
+                continue
             item = self.experiment.items[item_name]
             data['items'].append({
                 'item-name': item_name,
                 'item-type': item.item_type,
                 'script': item.to_string()
             })
-
         text = safe_decode(json.dumps(data))
         QtWidgets.QApplication.clipboard().setText(text)
 
