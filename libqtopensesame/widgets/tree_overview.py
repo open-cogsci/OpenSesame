@@ -412,6 +412,7 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
             if e is not None:
                 e.ignore()
             return
+        # Determine the tree item that is dropped onto
         if target_treeitem is None:
             try:
                 pos = e.pos()
@@ -433,22 +434,19 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
                 e.ignore()
             return
         item_name = data['item-name']
-        # Check for recursion when dropping sequences and loops. The target item
-        # may not have the dropped item in its ancestry. However, the target
-        # item may occur multiple times in the experiment, so we need to check
-        # that this constraint holds for all linked copies of the target item.
+        # Check for recursion when dropping sequences and loops. The target
+        # item may not have the dropped item in its ancestry. However, the
+        # target item may occur multiple times in the experiment, so we need
+        # to check that this constraint holds for all linked copies of the
+        # target item.
         if data.get('structure-item', False):
             for linked_target_treeitem in self.findItems(
                     target_treeitem.name,
-                    QtCore.Qt.MatchFixedString | QtCore.Qt.MatchRecursive
-            ):
-                target_item_name, target_item_ancestry = (
+                    QtCore.Qt.MatchFixedString | QtCore.Qt.MatchRecursive):
+                target_item_name, target_item_ancestry = \
                     linked_target_treeitem.ancestry()
-                )
-                if (
-                        target_item_ancestry.startswith('%s:' % item_name)
-                        or '.%s:' % item_name in target_item_ancestry
-                ):
+                if target_item_ancestry.startswith('%s:' % item_name) \
+                        or '.%s:' % item_name in target_item_ancestry:
                     oslogger.debug('Drop ignored: recursion prevented')
                     if e is not None:
                         e.ignore()
@@ -456,10 +454,8 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
             # If the dropped item is in the unused items bin, then we need to
             # check whether the target item is a child.
             if item_name in self.unused_items():
-                if (
-                        target_treeitem.name
-                        in self.experiment.items[item_name].children()
-                ):
+                if target_treeitem.name in \
+                        self.experiment.items[item_name].children():
                     if e is not None:
                         e.ignore()
                     return
@@ -470,37 +466,33 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
             if e is not None:
                 e.ignore()
             return
+        # * The actual drop action starts below *
+        #
         # The logic below is a bit complicated, but works as follows:
         # - If we're in a move action, remove the dragged item from its parent,
         #   and set need_restore so that we know this happened.
         # - Try to drop the dragged item onto the target item
         # - If the drop action was unsuccesful, and if need_restore is set,
         #   re-add the dragged item to its former parent.
+        event_action = 'move_item' if data['move'] else 'linked_copy'
+        self.extension_manager.fire(f'prepare_{event_action}', name=item_name)
         need_restore = False
         if data['move']:
             if parent_item_name not in self.experiment.items:
                 oslogger.debug(
-                    'Don\'t know how to remove item from %s'
-                    % parent_item_name
-                )
+                    f'Don\'t know how to remove item from {parent_item_name}')
             else:
                 self.locked = True
                 need_restore = True
                 self.experiment.items[parent_item_name].remove_child_item(
-                    item_name,
-                    index
-                )
+                    item_name, index)
                 self.locked = False
-        if self.drop_event_item_new(data, e, target_treeitem=target_treeitem):
-            if not data['move']:
-                self.extension_manager.fire('new_linked_copy', name=item_name)
-            return
-        if need_restore:
+        if not self.drop_event_item_new(
+                data, e, target_treeitem=target_treeitem) and need_restore:
             self.experiment.items[parent_item_name].insert_child_item(
-                item_name,
-                index
-            )
+                item_name, index)
             self.experiment.build_item_tree()
+        self.extension_manager.fire(event_action, name=item_name)
 
     def drop_get_item_snippet(self, data):
         """Gets the item and list of newly created items for item-snippet
