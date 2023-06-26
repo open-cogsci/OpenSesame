@@ -21,80 +21,61 @@ from libopensesame.keyboard_response import KeyboardResponse as \
     KeyboardResponseRuntime
 from libqtopensesame.validators import TimeoutValidator
 from libqtopensesame.items.qtplugin import QtPlugin
-from openexp.keyboard import keyboard
+from openexp.keyboard import Keyboard
 from qtpy import QtCore, QtWidgets
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'keyboard_response', category=u'item')
+_ = translation_context('keyboard_response', category='item')
 
 
 class KeyboardResponse(KeyboardResponseRuntime, QtPlugin):
-
     """keyboard_response item GUI"""
-    description = _(u'Collects keyboard responses')
-    help_url = u'manual/response/keyboard'
+    
+    description = _('Collects keyboard responses')
+    help_url = 'manual/response/keyboard'
     lazy_init = True
 
     def __init__(self, name, experiment, string=None):
-        """
-        Constructor
-
-        Arguments:
-        name -- item name
-        experiment -- experiment instance
-
-        Keywords arguments:
-        string -- a definition string (default=None)
-        """
         KeyboardResponseRuntime.__init__(self, name, experiment, string)
         QtPlugin.__init__(self)
 
     def init_edit_widget(self):
-        """Initialize controls"""
         super().init_edit_widget(stretch=True)
         # Use auto-controls for most stuff
         self.add_line_edit_control(
-            var=u'correct_response',
-            label=_(u'Correct response'),
-            info=_(u'Leave empty to use "correct_response"')
-        )
+            var='correct_response',
+            label=_('Correct response'),
+            info=_('Leave empty to use "correct_response"'))
         self.add_line_edit_control(
-            var=u'allowed_responses',
-            label=_(u'Allowed responses'),
-            info=_(u'Separated by semicolons, e.g. "z;/"')
-        )
+            var='allowed_responses',
+            label=_('Allowed responses'),
+            info=_('Separated by semicolons, e.g. "z;/"'))
         self.add_line_edit_control(
-            var=u'timeout',
-            label=_(u'Timeout'),
-            info=_(u'In milliseconds or "infinite"'),
-            validator=TimeoutValidator(self)
-        )
+            var='timeout',
+            label=_('Timeout'),
+            info=_('In milliseconds or "infinite"'),
+            validator=TimeoutValidator(self))
         self.add_combobox_control(
-            var=u'event_type',
-            label=_(u'Event type'),
-            options=[
-                u'keypress',
-                u'keyrelease'
-            ]
-        )
-        self.add_checkbox_control(u'flush', _(u'Flush pending key events'))
+            var='event_type',
+            label=_('Event type'),
+            options=['keypress', 'keyrelease'])
+        self.add_checkbox_control('flush', _('Flush pending key events'))
         # List available keys
         button_list_keys = QtWidgets.QPushButton(
-            self.theme.qicon(u"help-about"),
-            _(u"List available keys")
-        )
+            self.theme.qicon('help-about'),
+            _('List available keys'))
         button_list_keys.setIconSize(QtCore.QSize(16, 16))
         button_list_keys.clicked.connect(self.list_keys)
-        self.add_control(u'', button_list_keys)
+        self.add_control('', button_list_keys)
 
     def list_keys(self):
         """Show a dialog with available key names"""
         my_keyboard = Keyboard(self.experiment)
         keylist = filter(lambda key: key.strip(), my_keyboard.valid_keys())
-        md = u'# ' + _(u'Key names') + u'\n\n' \
-            + _(u'The following key names are valid:') + u'\n\n- ' \
-            + u'\n- '.join([u'`%s`' % key for key in keylist])
-        self.tabwidget.open_markdown(md, icon=u'os-keyboard_response',
-                                     title=_(u'Key names'))
+        md = '# ' + _('Key names') + '\n\n' \
+            + _('The following key names are valid:') + '\n\n- ' \
+            + '\n- '.join(['`%s`' % key for key in keylist])
+        self.tabwidget.open_markdown(md, icon='os-keyboard_response',
+                                     title=_('Key names'))
 
 
 # Alias for backwards compatibility
