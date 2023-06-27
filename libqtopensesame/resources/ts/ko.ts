@@ -239,12 +239,12 @@
 <context>
     <name>core_backend_settings</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="383" />
+        <location filename="../../../translation_tools/translatables.py" line="384" />
         <source>Settings for %s:</source>
         <translation>%s에 대한 설정:</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="384" />
+        <location filename="../../../translation_tools/translatables.py" line="383" />
         <source>Failed to load backend</source>
         <translation>백엔드 로드 실패</translation>
     </message>
@@ -257,17 +257,17 @@
 <context>
     <name>core_base_runner</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="297" />
+        <location filename="../../../translation_tools/translatables.py" line="296" />
         <source>Choose location for logfile (press 'escape' for default location)</source>
         <translation>로그 파일 위치 선택 ('escape'를 눌러 기본 위치 선택)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="296" />
+        <location filename="../../../translation_tools/translatables.py" line="295" />
         <source>Please enter the subject number</source>
         <translation>피실험자 번호를 입력해 주세요</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="295" />
+        <location filename="../../../translation_tools/translatables.py" line="297" />
         <source>Subject number</source>
         <translation>피실험자 번호</translation>
     </message>
@@ -334,72 +334,75 @@
     </message>
 </context>
 <context>
-    <name>core_item_context_menu</name>
+    <name>core_item_context_men</name>
+    <message>
+        <location filename="../../../translation_tools/translatables.py" line="319" />
+        <source>Enable</source>
+        <translation>활성화</translation>
+    </message>
     <message>
         <location filename="../../../translation_tools/translatables.py" line="320" />
         <source>Delete</source>
         <translation>삭제</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="326" />
-        <source>Enable</source>
-        <translation>활성화</translation>
-    </message>
-    <message>
-        <location filename="../../../translation_tools/translatables.py" line="323" />
-        <source>Copy (unlinked)</source>
-        <translation>복사 (연결되지 않음)</translation>
-    </message>
-    <message>
-        <location filename="../../../translation_tools/translatables.py" line="324" />
-        <source>Permanently delete all linked copies</source>
-        <translation>연결된 모든 사본을 영구적으로 삭제하십시오</translation>
-    </message>
-    <message>
-        <location filename="../../../translation_tools/translatables.py" line="328" />
-        <source>Paste</source>
-        <translation>붙여넣기</translation>
-    </message>
-    <message>
-        <location filename="../../../translation_tools/translatables.py" line="330" />
-        <source>Disable</source>
-        <translation>비활성화</translation>
-    </message>
-    <message>
-        <location filename="../../../translation_tools/translatables.py" line="329" />
-        <source>Copy (linked)</source>
-        <translation>복사 (연결됨)</translation>
-    </message>
-    <message>
         <location filename="../../../translation_tools/translatables.py" line="321" />
-        <source>Rename</source>
-        <translation>이름 바꾸기</translation>
-    </message>
-    <message>
-        <location filename="../../../translation_tools/translatables.py" line="325" />
-        <source>Permanently delete</source>
-        <translation>영구적으로 삭제</translation>
-    </message>
-    <message>
-        <location filename="../../../translation_tools/translatables.py" line="322" />
         <source>Open</source>
         <translation>열기</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="319" />
+        <location filename="../../../translation_tools/translatables.py" line="322" />
         <source>Edit run-if statement</source>
         <translation>run-if 문을 수정하세요</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="327" />
+        <location filename="../../../translation_tools/translatables.py" line="323" />
+        <source>Disable</source>
+        <translation>비활성화</translation>
+    </message>
+    <message>
+        <location filename="../../../translation_tools/translatables.py" line="324" />
+        <source>Permanently delete</source>
+        <translation>영구적으로 삭제</translation>
+    </message>
+    <message>
+        <location filename="../../../translation_tools/translatables.py" line="325" />
         <source>Help</source>
         <translation>도움말</translation>
     </message>
+    <message>
+        <location filename="../../../translation_tools/translatables.py" line="326" />
+        <source>Paste</source>
+        <translation>붙여넣기</translation>
+    </message>
+    <message>
+        <location filename="../../../translation_tools/translatables.py" line="327" />
+        <source>Copy (linked)</source>
+        <translation>복사 (연결됨)</translation>
+    </message>
+    <message>
+        <location filename="../../../translation_tools/translatables.py" line="328" />
+        <source>Copy (unlinked)</source>
+        <translation>복사 (연결되지 않음)</translation>
+    </message>
+    <message>
+        <location filename="../../../translation_tools/translatables.py" line="329" />
+        <source>Rename</source>
+        <translation>이름 바꾸기</translation>
+    </message>
+    <message>
+        <location filename="../../../translation_tools/translatables.py" line="330" />
+        <source>Permanently delete all linked copies</source>
+        <translation>연결된 모든 사본을 영구적으로 삭제하십시오</translation>
+    </message>
+</context>
+<context>
+    <name>core_item_context_menu</name>
 </context>
 <context>
     <name>core_item_view_button</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="372" />
+        <location filename="../../../translation_tools/translatables.py" line="373" />
         <source>View script</source>
         <translation>스크립트 보기</translation>
     </message>
@@ -414,7 +417,7 @@
         <translation>뷰 선택</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="373" />
+        <location filename="../../../translation_tools/translatables.py" line="372" />
         <source>Split view</source>
         <translation>분할 뷰</translation>
     </message>
@@ -438,62 +441,62 @@
 <context>
     <name>core_pool_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="413" />
+        <location filename="../../../translation_tools/translatables.py" line="409" />
         <source>Failed to rename "%s" to "%s".</source>
         <translation>"%s"에서 "%s"로 이름 변경 실패.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="408" />
+        <location filename="../../../translation_tools/translatables.py" line="410" />
         <source>Select</source>
         <translation>선택</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="414" />
+        <location filename="../../../translation_tools/translatables.py" line="411" />
         <source>Select file from pool</source>
         <translation>풀에서 파일 선택</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="406" />
+        <location filename="../../../translation_tools/translatables.py" line="417" />
         <source>Remove from pool</source>
         <translation>풀에서 제거</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="410" />
+        <location filename="../../../translation_tools/translatables.py" line="408" />
         <source>There already is a file named '%s' in the file pool</source>
         <translation>파일 풀에 이미 '%s'라는 이름의 파일이 있습니다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="415" />
+        <location filename="../../../translation_tools/translatables.py" line="406" />
         <source>Add files to pool</source>
         <translation>파일 풀에 파일 추가</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="407" />
+        <location filename="../../../translation_tools/translatables.py" line="413" />
         <source>Failed to refresh file pool</source>
         <translation>파일 풀 새로 고침 실패</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="411" />
+        <location filename="../../../translation_tools/translatables.py" line="414" />
         <source>Rename</source>
         <translation>이름 바꾸기</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="416" />
+        <location filename="../../../translation_tools/translatables.py" line="415" />
         <source>Failed to copy %s to file pool</source>
         <translation>파일 풀에 %s 복사 실패</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="417" />
+        <location filename="../../../translation_tools/translatables.py" line="416" />
         <source>And %d more file(s)</source>
         <translation>및 추가 파일 %d 개</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="412" />
+        <location filename="../../../translation_tools/translatables.py" line="407" />
         <source>Open</source>
         <translation>열기</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="409" />
+        <location filename="../../../translation_tools/translatables.py" line="412" />
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
@@ -509,27 +512,27 @@
 <context>
     <name>core_qtautoplugin</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="220" />
+        <location filename="../../../translation_tools/translatables.py" line="219" />
         <source>You must specify "type" for %s controls in info.yaml</source>
         <translation>info.yaml에서 %s 컨트롤에 대한 "type"을 지정해야 합니다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="216" />
+        <location filename="../../../translation_tools/translatables.py" line="217" />
         <source>"%s" is not a valid qtautoplugin control</source>
         <translation>"%s"는 유효한 qtautoplugin 컨트롤이 아닙니다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="217" />
+        <location filename="../../../translation_tools/translatables.py" line="218" />
         <source>You must specify "%s" for %s controls in info.yaml</source>
         <translation>info.yaml에서 %s 컨트롤에 대한 "%s"을 지정해야 합니다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="219" />
+        <location filename="../../../translation_tools/translatables.py" line="220" />
         <source>Name "%s" is already taken in qtautoplugin control</source>
         <translation>이름 "%s"이(가) 이미 qtautoplugin 컨트롤에서 사용 중입니다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="218" />
+        <location filename="../../../translation_tools/translatables.py" line="216" />
         <source>Invalid variable name (%s) specified in %s plugin info</source>
         <translation>%s 플러그인 정보에서 잘못된 변수 이름 (%s)이 지정되었습니다</translation>
     </message>
@@ -537,17 +540,17 @@
 <context>
     <name>core_qtitem</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="210" />
+        <location filename="../../../translation_tools/translatables.py" line="213" />
         <source>Failed to set control '%s': %s</source>
         <translation>제어 '%s' 설정 실패: %s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="209" />
+        <location filename="../../../translation_tools/translatables.py" line="212" />
         <source>Apply</source>
         <translation>적용</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="213" />
+        <location filename="../../../translation_tools/translatables.py" line="210" />
         <source>Default description</source>
         <translation>기본 설명</translation>
     </message>
@@ -557,7 +560,7 @@
         <translation>팝아웃 전환</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="212" />
+        <location filename="../../../translation_tools/translatables.py" line="209" />
         <source>Tell me more about the %s item</source>
         <translation>%s 항목에 대해 자세히 알려주세요</translation>
     </message>
@@ -565,12 +568,12 @@
 <context>
     <name>core_qtitem_store</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="292" />
+        <location filename="../../../translation_tools/translatables.py" line="291" />
         <source>An item name cannot be empty.</source>
         <translation>항목 이름은 비워 둘 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="291" />
+        <location filename="../../../translation_tools/translatables.py" line="292" />
         <source>An item with that name already exists.</source>
         <translation>그 이름을 가진 항목이 이미 있습니다.</translation>
     </message>
@@ -578,12 +581,12 @@
 <context>
     <name>core_qtopensesame</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="129" />
+        <location filename="../../../translation_tools/translatables.py" line="128" />
         <source> [read only]</source>
         <translation> [읽기 전용]</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="130" />
+        <location filename="../../../translation_tools/translatables.py" line="137" />
         <source>Failed to save file. Error: %s</source>
         <translation>파일 저장 실패. 오류: %s</translation>
     </message>
@@ -593,17 +596,17 @@
         <translation>오류</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="137" />
+        <location filename="../../../translation_tools/translatables.py" line="135" />
         <source>Save changes?</source>
         <translation>변경 사항을 저장하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="136" />
+        <location filename="../../../translation_tools/translatables.py" line="138" />
         <source>Save as…</source>
         <translation>다른 이름으로 저장…</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="138" />
+        <location filename="../../../translation_tools/translatables.py" line="136" />
         <source>Open file</source>
         <translation>파일 열기</translation>
     </message>
@@ -613,22 +616,22 @@
         <translation>새로운 실험</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="132" />
+        <location filename="../../../translation_tools/translatables.py" line="133" />
         <source>(No recent files)</source>
         <translation>(최근 파일 없음)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="128" />
+        <location filename="../../../translation_tools/translatables.py" line="129" />
         <source>The following error occured while trying to save:&lt;br/&gt;%s</source>
         <translation>저장 시도 중 다음 오류가 발생했습니다:&lt;br/&gt;%s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="135" />
+        <location filename="../../../translation_tools/translatables.py" line="130" />
         <source>Could not parse script: %s</source>
         <translation>스크립트를 파싱할 수 없습니다: %s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="133" />
+        <location filename="../../../translation_tools/translatables.py" line="132" />
         <source>Your experiment contains unsaved changes. Do you want to save your experiment?</source>
         <translation>당신의 실험에 저장되지 않은 변경 사항이 있습니다. 실험을 저장하시겠습니까?</translation>
     </message>
@@ -636,32 +639,32 @@
 <context>
     <name>core_tab_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="355" />
+        <location filename="../../../translation_tools/translatables.py" line="356" />
         <source>Unused items</source>
         <translation>사용하지 않은 항목</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="358" />
+        <location filename="../../../translation_tools/translatables.py" line="355" />
         <source>Preferences</source>
         <translation>환경설정</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="356" />
+        <location filename="../../../translation_tools/translatables.py" line="360" />
         <source>Back-end settings</source>
         <translation>백엔드 설정</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="360" />
+        <location filename="../../../translation_tools/translatables.py" line="358" />
         <source>General script editor</source>
         <translation>일반 스크립트 편집기</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="357" />
+        <location filename="../../../translation_tools/translatables.py" line="359" />
         <source>General properties</source>
         <translation>일반 속성</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="359" />
+        <location filename="../../../translation_tools/translatables.py" line="357" />
         <source>Help</source>
         <translation>도움말</translation>
     </message>
@@ -669,17 +672,17 @@
 <context>
     <name>core_template</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="283" />
+        <location filename="../../../translation_tools/translatables.py" line="282" />
         <source>Questionnaire template</source>
         <translation>설문지 템플릿</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="282" />
+        <location filename="../../../translation_tools/translatables.py" line="284" />
         <source>Default template</source>
         <translation>기본 템플릿</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="281" />
+        <location filename="../../../translation_tools/translatables.py" line="283" />
         <source>Eye-tracking template</source>
         <translation>아이 트래킹 템플릿</translation>
     </message>
@@ -689,7 +692,7 @@
         <translation>확장 템플릿</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="284" />
+        <location filename="../../../translation_tools/translatables.py" line="281" />
         <source>OSWeb (online) template</source>
         <translation>OSWeb (online) 템플릿</translation>
     </message>
@@ -713,12 +716,12 @@
 <context>
     <name>core_tree_append_menu</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="364" />
+        <location filename="../../../translation_tools/translatables.py" line="363" />
         <source>Append new item</source>
         <translation>새 항목 추가</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="363" />
+        <location filename="../../../translation_tools/translatables.py" line="364" />
         <source>Append existing item (linked)</source>
         <translation>기존 항목 추가 (연결됨)</translation>
     </message>
@@ -734,33 +737,33 @@
 <context>
     <name>core_tree_item_item</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="391" />
+        <location filename="../../../translation_tools/translatables.py" line="392" />
         <source>Permanently delete item</source>
         <translation>항목을 영구적으로 삭제</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="393" />
+        <location filename="../../../translation_tools/translatables.py" line="390" />
         <source>Are you sure you want to permanently delete &lt;b&gt;%s&lt;/b&gt;? All linked copies of &lt;b&gt;%s&lt;/b&gt; will be deleted. You will not be able to undo this.</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="388" />
+        <location filename="../../../translation_tools/translatables.py" line="393" />
         <source>Set as item to run for %s</source>
         <translation>%s에 대해 실행할 항목으로 설정</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="389" />
+        <location filename="../../../translation_tools/translatables.py" line="391" />
         <source>Type: %s
 Description: %s</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="390" />
+        <location filename="../../../translation_tools/translatables.py" line="389" />
         <source>Drop below %s</source>
         <translation>%s 아래로 드롭</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="392" />
+        <location filename="../../../translation_tools/translatables.py" line="388" />
         <source>Insert into %s</source>
         <translation>%s에 삽입</translation>
     </message>
@@ -773,17 +776,17 @@ Description: %s</source>
         <translation>%s 뒤에 삽입</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="348" />
+        <location filename="../../../translation_tools/translatables.py" line="351" />
         <source>Unknown item type: %s</source>
         <translation>알 수 없는 항목 유형: %s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="351" />
+        <location filename="../../../translation_tools/translatables.py" line="349" />
         <source>Item name</source>
         <translation>항목 이름</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="349" />
+        <location filename="../../../translation_tools/translatables.py" line="348" />
         <source>Run if</source>
         <translation>실행 조건</translation>
     </message>
@@ -817,17 +820,17 @@ Description: %s</source>
 <context>
     <name>core_unused_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="402" />
+        <location filename="../../../translation_tools/translatables.py" line="403" />
         <source>Permanently delete items?</source>
         <translation>항목을 영구적으로 삭제하시겠습니까?</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="403" />
+        <location filename="../../../translation_tools/translatables.py" line="401" />
         <source>Are you sure you want to permanently delete all unused items? This action cannot be undone.</source>
         <translation>사용하지 않는 모든 항목을 영구적으로 삭제하시겠습니까? 이 작업은 취소 할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="401" />
+        <location filename="../../../translation_tools/translatables.py" line="402" />
         <source>Permanently delete unused items</source>
         <translation>사용되지 않는 항목을 영구적으로 삭제</translation>
     </message>
@@ -853,12 +856,12 @@ Description: %s</source>
 <context>
     <name>extension_JupyterConsole</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="108" />
+        <location filename="../../../translation_tools/translatables.py" line="106" />
         <source>The {} (inprocess={}) kernel does not support debugging</source>
         <translation>{} (inprocess={}) 커널은 디버깅을 지원하지 않습니다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="106" />
+        <location filename="../../../translation_tools/translatables.py" line="107" />
         <source>Restart kernel</source>
         <translation>커널 재시작</translation>
     </message>
@@ -868,7 +871,7 @@ Description: %s</source>
         <translation>새 콘솔 시작</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="107" />
+        <location filename="../../../translation_tools/translatables.py" line="108" />
         <source>Failed to get workspace variable</source>
         <translation>작업 공간 변수를 얻지 못했습니다</translation>
     </message>
@@ -902,12 +905,12 @@ Description: %s</source>
 <context>
     <name>extension_analytics</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="98" />
+        <location filename="../../../translation_tools/translatables.py" line="97" />
         <source>Got it!</source>
         <translation>알겠습니다!</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="97" />
+        <location filename="../../../translation_tools/translatables.py" line="98" />
         <source>Sends a ping to Google Analytics when OpenSesame is started</source>
         <translation>OpenSesame가 시작될 때 Google Analytics에 핑을 보낸다</translation>
     </message>
@@ -928,12 +931,12 @@ Description: %s</source>
 <context>
     <name>extension_bug_report</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="18" />
+        <location filename="../../../translation_tools/translatables.py" line="19" />
         <source>Oops ...</source>
         <translation>으악 …</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="17" />
+        <location filename="../../../translation_tools/translatables.py" line="18" />
         <source>Bug report sent</source>
         <translation>버그 리포트가 전송되었습니다</translation>
     </message>
@@ -948,7 +951,7 @@ Description: %s</source>
         <translation>버그 리포트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="19" />
+        <location filename="../../../translation_tools/translatables.py" line="17" />
         <source>Sends a bug report when an exception occurs</source>
         <translation>예외가 발생할 때 버그 리포트를 보낸다</translation>
     </message>
@@ -982,12 +985,12 @@ Description: %s</source>
 <context>
     <name>extension_file_handler</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="44" />
+        <location filename="../../../translation_tools/translatables.py" line="43" />
         <source>Opens external files</source>
         <translation>외부 파일을 연다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="43" />
+        <location filename="../../../translation_tools/translatables.py" line="44" />
         <source>Handles opening of external files</source>
         <translation>외부 파일 여는 것을 처리한다</translation>
     </message>
@@ -995,27 +998,27 @@ Description: %s</source>
 <context>
     <name>extension_get_started</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="25" />
+        <location filename="../../../translation_tools/translatables.py" line="23" />
         <source>Get started!</source>
         <translation>시작하십시오!</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="26" />
+        <location filename="../../../translation_tools/translatables.py" line="24" />
         <source>Continue with a recent experiment:</source>
         <translation>최근 실험을 계속 진행하세요:</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="24" />
+        <location filename="../../../translation_tools/translatables.py" line="27" />
         <source>New…</source>
         <translation>새로운…</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="23" />
+        <location filename="../../../translation_tools/translatables.py" line="25" />
         <source>Start a new experiment</source>
         <translation>새로운 실험 시작하기</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="27" />
+        <location filename="../../../translation_tools/translatables.py" line="26" />
         <source>Shows the get-started tab and opens an experiment on startup, if one was
 passed on the command line
 </source>
@@ -1030,22 +1033,22 @@ passed on the command line
         <translation>PsychoPy API</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="32" />
+        <location filename="../../../translation_tools/translatables.py" line="31" />
         <source>Please wait …</source>
         <translation>잠시 기다려주십시오 …</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="30" />
+        <location filename="../../../translation_tools/translatables.py" line="33" />
         <source>Online help</source>
         <translation>온라인 도움말</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="33" />
+        <location filename="../../../translation_tools/translatables.py" line="30" />
         <source>Help</source>
         <translation>도움말</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="31" />
+        <location filename="../../../translation_tools/translatables.py" line="32" />
         <source>Adds a Help menu</source>
         <translation>도움말 메뉴 추가</translation>
     </message>
@@ -1058,12 +1061,12 @@ passed on the command line
         <translation>콘솔 표시</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="112" />
+        <location filename="../../../translation_tools/translatables.py" line="113" />
         <source>Show Jupyter/ IPython console</source>
         <translation>Jupyter/IPython 콘솔 표시하기</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="113" />
+        <location filename="../../../translation_tools/translatables.py" line="112" />
         <source>A Jupyter console</source>
         <translation>주피터 콘솔</translation>
     </message>
@@ -1071,12 +1074,12 @@ passed on the command line
 <context>
     <name>extension_notifications</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="55" />
+        <location filename="../../../translation_tools/translatables.py" line="54" />
         <source>Notifications</source>
         <translation>알림</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="54" />
+        <location filename="../../../translation_tools/translatables.py" line="55" />
         <source>Pretty notifications for OpenSesame</source>
         <translation>예쁜 OpenSesame 알림</translation>
     </message>
@@ -1084,7 +1087,7 @@ passed on the command line
 <context>
     <name>extension_opensesame_4_notifications</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="80" />
+        <location filename="../../../translation_tools/translatables.py" line="79" />
         <source>Notifies the user if an experiment has been created with a different version
 of OpenSesame.
 </source>
@@ -1092,7 +1095,7 @@ of OpenSesame.
 </translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="79" />
+        <location filename="../../../translation_tools/translatables.py" line="80" />
         <source>OpenSesame 4 notifications</source>
         <translation>OpenSesame 4 알림</translation>
     </message>
@@ -1167,17 +1170,17 @@ of OpenSesame.
 <context>
     <name>extension_quick_switcher</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="88" />
+        <location filename="../../../translation_tools/translatables.py" line="87" />
         <source>Search items …</source>
         <translation>항목 검색 …</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="86" />
+        <location filename="../../../translation_tools/translatables.py" line="88" />
         <source>Quickly open items</source>
         <translation>빠르게 항목 열기</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="87" />
+        <location filename="../../../translation_tools/translatables.py" line="86" />
         <source>Quick switcher</source>
         <translation>빠른 스위처</translation>
     </message>
@@ -1214,12 +1217,12 @@ of OpenSesame.
         <translation>탭을 독위젯으로</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="119" />
+        <location filename="../../../translation_tools/translatables.py" line="118" />
         <source>Turn tab into dockwidget</source>
         <translation>탭을 독위젯으로 변환</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="118" />
+        <location filename="../../../translation_tools/translatables.py" line="119" />
         <source>Turns a tab into a dockwidget</source>
         <translation>탭을 독위젯으로 변환함</translation>
     </message>
@@ -1227,7 +1230,7 @@ of OpenSesame.
 <context>
     <name>extension_toolbar_menu</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="39" />
+        <location filename="../../../translation_tools/translatables.py" line="37" />
         <source>Menu</source>
         <translation>메뉴</translation>
     </message>
@@ -1237,12 +1240,12 @@ of OpenSesame.
         <translation>메뉴를 도구 모음에 통합함.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="37" />
+        <location filename="../../../translation_tools/translatables.py" line="40" />
         <source>Integrate menu and toolbar</source>
         <translation>메뉴와 도구 모음 통합</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="40" />
+        <location filename="../../../translation_tools/translatables.py" line="39" />
         <source>Integrates the menu into the toolbar.</source>
         <translation>메뉴를 도구 모음에 통합함.</translation>
     </message>
@@ -1260,17 +1263,17 @@ of OpenSesame.
         <translation>가장 최근 작업 실행 취소</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="70" />
+        <location filename="../../../translation_tools/translatables.py" line="67" />
         <source>Implements undo/ redo</source>
         <translation>실행 취소/다시 하기 구현</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="67" />
+        <location filename="../../../translation_tools/translatables.py" line="69" />
         <source>Redo</source>
         <translation>다시 하기</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="69" />
+        <location filename="../../../translation_tools/translatables.py" line="70" />
         <source>Redo most recently undone action</source>
         <translation>최근에 취소한 작업 다시 실행</translation>
     </message>
@@ -1278,7 +1281,7 @@ of OpenSesame.
 <context>
     <name>extension_variable_inspector</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="122" />
+        <location filename="../../../translation_tools/translatables.py" line="124" />
         <source>Experiment status: &lt;b&gt;%s&lt;/b&gt;</source>
         <translation>실험 상태: &lt;b&gt;%s&lt;/b&gt;</translation>
     </message>
@@ -1288,7 +1291,7 @@ of OpenSesame.
         <translation>변수 검사기</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="124" />
+        <location filename="../../../translation_tools/translatables.py" line="122" />
         <source>Graphical variable inspector</source>
         <translation>그래픽 변수 검사기</translation>
     </message>
@@ -1340,57 +1343,57 @@ of OpenSesame.
 <context>
     <name>item_keyboard_response</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="194" />
+        <location filename="../../../translation_tools/translatables.py" line="198" />
         <source>Leave empty to use "correct_response"</source>
         <translation>"correct_response"를 사용하려면 비워 두세요</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="198" />
+        <location filename="../../../translation_tools/translatables.py" line="197" />
         <source>Flush pending key events</source>
         <translation>보류 중인 키 이벤트 플러시</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="193" />
+        <location filename="../../../translation_tools/translatables.py" line="190" />
         <source>Collects keyboard responses</source>
         <translation>키보드 응답을 수집</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="191" />
+        <location filename="../../../translation_tools/translatables.py" line="193" />
         <source>Correct response</source>
         <translation>정답</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="192" />
+        <location filename="../../../translation_tools/translatables.py" line="201" />
         <source>Allowed responses</source>
         <translation>허용되는 응답</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="201" />
+        <location filename="../../../translation_tools/translatables.py" line="194" />
         <source>Timeout</source>
         <translation>제한 시간</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="199" />
+        <location filename="../../../translation_tools/translatables.py" line="196" />
         <source>Key names</source>
         <translation>키 이름</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="196" />
+        <location filename="../../../translation_tools/translatables.py" line="200" />
         <source>The following key names are valid:</source>
         <translation>다음 키 이름이 유효합니다:</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="197" />
+        <location filename="../../../translation_tools/translatables.py" line="199" />
         <source>In milliseconds or "infinite"</source>
         <translation>밀리초 또는 "무한"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="190" />
+        <location filename="../../../translation_tools/translatables.py" line="191" />
         <source>Event type</source>
         <translation>이벤트 유형</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="200" />
+        <location filename="../../../translation_tools/translatables.py" line="192" />
         <source>Separated by semicolons, e.g. "z;/"</source>
         <translation>세미콜론으로 구분, 예: "z;/"</translation>
     </message>
@@ -1403,12 +1406,12 @@ of OpenSesame.
 <context>
     <name>item_logger</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="257" />
+        <location filename="../../../translation_tools/translatables.py" line="258" />
         <source>You have multiple unlinked loggers. This can lead to messy log files.</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="258" />
+        <location filename="../../../translation_tools/translatables.py" line="257" />
         <source>Logs experimental data</source>
         <translation>실험 데이터 로깅</translation>
     </message>
@@ -1416,22 +1419,22 @@ of OpenSesame.
 <context>
     <name>item_loop</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="223" />
+        <location filename="../../../translation_tools/translatables.py" line="230" />
         <source>Note: Loop data will be read from file</source>
         <translation>참고: 루프 데이터는 파일에서 읽습니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="230" />
+        <location filename="../../../translation_tools/translatables.py" line="235" />
         <source># Preview of loop table</source>
         <translation># 루프 테이블 미리보기</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="225" />
+        <location filename="../../../translation_tools/translatables.py" line="226" />
         <source>once</source>
         <translation>한 번</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="226" />
+        <location filename="../../../translation_tools/translatables.py" line="224" />
         <source>Summary: &lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; order.</source>
         <translation>요약: &lt;b&gt;%s&lt;/b&gt;는 &lt;b&gt;%s&lt;/b&gt; 순서로 &lt;b&gt;%s&lt;/b&gt;에 호출됩니다.</translation>
     </message>
@@ -1441,7 +1444,7 @@ of OpenSesame.
         <translation>경고: 실행할 항목이 지정되지 않았습니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="234" />
+        <location filename="../../../translation_tools/translatables.py" line="232" />
         <source>This means that %s %s and %s %s.</source>
         <translation>이것은 %s %s 및 %s %s를 의미합니다.</translation>
     </message>
@@ -1451,42 +1454,42 @@ of OpenSesame.
         <translation>행 수는 %s입니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="224" />
+        <location filename="../../../translation_tools/translatables.py" line="237" />
         <source>one row occurs</source>
         <translation>한 행 발생</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="233" />
+        <location filename="../../../translation_tools/translatables.py" line="236" />
         <source>two rows occur</source>
         <translation>두 행 발생</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="232" />
+        <location filename="../../../translation_tools/translatables.py" line="231" />
         <source>twice</source>
         <translation>두 번</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="235" />
+        <location filename="../../../translation_tools/translatables.py" line="228" />
         <source>Failed to generate preview.</source>
         <translation>미리보기 생성에 실패했습니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="236" />
+        <location filename="../../../translation_tools/translatables.py" line="234" />
         <source>never</source>
         <translation>결코</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="231" />
+        <location filename="../../../translation_tools/translatables.py" line="233" />
         <source>Note: Order or repeat is unknown or variably defined</source>
         <translation>참고: 순서 또는 반복이 알려지지 않았거나 가변적으로 정의됩니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="228" />
+        <location filename="../../../translation_tools/translatables.py" line="225" />
         <source>All rows occur %s.</source>
         <translation>모든 행이 %s에서 발생합니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="237" />
+        <location filename="../../../translation_tools/translatables.py" line="223" />
         <source>Repeatedly runs another item</source>
         <translation>다른 항목을 반복적으로 실행</translation>
     </message>
@@ -1494,17 +1497,17 @@ of OpenSesame.
 <context>
     <name>item_mouse_response</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="245" />
+        <location filename="../../../translation_tools/translatables.py" line="246" />
         <source>Leave empty to use "correct_response"</source>
         <translation>"correct_response"를 사용하려면 비워 두세요</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="248" />
+        <location filename="../../../translation_tools/translatables.py" line="250" />
         <source>Linked sketchpad</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="243" />
+        <location filename="../../../translation_tools/translatables.py" line="249" />
         <source>Flush pending mouse clicks</source>
         <translation>보류 중인 마우스 클릭 플러시</translation>
     </message>
@@ -1514,27 +1517,27 @@ of OpenSesame.
         <translation>정답</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="244" />
+        <location filename="../../../translation_tools/translatables.py" line="251" />
         <source>Allowed responses</source>
         <translation>허용되는 응답</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="249" />
+        <location filename="../../../translation_tools/translatables.py" line="242" />
         <source>Timeout</source>
         <translation>제한 시간</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="251" />
+        <location filename="../../../translation_tools/translatables.py" line="248" />
         <source>Elements define regions of interest</source>
         <translation>요소는 관심 영역을 정의합니다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="242" />
+        <location filename="../../../translation_tools/translatables.py" line="243" />
         <source>Collects mouse responses</source>
         <translation>마우스 응답 수집</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="250" />
+        <location filename="../../../translation_tools/translatables.py" line="245" />
         <source>Visible mouse cursor</source>
         <translation>보이는 마우스 커서</translation>
     </message>
@@ -1549,7 +1552,7 @@ of OpenSesame.
         <translation>이벤트 유형</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="246" />
+        <location filename="../../../translation_tools/translatables.py" line="244" />
         <source>Separated by semicolons, e.g. "left_button;right_button"</source>
         <translation>세미콜론으로 구분됨, 예: "left_button;right_button"</translation>
     </message>
@@ -1557,67 +1560,67 @@ of OpenSesame.
 <context>
     <name>item_sampler</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="187" />
+        <location filename="../../../translation_tools/translatables.py" line="178" />
         <source>Sound file</source>
         <translation>사운드 파일</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="177" />
+        <location filename="../../../translation_tools/translatables.py" line="179" />
         <source>Volume</source>
         <translation>볼륨</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="175" />
+        <location filename="../../../translation_tools/translatables.py" line="182" />
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="186" />
+        <location filename="../../../translation_tools/translatables.py" line="180" />
         <source>Panning</source>
         <translation>패닝</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="180" />
+        <location filename="../../../translation_tools/translatables.py" line="187" />
         <source>Stop after</source>
         <translation>이후 중지</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="182" />
+        <location filename="../../../translation_tools/translatables.py" line="176" />
         <source>Positive values toward the right; "left" or "right" for full panning</source>
         <translation>오른쪽으로 양수 값 ; 완전한 패닝에 "left" 또는 "right"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="179" />
+        <location filename="../../../translation_tools/translatables.py" line="175" />
         <source>Pitch</source>
         <translation>피치</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="181" />
+        <location filename="../../../translation_tools/translatables.py" line="183" />
         <source>In milliseconds, "sound", "keypress", or "mouseclick"</source>
         <translation>밀리초로, "sound", "keypress" 또는 "mouseclick"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="184" />
+        <location filename="../../../translation_tools/translatables.py" line="186" />
         <source>In .ogg or .wav format</source>
         <translation>.ogg 또는 .wav 형식으로</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="176" />
+        <location filename="../../../translation_tools/translatables.py" line="181" />
         <source> x original</source>
         <translation> x 원본</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="183" />
+        <location filename="../../../translation_tools/translatables.py" line="185" />
         <source>Fade in</source>
         <translation>페이드 인</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="178" />
+        <location filename="../../../translation_tools/translatables.py" line="177" />
         <source>Duration</source>
         <translation>기간</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="185" />
+        <location filename="../../../translation_tools/translatables.py" line="184" />
         <source>Plays a sound file in .wav or .ogg format</source>
         <translation>.wav 또는 .ogg 형식의 사운드 파일 재생</translation>
     </message>
@@ -1625,22 +1628,22 @@ of OpenSesame.
 <context>
     <name>item_sequence</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="171" />
+        <location filename="../../../translation_tools/translatables.py" line="172" />
         <source>Sequence contains non-existing item: %s</source>
         <translation>존재하지 않는 항목을 포함하는 시퀀스: %s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="169" />
+        <location filename="../../../translation_tools/translatables.py" line="170" />
         <source>Runs a number of items in sequence</source>
         <translation>여러 항목을 순차적으로 실행</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="172" />
+        <location filename="../../../translation_tools/translatables.py" line="171" />
         <source>Flush pending key presses at sequence start</source>
         <translation>시퀀스 시작 시 보류 중인 키 프레스 플러시</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="170" />
+        <location filename="../../../translation_tools/translatables.py" line="169" />
         <source>&lt;b&gt;Important&lt;/b&gt;: A sequence has &lt;a href="http://osdoc.cogsci.nl/usage/prepare-run"&gt;a variable preparation time&lt;/a&gt;.</source>
         <translation>&lt;b&gt;중요&lt;/b&gt;: 시퀀스에는 &lt;a href="http://osdoc.cogsci.nl/usage/prepare-run"&gt;가변적인 준비 시간&lt;/a&gt;이 있습니다.</translation>
     </message>
@@ -1648,132 +1651,132 @@ of OpenSesame.
 <context>
     <name>item_sketchpad</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="162" />
+        <location filename="../../../translation_tools/translatables.py" line="165" />
         <source>Some properties of a noise patch are unknown or variably defined, using fallback image</source>
         <translation>잡음 패치의 일부 속성이 알려지지 않거나 변할 수 있게 정의되어 있으며, 폴백 이미지를 사용합니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="161" />
+        <location filename="../../../translation_tools/translatables.py" line="160" />
         <source>Penwidth "%s" is unknown or variably defined, using 1</source>
         <translation>펜두께 "%s"는 알 수 없거나 가변적으로 정의되어 1 사용</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="147" />
+        <location filename="../../../translation_tools/translatables.py" line="158" />
         <source>Width "%s" is unknown or variably defined, using 100</source>
         <translation>너비 "%s"은(는) 알 수 없거나 가변적으로 정의되어 있어 100을 사용합니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="164" />
+        <location filename="../../../translation_tools/translatables.py" line="144" />
         <source>Enter text</source>
         <translation>텍스트 입력</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="143" />
+        <location filename="../../../translation_tools/translatables.py" line="166" />
         <source>Lower to bottom</source>
         <translation>뒤로 내리기</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="149" />
+        <location filename="../../../translation_tools/translatables.py" line="148" />
         <source>Please enter a text for the textline</source>
         <translation>텍스트 줄에 입력할 텍스트를 입력하세요</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="163" />
+        <location filename="../../../translation_tools/translatables.py" line="145" />
         <source>Rotation "%s" is unknown or variably defined, using 0</source>
         <translation>회전 "%s"은 알 수 없거나 가변적으로 정의되어 0 사용</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="144" />
+        <location filename="../../../translation_tools/translatables.py" line="154" />
         <source>Proportion "%s" is unknown or variably defined, using .5</source>
         <translation>비율 "%s"이(가) 알 수 없거나 가변적으로 정의되어 .5을 사용</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="157" />
+        <location filename="../../../translation_tools/translatables.py" line="162" />
         <source>Color "%s" is unknown or variably defined, using placeholder color</source>
         <translation>색상 "%s"은 알 수 없거나 가변적으로 정의되어 자리 표시자 색상 사용</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="166" />
+        <location filename="../../../translation_tools/translatables.py" line="142" />
         <source>Y coordinate "%s" is unknown or variably defined, using display center</source>
         <translation>Y 좌표 "%s"는 알 수 없거나 가변적으로 정의되어 디스플레이 중앙 사용</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="160" />
+        <location filename="../../../translation_tools/translatables.py" line="150" />
         <source>Scale "%s" is unknown or variably defined, using 1</source>
         <translation>스케일 "%s"은 알 수 없거나 가변적으로 정의되어 1 사용</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="159" />
+        <location filename="../../../translation_tools/translatables.py" line="153" />
         <source>X coordinate "%s" is unknown or variably defined, using display center</source>
         <translation>X 좌표 "%s"는 알 수 없거나 가변적으로 정의되어 디스플레이 중앙 사용</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="141" />
+        <location filename="../../../translation_tools/translatables.py" line="161" />
         <source>Specify polar coordinates</source>
         <translation>극 좌표 지정</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="151" />
+        <location filename="../../../translation_tools/translatables.py" line="159" />
         <source>Fill "%s" is unknown or variably defined, assuming filled</source>
         <translation>색상 "%s"은 알 수 없거나 가변적으로 정의되어 채워진 것으로 추정</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="156" />
+        <location filename="../../../translation_tools/translatables.py" line="141" />
         <source>Delete</source>
         <translation>삭제</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="146" />
+        <location filename="../../../translation_tools/translatables.py" line="151" />
         <source>Displays stimuli</source>
         <translation>자극 표시</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="165" />
+        <location filename="../../../translation_tools/translatables.py" line="155" />
         <source>Height "%s" is unknown or variably defined, using 100</source>
         <translation>높이 "%s"이(가) 알 수 없거나 가변적으로 정의되어 있어 100을 사용합니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="142" />
+        <location filename="../../../translation_tools/translatables.py" line="149" />
         <source>Element script</source>
         <translation>요소 스크립트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="148" />
+        <location filename="../../../translation_tools/translatables.py" line="163" />
         <source>Draw %s element</source>
         <translation>%s 요소 그리기</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="150" />
+        <location filename="../../../translation_tools/translatables.py" line="156" />
         <source>Fixdot style "%s" is unknown or variably defined</source>
         <translation>Fixdot 스타일 "%s"이(가) 알 수 없거나 가변적으로 정의되었습니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="158" />
+        <location filename="../../../translation_tools/translatables.py" line="152" />
         <source>Image name "%s" is unknown or variably defined, using fallback image</source>
         <translation>이미지 이름 "%s"이 알 수 없거나 가변적으로 정의되어 기본 이미지 사용</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="154" />
+        <location filename="../../../translation_tools/translatables.py" line="146" />
         <source>Some properties of a Gabor patch are unknown or variably defined, using fallback image</source>
         <translation>Gabor 패치의 일부 속성이 알려지지 않거나 변할 수 있게 정의되어 있으며, 폴백 이미지를 사용합니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="152" />
+        <location filename="../../../translation_tools/translatables.py" line="143" />
         <source>Radius "%s" is unknown or variably defined, using 50</source>
         <translation>반지름 "%s"이(가) 알 수 없거나 가변적으로 정의되어 있어 50을 사용합니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="153" />
+        <location filename="../../../translation_tools/translatables.py" line="147" />
         <source>Font size "%s" is invalid or variably defined, using 18</source>
         <translation>글꼴 크기 "%s"이(가) 잘못되었거나 가변적으로 정의되어 18을 사용합니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="155" />
+        <location filename="../../../translation_tools/translatables.py" line="164" />
         <source>Raise to front</source>
         <translation>앞으로 올리기</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="145" />
+        <location filename="../../../translation_tools/translatables.py" line="157" />
         <source>Edit script</source>
         <translation>스크립트 수정</translation>
     </message>
@@ -1781,72 +1784,72 @@ of OpenSesame.
 <context>
     <name>item_synth</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="272" />
+        <location filename="../../../translation_tools/translatables.py" line="270" />
         <source> x maximum</source>
         <translation> x 최대</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="263" />
+        <location filename="../../../translation_tools/translatables.py" line="267" />
         <source>Volume</source>
         <translation>볼륨</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="261" />
+        <location filename="../../../translation_tools/translatables.py" line="274" />
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="273" />
+        <location filename="../../../translation_tools/translatables.py" line="269" />
         <source>Panning</source>
         <translation>패닝</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="270" />
+        <location filename="../../../translation_tools/translatables.py" line="261" />
         <source>Attack</source>
         <translation>어택</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="269" />
+        <location filename="../../../translation_tools/translatables.py" line="265" />
         <source>Positive values toward the right; "left" or "right" for full panning</source>
         <translation>오른쪽으로 양수 값 ; 완전한 패닝에 "left" 또는 "right"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="266" />
+        <location filename="../../../translation_tools/translatables.py" line="272" />
         <source>In milliseconds, "sound", "keypress", or "mouseclick"</source>
         <translation>밀리초로, "sound", "keypress" 또는 "mouseclick"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="264" />
+        <location filename="../../../translation_tools/translatables.py" line="271" />
         <source>Length</source>
         <translation>길이</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="262" />
+        <location filename="../../../translation_tools/translatables.py" line="266" />
         <source>Duration</source>
         <translation>기간</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="265" />
+        <location filename="../../../translation_tools/translatables.py" line="263" />
         <source>Decay</source>
         <translation>감쇠</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="274" />
+        <location filename="../../../translation_tools/translatables.py" line="264" />
         <source>A basic sound synthesizer</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="268" />
+        <location filename="../../../translation_tools/translatables.py" line="262" />
         <source>Waveform</source>
         <translation>파형</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="267" />
+        <location filename="../../../translation_tools/translatables.py" line="268" />
         <source>In Hertz or as note, e.g. "A1"</source>
         <translation>헤르츠 또는 음표로, 예를 들어 "A1"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="271" />
+        <location filename="../../../translation_tools/translatables.py" line="273" />
         <source>Frequency</source>
         <translation>주파수</translation>
     </message>
@@ -1854,47 +1857,47 @@ of OpenSesame.
 <context>
     <name>plugin_advanced_delay</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="426" />
+        <location filename="../../../translation_tools/translatables.py" line="425" />
         <source>The average duration in milliseconds</source>
         <translation>밀리 초 단위의 평균 지속 시간</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="420" />
+        <location filename="../../../translation_tools/translatables.py" line="428" />
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="424" />
+        <location filename="../../../translation_tools/translatables.py" line="423" />
         <source>A random delay sampled from either a normal or uniform distribution</source>
         <translation>정규 또는 균일한 분포에서 추출된 무작위 지연</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="425" />
+        <location filename="../../../translation_tools/translatables.py" line="427" />
         <source>Jitter mode</source>
         <translation>지터 모드</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="422" />
+        <location filename="../../../translation_tools/translatables.py" line="426" />
         <source>The mode for determining the actual duration (see Help)</source>
         <translation>실제 지속 시간을 결정하는 모드 (도움말 참조)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="421" />
+        <location filename="../../../translation_tools/translatables.py" line="422" />
         <source>Duration</source>
         <translation>기간</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="428" />
+        <location filename="../../../translation_tools/translatables.py" line="424" />
         <source>The jitter of the actual duration in milliseconds (depends on Jitter mode)</source>
         <translation>실제 지속 시간의 지터(밀리 초 단위) (지터 모드에 따라 다름)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="427" />
+        <location filename="../../../translation_tools/translatables.py" line="421" />
         <source>Jitter</source>
         <translation>지터</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="423" />
+        <location filename="../../../translation_tools/translatables.py" line="420" />
         <source>Flow control</source>
         <translation>플로우 제어</translation>
     </message>
@@ -1933,72 +1936,72 @@ of OpenSesame.
 <context>
     <name>plugin_form_consent</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="531" />
+        <location filename="../../../translation_tools/translatables.py" line="528" />
         <source>Text to display in the form body</source>
         <translation>양식 본문에 표시할 텍스트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="522" />
+        <location filename="../../../translation_tools/translatables.py" line="520" />
         <source>Decline-button text</source>
         <translation>거절 버튼 텍스트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="529" />
+        <location filename="../../../translation_tools/translatables.py" line="533" />
         <source>Text for the decline button</source>
         <translation>거절 버튼의 텍스트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="527" />
+        <location filename="../../../translation_tools/translatables.py" line="530" />
         <source>Title to appear above the form text</source>
         <translation>양식 텍스트 위에 나타낼 제목</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="530" />
+        <location filename="../../../translation_tools/translatables.py" line="531" />
         <source>A simple consent form</source>
         <translation>간단한 동의서 양식</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="523" />
+        <location filename="../../../translation_tools/translatables.py" line="526" />
         <source>Form title</source>
         <translation>양식 제목</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="528" />
+        <location filename="../../../translation_tools/translatables.py" line="532" />
         <source>Accept-button text</source>
         <translation>수락 버튼 텍스트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="525" />
+        <location filename="../../../translation_tools/translatables.py" line="529" />
         <source>Message on decline</source>
         <translation>거절시 메시지</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="532" />
+        <location filename="../../../translation_tools/translatables.py" line="524" />
         <source>Text for the accept button</source>
         <translation>수락 버튼의 텍스트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="521" />
+        <location filename="../../../translation_tools/translatables.py" line="523" />
         <source>Checkbox text</source>
         <translation>체크박스 텍스트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="533" />
+        <location filename="../../../translation_tools/translatables.py" line="521" />
         <source>Consent form text</source>
         <translation>동의서 양식 텍스트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="526" />
+        <location filename="../../../translation_tools/translatables.py" line="522" />
         <source>Form</source>
         <translation>양식</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="524" />
+        <location filename="../../../translation_tools/translatables.py" line="527" />
         <source>A message shown when the participant declines</source>
         <translation>참가자가 거절할 때 표시되는 메시지</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="520" />
+        <location filename="../../../translation_tools/translatables.py" line="525" />
         <source>Text for the checkbox</source>
         <translation>체크박스에 대한 텍스트</translation>
     </message>
@@ -2006,12 +2009,12 @@ of OpenSesame.
 <context>
     <name>plugin_form_multiple_choice</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="589" />
+        <location filename="../../../translation_tools/translatables.py" line="592" />
         <source>A simple multiple choice item</source>
         <translation>간단한 객관식 문항</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="582" />
+        <location filename="../../../translation_tools/translatables.py" line="590" />
         <source>Form title</source>
         <translation>양식 제목</translation>
     </message>
@@ -2021,17 +2024,17 @@ of OpenSesame.
         <translation>응답 옵션</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="591" />
+        <location filename="../../../translation_tools/translatables.py" line="593" />
         <source>Response variable</source>
         <translation>응답 변수</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="593" />
+        <location filename="../../../translation_tools/translatables.py" line="582" />
         <source>Response options (different options on different lines)</source>
         <translation>응답 옵션</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="592" />
+        <location filename="../../../translation_tools/translatables.py" line="585" />
         <source>Your question</source>
         <translation>당신의 질문</translation>
     </message>
@@ -2041,22 +2044,22 @@ of OpenSesame.
         <translation>응답 시간 초과</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="584" />
+        <location filename="../../../translation_tools/translatables.py" line="589" />
         <source>Button text</source>
         <translation>버튼 텍스트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="581" />
+        <location filename="../../../translation_tools/translatables.py" line="588" />
         <source>Text for the button to advance to the next item</source>
         <translation>다음</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="590" />
+        <location filename="../../../translation_tools/translatables.py" line="581" />
         <source>Allow multiple options to be selected</source>
         <translation>여러 옵션 선택 허용</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="588" />
+        <location filename="../../../translation_tools/translatables.py" line="584" />
         <source>Timeout</source>
         <translation>제한 시간</translation>
     </message>
@@ -2066,7 +2069,7 @@ of OpenSesame.
         <translation>양식</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="585" />
+        <location filename="../../../translation_tools/translatables.py" line="591" />
         <source>Advance immediately to the next item once a selection has been made</source>
         <translation>선택이 완료되면 즉시 다음 항목으로 이동</translation>
     </message>
@@ -2074,42 +2077,42 @@ of OpenSesame.
 <context>
     <name>plugin_form_text_display</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="560" />
+        <location filename="../../../translation_tools/translatables.py" line="557" />
         <source>Ok-button text</source>
         <translation>확인 버튼 텍스트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="562" />
+        <location filename="../../../translation_tools/translatables.py" line="561" />
         <source>Main form text</source>
         <translation>주요 양식 텍스트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="557" />
+        <location filename="../../../translation_tools/translatables.py" line="556" />
         <source>Text for the Ok button</source>
         <translation>확인</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="561" />
+        <location filename="../../../translation_tools/translatables.py" line="560" />
         <source>Text to display in the form body</source>
         <translation>양식 본문에 표시할 텍스트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="559" />
+        <location filename="../../../translation_tools/translatables.py" line="562" />
         <source>Title to appear above the form text</source>
         <translation>양식 텍스트 위에 나타낼 제목</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="556" />
+        <location filename="../../../translation_tools/translatables.py" line="559" />
         <source>Form title</source>
         <translation>양식 제목</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="555" />
+        <location filename="../../../translation_tools/translatables.py" line="558" />
         <source>A simple text display form</source>
         <translation>간단한 텍스트 표시 양식</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="558" />
+        <location filename="../../../translation_tools/translatables.py" line="555" />
         <source>Form</source>
         <translation>양식</translation>
     </message>
@@ -2117,17 +2120,17 @@ of OpenSesame.
 <context>
     <name>plugin_form_text_input</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="485" />
+        <location filename="../../../translation_tools/translatables.py" line="489" />
         <source>Title to appear above the form text</source>
         <translation>양식 텍스트 위에 나타낼 제목</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="483" />
+        <location filename="../../../translation_tools/translatables.py" line="485" />
         <source>Form title</source>
         <translation>양식 제목</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="486" />
+        <location filename="../../../translation_tools/translatables.py" line="488" />
         <source>The experimental variable to save the response in</source>
         <translation>응답을 저장할 실험 변수</translation>
     </message>
@@ -2137,32 +2140,32 @@ of OpenSesame.
         <translation>응답 변수</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="491" />
+        <location filename="../../../translation_tools/translatables.py" line="484" />
         <source>Your question</source>
         <translation>당신의 질문</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="482" />
+        <location filename="../../../translation_tools/translatables.py" line="487" />
         <source>A simple text input form</source>
         <translation>간단한 텍스트 입력 양식</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="489" />
+        <location filename="../../../translation_tools/translatables.py" line="486" />
         <source>A question text</source>
         <translation>질문 텍스트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="487" />
+        <location filename="../../../translation_tools/translatables.py" line="491" />
         <source>A response timeout</source>
         <translation>응답 시간 초과</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="488" />
+        <location filename="../../../translation_tools/translatables.py" line="483" />
         <source>Timeout</source>
         <translation>제한 시간</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="484" />
+        <location filename="../../../translation_tools/translatables.py" line="482" />
         <source>Form</source>
         <translation>양식</translation>
     </message>
@@ -2170,57 +2173,57 @@ of OpenSesame.
 <context>
     <name>plugin_joystick</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="431" />
+        <location filename="../../../translation_tools/translatables.py" line="438" />
         <source>Identifies the joystick, in case there are multiple joysticks</source>
         <translation>다중 조이스틱이 있을 경우 조이스틱을 식별합니다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="436" />
+        <location filename="../../../translation_tools/translatables.py" line="433" />
         <source>Expecting a comma-separated list of numbers between 1 and the number of joybuttons</source>
         <translation>1과 joybuttons 수 사이의 쉼표로 구분된 숫자 목록을 기다리는 중</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="435" />
+        <location filename="../../../translation_tools/translatables.py" line="441" />
         <source>Enable dummy mode to test the experiment using a keyboard</source>
         <translation>키보드를 사용하여 실험을 테스트하기 위해 더미 모드 활성화</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="437" />
+        <location filename="../../../translation_tools/translatables.py" line="439" />
         <source>Collects input from a joystick or gamepad</source>
         <translation>조이스틱이나 게임패드에서 입력을 수집</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="441" />
+        <location filename="../../../translation_tools/translatables.py" line="436" />
         <source>Device nr.</source>
         <translation>장치 번호</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="440" />
+        <location filename="../../../translation_tools/translatables.py" line="431" />
         <source>Expecting a value in milliseconds of 'infinite'</source>
         <translation>밀리초 단위의 '무한'값이 예상됩니다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="434" />
+        <location filename="../../../translation_tools/translatables.py" line="440" />
         <source>Allowed responses</source>
         <translation>허용되는 응답</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="439" />
+        <location filename="../../../translation_tools/translatables.py" line="437" />
         <source>Timeout</source>
         <translation>제한 시간</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="433" />
+        <location filename="../../../translation_tools/translatables.py" line="432" />
         <source>Response collection</source>
         <translation>응답 수집</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="438" />
+        <location filename="../../../translation_tools/translatables.py" line="435" />
         <source>Dummy mode (use keyboard instead of joystick)</source>
         <translation>더미 모드 (조이스틱 대신 키보드 사용)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="432" />
+        <location filename="../../../translation_tools/translatables.py" line="434" />
         <source>Correct response</source>
         <translation>정답</translation>
     </message>
@@ -2228,7 +2231,7 @@ of OpenSesame.
 <context>
     <name>plugin_notepad</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="574" />
+        <location filename="../../../translation_tools/translatables.py" line="578" />
         <source>A simple notepad to document your experiment. This plug-in does nothing.</source>
         <translation>실험을 문서화하기 위한 간단한 메모장입니다. 이 플러그인은 아무 것도 하지 않습니다.</translation>
     </message>
@@ -2238,17 +2241,17 @@ of OpenSesame.
         <translation>없음</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="575" />
+        <location filename="../../../translation_tools/translatables.py" line="574" />
         <source>Miscellaneous</source>
         <translation>기타</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="577" />
+        <location filename="../../../translation_tools/translatables.py" line="575" />
         <source>Note</source>
         <translation>노트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="578" />
+        <location filename="../../../translation_tools/translatables.py" line="577" />
         <source>Type your note here</source>
         <translation>여기에 노트를 작성하세요</translation>
     </message>
@@ -2256,27 +2259,27 @@ of OpenSesame.
 <context>
     <name>plugin_quest_staircase_init</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="504" />
+        <location filename="../../../translation_tools/translatables.py" line="499" />
         <source>Name</source>
         <translation>이름</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="494" />
+        <location filename="../../../translation_tools/translatables.py" line="508" />
         <source>Initializes a new Quest staircase procedure</source>
         <translation>새로운 Quest 계단 절차를 초기화합니다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="505" />
+        <location filename="../../../translation_tools/translatables.py" line="507" />
         <source>β</source>
         <translation>β</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="511" />
+        <location filename="../../../translation_tools/translatables.py" line="496" />
         <source>Estimated threshold</source>
         <translation>추정 임계값</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="510" />
+        <location filename="../../../translation_tools/translatables.py" line="498" />
         <source>Staircase</source>
         <translation>계단</translation>
     </message>
@@ -2286,27 +2289,27 @@ of OpenSesame.
         <translation>다양한 이름을 사용하여 독립적인 여러 Quest 절차를 실행하십시오</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="508" />
+        <location filename="../../../translation_tools/translatables.py" line="506" />
         <source>Std. dev. of estimated threshold</source>
         <translation>추정 임계값의 표준 편차</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="496" />
+        <location filename="../../../translation_tools/translatables.py" line="511" />
         <source>Minimum test value</source>
         <translation>최소 테스트 값</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="497" />
+        <location filename="../../../translation_tools/translatables.py" line="494" />
         <source>Used for initial test value</source>
         <translation>초기 테스트 값에 사용됩니다.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="506" />
+        <location filename="../../../translation_tools/translatables.py" line="501" />
         <source>Proportion of random responses at maximum stimulus intensity</source>
         <translation>최대 자극 강도에서 무작위 응답 비율</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="495" />
+        <location filename="../../../translation_tools/translatables.py" line="509" />
         <source>Desired proportion of correct responses</source>
         <translation>정답 비율</translation>
     </message>
@@ -2316,37 +2319,37 @@ of OpenSesame.
         <translation>실험 변수에 대한 테스트 값</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="500" />
+        <location filename="../../../translation_tools/translatables.py" line="495" />
         <source>Maximum test value</source>
         <translation>최대 테스트 값</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="498" />
+        <location filename="../../../translation_tools/translatables.py" line="510" />
         <source>Steepness of the Weibull psychometric function</source>
         <translation>와이불 심리계량 함수의 경사</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="507" />
+        <location filename="../../../translation_tools/translatables.py" line="503" />
         <source>Method to determine optimal test value</source>
         <translation>최적의 테스트 값 결정 방법</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="501" />
+        <location filename="../../../translation_tools/translatables.py" line="504" />
         <source>Target</source>
         <translation>목표</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="503" />
+        <location filename="../../../translation_tools/translatables.py" line="500" />
         <source>Method</source>
         <translation>방법</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="509" />
+        <location filename="../../../translation_tools/translatables.py" line="497" />
         <source>Chance level (γ)</source>
         <translation>기회 수준 (γ)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="499" />
+        <location filename="../../../translation_tools/translatables.py" line="505" />
         <source>δ</source>
         <translation>δ</translation>
     </message>
@@ -2359,17 +2362,17 @@ of OpenSesame.
         <translation>계단</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="568" />
+        <location filename="../../../translation_tools/translatables.py" line="565" />
         <source>Updates the Quest test value based on a response</source>
         <translation>응답을 기반으로 Quest 테스트 값 업데이트</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="566" />
+        <location filename="../../../translation_tools/translatables.py" line="569" />
         <source>Should match a name specified in a quest_staircase_init</source>
         <translation>quest_staircase_init에서 지정한 이름과 일치해야 합니다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="569" />
+        <location filename="../../../translation_tools/translatables.py" line="566" />
         <source>Responses should be coded as 0 (incorrect) or 1 (correct)</source>
         <translation>응답은 0 (부정확함) 또는 1 (정확함)으로 인코딩해야 합니다</translation>
     </message>
@@ -2379,7 +2382,7 @@ of OpenSesame.
         <translation>응답 변수</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="565" />
+        <location filename="../../../translation_tools/translatables.py" line="568" />
         <source>Name</source>
         <translation>이름</translation>
     </message>
@@ -2387,22 +2390,22 @@ of OpenSesame.
 <context>
     <name>plugin_repeat_cycle</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="460" />
+        <location filename="../../../translation_tools/translatables.py" line="458" />
         <source>Repeat if</source>
         <translation>반복</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="458" />
+        <location filename="../../../translation_tools/translatables.py" line="460" />
         <source>A conditional expression that determines when the cycle is repeated</source>
         <translation>반복 주기를 결정하는 조건식</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="457" />
+        <location filename="../../../translation_tools/translatables.py" line="459" />
         <source>Optionally repeat a cycle from a loop</source>
         <translation>루프에서 선택적으로 사이클 반복</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="459" />
+        <location filename="../../../translation_tools/translatables.py" line="457" />
         <source>Flow control</source>
         <translation>플로우 제어</translation>
     </message>
@@ -2415,12 +2418,12 @@ of OpenSesame.
         <translation>응답 수집</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="551" />
+        <location filename="../../../translation_tools/translatables.py" line="552" />
         <source>This plug-in has no settings</source>
         <translation>이 플러그인에는 설정이 없습니다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="552" />
+        <location filename="../../../translation_tools/translatables.py" line="551" />
         <source>A very simple plug-in to reset feedback variables</source>
         <translation>피드백 변수를 재설정하는 매우 간단한 플러그인</translation>
     </message>
@@ -2428,89 +2431,89 @@ of OpenSesame.
 <context>
     <name>plugin_srbox</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="472" />
+        <location filename="../../../translation_tools/translatables.py" line="463" />
         <source>Expecting a value in milliseconds or 'infinite'</source>
         <translation>밀리초 또는 '무한' 값 기대</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="465" />
+        <location filename="../../../translation_tools/translatables.py" line="468" />
         <source>Correct response</source>
         <translation>정답</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="463" />
+        <location filename="../../../translation_tools/translatables.py" line="476" />
         <source>Expecting a valid device name. Leave empty for autodetect.</source>
         <translation>유효한 장치 이름을 기대함. 자동 감지를 위해 비워 두십시오.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="476" />
+        <location filename="../../../translation_tools/translatables.py" line="469" />
         <source>Expecting a semicolon-separated list of button numbers, e.g., 1;3;4</source>
         <translation>세미콜론으로 구분된 버튼 번호 목록을 기대하고 있음, 예를 들어, 1;3;4</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="478" />
+        <location filename="../../../translation_tools/translatables.py" line="471" />
         <source>Ignore buttons that are already pressed</source>
         <translation>이미 눌러진 버튼 무시</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="471" />
+        <location filename="../../../translation_tools/translatables.py" line="479" />
         <source>Dummy mode (use keyboard instead)</source>
         <translation>더미 모드 (대신 키보드 사용)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="479" />
+        <location filename="../../../translation_tools/translatables.py" line="465" />
         <source>Device name</source>
         <translation>장치 이름</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="470" />
+        <location filename="../../../translation_tools/translatables.py" line="473" />
         <source>Expecting a button number (1 .. 5)</source>
         <translation>버튼 번호 (1..5)를 기대함</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="468" />
+        <location filename="../../../translation_tools/translatables.py" line="478" />
         <source>Allowed responses</source>
         <translation>허용되는 응답</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="474" />
+        <location filename="../../../translation_tools/translatables.py" line="467" />
         <source>&lt;small&gt;&lt;b&gt;Note:&lt;/b&gt; If there are multiple srbox items in the experiment, the first srbox item determines the device name and whether dummy mode is enabled&lt;/small&gt;
 </source>
         <translation>&lt;small&gt;&lt;b&gt;주의:&lt;/b&gt; 실험에 여러 개의 srbox 항목이 있는 경우 첫 번째 srbox 항목이 장치 이름과 더미 모드가 활성화되는지를 결정합니다&lt;/small&gt;
 </translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="469" />
+        <location filename="../../../translation_tools/translatables.py" line="472" />
         <source>Require a button-state change, so that already-pressed buttons are ignored</source>
         <translation>이미 눌러진 버튼이 무시되도록 버튼 상태 변경이 필요합니다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="477" />
+        <location filename="../../../translation_tools/translatables.py" line="470" />
         <source>Timeout</source>
         <translation>제한 시간</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="475" />
+        <location filename="../../../translation_tools/translatables.py" line="474" />
         <source>Enable to respond with the keyboard instead of an SR Box</source>
         <translation>SR Box 대신 키보드로 응답하도록 설정 활성화</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="464" />
+        <location filename="../../../translation_tools/translatables.py" line="466" />
         <source>Turn on lights</source>
         <translation>불을 켜다</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="467" />
+        <location filename="../../../translation_tools/translatables.py" line="464" />
         <source>Response collection</source>
         <translation>응답 수집</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="473" />
+        <location filename="../../../translation_tools/translatables.py" line="477" />
         <source>Expecting a semicolon-separated list of light numbers, e.g., 1;3;4</source>
         <translation>세미콜론으로 구분된 조명 번호 목록을 기대하고 있음, 예를 들어, 1;3;4</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="466" />
+        <location filename="../../../translation_tools/translatables.py" line="475" />
         <source>A plug-in for using the serial response box.</source>
         <translation>시리얼 응답 박스를 사용하기 위한 플러그인.</translation>
     </message>
@@ -2518,32 +2521,32 @@ of OpenSesame.
 <context>
     <name>plugin_touch_response</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="538" />
+        <location filename="../../../translation_tools/translatables.py" line="545" />
         <source>Specifies the number of rows</source>
         <translation>행 수를 지정</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="540" />
+        <location filename="../../../translation_tools/translatables.py" line="536" />
         <source>Expecting a value in milliseconds or 'infinite'</source>
         <translation>밀리초 또는 '무한' 값 기대</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="543" />
+        <location filename="../../../translation_tools/translatables.py" line="539" />
         <source>Show a mouse cursor (if supported on device)</source>
         <translation>마우스 커서 표시 (기기에서 지원되는 경우)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="544" />
+        <location filename="../../../translation_tools/translatables.py" line="543" />
         <source>Number of columns</source>
         <translation>열 수</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="536" />
+        <location filename="../../../translation_tools/translatables.py" line="546" />
         <source>A grid-based response item, convenient for touch screens</source>
         <translation>터치 스크린에 편리한 그리드 기반 응답 항목</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="541" />
+        <location filename="../../../translation_tools/translatables.py" line="544" />
         <source>Number of rows</source>
         <translation>행 수</translation>
     </message>
@@ -2553,27 +2556,27 @@ of OpenSesame.
         <translation>커서 표시</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="546" />
+        <location filename="../../../translation_tools/translatables.py" line="541" />
         <source>Timeout</source>
         <translation>제한 시간</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="545" />
+        <location filename="../../../translation_tools/translatables.py" line="547" />
         <source>Set the correct response</source>
         <translation>정확한 응답 설정</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="539" />
+        <location filename="../../../translation_tools/translatables.py" line="537" />
         <source>Response collection</source>
         <translation>응답 수집</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="547" />
+        <location filename="../../../translation_tools/translatables.py" line="538" />
         <source>Specifies the number of columns</source>
         <translation>열 수를 지정</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="537" />
+        <location filename="../../../translation_tools/translatables.py" line="540" />
         <source>Correct response</source>
         <translation>정답</translation>
     </message>
@@ -2581,17 +2584,17 @@ of OpenSesame.
 <context>
     <name>plugins_coroutines</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="445" />
+        <location filename="../../../translation_tools/translatables.py" line="447" />
         <source>"%s" does not support coroutines.</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="448" />
+        <location filename="../../../translation_tools/translatables.py" line="449" />
         <source>End after item (optional)</source>
         <translation>항목 후 종료 (선택 사항)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="449" />
+        <location filename="../../../translation_tools/translatables.py" line="445" />
         <source>Item name</source>
         <translation>항목 이름</translation>
     </message>
@@ -2601,17 +2604,17 @@ of OpenSesame.
         <translation>기간</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="447" />
+        <location filename="../../../translation_tools/translatables.py" line="450" />
         <source>End time (if applicable)</source>
         <translation>종료 시간 (해당되는 경우)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="450" />
+        <location filename="../../../translation_tools/translatables.py" line="446" />
         <source>Start time</source>
         <translation>시작 시간</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="446" />
+        <location filename="../../../translation_tools/translatables.py" line="448" />
         <source>Flush pending key presses at coroutines start</source>
         <translation />
     </message>
@@ -3115,194 +3118,199 @@ Edit your experiment in script form</source>
         <translation>최근 파일</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="97" />
+        <location filename="../ui/misc/main_window.ui" line="98" />
         <source>Run</source>
         <translation>실행</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="107" />
+        <location filename="../ui/misc/main_window.ui" line="108" />
         <source>View</source>
         <translation>보기</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="119" />
+        <location filename="../ui/misc/main_window.ui" line="120" />
         <source>Tools</source>
         <translation>도구</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="125" />
+        <location filename="../ui/misc/main_window.ui" line="126" />
         <source>Edit</source>
         <translation>편집</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="142" />
+        <location filename="../ui/misc/main_window.ui" line="143" />
         <source>Overview</source>
         <translation>개요</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="174" />
+        <location filename="../ui/misc/main_window.ui" line="175" />
         <source>Name</source>
         <translation>이름</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="190" />
+        <location filename="../ui/misc/main_window.ui" line="191" />
         <source>File pool</source>
         <translation>파일 풀</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="217" />
+        <location filename="../ui/misc/main_window.ui" line="218" />
         <source>Main toolbar</source>
         <translation>메인 툴바</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="250" />
+        <location filename="../ui/misc/main_window.ui" line="251" />
         <source>Toolbar items</source>
         <translation>툴바 항목</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="267" />
+        <location filename="../ui/misc/main_window.ui" line="269" />
         <source>Open…</source>
         <translation>열기…</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="270" />
+        <location filename="../ui/misc/main_window.ui" line="272" />
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="281" />
+        <location filename="../ui/misc/main_window.ui" line="284" />
         <source>Save</source>
         <translation>저장</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="284" />
+        <location filename="../ui/misc/main_window.ui" line="287" />
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="296" />
+        <location filename="../ui/misc/main_window.ui" line="299" />
         <source>Save as…</source>
         <translation>다른 이름으로 저장…</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="299" />
+        <location filename="../ui/misc/main_window.ui" line="302" />
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="311" />
+        <location filename="../ui/misc/main_window.ui" line="314" />
         <source>Quit</source>
         <translation>종료</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="319" />
+        <location filename="../ui/misc/main_window.ui" line="322" />
         <source>Run fullscreen…</source>
         <translation>전체 화면으로 실행…</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="322" />
+        <location filename="../ui/misc/main_window.ui" line="325" />
         <source>Ctrl+R</source>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="331" />
+        <location filename="../ui/misc/main_window.ui" line="334" />
         <source>Close all tabs</source>
         <translation>모든 탭 닫기</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="334" />
+        <location filename="../ui/misc/main_window.ui" line="337" />
         <source>Ctrl+Alt+T</source>
         <translation>Ctrl+Alt+T</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="346" />
+        <location filename="../ui/misc/main_window.ui" line="349" />
         <source>Close other tabs</source>
         <translation>다른 탭 닫기</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="349" />
+        <location filename="../ui/misc/main_window.ui" line="352" />
         <source>Ctrl+T</source>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="357" />
+        <location filename="../ui/misc/main_window.ui" line="360" />
         <source>Run in window…</source>
         <translation>창에서 실행…</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="360" />
+        <location filename="../ui/misc/main_window.ui" line="363" />
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="375" />
+        <location filename="../ui/misc/main_window.ui" line="378" />
         <source>Show file pool</source>
         <translation>파일 풀 표시</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="378" />
+        <location filename="../ui/misc/main_window.ui" line="381" />
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="386" />
+        <location filename="../ui/misc/main_window.ui" line="389" />
         <source>Enable auto response</source>
         <translation>자동 응답 사용하기</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="398" />
+        <location filename="../ui/misc/main_window.ui" line="401" />
         <source>Preferences</source>
         <translation>환경설정</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="403" />
+        <location filename="../ui/misc/main_window.ui" line="406" />
         <source>Dummy</source>
         <translation>더미</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="411" />
+        <location filename="../ui/misc/main_window.ui" line="414" />
         <source>Show overview area</source>
         <translation>개요 영역 표시</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="414" />
+        <location filename="../ui/misc/main_window.ui" line="417" />
         <source>Ctrl+\</source>
         <translation>Ctrl+\</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="429" />
+        <location filename="../ui/misc/main_window.ui" line="432" />
         <source>One-tab mode</source>
         <translation>한 탭 모드</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="440" />
+        <location filename="../ui/misc/main_window.ui" line="443" />
         <source>Quick run</source>
         <translation>빠른 실행</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="443" />
+        <location filename="../ui/misc/main_window.ui" line="446" />
         <source>Ctrl+Shift+W</source>
         <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="451" />
+        <location filename="../ui/misc/main_window.ui" line="454" />
         <source>Close current tab</source>
         <translation>현재 탭 닫기</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="454" />
+        <location filename="../ui/misc/main_window.ui" line="457" />
         <source>Alt+T</source>
         <translation>Alt+T</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="462" />
+        <location filename="../ui/misc/main_window.ui" line="465" />
         <source>Kill experiment</source>
         <translation>실험 종료</translation>
     </message>
     <message>
-        <location filename="../ui/misc/main_window.ui" line="465" />
+        <location filename="../ui/misc/main_window.ui" line="468" />
         <source>Forcibly kill the experiment</source>
         <translation>실험 강제 종료</translation>
+    </message>
+    <message>
+        <location filename="../ui/misc/main_window.ui" line="477" />
+        <source>New window</source>
+        <translation>새 창</translation>
     </message>
 </context>
 <context>
