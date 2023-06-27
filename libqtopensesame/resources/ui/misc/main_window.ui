@@ -79,8 +79,7 @@
       <string>Recent files</string>
      </property>
      <property name="icon">
-      <iconset>
-       <normaloff>:/icons/recent_large.png</normaloff>:/icons/recent_large.png</iconset>
+      <iconset theme="folder-recent"/>
      </property>
      <addaction name="actionDummy"/>
     </widget>
@@ -89,6 +88,8 @@
     <addaction name="action_save_as"/>
     <addaction name="separator"/>
     <addaction name="menu_recent_files"/>
+    <addaction name="separator"/>
+    <addaction name="action_new_window"/>
     <addaction name="separator"/>
     <addaction name="action_quit"/>
    </widget>
@@ -258,7 +259,8 @@
   </widget>
   <action name="action_open">
    <property name="icon">
-    <iconset theme="document-open"/>
+    <iconset theme="document-open">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Open…</string>
@@ -272,7 +274,8 @@
   </action>
   <action name="action_save">
    <property name="icon">
-    <iconset theme="folder-download"/>
+    <iconset theme="folder-download">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -463,6 +466,15 @@
    </property>
    <property name="toolTip">
     <string>Forcibly kill the experiment</string>
+   </property>
+  </action>
+  <action name="action_new_window">
+   <property name="icon">
+    <iconset theme="document-new">
+     <normaloff>.</normaloff>.</iconset>
+   </property>
+   <property name="text">
+    <string>New window</string>
    </property>
   </action>
  </widget>
