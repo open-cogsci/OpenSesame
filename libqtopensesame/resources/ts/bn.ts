@@ -244,12 +244,12 @@
         <translation>%s এর জন্য সেটিংস:</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="383" />
+        <location filename="../../../translation_tools/translatables.py" line="385" />
         <source>Failed to load backend</source>
         <translation>ব্যাকএন্ড লোড করতে ব্যর্থ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="385" />
+        <location filename="../../../translation_tools/translatables.py" line="383" />
         <source>No settings for %s</source>
         <translation>%s এর জন্য কোনও সেটিংস নেই</translation>
     </message>
@@ -257,12 +257,12 @@
 <context>
     <name>core_base_runner</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="296" />
+        <location filename="../../../translation_tools/translatables.py" line="295" />
         <source>Choose location for logfile (press 'escape' for default location)</source>
         <translation>লগফাইলের জন্য অবস্থান চয়ন করুন (ডিফল্ট অবস্থানের জন্য 'এস্কেপ' চাপুন)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="295" />
+        <location filename="../../../translation_tools/translatables.py" line="296" />
         <source>Please enter the subject number</source>
         <translation>দয়া করে বিষয় নম্বর লিখুন</translation>
     </message>
@@ -294,6 +294,14 @@
         <location filename="../../../translation_tools/translatables.py" line="336" />
         <source>other ...</source>
         <translation>অন্য ...</translation>
+    </message>
+</context>
+<context>
+    <name>core_general_header_widget</name>
+    <message>
+        <location filename="../../../translation_tools/translatables.py" line="400" />
+        <source>experiment properties</source>
+        <translation>পরীক্ষার বৈশিষ্ট্যসমূহ</translation>
     </message>
 </context>
 <context>
@@ -336,27 +344,27 @@
 <context>
     <name>core_item_context_men</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="319" />
+        <location filename="../../../translation_tools/translatables.py" line="321" />
         <source>Enable</source>
         <translation>চালু করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="320" />
+        <location filename="../../../translation_tools/translatables.py" line="319" />
         <source>Delete</source>
         <translation>মুছুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="321" />
+        <location filename="../../../translation_tools/translatables.py" line="325" />
         <source>Open</source>
         <translation>খুলুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="322" />
+        <location filename="../../../translation_tools/translatables.py" line="323" />
         <source>Edit run-if statement</source>
         <translation>রান ইফ্ বক্যটি সম্পাদনা করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="323" />
+        <location filename="../../../translation_tools/translatables.py" line="328" />
         <source>Disable</source>
         <translation>বাধা দিন</translation>
     </message>
@@ -366,7 +374,7 @@
         <translation>স্থায়ীভাবে মুছুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="325" />
+        <location filename="../../../translation_tools/translatables.py" line="327" />
         <source>Help</source>
         <translation>সাহায্য</translation>
     </message>
@@ -376,33 +384,30 @@
         <translation>আটকান</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="327" />
+        <location filename="../../../translation_tools/translatables.py" line="330" />
         <source>Copy (linked)</source>
         <translation>লিংকযুক্ত অনুলিপি</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="328" />
+        <location filename="../../../translation_tools/translatables.py" line="329" />
         <source>Copy (unlinked)</source>
         <translation>অলিংকড অনুলিপি</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="329" />
+        <location filename="../../../translation_tools/translatables.py" line="322" />
         <source>Rename</source>
         <translation>নাম পরিবর্তন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="330" />
+        <location filename="../../../translation_tools/translatables.py" line="320" />
         <source>Permanently delete all linked copies</source>
         <translation>সমস্ত লিঙ্কযুক্ত নকল স্থায়ীভাবে মুছুন</translation>
     </message>
 </context>
 <context>
-    <name>core_item_context_menu</name>
-</context>
-<context>
     <name>core_item_view_button</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="373" />
+        <location filename="../../../translation_tools/translatables.py" line="372" />
         <source>View script</source>
         <translation>স্ক্রিপ্ট দেখুন</translation>
     </message>
@@ -417,7 +422,7 @@
         <translation>দৃশ্য বাছাই করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="372" />
+        <location filename="../../../translation_tools/translatables.py" line="373" />
         <source>Split view</source>
         <translation>বিভক্ত দৃশ্য</translation>
     </message>
@@ -441,62 +446,62 @@
 <context>
     <name>core_pool_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="409" />
+        <location filename="../../../translation_tools/translatables.py" line="411" />
         <source>Failed to rename "%s" to "%s".</source>
         <translation>"%s" কে "%s" তে পুনরায় নামান্তর ব্যর্থ হয়েছিল।</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="410" />
+        <location filename="../../../translation_tools/translatables.py" line="412" />
         <source>Select</source>
         <translation>নির্বাচন করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="411" />
+        <location filename="../../../translation_tools/translatables.py" line="416" />
         <source>Select file from pool</source>
         <translation>পুল থেকে ফাইল নির্বাচন করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="417" />
+        <location filename="../../../translation_tools/translatables.py" line="414" />
         <source>Remove from pool</source>
         <translation>পুল থেকে সরান</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="408" />
+        <location filename="../../../translation_tools/translatables.py" line="409" />
         <source>There already is a file named '%s' in the file pool</source>
         <translation>ফাইল পুলে ইতিমধ্যেই '%s' নামের একটি ফাইল রয়েছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="406" />
+        <location filename="../../../translation_tools/translatables.py" line="418" />
         <source>Add files to pool</source>
         <translation>পুলে ফাইল যোগ করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="413" />
+        <location filename="../../../translation_tools/translatables.py" line="410" />
         <source>Failed to refresh file pool</source>
         <translation>রেফ্রেশ করতে ব্যর্থ ফাইল পুল</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="414" />
+        <location filename="../../../translation_tools/translatables.py" line="415" />
         <source>Rename</source>
         <translation>নাম পরিবর্তন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="415" />
+        <location filename="../../../translation_tools/translatables.py" line="419" />
         <source>Failed to copy %s to file pool</source>
         <translation>ফাইল পুলে %s কপি করতে ব্যর্থ হয়েছিল</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="416" />
+        <location filename="../../../translation_tools/translatables.py" line="417" />
         <source>And %d more file(s)</source>
         <translation>এবং %d আরো ফাইল</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="407" />
+        <location filename="../../../translation_tools/translatables.py" line="420" />
         <source>Open</source>
         <translation>খুলুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="412" />
+        <location filename="../../../translation_tools/translatables.py" line="413" />
         <source>Cancel</source>
         <translation>বাতিল</translation>
     </message>
@@ -512,17 +517,17 @@
 <context>
     <name>core_qtautoplugin</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="219" />
+        <location filename="../../../translation_tools/translatables.py" line="217" />
         <source>You must specify "type" for %s controls in info.yaml</source>
         <translation>info.yaml মধ্যে %s নিয়ন্ত্রণের জন্য "টাইপ" নির্দেশ করতে হবে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="217" />
+        <location filename="../../../translation_tools/translatables.py" line="216" />
         <source>"%s" is not a valid qtautoplugin control</source>
         <translation>"%s" একটি বৈধ qtautoplugin নিয়ন্ত্রণ নয়</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="218" />
+        <location filename="../../../translation_tools/translatables.py" line="219" />
         <source>You must specify "%s" for %s controls in info.yaml</source>
         <translation>info.yaml মধ্যে %s নিয়ন্ত্রণের জন্য "%s" নির্দেশ করতে হবে</translation>
     </message>
@@ -532,7 +537,7 @@
         <translation>qtautoplugin নিয়ন্ত্রণে নাম "%s" ইতিমধ্যে নেয়া হয়েছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="216" />
+        <location filename="../../../translation_tools/translatables.py" line="218" />
         <source>Invalid variable name (%s) specified in %s plugin info</source>
         <translation>%s প্লাগইনের তথ্যে অবৈধ ভেরিয়েবলের নাম (%s) নির্দিষ্ট হয়েছে</translation>
     </message>
@@ -540,22 +545,22 @@
 <context>
     <name>core_qtitem</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="213" />
+        <location filename="../../../translation_tools/translatables.py" line="212" />
         <source>Failed to set control '%s': %s</source>
         <translation>কন্ট্রোল '%s' সেট করতে ব্যর্থ: %s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="212" />
+        <location filename="../../../translation_tools/translatables.py" line="210" />
         <source>Apply</source>
         <translation>প্রয়োগ করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="210" />
+        <location filename="../../../translation_tools/translatables.py" line="211" />
         <source>Default description</source>
         <translation>ডিফল্ট বিবরণ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="211" />
+        <location filename="../../../translation_tools/translatables.py" line="213" />
         <source>Toggle pop-out</source>
         <translation>পপ-আউট টগল করুন</translation>
     </message>
@@ -581,57 +586,57 @@
 <context>
     <name>core_qtopensesame</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="128" />
+        <location filename="../../../translation_tools/translatables.py" line="129" />
         <source> [read only]</source>
         <translation> [শুধুমাত্র পড়া]</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="137" />
+        <location filename="../../../translation_tools/translatables.py" line="128" />
         <source>Failed to save file. Error: %s</source>
         <translation>ফাইল সংরক্ষণ করতে ব্যর্থ। ত্রুটি: %s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="131" />
+        <location filename="../../../translation_tools/translatables.py" line="130" />
         <source>Error</source>
         <translation>ত্রুটি</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="135" />
+        <location filename="../../../translation_tools/translatables.py" line="136" />
         <source>Save changes?</source>
         <translation>পরিবর্তনগুলি সংরক্ষণ করবেন?</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="138" />
+        <location filename="../../../translation_tools/translatables.py" line="137" />
         <source>Save as…</source>
         <translation>হিসাবে সংরক্ষণ করুন…</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="136" />
+        <location filename="../../../translation_tools/translatables.py" line="132" />
         <source>Open file</source>
         <translation>ফাইল খুলুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="134" />
+        <location filename="../../../translation_tools/translatables.py" line="135" />
         <source>New experiment</source>
         <translation>নতুন পরীক্ষা</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="133" />
+        <location filename="../../../translation_tools/translatables.py" line="131" />
         <source>(No recent files)</source>
         <translation>(সাম্প্রতিক ফাইল নেই)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="129" />
+        <location filename="../../../translation_tools/translatables.py" line="133" />
         <source>The following error occured while trying to save:&lt;br/&gt;%s</source>
         <translation>সংরক্ষণ করার চেষ্টা করার সময় নিম্নলিখিত ত্রুটি ঘটেছে:&lt;br/&gt;%s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="130" />
+        <location filename="../../../translation_tools/translatables.py" line="134" />
         <source>Could not parse script: %s</source>
         <translation>স্ক্রিপ্ট পার্স করতে অক্ষম: %s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="132" />
+        <location filename="../../../translation_tools/translatables.py" line="138" />
         <source>Your experiment contains unsaved changes. Do you want to save your experiment?</source>
         <translation>আপনার পরীক্ষায় অসংরক্ষিত পরিবর্তন রয়েছে। আপনি কি আপনার পরীক্ষাটি সংরক্ষণ করতে চান?</translation>
     </message>
@@ -639,32 +644,32 @@
 <context>
     <name>core_tab_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="356" />
+        <location filename="../../../translation_tools/translatables.py" line="360" />
         <source>Unused items</source>
         <translation>অব্যবহৃত আইটেমগুলি</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="355" />
+        <location filename="../../../translation_tools/translatables.py" line="359" />
         <source>Preferences</source>
         <translation>পছন্দসমূহ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="360" />
+        <location filename="../../../translation_tools/translatables.py" line="358" />
         <source>Back-end settings</source>
         <translation>ব্যাক-এন্ড সেটিংস</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="358" />
+        <location filename="../../../translation_tools/translatables.py" line="355" />
         <source>General script editor</source>
         <translation>সাধারণ স্ক্রিপ্ট সম্পাদক</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="359" />
+        <location filename="../../../translation_tools/translatables.py" line="357" />
         <source>General properties</source>
         <translation>সাধারণ বৈশিষ্ট্য</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="357" />
+        <location filename="../../../translation_tools/translatables.py" line="356" />
         <source>Help</source>
         <translation>সাহায্য</translation>
     </message>
@@ -672,27 +677,27 @@
 <context>
     <name>core_template</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="282" />
+        <location filename="../../../translation_tools/translatables.py" line="283" />
         <source>Questionnaire template</source>
         <translation>প্রশ্নাবলী টেমপ্লেট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="284" />
+        <location filename="../../../translation_tools/translatables.py" line="285" />
         <source>Default template</source>
         <translation>ডিফল্ট টেমপ্লেট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="283" />
+        <location filename="../../../translation_tools/translatables.py" line="284" />
         <source>Eye-tracking template</source>
         <translation>চোখ-ট্র্যাকিং টেমপ্লেট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="285" />
+        <location filename="../../../translation_tools/translatables.py" line="281" />
         <source>Extended template</source>
         <translation>বিস্তৃত টেমপ্লেট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="281" />
+        <location filename="../../../translation_tools/translatables.py" line="282" />
         <source>OSWeb (online) template</source>
         <translation>OSWeb (online) টেমপ্লেট</translation>
     </message>
@@ -716,12 +721,12 @@
 <context>
     <name>core_tree_append_menu</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="363" />
+        <location filename="../../../translation_tools/translatables.py" line="364" />
         <source>Append new item</source>
         <translation>নতুন আইটেম যোগ করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="364" />
+        <location filename="../../../translation_tools/translatables.py" line="363" />
         <source>Append existing item (linked)</source>
         <translation>বিদ্যমান আইটেম যোগ করুন (লিঙ্কযুক্ত)</translation>
     </message>
@@ -737,17 +742,17 @@
 <context>
     <name>core_tree_item_item</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="392" />
+        <location filename="../../../translation_tools/translatables.py" line="389" />
         <source>Permanently delete item</source>
         <translation>আইটেমটি স্থায়ীভাবে মুছুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="390" />
+        <location filename="../../../translation_tools/translatables.py" line="393" />
         <source>Are you sure you want to permanently delete &lt;b&gt;%s&lt;/b&gt;? All linked copies of &lt;b&gt;%s&lt;/b&gt; will be deleted. You will not be able to undo this.</source>
         <translation>আপনি কি &lt;b&gt;%s&lt;/b&gt; কে চিরতরে মুছে ফেলার নিশ্চিত?&lt;b&gt;%s&lt;/b&gt; এর সমস্ত লিঙ্কযুক্ত অনুলিপিগুলি মুছে ফেলা হবে। আপনি এটা পছন্দ না করতে পারবেন না।</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="393" />
+        <location filename="../../../translation_tools/translatables.py" line="390" />
         <source>Set as item to run for %s</source>
         <translation>%s এর জন্য চালানোর আইটেম হিসাবে সেট করুন</translation>
     </message>
@@ -758,7 +763,7 @@ Description: %s</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="389" />
+        <location filename="../../../translation_tools/translatables.py" line="392" />
         <source>Drop below %s</source>
         <translation>%s-এর নিচে নামান</translation>
     </message>
@@ -771,27 +776,27 @@ Description: %s</source>
 <context>
     <name>core_tree_overview</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="352" />
+        <location filename="../../../translation_tools/translatables.py" line="350" />
         <source>Insert after %s</source>
         <translation>%s-এর পরে ঢোকানো</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="351" />
+        <location filename="../../../translation_tools/translatables.py" line="349" />
         <source>Unknown item type: %s</source>
         <translation>অজানা আইটেমের ধরণ: %s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="349" />
+        <location filename="../../../translation_tools/translatables.py" line="351" />
         <source>Item name</source>
         <translation>আইটেমের নাম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="348" />
+        <location filename="../../../translation_tools/translatables.py" line="352" />
         <source>Run if</source>
         <translation>যদি চালানো হয়</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="350" />
+        <location filename="../../../translation_tools/translatables.py" line="348" />
         <source>Insert into %s</source>
         <translation>%s-এ প্রবেশ করান</translation>
     </message>
@@ -820,22 +825,22 @@ Description: %s</source>
 <context>
     <name>core_unused_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="403" />
+        <location filename="../../../translation_tools/translatables.py" line="406" />
         <source>Permanently delete items?</source>
         <translation>আইটেমগুলিকে স্থায়ীভাবে মুছে ফেলতে চান?</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="401" />
+        <location filename="../../../translation_tools/translatables.py" line="405" />
         <source>Are you sure you want to permanently delete all unused items? This action cannot be undone.</source>
         <translation>আপনি কি নিশ্চিত যে আপনি সমস্ত অব্যবহৃত আইটেম স্থায়ীভাবে মুছে ফেলতে চান? এই অ্যাকশনটি আনডু করা যাবে না।</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="402" />
+        <location filename="../../../translation_tools/translatables.py" line="404" />
         <source>Permanently delete unused items</source>
         <translation>অব্যবহৃত আইটেমগুলিকে স্থায়ীভাবে মুছে ফেলুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="400" />
+        <location filename="../../../translation_tools/translatables.py" line="403" />
         <source>&lt;b&gt;&lt;font size='5'&gt;Unused&lt;/font&gt;&lt;/b&gt;</source>
         <translation>&lt;b&gt;&lt;font size='5'&gt;অব্যবহৃত&lt;/font&gt;&lt;/b&gt;</translation>
     </message>
@@ -843,12 +848,12 @@ Description: %s</source>
 <context>
     <name>core_webbrowser</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="368" />
+        <location filename="../../../translation_tools/translatables.py" line="367" />
         <source>Loading …</source>
         <translation>লোড হচ্ছে …</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="367" />
+        <location filename="../../../translation_tools/translatables.py" line="368" />
         <source>Done</source>
         <translation>সম্পন্ন</translation>
     </message>
@@ -856,12 +861,12 @@ Description: %s</source>
 <context>
     <name>extension_JupyterConsole</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="106" />
+        <location filename="../../../translation_tools/translatables.py" line="107" />
         <source>The {} (inprocess={}) kernel does not support debugging</source>
         <translation>{} (inprocess={}) কার্নেল ডিবাগিং সমর্থন করে না</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="107" />
+        <location filename="../../../translation_tools/translatables.py" line="106" />
         <source>Restart kernel</source>
         <translation>কার্নেল পুনরায় চালু করুন</translation>
     </message>
@@ -905,12 +910,12 @@ Description: %s</source>
 <context>
     <name>extension_analytics</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="97" />
+        <location filename="../../../translation_tools/translatables.py" line="98" />
         <source>Got it!</source>
         <translation>বুঝে গেছি!</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="98" />
+        <location filename="../../../translation_tools/translatables.py" line="97" />
         <source>Sends a ping to Google Analytics when OpenSesame is started</source>
         <translation>OpenSesame শুরু হলে Google Analytics-এ একটি পিং প্রেরণ করে</translation>
     </message>
@@ -931,27 +936,27 @@ Description: %s</source>
 <context>
     <name>extension_bug_report</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="19" />
+        <location filename="../../../translation_tools/translatables.py" line="16" />
         <source>Oops ...</source>
         <translation>ওপস ...</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="18" />
+        <location filename="../../../translation_tools/translatables.py" line="17" />
         <source>Bug report sent</source>
         <translation>বাগ রিপোর্ট পাঠানো হয়েছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="20" />
+        <location filename="../../../translation_tools/translatables.py" line="19" />
         <source>Bug report not sent</source>
         <translation>বাগ রিপোর্ট পাঠানো হয়নি</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="16" />
+        <location filename="../../../translation_tools/translatables.py" line="18" />
         <source>Bug report</source>
         <translation>বাগ রিপোর্ট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="17" />
+        <location filename="../../../translation_tools/translatables.py" line="20" />
         <source>Sends a bug report when an exception occurs</source>
         <translation>একটি ব্যতিক্রম ঘটার সময় একটি বাগ রিপোর্ট পাঠানো</translation>
     </message>
@@ -959,12 +964,12 @@ Description: %s</source>
 <context>
     <name>extension_command_palette</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="51" />
+        <location filename="../../../translation_tools/translatables.py" line="50" />
         <source>Trigger menu actions</source>
         <translation>মেনু অ্যাকশনগুলি ট্রিগার করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="50" />
+        <location filename="../../../translation_tools/translatables.py" line="51" />
         <source>Command palette</source>
         <translation>কমান্ড প্যালেট</translation>
     </message>
@@ -985,12 +990,12 @@ Description: %s</source>
 <context>
     <name>extension_file_handler</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="43" />
+        <location filename="../../../translation_tools/translatables.py" line="44" />
         <source>Opens external files</source>
         <translation>বাইরের ফাইল খোলে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="44" />
+        <location filename="../../../translation_tools/translatables.py" line="43" />
         <source>Handles opening of external files</source>
         <translation>বাইরের ফাইল খুললে খুলে যাওয়া পরিচালনা করে</translation>
     </message>
@@ -998,7 +1003,7 @@ Description: %s</source>
 <context>
     <name>extension_get_started</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="23" />
+        <location filename="../../../translation_tools/translatables.py" line="25" />
         <source>Get started!</source>
         <translation>শুরু হয়ে যান!</translation>
     </message>
@@ -1013,12 +1018,12 @@ Description: %s</source>
         <translation>নতুন…</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="25" />
+        <location filename="../../../translation_tools/translatables.py" line="26" />
         <source>Start a new experiment</source>
         <translation>নতুন পরীক্ষা শুরু করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="26" />
+        <location filename="../../../translation_tools/translatables.py" line="23" />
         <source>Shows the get-started tab and opens an experiment on startup, if one was
 passed on the command line
 </source>
@@ -1028,7 +1033,7 @@ passed on the command line
 <context>
     <name>extension_help</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="34" />
+        <location filename="../../../translation_tools/translatables.py" line="30" />
         <source>PsychoPy API</source>
         <translation>PsychoPy এপিআই</translation>
     </message>
@@ -1038,17 +1043,17 @@ passed on the command line
         <translation>অনুগ্রহ করে অপেক্ষা করুন …</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="33" />
+        <location filename="../../../translation_tools/translatables.py" line="32" />
         <source>Online help</source>
         <translation>অনলাইন সহায়তা</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="30" />
+        <location filename="../../../translation_tools/translatables.py" line="33" />
         <source>Help</source>
         <translation>সাহায্য</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="32" />
+        <location filename="../../../translation_tools/translatables.py" line="34" />
         <source>Adds a Help menu</source>
         <translation>সাহায্য মেনু যোগ করুন</translation>
     </message>
@@ -1074,12 +1079,12 @@ passed on the command line
 <context>
     <name>extension_notifications</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="54" />
+        <location filename="../../../translation_tools/translatables.py" line="55" />
         <source>Notifications</source>
         <translation>বিজ্ঞপ্তি</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="55" />
+        <location filename="../../../translation_tools/translatables.py" line="54" />
         <source>Pretty notifications for OpenSesame</source>
         <translation>OpenSesame এর জন্য চমৎকার বিজ্ঞপ্তি</translation>
     </message>
@@ -1087,7 +1092,7 @@ passed on the command line
 <context>
     <name>extension_opensesame_4_notifications</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="79" />
+        <location filename="../../../translation_tools/translatables.py" line="80" />
         <source>Notifies the user if an experiment has been created with a different version
 of OpenSesame.
 </source>
@@ -1095,7 +1100,7 @@ of OpenSesame.
 </translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="80" />
+        <location filename="../../../translation_tools/translatables.py" line="79" />
         <source>OpenSesame 4 notifications</source>
         <translation>OpenSesame 4 বিজ্ঞপ্তি</translation>
     </message>
@@ -1103,12 +1108,12 @@ of OpenSesame.
 <context>
     <name>extension_preload_items</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="8" />
+        <location filename="../../../translation_tools/translatables.py" line="9" />
         <source>Preload items</source>
         <translation>পূর্বভারণযোগ্য উপকরণ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="9" />
+        <location filename="../../../translation_tools/translatables.py" line="8" />
         <source>Preloads items in the background for smoother use</source>
         <translation>পছন্দের একে ব্যবহারের জন্য পটভূমির উপকরণগুলি পূর্বভারণ করান</translation>
     </message>
@@ -1116,7 +1121,7 @@ of OpenSesame.
 <context>
     <name>extension_psychopy_monitor_center</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="3" />
+        <location filename="../../../translation_tools/translatables.py" line="5" />
         <source>Launch the PsychoPy monitor center</source>
         <translation>PsychoPy মনিটর কেন্দ্র কার্যকর করুন</translation>
     </message>
@@ -1126,7 +1131,7 @@ of OpenSesame.
         <translation>PsychoPy মনিটর কেন্দ্র</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="5" />
+        <location filename="../../../translation_tools/translatables.py" line="3" />
         <source>Launches the PsychoPy monitor center</source>
         <translation>সাইকোপাই মনিটর কেন্দ্র চালু করুন</translation>
     </message>
@@ -1134,22 +1139,22 @@ of OpenSesame.
 <context>
     <name>extension_pyqode_manager</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="91" />
+        <location filename="../../../translation_tools/translatables.py" line="93" />
         <source>Convert spaces to tabs</source>
         <translation>স্থানগুলি ট্যাবে রূপান্তর করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="94" />
+        <location filename="../../../translation_tools/translatables.py" line="91" />
         <source>Convert tabs to spaces</source>
         <translation>ট্যাবগুলি স্থানে রূপান্তর করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="92" />
+        <location filename="../../../translation_tools/translatables.py" line="94" />
         <source>Manages PyQode, the code-editor component</source>
         <translation>পাইক'ন, কোড এডিটর উপাদানটি পরিচালনা করে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="93" />
+        <location filename="../../../translation_tools/translatables.py" line="92" />
         <source>PyQode manager</source>
         <translation>PyQode ম্যানেজার</translation>
     </message>
@@ -1157,12 +1162,12 @@ of OpenSesame.
 <context>
     <name>extension_quick_selector</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="13" />
+        <location filename="../../../translation_tools/translatables.py" line="12" />
         <source>Select stuff quickly</source>
         <translation>জিনিস দ্রুত নির্বাচন করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="12" />
+        <location filename="../../../translation_tools/translatables.py" line="13" />
         <source>A general-purpose quick-select dialog</source>
         <translation>সাধারণ উদ্দেশক দ্রুত-নির্বাচন ডায়ালগ</translation>
     </message>
@@ -1217,12 +1222,12 @@ of OpenSesame.
         <translation>ট্যাব ডকউইজেট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="118" />
+        <location filename="../../../translation_tools/translatables.py" line="119" />
         <source>Turn tab into dockwidget</source>
         <translation>ট্যাবকে ডকউইজেটে রূপান্তরিত করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="119" />
+        <location filename="../../../translation_tools/translatables.py" line="118" />
         <source>Turns a tab into a dockwidget</source>
         <translation>একটি ট্যাব ডকউইজেটে রূপান্তরিত হয়</translation>
     </message>
@@ -1230,7 +1235,7 @@ of OpenSesame.
 <context>
     <name>extension_toolbar_menu</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="37" />
+        <location filename="../../../translation_tools/translatables.py" line="39" />
         <source>Menu</source>
         <translation>মেনু</translation>
     </message>
@@ -1245,7 +1250,7 @@ of OpenSesame.
         <translation>মেনু এবং টুলবার একত্রিত করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="39" />
+        <location filename="../../../translation_tools/translatables.py" line="37" />
         <source>Integrates the menu into the toolbar.</source>
         <translation>টুলবারে মেনুটি একত্রীকরণ করে।</translation>
     </message>
@@ -1263,17 +1268,17 @@ of OpenSesame.
         <translation>সর্বশেষ পদক্ষেপ পূর্বাবস্থায় ফেরা</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="67" />
+        <location filename="../../../translation_tools/translatables.py" line="70" />
         <source>Implements undo/ redo</source>
         <translation>আনডু/রিডু বাস্তবায়ন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="69" />
+        <location filename="../../../translation_tools/translatables.py" line="67" />
         <source>Redo</source>
         <translation>পুনরায় করা</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="70" />
+        <location filename="../../../translation_tools/translatables.py" line="69" />
         <source>Redo most recently undone action</source>
         <translation>সাম্প্রতিকতম বাতিল কাজ পুনরায় করুন</translation>
     </message>
@@ -1325,17 +1330,17 @@ of OpenSesame.
 <context>
     <name>item_inline_script</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="205" />
+        <location filename="../../../translation_tools/translatables.py" line="206" />
         <source>Run</source>
         <translation>চালান</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="204" />
+        <location filename="../../../translation_tools/translatables.py" line="205" />
         <source>Prepare</source>
         <translation>প্রস্তুতি নেওয়া</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="206" />
+        <location filename="../../../translation_tools/translatables.py" line="204" />
         <source>Executes Python code</source>
         <translation>পাইথন কোড চালায়</translation>
     </message>
@@ -1343,62 +1348,62 @@ of OpenSesame.
 <context>
     <name>item_keyboard_response</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="198" />
+        <location filename="../../../translation_tools/translatables.py" line="200" />
         <source>Leave empty to use "correct_response"</source>
         <translation>"করেক্ট_রেসপনস" ব্যবহার করতে খালি রাখুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="197" />
+        <location filename="../../../translation_tools/translatables.py" line="195" />
         <source>Flush pending key events</source>
         <translation>প্রতীক্ষায় থাকা কী ইভেন্ট ফ্লাশ করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="190" />
+        <location filename="../../../translation_tools/translatables.py" line="194" />
         <source>Collects keyboard responses</source>
         <translation>কীবোর্ড প্রতিক্রিয়া সংগ্রহ করে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="193" />
+        <location filename="../../../translation_tools/translatables.py" line="191" />
         <source>Correct response</source>
         <translation>সঠিক প্রতিক্রিয়া</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="201" />
+        <location filename="../../../translation_tools/translatables.py" line="196" />
         <source>Allowed responses</source>
         <translation>অনুমোদিত প্রতিক্রিয়া</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="194" />
+        <location filename="../../../translation_tools/translatables.py" line="201" />
         <source>Timeout</source>
         <translation>সময় শেষ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="196" />
+        <location filename="../../../translation_tools/translatables.py" line="193" />
         <source>Key names</source>
         <translation>কী নাম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="200" />
+        <location filename="../../../translation_tools/translatables.py" line="197" />
         <source>The following key names are valid:</source>
         <translation>নিম্নলিখিত কী নামগুলি বৈধ:</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="199" />
+        <location filename="../../../translation_tools/translatables.py" line="198" />
         <source>In milliseconds or "infinite"</source>
         <translation>মিলিসেকেন্ডে বা "অসীম"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="191" />
+        <location filename="../../../translation_tools/translatables.py" line="192" />
         <source>Event type</source>
         <translation>ইভেন্টের ধরণ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="192" />
+        <location filename="../../../translation_tools/translatables.py" line="199" />
         <source>Separated by semicolons, e.g. "z;/"</source>
         <translation>সেমিকোলন দ্বারা পৃথক, যেমন "z;/"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="195" />
+        <location filename="../../../translation_tools/translatables.py" line="190" />
         <source>List available keys</source>
         <translation>উপলব্ধ কী তালিকাভুক্ত করুন</translation>
     </message>
@@ -1419,77 +1424,77 @@ of OpenSesame.
 <context>
     <name>item_loop</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="230" />
+        <location filename="../../../translation_tools/translatables.py" line="228" />
         <source>Note: Loop data will be read from file</source>
         <translation>নোটঃ লুপ ডাটা ফাইল থেকে পড়া হবে।</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="235" />
+        <location filename="../../../translation_tools/translatables.py" line="234" />
         <source># Preview of loop table</source>
         <translation># লুপ টেবিলের পূর্বরূপ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="226" />
+        <location filename="../../../translation_tools/translatables.py" line="237" />
         <source>once</source>
         <translation>একবার</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="224" />
+        <location filename="../../../translation_tools/translatables.py" line="225" />
         <source>Summary: &lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; order.</source>
         <translation>সারমর্ম: &lt;b&gt; %s &lt;/ b&gt; &lt;b&gt; %s &lt;/ b&gt; অর্ডারে &lt;b&gt; %s &lt;/ b&gt; বলা হবে।</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="229" />
+        <location filename="../../../translation_tools/translatables.py" line="223" />
         <source>Warning: No item to run has been specified</source>
         <translation>সতর্কীকরণ: চালানোর জন্য কোন আইটেম নির্দিষ্ট করা হয়নি</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="232" />
+        <location filename="../../../translation_tools/translatables.py" line="235" />
         <source>This means that %s %s and %s %s.</source>
         <translation>এর অর্থ %s %s এবং %s %s।</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="227" />
+        <location filename="../../../translation_tools/translatables.py" line="226" />
         <source>The number of rows is %s.</source>
         <translation>সারির সংখ্যা %s।</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="237" />
+        <location filename="../../../translation_tools/translatables.py" line="233" />
         <source>one row occurs</source>
         <translation>এক সারি ঘটে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="236" />
+        <location filename="../../../translation_tools/translatables.py" line="231" />
         <source>two rows occur</source>
         <translation>দুই সারি ঘটে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="231" />
+        <location filename="../../../translation_tools/translatables.py" line="232" />
         <source>twice</source>
         <translation>দুইবার</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="228" />
+        <location filename="../../../translation_tools/translatables.py" line="236" />
         <source>Failed to generate preview.</source>
         <translation>পূর্বরূপ তৈরি করতে বিফল।</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="234" />
+        <location filename="../../../translation_tools/translatables.py" line="227" />
         <source>never</source>
         <translation>কখনই</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="233" />
+        <location filename="../../../translation_tools/translatables.py" line="224" />
         <source>Note: Order or repeat is unknown or variably defined</source>
         <translation>নোটঃ আদেশ বা পুনরাবৃত্তি অজানা বা বিচ্ছিন্ন ভাবে সংজ্ঞায়িত।</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="225" />
+        <location filename="../../../translation_tools/translatables.py" line="230" />
         <source>All rows occur %s.</source>
         <translation>সমস্ত সারি %s ঘটনা।</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="223" />
+        <location filename="../../../translation_tools/translatables.py" line="229" />
         <source>Repeatedly runs another item</source>
         <translation>অন্য আইটেমটি পুনরাবৃত্তি করে চালায়</translation>
     </message>
@@ -1497,62 +1502,62 @@ of OpenSesame.
 <context>
     <name>item_mouse_response</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="246" />
+        <location filename="../../../translation_tools/translatables.py" line="250" />
         <source>Leave empty to use "correct_response"</source>
         <translation>"করেক্ট_রেসপনস" ব্যবহার করতে খালি রাখুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="250" />
+        <location filename="../../../translation_tools/translatables.py" line="245" />
         <source>Linked sketchpad</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="249" />
+        <location filename="../../../translation_tools/translatables.py" line="243" />
         <source>Flush pending mouse clicks</source>
         <translation>প্রতীক্ষায় থাকা মাউস ক্লিক ফ্লাশ করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="241" />
+        <location filename="../../../translation_tools/translatables.py" line="240" />
         <source>Correct response</source>
         <translation>সঠিক প্রতিক্রিয়া</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="251" />
+        <location filename="../../../translation_tools/translatables.py" line="248" />
         <source>Allowed responses</source>
         <translation>অনুমোদিত প্রতিক্রিয়া</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="242" />
+        <location filename="../../../translation_tools/translatables.py" line="251" />
         <source>Timeout</source>
         <translation>সময় শেষ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="248" />
+        <location filename="../../../translation_tools/translatables.py" line="247" />
         <source>Elements define regions of interest</source>
         <translation>উপাদানগুলি আগ্রহের অঞ্চল সংজ্ঞায়িত করে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="243" />
+        <location filename="../../../translation_tools/translatables.py" line="244" />
         <source>Collects mouse responses</source>
         <translation>মাউসের প্রতিসাদ সংগ্রহ করে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="245" />
+        <location filename="../../../translation_tools/translatables.py" line="242" />
         <source>Visible mouse cursor</source>
         <translation>দৃশ্যমান মাউস কার্সার</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="247" />
+        <location filename="../../../translation_tools/translatables.py" line="249" />
         <source>In milliseconds or "infinite"</source>
         <translation>মিলিসেকেন্ডে বা "অসীম"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="240" />
+        <location filename="../../../translation_tools/translatables.py" line="241" />
         <source>Event type</source>
         <translation>ইভেন্টের ধরণ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="244" />
+        <location filename="../../../translation_tools/translatables.py" line="246" />
         <source>Separated by semicolons, e.g. "left_button;right_button"</source>
         <translation>সেমিকোলন দ্বারা পৃথক, উদাঃ "left_button; right_button"</translation>
     </message>
@@ -1560,57 +1565,57 @@ of OpenSesame.
 <context>
     <name>item_sampler</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="178" />
+        <location filename="../../../translation_tools/translatables.py" line="181" />
         <source>Sound file</source>
         <translation>শব্দ ফাইল</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="179" />
+        <location filename="../../../translation_tools/translatables.py" line="187" />
         <source>Volume</source>
         <translation>ভলিউম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="182" />
+        <location filename="../../../translation_tools/translatables.py" line="184" />
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="180" />
+        <location filename="../../../translation_tools/translatables.py" line="176" />
         <source>Panning</source>
         <translation>প্যানিং</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="187" />
+        <location filename="../../../translation_tools/translatables.py" line="183" />
         <source>Stop after</source>
         <translation>পরে থামান</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="176" />
+        <location filename="../../../translation_tools/translatables.py" line="186" />
         <source>Positive values toward the right; "left" or "right" for full panning</source>
         <translation>দানবাদে ইটালিয়ান; পূর্ণতা পাস্টার জন্য "left" বা "right"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="175" />
+        <location filename="../../../translation_tools/translatables.py" line="180" />
         <source>Pitch</source>
         <translation>পিচ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="183" />
+        <location filename="../../../translation_tools/translatables.py" line="182" />
         <source>In milliseconds, "sound", "keypress", or "mouseclick"</source>
         <translation>মিলিসেকেন্ডে, "সাউন্ড", "কীপ্রেস" বা "মাউস ক্লিক"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="186" />
+        <location filename="../../../translation_tools/translatables.py" line="179" />
         <source>In .ogg or .wav format</source>
         <translation>.ogg বা .wav ফর্ম্যাটে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="181" />
+        <location filename="../../../translation_tools/translatables.py" line="185" />
         <source> x original</source>
         <translation> x মূল</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="185" />
+        <location filename="../../../translation_tools/translatables.py" line="175" />
         <source>Fade in</source>
         <translation>ফেড ইন</translation>
     </message>
@@ -1620,7 +1625,7 @@ of OpenSesame.
         <translation>স্থিতিকাল</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="184" />
+        <location filename="../../../translation_tools/translatables.py" line="178" />
         <source>Plays a sound file in .wav or .ogg format</source>
         <translation>.wav ছবির অথবা .ogg ফর্ম্যাটে একটি শব্দ ফাইল চালায়।</translation>
     </message>
@@ -1628,12 +1633,12 @@ of OpenSesame.
 <context>
     <name>item_sequence</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="172" />
+        <location filename="../../../translation_tools/translatables.py" line="169" />
         <source>Sequence contains non-existing item: %s</source>
         <translation>সিকোয়েন্সে অস্তিত্বহীন আইটেমঃ %s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="170" />
+        <location filename="../../../translation_tools/translatables.py" line="172" />
         <source>Runs a number of items in sequence</source>
         <translation>ক্রামানুশরণে বিভিন্ন আইটেমকে চালায়</translation>
     </message>
@@ -1643,7 +1648,7 @@ of OpenSesame.
         <translation>সিকোয়েন্সের শুরুতে বাকিশুদ্ধ কী চাপের ফ্লাশ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="169" />
+        <location filename="../../../translation_tools/translatables.py" line="170" />
         <source>&lt;b&gt;Important&lt;/b&gt;: A sequence has &lt;a href="http://osdoc.cogsci.nl/usage/prepare-run"&gt;a variable preparation time&lt;/a&gt;.</source>
         <translation>&lt;b&gt;গুরুত্বপূর্ণ&lt;/b&gt;: একটি অনুসরণের &lt;a href="http://osdoc.cogsci.nl/usage/prepare-run"&gt;একটি পরিবর্তনশীল প্রস্তুতি সময়&lt;/a&gt; রয়েছে।</translation>
     </message>
@@ -1651,17 +1656,17 @@ of OpenSesame.
 <context>
     <name>item_sketchpad</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="165" />
+        <location filename="../../../translation_tools/translatables.py" line="148" />
         <source>Some properties of a noise patch are unknown or variably defined, using fallback image</source>
         <translation>একটি নোইজ প্যাচের কিছু বৈশিষ্ট্য অজানা বা চল্লিত সংজ্ঞায়, ব্যবহার ফলব্যাক চিত্র</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="160" />
+        <location filename="../../../translation_tools/translatables.py" line="165" />
         <source>Penwidth "%s" is unknown or variably defined, using 1</source>
         <translation>পেনুইথ "%s" অজানা অথবা চলক নির্ধারিত, ১ ব্যবহার করা হচ্ছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="158" />
+        <location filename="../../../translation_tools/translatables.py" line="147" />
         <source>Width "%s" is unknown or variably defined, using 100</source>
         <translation>প্রস্থ "%s" অজানা বা পরিবর্তনশীল পরিভাষিত, 100 ব্যবহার করা হয়েছে</translation>
     </message>
@@ -1671,62 +1676,62 @@ of OpenSesame.
         <translation>টেক্সট প্রবেশ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="166" />
+        <location filename="../../../translation_tools/translatables.py" line="145" />
         <source>Lower to bottom</source>
         <translation>তালবিশেষে নিন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="148" />
+        <location filename="../../../translation_tools/translatables.py" line="156" />
         <source>Please enter a text for the textline</source>
         <translation>টেক্সটলাইনের জন্য একটি টেক্সট লিখুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="145" />
+        <location filename="../../../translation_tools/translatables.py" line="166" />
         <source>Rotation "%s" is unknown or variably defined, using 0</source>
         <translation>রোটেশন "%s" অজানা বা ভ্যারিয়েবলি নির্ধারিত, ০ ব্যবহার করা হচ্ছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="154" />
+        <location filename="../../../translation_tools/translatables.py" line="159" />
         <source>Proportion "%s" is unknown or variably defined, using .5</source>
         <translation>অনুপাত "%s" অজানা বা পরিবর্তনশীল পরিভাষিত, .৫ ব্যবহার করা হয়েছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="162" />
+        <location filename="../../../translation_tools/translatables.py" line="157" />
         <source>Color "%s" is unknown or variably defined, using placeholder color</source>
         <translation>রং "%s" অজানা অথবা চলক নির্ধারিত, প্লেসহোল্ডার রং ব্যবহার করা হচ্ছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="142" />
+        <location filename="../../../translation_tools/translatables.py" line="158" />
         <source>Y coordinate "%s" is unknown or variably defined, using display center</source>
         <translation>Y সহযোগী মুলেটি "%s" অজানা বা ভ্যারিয়েবলি নির্ধারিত, ডিসপ্লে কেন্দ্র ব্যবহার করা হচ্ছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="150" />
+        <location filename="../../../translation_tools/translatables.py" line="162" />
         <source>Scale "%s" is unknown or variably defined, using 1</source>
         <translation>স্কেল "%s" অজানা অথবা চলক নির্ধারিত, ১ ব্যবহার করা হচ্ছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="153" />
+        <location filename="../../../translation_tools/translatables.py" line="146" />
         <source>X coordinate "%s" is unknown or variably defined, using display center</source>
         <translation>X সহযোগী মুলেটি "%s" অজানা বা ভ্যারিয়েবলি নির্ধারিত, ডিসপ্লে কেন্দ্র ব্যবহার করা হচ্ছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="161" />
+        <location filename="../../../translation_tools/translatables.py" line="141" />
         <source>Specify polar coordinates</source>
         <translation>পোলার কো-অর্ডিনেট নির্দিষ্ট করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="159" />
+        <location filename="../../../translation_tools/translatables.py" line="164" />
         <source>Fill "%s" is unknown or variably defined, assuming filled</source>
         <translation>"%s" পূর্ণ অজানা বা ভ্যারিয়েবলি নির্ধারিত, পূর্ণ ধরা হচ্ছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="141" />
+        <location filename="../../../translation_tools/translatables.py" line="149" />
         <source>Delete</source>
         <translation>মুছুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="151" />
+        <location filename="../../../translation_tools/translatables.py" line="161" />
         <source>Displays stimuli</source>
         <translation>উদ্দীপক প্রদর্শন</translation>
     </message>
@@ -1736,47 +1741,47 @@ of OpenSesame.
         <translation>উচ্চতা "%s" অজানা বা পরিবর্তনশীল পরিভাষিত, ১০০ ব্যবহার করা হয়েছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="149" />
+        <location filename="../../../translation_tools/translatables.py" line="154" />
         <source>Element script</source>
         <translation>উপাদান স্ক্রিপ্ট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="163" />
+        <location filename="../../../translation_tools/translatables.py" line="142" />
         <source>Draw %s element</source>
         <translation>%s উপাদান আঁকা</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="156" />
+        <location filename="../../../translation_tools/translatables.py" line="160" />
         <source>Fixdot style "%s" is unknown or variably defined</source>
         <translation>Fixdot স্টাইল "%s" অজানা বা পরিবর্তনশীল পরিভাষিত</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="152" />
+        <location filename="../../../translation_tools/translatables.py" line="150" />
         <source>Image name "%s" is unknown or variably defined, using fallback image</source>
         <translation>চিত্রের নাম "%s" অজানা অথবা ভ্যারিয়েবলি নির্ধারিত, ফলব্যাক চিত্র ব্যবহার করা হচ্ছে।</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="146" />
+        <location filename="../../../translation_tools/translatables.py" line="151" />
         <source>Some properties of a Gabor patch are unknown or variably defined, using fallback image</source>
         <translation>একটি গাবোর প্যাচের কিছু বৈশিষ্ট্য অজানা বা চল্লিত সংজ্ঞায়, ব্যবহার ফলব্যাক চিত্র</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="143" />
+        <location filename="../../../translation_tools/translatables.py" line="163" />
         <source>Radius "%s" is unknown or variably defined, using 50</source>
         <translation>রেডিয়াস "%s" অজানা বা পরিবর্তনশীল পরিভাষিত, 50 ব্যবহার করা হয়েছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="147" />
+        <location filename="../../../translation_tools/translatables.py" line="152" />
         <source>Font size "%s" is invalid or variably defined, using 18</source>
         <translation>ফন্ট আকার "%s" অবৈধ বা পরিবর্তনশীল পরিভাষিত, ১৮ ব্যবহার করা হয়েছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="164" />
+        <location filename="../../../translation_tools/translatables.py" line="143" />
         <source>Raise to front</source>
         <translation>সামনে তোলা</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="157" />
+        <location filename="../../../translation_tools/translatables.py" line="153" />
         <source>Edit script</source>
         <translation>স্ক্রিপ্ট সম্পাদনা</translation>
     </message>
@@ -1784,22 +1789,22 @@ of OpenSesame.
 <context>
     <name>item_synth</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="270" />
+        <location filename="../../../translation_tools/translatables.py" line="268" />
         <source> x maximum</source>
         <translation> x সর্বাধিক</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="267" />
+        <location filename="../../../translation_tools/translatables.py" line="274" />
         <source>Volume</source>
         <translation>ভলিউম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="274" />
+        <location filename="../../../translation_tools/translatables.py" line="272" />
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="269" />
+        <location filename="../../../translation_tools/translatables.py" line="265" />
         <source>Panning</source>
         <translation>প্যানিং</translation>
     </message>
@@ -1809,17 +1814,17 @@ of OpenSesame.
         <translation>আক্রমণ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="265" />
+        <location filename="../../../translation_tools/translatables.py" line="273" />
         <source>Positive values toward the right; "left" or "right" for full panning</source>
         <translation>দানবাদে ইটালিয়ান; পূর্ণতা পাস্টার জন্য "left" বা "right"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="272" />
+        <location filename="../../../translation_tools/translatables.py" line="270" />
         <source>In milliseconds, "sound", "keypress", or "mouseclick"</source>
         <translation>মিলিসেকেন্ডে, "সাউন্ড", "কীপ্রেস" বা "মাউস ক্লিক"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="271" />
+        <location filename="../../../translation_tools/translatables.py" line="269" />
         <source>Length</source>
         <translation>দৈর্ঘ্য</translation>
     </message>
@@ -1829,27 +1834,27 @@ of OpenSesame.
         <translation>স্থিতিকাল</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="263" />
+        <location filename="../../../translation_tools/translatables.py" line="264" />
         <source>Decay</source>
         <translation>অবক্ষয়</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="264" />
+        <location filename="../../../translation_tools/translatables.py" line="267" />
         <source>A basic sound synthesizer</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="262" />
+        <location filename="../../../translation_tools/translatables.py" line="271" />
         <source>Waveform</source>
         <translation>ওয়েভফর্ম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="268" />
+        <location filename="../../../translation_tools/translatables.py" line="262" />
         <source>In Hertz or as note, e.g. "A1"</source>
         <translation>হার্টজ বা নোট হিসাবে, উদাহরণস্বরূপ "A1"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="273" />
+        <location filename="../../../translation_tools/translatables.py" line="263" />
         <source>Frequency</source>
         <translation>ফ্রিকুয়েন্সি</translation>
     </message>
@@ -1857,47 +1862,47 @@ of OpenSesame.
 <context>
     <name>plugin_advanced_delay</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="425" />
+        <location filename="../../../translation_tools/translatables.py" line="424" />
         <source>The average duration in milliseconds</source>
         <translation>মিলিসেকেন্ডে গড় সময়কাল</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="428" />
+        <location filename="../../../translation_tools/translatables.py" line="429" />
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="423" />
+        <location filename="../../../translation_tools/translatables.py" line="430" />
         <source>A random delay sampled from either a normal or uniform distribution</source>
         <translation>একটি স্বাভাবিক বা সমষ্টি বন্টন থেকে নেওয়া একটি এলোমেলো বিলম্ব</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="427" />
+        <location filename="../../../translation_tools/translatables.py" line="426" />
         <source>Jitter mode</source>
         <translation>জিটার মোড</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="426" />
+        <location filename="../../../translation_tools/translatables.py" line="427" />
         <source>The mode for determining the actual duration (see Help)</source>
         <translation>প্রকৃত সময়কাল নির্ধারণের জন্য মোড (হেল্প দেখুন)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="422" />
+        <location filename="../../../translation_tools/translatables.py" line="425" />
         <source>Duration</source>
         <translation>স্থিতিকাল</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="424" />
+        <location filename="../../../translation_tools/translatables.py" line="423" />
         <source>The jitter of the actual duration in milliseconds (depends on Jitter mode)</source>
         <translation>প্রকৃত সময়কালের জিটার মিলিসেকেন্ডে (জিটার মোডের উপর নির্ভর)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="421" />
+        <location filename="../../../translation_tools/translatables.py" line="428" />
         <source>Jitter</source>
         <translation>জিটার</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="420" />
+        <location filename="../../../translation_tools/translatables.py" line="431" />
         <source>Flow control</source>
         <translation>ফ্লো নিয়ন্ত্রণ</translation>
     </message>
@@ -1905,12 +1910,12 @@ of OpenSesame.
 <context>
     <name>plugin_coroutines</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="454" />
+        <location filename="../../../translation_tools/translatables.py" line="456" />
         <source>Run items simultaneously</source>
         <translation>আইটেমগুলি একরাশ চালান</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="453" />
+        <location filename="../../../translation_tools/translatables.py" line="457" />
         <source>Flow control</source>
         <translation>ফ্লো নিয়ন্ত্রণ</translation>
     </message>
@@ -1918,17 +1923,17 @@ of OpenSesame.
 <context>
     <name>plugin_form_base</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="517" />
+        <location filename="../../../translation_tools/translatables.py" line="518" />
         <source>Form</source>
         <translation>ফর্ম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="515" />
+        <location filename="../../../translation_tools/translatables.py" line="520" />
         <source>Edit the script to modify the form</source>
         <translation>ফর্ম পরিবর্তন করতে স্ক্রিপ্ট সম্পাদনা করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="516" />
+        <location filename="../../../translation_tools/translatables.py" line="519" />
         <source>A generic form plug-in</source>
         <translation>একটি সাধারণ ফর্ম প্লাগ-ইন</translation>
     </message>
@@ -1936,12 +1941,12 @@ of OpenSesame.
 <context>
     <name>plugin_form_consent</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="528" />
+        <location filename="../../../translation_tools/translatables.py" line="523" />
         <source>Text to display in the form body</source>
         <translation>ফর্মের মাধ্যমে প্রদর্শিত টেক্সট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="520" />
+        <location filename="../../../translation_tools/translatables.py" line="526" />
         <source>Decline-button text</source>
         <translation>নাকচ বোতামের টেক্সট</translation>
     </message>
@@ -1951,57 +1956,57 @@ of OpenSesame.
         <translation>নাকচ বোতামের জন্য টেক্সট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="530" />
+        <location filename="../../../translation_tools/translatables.py" line="534" />
         <source>Title to appear above the form text</source>
         <translation>ফর্ম টেক্সটের উপরে দেখা শিরোনাম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="531" />
+        <location filename="../../../translation_tools/translatables.py" line="524" />
         <source>A simple consent form</source>
         <translation>একটি সাধারণ সম্মতি ফর্ম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="526" />
+        <location filename="../../../translation_tools/translatables.py" line="528" />
         <source>Form title</source>
         <translation>ফর্মের শিরোনাম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="532" />
+        <location filename="../../../translation_tools/translatables.py" line="525" />
         <source>Accept-button text</source>
         <translation>গ্রহণ বোতামের টেক্সট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="529" />
+        <location filename="../../../translation_tools/translatables.py" line="527" />
         <source>Message on decline</source>
         <translation>অস্বীকারে বার্তা</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="524" />
+        <location filename="../../../translation_tools/translatables.py" line="535" />
         <source>Text for the accept button</source>
         <translation>গ্রহণ বোতামের জন্য টেক্সট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="523" />
+        <location filename="../../../translation_tools/translatables.py" line="536" />
         <source>Checkbox text</source>
         <translation>চেকবক্স টেক্সট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="521" />
+        <location filename="../../../translation_tools/translatables.py" line="530" />
         <source>Consent form text</source>
         <translation>সম্মতি ফর্মের টেক্সট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="522" />
+        <location filename="../../../translation_tools/translatables.py" line="531" />
         <source>Form</source>
         <translation>ফর্ম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="527" />
+        <location filename="../../../translation_tools/translatables.py" line="532" />
         <source>A message shown when the participant declines</source>
         <translation>অংশগ্রহণকারী যখন প্রত্যাখ্যান করে তখন প্রদর্শিত বার্তা</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="525" />
+        <location filename="../../../translation_tools/translatables.py" line="529" />
         <source>Text for the checkbox</source>
         <translation>চেকবক্সের জন্য টেক্সট</translation>
     </message>
@@ -2009,7 +2014,7 @@ of OpenSesame.
 <context>
     <name>plugin_form_multiple_choice</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="592" />
+        <location filename="../../../translation_tools/translatables.py" line="585" />
         <source>A simple multiple choice item</source>
         <translation>একটি সাধারণ বহুনির্বাচনী আইটেম</translation>
     </message>
@@ -2019,57 +2024,57 @@ of OpenSesame.
         <translation>ফর্মের শিরোনাম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="587" />
+        <location filename="../../../translation_tools/translatables.py" line="593" />
         <source>Response options</source>
         <translation>উত্তর বিকল্প</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="593" />
+        <location filename="../../../translation_tools/translatables.py" line="588" />
         <source>Response variable</source>
         <translation>উত্তর চলক</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="582" />
+        <location filename="../../../translation_tools/translatables.py" line="586" />
         <source>Response options (different options on different lines)</source>
         <translation>উত্তর বিকল্প</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="585" />
+        <location filename="../../../translation_tools/translatables.py" line="595" />
         <source>Your question</source>
         <translation>আপনার প্রশ্ন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="586" />
+        <location filename="../../../translation_tools/translatables.py" line="594" />
         <source>Response timeout</source>
         <translation>প্রতিক্রিয়া সময় শেষ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="589" />
+        <location filename="../../../translation_tools/translatables.py" line="592" />
         <source>Button text</source>
         <translation>বোতামের টেক্সট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="588" />
+        <location filename="../../../translation_tools/translatables.py" line="589" />
         <source>Text for the button to advance to the next item</source>
         <translation>পরবর্তী</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="581" />
+        <location filename="../../../translation_tools/translatables.py" line="584" />
         <source>Allow multiple options to be selected</source>
         <translation>একাধিক বিকল্প নির্বাচনের অনুমতি দিন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="584" />
+        <location filename="../../../translation_tools/translatables.py" line="596" />
         <source>Timeout</source>
         <translation>সময় শেষ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="583" />
+        <location filename="../../../translation_tools/translatables.py" line="591" />
         <source>Form</source>
         <translation>ফর্ম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="591" />
+        <location filename="../../../translation_tools/translatables.py" line="587" />
         <source>Advance immediately to the next item once a selection has been made</source>
         <translation>নির্বাচন হলে একটি নির্বাচন করা হলে অবিলম্বে পরবর্তী আইটেম</translation>
     </message>
@@ -2077,42 +2082,42 @@ of OpenSesame.
 <context>
     <name>plugin_form_text_display</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="557" />
+        <location filename="../../../translation_tools/translatables.py" line="559" />
         <source>Ok-button text</source>
         <translation>ওকে-বোতামের টেক্সট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="561" />
+        <location filename="../../../translation_tools/translatables.py" line="562" />
         <source>Main form text</source>
         <translation>প্রধান ফর্ম টেক্সট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="556" />
+        <location filename="../../../translation_tools/translatables.py" line="558" />
         <source>Text for the Ok button</source>
         <translation>ঠিক আছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="560" />
+        <location filename="../../../translation_tools/translatables.py" line="565" />
         <source>Text to display in the form body</source>
         <translation>ফর্মের মাধ্যমে প্রদর্শিত টেক্সট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="562" />
+        <location filename="../../../translation_tools/translatables.py" line="563" />
         <source>Title to appear above the form text</source>
         <translation>ফর্ম টেক্সটের উপরে দেখা শিরোনাম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="559" />
+        <location filename="../../../translation_tools/translatables.py" line="560" />
         <source>Form title</source>
         <translation>ফর্মের শিরোনাম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="558" />
+        <location filename="../../../translation_tools/translatables.py" line="564" />
         <source>A simple text display form</source>
         <translation>সাধারণ টেক্সট প্রদর্শন ফর্ম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="555" />
+        <location filename="../../../translation_tools/translatables.py" line="561" />
         <source>Form</source>
         <translation>ফর্ম</translation>
     </message>
@@ -2125,47 +2130,47 @@ of OpenSesame.
         <translation>ফর্ম টেক্সটের উপরে দেখা শিরোনাম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="485" />
+        <location filename="../../../translation_tools/translatables.py" line="486" />
         <source>Form title</source>
         <translation>ফর্মের শিরোনাম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="488" />
+        <location filename="../../../translation_tools/translatables.py" line="494" />
         <source>The experimental variable to save the response in</source>
         <translation>প্রতিক্রিয়া সংরক্ষণের জন্য পরীক্ষামূলক চলক</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="490" />
+        <location filename="../../../translation_tools/translatables.py" line="485" />
         <source>Response variable</source>
         <translation>উত্তর চলক</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="484" />
+        <location filename="../../../translation_tools/translatables.py" line="490" />
         <source>Your question</source>
         <translation>আপনার প্রশ্ন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="487" />
+        <location filename="../../../translation_tools/translatables.py" line="491" />
         <source>A simple text input form</source>
         <translation>সাধারণ টেক্সট ইনপুট ফর্ম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="486" />
+        <location filename="../../../translation_tools/translatables.py" line="493" />
         <source>A question text</source>
         <translation>প্রশ্নের টেক্সট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="491" />
+        <location filename="../../../translation_tools/translatables.py" line="487" />
         <source>A response timeout</source>
         <translation>প্রতিক্রিয়া সময় শেষ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="483" />
+        <location filename="../../../translation_tools/translatables.py" line="492" />
         <source>Timeout</source>
         <translation>সময় শেষ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="482" />
+        <location filename="../../../translation_tools/translatables.py" line="488" />
         <source>Form</source>
         <translation>ফর্ম</translation>
     </message>
@@ -2178,47 +2183,47 @@ of OpenSesame.
         <translation>একাধিক জয়স্টিক থাকলে জয়স্টিক চিহ্নিত করে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="433" />
+        <location filename="../../../translation_tools/translatables.py" line="439" />
         <source>Expecting a comma-separated list of numbers between 1 and the number of joybuttons</source>
         <translation>1 এবং joybuttons এর সংখ্যার মধ্যে কমা দ্বারা পৃথক সংখ্যাগুলির একটি তালিকা প্রত্যাশা করা হচ্ছে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="441" />
+        <location filename="../../../translation_tools/translatables.py" line="437" />
         <source>Enable dummy mode to test the experiment using a keyboard</source>
         <translation>কীবোর্ড ব্যবহার করে পরীক্ষা পরীক্ষণ করার জন্য ডামি মোড চালু করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="439" />
+        <location filename="../../../translation_tools/translatables.py" line="442" />
         <source>Collects input from a joystick or gamepad</source>
         <translation>জয়স্টিক বা গেমপ্যাড থেকে ইনপুট সংগ্রহ করে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="436" />
+        <location filename="../../../translation_tools/translatables.py" line="435" />
         <source>Device nr.</source>
         <translation>ডিভাইস নম্বর</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="431" />
+        <location filename="../../../translation_tools/translatables.py" line="440" />
         <source>Expecting a value in milliseconds of 'infinite'</source>
         <translation>মিলি সেকেন্ডে 'অনন্ত' মানের প্রত্যাশা করা</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="440" />
+        <location filename="../../../translation_tools/translatables.py" line="443" />
         <source>Allowed responses</source>
         <translation>অনুমোদিত প্রতিক্রিয়া</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="437" />
+        <location filename="../../../translation_tools/translatables.py" line="444" />
         <source>Timeout</source>
         <translation>সময় শেষ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="432" />
+        <location filename="../../../translation_tools/translatables.py" line="436" />
         <source>Response collection</source>
         <translation>প্রতিক্রিয়া সংগ্রহ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="435" />
+        <location filename="../../../translation_tools/translatables.py" line="441" />
         <source>Dummy mode (use keyboard instead of joystick)</source>
         <translation>ডামি মোড (জয়স্টিকের পরিবর্তে কীবোর্ড ব্যবহার করুন)</translation>
     </message>
@@ -2231,27 +2236,27 @@ of OpenSesame.
 <context>
     <name>plugin_notepad</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="578" />
+        <location filename="../../../translation_tools/translatables.py" line="580" />
         <source>A simple notepad to document your experiment. This plug-in does nothing.</source>
         <translation>আপনার পরীক্ষা নথিভুক্ত করার জন্য একটি সাধারণ নোটপ্যাড। এই প্লাগ-ইন কিছুই করে না।</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="576" />
+        <location filename="../../../translation_tools/translatables.py" line="581" />
         <source>None</source>
         <translation>কেউ না</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="574" />
+        <location filename="../../../translation_tools/translatables.py" line="578" />
         <source>Miscellaneous</source>
         <translation>বিবিধ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="575" />
+        <location filename="../../../translation_tools/translatables.py" line="576" />
         <source>Note</source>
         <translation>নোট</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="577" />
+        <location filename="../../../translation_tools/translatables.py" line="579" />
         <source>Type your note here</source>
         <translation>এখানে আপনার নোট টাইপ করুন</translation>
     </message>
@@ -2259,72 +2264,72 @@ of OpenSesame.
 <context>
     <name>plugin_quest_staircase_init</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="499" />
+        <location filename="../../../translation_tools/translatables.py" line="514" />
         <source>Name</source>
         <translation>নাম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="508" />
+        <location filename="../../../translation_tools/translatables.py" line="513" />
         <source>Initializes a new Quest staircase procedure</source>
         <translation>নতুন কুয়েস্ট স্টেয়ারকেস পদ্ধতিটি চালু করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="507" />
+        <location filename="../../../translation_tools/translatables.py" line="509" />
         <source>β</source>
         <translation>β</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="496" />
+        <location filename="../../../translation_tools/translatables.py" line="497" />
         <source>Estimated threshold</source>
         <translation>আনুমানিক থ্রেশল্ড</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="498" />
+        <location filename="../../../translation_tools/translatables.py" line="507" />
         <source>Staircase</source>
         <translation>স্ট্যায়ারকেস</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="502" />
+        <location filename="../../../translation_tools/translatables.py" line="508" />
         <source>Use different names to run multiple independent Quest procedures</source>
         <translation>দ্য বিবিন্ন nাম ব্যবহার করে একাধিক স্বাধীন কুয়েস্ট পদ্ধতি চালান</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="506" />
+        <location filename="../../../translation_tools/translatables.py" line="501" />
         <source>Std. dev. of estimated threshold</source>
         <translation>আনুমানিক থ্রেশল্ডের স্ট্যান্ডার্ড বিচ্যুতি</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="511" />
+        <location filename="../../../translation_tools/translatables.py" line="505" />
         <source>Minimum test value</source>
         <translation>নিম্নতম পরীক্ষার মান</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="494" />
+        <location filename="../../../translation_tools/translatables.py" line="506" />
         <source>Used for initial test value</source>
         <translation>প্রাথমিক পরীক্ষার মানের জন্য ব্যবহার করা</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="501" />
+        <location filename="../../../translation_tools/translatables.py" line="498" />
         <source>Proportion of random responses at maximum stimulus intensity</source>
         <translation>সর্বাধিক উত্তেজক তীব্রতা বেশী এলোমেলো প্রতিক্রিয়া এলোমেলো প্রতিক্রিয়া</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="509" />
+        <location filename="../../../translation_tools/translatables.py" line="510" />
         <source>Desired proportion of correct responses</source>
         <translation>শুদ্ধ উত্তরের প্রারণিক অনুপাত</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="512" />
+        <location filename="../../../translation_tools/translatables.py" line="500" />
         <source>Experimental variable for test value</source>
         <translation>পরীক্ষা মানের জন্য পরীক্ষণ-মূলক চলক</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="495" />
+        <location filename="../../../translation_tools/translatables.py" line="511" />
         <source>Maximum test value</source>
         <translation>সর্বাধিক পরীক্ষা মান</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="510" />
+        <location filename="../../../translation_tools/translatables.py" line="515" />
         <source>Steepness of the Weibull psychometric function</source>
         <translation>Weibull মানসিকতা গণিত ফাংশনের উঁচুনিচু</translation>
     </message>
@@ -2334,22 +2339,22 @@ of OpenSesame.
         <translation>অপ্টিমাল পরীক্ষার মান চিহ্নিত বিধি</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="504" />
+        <location filename="../../../translation_tools/translatables.py" line="499" />
         <source>Target</source>
         <translation>লক্ষ্য</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="500" />
+        <location filename="../../../translation_tools/translatables.py" line="504" />
         <source>Method</source>
         <translation>পদ্ধতি</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="497" />
+        <location filename="../../../translation_tools/translatables.py" line="502" />
         <source>Chance level (γ)</source>
         <translation>চান্স লেভেল (γ)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="505" />
+        <location filename="../../../translation_tools/translatables.py" line="512" />
         <source>δ</source>
         <translation>δ</translation>
     </message>
@@ -2357,32 +2362,32 @@ of OpenSesame.
 <context>
     <name>plugin_quest_staircase_next</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="567" />
+        <location filename="../../../translation_tools/translatables.py" line="570" />
         <source>Staircase</source>
         <translation>স্ট্যায়ারকেস</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="565" />
+        <location filename="../../../translation_tools/translatables.py" line="571" />
         <source>Updates the Quest test value based on a response</source>
         <translation>একটি প্রতিক্রিয়া ভিত্তিতে কুয়েস্ট পরীক্ষা মান আপডেট করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="569" />
+        <location filename="../../../translation_tools/translatables.py" line="568" />
         <source>Should match a name specified in a quest_staircase_init</source>
         <translation>একটি quest_staircase_init এ নির্দেশিত নামের সাথে মেলানো উচিত</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="566" />
+        <location filename="../../../translation_tools/translatables.py" line="572" />
         <source>Responses should be coded as 0 (incorrect) or 1 (correct)</source>
         <translation>প্রতিক্রিয়াগুলি 0 (ভুল) বা 1 (সঠিক) হিসাবে কোড করা উচিত</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="570" />
+        <location filename="../../../translation_tools/translatables.py" line="569" />
         <source>Response variable</source>
         <translation>উত্তর চলক</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="568" />
+        <location filename="../../../translation_tools/translatables.py" line="573" />
         <source>Name</source>
         <translation>নাম</translation>
     </message>
@@ -2390,22 +2395,22 @@ of OpenSesame.
 <context>
     <name>plugin_repeat_cycle</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="458" />
+        <location filename="../../../translation_tools/translatables.py" line="463" />
         <source>Repeat if</source>
         <translation>যদি পুনরাবৃত্তি করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="460" />
+        <location filename="../../../translation_tools/translatables.py" line="462" />
         <source>A conditional expression that determines when the cycle is repeated</source>
         <translation>বাংলা: চক্রটি কখন পুনরাবৃত্তি হবে তা নির্ধারণ করে একটি শর্তাধীন ব্যঞ্জনা</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="459" />
+        <location filename="../../../translation_tools/translatables.py" line="460" />
         <source>Optionally repeat a cycle from a loop</source>
         <translation>একটি লুপ থেকে ঐচ্ছিক রূপে একটি চক্র পুনরাবৃত্তি করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="457" />
+        <location filename="../../../translation_tools/translatables.py" line="461" />
         <source>Flow control</source>
         <translation>ফ্লো নিয়ন্ত্রণ</translation>
     </message>
@@ -2413,17 +2418,17 @@ of OpenSesame.
 <context>
     <name>plugin_reset_feedback</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="550" />
+        <location filename="../../../translation_tools/translatables.py" line="553" />
         <source>Response collection</source>
         <translation>প্রতিক্রিয়া সংগ্রহ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="552" />
+        <location filename="../../../translation_tools/translatables.py" line="555" />
         <source>This plug-in has no settings</source>
         <translation>এই প্লাগ-ইনে কোনও সেটিংস নেই</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="551" />
+        <location filename="../../../translation_tools/translatables.py" line="554" />
         <source>A very simple plug-in to reset feedback variables</source>
         <translation>ফিডব্যাক ভেরিয়েবলগুলি পুনরায় সেট করার খুব সাধারণ একটি প্লাগ-ইন</translation>
     </message>
@@ -2431,7 +2436,7 @@ of OpenSesame.
 <context>
     <name>plugin_srbox</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="463" />
+        <location filename="../../../translation_tools/translatables.py" line="474" />
         <source>Expecting a value in milliseconds or 'infinite'</source>
         <translation>মিলিসেকেন্ডে মান বা "অসীম" প্রত্যাশিত</translation>
     </message>
@@ -2441,17 +2446,17 @@ of OpenSesame.
         <translation>সঠিক প্রতিক্রিয়া</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="476" />
+        <location filename="../../../translation_tools/translatables.py" line="466" />
         <source>Expecting a valid device name. Leave empty for autodetect.</source>
         <translation>একটি বৈধ ডিভাইস নামের অপেক্ষা করা হয়। অটোডিটেক্টের জন্য খালি রাখুন।</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="469" />
+        <location filename="../../../translation_tools/translatables.py" line="476" />
         <source>Expecting a semicolon-separated list of button numbers, e.g., 1;3;4</source>
         <translation>যথা, 1;3;4 সমীপে সেমিকোলন দ্বারা দৃঢ় নম্বরের তালিকা প্রত্যাশিত</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="471" />
+        <location filename="../../../translation_tools/translatables.py" line="475" />
         <source>Ignore buttons that are already pressed</source>
         <translation>ইতিমধ্যে চাপা বোতামগুলি উপেক্ষা করা হয়</translation>
     </message>
@@ -2461,59 +2466,59 @@ of OpenSesame.
         <translation>ডামি মোড (এর পরিবর্তে কীবোর্ড ব্যবহার করুন)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="465" />
+        <location filename="../../../translation_tools/translatables.py" line="482" />
         <source>Device name</source>
         <translation>ডিভাইসের নাম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="473" />
+        <location filename="../../../translation_tools/translatables.py" line="471" />
         <source>Expecting a button number (1 .. 5)</source>
         <translation>একটি বোতাম নম্বর প্রত্যাশিত (1 .. 5)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="478" />
+        <location filename="../../../translation_tools/translatables.py" line="477" />
         <source>Allowed responses</source>
         <translation>অনুমোদিত প্রতিক্রিয়া</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="467" />
+        <location filename="../../../translation_tools/translatables.py" line="469" />
         <source>&lt;small&gt;&lt;b&gt;Note:&lt;/b&gt; If there are multiple srbox items in the experiment, the first srbox item determines the device name and whether dummy mode is enabled&lt;/small&gt;
 </source>
         <translation>&lt;small&gt;&lt;b&gt;নোট:&lt;/b&gt; যদি বিজ্ঞাপনে একাধিক এসআরবক্স বৈশিষ্ট্যর লিখনী থাকে, তাপ্রভৃতি পর এসআরবক্স বৈশিষ্ট্যর লিখনী ডিভাইসের নাম এবং টুকরা নাম চালু হোক বা না তা নির্ধারণ করে।&lt;/small&gt;
 </translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="472" />
+        <location filename="../../../translation_tools/translatables.py" line="470" />
         <source>Require a button-state change, so that already-pressed buttons are ignored</source>
         <translation>ইতিমধ্যে চাপা বোতামগুলি উপেক্ষা করা হয়, যাতে বোতামের অবস্থা পরিবর্তকের প্রয়োজন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="470" />
+        <location filename="../../../translation_tools/translatables.py" line="480" />
         <source>Timeout</source>
         <translation>সময় শেষ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="474" />
+        <location filename="../../../translation_tools/translatables.py" line="481" />
         <source>Enable to respond with the keyboard instead of an SR Box</source>
         <translation>একটি SR Box এর পরিবর্তে কীবোর্ডের সাথে প্রতিক্রিয়া দিন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="466" />
+        <location filename="../../../translation_tools/translatables.py" line="472" />
         <source>Turn on lights</source>
         <translation>আলোক চালু করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="464" />
+        <location filename="../../../translation_tools/translatables.py" line="473" />
         <source>Response collection</source>
         <translation>প্রতিক্রিয়া সংগ্রহ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="477" />
+        <location filename="../../../translation_tools/translatables.py" line="478" />
         <source>Expecting a semicolon-separated list of light numbers, e.g., 1;3;4</source>
         <translation>যথা, 1;3;4 সমীপে সেমিকোলন দ্বারা দৃঢ় নম্বরের তালিকা প্রত্যাশিত</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="475" />
+        <location filename="../../../translation_tools/translatables.py" line="467" />
         <source>A plug-in for using the serial response box.</source>
         <translation>সিরিয়াল প্রতিক্রিয়া বাক্স ব্যবহারের জন্য একটি প্লাগ-ইন।</translation>
     </message>
@@ -2521,32 +2526,32 @@ of OpenSesame.
 <context>
     <name>plugin_touch_response</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="545" />
+        <location filename="../../../translation_tools/translatables.py" line="550" />
         <source>Specifies the number of rows</source>
         <translation>রো সংখ্যা নির্দিষ্ট করে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="536" />
+        <location filename="../../../translation_tools/translatables.py" line="546" />
         <source>Expecting a value in milliseconds or 'infinite'</source>
         <translation>মিলিসেকেন্ডে মান বা "অসীম" প্রত্যাশিত</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="539" />
+        <location filename="../../../translation_tools/translatables.py" line="544" />
         <source>Show a mouse cursor (if supported on device)</source>
         <translation>একটি মাউস কার্সর দেখান (যদি ডিভাইসে সমর্থিত হয়)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="543" />
+        <location filename="../../../translation_tools/translatables.py" line="541" />
         <source>Number of columns</source>
         <translation>কলামের সংখ্যা</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="546" />
+        <location filename="../../../translation_tools/translatables.py" line="540" />
         <source>A grid-based response item, convenient for touch screens</source>
         <translation>টাচ স্ক্রীনের জন্য সুবিধাজনক গ্রিড-ভিত্তিক প্রতিক্রিয়া প্রদান</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="544" />
+        <location filename="../../../translation_tools/translatables.py" line="545" />
         <source>Number of rows</source>
         <translation>রো সংখ্যা</translation>
     </message>
@@ -2556,7 +2561,7 @@ of OpenSesame.
         <translation>কার্সর দেখান</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="541" />
+        <location filename="../../../translation_tools/translatables.py" line="549" />
         <source>Timeout</source>
         <translation>সময় শেষ</translation>
     </message>
@@ -2566,17 +2571,17 @@ of OpenSesame.
         <translation>সঠিক প্রতিক্রিয়া নির্ধারণ করুন</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="537" />
+        <location filename="../../../translation_tools/translatables.py" line="543" />
         <source>Response collection</source>
         <translation>প্রতিক্রিয়া সংগ্রহ</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="538" />
+        <location filename="../../../translation_tools/translatables.py" line="548" />
         <source>Specifies the number of columns</source>
         <translation>কলামের সংখ্যা নির্দিষ্ট করে</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="540" />
+        <location filename="../../../translation_tools/translatables.py" line="539" />
         <source>Correct response</source>
         <translation>সঠিক প্রতিক্রিয়া</translation>
     </message>
@@ -2584,37 +2589,37 @@ of OpenSesame.
 <context>
     <name>plugins_coroutines</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="447" />
+        <location filename="../../../translation_tools/translatables.py" line="450" />
         <source>"%s" does not support coroutines.</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="449" />
+        <location filename="../../../translation_tools/translatables.py" line="451" />
         <source>End after item (optional)</source>
         <translation>আইটেমের পরে সমাপ্ত (ঐচ্ছিক)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="445" />
+        <location filename="../../../translation_tools/translatables.py" line="449" />
         <source>Item name</source>
         <translation>আইটেমের নাম</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="444" />
+        <location filename="../../../translation_tools/translatables.py" line="448" />
         <source>Duration</source>
         <translation>স্থিতিকাল</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="450" />
+        <location filename="../../../translation_tools/translatables.py" line="453" />
         <source>End time (if applicable)</source>
         <translation>সমাপ্তি সময় (যদি প্রযোজ্য)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="446" />
+        <location filename="../../../translation_tools/translatables.py" line="447" />
         <source>Start time</source>
         <translation>সময় শুরু</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="448" />
+        <location filename="../../../translation_tools/translatables.py" line="452" />
         <source>Flush pending key presses at coroutines start</source>
         <translation />
     </message>

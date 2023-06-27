@@ -11539,5 +11539,43 @@
     "he": "OSWeb (online) תבנית",
     "ru": "OSWeb (online) шаблон",
     "tr": "OSWeb (online) şablon"
+  },
+  "New window": {
+    "nl": "Nieuw venster",
+    "de": "Neues Fenster",
+    "fr": "Nouvelle fenêtre",
+    "es": "Nueva ventana",
+    "it": "Nuova finestra",
+    "pt": "Nova janela",
+    "zh": "新窗口",
+    "yue": "新視窗",
+    "ja": "新しいウィンドウ",
+    "ko": "새 창",
+    "id": "Jendela baru",
+    "hi": "नई विंडो",
+    "bn": "নতুন উইন্ডো",
+    "ar": "نافذة جديدة",
+    "he": "חלון חדש",
+    "ru": "Новое окно",
+    "tr": "Yeni pencere"
+  },
+  "experiment properties": {
+    "nl": "experimenteigenschappen",
+    "de": "Experimenteigenschaften",
+    "fr": "propriétés de l'expérience",
+    "es": "propiedades del experimento",
+    "it": "proprietà dell'esperimento",
+    "pt": "propriedades do experimento",
+    "zh": "实验属性",
+    "yue": "實驗屬性",
+    "ja": "実験のプロパティ",
+    "ko": "실험 속성",
+    "id": "properti percobaan",
+    "hi": "प्रयोग गुण",
+    "bn": "পরীক্ষার বৈশিষ্ট্যসমূহ",
+    "ar": "خصائص التجربة",
+    "he": "תכונות הניסוי",
+    "ru": "свойства эксперимента",
+    "tr": "deney özellikleri"
   }
 }
