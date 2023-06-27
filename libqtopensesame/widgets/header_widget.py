@@ -24,13 +24,16 @@ from libqtopensesame.misc.translate import translation_context
 _ = translation_context('header_widget', category='core')
 
 
+MAX_NAME_LENGTH = 30
+
+
 class HeaderWidget(BaseWidget):
     """Editable labels for an item's name and description.
     
     Parameters
     ----------
     item
-        A qtitem object.
+        QtItem
     """
     def __init__(self, item):
         super().__init__(item.main_window)
@@ -73,27 +76,28 @@ class HeaderWidget(BaseWidget):
         self.setLayout(vbox)
 
     def refresh(self):
-        r"""Updates the header so that it's content match the item."""
+        """Updates the header so that it's content match the item."""
         self.set_name(self.item.name)
         self.set_desc(self.item.var.description)
 
-    def set_name(self, name):
-        r"""Sets the name.
+    def set_name(self, name, label_type=None):
+        """Sets the name.
 
         Parameters
         ----------
-        name
-            A name.
-        type
-            unicode
+        name: str
+        label_type: str or None, optional
         """
-        self.label_name.setText(safe_decode(name))
+        self.label_name.setText(
+            name if len(name) < MAX_NAME_LENGTH
+            else name[:MAX_NAME_LENGTH - 1] + '…')
         self.label_type.setText(
-            ' — ' + self.item.item_type.replace("_", " "))
-        self.edit_name.setText(safe_decode(name))
+            ' — ' + label_type if label_type is not None
+            else ' — ' + self.item.item_type.replace("_", " "))
+        self.edit_name.setText(name)
 
     def set_desc(self, desc):
-        r"""Sets the description.
+        """Sets the description.
 
         Parameters
         ----------
@@ -106,7 +110,7 @@ class HeaderWidget(BaseWidget):
         self.label_desc.setText(safe_decode(desc))
 
     def apply_name(self):
-        r"""Applies the name change and revert the edit control back to the
+        """Applies the name change and revert the edit control back to the
         static label.
         """
         if self.label_name.isVisible():
@@ -117,7 +121,7 @@ class HeaderWidget(BaseWidget):
         self.item_store.rename(self.item.name, self.edit_name.text())
 
     def apply_desc(self):
-        r"""Applies the description change and revert the edit back to the
+        """Applies the description change and revert the edit back to the
         label.
         """
         if self.label_desc.isVisible():

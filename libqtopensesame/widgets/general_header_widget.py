@@ -19,33 +19,30 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libqtopensesame.widgets.header_widget import HeaderWidget
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'general_header_widget', category=u'core')
+_ = translation_context('general_header_widget', category='core')
 
 
 class GeneralHeaderWidget(HeaderWidget):
-
-    r"""The widget containing the clickable title and description of the
+    """The widget containing the clickable title and description of the
     experiment.
+    
+    Parameters
+    ----------
+    general_tab
+        A general_properties object.
+    main_window
+        A qtopensesame object.
     """
     def __init__(self, general_tab, main_window):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        general_tab
-            A general_properties object.
-        main_window
-            A qtopensesame object.
-        """
         super().__init__(main_window.experiment)
         self.general_tab = general_tab
 
     def refresh(self):
-        r"""Updates the header so that it's content match the item."""
+        """Updates the header so that it's content match the item."""
         self.set_name(self.experiment.var.title)
         self.set_desc(self.experiment.var.description)
         
-    def set_name(self, name):
+    def set_name(self, name, label_type=None):
         """Sets the name.
 
         Parameters
@@ -53,12 +50,10 @@ class GeneralHeaderWidget(HeaderWidget):
         name
             A name
         """
-        self.label_name.setText(name)
-        self.label_type.setText('— experiment properties')
-        self.edit_name.setText(name)
+        super().set_name(name, _('experiment properties'))
 
     def apply_name(self):
-        r"""Applies the name change and revert the edit control back to the
+        """Applies the name change and revert the edit control back to the
         static label.
         """
         if self.label_name.isVisible():
@@ -70,7 +65,7 @@ class GeneralHeaderWidget(HeaderWidget):
         self.refresh()
 
     def apply_desc(self):
-        r"""Applies the description change and revert the edit back to the
+        """Applies the description change and revert the edit back to the
         label.
         """
         if self.label_desc.isVisible():
