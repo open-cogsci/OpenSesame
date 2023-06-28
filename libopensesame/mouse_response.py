@@ -91,7 +91,7 @@ class MouseResponseMixin:
             )
         else:
             self.experiment.var.cursor_roi = u'undefined'
-        super().process_response((response, t1))
+        BaseResponseItem.process_response(self, (response, t1))
 
 
 class MouseResponse(MouseResponseMixin, BaseResponseItem):
