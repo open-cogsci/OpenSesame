@@ -216,7 +216,7 @@ class PluginManager:
                     yield plugin
         
     def __contains__(self, name):
-        return name in self._plugins
+        return name in self._aliases and self._aliases[name] in self._plugins
     
     def __getitem__(self, name):
         return self._plugins[self._aliases[name]]

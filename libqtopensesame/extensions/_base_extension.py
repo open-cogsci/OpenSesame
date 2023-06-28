@@ -20,6 +20,7 @@ from libopensesame.py3compat import *
 import os
 import time
 import functools
+import traceback
 from qtpy import QtWidgets, QtCore
 from openexp import resources
 from libopensesame.misc import snake_case, camel_case
@@ -273,12 +274,13 @@ class BaseExtension(BaseSubcomponent):
             self.activate()
         except Exception as e:
             self.notify(
-                f'Extension {self.name} misbehaved on activate '
+                f'Extension {self.name()} misbehaved on activate '
                 f'(see debug window for stack trace)',
                 category='warning')
             self.console.write(e)
+            traceback.print_exc()
             oslogger.error(
-                f'Extension {self.name} misbehaved on activate: {e}')
+                f'Extension {self.name()} misbehaved on activate: {e}')
 
     def add_action(self, widget, action, index, separator_before,
                    separator_after):
@@ -349,9 +351,10 @@ class BaseExtension(BaseSubcomponent):
                 basename = os.path.splitext(path)[0]
                 resource_path = os.path.join(self.extension_folder, path)
                 name = self.name()
-                if not name.islower():
-                    name = snake_case(name)
                 resources[f'extensions.{name}.{basename}'] = resource_path
+                if not name.islower():
+                    resources[f'extensions.{snake_case(name)}.{basename}'] = \
+                        resource_path
 
     def qaction(self, icon, label, target, checkable=False, tooltip=None,
                 shortcut=None):

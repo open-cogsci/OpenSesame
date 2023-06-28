@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+import traceback
 from qtpy import QtWidgets
 from libqtopensesame.misc.config import cfg
 from libopensesame.oslogging import oslogger
@@ -240,11 +241,10 @@ class BaseRunner:
                 logfile=logfile
             )
         except Exception as e:
-            md = _(
-                '# Error\n\nFailed to parse experiment for the '
-                'following reason:\n\n- '
-            ) + e.markdown()
+            md = _('# Error\n\nFailed to parse experiment for the '
+                   'following reason:\n\n- ') + safe_str(e)
             self.console.write(e)
+            traceback.print_exc()
             self.tabwidget.open_markdown(md)
             return False
         return True
