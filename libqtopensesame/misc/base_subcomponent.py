@@ -46,9 +46,14 @@ class BaseSubcomponent(BaseComponent):
             name]`.
         **kwdict : dict
             A keyword dictionary with event-specific keywords.
+            
+        Returns
+        -------
+        The return value of the event function, or None if no event function
+        exists.
         """
         if hasattr(self, u'event_%s' % event):
-            getattr(self, u'event_%s' % event)(**kwdict)
+            return getattr(self, u'event_%s' % event)(**kwdict)
 
     def _fire_and_time(self, event, **kwdict):
         r"""Similar to fire() but also keeps track of the duration of each
@@ -116,6 +121,17 @@ class BaseSubcomponent(BaseComponent):
                     u'extension %s provides %s' % (self.name(), provide)
                 )
         return provides
+    
+    def report_exception(self, e):
+        """Prints an exception to the console and shows a markdown tab.
+        
+        Parameters
+        ----------
+        e : Exception
+        """
+        self.console.write(e)
+        self.tabwidget.open_markdown(e.markdown(), 'os-finished-error',
+                                     e.title())
 
     # These properties allow for cleaner programming, without dot references.
 

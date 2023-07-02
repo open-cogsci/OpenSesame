@@ -281,7 +281,7 @@ class Theme:
                     value.setIcon(qta.icon(value.text()[4:]))
                     value.setText('')
                 except Exception as e:
-                    oslogger.warning('failed to load qtawesome icon: {e}')
+                    oslogger.warning(f'failed to load qtawesome icon: {e}')
                     
             elif key in self.icon_map:
                 if hasattr(value, 'setIcon'):

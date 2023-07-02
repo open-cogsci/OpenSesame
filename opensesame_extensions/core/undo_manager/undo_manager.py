@@ -34,7 +34,7 @@ class UndoManager(BaseExtension):
         self.undo_action = self.qaction('edit-undo', _('Undo'), self.undo,
                                         tooltip=_('Undo most recent action'),
                                         shortcut='Alt+Ctrl+Z')
-        # fThis extension has two actions instead of one. This is a hacky
+        # This extension has two actions instead of one. This is a hacky
         # solution to insert the second action after the first one in both
         # the toolbar and menu.
         menu_pos = self.menu_pos()

@@ -95,7 +95,8 @@ Edit your experiment in script form</string>
          <string>Apply</string>
         </property>
         <property name="icon">
-         <iconset theme="dialog-apply"/>
+         <iconset theme="dialog-apply">
+          <normaloff>.</normaloff>.</iconset>
         </property>
        </widget>
       </item>

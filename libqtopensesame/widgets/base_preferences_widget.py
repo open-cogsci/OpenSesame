@@ -18,15 +18,14 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 import functools
-from qtpy.QtWidgets import (
-    QCheckBox,
-    QSpinBox,
-    QDoubleSpinBox,
-    QKeySequenceEdit,
-    QLineEdit,
-    QComboBox,
-    QFontComboBox
-)
+from qtpy.QtWidgets import (QCheckBox,
+                            QSpinBox,
+                            QDoubleSpinBox,
+                            QKeySequenceEdit,
+                            QLineEdit,
+                            QComboBox,
+                            QFontComboBox,
+                            QPlainTextEdit)
 from qtpy.QtGui import QKeySequence, QFont
 from libopensesame.oslogging import oslogger
 from libqtopensesame.widgets.base_widget import BaseWidget
@@ -99,8 +98,7 @@ class BasePreferencesWidget(BaseWidget):
             elif isinstance(widget, QLineEdit):
                 widget.setText(cfg[setting])
                 widget.editingFinished.connect(
-                    functools.partial(change_setting, widget)
-                )
+                    functools.partial(change_setting, widget))
             elif isinstance(widget, (QSpinBox, QDoubleSpinBox)):
                 widget.setValue(cfg[setting])
                 widget.valueChanged.connect(change_setting)
@@ -113,6 +111,10 @@ class BasePreferencesWidget(BaseWidget):
             elif isinstance(widget, QComboBox):
                 widget.setCurrentText(cfg[setting])
                 widget.currentTextChanged.connect(change_setting)
+            elif isinstance(widget, QPlainTextEdit):
+                widget.setPlainText(cfg[setting])
+                widget.textChanged.connect(
+                    lambda: change_setting(widget.toPlainText()))
             else:
                 oslogger.warning('invalid QWidget with name {}'.format(name))
 
@@ -142,29 +144,31 @@ class BasePreferencesWidget(BaseWidget):
                 widget.setValue(value)
             except TypeError:
                 oslogger.warning(
-                    'invalid value {} for {}', format(value, setting)
-                )
+                    'invalid value {} for {}', format(value, setting))
         elif isinstance(widget, QKeySequenceEdit):
             try:
                 widget.setKeySequence(QKeySequence(value))
             except TypeError:
                 oslogger.warning(
-                    'invalid value {} for {}', format(value, setting)
-                )
+                    'invalid value {} for {}', format(value, setting))
         elif isinstance(widget, QFontComboBox):
             try:
                 widget.setCurrentFont(QFont(value))
             except TypeError:
                 oslogger.warning(
-                    'invalid value {} for {}', format(value, setting)
-                )
+                    'invalid value {} for {}', format(value, setting))
         elif isinstance(widget, QComboBox):
             try:
-                widget.setCurrentText(value)
+                widget.setCurrentText(safe_decode(value))
             except TypeError:
                 oslogger.warning(
-                    'invalid value {} for {}', format(value, setting)
-                )
+                    'invalid value {} for {}', format(value, setting))
+        elif isinstance(widget, QPlainTextEdit):
+            try:
+                widget.setPlainText(safe_decode(value))
+            except TypeError:
+                oslogger.warning(
+                    'invalid value {} for {}', format(value, setting))
         else:
             oslogger.warn('invalid QWidget with name {}'.format(name))
         self._its_me = False

@@ -32,8 +32,8 @@ _ = translation_context(u'experiment', category=u'item')
 class Experiment(ExperimentRuntime):
 
     """Contains various GUI controls for the experiment"""
-    def __init__(self, main_window, name, string=None, pool_folder=None,
-                 experiment_path=None, resources={}):
+    def __init__(self, main_window, name='experiment', string=None,
+                 pool_folder=None, experiment_path=None, resources={}):
         r"""Constructor. The experiment is created automatically be OpenSesame
         and you will generally not need to create it yourself.
 
@@ -41,7 +41,7 @@ class Experiment(ExperimentRuntime):
         ----------
         main_window : qtopensesame
             The main-window object.
-        name : str, unicode
+        name : str, unicode, optional
             The name of the experiment.
         string : str, unicode, NoneType, optional
             A string containing the experiment definition, the name of an

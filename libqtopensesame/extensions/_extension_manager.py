@@ -136,6 +136,12 @@ class ExtensionManager(BaseSubcomponent):
         **kwdict : dict
             A dictionary with keywords that are applicable to a particular
             event.
+            
+        Returns
+        -------
+        dict
+            A dict with extension names as keys and returns values as values.
+            This dict contains only return values that were not None.
         """
         if self._suspended_until == event:
             self._suspended = False
@@ -147,9 +153,10 @@ class ExtensionManager(BaseSubcomponent):
         if event == u'open_experiment':
             for ext in self._extensions:
                 ext.register_ui_files()
+        return_values = {}
         for ext in self.events.get(event, []):
             try:
-                ext.fire(event, **kwdict)
+                return_value = ext.fire(event, **kwdict)
             except Exception as e:
                 self.notify(
                     f'Extension {ext.name()} misbehaved on event {event} '
@@ -159,6 +166,10 @@ class ExtensionManager(BaseSubcomponent):
                 traceback.print_exc()
                 oslogger.error(f'Extension {ext.name()} misbehaved on event '
                                f'{event}: {e}')
+            else:
+                if return_value is not None:
+                    return_values[ext.name()] = return_value
+        return return_values
 
     def provide(self, provide, **kwdict):
 

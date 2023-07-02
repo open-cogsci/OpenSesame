@@ -670,6 +670,51 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                     )
                 )
 
+    def open_experiment(self, exp, path=None, add_to_recent=True):
+        """Opens an experiment from an Experiment object (as opposed to from 
+        disk).
+        
+        Parameters
+        ----------
+        exp : Experiment
+        path : str or None, optional
+            The path that is associated with the experiment or None if the
+            experiment does not exist on disk.
+        add_to_recent : bool, optional
+            Indicates whether the experiment should be added to the recent
+            files.
+        """
+        self.experiment.pool.clean_up()
+        self.experiment = exp
+        self.experiment.build_item_tree()
+        self.ui.itemtree.default_fold_state()
+        self.ui.tabwidget.open_general()
+        if add_to_recent and path is not None:
+            self.current_path = path
+            self.read_only = not os.access(path, os.W_OK)
+            self.window_message(self.current_path)
+            self.update_recent_files()
+            cfg.default_logfile_folder = os.path.dirname(self.current_path)
+        else:
+            self.window_message("New experiment")
+            self.current_path = None
+        self.set_unsaved(False)
+        self.ui.pool_widget.refresh()
+        self.extension_manager.fire('open_experiment', path=path)
+        self.set_busy(False)
+        # Process non-fatal errors
+        if exp.items.error_log:
+            self.tabwidget.open_markdown(
+                _(f'Errors occurred while opening the file:\n\n') +
+                '\n\n'.join(
+                    [str(exc) for exc in exp.items.error_log]
+                ),
+                title=_('Error'),
+                icon='dialog-error'
+            )
+            self.window_message("New experiment")
+            self.current_path = None
+
     def open_file(self, dummy=None, path=None, add_to_recent=True):
         """Opens an experiment file.
 
@@ -725,36 +770,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             self.console.write(e)
             self.set_busy(False)
             return
-        self.experiment.pool.clean_up()
-        self.experiment = exp
-        self.experiment.build_item_tree()
-        self.ui.itemtree.default_fold_state()
-        self.ui.tabwidget.open_general()
-        if add_to_recent:
-            self.current_path = path
-            self.read_only = not os.access(path, os.W_OK)
-            self.window_message(self.current_path)
-            self.update_recent_files()
-            cfg.default_logfile_folder = os.path.dirname(self.current_path)
-        else:
-            self.window_message("New experiment")
-            self.current_path = None
-        self.set_unsaved(False)
-        self.ui.pool_widget.refresh()
-        self.extension_manager.fire('open_experiment', path=path)
-        self.set_busy(False)
-        # Process non-fatal errors
-        if exp.items.error_log:
-            self.tabwidget.open_markdown(
-                _(f'Errors occurred while opening the file:\n\n') +
-                '\n\n'.join(
-                    [str(exc) for exc in exp.items.error_log]
-                ),
-                title=_('Error'),
-                icon='dialog-error'
-            )
-            self.window_message("New experiment")
-            self.current_path = None
+        self.open_experiment(exp, path, add_to_recent)
 
     def set_run_status(self, status):
 
