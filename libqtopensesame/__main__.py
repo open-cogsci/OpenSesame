@@ -203,7 +203,7 @@ def opensesame():
     # locale is ignored.
     from qtpy.QtCore import QTranslator
     opensesame.set_locale([QTranslator(), QTranslator(), QTranslator(),
-                           QTranslator()])
+                           QTranslator(), QTranslator(), QTranslator()])
     # Now that the window is shown, load the remaining modules and resume the
     # GUI initialization.
     opensesame.resume_init()

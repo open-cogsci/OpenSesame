@@ -63,7 +63,6 @@ class BaseExtension(BaseSubcomponent):
             self._unloaded_extension = \
                 self.unloaded_extension_manager[snake_case(self.name())]
         self.register_ui_files()
-        self.create_action()
         self.register_config()
         # Store of aliases so that we can still call the extension by its old
         # name if it has been renamed, e.g. OpenSesameIDE (old) for
@@ -75,6 +74,20 @@ class BaseExtension(BaseSubcomponent):
             self.aliases.append(camel_case(name))
         else:
             self.aliases.append(snake_case(name))
+        try:
+            qm_path = self.ext_resource('locale/' + main_window.locale + '.qm')
+        except Exception as e:
+            pass
+        else:
+            if main_window.translators:
+                from qtpy.QtCore import QCoreApplication
+                oslogger.info('installing translator {}'.format(qm_path))
+                self._translator = main_window.translators.pop()
+                self._translator.load(qm_path)
+                QCoreApplication.installTranslator(self._translator)
+            else:
+                oslogger.warning('no translators objects available')
+        self.create_action()
 
     @staticmethod
     def as_thread(wait):
