@@ -25,16 +25,16 @@ from libopensesame import widgets
 
 class FormBase(Item):
 
-    initial_view = u'script'
+    initial_view = 'script'
 
     def reset(self):
-        self.var.cols = u'2;2'
-        self.var.rows = u'2;2'
+        self.var.cols = '2;2'
+        self.var.rows = '2;2'
         self.var.spacing = 10
-        self.var._theme = u'gray'
-        self.var.only_render = u'no'
-        self.var.timeout = u'infinite'
-        self.var.margins = u'50;50;50;50'
+        self.var._theme = 'gray'
+        self.var.only_render = 'no'
+        self.var.timeout = 'infinite'
+        self.var.margins = '50;50;50;50'
         self._widgets = []
         self._variables = []
 
@@ -43,24 +43,24 @@ class FormBase(Item):
 
     def parse_line(self, line):
         cmd, arglist, kwdict = self.syntax.parse_cmd(line)
-        if cmd != u'widget':
+        if cmd != 'widget':
             return
         if len(arglist) != 5:
             raise InvalidFormScript(f'Invalid widget specification: {line}')
         self._widgets.append((arglist, kwdict))
-        if u'var' in kwdict:
-            self._variables.append(kwdict[u'var'])
+        if 'var' in kwdict:
+            self._variables.append(kwdict['var'])
 
     def to_string(self):
         s = super().to_string(self.item_type)
         for arglist, kwdict in self._widgets:
-            s += u'\t%s\n' % self.syntax.create_cmd(u'widget', arglist, kwdict)
-        s += u'\n'
+            s += '\t%s\n' % self.syntax.create_cmd('widget', arglist, kwdict)
+        s += '\n'
         return s
 
     def run(self):
         self.set_item_onset()
-        if self.var.only_render == u'yes':
+        if self.var.only_render == 'yes':
             self._form.render()
         else:
             self._form._exec(focus_widget=self.focus_widget)
@@ -69,13 +69,13 @@ class FormBase(Item):
         super().prepare()
         # Prepare the form
         try:
-            cols = [float(i) for i in str(self.var.cols).split(u';')]
-            rows = [float(i) for i in str(self.var.rows).split(u';')]
-            margins = [float(i) for i in str(self.var.margins).split(u';')]
-        except:
+            cols = [float(i) for i in str(self.var.cols).split(';')]
+            rows = [float(i) for i in str(self.var.rows).split(';')]
+            margins = [float(i) for i in str(self.var.margins).split(';')]
+        except Exception as e:
             raise InvalidValue('cols, rows, and margins should be numeric '
                                'values separated by a semi-colon')
-        if self.var.timeout == u'infinite':
+        if self.var.timeout == 'infinite':
             timeout = None
         else:
             timeout = self.var.timeout
@@ -83,7 +83,7 @@ class FormBase(Item):
                                   margins=margins, spacing=self.var.spacing,
                                   theme=self.var._theme,
                                   item=self, timeout=timeout,
-                                  clicks=self.var.form_clicks == u'yes')
+                                  clicks=self.var.form_clicks == 'yes')
 
         self.focus_widget = None
         for arglist, orig_kwdict in self._widgets:
@@ -94,14 +94,14 @@ class FormBase(Item):
             for key, val in kwdict.items():
                 kwdict[key] = self.syntax.eval_text(val, include_local=True)
             # Translate paths into full file names
-            if u'path' in kwdict:
-                kwdict[u'path'] = self.experiment.pool[kwdict[u'path']]
+            if 'path' in kwdict:
+                kwdict['path'] = self.experiment.pool[kwdict['path']]
             # Process focus keyword
             focus = False
-            if u'focus' in kwdict:
-                if kwdict[u'focus'] == u'yes':
+            if 'focus' in kwdict:
+                if kwdict['focus'] == 'yes':
                     focus = True
-                del kwdict[u'focus']
+                del kwdict['focus']
             # Parse arguments
             _type = arglist[4]
             try:
@@ -129,4 +129,4 @@ class FormBase(Item):
 
     def var_info(self):
         return super().var_info() + \
-            [(var, u'[Response variable]') for var in self._variables]
+            [(var, '[Response variable]') for var in self._variables]

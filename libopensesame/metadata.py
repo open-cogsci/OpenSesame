@@ -20,20 +20,20 @@ from libopensesame.py3compat import *
 from distutils.version import StrictVersion
 import sys
 
-__version__ = u'4.0.0a49'
+__version__ = '4.0.0a49'
 strict_version = StrictVersion(__version__)
 # The version without the prerelease (if any): e.g. 3.0.0
-main_version = u'.'.join([str(i) for i in strict_version.version])
+main_version = '.'.join([str(i) for i in strict_version.version])
 # The version without maintenance release suffix: e.g. 3.0
-major_version = u'.'.join([str(i) for i in strict_version.version[:-1]])
+major_version = '.'.join([str(i) for i in strict_version.version[:-1]])
 # The version following the debian convention: e.g. 3.0.0~a1
 if strict_version.prerelease is None:
     deb_version = main_version
 else:
-    deb_version = main_version + u'+%s%d' % strict_version.prerelease
-python_version = u'%d.%d.%d' % sys.version_info[:3]
-codename = u'Melodramatic Milgram'
-channel = u'dev'
-api = StrictVersion(u'3.0')
+    deb_version = main_version + '+%s%d' % strict_version.prerelease
+python_version = '%d.%d.%d' % sys.version_info[:3]
+codename = 'Melodramatic Milgram'
+channel = 'dev'
+api = StrictVersion('3.0')
 platform = sys.platform
-identity = u'OpenSesame {} {}'.format(__version__, codename)
+identity = 'OpenSesame {} {}'.format(__version__, codename)

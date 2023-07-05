@@ -23,18 +23,14 @@ import warnings
 
 
 class BasePythonWorkspace:
-
-    r"""Provides a basic Python workspace for use in the GUI. This avoids
+    """Provides a basic Python workspace for use in the GUI. This avoids
     unnecessarily importing the entire runtime API.
+    
+    Parameters
+    ----------
+    experiment : Experiment
     """
     def __init__(self, experiment):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        experiment : experiment
-            The experiment object.
-        """
         self.experiment = experiment
         
     @property
@@ -42,7 +38,7 @@ class BasePythonWorkspace:
         return self.experiment.var.__vars__
 
     def check_syntax(self, script):
-        r"""Checks whether a Python script is syntactically correct.
+        """Checks whether a Python script is syntactically correct.
 
         Parameters
         ----------
@@ -58,14 +54,14 @@ class BasePythonWorkspace:
         with warnings.catch_warnings(record=True) as warning_list:
             try:
                 self._compile(safe_decode(script))
-            except:
+            except Exception as e:
                 return 2
         if warning_list:
             return 1
         return 0
 
     def run_file(self, path):
-        r"""Reads and executes a files.
+        """Reads and executes a files.
 
         Parameters
         ----------
@@ -78,7 +74,7 @@ class BasePythonWorkspace:
         self._exec(bytecode)
 
     def _compile(self, script):
-        r"""Compiles a script into bytecode.
+        """Compiles a script into bytecode.
 
         Parameters
         ----------
@@ -93,7 +89,7 @@ class BasePythonWorkspace:
         return compile(script, '<string>', 'exec')  # __ignore_traceback__
 
     def _exec(self, bytecode):
-        r"""Executes bytecode.
+        """Executes bytecode.
 
         Parameters
         ----------
@@ -103,7 +99,7 @@ class BasePythonWorkspace:
         exec(bytecode, self._globals)  # __ignore_traceback__
 
     def _eval(self, bytecode):
-        r"""Evaluates bytecode.
+        """Evaluates bytecode.
 
         Parameters
         ----------

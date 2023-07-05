@@ -20,43 +20,41 @@ from libopensesame.py3compat import *
 
 
 class ItemStack:
-
-    r"""Keeps track of which item is currently active."""
+    """Keeps track of which item is currently active."""
+    
     def __init__(self):
-        r"""Constructor."""
         self.clear()
 
     def clear(self):
-        r"""Clears the stack."""
-        self.l = []
+        """Clears the stack."""
+        self._stack = []
 
     def push(self, item, phase):
-        r"""Adds a new item to the stack.
+        """Adds a new item to the stack.
 
         Parameters
         ----------
         item : str
             The item to add.
         """
-        self.l.append((item, phase))
+        self._stack.append((item, phase))
 
     def pop(self):
-        r"""Pops the last item from the stack.
+        """Pops the last item from the stack.
 
         Returns
         -------
         str
             The popped item.
         """
-        return self.l.pop()
+        return self._stack.pop()
 
     def __str__(self):
 
-        return '.'.join(['%s[%s]' % i for i in self.l])
+        return '.'.join(['%s[%s]' % i for i in self._stack])
         
     def __getitem__(self, key):
-        return self.l[key]
-
+        return self._stack[key]
 
 
 # Create a single instance of the stack
