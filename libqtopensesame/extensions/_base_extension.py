@@ -228,7 +228,7 @@ class BaseExtension(BaseSubcomponent):
         r"""Gives the keyboard shortcut that activates the extension. Normally,
         this is specified in info.json, but you can override this function to
         implement custom logic. A shortcut only works if the extension has
-        either a toolbar ot menu entry.
+        either a toolbar or menu entry.
 
         Returns
         -------

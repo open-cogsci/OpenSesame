@@ -43,7 +43,7 @@ set background gray
 define notepad about_this_example
 	__note__
 	In a lexical-decision experiment, the task is to categorize letter strings on
-	some feature, such as wether they form a word (e.g. 'apple') or not
+	some feature, such as whether they form a word (e.g. 'apple') or not
 	(e.g. 'ipple'). Usually, the goal of a lexical-decision experiment is to analyze
 	the response times to words as a function of another variable, that is, not the
 	variable that participants base their response on.

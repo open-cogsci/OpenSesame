@@ -448,7 +448,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
     def is_busy(self):
         """
         returns:
-                True if the cursos has a busy state, False otherwise
+                True if the cursor has a busy state, False otherwise
         """
         return QtWidgets.QApplication.overrideCursor() is not None
 

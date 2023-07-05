@@ -35,7 +35,7 @@ You are free to choose different file names.
 
 2.2. STYLESHEET
 ===============
-The stylesheet is typically placed here (depening on the theme info file):
+The stylesheet is typically placed here (depending on the theme info file):
 
 	/usr/share/opensesame/resources/my_theme/stylesheet.qss
 	
@@ -45,7 +45,7 @@ See the Qt documentation for a description of the QSS format:
 	
 2.3. ICON MAP
 =============
-The icon map is typically placed here (depening on the theme info file):
+The icon map is typically placed here (depending on the theme info file):
 
 	/usr/share/opensesame/resources/my_theme/icon_map.csv
 
@@ -65,7 +65,7 @@ size column can be left blank, in which case a default is chosen.
 
 2.4. ICON THEME
 ===============
-The icon theme is typically placed here (depening on the theme info file):
+The icon theme is typically placed here (depending on the theme info file):
 
 	/usr/share/opensesame/resources/my_theme/os-custom-icons/
 	

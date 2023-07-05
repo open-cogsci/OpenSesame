@@ -228,7 +228,7 @@ define feedback funny_instructions
 	set reset_variables no
 	set duration keypress
 	set description "Displays stimuli"
-	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="Your task is to say wether a word is associated with<br /><b>funny</b> or <b>boring</b><br /><br />If you see a <b>funny</b> word press the <b>{funny_response}</b> key<br />If you see a <b>boring</b> word press the <b>{boring_response}</b> key<br />" x=0 y=0 z_index=0
+	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="Your task is to say whether a word is associated with<br /><b>funny</b> or <b>boring</b><br /><br />If you see a <b>funny</b> word press the <b>{funny_response}</b> key<br />If you see a <b>boring</b> word press the <b>{boring_response}</b> key<br />" x=0 y=0 z_index=0
 	draw textline center=1 color=white font_bold=no font_family=sans font_italic=no font_size=32 html=yes show_if=True text="Press any key to continue" x=0 y=288 z_index=0
 
 define loop funny_loop
