@@ -503,7 +503,7 @@ class QtItem:
         self.validator = cls
 
     def rename(self, from_name, to_name):
-        r"""Handles renaming of an item (not necesarrily the current item).
+        r"""Handles renaming of an item (not necessarily the current item).
 
         Parameters
         ----------

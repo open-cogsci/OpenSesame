@@ -534,7 +534,7 @@ class Experiment(Item):
             pass
 
     def init_sound(self):
-        """Intializes the sound backend."""
+        """Initializes the sound backend."""
         from openexp import sampler
         sampler.init_sound(self)
 

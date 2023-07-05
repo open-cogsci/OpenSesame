@@ -64,7 +64,7 @@ class QtPlugin(Plugin):
             return getattr(mod, cls_name)
         # Otherwise, we dynamically create a class that inherits from the
         # plugin runtime class and QtAutoPlugin. We also specify a custom
-        # __init__() function that calls the parent constructors correclty.
+        # __init__() function that calls the parent constructors correctly.
         oslogger.info(
             f'dynamically creating plugin gui class for {self.name}')
         Runtime = getattr(mod, camel_case(self.name))

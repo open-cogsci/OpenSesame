@@ -472,7 +472,7 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         # - If we're in a move action, remove the dragged item from its parent,
         #   and set need_restore so that we know this happened.
         # - Try to drop the dragged item onto the target item
-        # - If the drop action was unsuccesful, and if need_restore is set,
+        # - If the drop action was unsuccessful, and if need_restore is set,
         #   re-add the dragged item to its former parent.
         event_action = 'move_item' if data['move'] else 'linked_copy'
         self.extension_manager.fire(f'prepare_{event_action}', name=item_name)
@@ -739,7 +739,7 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         e : QDragLeaveEvent
             A drop event.
         """
-        # The focusOutEvent arrives too late, so here we explictly give the
+        # The focusOutEvent arrives too late, so here we explicitly give the
         # currently opened item the opportunity to get ready
         item_name = self.tabwidget.current_item()
         if item_name is not None:

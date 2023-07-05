@@ -29,7 +29,7 @@ from libopensesame.oslogging import oslogger
 
 
 class Plugin:
-    """An unloaded plugin or extension. This is created for each availabe
+    """An unloaded plugin or extension. This is created for each available
     plugin or extension. An instance of the plugin or extension is created by
     calling Plugin.build().
 

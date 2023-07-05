@@ -31,7 +31,7 @@ def LibJoystick(experiment, **kwargs):
     experiment
         The experiment object.
     **kwargs : dict
-        Keyords to be passed on the joystick init.
+        Keywords to be passed on the joystick init.
     """
     if experiment.var.canvas_backend == u'psycho':
         raise BackendNotSupported(

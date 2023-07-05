@@ -53,7 +53,7 @@ def Experiment(osexp_path=None, log_path='defaultlog.csv', fullscreen=False,
         
     Examples
     --------
-    To implement an experiment fully programatically:
+    To implement an experiment fully programmatically:
     
     ~~~ .python
     from libopensesame.python_workspace_api import (
@@ -358,7 +358,7 @@ def xy_from_polar(rho, phi, pole=(0, 0)):
         The angular coordinate. This reflects a clockwise rotation in degrees
         (i.e. not radians), where 0 is straight right.
     pole : tuple, optional
-        The refence point.
+        The reference point.
 
     Returns
     -------
@@ -401,7 +401,7 @@ def xy_to_polar(x, y, pole=(0, 0)):
     y : float
         The Y coordinate.
     pole : tuple, optional
-        The refence point.
+        The reference point.
 
     Returns
     -------
@@ -476,7 +476,7 @@ def xy_circle(n, rho, phi0=0, pole=(0, 0)):
         counterclockwise rotation in degrees (i.e. not radians), where 0 is
         straight right.
     pole : tuple, optional
-        The refence point.
+        The reference point.
 
     Returns
     -------
@@ -523,7 +523,7 @@ def xy_grid(n, spacing, pole=(0, 0)):
         A numeric value that indicates the spacing between cells, or a
         (col_spacing, row_spacing) tuple.
     pole : tuple, optional
-        The refence point.
+        The reference point.
 
     Returns
     -------
@@ -591,7 +591,7 @@ def xy_random(n, width, height, min_dist=0, pole=(0, 0)):
     min_dist : float, optional
         The minimum distance between each point.
     pole : tuple, optional
-        The refence point.
+        The reference point.
 
     Returns
     -------

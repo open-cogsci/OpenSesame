@@ -211,7 +211,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         )
 
     def _kb_shortcut(self, target):
-        """Builds a simple keybaord shortcut. The key sequence is specified
+        """Builds a simple keyboard shortcut. The key sequence is specified
         later, while restoring the settings.
 
         Parameters
@@ -807,7 +807,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         except OSException as e:
             self.console.write(e)
             self.notify(
-                _("The following error occured while trying to save:<br/>%s")
+                _("The following error occurred while trying to save:<br/>%s")
                 % e
             )
             self.set_busy(False)

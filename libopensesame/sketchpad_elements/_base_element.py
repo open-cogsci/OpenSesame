@@ -163,7 +163,7 @@ class BaseElement:
         Returns
         -------
         unicode, int, float
-            A value that can be safely inserted into a definiton string.
+            A value that can be safely inserted into a definition string.
         """
         if not isinstance(val, str):
             return val

@@ -555,7 +555,7 @@ class Syntax:
         Parameters
         ----------
         s : unicode
-            A unicode string to be santized
+            A unicode string to be sanitized
         strict : bool, optional
             If True, special characters are ignored rather than recoded.
 

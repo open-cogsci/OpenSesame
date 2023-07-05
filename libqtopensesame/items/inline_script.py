@@ -124,7 +124,7 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
             return
         tab_index = 1 if kwargs['phase'] == 'run' else 0
         self._pyqode_tab_widget.main_tab_widget.setCurrentIndex(tab_index)
-        # The line number is allways passed as the first optional argument
+        # The line number is always passed as the first optional argument
         if 'args' in kwargs:
             line = int(kwargs['args'][0])
             edit = self._pyqode_tab_widget.main_tab_widget.currentWidget()

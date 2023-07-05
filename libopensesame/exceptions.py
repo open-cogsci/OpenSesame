@@ -132,7 +132,7 @@ class InvalidSketchpadElementScript(OSException):
 
 class InvalidFormScript(OSException):
     """An `InvalidFormScript` is raised when there is a mistake in a form
-    script. This can happen when you make a mistake while manually buidling a
+    script. This can happen when you make a mistake while manually building a
     form using the `form_base` item, or while modifying the script of other
     form items.
     """
@@ -338,7 +338,7 @@ class PythonSyntaxError(PythonError):
 
 class InvalidConditionalExpression(PythonSyntaxError):
     """An `InvalidConditionalExpression` is raised when a conditional 
-    expresssion, such as a run-if, break-if, or show-if expression, is
+    expression, such as a run-if, break-if, or show-if expression, is
     syntactically incorrect. This generally reflects a mistake in the 
     experiment, such as a typo in a conditional expression that renders it
     invalid.

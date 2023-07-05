@@ -168,7 +168,7 @@ class Loop(Item):
                 f'Invalid argument list for {cmd}')
 
     def _create_live_datamatrix(self):
-        r"""Builds a live DataMatrix. That is, it takes the orignal DataMatrix
+        r"""Builds a live DataMatrix. That is, it takes the original DataMatrix
         and applies all the operations as specified.
 
         Returns

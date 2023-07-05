@@ -76,7 +76,7 @@ class Color:
 
     @staticmethod
     def to_hex(colorspec):
-        r"""Converts a color specificaton to a seven-character lowercase
+        r"""Converts a color specification to a seven-character lowercase
         hexadecimal color string, such as '#ff0000'.
 
         Parameters

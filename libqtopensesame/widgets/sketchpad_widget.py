@@ -189,7 +189,7 @@ class SketchpadWidget(BaseWidget):
         element
             A sketchpad element.
         """
-        # Float/ int properties need to be checked before they are apllied
+        # Float/ int properties need to be checked before they are applied
         for prop, _type in [
                 ('penwidth', int),
                 ('arrow_head_width', float),

@@ -216,7 +216,7 @@ class PoolWidget(BaseWidget):
             self.ui.list_pool.editItem(item)
 
     def delete_selected_files(self):
-        r"""Deletes all selected files from the pool. Asks for confimation\
+        r"""Deletes all selected files from the pool. Asks for confirmation\
         first.
         """
         # Prepare the confirmation dialog, which contains a limited nr of

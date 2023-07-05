@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 
 class ItemsAdapter:
     """Gives an editable view on (item_name, start_time, end_time, cond, 
-    enabled) tuple (schedule) used by coroutines that funtions like an
+    enabled) tuple (schedule) used by coroutines that functions like an
     (item_name, cond) tuple as used by sequences.
     """
     def __init__(self, schedule):

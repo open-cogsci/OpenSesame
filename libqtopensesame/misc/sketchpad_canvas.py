@@ -40,7 +40,7 @@ class QtCanvas(Canvas, Coordinates):
 
 class QtRichText(RichText):
 
-    r"""Disables the pyqt initialization in the RichText element, becausee it
+    r"""Disables the pyqt initialization in the RichText element, because it
     is not necessary in the context of the GUI.
     """
     def _init_pyqt(self, exp):
@@ -575,23 +575,23 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         painter.drawLine(0, -yc, 0, yc)
 
     def clear(self):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
+        """Mimics canvas api. See openexp._canvas.canvas."""
         super(sketchpad_canvas, self).clear()
         self.notifications = []
         self.elements = []
         self.background_color = self.sketchpad.var.background
 
     def xcenter(self):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
+        """Mimics canvas api. See openexp._canvas.canvas."""
         return self.sketchpad.var.get(u'width') // 2
 
     def ycenter(self):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
+        """Mimics canvas api. See openexp._canvas.canvas."""
         return self.sketchpad.var.get(u'height') // 2
 
     def text(self, text, center=True, x=None, y=None, max_width=None,
              **properties):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
+        """Mimics canvas api. See openexp._canvas.canvas."""
         if u'color' in properties:
             properties[u'color'] = self._color(properties[u'color']).name()
         if u'font_size' in properties:
@@ -638,7 +638,7 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return i
 
     def line(self, sx, sy, ex, ey, color=None, penwidth=None, add=True):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
+        """Mimics canvas api. See openexp._canvas.canvas."""
         i = QtWidgets.QGraphicsLineItem(self._x(sx), self._y(sy), self._x(ex),
                                         self._y(ey))
         i.setPen(self._pen(color, penwidth))
@@ -648,7 +648,7 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
     def arrow(self, sx, sy, ex, ey, body_length=0.8, body_width=.5,
               head_width=30, color=None, fill=False, penwidth=None, add=True):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
+        """Mimics canvas api. See openexp._canvas.canvas."""
         from openexp._canvas._arrow.arrow import Arrow
 
         shape = Arrow._shape(self._x(sx), self._y(sy), self._x(ex),
@@ -673,7 +673,7 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return i
 
     def rect(self, x, y, w, h, fill=False, color=None, penwidth=None):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
+        """Mimics canvas api. See openexp._canvas.canvas."""
         color = self._color(color)
         if self._fill(fill):
             pen = self._pen(color, 1)
@@ -687,7 +687,7 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
     def ellipse(self, x, y, w, h, fill=False, color=None, penwidth=None,
                 add=True):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
+        """Mimics canvas api. See openexp._canvas.canvas."""
         color = self._color(color)
         if fill:
             pen = self._pen(color, 1)
@@ -704,7 +704,7 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return i
 
     def circle(self, x, y, r, fill=False, color=None, penwidth=None):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
+        """Mimics canvas api. See openexp._canvas.canvas."""
         r = self._r(r)
         x = self._x(x) - r
         y = self._y(y) - r
@@ -714,7 +714,7 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
 
     def image(self, image, center=True, x=None, y=None, scale=None,
               rotation=None):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
+        """Mimics canvas api. See openexp._canvas.canvas."""
         if not isinstance(image, QtGui.QPixmap):
             image = self._pixmap(image)
         i = self.addPixmap(image)
@@ -739,7 +739,7 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return i
 
     def gabor(self, x, y, *arglist, **kwdict):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
+        """Mimics canvas api. See openexp._canvas.canvas."""
         from openexp.canvas import gabor_file
         try:
             image = gabor_file(*arglist, **kwdict)
@@ -750,7 +750,7 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return self.image(image, x=x, y=y, scale=1)
 
     def noise_patch(self, x, y, *arglist, **kwdict):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
+        """Mimics canvas api. See openexp._canvas.canvas."""
         from openexp.canvas import noise_file
         try:
             image = noise_file(*arglist, **kwdict)
@@ -761,7 +761,7 @@ class SketchpadCanvas(QtWidgets.QGraphicsScene):
         return self.image(image, x=x, y=y, scale=1)
 
     def fixdot(self, x=None, y=None, color=None, style=u'default'):
-        """Mimicks canvas api. See openexp._canvas.canvas."""
+        """Mimics canvas api. See openexp._canvas.canvas."""
         color = self._color(color)
         x = self._x(x)
         y = self._y(y)

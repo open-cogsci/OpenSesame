@@ -86,7 +86,7 @@ define loop block_loop
 
 define sequence block_sequence
 	set flush_keyboard yes
-	set description "A sequence containging a single block of trials followed by feedback to the participant"
+	set description "A sequence containing a single block of trials followed by feedback to the participant"
 	run reset_feedback True
 	run block_loop True
 	run feedback True

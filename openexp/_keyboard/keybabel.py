@@ -67,7 +67,7 @@ class KeyBabel:
 
         Parameters
         ----------
-        keybaord
+        keyboard
             A Keyboard object
         """
         self._keyboard = keyboard
