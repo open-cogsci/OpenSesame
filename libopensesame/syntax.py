@@ -26,6 +26,7 @@ from distutils.version import StrictVersion
 from libopensesame import metadata
 from libopensesame.exceptions import InvalidConditionalExpression, \
     InvalidOpenSesameScript
+from libopensesame.item_stack import item_stack_singleton
 from libopensesame.py3compat import *
 
 
@@ -270,7 +271,7 @@ class Syntax:
         Parameters
         ----------
         txt:
-            	The string to evaluate. If the input is not a string, then the
+             The string to evaluate. If the input is not a string, then the
              value will be returned unmodified.
         round_float: bool, optional
             Indicates whether floating point values should be rounded or not.
@@ -280,7 +281,8 @@ class Syntax:
         include_local : bool, optional
             If True, the variable store of the current item is merged into the
             Python workspace. This allows items to evaluate f-strings that
-            take into account the item's local variables.
+            take into account the item's local variables. For old-style
+            [variables], this means that the local variable store is evaluated.
 
         Returns
         -------
@@ -297,7 +299,13 @@ class Syntax:
             return u'' if m.group(1) is None \
                 else m.group(1)[:len(m.group(1))//2]
         if var is None:
-            var = self.experiment.var
+            # If we want to include local variables, we need to get the current
+            # item from the stack
+            if include_local:
+                item_name, phase = item_stack_singleton[-1]
+                var = self.experiment.items[item_name].var
+            else:
+                var = self.experiment.var
         if round_float:
             float_template = u'%%.%sf' % var.round_decimals
         while True:
