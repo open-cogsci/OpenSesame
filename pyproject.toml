@@ -62,6 +62,5 @@ opensesame = 'libqtopensesame.__main__:opensesame'
 opensesamerun = 'libqtopensesame.__main__:opensesamerun'
 
 [tool.codespell]
-skip = '.git,*.pdf,*.svg'
-#
-# ignore-words-list = ''
+skip = '.git,*.pdf,*.svg,translations*.json,locale,ts'
+ignore-words-list = 'checkts'
