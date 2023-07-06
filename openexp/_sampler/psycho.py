@@ -31,7 +31,7 @@ NEEDS_BLOCK_SIZE = 'sounddevice', 'PTB'
 # Due to issues with sounddevice/ portaudio on Mac OS, we fall back to
 # pygame on that platform
 DEFAULT_AUDIOLIB = 'pygame' if sys.platform == 'darwin' else 'sounddevice'
-# Will be intialized during init_sound()
+# Will be initialized during init_sound()
 Sound = None
 PLAYING = None
 

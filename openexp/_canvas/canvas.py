@@ -1166,7 +1166,7 @@ def _gabor(
         return canvas_cache[key]
     im = PILImage.new('RGB', (size, size))
     px = im.load()
-    # Conver the orientation to radians
+    # Convert the orientation to radians
     orient = math.radians(-orient)
     col1 = _color(col1)
     col2 = _color(col2)

@@ -59,7 +59,7 @@ class Keyboard(Backend):
     ### Key names
     
     - Key names may differ between backends.
-    - Keys can be identified either by character or name, and are case-insentive.
+    - Keys can be identified either by character or name, and are case-insensitive.
       For example:
       - The key 'a' is represented by 'a' and 'A'
       - The up arrow is represented by 'up' and 'UP'

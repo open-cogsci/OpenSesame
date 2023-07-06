@@ -204,7 +204,7 @@ class ExtensionManager(BaseSubcomponent):
 
     def suspend_until(self, event):
         r"""Suspends all events until a specific event is fired. This is useful
-        for situations where you want to supress all events between a starting
+        for situations where you want to suppress all events between a starting
         and ending event.
         """
         self._suspended = True

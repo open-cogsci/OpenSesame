@@ -42,7 +42,7 @@ class Coordinates:
                             'or mouse class')
 
     def none_to_center(self, x, y):
-        r"""Interpretes None coordinates as the display center.
+        r"""Interprets None coordinates as the display center.
 
         Parameters
         ----------

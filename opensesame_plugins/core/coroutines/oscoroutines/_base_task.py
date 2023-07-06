@@ -37,7 +37,7 @@ class BaseTask:
         end_time : int
             The end-time of the coroutine.
         abort_on_end : bool`, optional
-            Indicates whetehr an ABORT signal should be given when the task
+            Indicates whether an ABORT signal should be given when the task
             ends.
         """
         if not (isinstance(start_time, (int, float)) and start_time >= 0) or \

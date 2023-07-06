@@ -119,7 +119,7 @@ class Item:
         Returns
         -------
         bool
-            True on succes, False on failure.
+            True on success, False on failure.
         """
         # It is a little ugly to call parse_comment() here, but otherwise
         # all from_string() derivatives need to be modified
@@ -156,7 +156,7 @@ class Item:
         Returns
         -------
         bool
-            True on succes, False on failure.
+            True on success, False on failure.
         """
         line = line.strip()
         if len(line) > 0 and line[0] == u'#':

@@ -86,7 +86,7 @@ class ResponseStore:
     # attributes.
     for response in responses:
         print(response.correct)
-    # Print the two last-given respones
+    # Print the two last-given responses
     print('last_two responses:')
     print(responses[:2])
     ~~~

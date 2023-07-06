@@ -59,7 +59,7 @@ class Label(Widget):
         frame : bool, optional
             Indicates whether a frame should be drawn around the widget.
         center : bool, optional
-            Indicates whether the text should be centerd.
+            Indicates whether the text should be centered.
         """
         if isinstance(frame, str):
             frame = frame == u'yes'

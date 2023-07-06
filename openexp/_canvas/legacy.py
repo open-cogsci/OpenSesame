@@ -97,7 +97,7 @@ class Legacy(Canvas, LegacyCoordinates):
 
     def _show_macos(self):
         r"""On Mac OS, the display is sometimes not refreshed unless there is
-        some interaction with the event loop. Therefor we implement this hack
+        some interaction with the event loop. Therefore we implement this hack
         which is only used on Mac OS.
         """
         self.experiment.surface.blit(self.surface, (0, 0))
@@ -159,7 +159,7 @@ class Legacy(Canvas, LegacyCoordinates):
     @staticmethod
     def init_display(experiment):
 
-        # Intialize PyGame and set the Window icon
+        # Initialize PyGame and set the Window icon
         pygame.init()
         surf = pygame.Surface((32, 32))
         surf.fill((255, 255, 255))

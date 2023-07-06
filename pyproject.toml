@@ -60,3 +60,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry.scripts]
 opensesame = 'libqtopensesame.__main__:opensesame'
 opensesamerun = 'libqtopensesame.__main__:opensesamerun'
+
+[tool.codespell]
+skip = '.git,*.pdf,*.svg,translations*.json,locale,ts'
+ignore-words-list = 'checkts'

@@ -252,7 +252,7 @@ class VarStore:
         """
         self._check_var_name(var)
         # The logic here is that we first try to convert to float, and if this
-        # is not successful, return the orignal type. If this is succesful we
+        # is not successful, return the original type. If this is successful we
         # turn the float into an int if this doesn't result in data loss, and
         # otherwise return the float.
         try:

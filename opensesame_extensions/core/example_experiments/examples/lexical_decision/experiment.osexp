@@ -43,7 +43,7 @@ set background gray
 define notepad about_this_example
 	__note__
 	In a lexical-decision experiment, the task is to categorize letter strings on
-	some feature, such as wether they form a word (e.g. 'apple') or not
+	some feature, such as whether they form a word (e.g. 'apple') or not
 	(e.g. 'ipple'). Usually, the goal of a lexical-decision experiment is to analyze
 	the response times to words as a function of another variable, that is, not the
 	variable that participants base their response on.
@@ -86,7 +86,7 @@ define loop block_loop
 
 define sequence block_sequence
 	set flush_keyboard yes
-	set description "A sequence containging a single block of trials followed by feedback to the participant"
+	set description "A sequence containing a single block of trials followed by feedback to the participant"
 	run reset_feedback True
 	run block_loop True
 	run feedback True

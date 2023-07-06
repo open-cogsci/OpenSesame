@@ -174,7 +174,7 @@ class GeneralProperties(BaseWidget):
         r"""Updates the controls of the general tab."""
         # Lock the general tab to prevent a recursive loop
         self.lock = True
-        # Set the header containing the titel etc
+        # Set the header containing the title etc
         self.set_header_label()
         # Select the backend
         backend_name = backend.backend_match(self.experiment)

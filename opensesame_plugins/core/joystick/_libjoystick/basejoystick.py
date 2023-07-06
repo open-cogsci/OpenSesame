@@ -32,7 +32,7 @@ class BaseJoystick:
     [TOC]
     """
     def __init__(self, experiment, device=0, joybuttonlist=None, timeout=None):
-        """Intializes the joystick object.
+        """Initializes the joystick object.
 
         Parameters
         ----------

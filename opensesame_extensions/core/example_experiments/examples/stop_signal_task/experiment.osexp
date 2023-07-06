@@ -44,7 +44,7 @@ set background black
 
 define notepad about_this_example
 	__note__
-	This is an example of a stop-signal task. In this experiment, participants respond to a leftward- or rightward-pointing arrow by pressing the left or right key, respectively. On some trials, a red square is presented—this is the stop signal. Participants should withold their response when the stop-signal is presented.
+	This is an example of a stop-signal task. In this experiment, participants respond to a leftward- or rightward-pointing arrow by pressing the left or right key, respectively. On some trials, a red square is presented—this is the stop signal. Participants should withhold their response when the stop-signal is presented.
 	This experiment is based on, but not identical to, the studies described by Gordon Logan in:
 	- Logan, G. D., Cowan, W. B., & Davis, K. A. (1984). On the ability to inhibit simple and choice reaction time responses: a model and a method. *Journal of Experimental Psychology: Human Perception and Performance*, 10(2), 276. <http://doi.org/10.1037/0096-1523.10.2.276>
 	__end__

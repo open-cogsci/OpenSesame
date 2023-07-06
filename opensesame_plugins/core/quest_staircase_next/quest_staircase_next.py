@@ -22,7 +22,7 @@ from libopensesame.exceptions import OSException
 
 
 class QuestNotInitialized(OSException):
-    """This exception is raised when a Quest staircase hasn't been intialized.
+    """This exception is raised when a Quest staircase hasn't been initialized.
     """
     pass
 
