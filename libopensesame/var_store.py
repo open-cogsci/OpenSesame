@@ -251,24 +251,25 @@ class VarStore:
         >>> var.my_variable = u'my_value'
         """
         self._check_var_name(var)
-        # The logic here is that we first try to convert to float, and if this
-        # is not successful, return the original type. If this is successful we
-        # turn the float into an int if this doesn't result in data loss, and
-        # otherwise return the float.
-        try:
-            val = float(val)
-        except (TypeError, ValueError):
-            pass
-        try:
-            ival = int(val)
-        except (TypeError, ValueError, ArithmeticError):
-            # A float can always be converted to an int, except nan values,
-            # which result in ValueError, or inf values, which result in an
-            # OverFlowError (which is a subclass of ArithmeticError).
-            pass
-        else:
-            if ival == val:
-                val = ival
+        if not isinstance(val, bool):
+            # The logic here is that we first try to convert to float, and if this
+            # is not successful, return the original type. If this is successful we
+            # turn the float into an int if this doesn't result in data loss, and
+            # otherwise return the float.
+            try:
+                val = float(val)
+            except (TypeError, ValueError):
+                pass
+            try:
+                ival = int(val)
+            except (TypeError, ValueError, ArithmeticError):
+                # A float can always be converted to an int, except nan values,
+                # which result in ValueError, or inf values, which result in an
+                # OverFlowError (which is a subclass of ArithmeticError).
+                pass
+            else:
+                if ival == val:
+                    val = ival
         self.__setattr__(var, val)
 
     def unset(self, var):

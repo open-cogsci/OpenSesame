@@ -228,7 +228,10 @@ class ResponseStore:
         else:
             correct = r.correct
         self._responses.insert(0, r)
-        self.var.response = self._experiment.syntax.sanitize(r.response)
+        self.var.response = self._experiment.syntax.auto_type(
+            self._experiment.syntax.sanitize(r.response),
+            allow_none=True,
+            allow_bool=True)
         self.var.response_time = r.response_time
         self.var.correct = correct
         if item is not None:

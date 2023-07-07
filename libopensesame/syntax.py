@@ -94,24 +94,35 @@ class Syntax:
         self.re_from_ascii = re.compile(r'U\+([A-F0-9]{4})')
         self.re_front_matter = re.compile(r'---(?P<info>.*?)---', re.S)
 
-    def auto_type(self, val):
-        r"""Casts a value to its best-fitting type, i.e. float, int, or
+    def auto_type(self, val, allow_bool=False, allow_none=False):
+        """Casts a value to its best-fitting type, i.e. float, int, or
         unicode.
 
         Parameters
         ----------
         val
             A value of any type.
+        allow_bool: bool
+            Indicates whether 'True' and 'False' should be returned as bool
+        allow_none: bool
+            Indicates whether 'None' should be returned as None
 
         Returns
         -------
         An auto-typed value.
         """
+        stripped_val = val
+        if allow_bool and stripped_val == 'True':
+            return True
+        if allow_bool and stripped_val == 'False':
+            return False
+        if allow_none and stripped_val == 'None':
+            return None
         try:
             f = float(val)
             # No flanking whitespace
             if isinstance(val, str):
-                assert(val == val.strip())
+                assert(val == stripped_val)
         except:
             return safe_decode(val, errors=u'ignore')
         if int(f) == f:
@@ -358,7 +369,7 @@ class Syntax:
 
     def compile_cond(self, cnd, bytecode=True):
         """Compiles OpenSesame conditional statements.
-        
+
         Examples
         --------
         [width] > 100
@@ -369,7 +380,7 @@ class Syntax:
         cnd: str
             The conditional statement to compile.
         bytecode: bool, optional
-            Indicates whether the conditional statement should be returned as 
+            Indicates whether the conditional statement should be returned as
             bytecode (True) or a Python string (False).
 
         Returns
@@ -377,8 +388,9 @@ class Syntax:
         str or bytecoode
             The conditional statement as a Python string or bytecode.
         """
+        cnd = safe_decode(cnd)
         # Python conditions `=True` don't have to be evaluated
-        if cnd.startswith(u'='):
+        if cnd.startswith('='):
             warnings.warn(PYTHON_CONDITIONAL_DEPRECATION_WARNING,
                           category=DeprecationWarning)
             cnd = cnd[1:]
