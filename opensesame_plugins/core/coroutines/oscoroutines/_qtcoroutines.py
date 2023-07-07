@@ -93,9 +93,18 @@ class QtCoroutines(Coroutines, Sequence):
 
     def rename(self, from_name, to_name):
         super().rename(from_name, to_name)
+        # The end-after-item has changed we need to refresh and also update
+        # corersponding variable
         if self.var.end_after_item == from_name:
             self.var.end_after_item = to_name
             self._refresh()
+        else:
+            # If any other items have changed, we just need to refrsh. We
+            # compare to the to_name, because the renaming has already happened
+            # at this point through the super().rename()
+            for name, *_ in self._items:
+                if name == to_name:
+                    self._refresh()
 
     def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
                         extra_info=None):
