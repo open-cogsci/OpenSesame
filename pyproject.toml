@@ -41,7 +41,7 @@ markdown = "*"
 
 [tool.wheel2deb.dependencies]
 python = ">= 3.7"
-numpy = "< 1.25"
+numpy = "*"
 "pyqode-python" = ">= 4"
 "pyqode-core" = ">= 4"
 qdatamatrix = ">= 0.1.34"
