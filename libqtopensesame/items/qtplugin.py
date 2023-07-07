@@ -60,17 +60,18 @@ class QtPlugin(QtItem):
             # However, separate plugins can bring their own translation.
             # We search both resources/locale and locale for qm translation
             # files.
-            translation_file = os.path.join(
+            qm_path = os.path.join(
                 self.plugin_folder, 'resources', 'locale',
-                f'{self.main_window._locale}.qm')
-            if not os.path.exists(translation_file):
-                translation_file = os.path.join(
+                f'{self.main_window.locale}.qm')
+            if not os.path.exists(qm_path):
+                qm_path = os.path.join(
                     self.plugin_folder, 'locale',
-                    f'{self.main_window._locale}.qm')
-            if os.path.exists(translation_file):
-                translator = QtCore.QTranslator()
-                translator.load(translation_file)
-                QtCore.QCoreApplication.installTranslator(translator)
+                    f'{self.main_window.locale}.qm')
+            if os.path.exists(qm_path):
+                oslogger.info(f'installing translator {qm_path}')
+                self._translator = self.main_window.translators.pop()
+                self._translator.load(qm_path)
+                QtCore.QCoreApplication.installTranslator(self._translator)
             self.init_item_icon()
         else:
             self.qicon = None
