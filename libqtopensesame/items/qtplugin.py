@@ -58,9 +58,15 @@ class QtPlugin(QtItem):
             # Install a translation file if there is one. Most plugins have
             # their translations as part of the OpenSesame main translations.
             # However, separate plugins can bring their own translation.
+            # We search both resources/locale and locale for qm translation
+            # files.
             translation_file = os.path.join(
                 self.plugin_folder, 'resources', 'locale',
                 f'{self.main_window._locale}.qm')
+            if not os.path.exists(translation_file):
+                translation_file = os.path.join(
+                    self.plugin_folder, 'locale',
+                    f'{self.main_window._locale}.qm')
             if os.path.exists(translation_file):
                 translator = QtCore.QTranslator()
                 translator.load(translation_file)
