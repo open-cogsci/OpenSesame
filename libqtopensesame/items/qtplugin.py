@@ -68,10 +68,13 @@ class QtPlugin(QtItem):
                     self.plugin_folder, 'locale',
                     f'{self.main_window.locale}.qm')
             if os.path.exists(qm_path):
-                oslogger.info(f'installing translator {qm_path}')
-                self._translator = self.main_window.translators.pop()
-                self._translator.load(qm_path)
-                QtCore.QCoreApplication.installTranslator(self._translator)
+                if self.main_window.translators:
+                    oslogger.info(f'installing translator {qm_path}')
+                    self._translator = self.main_window.translators.pop()
+                    self._translator.load(qm_path)
+                    QtCore.QCoreApplication.installTranslator(self._translator)
+                else:
+                    oslogger.warning('no translators objects available')
             self.init_item_icon()
         else:
             self.qicon = None
