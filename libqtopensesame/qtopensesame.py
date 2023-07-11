@@ -1036,7 +1036,11 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         
     def new_window(self):
         """Launches a new instance of the application"""
-        subprocess.Popen(sys.argv)
+        if sys.platform == 'win32':
+            cmd = [sys.executable] + sys.argv
+        else:
+            cmd = sys.argv
+        subprocess.Popen(cmd)
 
     def _id(self):
         """
