@@ -108,7 +108,7 @@ class PreferencesWidget(BaseWidget):
         # Set the locale combobox
         self.ui.combobox_locale.addItem('[Default]')
         self.ui.combobox_locale.setCurrentIndex(0)
-        locales = []
+        locales = ['en (English)']
         for locale in os.listdir(resources['locale']):
             if locale == 'translatables.qm':
                 continue
