@@ -41,7 +41,6 @@ class LoopWizard(BaseDialog):
         try:
             self._dm = pickle.loads(cfg.loop_wizard)
             assert(isinstance(self._dm, DataMatrix))
-            assert(hasattr(self._dm._rowid, u'clone'))
         except Exception as e:
             oslogger.warning(f'failed to restore loop table: {e}')
             self._dm = DataMatrix(length=0)
