@@ -35,5 +35,5 @@ class Psycho(RotatingElement, PsychoElement, NoisePatch):
             tex=tex,
             mask=env,
             size=size,
-            color=self.col1
+            color=self.col1.backend_color
         )

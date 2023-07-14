@@ -36,5 +36,5 @@ class Psycho(RotatingElement, PsychoElement, Gabor):
             tex='sin',
             mask=env,
             size=size,
-            color=self.col1
+            color=self.col1.backend_color
         )

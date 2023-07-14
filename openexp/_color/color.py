@@ -89,6 +89,8 @@ class Color:
         unicode
             A hexadecimal color specification.
         """
+        if isinstance(colorspec, float):
+            colorspec = int(colorspec)
         if isinstance(colorspec, int):  # 0-255 luminance value
             return webcolors.rgb_to_hex((colorspec, colorspec, colorspec))
         if _is_rgb(colorspec):
