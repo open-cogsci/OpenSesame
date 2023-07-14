@@ -113,7 +113,7 @@ class BaseRunner:
                 f'subject-{subject_nr}{file_extension}'
             )
             # Get the data file
-            file_filter = 'Log file ({file_extension})'
+            file_filter = f'Log file ({file_extension})'
             logfile = QtWidgets.QFileDialog.getSaveFileName(
                 self.main_window.ui.centralwidget,
                 _("Choose location for logfile (press 'escape' for default location)"),
@@ -126,7 +126,7 @@ class BaseRunner:
             # which case we fall back to a default location.
             if logfile == '':
                 logfile = os.path.join(cfg.default_logfile_folder,
-                                       'defaultlog{file_extension}')
+                                       f'defaultlog{file_extension}')
             # If a logfile was provided, but it did not have a proper
             # extension, we add a `.csv` extension.
             else:
