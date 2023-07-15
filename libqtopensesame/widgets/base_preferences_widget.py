@@ -92,31 +92,36 @@ class BasePreferencesWidget(BaseWidget):
                 self._its_me = False
 
             change_setting = functools.partial(change_setting, setting)
-            if isinstance(widget, QCheckBox):
-                widget.setChecked(cfg[setting])
-                widget.toggled.connect(change_setting)
-            elif isinstance(widget, QLineEdit):
-                widget.setText(cfg[setting])
-                widget.editingFinished.connect(
-                    functools.partial(change_setting, widget))
-            elif isinstance(widget, (QSpinBox, QDoubleSpinBox)):
-                widget.setValue(cfg[setting])
-                widget.valueChanged.connect(change_setting)
-            elif isinstance(widget, QKeySequenceEdit):
-                widget.setKeySequence(QKeySequence(cfg[setting]))
-                widget.keySequenceChanged.connect(change_setting)
-            elif isinstance(widget, QFontComboBox):
-                widget.setCurrentFont(QFont(cfg[setting]))
-                widget.currentFontChanged.connect(change_setting)
-            elif isinstance(widget, QComboBox):
-                widget.setCurrentText(cfg[setting])
-                widget.currentTextChanged.connect(change_setting)
-            elif isinstance(widget, QPlainTextEdit):
-                widget.setPlainText(cfg[setting])
-                widget.textChanged.connect(
-                    lambda: change_setting(widget.toPlainText()))
-            else:
-                oslogger.warning('invalid QWidget with name {}'.format(name))
+            try:
+                if isinstance(widget, QCheckBox):
+                    widget.setChecked(cfg[setting])
+                    widget.toggled.connect(change_setting)
+                elif isinstance(widget, QLineEdit):
+                    widget.setText(safe_decode(cfg[setting]))
+                    widget.editingFinished.connect(
+                        functools.partial(change_setting, widget))
+                elif isinstance(widget, (QSpinBox, QDoubleSpinBox)):
+                    widget.setValue(cfg[setting])
+                    widget.valueChanged.connect(change_setting)
+                elif isinstance(widget, QKeySequenceEdit):
+                    widget.setKeySequence(QKeySequence(cfg[setting]))
+                    widget.keySequenceChanged.connect(change_setting)
+                elif isinstance(widget, QFontComboBox):
+                    widget.setCurrentFont(QFont(cfg[setting]))
+                    widget.currentFontChanged.connect(change_setting)
+                elif isinstance(widget, QComboBox):
+                    widget.setCurrentText(cfg[setting])
+                    widget.currentTextChanged.connect(change_setting)
+                elif isinstance(widget, QPlainTextEdit):
+                    widget.setPlainText(cfg[setting])
+                    widget.textChanged.connect(
+                        lambda: change_setting(widget.toPlainText()))
+                else:
+                    oslogger.warning(
+                        'invalid QWidget with name {}'.format(name))
+            except TypeError:
+                oslogger.warning(
+                    'invalid value {} for {}', format(value, setting))
 
     def event_setting_changed(self, setting, value):
         r"""Update the controls if settings have been changed by someone else.
@@ -135,40 +140,24 @@ class BasePreferencesWidget(BaseWidget):
             return
         self._its_me = True
         widget = getattr(self.ui, name)
-        if isinstance(widget, QCheckBox):
-            widget.setChecked(bool(value))
-        elif isinstance(widget, QLineEdit):
-            widget.setText(value)
-        elif isinstance(widget, (QSpinBox, QDoubleSpinBox)):
-            try:
+        try:
+            if isinstance(widget, QCheckBox):
+                widget.setChecked(bool(value))
+            elif isinstance(widget, QLineEdit):
+                widget.setText(safe_decode(value))
+            elif isinstance(widget, (QSpinBox, QDoubleSpinBox)):
                 widget.setValue(value)
-            except TypeError:
-                oslogger.warning(
-                    'invalid value {} for {}', format(value, setting))
-        elif isinstance(widget, QKeySequenceEdit):
-            try:
+            elif isinstance(widget, QKeySequenceEdit):
                 widget.setKeySequence(QKeySequence(value))
-            except TypeError:
-                oslogger.warning(
-                    'invalid value {} for {}', format(value, setting))
-        elif isinstance(widget, QFontComboBox):
-            try:
+            elif isinstance(widget, QFontComboBox):
                 widget.setCurrentFont(QFont(value))
-            except TypeError:
-                oslogger.warning(
-                    'invalid value {} for {}', format(value, setting))
-        elif isinstance(widget, QComboBox):
-            try:
+            elif isinstance(widget, QComboBox):
                 widget.setCurrentText(safe_decode(value))
-            except TypeError:
-                oslogger.warning(
-                    'invalid value {} for {}', format(value, setting))
-        elif isinstance(widget, QPlainTextEdit):
-            try:
+            elif isinstance(widget, QPlainTextEdit):
                 widget.setPlainText(safe_decode(value))
-            except TypeError:
-                oslogger.warning(
-                    'invalid value {} for {}', format(value, setting))
-        else:
-            oslogger.warn('invalid QWidget with name {}'.format(name))
+            else:
+                oslogger.warn('invalid QWidget with name {}'.format(name))
+        except TypeError:
+            oslogger.warning('invalid value {} for {}', format(value, setting))
+                
         self._its_me = False
