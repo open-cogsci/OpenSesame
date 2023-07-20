@@ -24,10 +24,10 @@ from libqtopensesame.widgets.webbrowser import WebView
 from libqtopensesame.extensions import BaseExtension
 from libqtopensesame.misc.translate import translation_context
 from libqtopensesame.misc import template_info
-_ = translation_context(u'analytics', category=u'extension')
+_ = translation_context('analytics', category='extension')
 
 
-HTML = u'''<!DOCTYPE html>
+HTML = '''<!DOCTYPE html>
 <html>
 <head>
 <!-- Google tag (gtag.js) -->
@@ -35,11 +35,12 @@ HTML = u'''<!DOCTYPE html>
 </script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
 
   gtag('config', 'G-TPL6TXE7KL');
 </script>
+<title>{mode} ({version})</title>
 </head>
 </body>DUMMY BODY</body>
 </html>
@@ -52,14 +53,15 @@ class Analytics(BaseExtension):
     def event_startup(self):
         wv = WebView(self.main_window)
         wv.setHtml(
-            HTML, QtCore.QUrl(
-                f'http://opensesame.app.cogsci.nl/{self.main_window.mode}/{metadata.__version__}'))
+            HTML.format(mode=self.main_window.mode,
+                        version=metadata.__version__),
+            QtCore.QUrl(f'http://opensesame.app.cogsci.nl/{self.main_window.mode}/{metadata.__version__}'))
         wv.hide()
         if not cfg.analytics_show_notification:
             return
         self.extension_manager.fire(
-            u'notify',
+            'notify',
             message=_('Anonymous usage data is collected. You can disable '
                       'this by disabling the <i>analytics</i> extension.'),
-            category=u'info', timeout=10000, buttontext=_(u'Got it!'))
+            category='info', timeout=10000, buttontext=_('Got it!'))
         cfg.analytics_show_notification = False
