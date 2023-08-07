@@ -48,8 +48,26 @@ def fix_punctuation(original, translation):
 
 
 def fix_french_spacing(text):
-    fixed_text = re.sub(r'(?<=[^\s])([?!:;])', r' \1', text)
-    return fixed_text
+    result = ''
+    i = 0
+
+    while i < len(text):
+        # If we're at the start of an HTML entity, add the whole entity to the result
+        if text[i] == '&':
+            while text[i] != ';':
+                result += text[i]
+                i += 1
+            result += text[i]
+        # If the current character is punctuation and the previous character is not a space, add a space before the punctuation
+        elif text[i] in '?!:;' and (i == 0 or text[i-1] != ' '):
+            result += ' ' + text[i]
+        # In all other cases, simply add the current character to the result
+        else:
+            result += text[i]
+        
+        i += 1
+
+    return result
 
 
 def check_special_terms(original, translation):
