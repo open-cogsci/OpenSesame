@@ -24,23 +24,19 @@ from libqtopensesame.misc import theme
 
 
 class QtOpenSesameRun(QtWidgets.QMainWindow, BaseComponent):
-
-    """Implements the GUI for opensesamerun."""
+    """Implements the GUI for opensesamerun.
+    
+    Parameters
+    ----------
+    options:
+        Command-line arguments passed to opensesamerun, as parsed by
+        `libopensesame.misc.opensesamerun_options()`.
+    parent: optional
+    """
     def __init__(self, options, parent=None):
-        """
-        Constructor.
-
-        Arguments:
-        options		--	Command-line arguments passed to opensesamerun, as
-                                        parsed by `libopensesame.misc.opensesamerun_options()`.
-
-        Keyword arguments:
-        parent		--	A parent QWidget. (default=None)
-        """
-        # Construct the parent
         QtWidgets.QMainWindow.__init__(self, parent)
         # Setup the UI
-        self.load_ui(u'misc.opensesamerun')
+        self.load_ui('misc.opensesamerun')
         self.ui.button_run.clicked.connect(self.run)
         self.ui.label_header.setText(
             self.ui.label_header.text() % metadata.__version__)
@@ -52,34 +48,32 @@ class QtOpenSesameRun(QtWidgets.QMainWindow, BaseComponent):
         # Fill the GUI controls based on the options
         self.ui.edit_experiment.setText(self.options.experiment)
         self.ui.checkbox_fullscreen.setChecked(self.options.fullscreen)
-        self.ui.checkbox_pylink.setChecked(self.options.pylink)
         self.ui.spinbox_subject_nr.setValue(int(self.options.subject))
         self.ui.edit_logfile.setText(self.options.logfile)
 
     def browse_experiment(self):
         """Locates the experiment file."""
         file_type_filter = \
-            u"OpenSesame files (*.osexp *.opensesame.tar.gz *.opensesame);;OpenSesame script and file pool (*.opensesame.tar.gz);;OpenSesame script (*.opensesame)"
-        path = QtWidgets.QFileDialog.getOpenFileName(self,
-                                                     u"Open experiment file", filter=file_type_filter)
+            "OpenSesame files (*.osexp *.opensesame.tar.gz *.opensesame);;OpenSesame script and file pool (*.opensesame.tar.gz);;OpenSesame script (*.opensesame)"
+        path = QtWidgets.QFileDialog.getOpenFileName(
+            self, "Open experiment file", filter=file_type_filter)
         # In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of
         # a string, of which the first position contains the path.
         if isinstance(path, tuple):
             path = path[0]
-        if path == u"":
+        if path == "":
             return
         self.ui.edit_experiment.setText(path)
 
     def browse_logfile(self):
-        """Locates the logfile.	"""
-        path = QtWidgets.QFileDialog.getSaveFileName(self,
-                                                     u"Choose a location for the logfile")
+        """Locates the logfile."""
+        path = QtWidgets.QFileDialog.getSaveFileName(
+            self, "Choose a location for the logfile")
         # In PyQt5, the QFileDialog.getOpenFileName returns a tuple instead of
         # a string, of which the first position contains the path.
         if isinstance(path, tuple):
             path = path[0]
-
-        if path == u"":
+        if path == "":
             return
         self.ui.edit_logfile.setText(path)
 
@@ -89,8 +83,7 @@ class QtOpenSesameRun(QtWidgets.QMainWindow, BaseComponent):
         QtWidgets.QMainWindow.show(self)
 
     def run(self):
-        """
-        Does not actual run the experiment, but marks the application for
+        """Does not actual run the experiment, but marks the application for
         running later.
         """
         self.run = True
@@ -102,7 +95,6 @@ class QtOpenSesameRun(QtWidgets.QMainWindow, BaseComponent):
             self.ui.checkbox_custom_resolution.isChecked()
         self.options.width = self.ui.spinbox_width.value()
         self.options.height = self.ui.spinbox_height.value()
-        self.options.pylink = self.ui.checkbox_pylink.isChecked()
         self.close()
 
 
@@ -110,7 +102,6 @@ class QtOpenSesameRun(QtWidgets.QMainWindow, BaseComponent):
 qtopensesamerun = QtOpenSesameRun
 
 
-if __name__ == u'__main__':
-
+if __name__ == '__main__':
     from libqtopensesame import __main__
     __main__.opensesamerun()

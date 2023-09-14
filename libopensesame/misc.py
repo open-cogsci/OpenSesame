@@ -93,7 +93,6 @@ def opensesamerun_options():
     parser.set_defaults(logfile=None)
     parser.set_defaults(debug=False)
     parser.set_defaults(fullscreen=False)
-    parser.set_defaults(pylink=False)
     parser.set_defaults(width=1024)
     parser.set_defaults(height=768)
     parser.set_defaults(custom_resolution=False)
@@ -119,9 +118,6 @@ def opensesamerun_options():
     group.add_option(u"--stack", action=u"store_true",
                      dest=u"stack", help=u"Print stack information")
     parser.add_option_group(group)
-    group = optparse.OptionGroup(parser, u"Miscellaneous options")
-    group.add_option(u"--pylink", action=u"store_true", dest=u"pylink",
-                     help=u"Load PyLink before PyGame (necessary for using the Eyelink plug-ins in non-dummy mode)")
     parser.add_option_group(group)
     options, args = parser.parse_args(sys.argv)
 

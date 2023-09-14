@@ -49,9 +49,10 @@ if sys.executable.endswith('pythonw.exe'):
     sys.stderr = open(os.devnull, 'w')
     sys.stdin = open(os.devnull)
 
-# On MacOS, the locations of the SSL cerfificates need to be explicitly indicated when packaged
-# as an app, otherwise urllib.urlopen fails with an SSL related error. To do so, we make use of the
-# certifi package that can provide this location, but it is unclear if certifi is always installed,
+# On MacOS, the locations of the SSL cerfificates need to be explicitly
+# indicated when packaged # as an app, otherwise urllib.urlopen fails with an
+# SSL related error. To do so, we make use of the certifi package that can
+# provide this location, but it is unclear if certifi is always installed,
 # so let's fail gracefully if it isn't.
 if platform.system() == 'Darwin':
     try:
@@ -221,7 +222,7 @@ def opensesamerun():
     """The entrty point for the OpenSesameRun GUI"""
     set_paths()
     from libopensesame.oslogging import oslogger
-    oslogger.start(u'gui')
+    oslogger.start('gui')
     from libopensesame import misc
     misc.parse_environment_file()
     from libopensesame.experiment import Experiment
@@ -236,11 +237,11 @@ def opensesamerun():
         # without PyQt, people can still run experiments.
         try:
             from qtpy import QtGui, QtCore, QtWidgets
-        except:
-            misc.messagebox(u"OpenSesame Run", u"Incorrect or "
-                            u"missing options.\n\nRun 'opensesame --help' from a terminal "
-                            u"(or command prompt) to see a list of available options, or "
-                            u"install Python Qt4 to enable the graphical user interface.")
+        except Exception as e:
+            misc.messagebox("OpenSesame Run", "Incorrect or "
+                "missing options.\n\nRun 'opensesame --help' from a terminal "
+                "(or command prompt) to see a list of available options, or "
+                "install PyQt to enable the graphical user interface.")
             sys.exit()
         # Create the GUI and show it
         from libqtopensesame.qtopensesamerun import QtOpenSesameRun
@@ -258,17 +259,17 @@ def opensesamerun():
     experiment = os.path.abspath(options.experiment)
     if isinstance(experiment, bytes):
         experiment = safe_decode(experiment, enc=sys.getfilesystemencoding(),
-                                 errors=u'ignore')
+                                 errors='ignore')
     # experiment_path = os.path.dirname(experiment)
     logfile = options.logfile
     if isinstance(logfile, bytes):
         logfile = safe_decode(logfile, enc=sys.getfilesystemencoding(),
-                              errors=u'ignore')
+                              errors='ignore')
     experiment_path = safe_decode(os.path.abspath(options.experiment),
                                   enc=sys.getfilesystemencoding())
     # In debug mode, don't try to catch any exceptions
     if options.debug:
-        exp = Experiment(u"Experiment", experiment,
+        exp = Experiment("Experiment", experiment,
                          experiment_path=experiment_path)
         exp.set_subject(options.subject)
         exp.var.fullscreen = options.fullscreen
@@ -278,17 +279,17 @@ def opensesamerun():
         return
     # Try to parse the experiment from a file
     try:
-        exp = Experiment(u"Experiment", experiment,
+        exp = Experiment("Experiment", experiment,
                          experiment_path=experiment_path)
     except Exception as e:
         misc.messagebox(
-            u"OpenSesame Run",
+            "OpenSesame Run",
             misc.strip_tags(e)
         )
         sys.exit()
     # Set some options
     exp.set_subject(options.subject)
-    exp.var.fullscreen = options.fullscreen
+    exp.var.fullscreen = 'yes' if options.fullscreen else 'no'
     exp.logfile = logfile
     # Initialize random number generator
     import random
@@ -297,10 +298,10 @@ def opensesamerun():
     try:
         exp.run()
     except Exception as e:
-        misc.messagebox(u"OpenSesame Run", misc.strip_tags(e))
+        misc.messagebox("OpenSesame Run", misc.strip_tags(e))
     finally:
         try:
             exp.end()
         except Exception as f:
-            misc.messagebox(u"OpenSesame Run", misc.strip_tags(f))
+            misc.messagebox("OpenSesame Run", misc.strip_tags(f))
     exp.pool.clean_up()
