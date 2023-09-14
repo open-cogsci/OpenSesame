@@ -303,3 +303,4 @@ def opensesamerun():
             exp.end()
         except Exception as f:
             misc.messagebox(u"OpenSesame Run", misc.strip_tags(f))
+    exp.pool.clean_up()
