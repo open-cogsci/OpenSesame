@@ -82,6 +82,8 @@ class BasePreferencesWidget(BaseWidget):
                     value = value.family()
                 elif isinstance(value, QLineEdit):
                     value = value.text()
+                elif isinstance(value, QPlainTextEdit):
+                    value = value.toPlainText()
                 cfg[setting] = value
                 self._its_me = True
                 self.extension_manager.fire(
@@ -90,8 +92,14 @@ class BasePreferencesWidget(BaseWidget):
                     value=value
                 )
                 self._its_me = False
-
+            # The setting needs to be bound to the function because it is not
+            # passed by the signal
             change_setting = functools.partial(change_setting, setting)
+            # For QPlainTextEdit widgets, the widget itself also needs to be
+            # bound, because the signal doesn't pass the widget
+            change_plaintext_setting = functools.partial(change_setting,
+                                                         widget)
+
             try:
                 if isinstance(widget, QCheckBox):
                     widget.setChecked(cfg[setting])
@@ -114,8 +122,7 @@ class BasePreferencesWidget(BaseWidget):
                     widget.currentTextChanged.connect(change_setting)
                 elif isinstance(widget, QPlainTextEdit):
                     widget.setPlainText(cfg[setting])
-                    widget.textChanged.connect(
-                        lambda: change_setting(widget.toPlainText()))
+                    widget.textChanged.connect(change_plaintext_setting)
                 else:
                     oslogger.warning(
                         'invalid QWidget with name {}'.format(name))
