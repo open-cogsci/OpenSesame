@@ -153,7 +153,7 @@ class Form:
             focus_widget.focus = True
         if len(self) == 0:
             raise InvalidFormGeometry('The form contains no widgets')
-        ms = mouse(self.experiment, timeout=0)
+        ms = mouse(self.experiment, button_list=[1, 2, 3], timeout=0)
         ms.show_cursor()
         kb = keyboard(self.experiment, timeout=0)
         kb.show_virtual_keyboard()
