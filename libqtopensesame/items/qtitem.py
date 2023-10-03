@@ -453,7 +453,7 @@ class QtItem:
 
     def validate_script(self):
         r"""Checks whether the script is syntactically valid. If not, the
-        offending line is highlighted if QProgEdit suppors setInvalid().
+        offending line is highlighted if QProgEdit supports setInvalid().
 
         Returns
         -------

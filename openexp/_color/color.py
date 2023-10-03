@@ -48,7 +48,7 @@ def _is_rgb(colorspec):
 class Color:
 
     r"""Converts various color specifications to a back-end specific format.
-    Valid color specificatons are described in more detail in
+    Valid color specifications are described in more detail in
     openexp._canvas.canvas.canvas.
     """
     def __init__(self, experiment, colorspec):

@@ -182,7 +182,7 @@ class Sequence(QtStructureItem, QtPlugin, SequenceRuntime):
                     items.append((item, cond, enabled))
             self.items = items
         elif len(self.items) > index and self.items[index][0] == item_name:
-            # We remember the last removed child item, because we will re-use
+            # We remember the last removed child item, because we will reuse
             # it's run-if statement if it is re-added.
             self.last_removed_child = self.items[index]
             del self.items[index]

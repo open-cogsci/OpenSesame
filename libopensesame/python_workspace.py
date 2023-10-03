@@ -29,7 +29,7 @@ class PythonWorkspace(BasePythonWorkspace):
 
     """
     desc:
-        Provides a worspace in which Python scripts can be executed. Generally,
+        Provides a workspace in which Python scripts can be executed. Generally,
         each experiment has one python_workspace object, which is used for all
         inline_script items, and other items that make allow users to execute
         Python code.

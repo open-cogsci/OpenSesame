@@ -29,7 +29,7 @@ from libqtopensesame.misc.translate import translation_context
 
 
 class QtPlugin(Plugin):
-    """An extenion of the Plugin class that loads the Qt interface of a
+    """An extension of the Plugin class that loads the Qt interface of a
     plugin or extension.
     """
     
@@ -83,7 +83,7 @@ class QtPlugin(Plugin):
 
 
 class QtOldStylePlugin(OldStylePlugin):
-    """An extenion of the OldStylePlugin class that loads the Qt interface of a
+    """An extension of the OldStylePlugin class that loads the Qt interface of a
     plugin or extension. This is deprecated and will be removed.
     """
     
@@ -103,7 +103,7 @@ class QtOldStylePlugin(OldStylePlugin):
 
 
 class QtPluginManager(PluginManager):
-    """An extension of the PluginManager that provdes access to the Qt
+    """An extension of the PluginManager that provides access to the Qt
     interfaces of plugins and extensions.
     """
     

@@ -467,7 +467,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         QtWidgets.QApplication.processEvents()
 
     def set_style(self):
-        """Appply the application style"""
+        """Apply the application style"""
         if cfg.style in QtWidgets.QStyleFactory.keys():
             self.setStyle(QtWidgets.QStyleFactory.create(cfg.style))
             oslogger.debug("using style '%s'" % cfg.style)
