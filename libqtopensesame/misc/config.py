@@ -72,7 +72,7 @@ DEFAULT_CONFIG = {
     "start_drag_delay": 300,
     "pos": QtCore.QPoint(200, 200),
     "size": QtCore.QSize(1000, 600),
-    "url_website": u"http://www.cogsci.nl/opensesame",
+    "url_website": u"http://osdoc.cogsci.nl/",
     "url_facebook": u"http://www.facebook.com/cognitivescience",
     "url_twitter": u"http://www.twitter.com/cogscinl",
     'sketchpad_placeholder_color': u'#00FF00',
