@@ -21,7 +21,7 @@ from libopensesame.py3compat import *
 from libopensesame.widgets._button import Button
 from libopensesame.widgets._checkbox import Checkbox
 from libopensesame.widgets._form import Form
-from libopensesame.widgets._image import Image
+from libopensesame.widgets._image import ImageWidget
 from libopensesame.widgets._image_button import ImageButton
 from libopensesame.widgets._label import Label
 from libopensesame.widgets._rating_scale import RatingScale
@@ -32,7 +32,7 @@ from libopensesame.widgets._widget import Widget
 button = Button
 checkbox = Checkbox
 form = Form
-image = Image
+image = ImageWidget
 image_button = ImageButton
 label = Label
 rating_scale = RatingScale
