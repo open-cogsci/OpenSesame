@@ -75,6 +75,7 @@ class Legacy(Sampler):
             self.sound = mixer.Sound(src)
         Sampler.__init__(self, experiment, src, **playback_args)
         self.keyboard = Keyboard(experiment)
+        self._channel = None
 
     def set_config(self, **cfg):
 
@@ -135,29 +136,40 @@ class Legacy(Sampler):
     @configurable
     def play(self, **playback_args):
 
-        self.sound.play(maxtime=self.duration, fade_ms=self.fade_in)
+        self._channel = self.sound.play(maxtime=self.duration,
+                                        fade_ms=self.fade_in)
         if self.block:
             self.wait()
 
     def stop(self):
 
-        mixer.stop()
-
+        if self._channel is None:
+            return
+        self._channel.stop()
+        
     def pause(self):
 
-        mixer.pause()
+        if self._channel is None:
+            return
+        self._channel.pause()
 
     def resume(self):
 
-        mixer.unpause()
+        if self._channel is None:
+            return
+        self._channel.unpause()
 
     def is_playing(self):
 
-        return bool(mixer.get_busy())
+        if self._channel is None:
+            return
+        return self._channel.get_busy()
 
     def wait(self):
 
-        while mixer.get_busy():
+        if self._channel is None:
+            return
+        while self._channel.get_busy():
             self.keyboard.flush()
 
     @staticmethod
@@ -170,12 +182,10 @@ class Legacy(Sampler):
         if hasattr(mixer, u'get_init') and mixer.get_init():
             oslogger.warning(u'mixer already initialized, closing')
             pygame.mixer.quit()
-        mixer.pre_init(
-            experiment.var.sound_freq,
-            experiment.var.sound_sample_size,
-            experiment.var.sound_channels,
-            experiment.var.sound_buf_size
-        )
+        mixer.pre_init(experiment.var.sound_freq,
+                       experiment.var.sound_sample_size,
+                       experiment.var.sound_channels,
+                       experiment.var.sound_buf_size)
         try:
             mixer.init()
         except pygame.error:
