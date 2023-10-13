@@ -78,6 +78,24 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="QWidget" name="widget_backend_list" native="true">
+        <layout class="QVBoxLayout" name="layout_backend_list">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+        </layout>
+       </widget>
+      </item>
       <item row="1" column="1">
        <widget class="QPushButton" name="button_backend_settings">
         <property name="sizePolicy">
@@ -101,7 +119,7 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
+      <item row="3" column="1">
        <widget class="QLabel" name="label_backend_2">
         <property name="text">
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;http://osdoc.cogsci.nl/manual/backends/&quot;&gt;&lt;span style=&quot;font-size:small;font-style:italic; text-decoration: underline; color:#0057ae;&quot;&gt;Why is this important?&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -111,7 +129,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
+      <item row="4" column="0">
        <widget class="QLabel" name="label_resolution">
         <property name="text">
          <string>Resolution</string>
@@ -121,7 +139,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="4" column="1">
        <widget class="QFrame" name="frame_resolution">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -187,14 +205,14 @@
         </layout>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="5" column="0">
        <widget class="QLabel" name="label_foreground">
         <property name="text">
          <string>Foreground</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="5" column="1">
        <widget class="color_edit" name="edit_foreground" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -210,14 +228,14 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="6" column="0">
        <widget class="QLabel" name="label_background">
         <property name="text">
          <string>Background</string>
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="6" column="1">
        <widget class="color_edit" name="edit_background" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -233,7 +251,7 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="0">
+      <item row="7" column="0">
        <widget class="QLabel" name="label_font">
         <property name="text">
          <string>Font</string>
@@ -243,10 +261,10 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="1">
+      <item row="7" column="1">
        <widget class="font_widget" name="widget_font" native="true"/>
       </item>
-      <item row="7" column="1">
+      <item row="8" column="1">
        <widget class="QFrame" name="frame_colors">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -273,7 +291,7 @@
         </layout>
        </widget>
       </item>
-      <item row="8" column="0">
+      <item row="9" column="0">
        <widget class="QLabel" name="label_miscellaneous">
         <property name="text">
          <string>Miscellaneous</string>
@@ -286,14 +304,14 @@
         </property>
        </widget>
       </item>
-      <item row="8" column="1">
+      <item row="9" column="1">
        <widget class="QCheckBox" name="checkbox_disable_garbage_collection">
         <property name="text">
          <string>Disable garbage collection</string>
         </property>
        </widget>
       </item>
-      <item row="9" column="1">
+      <item row="10" column="1">
        <widget class="QPushButton" name="button_script_editor">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -316,7 +334,7 @@
         </property>
        </widget>
       </item>
-      <item row="12" column="1">
+      <item row="13" column="1">
        <widget class="QFrame" name="frame_advanced">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -349,9 +367,9 @@
         </layout>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QWidget" name="widget_backend_list" native="true">
-        <layout class="QVBoxLayout" name="layout_backend_list">
+      <item row="2" column="1">
+       <widget class="QWidget" name="widget_reset_backend" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout">
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -364,6 +382,23 @@
          <property name="bottomMargin">
           <number>0</number>
          </property>
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>The experiment uses an unknown back-end</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="button_reset_backend">
+           <property name="text">
+            <string>Reset back-end to default</string>
+           </property>
+           <property name="icon">
+            <iconset theme="edit-clear"/>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>

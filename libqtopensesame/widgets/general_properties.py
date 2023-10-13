@@ -29,16 +29,15 @@ _ = translation_context(u'general_properties', category=u'core')
 
 
 class GeneralProperties(BaseWidget):
-    """The QWidget for the general properties tab."""
+    """The QWidget for the general properties tab.
+
+    Parameters
+    ----------
+    main_window
+        A qtopensesame object.
+    """
 
     def __init__(self, main_window):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        main_window
-            A qtopensesame object.
-        """
         super().__init__(main_window, ui=u'widgets.general_properties')
         self.lock = False
         # Set the header, with the icon, label and script button
@@ -56,6 +55,7 @@ class GeneralProperties(BaseWidget):
         self.ui.edit_foreground.initialize(self.experiment)
         self.ui.edit_background.initialize(self.experiment)
         self.ui.widget_font.initialize(self.experiment)
+        self.ui.button_reset_backend.clicked.connect(self._reset_backend)
         # Set the backend combobox
         self._backend_button_group = QtWidgets.QButtonGroup()
         for id_, (name, info) in enumerate(backend.backend_info().items()):
@@ -87,14 +87,14 @@ class GeneralProperties(BaseWidget):
         self.on_activate = self.refresh
 
     def set_header_label(self):
-        r"""Sets the general header based on the experiment title and
+        """Sets the general header based on the experiment title and
         description.
         """
         self.header_widget.set_name(self.experiment.var.title)
         self.header_widget.set_desc(self.experiment.var.description)
 
     def apply_changes(self):
-        r"""Applies changes to the general tab."""
+        """Applies changes to the general tab."""
         # Skip if the general tab is locked and lock it otherwise
         if self.lock:
             return
@@ -169,9 +169,21 @@ class GeneralProperties(BaseWidget):
         self.lock = False
         self.main_window.extension_manager.fire(u'change_experiment')
         self.main_window.set_busy(False)
+        
+    def _reset_backend(self):
+        """Resets the backend to the default backend settings"""
+        self.experiment.var.canvas_backend = 'psycho'
+        del self.experiment.var.keyboard_backend
+        del self.experiment.var.mouse_backend
+        del self.experiment.var.sampler_backend
+        del self.experiment.var.synth_backend
+        del self.experiment.var.color_backend
+        del self.experiment.var.clock_backend
+        del self.experiment.var.log_backend
+        self.refresh()
 
     def refresh(self):
-        r"""Updates the controls of the general tab."""
+        """Updates the controls of the general tab."""
         # Lock the general tab to prevent a recursive loop
         self.lock = True
         # Set the header containing the title etc
@@ -179,9 +191,11 @@ class GeneralProperties(BaseWidget):
         # Select the backend
         backend_name = backend.backend_match(self.experiment)
         if backend_name == u"custom":
+            self.ui.widget_reset_backend.setVisible(True)
             self.ui.widget_backend_list.setDisabled(True)
             self.ui.button_backend_settings.setDisabled(True)
         else:
+            self.ui.widget_reset_backend.setVisible(False)
             backend_info = backend.backend_info()[backend_name]
             backend_desc = backend_info['description']
             backend_settings = backend_info['settings']
