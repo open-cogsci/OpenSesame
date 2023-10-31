@@ -756,7 +756,8 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             return
         self.set_busy()
         self.ui.tabwidget.close_all(avoid_empty=False)
-        cfg.file_dialog_path = os.path.dirname(path)
+        if add_to_recent:
+            cfg.file_dialog_path = os.path.dirname(path)
         try:
             exp = Experiment(self, "Experiment", path,
                              experiment_path=os.path.dirname(path))
