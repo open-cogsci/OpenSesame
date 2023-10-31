@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 import os
+import sys
 import traceback
 from qtpy import QtWidgets
 from libqtopensesame.misc.config import cfg
