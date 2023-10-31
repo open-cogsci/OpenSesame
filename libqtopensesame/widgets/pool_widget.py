@@ -32,16 +32,14 @@ _ = translation_context(u'pool_widget', category=u'core')
 
 
 class PoolWidget(BaseWidget):
-
-    r"""The file-pool widget."""
+    """The file-pool widget.
+    
+    Parameters
+    ----------
+    main_window
+        The main-window object.
+    """
     def __init__(self, main_window):
-        r"""Constructor.
-
-        Parameters
-        ----------
-        main_window
-            The main-window object.
-        """
         self.max_len = 5
         super().__init__(main_window, ui=u'widgets.pool_widget')
         self.ui.button_pool_add.clicked.connect(self.select_and_add)
@@ -56,22 +54,22 @@ class PoolWidget(BaseWidget):
         self.ui.label_size_warning.setVisible(False)
 
     def help(self):
-        r"""Opens the help tab."""
+        """Opens the help tab."""
         self.tabwidget.open_osdoc(u'manual/interface')
 
     def set_view(self):
-        r"""Sets the viewmode (list/ icons) based on the gui control."""
+        """Sets the viewmode (list/ icons) based on the gui control."""
         if self.ui.combobox_view.currentIndex() == 0:
             self.ui.list_pool.setViewMode(QtWidgets.QListView.ListMode)
         else:
             self.ui.list_pool.setViewMode(QtWidgets.QListView.IconMode)
 
     def browse(self):
-        r"""Opens the pool folder in the file manager in an OS specific way."""
+        """Opens the pool folder in the file manager in an OS specific way."""
         misc.open_url(self.experiment.pool.folder())
 
     def add(self, files, rename=False):
-        r"""Adds a list of files to the pool.
+        """Adds a list of files to the pool.
 
         Parameters
         ----------
@@ -104,11 +102,12 @@ class PoolWidget(BaseWidget):
             except (IOError, shutil.Error) as e:
                 self.notify(_(u'Failed to copy %s to file pool') % path)
                 self.console.write(safe_decode(e, errors=u'ignore'))
+        self.main_window.set_unsaved()
         self.refresh()
         self.select(basename)
 
     def select_and_add(self, dummy=None):
-        r"""Adds one or more files to the pool."""
+        """Adds one or more files to the pool."""
         path_list = QtWidgets.QFileDialog.getOpenFileNames(
             self.main_window.ui.centralwidget, _(u"Add files to pool"),
             directory=cfg.default_pool_folder)
@@ -123,7 +122,7 @@ class PoolWidget(BaseWidget):
         self.add(path_list)
 
     def select(self, fname):
-        r"""Selects a specific file in the file pool.
+        """Selects a specific file in the file pool.
 
         Parameters
         ----------
@@ -136,7 +135,7 @@ class PoolWidget(BaseWidget):
                 self.ui.list_pool.setCurrentItem(item)
 
     def refresh(self):
-        r"""Refreshes the contents of the pool widget."""
+        """Refreshes the contents of the pool widget."""
         try:
             path_iterator = iter(self.pool)
         except Exception as e:
@@ -171,7 +170,7 @@ class PoolWidget(BaseWidget):
             self.ui.label_size_warning.setVisible(False)
 
     def open_file(self, path):
-        r"""Opens a file in a platform specific way.
+        """Opens a file in a platform specific way.
 
         Parameters
         ----------
@@ -181,7 +180,7 @@ class PoolWidget(BaseWidget):
         misc.open_url(self.pool[path])
 
     def activate_file(self, item):
-        r"""Is called when a file is double-clicked or otherwise activated and
+        """Is called when a file is double-clicked or otherwise activated and
         opens the file.
 
         Parameters
@@ -191,7 +190,7 @@ class PoolWidget(BaseWidget):
         self.open_file(item.path)
 
     def contextMenuEvent(self, event):
-        r"""Presents a context menu.
+        """Presents a context menu.
 
         Parameters
         ----------
@@ -216,7 +215,7 @@ class PoolWidget(BaseWidget):
             self.ui.list_pool.editItem(item)
 
     def delete_selected_files(self):
-        r"""Deletes all selected files from the pool. Asks for confirmation\
+        """Deletes all selected files from the pool. Asks for confirmation\
         first.
         """
         # Prepare the confirmation dialog, which contains a limited nr of
@@ -248,7 +247,7 @@ class PoolWidget(BaseWidget):
         self.main_window.set_unsaved()
 
     def rename_file(self, item):
-        r"""Starts a rename action for an item.
+        """Starts a rename action for an item.
 
         Parameters
         ----------
@@ -269,11 +268,13 @@ class PoolWidget(BaseWidget):
             except:
                 self.notify(_(u'Failed to rename "%s" to "%s".')
                             % (old_name, new_name))
+            else:
+                self.main_window.set_unsaved()
         self.refresh()
         self.select(new_name)
 
     def dragEnterEvent(self, event):
-        r"""Accepts an incoming drag that precedes a drop.
+        """Accepts an incoming drag that precedes a drop.
 
         Parameters
         ----------
@@ -282,7 +283,7 @@ class PoolWidget(BaseWidget):
         event.acceptProposedAction()
 
     def dropEvent(self, event):
-        r"""Accepts an incoming drop.
+        """Accepts an incoming drop.
 
         Parameters
         ----------
@@ -295,7 +296,7 @@ class PoolWidget(BaseWidget):
         event.acceptProposedAction()
 
     def focusInEvent(self, e):
-        r"""Focus the filter edit when the widget receives focus.
+        """Focus the filter edit when the widget receives focus.
 
         Parameters
         ----------
@@ -305,7 +306,7 @@ class PoolWidget(BaseWidget):
 
 
 def select_from_pool(main_window, parent=None):
-    r"""A static function that presents the select from pool dialog.
+    """A static function that presents the select from pool dialog.
 
     Parameters
     ----------
