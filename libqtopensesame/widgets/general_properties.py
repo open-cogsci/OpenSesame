@@ -169,6 +169,7 @@ class GeneralProperties(BaseWidget):
         self.lock = False
         self.main_window.extension_manager.fire(u'change_experiment')
         self.main_window.set_busy(False)
+        self.main_window.set_unsaved()
         
     def _reset_backend(self):
         """Resets the backend to the default backend settings"""
