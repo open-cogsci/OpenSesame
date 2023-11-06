@@ -19,6 +19,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import numpy as np
 from openexp._canvas import canvas
+from libopensesame.oslogging import oslogger
 
 
 class PsychoElement:
@@ -39,6 +40,25 @@ class PsychoElement:
 
         if self._canvas.auto_prepare:
             self.prepare()
+            
+    @staticmethod
+    def _power_of_two(n):
+        n = int(n)
+        # A power of two always has exactly one bit set and does not have any
+        # bitwise overlap with one number lower:
+        # 4: 100
+        # 3: 011
+        # &: 000
+        if (n & (n - 1) == 0) and n != 0:
+            return n
+        # The bit_length is the number of bits necessary to represent a number
+        # so for 3 this would be 2: 11. The bit_length for one number lower in
+        # this case is still 2: 10. The next power of two is 2 raised by this
+        # number, so 2 ** 2 = 4.
+        rounded_up = 2 ** ((n - 1).bit_length())
+        oslogger.warning(
+            f"Warning: {n} is not a power of two, rounding up to {rounded_up}.")
+        return rounded_up
 
     def _mask(self, env, size, stdev):
         r"""Generates a PsychoPy mask for Gabor and NoisePatch stimuli.
@@ -57,9 +77,6 @@ class PsychoElement:
         ndarray
             A PsychoPy mask, which is a numpy array.
         """
-        # Get the smallest power-of-two that is larger than or equal to the
-        # given size
-        size = int(np.ceil(np.sqrt(size))**2)
         # Create a PsychoPy mask
         env = canvas._match_env(env)
         if env == u'c':
@@ -69,6 +86,9 @@ class PsychoElement:
         if env == u'r':
             return u'None', size
         if env == u'l':
+            # Get the smallest power-of-two that is larger than or equal to 
+            # the given size
+            size = self._power_of_two(size)
             _env = np.zeros([size, size])
             for x in range(size):
                 for y in range(size):
