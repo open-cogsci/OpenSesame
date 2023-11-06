@@ -95,6 +95,8 @@ class Color:
             return webcolors.rgb_to_hex((colorspec, colorspec, colorspec))
         if _is_rgb(colorspec):
             return webcolors.rgb_to_hex(colorspec)
+        if hasattr(colorspec, 'hexcolor'):
+            return colorspec.hexcolor
         if not isinstance(colorspec, str):
             raise InvalidColor(colorspec)
         try:  # 0-255 luminance value passed as string
