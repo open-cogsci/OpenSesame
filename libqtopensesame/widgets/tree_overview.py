@@ -408,6 +408,7 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
             return
         # Only accept existing-item drops from this application
         if data['application-id'] != self.main_window._id():
+            self.notify(_('Cannot copy linked copies between windows. Use unlinked copy instead.'))
             oslogger.debug('Drop ignored: from different instance')
             if e is not None:
                 e.ignore()
