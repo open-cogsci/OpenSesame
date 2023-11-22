@@ -11634,5 +11634,24 @@
     "he": "אפס את הממשק האחורי לברירת המחדל",
     "ru": "Сбросить бэк-энд к значению по умолчанию",
     "tr": "Arka ucu varsayılana sıfırla"
+  },
+  "Cannot copy linked copies between windows. Use unlinked copy instead.": {
+    "nl": "Kan geen gekoppelde kopieën tussen vensters kopiëren. Gebruik in plaats daarvan een niet-gekoppelde kopie.",
+    "de": "Zwischen Fenstern können keine verknüpften Kopien kopiert werden. Verwenden Sie stattdessen eine nicht verknüpfte Kopie.",
+    "fr": "Impossible de copier des copies liées entre les fenêtres. Utilisez plutôt une copie non liée.",
+    "es": "No se pueden copiar copias vinculadas entre ventanas. Use una copia no vinculada en su lugar.",
+    "it": "Non è possibile copiare copie collegate tra le finestre. Utilizza invece una copia non collegata.",
+    "pt": "Não é possível copiar cópias vinculadas entre janelas. Use uma cópia não vinculada em vez disso.",
+    "zh": "无法在窗口之间复制链接的副本。请使用未链接的副本。",
+    "yue": "無法在窗口之間複製鏈接的副本。請使用未連接的副本。",
+    "ja": "ウィンドウ間でリンクされたコピーをコピーできません。代わりにリンクされていないコピーを使用してください。",
+    "ko": "창간에 연결된 사본을 복사할 수 없습니다. 대신 연결되지 않은 사본을 사용하세요.",
+    "id": "Tidak dapat menyalin salinan tautan antar jendela. Gunakan salinan yang tidak tertaut sebagai gantinya.",
+    "hi": "विंडोज़ के बीच लिंक्ड कॉपीस को कॉपी करने में असमर्थ। इसके बजाय अनलिंक्ड कॉपी का उपयोग करें।",
+    "bn": "উইন্ডোগুলির মধ্যে লিঙ্কযুক্ত কপিগুলি অনুলিপিয়া করা যায় না। পরিবর্তে অলিঙ্কড কপি ব্যবহার করুন।",
+    "ar": "لا يمكن نسخ النسخ المرتبطة بين النوافذ. استخدم نسخة غير مرتبطة بدلاً من ذلك.",
+    "he": "לא ניתן להעתיק עותקים מקושרים בין חלונות. השתמש/י במקום זאת בעותק שאינו מקושר.",
+    "ru": "Невозможно скопировать связанные копии между окнами. Используйте вместо этого несвязанную копию.",
+    "tr": "Pencereler arasında bağlantılı kopyalar kopyalanamaz. Bunun yerine bağlantısız kopyayı kullanın."
   }
 }

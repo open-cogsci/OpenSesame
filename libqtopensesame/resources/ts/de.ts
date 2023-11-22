@@ -239,17 +239,17 @@
 <context>
     <name>core_backend_settings</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="179" />
+        <location filename="../../../translation_tools/translatables.py" line="180" />
         <source>Settings for %s:</source>
         <translation>Einstellungen für %s:</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="181" />
+        <location filename="../../../translation_tools/translatables.py" line="179" />
         <source>Failed to load backend</source>
         <translation>Laden des Backends fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="180" />
+        <location filename="../../../translation_tools/translatables.py" line="181" />
         <source>No settings for %s</source>
         <translation>Keine Einstellungen für %s</translation>
     </message>
@@ -257,12 +257,12 @@
 <context>
     <name>core_base_runner</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="157" />
+        <location filename="../../../translation_tools/translatables.py" line="155" />
         <source>Choose location for logfile (press 'escape' for default location)</source>
         <translation>Wählen Sie den Speicherort für die Logdatei aus (drücken Sie 'escape' für den Standard-Speicherort)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="155" />
+        <location filename="../../../translation_tools/translatables.py" line="157" />
         <source>Please enter the subject number</source>
         <translation>Bitte geben Sie die Probandennummer ein</translation>
     </message>
@@ -275,7 +275,7 @@
 <context>
     <name>core_color_edit</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="256" />
+        <location filename="../../../translation_tools/translatables.py" line="257" />
         <source>Pick a color</source>
         <translation>Wähle eine Farbe</translation>
     </message>
@@ -291,7 +291,7 @@
 <context>
     <name>core_font_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="270" />
+        <location filename="../../../translation_tools/translatables.py" line="271" />
         <source>other ...</source>
         <translation>andere ...</translation>
     </message>
@@ -307,7 +307,7 @@
 <context>
     <name>core_general_properties</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="273" />
+        <location filename="../../../translation_tools/translatables.py" line="274" />
         <source>Failed to parse the resolution. Expecting positive numeric values.</source>
         <translation>Fehler beim Analysieren der Auflösung. Positive numerische Werte erwartet.</translation>
     </message>
@@ -315,12 +315,12 @@
 <context>
     <name>core_general_script_editor</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="214" />
+        <location filename="../../../translation_tools/translatables.py" line="215" />
         <source>Apply?</source>
         <translation>Anwenden?</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="215" />
+        <location filename="../../../translation_tools/translatables.py" line="214" />
         <source>Are you sure you want to apply the changes to the general script?</source>
         <translation>Sind Sie sicher, dass Sie die Änderungen am allgemeinen Skript vornehmen möchten?</translation>
     </message>
@@ -328,7 +328,7 @@
 <context>
     <name>core_header_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="247" />
+        <location filename="../../../translation_tools/translatables.py" line="248" />
         <source>Click to edit</source>
         <translation>Klicken zum Bearbeiten</translation>
     </message>
@@ -344,62 +344,62 @@
 <context>
     <name>core_item_context_men</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="277" />
+        <location filename="../../../translation_tools/translatables.py" line="283" />
         <source>Enable</source>
         <translation>Aktivieren</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="279" />
+        <location filename="../../../translation_tools/translatables.py" line="280" />
         <source>Delete</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="287" />
+        <location filename="../../../translation_tools/translatables.py" line="278" />
         <source>Open</source>
         <translation>Öffnen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="284" />
+        <location filename="../../../translation_tools/translatables.py" line="287" />
         <source>Edit run-if statement</source>
         <translation>Bearbeite die run-if-Anweisung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="286" />
+        <location filename="../../../translation_tools/translatables.py" line="285" />
         <source>Disable</source>
         <translation>Deaktivieren</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="283" />
+        <location filename="../../../translation_tools/translatables.py" line="286" />
         <source>Permanently delete</source>
         <translation>Dauerhaft löschen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="281" />
+        <location filename="../../../translation_tools/translatables.py" line="288" />
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="278" />
+        <location filename="../../../translation_tools/translatables.py" line="279" />
         <source>Paste</source>
         <translation>Einfügen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="285" />
+        <location filename="../../../translation_tools/translatables.py" line="277" />
         <source>Copy (linked)</source>
         <translation>Kopieren (verknüpft)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="282" />
+        <location filename="../../../translation_tools/translatables.py" line="281" />
         <source>Copy (unlinked)</source>
         <translation>Kopieren (unverknüpft)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="276" />
+        <location filename="../../../translation_tools/translatables.py" line="284" />
         <source>Rename</source>
         <translation>Umbenennen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="280" />
+        <location filename="../../../translation_tools/translatables.py" line="282" />
         <source>Permanently delete all linked copies</source>
         <translation>Alle verknüpften Kopien dauerhaft löschen</translation>
     </message>
@@ -412,7 +412,7 @@
         <translation>Skript anzeigen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="201" />
+        <location filename="../../../translation_tools/translatables.py" line="199" />
         <source>View controls</source>
         <translation>Steuerelemente anzeigen</translation>
     </message>
@@ -422,7 +422,7 @@
         <translation>Ansicht auswählen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="199" />
+        <location filename="../../../translation_tools/translatables.py" line="201" />
         <source>Split view</source>
         <translation>Geteilte Ansicht</translation>
     </message>
@@ -430,7 +430,7 @@
 <context>
     <name>core_markdown</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="301" />
+        <location filename="../../../translation_tools/translatables.py" line="302" />
         <source>Dismiss this message</source>
         <translation>Diese Nachricht ignorieren</translation>
     </message>
@@ -446,47 +446,47 @@
 <context>
     <name>core_pool_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="195" />
+        <location filename="../../../translation_tools/translatables.py" line="189" />
         <source>Failed to rename "%s" to "%s".</source>
         <translation>Umbenennen von "%s" in "%s" fehlgeschlagen.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="185" />
+        <location filename="../../../translation_tools/translatables.py" line="187" />
         <source>Select</source>
         <translation>Auswählen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="189" />
+        <location filename="../../../translation_tools/translatables.py" line="192" />
         <source>Select file from pool</source>
         <translation>Datei aus dem Pool auswählen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="188" />
+        <location filename="../../../translation_tools/translatables.py" line="191" />
         <source>Remove from pool</source>
         <translation>Aus dem Pool entfernen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="190" />
+        <location filename="../../../translation_tools/translatables.py" line="195" />
         <source>There already is a file named '%s' in the file pool</source>
         <translation>Es gibt bereits eine Datei mit dem Namen '%s' in der Dateisammlung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="192" />
+        <location filename="../../../translation_tools/translatables.py" line="184" />
         <source>Add files to pool</source>
         <translation>Dateien zum Pool hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="191" />
+        <location filename="../../../translation_tools/translatables.py" line="194" />
         <source>Failed to refresh file pool</source>
         <translation>Aktualisierung der Dateisammlung fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="184" />
+        <location filename="../../../translation_tools/translatables.py" line="193" />
         <source>Rename</source>
         <translation>Umbenennen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="193" />
+        <location filename="../../../translation_tools/translatables.py" line="190" />
         <source>Failed to copy %s to file pool</source>
         <translation>Kopieren von %s zur Dateisammlung fehlgeschlagen</translation>
     </message>
@@ -496,12 +496,12 @@
         <translation>Und %d weitere Datei(en)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="194" />
+        <location filename="../../../translation_tools/translatables.py" line="185" />
         <source>Open</source>
         <translation>Öffnen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="187" />
+        <location filename="../../../translation_tools/translatables.py" line="188" />
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
@@ -517,22 +517,22 @@
 <context>
     <name>core_qtautoplugin</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="64" />
+        <location filename="../../../translation_tools/translatables.py" line="65" />
         <source>You must specify "type" for %s controls in info.yaml</source>
         <translation>Sie müssen "type" für %s Steuerelemente in info.yaml angeben</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="65" />
+        <location filename="../../../translation_tools/translatables.py" line="66" />
         <source>"%s" is not a valid qtautoplugin control</source>
         <translation>"%s" ist kein gültiges qtautoplugin Steuerelement</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="66" />
+        <location filename="../../../translation_tools/translatables.py" line="67" />
         <source>You must specify "%s" for %s controls in info.yaml</source>
         <translation>Sie müssen "%s" für %s Steuerelemente in info.yaml angeben</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="67" />
+        <location filename="../../../translation_tools/translatables.py" line="64" />
         <source>Name "%s" is already taken in qtautoplugin control</source>
         <translation>Name "%s" ist bereits bei qtautoplugin-Steuerung vergeben</translation>
     </message>
@@ -545,7 +545,7 @@
 <context>
     <name>core_qtitem</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="22" />
+        <location filename="../../../translation_tools/translatables.py" line="24" />
         <source>Failed to set control '%s': %s</source>
         <translation>Fehler beim Einstellen der Steuerung '%s': %s</translation>
     </message>
@@ -555,17 +555,17 @@
         <translation>Anwenden</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="21" />
+        <location filename="../../../translation_tools/translatables.py" line="22" />
         <source>Default description</source>
         <translation>Standardbeschreibung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="24" />
+        <location filename="../../../translation_tools/translatables.py" line="25" />
         <source>Toggle pop-out</source>
         <translation>Pop-out umschalten</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="25" />
+        <location filename="../../../translation_tools/translatables.py" line="21" />
         <source>Tell me more about the %s item</source>
         <translation>Erzähl mir mehr über das %s Element</translation>
     </message>
@@ -578,7 +578,7 @@
         <translation>Der Name eines Elements darf nicht leer sein.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="290" />
+        <location filename="../../../translation_tools/translatables.py" line="292" />
         <source>An item with that name already exists.</source>
         <translation>Ein Element mit diesem Namen existiert bereits.</translation>
     </message>
@@ -586,57 +586,57 @@
 <context>
     <name>core_qtopensesame</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="163" />
+        <location filename="../../../translation_tools/translatables.py" line="167" />
         <source> [read only]</source>
         <translation> [schreibgeschützt]</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="169" />
+        <location filename="../../../translation_tools/translatables.py" line="165" />
         <source>Failed to save file. Error: %s</source>
         <translation>Datei konnte nicht gespeichert werden. Fehler: %s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="167" />
+        <location filename="../../../translation_tools/translatables.py" line="160" />
         <source>Error</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="166" />
+        <location filename="../../../translation_tools/translatables.py" line="169" />
         <source>Save changes?</source>
         <translation>Änderungen speichern?</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="168" />
+        <location filename="../../../translation_tools/translatables.py" line="162" />
         <source>Save as…</source>
         <translation>Speichern unter…</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="164" />
+        <location filename="../../../translation_tools/translatables.py" line="161" />
         <source>Open file</source>
         <translation>Datei öffnen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="160" />
+        <location filename="../../../translation_tools/translatables.py" line="168" />
         <source>New experiment</source>
         <translation>Neues Experiment</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="162" />
+        <location filename="../../../translation_tools/translatables.py" line="166" />
         <source>(No recent files)</source>
         <translation>(Keine aktuellen Dateien)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="161" />
+        <location filename="../../../translation_tools/translatables.py" line="164" />
         <source>Could not parse script: %s</source>
         <translation>Skript konnte nicht analysiert werden: %s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="170" />
+        <location filename="../../../translation_tools/translatables.py" line="163" />
         <source>Your experiment contains unsaved changes. Do you want to save your experiment?</source>
         <translation>Ihr Experiment enthält ungespeicherte Änderungen. Möchten Sie Ihr Experiment speichern?</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="165" />
+        <location filename="../../../translation_tools/translatables.py" line="170" />
         <source>The following error occurred while trying to save:&lt;br/&gt;%s</source>
         <translation>Beim Versuch zu speichern, ist folgender Fehler aufgetreten:&lt;br/&gt;%s</translation>
     </message>
@@ -644,32 +644,32 @@
 <context>
     <name>core_tab_widget</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="223" />
+        <location filename="../../../translation_tools/translatables.py" line="219" />
         <source>Unused items</source>
         <translation>Unbenutzte Elemente</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="218" />
+        <location filename="../../../translation_tools/translatables.py" line="220" />
         <source>Preferences</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="220" />
+        <location filename="../../../translation_tools/translatables.py" line="221" />
         <source>Back-end settings</source>
         <translation>Back-End-Einstellungen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="222" />
+        <location filename="../../../translation_tools/translatables.py" line="218" />
         <source>General script editor</source>
         <translation>Allgemeiner Skripteditor</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="221" />
+        <location filename="../../../translation_tools/translatables.py" line="222" />
         <source>General properties</source>
         <translation>Allgemeine Eigenschaften</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="219" />
+        <location filename="../../../translation_tools/translatables.py" line="223" />
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
@@ -677,27 +677,27 @@
 <context>
     <name>core_template</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="296" />
+        <location filename="../../../translation_tools/translatables.py" line="298" />
         <source>Questionnaire template</source>
         <translation>Fragebogenvorlage</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="298" />
+        <location filename="../../../translation_tools/translatables.py" line="296" />
         <source>Default template</source>
         <translation>Standardvorlage</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="297" />
+        <location filename="../../../translation_tools/translatables.py" line="295" />
         <source>Eye-tracking template</source>
         <translation>Eye-Tracking-Vorlage</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="295" />
+        <location filename="../../../translation_tools/translatables.py" line="297" />
         <source>Extended template</source>
         <translation>Erweiterte Vorlage</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="294" />
+        <location filename="../../../translation_tools/translatables.py" line="299" />
         <source>OSWeb (online) template</source>
         <translation>OSWeb (online) Vorlage</translation>
     </message>
@@ -705,7 +705,7 @@
 <context>
     <name>core_toolbar_items</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="253" />
+        <location filename="../../../translation_tools/translatables.py" line="254" />
         <source>Commonly used</source>
         <translation>Häufig verwendet</translation>
     </message>
@@ -726,7 +726,7 @@
         <translation>Neues Element anhängen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="266" />
+        <location filename="../../../translation_tools/translatables.py" line="268" />
         <source>Append existing item (linked)</source>
         <translation>Vorhandenes Element anhängen (verknüpft)</translation>
     </message>
@@ -734,7 +734,7 @@
 <context>
     <name>core_tree_general_item</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="250" />
+        <location filename="../../../translation_tools/translatables.py" line="251" />
         <source>General options</source>
         <translation>Allgemeine Optionen</translation>
     </message>
@@ -742,12 +742,12 @@
 <context>
     <name>core_tree_item_item</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="234" />
+        <location filename="../../../translation_tools/translatables.py" line="236" />
         <source>Permanently delete item</source>
         <translation>Element dauerhaft löschen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="233" />
+        <location filename="../../../translation_tools/translatables.py" line="235" />
         <source>Are you sure you want to permanently delete &lt;b&gt;%s&lt;/b&gt;? All linked copies of &lt;b&gt;%s&lt;/b&gt; will be deleted. You will not be able to undo this.</source>
         <translation>Sind Sie sicher, dass Sie &lt;b&gt;%s&lt;/b&gt; dauerhaft löschen möchten? Alle verknüpften Kopien von &lt;b&gt;%s&lt;/b&gt; werden gelöscht. Dies kann nicht rückgängig gemacht werden.</translation>
     </message>
@@ -757,13 +757,13 @@
         <translation>Als auszuführendes Element für %s einstellen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="236" />
+        <location filename="../../../translation_tools/translatables.py" line="234" />
         <source>Type: %s
 Description: %s</source>
         <translation type="unfinished" />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="235" />
+        <location filename="../../../translation_tools/translatables.py" line="233" />
         <source>Drop below %s</source>
         <translation>Unterhalb von %s ablegen</translation>
     </message>
@@ -776,12 +776,12 @@ Description: %s</source>
 <context>
     <name>core_tree_overview</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="244" />
+        <location filename="../../../translation_tools/translatables.py" line="245" />
         <source>Insert after %s</source>
         <translation>Nach %s einfügen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="243" />
+        <location filename="../../../translation_tools/translatables.py" line="240" />
         <source>Unknown item type: %s</source>
         <translation>Unbekannter Elementtyp: %s</translation>
     </message>
@@ -791,20 +791,25 @@ Description: %s</source>
         <translation>Elementname</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="241" />
+        <location filename="../../../translation_tools/translatables.py" line="243" />
         <source>Run if</source>
         <translation>Ausführen, wenn</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="240" />
+        <location filename="../../../translation_tools/translatables.py" line="241" />
         <source>Insert into %s</source>
         <translation>In %s einfügen</translation>
+    </message>
+    <message>
+        <location filename="../../../translation_tools/translatables.py" line="244" />
+        <source>Cannot copy linked copies between windows. Use unlinked copy instead.</source>
+        <translation>Zwischen Fenstern können keine verknüpften Kopien kopiert werden. Verwenden Sie stattdessen eine nicht verknüpfte Kopie.</translation>
     </message>
 </context>
 <context>
     <name>core_tree_recursion_error_item</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="263" />
+        <location filename="../../../translation_tools/translatables.py" line="264" />
         <source>Recursion detected</source>
         <translation>Rekursion erkannt</translation>
     </message>
@@ -812,7 +817,7 @@ Description: %s</source>
 <context>
     <name>core_tree_unused_items_item</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="259" />
+        <location filename="../../../translation_tools/translatables.py" line="261" />
         <source>Unused items</source>
         <translation>Unbenutzte Elemente</translation>
     </message>
@@ -848,12 +853,12 @@ Description: %s</source>
 <context>
     <name>core_webbrowser</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="208" />
+        <location filename="../../../translation_tools/translatables.py" line="207" />
         <source>Loading …</source>
         <translation>Laden …</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="207" />
+        <location filename="../../../translation_tools/translatables.py" line="208" />
         <source>Done</source>
         <translation>Fertig</translation>
     </message>
@@ -861,22 +866,22 @@ Description: %s</source>
 <context>
     <name>extension_JupyterConsole</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="576" />
+        <location filename="../../../translation_tools/translatables.py" line="577" />
         <source>The {} (inprocess={}) kernel does not support debugging</source>
         <translation>Der {} (inprocess={}) Kernel unterstützt kein Debugging</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="578" />
+        <location filename="../../../translation_tools/translatables.py" line="576" />
         <source>Restart kernel</source>
         <translation>Kernel neu starten</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="575" />
+        <location filename="../../../translation_tools/translatables.py" line="578" />
         <source>Start new console</source>
         <translation>Neue Konsole starten</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="577" />
+        <location filename="../../../translation_tools/translatables.py" line="579" />
         <source>Failed to get workspace variable</source>
         <translation>Fehler beim Abrufen der Arbeitsplatzvariablen</translation>
     </message>
@@ -884,7 +889,7 @@ Description: %s</source>
 <context>
     <name>extension_SubprocessManager</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="515" />
+        <location filename="../../../translation_tools/translatables.py" line="516" />
         <source>Subprocesses</source>
         <translation>Unterprozesse</translation>
     </message>
@@ -892,7 +897,7 @@ Description: %s</source>
 <context>
     <name>extension_after_experiment</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="521" />
+        <location filename="../../../translation_tools/translatables.py" line="524" />
         <source>The following extra data files where created:</source>
         <translation>Die folgenden zusätzlichen Datendateien wurden erstellt:</translation>
     </message>
@@ -915,7 +920,7 @@ Description: %s</source>
         <translation>Verstanden!</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="540" />
+        <location filename="../../../translation_tools/translatables.py" line="542" />
         <source>Sends a ping to Google Analytics when OpenSesame is started</source>
         <translation>Sendet ein Ping an Google Analytics, wenn OpenSesame gestartet wird</translation>
     </message>
@@ -923,12 +928,12 @@ Description: %s</source>
 <context>
     <name>extension_automatic_backup</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="508" />
+        <location filename="../../../translation_tools/translatables.py" line="509" />
         <source>Periodically saves your experiment to a back-up folder.</source>
         <translation>Speichert Ihr Experiment in regelmäßigen Abständen in einem Backup-Ordner.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="509" />
+        <location filename="../../../translation_tools/translatables.py" line="510" />
         <source>Open backup folder</source>
         <translation>Backup-Ordner öffnen</translation>
     </message>
@@ -936,12 +941,12 @@ Description: %s</source>
 <context>
     <name>extension_bug_report</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="546" />
+        <location filename="../../../translation_tools/translatables.py" line="547" />
         <source>Oops ...</source>
         <translation>Ups ...</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="548" />
+        <location filename="../../../translation_tools/translatables.py" line="549" />
         <source>Bug report sent</source>
         <translation>Fehlerbericht gesendet</translation>
     </message>
@@ -951,12 +956,12 @@ Description: %s</source>
         <translation>Fehlerbericht nicht gesendet</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="544" />
+        <location filename="../../../translation_tools/translatables.py" line="548" />
         <source>Bug report</source>
         <translation>Fehlerbericht</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="547" />
+        <location filename="../../../translation_tools/translatables.py" line="546" />
         <source>Sends a bug report when an exception occurs</source>
         <translation>Sendet einen Fehlerbericht, wenn eine Ausnahme auftritt</translation>
     </message>
@@ -964,7 +969,7 @@ Description: %s</source>
 <context>
     <name>extension_command_palette</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="558" />
+        <location filename="../../../translation_tools/translatables.py" line="560" />
         <source>Trigger menu actions</source>
         <translation>Menüaktionen auslösen</translation>
     </message>
@@ -982,7 +987,7 @@ Description: %s</source>
         <translation>Beispiel-Experimente</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="566" />
+        <location filename="../../../translation_tools/translatables.py" line="568" />
         <source>Shows a list of example experiments</source>
         <translation>Zeigt eine Liste von Beispiel-Experimenten</translation>
     </message>
@@ -990,7 +995,7 @@ Description: %s</source>
 <context>
     <name>extension_file_handler</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="531" />
+        <location filename="../../../translation_tools/translatables.py" line="533" />
         <source>Opens external files</source>
         <translation>Öffnet externe Dateien</translation>
     </message>
@@ -1003,17 +1008,17 @@ Description: %s</source>
 <context>
     <name>extension_get_started</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="585" />
+        <location filename="../../../translation_tools/translatables.py" line="586" />
         <source>Get started!</source>
         <translation>Los geht's!</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="583" />
+        <location filename="../../../translation_tools/translatables.py" line="585" />
         <source>Continue with a recent experiment:</source>
         <translation>Mit einem kürzlich durchgeführten Experiment fortfahren:</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="581" />
+        <location filename="../../../translation_tools/translatables.py" line="583" />
         <source>New…</source>
         <translation>Neu…</translation>
     </message>
@@ -1033,7 +1038,7 @@ passed on the command line
 <context>
     <name>extension_help</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="551" />
+        <location filename="../../../translation_tools/translatables.py" line="552" />
         <source>PsychoPy API</source>
         <translation>PsychoPy API</translation>
     </message>
@@ -1048,7 +1053,7 @@ passed on the command line
         <translation>Online-Hilfe</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="552" />
+        <location filename="../../../translation_tools/translatables.py" line="556" />
         <source>Help</source>
         <translation>Hilfe</translation>
     </message>
@@ -1066,7 +1071,7 @@ passed on the command line
         <translation>Konsole anzeigen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="570" />
+        <location filename="../../../translation_tools/translatables.py" line="573" />
         <source>Show Jupyter/ IPython console</source>
         <translation>Zeige Jupyter/IPython-Konsole</translation>
     </message>
@@ -1079,7 +1084,7 @@ passed on the command line
 <context>
     <name>extension_notifications</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="562" />
+        <location filename="../../../translation_tools/translatables.py" line="564" />
         <source>Notifications</source>
         <translation>Benachrichtigungen</translation>
     </message>
@@ -1100,7 +1105,7 @@ of OpenSesame.
 </translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="500" />
+        <location filename="../../../translation_tools/translatables.py" line="502" />
         <source>OpenSesame 4 notifications</source>
         <translation>OpenSesame 4 Benachrichtigungen</translation>
     </message>
@@ -1113,33 +1118,30 @@ of OpenSesame.
         <translation>Elemente vorladen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="496" />
+        <location filename="../../../translation_tools/translatables.py" line="498" />
         <source>Preloads items in the background for smoother use</source>
         <translation>Lädt Elemente im Hintergrund für eine reibungslosere Nutzung</translation>
     </message>
 </context>
 <context>
-    <name>extension_psychopy_monitor_center</name>
-</context>
-<context>
     <name>extension_pyqode_manager</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="173" />
+        <location filename="../../../translation_tools/translatables.py" line="176" />
         <source>Convert spaces to tabs</source>
         <translation>Leerzeichen in Tabs umwandeln</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="176" />
+        <location filename="../../../translation_tools/translatables.py" line="174" />
         <source>Convert tabs to spaces</source>
         <translation>Tabs in Leerzeichen umwandeln</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="174" />
+        <location filename="../../../translation_tools/translatables.py" line="175" />
         <source>Manages PyQode, the code-editor component</source>
         <translation>Verwaltet PyQode, die Code-Editor-Komponente</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="175" />
+        <location filename="../../../translation_tools/translatables.py" line="173" />
         <source>PyQode manager</source>
         <translation>PyQode-Manager</translation>
     </message>
@@ -1147,12 +1149,12 @@ of OpenSesame.
 <context>
     <name>extension_quick_selector</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="504" />
+        <location filename="../../../translation_tools/translatables.py" line="505" />
         <source>Select stuff quickly</source>
         <translation>Wählen Sie Dinge schnell aus</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="505" />
+        <location filename="../../../translation_tools/translatables.py" line="506" />
         <source>A general-purpose quick-select dialog</source>
         <translation>Ein allgemeiner Schnellauswahl-Dialog</translation>
     </message>
@@ -1165,12 +1167,12 @@ of OpenSesame.
         <translation>Artikel suchen …</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="536" />
+        <location filename="../../../translation_tools/translatables.py" line="538" />
         <source>Quickly open items</source>
         <translation>Öffnen Sie Artikel schnell</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="535" />
+        <location filename="../../../translation_tools/translatables.py" line="536" />
         <source>Quick switcher</source>
         <translation>Schnellumschalter</translation>
     </message>
@@ -1178,7 +1180,7 @@ of OpenSesame.
 <context>
     <name>extension_restore_ui_elements</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="512" />
+        <location filename="../../../translation_tools/translatables.py" line="513" />
         <source>Show toolbars and menu when they are hidden</source>
         <translation>Symbolleisten und Menü anzeigen, wenn sie ausgeblendet sind</translation>
     </message>
@@ -1186,7 +1188,7 @@ of OpenSesame.
 <context>
     <name>extension_subprocess_manager</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="518" />
+        <location filename="../../../translation_tools/translatables.py" line="519" />
         <source>Manages subprocesses</source>
         <translation>Verwaltet Unterprozesse</translation>
     </message>
@@ -1194,7 +1196,7 @@ of OpenSesame.
 <context>
     <name>extension_system_check</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="480" />
+        <location filename="../../../translation_tools/translatables.py" line="481" />
         <source>Checks the system and provides warnings if necessary</source>
         <translation>Überprüft das System und gibt bei Bedarf Warnungen aus</translation>
     </message>
@@ -1207,12 +1209,12 @@ of OpenSesame.
         <translation>Tab zu Dock-Widget</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="527" />
+        <location filename="../../../translation_tools/translatables.py" line="529" />
         <source>Turn tab into dockwidget</source>
         <translation>Tab in Dock-Widget umwandeln</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="526" />
+        <location filename="../../../translation_tools/translatables.py" line="527" />
         <source>Turns a tab into a dockwidget</source>
         <translation>Wandelt einen Tab in ein Dock-Widget um</translation>
     </message>
@@ -1220,12 +1222,12 @@ of OpenSesame.
 <context>
     <name>extension_toolbar_menu</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="590" />
+        <location filename="../../../translation_tools/translatables.py" line="589" />
         <source>Menu</source>
         <translation>Menü</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="589" />
+        <location filename="../../../translation_tools/translatables.py" line="590" />
         <source>Integrates the menu into the toolbar</source>
         <translation>Integriert das Menü in die Symbolleiste</translation>
     </message>
@@ -1235,7 +1237,7 @@ of OpenSesame.
         <translation>Menü und Symbolleiste integrieren</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="588" />
+        <location filename="../../../translation_tools/translatables.py" line="592" />
         <source>Integrates the menu into the toolbar.</source>
         <translation>Integriert das Menü in die Symbolleiste.</translation>
     </message>
@@ -1248,7 +1250,7 @@ of OpenSesame.
         <translation>Rückgängig</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="485" />
+        <location filename="../../../translation_tools/translatables.py" line="484" />
         <source>Undo most recent action</source>
         <translation>Zuletzt ausgeführte Aktion rückgängig machen</translation>
     </message>
@@ -1258,12 +1260,12 @@ of OpenSesame.
         <translation>Implementiert Rückgängig/Wiederholen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="483" />
+        <location filename="../../../translation_tools/translatables.py" line="485" />
         <source>Redo</source>
         <translation>Wiederholen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="484" />
+        <location filename="../../../translation_tools/translatables.py" line="488" />
         <source>Redo most recently undone action</source>
         <translation>Zuletzt rückgängig gemachte Aktion wiederholen</translation>
     </message>
@@ -1271,7 +1273,7 @@ of OpenSesame.
 <context>
     <name>extension_variable_inspector</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="491" />
+        <location filename="../../../translation_tools/translatables.py" line="494" />
         <source>Experiment status: &lt;b&gt;%s&lt;/b&gt;</source>
         <translation>Experimentstatus: &lt;b&gt;%s&lt;/b&gt;</translation>
     </message>
@@ -1281,12 +1283,12 @@ of OpenSesame.
         <translation>Variableninspektor</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="493" />
+        <location filename="../../../translation_tools/translatables.py" line="491" />
         <source>Graphical variable inspector</source>
         <translation>Grafischer Variableninspektor</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="490" />
+        <location filename="../../../translation_tools/translatables.py" line="493" />
         <source>Show variable inspector</source>
         <translation>Variableninspektor anzeigen</translation>
     </message>
@@ -1315,12 +1317,12 @@ of OpenSesame.
 <context>
     <name>item_inline_script</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="30" />
+        <location filename="../../../translation_tools/translatables.py" line="29" />
         <source>Run</source>
         <translation>Ausführen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="29" />
+        <location filename="../../../translation_tools/translatables.py" line="30" />
         <source>Prepare</source>
         <translation>Vorbereiten</translation>
     </message>
@@ -1333,7 +1335,7 @@ of OpenSesame.
 <context>
     <name>item_keyboard_response</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="6" />
+        <location filename="../../../translation_tools/translatables.py" line="5" />
         <source>Leave empty to use "correct_response"</source>
         <translation>Leer lassen, um "correct_response" zu verwenden</translation>
     </message>
@@ -1343,42 +1345,42 @@ of OpenSesame.
         <translation>Anstehende Tastenereignisse löschen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="9" />
+        <location filename="../../../translation_tools/translatables.py" line="7" />
         <source>Collects keyboard responses</source>
         <translation>Sammelt Tastaturantworten</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="8" />
+        <location filename="../../../translation_tools/translatables.py" line="13" />
         <source>Correct response</source>
         <translation>Korrekte Antwort</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="14" />
+        <location filename="../../../translation_tools/translatables.py" line="4" />
         <source>Allowed responses</source>
         <translation>Erlaubte Antworten</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="10" />
+        <location filename="../../../translation_tools/translatables.py" line="9" />
         <source>Timeout</source>
         <translation>Zeitüberschreitung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="5" />
+        <location filename="../../../translation_tools/translatables.py" line="6" />
         <source>Key names</source>
         <translation>Tastennamen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="12" />
+        <location filename="../../../translation_tools/translatables.py" line="14" />
         <source>The following key names are valid:</source>
         <translation>Die folgenden Tastennamen sind gültig:</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="7" />
+        <location filename="../../../translation_tools/translatables.py" line="10" />
         <source>In milliseconds or "infinite"</source>
         <translation>In Millisekunden oder "unendlich"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="4" />
+        <location filename="../../../translation_tools/translatables.py" line="8" />
         <source>Event type</source>
         <translation>Ereignistyp</translation>
     </message>
@@ -1388,7 +1390,7 @@ of OpenSesame.
         <translation>Getrennt durch Semikolon, z.B. "z;/"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="13" />
+        <location filename="../../../translation_tools/translatables.py" line="12" />
         <source>List available keys</source>
         <translation>Verfügbare Tasten auflisten</translation>
     </message>
@@ -1396,12 +1398,12 @@ of OpenSesame.
 <context>
     <name>item_logger</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="17" />
+        <location filename="../../../translation_tools/translatables.py" line="18" />
         <source>You have multiple unlinked loggers. This can lead to messy log files.</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="18" />
+        <location filename="../../../translation_tools/translatables.py" line="17" />
         <source>Logs experimental data</source>
         <translation>Protokolliert experimentelle Daten</translation>
     </message>
@@ -1409,77 +1411,77 @@ of OpenSesame.
 <context>
     <name>item_loop</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="103" />
+        <location filename="../../../translation_tools/translatables.py" line="115" />
         <source>Note: Loop data will be read from file</source>
         <translation>Hinweis: Schleifendaten werden aus Datei gelesen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="114" />
+        <location filename="../../../translation_tools/translatables.py" line="112" />
         <source># Preview of loop table</source>
         <translation># Vorschau der Schleifentabelle</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="110" />
+        <location filename="../../../translation_tools/translatables.py" line="106" />
         <source>once</source>
         <translation>einmal</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="105" />
+        <location filename="../../../translation_tools/translatables.py" line="116" />
         <source>Summary: &lt;b&gt;%s&lt;/b&gt; will be called &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; order.</source>
         <translation>Zusammenfassung: &lt;b&gt;%s&lt;/b&gt; wird &lt;b&gt;%s&lt;/b&gt; in &lt;b&gt;%s&lt;/b&gt; Reihenfolge aufgerufen.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="112" />
+        <location filename="../../../translation_tools/translatables.py" line="110" />
         <source>Warning: No item to run has been specified</source>
         <translation>Warnung: Es wurde kein Element zum Ausführen angegeben</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="106" />
+        <location filename="../../../translation_tools/translatables.py" line="113" />
         <source>This means that %s %s and %s %s.</source>
         <translation>Das bedeutet, dass %s %s und %s %s.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="107" />
+        <location filename="../../../translation_tools/translatables.py" line="111" />
         <source>The number of rows is %s.</source>
         <translation>Die Anzahl der Zeilen beträgt %s.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="111" />
+        <location filename="../../../translation_tools/translatables.py" line="108" />
         <source>one row occurs</source>
         <translation>eine Zeile tritt auf</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="117" />
+        <location filename="../../../translation_tools/translatables.py" line="104" />
         <source>two rows occur</source>
         <translation>zwei Zeilen treten auf</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="113" />
+        <location filename="../../../translation_tools/translatables.py" line="105" />
         <source>twice</source>
         <translation>zweimal</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="109" />
+        <location filename="../../../translation_tools/translatables.py" line="114" />
         <source>Failed to generate preview.</source>
         <translation>Fehler beim Generieren der Vorschau.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="104" />
+        <location filename="../../../translation_tools/translatables.py" line="109" />
         <source>never</source>
         <translation>niemals</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="116" />
+        <location filename="../../../translation_tools/translatables.py" line="117" />
         <source>Note: Order or repeat is unknown or variably defined</source>
         <translation>Hinweis: Reihenfolge oder Wiederholung ist unbekannt oder variabel definiert</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="108" />
+        <location filename="../../../translation_tools/translatables.py" line="103" />
         <source>All rows occur %s.</source>
         <translation>Alle Zeilen treten %s auf.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="115" />
+        <location filename="../../../translation_tools/translatables.py" line="107" />
         <source>Repeatedly runs another item</source>
         <translation>Führt wiederholt ein anderes Element aus</translation>
     </message>
@@ -1487,62 +1489,62 @@ of OpenSesame.
 <context>
     <name>item_mouse_response</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="131" />
+        <location filename="../../../translation_tools/translatables.py" line="133" />
         <source>Leave empty to use "correct_response"</source>
         <translation>Leer lassen, um "correct_response" zu verwenden</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="136" />
+        <location filename="../../../translation_tools/translatables.py" line="130" />
         <source>Linked sketchpad</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="130" />
+        <location filename="../../../translation_tools/translatables.py" line="137" />
         <source>Flush pending mouse clicks</source>
         <translation>Anstehende Mausklicks löschen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="134" />
+        <location filename="../../../translation_tools/translatables.py" line="138" />
         <source>Correct response</source>
         <translation>Korrekte Antwort</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="140" />
+        <location filename="../../../translation_tools/translatables.py" line="131" />
         <source>Allowed responses</source>
         <translation>Erlaubte Antworten</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="139" />
+        <location filename="../../../translation_tools/translatables.py" line="135" />
         <source>Timeout</source>
         <translation>Zeitüberschreitung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="132" />
+        <location filename="../../../translation_tools/translatables.py" line="139" />
         <source>Elements define regions of interest</source>
         <translation>Elemente definieren interessante Bereiche</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="135" />
+        <location filename="../../../translation_tools/translatables.py" line="129" />
         <source>Collects mouse responses</source>
         <translation>Sammelt Mausantworten</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="138" />
+        <location filename="../../../translation_tools/translatables.py" line="132" />
         <source>Visible mouse cursor</source>
         <translation>Sichtbarer Mauszeiger</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="133" />
+        <location filename="../../../translation_tools/translatables.py" line="136" />
         <source>In milliseconds or "infinite"</source>
         <translation>In Millisekunden oder "unendlich"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="129" />
+        <location filename="../../../translation_tools/translatables.py" line="134" />
         <source>Event type</source>
         <translation>Ereignistyp</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="137" />
+        <location filename="../../../translation_tools/translatables.py" line="140" />
         <source>Separated by semicolons, e.g. "left_button;right_button"</source>
         <translation>Getrennt durch Semikolons, z. B. "left_button;right_button"</translation>
     </message>
@@ -1550,42 +1552,42 @@ of OpenSesame.
 <context>
     <name>item_sampler</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="58" />
+        <location filename="../../../translation_tools/translatables.py" line="53" />
         <source>Sound file</source>
         <translation>Tondatei</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="57" />
+        <location filename="../../../translation_tools/translatables.py" line="52" />
         <source>Volume</source>
         <translation>Lautstärke</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="55" />
+        <location filename="../../../translation_tools/translatables.py" line="61" />
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="54" />
+        <location filename="../../../translation_tools/translatables.py" line="57" />
         <source>Panning</source>
         <translation>Panning</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="52" />
+        <location filename="../../../translation_tools/translatables.py" line="50" />
         <source>Stop after</source>
         <translation>Stoppe nach</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="49" />
+        <location filename="../../../translation_tools/translatables.py" line="58" />
         <source>Positive values toward the right; "left" or "right" for full panning</source>
         <translation>Positive Werte nach rechts; "left" oder "right" für volles Panning</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="50" />
+        <location filename="../../../translation_tools/translatables.py" line="54" />
         <source>Pitch</source>
         <translation>Tonhöhe</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="51" />
+        <location filename="../../../translation_tools/translatables.py" line="49" />
         <source>In milliseconds, "sound", "keypress", or "mouseclick"</source>
         <translation>In Millisekunden, "sound", "keypress" oder "mouseclick"</translation>
     </message>
@@ -1595,22 +1597,22 @@ of OpenSesame.
         <translation>Im .ogg oder .wav Format</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="56" />
+        <location filename="../../../translation_tools/translatables.py" line="59" />
         <source> x original</source>
         <translation> x original</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="53" />
+        <location filename="../../../translation_tools/translatables.py" line="55" />
         <source>Fade in</source>
         <translation>Einblenden</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="59" />
+        <location filename="../../../translation_tools/translatables.py" line="51" />
         <source>Duration</source>
         <translation>Dauer</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="61" />
+        <location filename="../../../translation_tools/translatables.py" line="56" />
         <source>Plays a sound file in .wav or .ogg format</source>
         <translation>Spielt eine Sounddatei im .wav oder .ogg Format ab</translation>
     </message>
@@ -1618,12 +1620,12 @@ of OpenSesame.
 <context>
     <name>item_sequence</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="125" />
+        <location filename="../../../translation_tools/translatables.py" line="124" />
         <source>Sequence contains non-existing item: %s</source>
         <translation>Sequenz enthält nicht vorhandenen Eintrag: %s</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="124" />
+        <location filename="../../../translation_tools/translatables.py" line="125" />
         <source>Runs a number of items in sequence</source>
         <translation>Führt eine Anzahl von Elementen in einer Sequenz aus</translation>
     </message>
@@ -1641,87 +1643,87 @@ of OpenSesame.
 <context>
     <name>item_sketchpad</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="79" />
+        <location filename="../../../translation_tools/translatables.py" line="81" />
         <source>Some properties of a noise patch are unknown or variably defined, using fallback image</source>
         <translation>Einige Eigenschaften eines Rauschpatches sind unbekannt oder variabel definiert, wobei ein fallback-Bild verwendet wird</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="93" />
+        <location filename="../../../translation_tools/translatables.py" line="85" />
         <source>Penwidth "%s" is unknown or variably defined, using 1</source>
         <translation>Stiftbreite "%s" ist unbekannt oder variabel definiert, 1 wird verwendet</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="88" />
+        <location filename="../../../translation_tools/translatables.py" line="74" />
         <source>Width "%s" is unknown or variably defined, using 100</source>
         <translation>Breite "%s" ist unbekannt oder variabel definiert, 100 verwenden</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="74" />
+        <location filename="../../../translation_tools/translatables.py" line="84" />
         <source>Enter text</source>
         <translation>Text eingeben</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="86" />
+        <location filename="../../../translation_tools/translatables.py" line="79" />
         <source>Lower to bottom</source>
         <translation>In den Hintergrund bringen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="80" />
+        <location filename="../../../translation_tools/translatables.py" line="75" />
         <source>Please enter a text for the textline</source>
         <translation>Bitte geben Sie einen Text für die Textzeile ein</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="82" />
+        <location filename="../../../translation_tools/translatables.py" line="72" />
         <source>Rotation "%s" is unknown or variably defined, using 0</source>
         <translation>Rotation "%s" ist unbekannt oder variabel definiert, 0 wird verwendet</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="75" />
+        <location filename="../../../translation_tools/translatables.py" line="82" />
         <source>Proportion "%s" is unknown or variably defined, using .5</source>
         <translation>Proportion "%s" ist unbekannt oder variabel definiert, .5 verwenden</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="81" />
+        <location filename="../../../translation_tools/translatables.py" line="77" />
         <source>Color "%s" is unknown or variably defined, using placeholder color</source>
         <translation>Farbe "%s" ist unbekannt oder variabel definiert, Platzhalterfarbe wird verwendet</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="77" />
+        <location filename="../../../translation_tools/translatables.py" line="92" />
         <source>Y coordinate "%s" is unknown or variably defined, using display center</source>
         <translation>Y-Koordinate "%s" ist unbekannt oder variabel definiert, Bildschirmmitte wird verwendet</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="85" />
+        <location filename="../../../translation_tools/translatables.py" line="93" />
         <source>Scale "%s" is unknown or variably defined, using 1</source>
         <translation>Skala "%s" ist unbekannt oder variabel definiert, 1 wird verwendet</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="73" />
+        <location filename="../../../translation_tools/translatables.py" line="80" />
         <source>X coordinate "%s" is unknown or variably defined, using display center</source>
         <translation>X-Koordinate "%s" ist unbekannt oder variabel definiert, Bildschirmmitte wird verwendet</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="72" />
+        <location filename="../../../translation_tools/translatables.py" line="78" />
         <source>Specify polar coordinates</source>
         <translation>Geben Sie Polarkoordinaten an</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="89" />
+        <location filename="../../../translation_tools/translatables.py" line="95" />
         <source>Fill "%s" is unknown or variably defined, assuming filled</source>
         <translation>Füllung "%s" ist unbekannt oder variabel definiert, Annahme gefüllt</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="90" />
+        <location filename="../../../translation_tools/translatables.py" line="91" />
         <source>Delete</source>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="96" />
+        <location filename="../../../translation_tools/translatables.py" line="73" />
         <source>Displays stimuli</source>
         <translation>Stimuli anzeigen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="95" />
+        <location filename="../../../translation_tools/translatables.py" line="96" />
         <source>Height "%s" is unknown or variably defined, using 100</source>
         <translation>Höhe "%s" ist unbekannt oder variabel definiert, 100 verwenden</translation>
     </message>
@@ -1731,12 +1733,12 @@ of OpenSesame.
         <translation>Element-Script</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="71" />
+        <location filename="../../../translation_tools/translatables.py" line="86" />
         <source>Draw %s element</source>
         <translation>%s-Element zeichnen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="83" />
+        <location filename="../../../translation_tools/translatables.py" line="90" />
         <source>Fixdot style "%s" is unknown or variably defined</source>
         <translation>Fixdot-Stil "%s" ist unbekannt oder variabel definiert</translation>
     </message>
@@ -1746,27 +1748,27 @@ of OpenSesame.
         <translation>Bildname "%s" ist unbekannt oder variabel definiert, es wird auf Ersatzbild zurückgegriffen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="91" />
+        <location filename="../../../translation_tools/translatables.py" line="89" />
         <source>Some properties of a Gabor patch are unknown or variably defined, using fallback image</source>
         <translation>Einige Eigenschaften eines Gabor-Patches sind unbekannt oder variabel definiert, wobei ein fallback-Bild verwendet wird</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="87" />
+        <location filename="../../../translation_tools/translatables.py" line="71" />
         <source>Radius "%s" is unknown or variably defined, using 50</source>
         <translation>Radius "%s" ist unbekannt oder variabel definiert, 50 verwenden</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="92" />
+        <location filename="../../../translation_tools/translatables.py" line="83" />
         <source>Font size "%s" is invalid or variably defined, using 18</source>
         <translation>Schriftgröße "%s" ist ungültig oder variabel definiert, 18 verwenden</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="78" />
+        <location filename="../../../translation_tools/translatables.py" line="87" />
         <source>Raise to front</source>
         <translation>In den Vordergrund bringen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="84" />
+        <location filename="../../../translation_tools/translatables.py" line="88" />
         <source>Edit script</source>
         <translation>Skript bearbeiten</translation>
     </message>
@@ -1774,72 +1776,72 @@ of OpenSesame.
 <context>
     <name>item_synth</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="44" />
+        <location filename="../../../translation_tools/translatables.py" line="40" />
         <source> x maximum</source>
         <translation> x Maximum</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="41" />
+        <location filename="../../../translation_tools/translatables.py" line="37" />
         <source>Volume</source>
         <translation>Lautstärke</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="36" />
+        <location filename="../../../translation_tools/translatables.py" line="46" />
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="39" />
+        <location filename="../../../translation_tools/translatables.py" line="42" />
         <source>Panning</source>
         <translation>Panning</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="45" />
+        <location filename="../../../translation_tools/translatables.py" line="34" />
         <source>Attack</source>
         <translation>Attacke</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="33" />
+        <location filename="../../../translation_tools/translatables.py" line="44" />
         <source>Positive values toward the right; "left" or "right" for full panning</source>
         <translation>Positive Werte nach rechts; "left" oder "right" für volles Panning</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="34" />
+        <location filename="../../../translation_tools/translatables.py" line="33" />
         <source>In milliseconds, "sound", "keypress", or "mouseclick"</source>
         <translation>In Millisekunden, "sound", "keypress" oder "mouseclick"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="42" />
+        <location filename="../../../translation_tools/translatables.py" line="39" />
         <source>Length</source>
         <translation>Länge</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="43" />
+        <location filename="../../../translation_tools/translatables.py" line="36" />
         <source>Duration</source>
         <translation>Dauer</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="38" />
+        <location filename="../../../translation_tools/translatables.py" line="45" />
         <source>Decay</source>
         <translation>Abklingzeit</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="35" />
+        <location filename="../../../translation_tools/translatables.py" line="38" />
         <source>A basic sound synthesizer</source>
         <translation>Ein einfacher Tonsynthesizer</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="37" />
+        <location filename="../../../translation_tools/translatables.py" line="43" />
         <source>Waveform</source>
         <translation>Wellenform</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="46" />
+        <location filename="../../../translation_tools/translatables.py" line="41" />
         <source>In Hertz or as note, e.g. "A1"</source>
         <translation>In Hertz oder als Note, z.B. "A1"</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="40" />
+        <location filename="../../../translation_tools/translatables.py" line="35" />
         <source>Frequency</source>
         <translation>Frequenz</translation>
     </message>
@@ -1847,47 +1849,47 @@ of OpenSesame.
 <context>
     <name>plugin_advanced_delay</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="415" />
+        <location filename="../../../translation_tools/translatables.py" line="414" />
         <source>The average duration in milliseconds</source>
         <translation>Die durchschnittliche Dauer in Millisekunden</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="416" />
+        <location filename="../../../translation_tools/translatables.py" line="419" />
         <source> ms</source>
         <translation> ms</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="412" />
+        <location filename="../../../translation_tools/translatables.py" line="416" />
         <source>A random delay sampled from either a normal or uniform distribution</source>
         <translation>Eine zufällige Verzögerung, die einer normalen oder gleichmäßigen Verteilung entnommen wird</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="410" />
+        <location filename="../../../translation_tools/translatables.py" line="417" />
         <source>Jitter mode</source>
         <translation>Jitter-Modus</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="413" />
+        <location filename="../../../translation_tools/translatables.py" line="418" />
         <source>The mode for determining the actual duration (see Help)</source>
         <translation>Der Modus zur Bestimmung der tatsächlichen Dauer (siehe Hilfe)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="418" />
+        <location filename="../../../translation_tools/translatables.py" line="413" />
         <source>Duration</source>
         <translation>Dauer</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="411" />
+        <location filename="../../../translation_tools/translatables.py" line="415" />
         <source>The jitter of the actual duration in milliseconds (depends on Jitter mode)</source>
         <translation>Die Jitter der tatsächlichen Dauer in Millisekunden (abhängig vom Jitter-Modus)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="414" />
+        <location filename="../../../translation_tools/translatables.py" line="411" />
         <source>Jitter</source>
         <translation>Jitter</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="417" />
+        <location filename="../../../translation_tools/translatables.py" line="412" />
         <source>Flow control</source>
         <translation>Flusskontrolle</translation>
     </message>
@@ -1895,12 +1897,12 @@ of OpenSesame.
 <context>
     <name>plugin_coroutines</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="304" />
+        <location filename="../../../translation_tools/translatables.py" line="305" />
         <source>Run items simultaneously</source>
         <translation>Elemente gleichzeitig ausführen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="305" />
+        <location filename="../../../translation_tools/translatables.py" line="306" />
         <source>Flow control</source>
         <translation>Flusskontrolle</translation>
     </message>
@@ -1908,7 +1910,7 @@ of OpenSesame.
 <context>
     <name>plugin_form_base</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="405" />
+        <location filename="../../../translation_tools/translatables.py" line="408" />
         <source>Form</source>
         <translation>Formular</translation>
     </message>
@@ -1926,47 +1928,47 @@ of OpenSesame.
 <context>
     <name>plugin_form_consent</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="367" />
+        <location filename="../../../translation_tools/translatables.py" line="369" />
         <source>Text to display in the form body</source>
         <translation>Text, der im Formularkörper angezeigt wird</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="362" />
+        <location filename="../../../translation_tools/translatables.py" line="363" />
         <source>Decline-button text</source>
         <translation>Text der Ablehnungs-Schaltfläche</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="369" />
+        <location filename="../../../translation_tools/translatables.py" line="364" />
         <source>Text for the decline button</source>
         <translation>Text für die Ablehnungs-Schaltfläche</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="360" />
+        <location filename="../../../translation_tools/translatables.py" line="361" />
         <source>Title to appear above the form text</source>
         <translation>Titel, der über dem Formulartext erscheint</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="356" />
+        <location filename="../../../translation_tools/translatables.py" line="357" />
         <source>A simple consent form</source>
         <translation>Ein einfaches Einverständniserklärungsformular</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="361" />
+        <location filename="../../../translation_tools/translatables.py" line="365" />
         <source>Form title</source>
         <translation>Formulartitel</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="358" />
+        <location filename="../../../translation_tools/translatables.py" line="362" />
         <source>Accept-button text</source>
         <translation>Text der Akzeptieren-Schaltfläche</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="364" />
+        <location filename="../../../translation_tools/translatables.py" line="360" />
         <source>Message on decline</source>
         <translation>Nachricht bei Ablehnung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="365" />
+        <location filename="../../../translation_tools/translatables.py" line="358" />
         <source>Text for the accept button</source>
         <translation>Text für die Akzeptieren-Schaltfläche</translation>
     </message>
@@ -1976,17 +1978,17 @@ of OpenSesame.
         <translation>Kontrollkästchen-Text</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="357" />
+        <location filename="../../../translation_tools/translatables.py" line="367" />
         <source>Consent form text</source>
         <translation>Text des Einverständniserklärungsformulars</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="359" />
+        <location filename="../../../translation_tools/translatables.py" line="370" />
         <source>Form</source>
         <translation>Formular</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="363" />
+        <location filename="../../../translation_tools/translatables.py" line="359" />
         <source>A message shown when the participant declines</source>
         <translation>Eine Nachricht, die angezeigt wird, wenn der Teilnehmer ablehnt</translation>
     </message>
@@ -1999,67 +2001,67 @@ of OpenSesame.
 <context>
     <name>plugin_form_multiple_choice</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="387" />
+        <location filename="../../../translation_tools/translatables.py" line="384" />
         <source>A simple multiple choice item</source>
         <translation>Ein einfaches Multiple-Choice-Element</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="384" />
+        <location filename="../../../translation_tools/translatables.py" line="392" />
         <source>Form title</source>
         <translation>Formulartitel</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="385" />
+        <location filename="../../../translation_tools/translatables.py" line="393" />
         <source>Response options</source>
         <translation>Antwortoptionen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="388" />
+        <location filename="../../../translation_tools/translatables.py" line="385" />
         <source>Response variable</source>
         <translation>Antwortvariable</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="393" />
+        <location filename="../../../translation_tools/translatables.py" line="387" />
         <source>Response options (different options on different lines)</source>
         <translation>Antwortoptionen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="382" />
+        <location filename="../../../translation_tools/translatables.py" line="386" />
         <source>Your question</source>
         <translation>Ihre Frage</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="394" />
+        <location filename="../../../translation_tools/translatables.py" line="391" />
         <source>Response timeout</source>
         <translation>Antwortzeitüberschreitung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="386" />
+        <location filename="../../../translation_tools/translatables.py" line="394" />
         <source>Button text</source>
         <translation>Schaltflächentext</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="392" />
+        <location filename="../../../translation_tools/translatables.py" line="390" />
         <source>Text for the button to advance to the next item</source>
         <translation>Weiter</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="391" />
+        <location filename="../../../translation_tools/translatables.py" line="389" />
         <source>Allow multiple options to be selected</source>
         <translation>Mehrere Optionen auswählbar</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="389" />
+        <location filename="../../../translation_tools/translatables.py" line="388" />
         <source>Timeout</source>
         <translation>Zeitüberschreitung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="383" />
+        <location filename="../../../translation_tools/translatables.py" line="395" />
         <source>Form</source>
         <translation>Formular</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="390" />
+        <location filename="../../../translation_tools/translatables.py" line="383" />
         <source>Advance immediately to the next item once a selection has been made</source>
         <translation>Sofort zum nächsten Element wechseln, sobald eine Auswahl getroffen wurde</translation>
     </message>
@@ -2067,7 +2069,7 @@ of OpenSesame.
 <context>
     <name>plugin_form_text_display</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="379" />
+        <location filename="../../../translation_tools/translatables.py" line="375" />
         <source>Ok-button text</source>
         <translation>OK-Schaltflächentext</translation>
     </message>
@@ -2077,32 +2079,32 @@ of OpenSesame.
         <translation>Hauptformulartext</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="373" />
+        <location filename="../../../translation_tools/translatables.py" line="378" />
         <source>Text for the Ok button</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="378" />
+        <location filename="../../../translation_tools/translatables.py" line="379" />
         <source>Text to display in the form body</source>
         <translation>Text, der im Formularkörper angezeigt wird</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="376" />
+        <location filename="../../../translation_tools/translatables.py" line="373" />
         <source>Title to appear above the form text</source>
         <translation>Titel, der über dem Formulartext erscheint</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="375" />
+        <location filename="../../../translation_tools/translatables.py" line="376" />
         <source>Form title</source>
         <translation>Formulartitel</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="372" />
+        <location filename="../../../translation_tools/translatables.py" line="374" />
         <source>A simple text display form</source>
         <translation>Einfache Textanzeigeform</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="374" />
+        <location filename="../../../translation_tools/translatables.py" line="380" />
         <source>Form</source>
         <translation>Formular</translation>
     </message>
@@ -2110,52 +2112,52 @@ of OpenSesame.
 <context>
     <name>plugin_form_text_input</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="451" />
+        <location filename="../../../translation_tools/translatables.py" line="452" />
         <source>Title to appear above the form text</source>
         <translation>Titel, der über dem Formulartext erscheint</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="450" />
+        <location filename="../../../translation_tools/translatables.py" line="455" />
         <source>Form title</source>
         <translation>Formulartitel</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="447" />
+        <location filename="../../../translation_tools/translatables.py" line="454" />
         <source>The experimental variable to save the response in</source>
         <translation>Die experimentelle Variable zum Speichern der Antwort</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="452" />
+        <location filename="../../../translation_tools/translatables.py" line="448" />
         <source>Response variable</source>
         <translation>Antwortvariable</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="448" />
+        <location filename="../../../translation_tools/translatables.py" line="449" />
         <source>Your question</source>
         <translation>Ihre Frage</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="453" />
+        <location filename="../../../translation_tools/translatables.py" line="456" />
         <source>A simple text input form</source>
         <translation>Einfaches Texteingabeformular</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="456" />
+        <location filename="../../../translation_tools/translatables.py" line="450" />
         <source>A question text</source>
         <translation>Fragetext</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="455" />
+        <location filename="../../../translation_tools/translatables.py" line="453" />
         <source>A response timeout</source>
         <translation>Antwortzeitüberschreitung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="454" />
+        <location filename="../../../translation_tools/translatables.py" line="451" />
         <source>Timeout</source>
         <translation>Zeitüberschreitung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="449" />
+        <location filename="../../../translation_tools/translatables.py" line="457" />
         <source>Form</source>
         <translation>Formular</translation>
     </message>
@@ -2173,12 +2175,12 @@ of OpenSesame.
         <translation>Erwartet eine durch Komma getrennte Liste von Zahlen zwischen 1 und der Anzahl der Joybuttons</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="436" />
+        <location filename="../../../translation_tools/translatables.py" line="445" />
         <source>Enable dummy mode to test the experiment using a keyboard</source>
         <translation>Dummy-Modus aktivieren, um das Experiment mit einer Tastatur zu testen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="438" />
+        <location filename="../../../translation_tools/translatables.py" line="439" />
         <source>Collects input from a joystick or gamepad</source>
         <translation>Sammelt Eingaben von einem Joystick oder Gamepad</translation>
     </message>
@@ -2188,32 +2190,32 @@ of OpenSesame.
         <translation>Gerätenr.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="437" />
+        <location filename="../../../translation_tools/translatables.py" line="443" />
         <source>Expecting a value in milliseconds of 'infinite'</source>
         <translation>Erwartet einen Wert in Millisekunden von 'infinite'</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="444" />
+        <location filename="../../../translation_tools/translatables.py" line="437" />
         <source>Allowed responses</source>
         <translation>Erlaubte Antworten</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="443" />
+        <location filename="../../../translation_tools/translatables.py" line="441" />
         <source>Timeout</source>
         <translation>Zeitüberschreitung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="434" />
+        <location filename="../../../translation_tools/translatables.py" line="436" />
         <source>Response collection</source>
         <translation>Antworterfassung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="441" />
+        <location filename="../../../translation_tools/translatables.py" line="438" />
         <source>Dummy mode (use keyboard instead of joystick)</source>
         <translation>Dummy-Modus (Tastatur statt Joystick verwenden)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="439" />
+        <location filename="../../../translation_tools/translatables.py" line="444" />
         <source>Correct response</source>
         <translation>Korrekte Antwort</translation>
     </message>
@@ -2226,12 +2228,12 @@ of OpenSesame.
         <translation>Ein einfacher Notizblock, um Ihr Experiment zu dokumentieren. Dieses Plugin tut nichts.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="428" />
+        <location filename="../../../translation_tools/translatables.py" line="429" />
         <source>None</source>
         <translation>Keiner</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="427" />
+        <location filename="../../../translation_tools/translatables.py" line="432" />
         <source>Miscellaneous</source>
         <translation>Sonstiges</translation>
     </message>
@@ -2241,7 +2243,7 @@ of OpenSesame.
         <translation>Notiz</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="429" />
+        <location filename="../../../translation_tools/translatables.py" line="427" />
         <source>Type your note here</source>
         <translation>Geben Sie hier Ihre Notiz ein</translation>
     </message>
@@ -2249,97 +2251,97 @@ of OpenSesame.
 <context>
     <name>plugin_quest_staircase_init</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="471" />
+        <location filename="../../../translation_tools/translatables.py" line="461" />
         <source>Name</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="459" />
+        <location filename="../../../translation_tools/translatables.py" line="471" />
         <source>Initializes a new Quest staircase procedure</source>
         <translation>Initialisiert ein neues Quest-Stufenverfahren</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="466" />
+        <location filename="../../../translation_tools/translatables.py" line="478" />
         <source>β</source>
         <translation>β</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="474" />
+        <location filename="../../../translation_tools/translatables.py" line="470" />
         <source>Estimated threshold</source>
         <translation>Geschätzte Schwelle</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="467" />
+        <location filename="../../../translation_tools/translatables.py" line="466" />
         <source>Staircase</source>
         <translation>Treppenstufe</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="463" />
+        <location filename="../../../translation_tools/translatables.py" line="467" />
         <source>Use different names to run multiple independent Quest procedures</source>
         <translation>Verwenden Sie unterschiedliche Namen, um mehrere unabhängige Quest-Verfahren auszuführen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="470" />
+        <location filename="../../../translation_tools/translatables.py" line="473" />
         <source>Std. dev. of estimated threshold</source>
         <translation>Standardabweichung der geschätzten Schwelle</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="460" />
+        <location filename="../../../translation_tools/translatables.py" line="472" />
         <source>Minimum test value</source>
         <translation>Minimaler Testwert</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="468" />
+        <location filename="../../../translation_tools/translatables.py" line="476" />
         <source>Used for initial test value</source>
         <translation>Für anfänglichen Testwert verwendet</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="461" />
+        <location filename="../../../translation_tools/translatables.py" line="465" />
         <source>Proportion of random responses at maximum stimulus intensity</source>
         <translation>Anteil an zufälligen Reaktionen bei maximaler Stimulusintensität</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="464" />
+        <location filename="../../../translation_tools/translatables.py" line="469" />
         <source>Desired proportion of correct responses</source>
         <translation>Erwünschter Anteil an korrekten Antworten</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="465" />
+        <location filename="../../../translation_tools/translatables.py" line="463" />
         <source>Experimental variable for test value</source>
         <translation>Experimentelle Variable für Testwert</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="476" />
+        <location filename="../../../translation_tools/translatables.py" line="464" />
         <source>Maximum test value</source>
         <translation>Maximaler Testwert</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="469" />
+        <location filename="../../../translation_tools/translatables.py" line="462" />
         <source>Steepness of the Weibull psychometric function</source>
         <translation>Steilheit der Weibull-Psychometriefunktion</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="462" />
+        <location filename="../../../translation_tools/translatables.py" line="468" />
         <source>Method to determine optimal test value</source>
         <translation>Methode zur Bestimmung des optimalen Testwerts</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="472" />
+        <location filename="../../../translation_tools/translatables.py" line="460" />
         <source>Target</source>
         <translation>Ziel</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="473" />
+        <location filename="../../../translation_tools/translatables.py" line="475" />
         <source>Method</source>
         <translation>Methode</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="475" />
+        <location filename="../../../translation_tools/translatables.py" line="477" />
         <source>Chance level (γ)</source>
         <translation>Zufallsniveau (γ)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="477" />
+        <location filename="../../../translation_tools/translatables.py" line="474" />
         <source>δ</source>
         <translation>δ</translation>
     </message>
@@ -2347,32 +2349,32 @@ of OpenSesame.
 <context>
     <name>plugin_quest_staircase_next</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="397" />
+        <location filename="../../../translation_tools/translatables.py" line="398" />
         <source>Staircase</source>
         <translation>Treppenstufe</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="399" />
+        <location filename="../../../translation_tools/translatables.py" line="401" />
         <source>Updates the Quest test value based on a response</source>
         <translation>Aktualisiert den Quest-Testwert basierend auf einer Antwort</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="398" />
+        <location filename="../../../translation_tools/translatables.py" line="402" />
         <source>Should match a name specified in a quest_staircase_init</source>
         <translation>Sollte mit einem Namen übereinstimmen, der in einer quest_staircase_init angegeben ist</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="402" />
+        <location filename="../../../translation_tools/translatables.py" line="403" />
         <source>Responses should be coded as 0 (incorrect) or 1 (correct)</source>
         <translation>Antworten sollten als 0 (falsch) oder 1 (richtig) kodiert sein</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="400" />
+        <location filename="../../../translation_tools/translatables.py" line="399" />
         <source>Response variable</source>
         <translation>Antwortvariable</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="401" />
+        <location filename="../../../translation_tools/translatables.py" line="400" />
         <source>Name</source>
         <translation>Name</translation>
     </message>
@@ -2380,17 +2382,17 @@ of OpenSesame.
 <context>
     <name>plugin_repeat_cycle</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="353" />
+        <location filename="../../../translation_tools/translatables.py" line="351" />
         <source>Repeat if</source>
         <translation>Wiederholen, wenn</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="350" />
+        <location filename="../../../translation_tools/translatables.py" line="353" />
         <source>A conditional expression that determines when the cycle is repeated</source>
         <translation>Ein bedingter Ausdruck, der bestimmt, wann der Zyklus wiederholt wird</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="351" />
+        <location filename="../../../translation_tools/translatables.py" line="354" />
         <source>Optionally repeat a cycle from a loop</source>
         <translation>Optional einen Zyklus aus einer Schleife wiederholen</translation>
     </message>
@@ -2408,12 +2410,12 @@ of OpenSesame.
         <translation>Antworterfassung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="422" />
+        <location filename="../../../translation_tools/translatables.py" line="424" />
         <source>This plug-in has no settings</source>
         <translation>Dieses Plug-in hat keine Einstellungen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="421" />
+        <location filename="../../../translation_tools/translatables.py" line="422" />
         <source>A very simple plug-in to reset feedback variables</source>
         <translation>Ein sehr einfaches Plug-in, um Feedback-Variablen zurückzusetzen</translation>
     </message>
@@ -2421,22 +2423,22 @@ of OpenSesame.
 <context>
     <name>plugin_srbox</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="323" />
+        <location filename="../../../translation_tools/translatables.py" line="326" />
         <source>Expecting a value in milliseconds or 'infinite'</source>
         <translation>Erwartet einen Wert in Millisekunden oder 'unendlich'</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="325" />
+        <location filename="../../../translation_tools/translatables.py" line="332" />
         <source>Correct response</source>
         <translation>Korrekte Antwort</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="331" />
+        <location filename="../../../translation_tools/translatables.py" line="327" />
         <source>Expecting a valid device name. Leave empty for autodetect.</source>
         <translation>Erwartet einen gültigen Gerätenamen. Leer lassen für automatische Erkennung.</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="328" />
+        <location filename="../../../translation_tools/translatables.py" line="324" />
         <source>Expecting a semicolon-separated list of button numbers, e.g., 1;3;4</source>
         <translation>Erwartet eine durch Semikolon getrennte Liste von Schaltflächennummern, z. B. 1;3;4</translation>
     </message>
@@ -2446,64 +2448,64 @@ of OpenSesame.
         <translation>Bereits gedrückte Tasten ignorieren</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="318" />
+        <location filename="../../../translation_tools/translatables.py" line="323" />
         <source>Dummy mode (use keyboard instead)</source>
         <translation>Dummymodus (stattdessen Tastatur verwenden)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="320" />
+        <location filename="../../../translation_tools/translatables.py" line="334" />
         <source>Device name</source>
         <translation>Gerätename</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="322" />
+        <location filename="../../../translation_tools/translatables.py" line="331" />
         <source>Expecting a button number (1 .. 5)</source>
         <translation>Erwartet eine Schaltflächennummer (1 .. 5)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="327" />
+        <location filename="../../../translation_tools/translatables.py" line="319" />
         <source>Allowed responses</source>
         <translation>Erlaubte Antworten</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="324" />
+        <location filename="../../../translation_tools/translatables.py" line="320" />
         <source>&lt;small&gt;&lt;b&gt;Note:&lt;/b&gt; If there are multiple srbox items in the experiment, the first srbox item determines the device name and whether dummy mode is enabled&lt;/small&gt;
 </source>
         <translation>&lt;small&gt;&lt;b&gt;Hinweis:&lt;/b&gt; Wenn es mehrere srbox Elemente im Experiment gibt, bestimmt das erste srbox Element den Gerätenamen und ob der Dummymodus aktiviert ist&lt;/small&gt;
 </translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="333" />
+        <location filename="../../../translation_tools/translatables.py" line="328" />
         <source>Require a button-state change, so that already-pressed buttons are ignored</source>
         <translation>Erfordert eine Änderung des Tastenzustands, damit bereits gedrückte Tasten ignoriert werden</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="330" />
+        <location filename="../../../translation_tools/translatables.py" line="325" />
         <source>Timeout</source>
         <translation>Zeitüberschreitung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="326" />
+        <location filename="../../../translation_tools/translatables.py" line="330" />
         <source>Enable to respond with the keyboard instead of an SR Box</source>
         <translation>Aktivieren Sie die Möglichkeit, mit der Tastatur statt mit einer SR Box zu antworten</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="332" />
+        <location filename="../../../translation_tools/translatables.py" line="333" />
         <source>Turn on lights</source>
         <translation>Lichter einschalten</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="321" />
+        <location filename="../../../translation_tools/translatables.py" line="318" />
         <source>Response collection</source>
         <translation>Antworterfassung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="319" />
+        <location filename="../../../translation_tools/translatables.py" line="322" />
         <source>Expecting a semicolon-separated list of light numbers, e.g., 1;3;4</source>
         <translation>Erwartet eine durch Semikolon getrennte Liste von Lichtnummern, z. B. 1;3;4</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="317" />
+        <location filename="../../../translation_tools/translatables.py" line="321" />
         <source>A plug-in for using the serial response box.</source>
         <translation>Ein Plug-in für die Verwendung der seriellen Antwortbox.</translation>
     </message>
@@ -2516,42 +2518,42 @@ of OpenSesame.
         <translation>Gibt die Anzahl der Zeilen an</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="339" />
+        <location filename="../../../translation_tools/translatables.py" line="343" />
         <source>Expecting a value in milliseconds or 'infinite'</source>
         <translation>Erwartet einen Wert in Millisekunden oder 'unendlich'</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="340" />
+        <location filename="../../../translation_tools/translatables.py" line="347" />
         <source>Show a mouse cursor (if supported on device)</source>
         <translation>Mauscursor anzeigen (falls vom Gerät unterstützt)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="345" />
+        <location filename="../../../translation_tools/translatables.py" line="339" />
         <source>Number of columns</source>
         <translation>Anzahl der Spalten</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="346" />
+        <location filename="../../../translation_tools/translatables.py" line="342" />
         <source>A grid-based response item, convenient for touch screens</source>
         <translation>Ein rasterbasiertes Antwortelement, praktisch für Touchscreens</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="344" />
+        <location filename="../../../translation_tools/translatables.py" line="345" />
         <source>Number of rows</source>
         <translation>Anzahl der Zeilen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="347" />
+        <location filename="../../../translation_tools/translatables.py" line="346" />
         <source>Show cursor</source>
         <translation>Cursor anzeigen</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="342" />
+        <location filename="../../../translation_tools/translatables.py" line="341" />
         <source>Timeout</source>
         <translation>Zeitüberschreitung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="336" />
+        <location filename="../../../translation_tools/translatables.py" line="344" />
         <source>Set the correct response</source>
         <translation>Richtige Antwort festlegen</translation>
     </message>
@@ -2561,12 +2563,12 @@ of OpenSesame.
         <translation>Antworterfassung</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="343" />
+        <location filename="../../../translation_tools/translatables.py" line="340" />
         <source>Specifies the number of columns</source>
         <translation>Gibt die Anzahl der Spalten an</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="341" />
+        <location filename="../../../translation_tools/translatables.py" line="348" />
         <source>Correct response</source>
         <translation>Korrekte Antwort</translation>
     </message>
@@ -2574,37 +2576,37 @@ of OpenSesame.
 <context>
     <name>plugins_coroutines</name>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="310" />
+        <location filename="../../../translation_tools/translatables.py" line="313" />
         <source>"%s" does not support coroutines.</source>
         <translation />
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="311" />
+        <location filename="../../../translation_tools/translatables.py" line="314" />
         <source>End after item (optional)</source>
         <translation>Ende nach Element (optional)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="312" />
+        <location filename="../../../translation_tools/translatables.py" line="311" />
         <source>Item name</source>
         <translation>Elementname</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="313" />
+        <location filename="../../../translation_tools/translatables.py" line="310" />
         <source>Duration</source>
         <translation>Dauer</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="309" />
+        <location filename="../../../translation_tools/translatables.py" line="315" />
         <source>End time (if applicable)</source>
         <translation>Endzeit (falls zutreffend)</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="314" />
+        <location filename="../../../translation_tools/translatables.py" line="309" />
         <source>Start time</source>
         <translation>Startzeit</translation>
     </message>
     <message>
-        <location filename="../../../translation_tools/translatables.py" line="308" />
+        <location filename="../../../translation_tools/translatables.py" line="312" />
         <source>Flush pending key presses at coroutines start</source>
         <translation />
     </message>
