@@ -229,7 +229,7 @@ class Element:
         if key in NUMERIC_PROPERTIES:
             self._assert_numeric(**{key: val})
         if key == 'color':
-            val = color(self.experiment, val)
+            val = Color(self.experiment, val)
         self._properties[key] = val
         self._on_attribute_change(**{key: val})
 
