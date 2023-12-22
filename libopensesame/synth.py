@@ -47,6 +47,8 @@ class Synth(Sampler):
                                         length=self.var.length,
                                         attack=self.var.attack,
                                         decay=self.var.decay)
+        except OSException as e:
+            raise
         except Exception as e:
             raise OSException(f'Failed to generate sound: {e}')
         pan = self.var.pan

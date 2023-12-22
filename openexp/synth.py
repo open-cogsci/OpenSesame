@@ -86,13 +86,13 @@ def key_to_freq(key):
         return key
     if not isinstance(key, str) or len(key) < 2:
         raise InvalidValue(
-            "synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")
+            f"{key} is not a valid note, expecting something like 'A1'")
     n = key[:-1].lower()
     try:
         o = int(key[-1])
     except:
         raise InvalidValue(
-            "synth.key_to_freq(): '%s' is not a valid note, expecting something like 'A1'")
+            f"{key} is not a valid note, expecting something like 'A1'")
     if n == "a":
         f = 440.0
     elif n == "a#" or n == "bb":
@@ -117,6 +117,9 @@ def key_to_freq(key):
         f = 784.00
     elif n == "ab" or n == "g#":
         f = 830.64
+    else:
+        raise InvalidValue(
+            f"{key} is not a valid note, expecting something like 'A1'")
     if o < 1:
         o = 0.5 ** (abs(o) + 1)
         freq = f * o
