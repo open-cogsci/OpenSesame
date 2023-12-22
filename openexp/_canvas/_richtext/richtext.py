@@ -217,7 +217,7 @@ class RichText(Element):
         """This functions takes a QImage and returns a PIL Image. If available,
         this uses PIL's built-in conversion tool, but since this has broken
         for PyQt5 for Pillow >= 10, we resort to a custom conversion procedure
-        if necesary.
+        if necessary.
         """
         try:
             return Image.fromqimage(self._to_qimage())
