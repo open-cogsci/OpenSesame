@@ -116,7 +116,7 @@ def key_to_freq(key):
     elif n == "g":
         f = 784.00
     elif n == "ab" or n == "g#":
-        f == 830.64
+        f = 830.64
     if o < 1:
         o = 0.5 ** (abs(o) + 1)
         freq = f * o
