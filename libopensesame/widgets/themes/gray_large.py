@@ -23,7 +23,7 @@ from libopensesame.widgets.themes.gray import Gray
 from libopensesame.widgets.themes.plain import Plain
 
 
-class GrayLarge(gray):
+class GrayLarge(Gray):
 
     def __init__(self, form):
 
