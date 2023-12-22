@@ -29,7 +29,7 @@ from qtpy.QtWidgets import (
     QStyleOptionGraphicsItem,
     QApplication
 )
-from qtpy.QtGui import QPixmap, QPainter, QColor, QFont, QFontDatabase
+from qtpy.QtGui import QPixmap, QPainter, QColor, QFont, QFontDatabase, QImage
 from qtpy.QtCore import Qt, QCoreApplication
 from PIL import Image
 
@@ -212,10 +212,35 @@ class RichText(Element):
         t.paint(painter, QStyleOptionGraphicsItem(), None)
         painter.end()
         return pixmap.toImage()
+        
+    def _qimage_to_pil(self, qimage):
+        """This functions takes a QImage and returns a PIL Image. If available,
+        this uses PIL's built-in conversion tool, but since this has broken
+        for PyQt5 for Pillow >= 10, we resort to a custom conversion procedure
+        if necesary.
+        """
+        try:
+            return Image.fromqimage(self._to_qimage())
+        except ImportError:
+            pass
+        import numpy as np
+        oslogger.info('no Qt bindings, using custom QImage to PIL conversion')
+        qimage = qimage.convertToFormat(QImage.Format_ARGB32)
+        width = qimage.width()
+        height = qimage.height()
+        ptr = qimage.bits()
+        ptr.setsize(qimage.byteCount())
+        # Assuming 32-bit color depth
+        arr = np.array(ptr).reshape(height, width, 4)
+        if arr.shape[2] == 4:
+            arr = arr[..., [2, 1, 0, 3]]  # Convert ARGB to RGBA
+        else:
+            arr = arr[..., [2, 1, 0]]  # Convert RGB to BGR
+        return Image.fromarray(arr)
 
     def _to_pil(self):
 
-        im = Image.fromqimage(self._to_qimage())
+        im = self._qimage_to_pil(self._to_qimage())
         bbox = im.getbbox()
         x1, y1, x2, y2 = (0, 0, 1, 1) if bbox is None else bbox
         y1 = min(y2 - self.font_size, y1)
