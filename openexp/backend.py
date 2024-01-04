@@ -160,11 +160,11 @@ def configurable(fnc):
         return retval
     # We need to copy the docstring and argument specification, otherwise using
     # this decorator will break the documentation functions.
+    inner.__doc__ = fnc.__doc__
+    inner.__argspec__ = inspect.getargspec(fnc)
+    inner.__name__ = fnc.__name__
     if FunctionDoc is not None:
-        inner.__doc__ = fnc.__doc__
-        inner.__argspec__ = inspect.getargspec(fnc)
         inner._dict = FunctionDoc(fnc)._dict()
-        inner.__name__ = fnc.__name__
     return inner
 
 
