@@ -36,7 +36,7 @@ python-qnotifications = ">= 2.0.6"
 python-fileinspector = ">= 1.0.2"
 PyYAML = "*"
 webcolors = "*"
-pillow = "<10"  # Pillow 10 is only compatible with PyQt6
+pillow = "*"
 markdown = "*"
 
 [tool.wheel2deb.dependencies]
