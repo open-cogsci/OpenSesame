@@ -27,23 +27,24 @@ except ImportError:
     signal = None
 
 
-def Synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
-    r"""A factory that synthesizes a sound and returns it as a `sampler
+def Synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5,
+          **playback_args):
+    """A factory that synthesizes a sound and returns it as a `Sampler
     object`. For a full description of keywords, see
-    `python_workspace_api.synth`.
+    `python_workspace_api.Synth`.
 
     For backwards compatibility, this function behaves as though it is a
     back-end.
 
     Parameters
     ----------
-    experiment : experiment
+    experiment : Experiment
         The experiment object.
 
     Returns
     -------
     sampler
-        A SAMPLER object.
+        A Sampler object.
     """
     if np is None:
         raise MissingDependency(
@@ -59,7 +60,7 @@ def Synth(experiment, osc="sine", freq=440, length=100, attack=0, decay=5):
     signal = osc_gen(osc, key_to_freq(freq), length, rate)
     _envelope = envelope(length, attack, decay, rate)
     sound = to_int_16(signal * _envelope)
-    return Sampler(experiment, sound)
+    return Sampler(experiment, sound, **playback_args)
 
 
 def key_to_freq(key):

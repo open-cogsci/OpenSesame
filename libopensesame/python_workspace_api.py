@@ -214,8 +214,9 @@ def Sampler(src, **playback_args):
 # Miscellaneous API	functions
 
 
-def Synth(osc="sine", freq=440, length=100, attack=0, decay=5):
-    r"""A factory function that synthesizes a sound and returns it as a
+def Synth(osc="sine", freq=440, length=100, attack=0, decay=5,
+          **playback_args):
+    """A factory function that synthesizes a sound and returns it as a
     `Sampler` object.
 
     Parameters
@@ -231,6 +232,9 @@ def Synth(osc="sine", freq=440, length=100, attack=0, decay=5):
         The attack (fade-in) time in milliseconds.
     decay : int, float, optional
         The decay (fade-out) time in milliseconds.
+    **playback_args : dict
+        Optional playback keywords, such as volume and pan, as described under
+        [/python/sampler/]().
 
     Returns
     -------
@@ -239,11 +243,11 @@ def Synth(osc="sine", freq=440, length=100, attack=0, decay=5):
 
     Examples
     --------
-    >>> my_sampler = Synth(freq=u'b2', length=500)
+    >>> my_sampler = Synth(freq='b2', length=500)
     """
     from openexp.synth import Synth
     return Synth(experiment, osc=osc, freq=freq, length=length, attack=attack,
-                 decay=decay)
+                 decay=decay, **playback_args)
 
 
 def copy_sketchpad(name):
