@@ -106,13 +106,13 @@ class QtPlugin(QtItem):
         return self.item_type
 
     def edit_widget(self):
-        r"""Updates the GUI controls."""
+        """Updates the GUI controls."""
         super().edit_widget()
         self.auto_edit_widget()
 
     def add_control(self, label, widget, tooltip=None, min_width=200,
                     info=None):
-        r"""Adds a generic control QWidget.
+        """Adds a generic control QWidget.
 
         Parameters
         ----------
@@ -153,7 +153,7 @@ class QtPlugin(QtItem):
         self.set_focus_widget(widget)
 
     def add_line_edit_control(self, var, label, validator=None, **kwdict):
-        r"""Adds a QLineEdit control that is linked to a variable.
+        """Adds a QLineEdit control that is linked to a variable.
 
         Parameters
         ----------
@@ -214,7 +214,7 @@ class QtPlugin(QtItem):
         return edit
 
     def add_checkbox_control(self, var, label, **kwdict):
-        r"""Adds a QCheckBox control that is linked to a variable.
+        """Adds a QCheckBox control that is linked to a variable.
 
         Parameters
         ----------
@@ -238,7 +238,7 @@ class QtPlugin(QtItem):
         return checkbox
 
     def add_color_edit_control(self, var, label, **kwdict):
-        r"""Adds a color_edit control.
+        """Adds a color_edit control.
 
         Parameters
         ----------
@@ -264,7 +264,7 @@ class QtPlugin(QtItem):
         return edit
 
     def add_combobox_control(self, var, label, options, **kwdict):
-        r"""Adds a QComboBox control that is linked to a variable.
+        """Adds a QComboBox control that is linked to a variable.
 
         Parameters
         ----------
@@ -293,17 +293,17 @@ class QtPlugin(QtItem):
         return combobox
 
     def add_doublespinbox_control(self, *args, **kwdict):
-        r"""Adds a QDoubleSpinBox. See _add_spinbox_control()."""
+        """Adds a QDoubleSpinBox. See _add_spinbox_control()."""
         return self._add_spinbox_control(QtWidgets.QDoubleSpinBox, *args,
                                          **kwdict)
 
     def add_spinbox_control(self, *args, **kwdict):
-        r"""Adds a QSpinBox. See _add_spinbox_control()."""
+        """Adds a QSpinBox. See _add_spinbox_control()."""
         return self._add_spinbox_control(QtWidgets.QSpinBox, *args, **kwdict)
 
     def _add_spinbox_control(self, cls, var, label, min_val, max_val,
                              prefix=u'', suffix=u'', **kwdict):
-        r"""Adds a QSpinBox or QDoubleSpinBox control that is linked to a
+        """Adds a QSpinBox or QDoubleSpinBox control that is linked to a
         variable.
 
         Parameters
@@ -387,7 +387,7 @@ class QtPlugin(QtItem):
         return slider
 
     def add_filepool_control(self, var, label, **kwdict):
-        r"""Adds a control to select a file from the file pool, and is linked
+        """Adds a control to select a file from the file pool, and is linked
         to a variable.
 
         Parameters
@@ -406,31 +406,35 @@ class QtPlugin(QtItem):
 
         Returns
         -------
-        A pool_select widget that contains the path of the selected file.
+        A PoolSelect widget that contains the path of the selected file.
         """
-        from libqtopensesame._input.pool_select import pool_select
-        edit = pool_select(self.main_window)
+        from libqtopensesame._input.pool_select import PoolSelect
+        edit = PoolSelect(self.main_window)
         edit.editingFinished.connect(self.apply_edit_changes)
+        edit.textEdited.connect(self.set_dirty)
         if var is not None:
             self.auto_line_edit[var] = edit
         self.add_control(label, edit, **kwdict)
         return edit
 
     def add_editor_control(self, var, label, syntax=False, language='python'):
-        """
-        Adds an editor that is linked to a variable.
+        """Adds an editor that is linked to a variable.
 
-        arguments:
-                var:		The associated variable.
-                label:		The label text.
+        Parameters
+        ----------
+        var
+            The associated variable.
+        label
+            The label text.
+        syntax:	bool, optional
+            	A boolean indicating whether Python syntax highlighting should be
+             activated.
+        language: str, optional
+            The name of a programming language.
 
-        keywords:
-                syntax:		A boolean indicating whether Python syntax highlighting
-                                        should be activated.
-                language:	The name of a programming language
-
-        returns:
-                An editor widget.
+        Returns
+        -------
+        An editor widget.
         """
         if syntax:
             if language == 'python':
@@ -472,11 +476,10 @@ class QtPlugin(QtItem):
         return editor
 
     def _editor_focus_out(self, event):
-
         self.apply_edit_changes()
 
     def add_text(self, msg):
-        r"""Adds a non-interactive QLabel for description purposes.
+        """Adds a non-interactive QLabel for description purposes.
 
         Parameters
         ----------
@@ -494,7 +497,7 @@ class QtPlugin(QtItem):
         return label
 
     def add_widget(self, w):
-        r"""Adds a QWidget to the controls.
+        """Adds a QWidget to the controls.
 
         Parameters
         ----------
@@ -510,11 +513,11 @@ class QtPlugin(QtItem):
         return w
 
     def add_stretch(self):
-        r"""Pads empty space below the controls."""
+        """Pads empty space below the controls."""
         self.edit_vbox.addStretch()
 
     def get_ready(self):
-        r"""Applies pending script changes.
+        """Applies pending script changes.
 
         Returns
         -------

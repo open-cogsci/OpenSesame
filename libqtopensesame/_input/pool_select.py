@@ -25,25 +25,21 @@ _ = translation_context(u'pool_select', category=u'core')
 
 
 class PoolSelect(QtWidgets.QWidget, BaseSubcomponent):
-
-    r"""A widget that implements a file-pool selector. Partly emulates the
+    """A widget that implements a file-pool selector. Partly emulates the
     QLineEdit API.
     """
     editingFinished = QtCore.Signal()
     textEdited = QtCore.Signal()
 
     def __init__(self, parent=None):
-
         QtWidgets.QComboBox.__init__(self, parent)
         self.setup(parent)
         self.edit = QtWidgets.QLineEdit()
         self.edit.editingFinished.connect(self.editingFinished.emit)
         self.edit.textEdited.connect(self.textEdited.emit)
         self.edit.setMinimumWidth(200)
-        self.button = QtWidgets.QPushButton(
-            self.theme.qicon(u'browse'),
-            _(u'Browse')
-        )
+        self.button = QtWidgets.QPushButton(self.theme.qicon('browse'),
+                                            _('Browse'))
         self.button.setIconSize(QtCore.QSize(16, 16))
         self.button.clicked.connect(self.browse)
         self.hbox = QtWidgets.QHBoxLayout(self)
@@ -54,15 +50,12 @@ class PoolSelect(QtWidgets.QWidget, BaseSubcomponent):
         self.setLayout(self.hbox)
 
     def text(self):
-
         return self.edit.text()
 
     def setText(self, value):
-
         return self.edit.setText(value)
 
     def browse(self):
-
         s = pool_widget.select_from_pool(self.main_window)
         if not s:
             return
