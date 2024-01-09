@@ -1,7 +1,5 @@
 # OpenSesame
 
-![](https://github.com/open-cogsci/OpenSesame/raw/loewenfeld/opensesame_resources/einstein.png)
-
 OpenSesame is a tool to create experiments for psychology, neuroscience, and experimental economics.
 
 Copyright, 2010-2024, Sebastiaan Mathôt and contributors.
@@ -29,9 +27,10 @@ OpenSesame is a graphical experiment builder. OpenSesame provides an easy to use
 
 ## Related repositories
 
-In addition to this repository, OpenSesame relies on a number repositories that are all hosted by the [Cogsci.nl](https://github.com/open-cogsci/) organization on GitHub. The most important of these are:
+OpenSesame relies on a number repositories that are all hosted by the [Cogsci.nl](https://github.com/open-cogsci/) organization on GitHub. The most important of these are:
 
-- [rapunzel](https://github.com/open-cogsci/rapunzel) is a set of extensions that turns OpenSesame into a code editor
+- [opensesame](https://github.com/open-cogsci/opensesame) contains core OpenSesame functionality
+- [rapunzel](https://github.com/open-cogsci/rapunzel) is a set of extensions that turn OpenSesame into a code editor
 - [osweb](https://github.com/open-cogsci/osweb) implements OSWeb, the online OpenSesame runtime
 - [opensesame-extension-osweb](https://github.com/open-cogsci/opensesame-extension-osweb) embeds OSWeb into the OpenSesame user interface
 - [pyqode.core](https://github.com/open-cogsci/pyqode.core) implements generic code-editor widgets
@@ -43,13 +42,13 @@ In addition to this repository, OpenSesame relies on a number repositories that 
 
 ## Branches
 
-Each major version of OpenSesame lives in its own branch. The default branch is currently `4.0`.
+Each major version of OpenSesame lives in its own branch. The default branch is currently `milgram`.
 
 - `gibson` - 2.8
 - `heisenberg` - 2.9
 - `ising` - 3.0
 - `james` - 3.1
-- `kuhn` - 3.2
+- `koffka` - 3.2
 - `loewenfeld` - 3.3
 - `milgram` - 4.0
 
