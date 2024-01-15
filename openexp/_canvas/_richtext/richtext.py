@@ -148,7 +148,7 @@ class RichText(Element):
 
         if self._cached_size:
             return self._cached_size
-        bbox = Image.fromqimage(self._to_qimage()).getbbox()
+        bbox = self._qimage_to_pil(self._to_qimage()).getbbox()
         x1, y1, x2, y2 = (0, 0, 1, 1) if bbox is None else bbox
         y2 = max(y1 + self.font_size, y2)
         self._cached_size = x2 - x1, y2 - y1
