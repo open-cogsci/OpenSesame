@@ -27,29 +27,28 @@ import multiprocessing
 
 
 class OutputChannel:
-
-    """Passes messages from child process back to main process."""
+    """Passes messages from child process back to main process.
+    
+    Parameters
+    ----------
+    channel:
+        A multiprocessing.JoinableQueue object that is referenced from the
+        main process.
+    orig:
+        The original stdout or stderr to also print the messages to.
+    """
     def __init__(self, channel, orig=None):
-        """
-        Constructor.
-
-        Arguments:
-        channel	--	A multiprocessing.JoinableQueue object that is referenced
-                                from the main process.
-
-        Keyword arguments:
-        orig	--	The original stdout or stderr to also print the messages to.
-        """
         self.channel = channel
         self.orig = orig
 
     def write(self, m):
-        """
-        Writes a message to the queue.
+        """Writes a message to the queue.
 
-        Arguments
-        m		--	The message to write. Should be a string or an (Exception,
-                                traceback) tuple.
+        Parameters
+        ----------
+        m:
+            The message to write. Should be a string or an (Exception,
+            traceback) tuple.
         """
         self.channel.put(m)
 
@@ -61,22 +60,22 @@ class OutputChannel:
             pass
 
     def isatty(self):
-        r"""Indicates that the output is not attached to a terminal."""
+        """Indicates that the output is not attached to a terminal."""
         return False
 
 
 class ExperimentProcess(multiprocessing.Process):
+    """Creates a new process to run an experiment in.
 
-    """Creates a new process to run an experiment in."""
+    Parameters
+    ----------
+    exp:
+        An instance of libopensesame.experiment.experiment
+    output:
+        A reference to the queue object created in and used to communicate with
+        the main process.
+    """
     def __init__(self, exp, output):
-        """
-        Constructor.
-
-        Arguments
-        exp		--	An instance of libopensesame.experiment.experiment
-        output	--	A reference to the queue object created in and used to
-                                communicate with the main process.
-        """
         multiprocessing.Process.__init__(self)
         self.output = output
         # The experiment object is troublesome to serialize,
@@ -117,8 +116,7 @@ class ExperimentProcess(multiprocessing.Process):
                 string=self.script, pool_folder=self.pool_folder,
                 experiment_path=self.experiment_path,
                 fullscreen=self.fullscreen, subject_nr=self.subject_nr,
-                logfile=self.logfile
-            )
+                logfile=self.logfile)
         except Exception as e:
             if not isinstance(e, OSException):
                 e = UnexpectedError('An unexpected error occurred while '
@@ -138,7 +136,6 @@ class ExperimentProcess(multiprocessing.Process):
                 e = UnexpectedError('An unexpected error occurred while '
                                     'running the experiment')
             e_run = e
-        exp.transmit_workspace()
         # Communicate the exception. We do this before calling exp.end()
         # because Python may crash in this step and we need to send the
         # exception before that happens.
@@ -152,6 +149,7 @@ class ExperimentProcess(multiprocessing.Process):
         except Exception as e_exp:
             oslogger.error(
                 u'An Exception occurred during exp.end(): %s' % e_exp)
+        exp.transmit_workspace()
         # Exit with error status if an exception occurred.
         if e_run is not None:
             sys.exit(1)

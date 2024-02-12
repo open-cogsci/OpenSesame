@@ -28,12 +28,11 @@ JOIN_TIMEOUT = 3  # Seconds to wait for the process to end cleanly
 
 
 class MultiprocessRunner(BaseRunner):
-
     """Runs an experiment in another process using multiprocessing."""
+    
     supports_kill = True
 
     def execute(self):
-        """See base_runner.execute()."""
         import platform
         import multiprocessing
         from libqtopensesame.misc import process, _
@@ -43,16 +42,15 @@ class MultiprocessRunner(BaseRunner):
         try:
             self.exp_process = process.ExperimentProcess(
                 self.experiment,
-                self.channel
-            )
+                self.channel)
         except Exception as e:
             return e
-        self.console.set_workspace_globals({u'process': self.exp_process})
+        self.console.set_workspace_globals({'process': self.exp_process})
         # Start process!
         self.exp_process.start()
         # Wait for experiment to finish.
         # Listen for incoming messages in the meantime.
-        finished = False
+        self._finished = False
         while self.exp_process.is_alive() or not self.channel.empty():
             # We need to process the GUI. To make the GUI feel more responsive
             # during pauses, we refresh the GUI more often when paused.
@@ -67,11 +65,18 @@ class MultiprocessRunner(BaseRunner):
                 msg = self.channel.get(True, 0.05)
             except Exception:
                 continue
-            if isinstance(msg, str):
-                sys.stdout.write(safe_decode(msg, errors=u'ignore'))
+            if self._process_msg(msg):
                 continue
-            # Capture exceptions
             if isinstance(msg, Exception):
+                # After an exception has been captured, text and dict message
+                # can still come in and need to be processed
+                while True:
+                    try:
+                        post_msg = self.channel.get(True, .5)
+                    except Exception:
+                        break
+                    self._process_msg(post_msg)
+                # Once the process is not streaming messages anymore, close it
                 self.exp_process.join(JOIN_TIMEOUT)
                 try:
                     self.exp_process.close()
@@ -85,26 +90,6 @@ class MultiprocessRunner(BaseRunner):
                     oslogger.warning(
                         'experiment process was forcibly terminated')
                 return msg
-            # The workspace globals are sent as a dict. A special __pause__ key
-            # indicates whether the experiment should be paused or resumed.
-            if isinstance(msg, dict):
-                self._workspace_globals = msg
-                if u'__kill__' in msg:
-                    self.exp_process.kill()
-                if u'__heartbeat__' in msg:
-                    self.main_window.extension_manager.fire(
-                        u'set_workspace_globals',
-                        global_dict=msg
-                    )
-                    self.main_window.extension_manager.fire(u'heartbeat')
-                elif u'__pause__' in msg:
-                    if msg[u'__pause__']:
-                        self.pause()
-                    else:
-                        self.resume()
-                elif u'__finished__' in msg:
-                    finished = True
-                continue
             # Anything that is not a string, not an Exception, and not None is
             # unexpected
             return ValueError(
@@ -121,23 +106,52 @@ class MultiprocessRunner(BaseRunner):
             # terminate the process.
             self.exp_process.terminate()
             oslogger.warning('experiment process was forcibly terminated')
-        if finished:
+        if self._finished:
             return
         if self.exp_process.killed:
             return UserKilled('The experiment process was killed.')
         return ExperimentProcessDied(
             'The experiment process seems to have died as the result of an '
             'unknown problem. This should not happen!')
+        
+    def _process_msg(self, msg):
+        if isinstance(msg, dict):
+            self._process_dict_msg(msg)
+            return True
+        if isinstance(msg, str):
+            self._process_str_msg(msg)
+            return True
+        return False
+        
+    def _process_dict_msg(self, msg):
+        # The workspace globals are sent as a dict. A special __pause__ key
+        # indicates whether the experiment should be paused or resumed.
+        self._workspace_globals = msg
+        if '__kill__' in msg:
+            self.exp_process.kill()
+        if '__heartbeat__' in msg:
+            self.main_window.extension_manager.fire(
+                'set_workspace_globals',
+                global_dict=msg
+            )
+            self.main_window.extension_manager.fire('heartbeat')
+        elif '__pause__' in msg:
+            if msg['__pause__']:
+                self.pause()
+            else:
+                self.resume()
+        elif '__finished__' in msg:
+            self._finished = True
+            
+    def _process_str_msg(self, msg):
+        sys.stdout.write(safe_decode(msg, errors='ignore'))
 
     def kill(self):
-        """See base_runner."""
         self.exp_process.kill()
 
     def workspace_globals(self):
-        """See base_runner."""
         return self._workspace_globals
 
     @staticmethod
     def has_heartbeat():
-        """See base_runner."""
         return True
