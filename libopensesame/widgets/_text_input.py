@@ -96,7 +96,7 @@ class TextInput(Label):
         self.var = var
         self.text = safe_decode(text)
         self.set_var(text)
-        self.caret_pos = None
+        self.caret_pos = len(self.text)
         self._key_filter = (
             lambda k: True) if key_filter is None else key_filter
 
