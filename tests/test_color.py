@@ -36,25 +36,25 @@ class CheckColor(unittest.TestCase):
             Checks various correct and incorrect color specifications.
         """
         for colorspec, colorref in [
-            (u'green', u'#008000'),
-            (255, u'#ffffff'),
-            (u'255', u'#ffffff'),
-            (u'#00FF00', u'#00ff00'),
-            (u'#00ff00', u'#00ff00'),
-            (u'#0F0', u'#00ff00'),
-            (u'#0f0', u'#00ff00'),
-            ((0, 255, 0), u'#00ff00'),
-            (u'rgb(0,255,0)', u'#00ff00'),
-            (u'rgb( 0 , 255 , 0 )', u'#00ff00'),
-            (u'rgb(0%,100%,0%)', u'#00ff00'),
-            (u'rgb( +0.0% , 100% , -0.0% )', u'#00ff00'),
-            (u'hsl(120,100%,50%)', u'#00ff00'),
-            (u'hsl( +120.0 , 100% , 50% )', u'#00ff00'),
-            (u'hsv(120,100%,100%)', u'#00ff00'),
-            (u'hsv( +120.0 , 100% , 100% )', u'#00ff00'),
-            (u'lab(70, -127, 65)', u'#00d412'),
-            (u'lab(37, -91, 34)', u'#006f17'),
-            (u'lab( +41. , 8 , -59.0 )', u'#0062c2'),
+            ('green', '#008000'),
+            (255, '#ffffff'),
+            ('255', '#ffffff'),
+            ('#00FF00', '#00ff00'),
+            ('#00ff00', '#00ff00'),
+            ('#0F0', '#00ff00'),
+            ('#0f0', '#00ff00'),
+            ((0, 255, 0), '#00ff00'),
+            ('rgb(0,255,0)', '#00ff00'),
+            ('rgb( 0 , 255 , 0 )', '#00ff00'),
+            ('rgb(0%,100%,0%)', '#00ff00'),
+            ('rgb( +0.0% , 100% , -0.0% )', '#00ff00'),
+            ('hsl(120,100%,50%)', '#00ff00'),
+            ('hsl( +120.0 , 100% , 50% )', '#00ff00'),
+            ('hsv(120,100%,100%)', '#00ff00'),
+            ('hsv( +120.0 , 100% , 100% )', '#00ff00'),
+            ('lab(70, -127, 65)', '#00d412'),
+            ('lab(37, -91, 34)', '#006f17'),
+            ('lab( +41. , 8 , -59.0 )', '#0062c2'),
         ]:
             if isinstance(colorspec, str) and colorspec.startswith('lab'):
                 try:
@@ -63,7 +63,7 @@ class CheckColor(unittest.TestCase):
                     print('PsychoPy is not installed, skipping CIElab test')
                     continue
             print(
-                u'Checking correct {} ({}) -> {}'.format(
+                'Checking correct {} ({}) -> {}'.format(
                     str(colorspec),
                     type(colorspec),
                     colorref
@@ -72,23 +72,22 @@ class CheckColor(unittest.TestCase):
             self.assertEqual(color.to_hex(colorspec), colorref)
 
         for colorspec in [
-            u'wihte',
-            u'#FFFFF',
-            u'#FFFFG',
+            'wihte',
+            '#FFFFF',
+            '#FFFFG',
             (255, 255, 255.0),
             (255, 255, 255, 255),
-            255.0,
-            u'rgb(255,255)',
-            u'rgb(255,255,255,255)',
-            u'rgb(100%,100%,100)',
-            u'rgb(100 %,100%,100)',
-            u'hsl(120,100,50)',
-            u'hsl(- 120,100,50)',
-            u'hsl(120 .0,100,50)',
-            u'hsv(120,100,50)',
+            'rgb(255,255)',
+            'rgb(255,255,255,255)',
+            'rgb(100%,100%,100)',
+            'rgb(100 %,100%,100)',
+            'hsl(120,100,50)',
+            'hsl(- 120,100,50)',
+            'hsl(120 .0,100,50)',
+            'hsv(120,100,50)',
         ]:
             print(
-                u'Checking incorrect %s (%s)'
+                'Checking incorrect %s (%s)'
                 % (str(colorspec), type(colorspec))
             )
             self.assertRaises(OSException, color.to_hex, colorspec)

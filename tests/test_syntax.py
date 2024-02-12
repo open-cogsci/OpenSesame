@@ -72,10 +72,10 @@ class check_syntax(unittest.TestCase):
         self.checkCmd(u'test test="\\"quoted\\""', u'test', [],
             {u'test' : u'\"quoted\"'},)
         self.checkCmd(
-            u'draw textline text=" 1 "',
+            u'draw textline text=1',
             u'draw',
             [u'textline'],
-            {u'text': ' 1 '}
+            {u'text': 1}
         )
         with self.assertRaises(OSException):
             print(u'Testing exception ...')

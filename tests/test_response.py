@@ -31,12 +31,16 @@ class check_response(unittest.TestCase):
     def assertState(self, response, response_time, correct, total_responses,
         total_response_time, total_correct):
 
-        self.assertEqual(self.exp.var.response, response)
-        self.assertEqual(self.exp.var.response_time, response_time)
-        self.assertEqual(self.exp.var.correct, correct)
-        self.assertEqual(self.exp.var.total_responses, total_responses)
-        self.assertEqual(self.exp.var.total_response_time, total_response_time)
-        self.assertEqual(self.exp.var.total_correct, total_correct)
+        self.assertEqual(self.exp.python_workspace['response'], response)
+        self.assertEqual(self.exp.python_workspace['response_time'],
+                         response_time)
+        self.assertEqual(self.exp.python_workspace['correct'], correct)
+        self.assertEqual(self.exp.python_workspace['total_responses'],
+                         total_responses)
+        self.assertEqual(self.exp.python_workspace['total_response_time'],
+                         total_response_time)
+        self.assertEqual(self.exp.python_workspace['total_correct'],
+                         total_correct)
 
     def runTest(self):
 
@@ -44,24 +48,24 @@ class check_response(unittest.TestCase):
         desc:
             Runs the response test.
         """
-        print(u'Checking response handling')
+        print('Checking response handling')
         self.exp = experiment()
         with self.assertRaises(OSException) as cm:
-            self.exp._responses.add(correct=u'A')
+            self.exp._responses.add(correct='A')
         with self.assertRaises(OSException) as cm:
-            self.exp._responses.add(response_time=u'A')
+            self.exp._responses.add(response_time='A')
         for i in range(2):
             self.exp._responses.reset_feedback()
             self.exp._responses.add()
-            self.assertState(u'None', None, u'undefined', 1, 0, 0)
-            self.exp._responses.add(response=u'A')
-            self.assertState(u'A', None, u'undefined', 2, 0, 0)
-            self.exp._responses.add(response=u'B', response_time=1000)
-            self.assertState(u'B', 1000, u'undefined', 3, 1000, 0)
-            self.exp._responses.add(response=u'C', response_time=1000, correct=1)
-            self.assertState(u'C', 1000, 1, 4, 2000, 1)
-            self.exp._responses.add(response=u'D', response_time=1, correct=0)
-            self.assertState(u'D', 1, 0, 5, 2001, 1)
+            self.assertState(None, None, 'undefined', 1, 0, 0)
+            self.exp._responses.add(response='A')
+            self.assertState('A', None, 'undefined', 2, 0, 0)
+            self.exp._responses.add(response='B', response_time=1000)
+            self.assertState('B', 1000, 'undefined', 3, 1000, 0)
+            self.exp._responses.add(response='C', response_time=1000, correct=1)
+            self.assertState('C', 1000, 1, 4, 2000, 1)
+            self.exp._responses.add(response='D', response_time=1, correct=0)
+            self.assertState('D', 1, 0, 5, 2001, 1)
 
 if __name__ == '__main__':
     unittest.main()
