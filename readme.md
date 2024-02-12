@@ -6,8 +6,6 @@ Copyright, 2010-2024, Sebastiaan Mathôt and contributors.
 
 <http://osdoc.cogsci.nl/>
 
-[![Build Status](https://travis-ci.org/smathot/OpenSesame.svg?branch=ising)](https://travis-ci.org/smathot/OpenSesame)
-
 
 ## About
 
