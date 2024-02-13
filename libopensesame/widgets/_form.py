@@ -386,7 +386,7 @@ class Form:
         
     def _widget_instance(self, widget):
         """Takes a Widget or WidgetFactory and returns a Widget. If a 
-        WidgetFactory has already been instatiated before, the Widget instance
+        WidgetFactory has already been instantiated before, the Widget instance
         is retrieved and returned.
         """
         if isinstance(widget, WidgetFactory):
