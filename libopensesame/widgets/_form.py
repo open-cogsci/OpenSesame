@@ -111,8 +111,9 @@ class Form:
         self.canvas = canvas(
             self.experiment,
             color=self.item.var.foreground,
-            background_color=self.item.var.background
-        )
+            background_color=self.item.var.background)
+        # Maps ids of WidgetFactory objects to corresponding Widgets.
+        self._widget_factory_map = {}
         # Dynamically load the theme object
         theme_mod = __import__(
             u'libopensesame.widgets.themes.%s' % theme, fromlist=[u'dummy'])
@@ -147,9 +148,8 @@ class Form:
         Returns
         -------
         """
-        if isinstance(focus_widget, WidgetFactory):
-            focus_widget = focus_widget.construct(self)
         if focus_widget is not None:
+            focus_widget = self._widget_instance(focus_widget)
             focus_widget.focus = True
         if len(self) == 0:
             raise InvalidFormGeometry('The form contains no widgets')
@@ -352,8 +352,7 @@ class Form:
             raise InvalidFormGeometry(
                 f'Row span {rowspan} is invalid (i.e. too large, too '
                 f'small, or not a number)')
-        if isinstance(widget, WidgetFactory):
-            widget = widget.construct(self)
+        widget = self._widget_instance(widget)
         self.widgets[index] = widget
         self.span[index] = colspan, rowspan
         widget.set_rect(self.get_rect(index))
@@ -384,6 +383,19 @@ class Form:
         if index is None:
             return None
         return self.widgets[index]
+        
+    def _widget_instance(self, widget):
+        """Takes a Widget or WidgetFactory and returns a Widget. If a 
+        WidgetFactory has already been instatiated before, the Widget instance
+        is retrieved and returned.
+        """
+        if isinstance(widget, WidgetFactory):
+            factory_id = id(widget)
+            if factory_id in self._widget_factory_map:
+                return self._widget_factory_map[factory_id]
+            widget = widget.construct(self)
+            self._widget_factory_map[factory_id] = widget
+        return widget
 
 
 form = Form
