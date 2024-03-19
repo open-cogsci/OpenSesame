@@ -67,7 +67,7 @@ MD_SYSTEM = f'''You're a translator for OpenSesame, a program for developing psy
 Do not translate technical terms or terms that have a special meaning within OpenSesame, such as: {', '.join(SPECIAL_TERMS)}, and other similar terms. Preserve whitespace, capitalization, and punctuation.
 
 Reply with a %s translation. Only provide the translated text without adding any additional text. This concludes the instruction. The to be translated text will be provided next.'''
-MODEL = 'gpt-4'
+MODEL = 'gpt-4-1106-preview'
 TS_FOLDER = Path(args.ts_folder)
 QM_FOLDER = Path(args.qm_folder)
 TRANSLATABLES = TS_FOLDER / 'translatables.ts'
