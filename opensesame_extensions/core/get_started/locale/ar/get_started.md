@@ -1,6 +1,6 @@
-# لنبدأ!
+# ابدأ!
 
-مرحبا بك في OpenSesame! كيف يمكنني مساعدتك؟
+مرحبًا بك في OpenSesame! كيف يمكنني مساعدتك؟
 
 <table><tr><td>
 
@@ -13,12 +13,12 @@
 
 </td></tr></table>
 
-البرمجيات الجيدة تحتاج إلى مطورين مستيقظين:
+Sigmund أفضل من ChatGPT لأسئلة OpenSesame. اشتراكك يدعمنا!
 
-[&#x2615;&nbsp;&nbsp; اشتر لنا قهوة!](https://www.buymeacoffee.com/cogsci){: .button}
+[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
 
 أو:
 
 [&#x1F440;&nbsp;&nbsp; اقرأ التوثيق](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC;&nbsp;&nbsp; اطرح سؤالًا على المنتدى](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0;&nbsp;&nbsp; احصل على دعم محترف](http://professional.cogsci.nl){: .button}<br />
+[&#x1F4AC;&nbsp;&nbsp; اطرح سؤالًا في المنتدى](http://forum.cogsci.nl){: .button}<br />
+[&#x1F9D0;&nbsp;&nbsp; احصل على دعم احترافي](http://professional.cogsci.nl){: .button}<br />

@@ -1,4 +1,4 @@
-# Leg los!
+# Los geht's!
 
 Willkommen bei OpenSesame! Wie kann ich Ihnen helfen?
 
@@ -13,12 +13,12 @@ Ein neues Experiment starten:<br />
 
 </td></tr></table>
 
-Gute Software braucht wachsame Entwickler:
+Sigmund ist besser als ChatGPT für OpenSesame-Fragen. Ihr Abonnement unterstützt uns!
 
-[&#x2615;&nbsp;&nbsp; Kauf uns einen Kaffee!](https://www.buymeacoffee.com/cogsci){: .button}
+[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
 
 Oder:
 
 [&#x1F440;&nbsp;&nbsp; Die Dokumentation lesen](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC;&nbsp;&nbsp; Stelle eine Frage im Forum](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0;&nbsp;&nbsp; Professionelle Unterstützung erhalten](http://professional.cogsci.nl){: .button}<br />
+[&#x1F4AC;&nbsp;&nbsp; Eine Frage im Forum stellen](http://forum.cogsci.nl){: .button}<br />
+[&#x1F9D0;&nbsp;&nbsp; Professionellen Support bekommen](http://professional.cogsci.nl){: .button}<br />

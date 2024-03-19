@@ -1,4 +1,4 @@
-# Начать!
+# Начнем!
 
 Добро пожаловать в OpenSesame! Чем могу помочь?
 
@@ -13,12 +13,12 @@
 
 </td></tr></table>
 
-Хорошему программному обеспечению нужны бодрые разработчики:
+Sigmund лучше, чем ChatGPT, для вопросов по OpenSesame. Ваша подписка поддерживает нас!
 
-[&#x2615;&nbsp;&nbsp; Купи нам кофе!](https://www.buymeacoffee.com/cogsci){: .button}
+[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
 
 Или:
 
 [&#x1F440;&nbsp;&nbsp; Читать документацию](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC;&nbsp;&nbsp; Задай вопрос на форуме](http://forum.cogsci.nl){: .button}<br />
+[&#x1F4AC;&nbsp;&nbsp; Задать вопрос на форуме](http://forum.cogsci.nl){: .button}<br />
 [&#x1F9D0;&nbsp;&nbsp; Получить профессиональную поддержку](http://professional.cogsci.nl){: .button}<br />

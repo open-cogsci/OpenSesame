@@ -1,10 +1,10 @@
 # শুরু করুন!
 
-ওপেনসেসামে স্বাগতম! আমি কিভাবে আপনাকে সাহায্য করতে পারি?
+OpenSesame-তে স্বাগতম! আমি আপনার কীভাবে সাহায্য করতে পারি?
 
 <table><tr><td>
 
-নতুন একটি পরীক্ষা শুরু করুন: <br />
+নতুন এক্সপেরিমেন্ট শুরু করুন:<br />
 %(templates)s
 
 </td><td>
@@ -13,12 +13,12 @@
 
 </td></tr></table>
 
-ভাল সফ্টওয়্যারের জন্য জাগরত ডেভেলপারের প্রয়োজন:
+OpenSesame প্রশ্নের জন্য Sigmund ChatGPT এর চেয়ে ভালো। আপনার সাবস্ক্রিপশন আমাদের সহায়তা করে!
 
-[&#x2615;&nbsp;&nbsp; আমাদের একটা কফি কিনুন!](https://www.buymeacoffee.com/cogsci){: .button}
+[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
 
 অথবা:
 
 [&#x1F440;&nbsp;&nbsp; ডকুমেন্টেশন পড়ুন](http://osdoc.cogsci.nl){: .button}<br />
 [&#x1F4AC;&nbsp;&nbsp; ফোরামে প্রশ্ন করুন](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0;&nbsp;&nbsp; পেশাদারী সমর্থিত পান](http://professional.cogsci.nl){: .button}<br />
+[&#x1F9D0;&nbsp;&nbsp; প্রফেশনাল সাপোর্ট পান](http://professional.cogsci.nl){: .button}<br />

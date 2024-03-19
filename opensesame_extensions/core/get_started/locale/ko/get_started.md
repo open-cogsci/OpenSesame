@@ -4,7 +4,7 @@ OpenSesame에 오신 것을 환영합니다! 어떻게 도와드릴까요?
 
 <table><tr><td>
 
-새로운 실험 시작하기:<br />
+새 실험 시작하기:<br />
 %(templates)s
 
 </td><td>
@@ -13,12 +13,12 @@ OpenSesame에 오신 것을 환영합니다! 어떻게 도와드릴까요?
 
 </td></tr></table>
 
-좋은 소프트웨어는 깨어있는 개발자들이 필요합니다:
+Sigmund가 OpenSesame 관련 질문에는 ChatGPT보다 낫습니다. 여러분의 구독이 저희를 지원합니다!
 
-[&#x2615;&nbsp;&nbsp; 커피 사주세요!](https://www.buymeacoffee.com/cogsci){: .button}
+[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
 
 또는:
 
-[&#x1F440;&nbsp;&nbsp; 문서를 읽어보세요](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC;&nbsp;&nbsp; 포럼에서 질문하세요](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0;&nbsp;&nbsp; 전문 지원 받으세요](http://professional.cogsci.nl){: .button}<br />
+[&#x1F440;&nbsp;&nbsp; 문서 읽기](http://osdoc.cogsci.nl){: .button}<br />
+[&#x1F4AC;&nbsp;&nbsp; 포럼에서 질문하기](http://forum.cogsci.nl){: .button}<br />
+[&#x1F9D0;&nbsp;&nbsp; 전문적인 지원 받기](http://professional.cogsci.nl){: .button}<br />

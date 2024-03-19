@@ -1,4 +1,4 @@
-# はじめに！
+# スタート！
 
 OpenSesameへようこそ！どのようにお手伝いしましょうか？
 
@@ -13,12 +13,12 @@ OpenSesameへようこそ！どのようにお手伝いしましょうか？
 
 </td></tr></table>
 
-良いソフトウェアには目覚めた開発者が必要です：
+SigmundはOpenSesameの質問に対するChatGPTよりも優れています。あなたのサブスクリプションが私たちをサポートしています！
 
-[&#x2615; &nbsp;&nbsp; コーヒーを買ってあげて！](https://www.buymeacoffee.com/cogsci){: .button}
+[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
 
-または
+あるいは：
 
-[&#x1F440; &nbsp;&nbsp; ドキュメントを読む](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC; &nbsp;&nbsp; フォーラムで質問をする](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0; &nbsp;&nbsp; プロフェッショナルサポートを受ける](http://professional.cogsci.nl){: .button}<br />
+[&#x1F440;&nbsp;&nbsp; ドキュメンテーションを読む](http://osdoc.cogsci.nl){: .button}<br />
+[&#x1F4AC;&nbsp;&nbsp; フォーラムで質問する](http://forum.cogsci.nl){: .button}<br />
+[&#x1F9D0;&nbsp;&nbsp; プロフェッショナルなサポートを受ける](http://professional.cogsci.nl){: .button}<br />

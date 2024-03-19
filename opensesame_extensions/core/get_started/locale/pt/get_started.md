@@ -1,6 +1,6 @@
-# Comece!
+# Comece aqui!
 
-Bem-vindo ao OpenSesame! Como posso ajudá-lo?
+Bem-vindo ao OpenSesame! Como posso ajudar?
 
 <table><tr><td>
 
@@ -13,9 +13,9 @@ Iniciar um novo experimento:<br />
 
 </td></tr></table>
 
-Um bom software precisa de desenvolvedores acordados:
+Sigmund é melhor do que ChatGPT para questões sobre OpenSesame. Sua assinatura nos apoia!
 
-[&#x2615;&nbsp;&nbsp; Compre-nos um café!](https://www.buymeacoffee.com/cogsci){: .button}
+[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
 
 Ou:
 

@@ -13,12 +13,12 @@ Commencer une nouvelle expérience :<br />
 
 </td></tr></table>
 
-Un bon logiciel a besoin de développeurs éveillés :
+Sigmund est meilleur que ChatGPT pour les questions sur OpenSesame. Votre abonnement nous soutient !
 
-[&#x2615;&nbsp;&nbsp; Offrez-nous un café!](https://www.buymeacoffee.com/cogsci){: .button}
+[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
 
 Ou :
 
-[&#x1F440;&nbsp;&nbsp; Lisez la documentation](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC;&nbsp;&nbsp; Posez une question sur le forum](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0;&nbsp;&nbsp; Obtenez un support professionnel](http://professional.cogsci.nl){: .button}<br />
+[&#x1F440;&nbsp;&nbsp; Lire la documentation](http://osdoc.cogsci.nl){: .button}<br />
+[&#x1F4AC;&nbsp;&nbsp; Poser une question sur le forum](http://forum.cogsci.nl){: .button}<br />
+[&#x1F9D0;&nbsp;&nbsp; Obtenir un support professionnel](http://professional.cogsci.nl){: .button}<br />

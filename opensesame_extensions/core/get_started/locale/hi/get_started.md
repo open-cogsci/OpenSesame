@@ -1,10 +1,10 @@
 # शुरू करें!
 
-OpenSesame में आपका स्वागत है! मैं आपकी कैसे मदद कर सकता हूं?
+OpenSesame में आपका स्वागत है! मैं आपकी कैसे मदद कर सकता हूँ?
 
 <table><tr><td>
 
-एक नई प्रयोग शुरू करें:<br />
+नया प्रयोग शुरू करें:<br />
 %(templates)s
 
 </td><td>
@@ -13,12 +13,12 @@ OpenSesame में आपका स्वागत है! मैं आपक
 
 </td></tr></table>
 
-अच्छा सॉफ़्टवेयर जागरूक डेवलपर्स की आवश्यकता होता है:
+OpenSesame प्रश्नों के लिए Sigmund, ChatGPT से बेहतर है। आपकी सदस्यता हमें सहायता प्रदान करती है!
 
-[&#x2615;&nbsp;&nbsp; हमें एक कॉफ़ी खरीदें!](https://www.buymeacoffee.com/cogsci){: .button}
+[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
 
 या:
 
-[&#x1F440;&nbsp;&nbsp; दस्तावेज़ीकरण पढ़ें](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC;&nbsp;&nbsp; फ़ोरम पर प्रश्न पूछें](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0;&nbsp;&nbsp; पेशेवर समर्थन प्राप्त करें](http://professional.cogsci.nl){: .button}<br />
+[&#x1F440;&nbsp;&nbsp; डॉक्यूमेंटेशन पढ़ें](http://osdoc.cogsci.nl){: .button}<br />
+[&#x1F4AC;&nbsp;&nbsp; फोरम पर प्रश्न पूछें](http://forum.cogsci.nl){: .button}<br />
+[&#x1F9D0;&nbsp;&nbsp; प्रोफेशनल सपोर्ट प्राप्त करें](http://professional.cogsci.nl){: .button}<br />

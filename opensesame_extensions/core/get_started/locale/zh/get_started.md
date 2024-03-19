@@ -1,10 +1,10 @@
-# 开始吧！
+# 开始使用！
 
-欢迎来到OpenSesame！我能帮您什么？
+欢迎来到 OpenSesame! 我能帮您什么吗？
 
 <table><tr><td>
 
-开始一个新实验：<br />
+开始新实验：<br />
 %(templates)s
 
 </td><td>
@@ -13,12 +13,12 @@
 
 </td></tr></table>
 
-优秀软件需要醒着的开发者：
+Sigmund 比 ChatGPT 更适合回答 OpenSesame 的问题。您的订阅支持我们！
 
-[&#x2615;&nbsp;&nbsp; 请我们喝杯咖啡！](https://www.buymeacoffee.com/cogsci){: .button}
+[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
 
 或者：
 
 [&#x1F440;&nbsp;&nbsp; 阅读文档](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC;&nbsp;&nbsp; 论坛上提问](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0;&nbsp;&nbsp; 获取专业支持](http://professional.cogsci.nl){: .button}<br />
+[&#x1F4AC;&nbsp;&nbsp; 在论坛上提问](http://forum.cogsci.nl){: .button}<br />
+[&#x1F9D0;&nbsp;&nbsp; 获得专业支持](http://professional.cogsci.nl){: .button}<br />

@@ -1,10 +1,10 @@
-# Inizia!
+# Inizia ora!
 
 Benvenuto in OpenSesame! Come posso aiutarti?
 
 <table><tr><td>
 
-Inizia un nuovo esperimento:<br />
+Avvia un nuovo esperimento:<br />
 %(templates)s
 
 </td><td>
@@ -13,9 +13,9 @@ Inizia un nuovo esperimento:<br />
 
 </td></tr></table>
 
-Un buon software ha bisogno di sviluppatori svegli:
+Sigmund è migliore di ChatGPT per le domande su OpenSesame. Il tuo abbonamento ci supporta!
 
-[&#x2615;&nbsp;&nbsp; Offrici un caffè!](https://www.buymeacoffee.com/cogsci){: .button}
+[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
 
 Oppure:
 

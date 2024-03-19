@@ -13,9 +13,9 @@ Start a new experiment:<br />
 
 </td></tr></table>
 
-Good software needs awake developers:
+Sigmund is better than ChatGPT for OpenSesame questions. Your subscription supports us!
 
-[&#x2615;&nbsp;&nbsp; Buy us a coffee!](https://www.buymeacoffee.com/cogsci){: .button}
+[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
 
 Or:
 

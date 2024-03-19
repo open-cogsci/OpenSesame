@@ -1,10 +1,10 @@
-# להתחיל!
+# בואו נתחיל!
 
-ברוך הבא ל-OpenSesame! איך אפשר לעזור לך?
+ברוכים הבאים ל-OpenSesame! כיצד אוכל לעזור לך?
 
 <table><tr><td>
 
-להתחיל ניסוי חדש:<br />
+התחל ניסוי חדש:<br />
 %(templates)s
 
 </td><td>
@@ -13,12 +13,12 @@
 
 </td></tr></table>
 
-תוכנה טובה דורשת מפתחים ערים:
+Sigmund טוב יותר מ-ChatGPT עבור שאלות לגבי OpenSesame. המנוי שלך תומך בנו!
 
-[&#x2615;&nbsp;&nbsp; קנו לנו קפה!](https://www.buymeacoffee.com/cogsci){: .button}
+[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){:‏ .button}
 
 או:
 
-[&#x1F440;&nbsp;&nbsp; קראו את התיעוד](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC;&nbsp;&nbsp; שאלו שאלה בפורום](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0;&nbsp;&nbsp; קבלו תמיכה מקצועית](http://professional.cogsci.nl){: .button}<br />
+[&#x1F440;&nbsp;&nbsp; קרא את התיעוד](http://osdoc.cogsci.nl){: .button}<br />
+[&#x1F4AC;&nbsp;&nbsp; שאל שאלה בפורום](http://forum.cogsci.nl){: .button}<br />
+[&#x1F9D0;&nbsp;&nbsp; קבל תמיכה מקצועית](http://professional.cogsci.nl){: .button}<br />
