@@ -235,45 +235,29 @@ def opensesame_folder():
     The OpenSesame folder or None if the os is not Windows.
     """
     # Determines the directory name of the script or the directory name
-    # of the executable after being packaged with py2exe. This has to be
-    # done so the child process can find all relevant modules too.
-    # See http://www.py2exe.org/index.cgi/HowToDetermineIfRunningFromExe
+    # of the executable
     #
-    # There are three scenarios:
+    # There are two scenarios:
     #
-    # - OpenSesame is run from a frozen state, in which case the OpenSesame
-    #   folder is the folder containing the
     # - OpenSesame is run from source, in which case we go to the OpenSesame
     #   folder by going a levels up from the __file__ folder.
     # - OpenSesame is run in Anaconda, in which case we need to go two levels
     #   up to get out of the site-packages folder.
-    if platform.system() == u'Darwin':
+    if platform.system() == 'Darwin':
         return os.getcwd()
-    elif platform.system() == u'Windows':
-        import imp
-        if (
-                hasattr(sys, u'frozen') or
-                hasattr(sys, u'importers') or
-                imp.is_frozen(u'__main__')
-        ):
-            path = safe_decode(
-                os.path.dirname(sys.executable),
-                enc=sys.getfilesystemencoding()
-            )
-        else:
-            # To get the opensesame folder, simply jump to levels up
-            path = safe_decode(
-                os.path.dirname(__file__),
-                enc=sys.getfilesystemencoding()
-            )
-            # The current should not be the site-packages folder, which
-            # happens on Anaconda if launched in multiprocess mode.
-            path = os.path.normpath(os.path.join(path, u'..'))
-            if path.endswith(u'Lib\\site-packages'):
-                path = os.path.normpath(os.path.join(path, u'..', u'..'))
+    if platform.system() == 'Windows':
+        # To get the opensesame folder, simply jump to levels up
+        path = safe_decode(
+            os.path.dirname(__file__),
+            enc=sys.getfilesystemencoding()
+        )
+        # The current should not be the site-packages folder, which
+        # happens on Anaconda if launched in multiprocess mode.
+        path = os.path.normpath(os.path.join(path, '..'))
+        if path.endswith('Lib\\site-packages'):
+            path = os.path.normpath(os.path.join(path, '..', '..'))
         return path
-    else:
-        return None
+    return None
 
 
 def open_url(url):

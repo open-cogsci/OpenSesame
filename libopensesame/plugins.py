@@ -360,7 +360,7 @@ def plugin_icon_small(plugin, _type=u'plugins'):
 
 
 def import_plugin(plugin, _type=u'plugins'):
-    r"""Imports plugin module.
+    """Imports plugin module.
 
     Parameters
     ----------
@@ -373,21 +373,26 @@ def import_plugin(plugin, _type=u'plugins'):
     -------
     The imported module.
     """
-    import imp
+    import importlib.util
+    
     plugin = str(plugin)
     folder = plugin_folder(plugin, _type=_type)
     for tmpl in src_templates:
         if os.path.exists(os.path.join(folder, tmpl % plugin)):
             path = os.path.join(folder, tmpl % plugin)
-            if not py3:
-                path = safe_encode(path, enc=sys.getfilesystemencoding())
-            return imp.load_source(plugin, path)
+            # Create a module spec from the source file and load the module
+            spec = importlib.util.spec_from_file_location(plugin, path)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            return module
     for tmpl in bytecode_templates:
         if os.path.exists(os.path.join(folder, tmpl % plugin)):
             path = os.path.join(folder, tmpl % plugin)
-            if not py3:
-                path = safe_encode(path, enc=sys.getfilesystemencoding())
-            return imp.load_compiled(plugin, path)
+            # Similarly load the module from compiled bytecode
+            spec = importlib.util.spec_from_file_location(plugin, path)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            return module
 
 
 def load_plugin(
@@ -490,17 +495,19 @@ def load_mod(path, mod, pkg=None):
     -------
     A module.
     """
-    import imp
+    import importlib.util
+    
     path = safe_decode(path, enc=sys.getfilesystemencoding())
     if not os.path.isdir(path):
         path = os.path.dirname(path)
     if pkg is not None:
         path = os.path.join(path, pkg)
-    path = os.path.join(path, mod+u'.py')
+    path = os.path.join(path, mod + '.py')
     if not os.path.exists(path):
-        raise osexception(u'%s does not exist' % path)
-    oslogger.debug(u'loading module from %s' % path)
-    if not py3:
-        mod = safe_encode(mod, enc=sys.getfilesystemencoding())
-        path = safe_encode(path, enc=sys.getfilesystemencoding())
-    return imp.load_source(mod, path)
+        raise osexception('%s does not exist' % path)
+    oslogger.debug('loading module from %s' % path)
+    # Create a module spec from the source file and load the module
+    spec = importlib.util.spec_from_file_location(mod, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
