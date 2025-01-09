@@ -2,7 +2,7 @@
 
 OpenSesame is a tool to create experiments for psychology, neuroscience, and experimental economics.
 
-Copyright, 2010-2024, Sebastiaan Mathôt and contributors.
+Copyright, 2010-2025, Sebastiaan Mathôt and contributors.
 
 <http://osdoc.cogsci.nl/>
 
