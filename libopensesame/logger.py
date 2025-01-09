@@ -87,8 +87,8 @@ class Logger(Item):
                     for var in arglist:
                         if not self.experiment.syntax.valid_var_name(
                                 safe_decode(var)):
-                            raise InvalidOpenSesameScript(
-                                '{var} is not a valid variable name')
+                            oslogger.error(
+                                f'{var} is not a valid variable name')
                     self.logvars += arglist
                 else:
                     self.exclude_patterns += arglist
