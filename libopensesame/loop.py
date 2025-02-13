@@ -18,6 +18,7 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 import os
+from libopensesame.oslogging import oslogger
 from libopensesame.exceptions import InvalidOpenSesameScript, OSException, \
     ItemDoesNotExist, LoopSourceFileDoesNotExist, UnsupportedLoopSourceFile, \
     InvalidConditionalExpression, PythonError, InvalidValue, \
@@ -196,6 +197,11 @@ class Loop(Item):
                 dm <<= operations.shuffle(src_dm)[:i]
             else:
                 dm <<= src_dm[:i]
+        # An empty loop table is not an error, but we should return an empty
+        # DataMatrix and warn the user because it may indicate a mistake.
+        if len(dm) == 0:
+            oslogger.warning('loop table is empty')
+            return dm
         if self.var.order == u'random':
             dm = operations.shuffle(dm)
         # Constraints come before loop operations
