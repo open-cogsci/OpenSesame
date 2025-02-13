@@ -141,10 +141,6 @@ class Help(BaseExtension):
             if menu is not None:
                 self.action_psychopy_help = self.menu.addMenu(menu)
         self.menu.addSeparator()
-        self.menu.addAction(ActionPage(self.main_window,
-                                       _('Sigmund AI assistant'),
-                                       'https://sigmundai.eu', self.menu,
-                                       icon='face-smile'))
 
     def build_menu(self, parent_menu, base_url, title, _dict, sub_menu=True):
         r"""A helper function to build the online-help menu.
