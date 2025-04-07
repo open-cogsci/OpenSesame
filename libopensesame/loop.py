@@ -333,9 +333,12 @@ class Loop(Item):
                 # notation
                 if isinstance(val, str) and val.startswith('='):
                     val = f'{val[1:]}'
-                val = self.syntax.auto_type(val,
-                                            allow_bool=True,
-                                            allow_none=True)
+                try:
+                    val = self.syntax.auto_type(val,
+                                                allow_bool=True,
+                                                allow_none=True)
+                except Exception as e:
+                    oslogger.warning(f'loop variable {name} has unusual type')
                 self.experiment.var.set(name, self.syntax.eval_text(val))
             # Evaluate the run if statement
             if (
