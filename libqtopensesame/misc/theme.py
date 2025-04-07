@@ -22,12 +22,30 @@ import sys
 import importlib.util
 import qtawesome as qta
 from openexp import resources
-from libopensesame import misc
 from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
 from qtpy import QtGui, QtWidgets, QtCore
 
 available_themes = [u'default', u'monokai']
+
+# Fontawesome 4 (with the fa. prefix) has been removed in recent updates of
+# qtawesome. This is used by various packages, so here we monkeypatch the icon()
+# function so that it at least doesn't crash, and falls back to a circle icon.
+def fix_qta_icon(fnc):
+    
+    def inner(qta_name, *args, **kwargs):
+        if qta_name.startswith('fa.'):
+            oslogger.warning('fa. prefix is deprecated, use fa6')
+            qta_name = 'fa6.' + qta_name[3:]
+        try:
+            return fnc(qta_name, *args, **kwargs)
+        except Exception:
+            oslogger.error(f'{qta_name} is not defined')
+            return fnc('fa6.circle', *args, **kwargs)
+        
+    return inner
+
+qta.icon = fix_qta_icon(qta.icon)
 
 
 class Theme:
