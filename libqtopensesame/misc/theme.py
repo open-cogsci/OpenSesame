@@ -34,12 +34,13 @@ available_themes = [u'default', u'monokai']
 def fix_qta_icon(fnc):
     
     def inner(qta_name, *args, **kwargs):
-        if qta_name.startswith('fa.'):
-            oslogger.warning('fa. prefix is deprecated, use fa6')
-            qta_name = 'fa6.' + qta_name[3:]
         try:
             return fnc(qta_name, *args, **kwargs)
         except Exception:
+            if qta_name.startswith('fa.'):
+                oslogger.warning('fa. prefix is deprecated, use fa6')
+                qta_name = 'fa6.' + qta_name[3:]
+                return inner(qta_name, *args, **kwargs)
             oslogger.error(f'{qta_name} is not defined')
             return fnc('fa6.circle', *args, **kwargs)
         
