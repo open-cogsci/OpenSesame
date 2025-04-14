@@ -1,7 +1,4 @@
-# -*- coding:utf-8 -*-
-
-"""
-This file is part of OpenSesame.
+"""This file is part of OpenSesame.
 
 OpenSesame is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,8 +19,7 @@ import os
 
 
 class Csv(Log):
-
-    r"""For docstrings, see openexp._log.log."""
+    
     def __init__(self, experiment, path):
 
         self._log = None
@@ -52,32 +48,42 @@ class Csv(Log):
         self.experiment.var.logfile = self._path
         if self._path not in self.experiment.data_files:
             self.experiment.data_files.append(self._path)
-        self._log = safe_open(self._path, u'w')
+        self._log = safe_open(self._path, 'w')
         self._header_written = False
 
     def write(self, msg, newline=True):
 
         self._log.write(safe_decode(msg))
         if newline:
-            self._log.write(u'\n')
+            self._log.write('\n')
         # Flush to avoid pending write operations
         self._log.flush()
         os.fsync(self._log)
+        
+    def _csv_escape_and_quote(self, val):
+        """
+        Takes a single value, which can be of any type, and returns it so that 
+        it matches the CSV specification for a field. For consistency, we put 
+        double quotes around all values, and escape any instances of a double quote 
+        by doubling them.
+        """
+        s = safe_decode(val)
+        s = s.replace('"', '""')
+        return '"' + s + '"'
 
     def write_vars(self, var_list=None):
 
         if var_list is None:
             var_list = self.all_vars()
         if not self._header_written:
-            l = [u'"%s"' % var.replace(u'"', u'\\"') for var in var_list]
-            self.write(u','.join(l))
+            self.write(
+                ','.join(self._csv_escape_and_quote(var) for var in var_list))
             self._header_written = True
-        l = []
+        values = []
         for var in var_list:
-            val = self.experiment.var.get(var, _eval=False, default=u'NA')
-            val = safe_decode(val)
-            l.append(u'"%s"' % val.replace(u'"', u'\\"'))
-        self.write(u','.join(l))
+            val = self.experiment.var.get(var, _eval=False, default='NA')
+            values.append(self._csv_escape_and_quote(val))
+        self.write(','.join(values))
 
 
 # Non PEP-8 alias for backwards compatibility
