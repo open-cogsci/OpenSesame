@@ -17,8 +17,6 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 import functools
-import sys
-import io
 import yaml
 
 py3 = True
@@ -41,7 +39,7 @@ def safe_decode(s, enc='utf-8', errors='strict'):
     if isinstance(s, Exception):
         try:
             return safe_decode(bytes(s), enc=enc, errors=errors)
-        except:
+        except Exception:
             pass
     # For other types, the unicode representation doesn't require a specific
     # encoding. This mostly applies to non-stringy things, such as integers.
