@@ -28,11 +28,9 @@ OpenSesame is a graphical experiment builder. OpenSesame provides an easy to use
 OpenSesame relies on a number repositories that are all hosted by the [Cogsci.nl](https://github.com/open-cogsci/) organization on GitHub. The most important of these are:
 
 - [opensesame](https://github.com/open-cogsci/opensesame) contains core OpenSesame functionality
-- [rapunzel](https://github.com/open-cogsci/rapunzel) is a set of extensions that turn OpenSesame into a code editor
+- [sigmund analyst](https://github.com/open-cogsci/sigmund-analystr) is a code editor and a PyQt widgets
 - [osweb](https://github.com/open-cogsci/osweb) implements OSWeb, the online OpenSesame runtime
 - [opensesame-extension-osweb](https://github.com/open-cogsci/opensesame-extension-osweb) embeds OSWeb into the OpenSesame user interface
-- [pyqode.core](https://github.com/open-cogsci/pyqode.core) implements generic code-editor widgets
-- [pyqode.python](https://github.com/open-cogsci/pyqode.python) implements Python-specific code-editor widgets
 - [datamatrix](https://github.com/open-cogsci/python-datamatrix) implements a tabular data structure that is used by the `loop` item
 - [qdatamatrix](https://github.com/open-cogsci/python-qdatamatrix) implements a Qt widget for editing datamatrix objects
 - [pseudorandom](https://github.com/open-cogsci/python-pseudorandom) implements pseudorandomization/ randomization constraints
@@ -49,6 +47,7 @@ Each major version of OpenSesame lives in its own branch. The default branch is 
 - `koffka` - 3.2
 - `loewenfeld` - 3.3
 - `milgram` - 4.0
+- `TBA` - 4.1
 
 
 ## Citations
