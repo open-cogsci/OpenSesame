@@ -25,7 +25,11 @@ from qtpy.QtGui import QKeySequence
 from libqtopensesame.misc.translate import translation_context
 from pyqt_code_editor.components.jupyter_console import JupyterConsole as JupyterDock
 import sys
+import json
 _ = translation_context(u'JupyterConsole', category=u'extension')
+
+SIMPLE_TYPES = int, str, float, bytes, bool, type(None)
+ITERABLES = list, set, dict
 
 
 class JupyterConsole(BaseExtension):
@@ -80,6 +84,53 @@ class JupyterConsole(BaseExtension):
             sys.stderr = self._original_stderr
             self._original_stderr = None        
         self.jupyter_widget._show_interpreter_prompt()
+        
+    def _is_simple_value(self, value, visited=None):
+        """Check if a value is simple or a standard iterable containing only
+        simple types
+        """
+        if visited is None:
+            visited = set()
+        # Avoid circular references
+        value_id = id(value)
+        if value_id in visited:
+            return False
+        visited.add(value_id)
+        # Check if it's a simple type
+        if isinstance(value, SIMPLE_TYPES):
+            return True
+        # Check if it's a standard iterable
+        if isinstance(value, ITERABLES):
+            return all(self._is_simple_value(item, visited)
+                       for item in value)
+        # Check if it's a dict with simple keys and values
+        if isinstance(value, dict):
+            return all(
+                isinstance(k, SIMPLE_TYPES)
+                    and self._is_simple_value(v, visited)
+                for k, v in value.items())
+        return False        
+        
+    def event_set_workspace_globals(self, global_dict={}):
+        """Send filtered variables to the Jupyter console"""        
+        # Only simple and non-private values should be set
+        filtered_dict = {}
+        for key, value in global_dict.items():
+            if key.startswith('_'):
+                continue
+            if not self._is_simple_value(value):
+                continue
+            filtered_dict[key] = value        
+        if not filtered_dict:
+            return        
+        oslogger.debug(f'Sending {len(filtered_dict)} variables to Jupyter console')
+        code = f"""
+import json
+_workspace_vars = json.loads('''{json.dumps(filtered_dict)}''')
+globals().update(_workspace_vars)
+del _workspace_vars
+"""
+        self.jupyter_widget.kernel_client.execute(code, silent=False)
 
     def event_jupyter_write(self, msg):
         self.write(msg)
