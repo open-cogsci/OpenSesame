@@ -16,6 +16,7 @@ OpenSesame is a graphical experiment builder. OpenSesame provides an easy to use
 
 - A user-friendly interface — a modern, professional, and easy-to-use graphical interface
 - Online experiments — run your experiment in a browser with OSWeb
+- AI — develop your experiments together with [SigmundAI](https://sigmundai.eu/)
 - Python — add the power of Python to your experiment
 - JavaScript — add the power of JavaScript to your experiment
 - Use your devices — use your eye tracker, button box, EEG equipment, and more.
@@ -28,7 +29,8 @@ OpenSesame is a graphical experiment builder. OpenSesame provides an easy to use
 OpenSesame relies on a number repositories that are all hosted by the [Cogsci.nl](https://github.com/open-cogsci/) organization on GitHub. The most important of these are:
 
 - [opensesame](https://github.com/open-cogsci/opensesame) contains core OpenSesame functionality
-- [sigmund analyst](https://github.com/open-cogsci/sigmund-analyst) is a code editor and a PyQt widgets
+- [sigmund analyst](https://github.com/open-cogsci/sigmund-analyst) is a code editor that provides various PyQt widgets used by OpenSesame
+- [opensesame-extension-sigmund](https://github.com/open-cogsci/opensesame-extension-sigmund) integrates SigmundAI into the OpenSesame user interface
 - [osweb](https://github.com/open-cogsci/osweb) implements OSWeb, the online OpenSesame runtime
 - [opensesame-extension-osweb](https://github.com/open-cogsci/opensesame-extension-osweb) embeds OSWeb into the OpenSesame user interface
 - [datamatrix](https://github.com/open-cogsci/python-datamatrix) implements a tabular data structure that is used by the `loop` item
