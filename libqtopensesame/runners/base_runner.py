@@ -47,10 +47,6 @@ class BaseRunner:
         self.paused = False
 
     @property
-    def console(self):
-        return self.main_window.console
-
-    @property
     def tabwidget(self):
         return self.main_window.tabwidget
 
@@ -209,7 +205,6 @@ class BaseRunner:
                 '# Error\n\nFailed to generate experiment for the '
                 'following reason:\n\n- '
             ) + e.markdown()
-            self.console.write(e)
             self.tabwidget.open_markdown(md)
             return False
         # Get and set the subject number
@@ -244,7 +239,6 @@ class BaseRunner:
         except Exception as e:
             md = _('# Error\n\nFailed to parse experiment for the '
                    'following reason:\n\n- ') + safe_str(e)
-            self.console.write(e)
             traceback.print_exc()
             self.tabwidget.open_markdown(md)
             return False
@@ -312,12 +306,12 @@ class BaseRunner:
 
     def pause(self):
         r"""Is called when the experiment is paused."""
-        self.console.set_workspace_globals(self.workspace_globals())
+        self.main_window.extension_manager.fire('set_workspace_globals',
+                                                self.workspace_globals())
         print(
             'The experiment has been paused. Switch back to the experiment '
             'window and press space to resume.'
         )
-        self.console.show_prompt()
         self.main_window.set_run_status('paused')
         self.main_window.extension_manager.fire('pause_experiment')
         self.paused = True

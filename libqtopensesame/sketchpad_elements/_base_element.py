@@ -61,10 +61,6 @@ class BaseElement:
     def theme(self):
         return self.experiment.main_window.theme
 
-    @property
-    def console(self):
-        return self.experiment.main_window.console
-
     def draw(self):
         r"""Draw this element, without redrawing the entire sketchpad."""
         self.graphics_item = super(base_element, self).draw()
@@ -266,7 +262,6 @@ class BaseElement:
             self.from_string(string)
         except OSException as e:
             self.main_window.notify(e)
-            self.console.write(e)
             self.from_string(old_string)
             return
         self.sketchpad.draw()

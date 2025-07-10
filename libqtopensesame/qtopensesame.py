@@ -89,7 +89,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         from libopensesame import misc
         from libopensesame.plugin_manager import PluginManager
         from libqtopensesame.misc import theme
-        from libqtopensesame.misc.console_bridge import ConsoleBridge
         from libqtopensesame.widgets.pool_widget import PoolWidget
         from libqtopensesame.extensions import ExtensionManager
         import random
@@ -182,7 +181,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.update_recent_files()
         self.set_unsaved(False)
         self.init_custom_fonts()
-        self.console = ConsoleBridge(self)
         self._unloaded_extension_manager = PluginManager(opensesame_extensions)
         self.extension_manager = ExtensionManager(self)
         self.extension_manager.register_extension(self.ui.toolbar_items)
@@ -770,7 +768,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             ) + safe_decode(e)
             self.tabwidget.open_markdown(md)
             traceback.print_exc()
-            self.console.write(e)
             self.set_busy(False)
             return
         self.open_experiment(exp, path, add_to_recent)
@@ -808,7 +805,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         try:
             self.get_ready()
         except OSException as e:
-            self.console.write(e)
             self.notify(
                 _("The following error occurred while trying to save:<br/>%s")
                 % e
@@ -820,7 +816,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             self.experiment.save(self.current_path, overwrite=True)
             self.set_busy(False)
         except Exception as e:
-            self.console.write(e)
             self.notify(
                 _("Failed to save file. Error: %s")
                 % safe_decode(e)
@@ -883,7 +878,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                 'following reason:\n\n- '
             ) + e.markdown()
             self.tabwidget.open_markdown(md)
-            self.console.write(e)
             return
         self.experiment = exp
         self.tabwidget.close_all()

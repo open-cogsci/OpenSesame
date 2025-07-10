@@ -135,6 +135,5 @@ class AfterExperiment(BaseExtension):
             self.extension_manager.fire('notify', message=str(e),
                                         always_show=True)
             return
-        self.console.write(e)
         self.tabwidget.open_markdown(e.markdown(), 'os-finished-error',
                                      e.title())

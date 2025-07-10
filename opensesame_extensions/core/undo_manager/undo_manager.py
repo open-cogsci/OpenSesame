@@ -181,7 +181,7 @@ class UndoManager(BaseExtension):
         if item is None:
             print('\nThe undo stack is empty')
             return
-        self.console.write('\nMost recent: %s\n\n' % item)
+        print('\nMost recent: %s\n\n' % item)
         if item == '__experiment__':
             old_script = self.stack.peek(-2)[1]
             new_script = self.stack.peek(-1)[1]
@@ -192,16 +192,16 @@ class UndoManager(BaseExtension):
         for line in difflib.ndiff(old_script.splitlines(),
                                   new_script.splitlines()):
             if line.startswith('+'):
-                self.console.write('\x1b[32;1m')
+                print('\x1b[32;1m')
             elif line.startswith('-'):
-                self.console.write('\x1b[31;1m')
+                print('\x1b[31;1m')
             else:
                 continue
-            self.console.write(line + '\n')
-        self.console.write('\x1b[0m')
-        self.console.write('\nFull stack:\n\n')
+            print(line + '\n')
+        print('\x1b[0m')
+        print('\nFull stack:\n\n')
         for i, (item, script) in enumerate(self.stack.history[::-1]):
-            self.console.write('%d - %s\n' % (i, item))
+            print('%d - %s\n' % (i, item))
 
     # All these events simply undo by restoring the complete experiment state.
     # This is crude, but works for now.

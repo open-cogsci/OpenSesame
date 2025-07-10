@@ -110,10 +110,6 @@ class QtItem:
         return self.experiment.main_window.tabwidget
 
     @property
-    def console(self):
-        return self.experiment.main_window.console
-
-    @property
     def extension_manager(self):
         return self.experiment.main_window.extension_manager
 
@@ -471,7 +467,6 @@ class QtItem:
                     cursor.movePosition(cursor.EndOfLine, cursor.KeepAnchor)
                     self._script_widget.setTextCursor(cursor)
                     break
-            self.console.write(e)
             self.extension_manager.fire(
                 'notify',
                 message=_(

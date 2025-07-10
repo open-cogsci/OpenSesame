@@ -75,4 +75,3 @@ class FileHandler(BaseExtension):
                         u'Failed to open file. '
                         u'See debug window for error message.'
                     ))
-                    self.console.write(e)

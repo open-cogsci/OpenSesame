@@ -59,10 +59,6 @@ class QtItemStore(ItemStore):
     def tabwidget(self):
         return self.main_window.tabwidget
 
-    @property
-    def console(self):
-        return self.main_window.console
-
     def __delitem__(self, name):
         r"""Deletes an item, and notifies other items of the deletion.
 
@@ -119,7 +115,6 @@ class QtItemStore(ItemStore):
                 # the help page to fail.
                 pass
             oslogger.warning(yaml.dump(warning_list))
-            self.console.write(yaml.dump(warning_list))
 
         self.main_window.set_unsaved(True)
         return item

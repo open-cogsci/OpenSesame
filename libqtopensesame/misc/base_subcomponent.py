@@ -129,7 +129,6 @@ class BaseSubcomponent(BaseComponent):
         ----------
         e : Exception
         """
-        self.console.write(e)
         self.tabwidget.open_markdown(e.markdown(), 'os-finished-error',
                                      e.title())
 
@@ -174,10 +173,6 @@ class BaseSubcomponent(BaseComponent):
     @property
     def overview_area(self):
         return self.main_window.ui.itemtree
-
-    @property
-    def console(self):
-        return self.main_window.console
 
     @property
     def pool(self):

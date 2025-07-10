@@ -102,10 +102,6 @@ class BaseExtension(BaseSubcomponent):
         return inner
 
     @property
-    def console(self):
-        return self.main_window.console
-
-    @property
     def menubar(self):
         return self.main_window.menuBar()
 
@@ -290,7 +286,6 @@ class BaseExtension(BaseSubcomponent):
                 f'Extension {self.name()} misbehaved on activate '
                 f'(see debug window for stack trace)',
                 category='warning')
-            self.console.write(e)
             traceback.print_exc()
             oslogger.error(
                 f'Extension {self.name()} misbehaved on activate: {e}')

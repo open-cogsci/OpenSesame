@@ -101,7 +101,6 @@ class PoolWidget(BaseWidget):
                 self.pool.add(path, new_name=basename)
             except (IOError, shutil.Error) as e:
                 self.notify(_(u'Failed to copy %s to file pool') % path)
-                self.console.write(safe_decode(e, errors=u'ignore'))
         self.main_window.set_unsaved()
         self.refresh()
         self.select(basename)
@@ -140,7 +139,6 @@ class PoolWidget(BaseWidget):
             path_iterator = iter(self.pool)
         except Exception as e:
             self.notify(_(u'Failed to refresh file pool'))
-            self.console.write(safe_decode(e, errors=u'ignore'))
             return
         filt = self.ui.edit_pool_filter.text().lower()
         self.ui.list_pool.clear()

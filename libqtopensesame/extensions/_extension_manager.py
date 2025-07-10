@@ -78,7 +78,6 @@ class ExtensionManager(BaseSubcomponent):
             except Exception as e:
                 oslogger.error(f'Failed to load extension {ulext.name}: {e}')
                 traceback.print_exc()
-                self.console.write(e)
             else:
                 self._extensions.append(ext)
                 self.register_extension(ext)
@@ -162,7 +161,6 @@ class ExtensionManager(BaseSubcomponent):
                     f'Extension {ext.name()} misbehaved on event {event} '
                     f'(see debug window for stack trace)',
                     category='warning')
-                self.console.write(e)
                 traceback.print_exc()
                 oslogger.error(f'Extension {ext.name()} misbehaved on event '
                                f'{event}: {e}')
@@ -185,7 +183,6 @@ class ExtensionManager(BaseSubcomponent):
                 f'Extension {self.name} misbehaved on providing {provide} '
                 f'(see debug window for stack trace)',
                 category='warning')
-            self.console.write(e)
             traceback.print_exc()
             oslogger.error(f'Extension {ulext.name} misbehaved on providing '
                            f'{provide}: {e}')

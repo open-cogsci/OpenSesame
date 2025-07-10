@@ -45,7 +45,6 @@ class MultiprocessRunner(BaseRunner):
                 self.channel)
         except Exception as e:
             return e
-        self.console.set_workspace_globals({'process': self.exp_process})
         # Start process!
         self.exp_process.start()
         # Wait for experiment to finish.
