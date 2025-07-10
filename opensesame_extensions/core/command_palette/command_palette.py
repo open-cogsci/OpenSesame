@@ -19,17 +19,27 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import BaseExtension
+from pyqt_code_editor.widgets import QuickOpenDialog
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context('command_palette', category='extension')
+
+
+class QuickCommandPaletteDialog(QuickOpenDialog):
+    def __init__(self, parent, items):
+        super().__init__(parent, items, title=_("Command palette"))
+
+    def on_item_selected(self, item_dict: dict):
+        print(item_dict)
+        item_dict['action']()
 
 
 class CommandPalette(BaseExtension):
 
     def activate(self):
 
-        self.extension_manager.fire(
-            u'quick_select',
-            haystack=self._actions(self.main_window.menuBar()),
-            placeholder_text=_(u'Search actions …')
-        )
+        QuickCommandPaletteDialog(
+            self.main_window,
+            self._actions(self.main_window.menuBar())).exec()
 
     def _actions(self, menu):
 
@@ -39,11 +49,8 @@ class CommandPalette(BaseExtension):
                 actions += self._actions(action.menu())
                 continue
             if action.text():
-                actions.append((
-                    action.text().replace(u'&', ''),
-                    action,
-                    self._trigger)
-                )
+                actions.append({'name': action.text().replace(u'&', ''),
+                                'action': action.trigger})
         return actions
 
     def _trigger(self, action):

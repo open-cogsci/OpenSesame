@@ -18,24 +18,28 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import BaseExtension
+from pyqt_code_editor.widgets import QuickOpenDialog
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'quick_switcher', category=u'extension')
+_ = translation_context('quick_switcher', category='extension')
+
+
+class QuickSwitcherDialog(QuickOpenDialog):
+    def __init__(self, parent, items):
+        super().__init__(parent, items, title=_("Quick switcher"))
+
+    def on_item_selected(self, item_dict: dict):
+        print(item_dict)
+        item_dict['action']()
 
 
 class QuickSwitcher(BaseExtension):
-
-    r"""The quick-switcher allows you to quickly navigate to items."""
+    """The quick-switcher allows you to quickly navigate to items."""
+    
     def activate(self):
-
         haystack = []
         for item in self.experiment.items.values():
-            haystack.append((
-                u'{} ({})'.format(item.name, item.item_type),
-                item,
-                item.open_tab
-            ))
-        self.extension_manager.fire(
-            u'quick_select',
-            haystack=haystack,
-            placeholder_text=_(u'Search items …')
-        )
+            haystack.append({
+                'name': '{} ({})'.format(item.name, item.item_type),
+                'action': item.open_tab
+            })
+        QuickSwitcherDialog(self.main_window, haystack).exec()
