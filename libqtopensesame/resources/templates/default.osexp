@@ -16,7 +16,7 @@ define sequence experiment
 
 define notepad getting_started
 	__note__
-	Welcome to OpenSesame 4.0 "Melodramatic Milgram"!
+	Welcome to OpenSesame 4.1 "TBA"!
 
 	If you are new to OpenSesame, it is a good idea to follow one of the tutorials,
 	which can be found on the documentation site:
