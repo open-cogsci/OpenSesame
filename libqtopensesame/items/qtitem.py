@@ -1,5 +1,3 @@
-# -*- coding:utf-8 -*-
-
 """
 This file is part of OpenSesame.
 
@@ -26,7 +24,7 @@ from libqtopensesame.widgets.qtitem_splitter import qtitem_splitter
 from libqtopensesame.widgets import header_widget
 from libqtopensesame._input.pool_select import pool_select
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'qtitem', category=u'core')
+_ = translation_context('qtitem', category='core')
 
 
 def requires_init(fnc):
@@ -59,8 +57,8 @@ def wait_cursor(fnc):
 class QtItem:
     """Base class for the GUI controls of other items"""
     
-    initial_view = u'controls'
-    label_align = u'right'
+    initial_view = 'controls'
+    label_align = 'right'
     help_url = None
     lazy_init = True
 
@@ -88,7 +86,7 @@ class QtItem:
         self.lock = False
         self.maximized = False
         self.set_validator()
-        oslogger.debug(u'created %s' % self.name)
+        oslogger.debug('created %s' % self.name)
         self.cached_script = self.to_string()
         
     @property
@@ -121,7 +119,7 @@ class QtItem:
 
     @property
     def default_description(self):
-        return _(u'Default description')
+        return _('Default description')
 
     def open_tab(self, select_in_tree=True, **kwargs):
         """Opens the tab if it wasn't yet open, and switches to it."""
@@ -140,7 +138,7 @@ class QtItem:
 
     def set_focus(self):
         r"""Gives focus to the most important widget."""
-        if hasattr(self, u'focus_widget') and self.focus_widget is not None:
+        if hasattr(self, 'focus_widget') and self.focus_widget is not None:
             self.focus_widget.setFocus()
 
     def set_focus_widget(self, widget, override=False):
@@ -154,7 +152,7 @@ class QtItem:
             Indicates whether the focus widget should be changed if there
             already is a focus widget.
         """
-        if override or not hasattr(self, u'focus_widget') or \
+        if override or not hasattr(self, 'focus_widget') or \
                 self.focus_widget is None:
             self.focus_widget = widget
 
@@ -181,19 +179,19 @@ class QtItem:
         if not self._shown:
             self._shown = True
             self.main_window.ui.itemtree.inhibit_drag = True
-            oslogger.debug(u'Invalid initial_view: %s' % self.initial_view)
-            if self.initial_view == u'script':
+            oslogger.debug('Invalid initial_view: %s' % self.initial_view)
+            if self.initial_view == 'script':
                 self.set_view_script()
-            elif self.initial_view == u'split':
+            elif self.initial_view == 'split':
                 self.set_view_split()
-            elif self.initial_view != u'controls':
-                oslogger.warning(u'Invalid initial_view: %s' %
+            elif self.initial_view != 'controls':
+                oslogger.warning('Invalid initial_view: %s' %
                                  self.initial_view)
-        self.extension_manager.fire(u'prepare_open_item', name=self.name)
+        self.extension_manager.fire('prepare_open_item', name=self.name)
         self.update_script()
         self.edit_widget()
         self.main_window.ui.itemtree.select_item(self.name, open_tab=False)
-        self.extension_manager.fire(u'open_item', name=self.name)
+        self.extension_manager.fire('open_item', name=self.name)
 
     @requires_init
     def widget(self):
@@ -213,7 +211,7 @@ class QtItem:
             Indicates whether a vertical stretch should be added to the bottom
             of the controls. This is necessary if the controls don't expand.
         """
-        oslogger.debug(u'initializing controls for {}'.format(self.name))
+        oslogger.debug('initializing controls for {}'.format(self.name))
         # Header widget
         self.header = header_widget.header_widget(self)
         self.header_hbox = QtWidgets.QHBoxLayout()
@@ -224,8 +222,8 @@ class QtItem:
         self.header_hbox.setSpacing(12)
         # Maximize button
         self.button_toggle_maximize = QtWidgets.QPushButton(
-            self.theme.qicon(u'view-fullscreen'), u'')
-        self.button_toggle_maximize.setToolTip(_(u'Toggle pop-out'))
+            self.theme.qicon('view-fullscreen'), '')
+        self.button_toggle_maximize.setToolTip(_('Toggle pop-out'))
         self.button_toggle_maximize.setIconSize(QtCore.QSize(16, 16))
         self.button_toggle_maximize.clicked.connect(self.toggle_maximize)
         self.header_hbox.addWidget(self.button_toggle_maximize)
@@ -245,7 +243,7 @@ class QtItem:
         # The edit_grid is the layout that contains the actual controls for the
         # items.
         self.edit_grid = QtWidgets.QFormLayout()
-        if self.label_align == u'right':
+        if self.label_align == 'right':
             self.edit_grid.setLabelAlignment(QtCore.Qt.AlignRight)
         self.edit_grid.setFieldGrowthPolicy(
             QtWidgets.QFormLayout.FieldsStayAtSizeHint)
@@ -286,19 +284,14 @@ class QtItem:
     @wait_cursor
     def init_script_widget(self):
 
-        from libqtopensesame.pyqode_extras.widgets import \
-            OpenSesameCodeEdit
+        from pyqt_code_editor.code_editors import create_editor
 
-        oslogger.debug(u'initializing script widget for {}'.format(self.name))
-        self._script_widget = OpenSesameCodeEdit(self.main_window)
+        oslogger.debug('initializing script widget for {}'.format(self.name))
+        self._script_widget = create_editor(language='opensesame', parent=self.main_window)
         self._script_widget.focusOutEvent = self._script_focus_out
-        self.extension_manager.fire(
-            u'register_editor',
-            editor=self._script_widget
-        )
         self._script_button = QtWidgets.QPushButton(
-            self.theme.qicon(u'dialog-apply'),
-            _(u'Apply')
+            self.theme.qicon('dialog-apply'),
+            _('Apply')
         )
         self._script_button.is_apply_button = True
         self._script_button.clicked.connect(
@@ -353,23 +346,23 @@ class QtItem:
         self.edit_size = sizes[0]
         self.script_size = sizes[1]
         if self.script_size == 0:
-            self.button_view.set_view_icon(u'controls')
+            self.button_view.set_view_icon('controls')
         elif self.edit_size == 0:
-            self.button_view.set_view_icon(u'script')
+            self.button_view.set_view_icon('script')
         else:
-            self.button_view.set_view_icon(u'split')
+            self.button_view.set_view_icon('split')
 
     def set_view_controls(self):
         r"""Puts the splitter in control view."""
         self.splitter.setSizes([self.splitter.width(), 0])
-        self.button_view.set_view_icon(u'controls')
+        self.button_view.set_view_icon('controls')
 
     def set_view_script(self):
         r"""Puts the splitter in script view."""
         if self._script_widget is None:
             self.init_script_widget()
         self.splitter.setSizes([0, self.splitter.width()])
-        self.button_view.set_view_icon(u'script')
+        self.button_view.set_view_icon('script')
 
     def set_view_split(self):
         r"""Puts the splitter in split view."""
@@ -377,7 +370,7 @@ class QtItem:
             self.init_script_widget()
         width = self.splitter.width() // 2
         self.splitter.setSizes([width, width])
-        self.button_view.set_view_icon(u'split')
+        self.button_view.set_view_icon('split')
 
     def update(self):
         r"""Updates both the script and the controls."""
@@ -405,16 +398,12 @@ class QtItem:
         self.cached_script = script
         # Normally, the script starts with a 'define' line and is indented by
         # a tab. We want to undo this, and present only unindented content.
-        script = script[script.find(u'\t'):]
+        script = script[script.find('\t'):]
         script = textwrap.dedent(script)
         self.main_window.set_unsaved()
         if self._script_widget is not None:
-            self._script_widget.setPlainText(
-                script,
-                u'text/generic',
-                u'utf-8'
-            )
-        self.extension_manager.fire(u'change_item', name=self.name)
+            self._script_widget.setPlainText(script)
+        self.extension_manager.fire('change_item', name=self.name)
 
     def edit_widget(self):
         r"""This function updates the controls based on the item state."""
@@ -467,24 +456,27 @@ class QtItem:
         except Exception as e:
             # If an error occurs, we first parse the first line, then the first
             # and second, and so on, until we find the error.
-            l = script.split(u'\n')
+            l = script.split('\n')
             for line_nr, line in enumerate(l):
-                test_script = u'\n'.join(l[:line_nr])
+                test_script = '\n'.join(l[:line_nr])
                 try:
                     self.validator(self.name, self.experiment, test_script)
                 except Exception as e_:
-                    from pyqode.core.api.utils import TextHelper
-                    TextHelper(self._script_widget).select_lines(
-                        line_nr - 1,
-                        line_nr - 1
-                    )
+                    # Use QTextCursor to select the offending line
+                    cursor = self._script_widget.textCursor()
+                    cursor.movePosition(cursor.Start)
+                    for _ in range(line_nr - 1):
+                        cursor.movePosition(cursor.Down)
+                    cursor.movePosition(cursor.StartOfLine)
+                    cursor.movePosition(cursor.EndOfLine, cursor.KeepAnchor)
+                    self._script_widget.setTextCursor(cursor)
                     break
             self.console.write(e)
             self.extension_manager.fire(
-                u'notify',
+                'notify',
                 message=_(
-                    u'Failed to parse script. See debug window for details'),
-                category=u'warning',
+                    'Failed to parse script. See debug window for details'),
+                category='warning',
                 always_show=True
             )
             return False
@@ -499,7 +491,7 @@ class QtItem:
         for cls in inspect.getmro(self.__class__):
             if meth.__name__ in cls.__dict__:
                 break
-        oslogger.debug(u'validator: %s' % cls)
+        oslogger.debug('validator: %s' % cls)
         self.validator = cls
 
     def rename(self, from_name, to_name):
@@ -546,13 +538,13 @@ class QtItem:
             self.container_widget.showMaximized()
             self.container_widget.show()
             self.button_toggle_maximize.setIcon(
-                self.theme.qicon(u'view-restore'))
+                self.theme.qicon('view-restore'))
         else:
             self.main_window.block_close_event = False
             self.container_widget.setParent(self.main_window)
             self.open_tab()
             self.button_toggle_maximize.setIcon(
-                self.theme.qicon(u'view-fullscreen'))
+                self.theme.qicon('view-fullscreen'))
         self.maximized = not self.maximized
         self.button_help.setDisabled(self.maximized)
         self.main_window.setDisabled(self.maximized)
@@ -633,14 +625,14 @@ class QtItem:
             if var in self.var:
                 val = safe_decode(self.var.get(var, _eval=False))
             else:
-                val = u''
+                val = ''
             if val != edit.text():
                 edit.setText(val)
 
         for var, combobox in self.auto_combobox.items():
             if isinstance(var, int):
                 continue
-            val = self.var.get(var, _eval=False, default=u'')
+            val = self.var.get(var, _eval=False, default='')
             i = combobox.findText(safe_decode(val))
             # Set the combobox to the select item
             if i >= 0:
@@ -648,7 +640,7 @@ class QtItem:
                     combobox.setDisabled(False)
                     combobox.setCurrentIndex(i)
             # If no value was specified, set the combobox to a blank item
-            elif val == u'':
+            elif val == '':
                 if combobox.currentIndex() >= 0 or not combobox.isEnabled():
                     combobox.setDisabled(False)
                     combobox.setCurrentIndex(-1)
@@ -657,10 +649,10 @@ class QtItem:
                 if combobox.isEnabled():
                     combobox.setDisabled(True)
                     self.extension_manager.fire(
-                        u'notify',
+                        'notify',
                         message=_('"%s" is set to a variable or unknown '
                                   'value and can only be edited through '
-                                  'the script.') % var, category=u'info')
+                                  'the script.') % var, category='info')
 
         for var, spinbox in list(self.auto_spinbox.items()) \
                 + list(self.auto_slider.items()):
@@ -682,34 +674,34 @@ class QtItem:
                         continue
                     spinbox.setDisabled(True)
                     self.extension_manager.fire(
-                        u'notify',
+                        'notify',
                         message=_('"%s" is defined using variables and can '
                                   'only be edited through the script.') % var,
-                        category=u'info')
+                        category='info')
 
         for var, checkbox in self.auto_checkbox.items():
             if isinstance(var, int):
                 continue
             if var in self.var:
                 val = self.var.get(var, _eval=False)
-                if val in [u'yes', u'no']:
+                if val in ['yes', 'no']:
                     checkbox.setDisabled(False)
-                    checked = val == u'yes'
+                    checked = val == 'yes'
                     if checked != checkbox.isChecked():
                         checkbox.setChecked(checked)
                 else:
                     checkbox.setDisabled(True)
                     self.extension_manager.fire(
-                        u'notify',
+                        'notify',
                         message=_('"%s" is defined using variables or has an '
                                   'invalid value, and can only be edited '
                                   'through the script.') % var,
-                        category=u'info')
+                        category='info')
 
         for var, editor in self.auto_editor.items():
             if isinstance(var, int):
                 continue
-            val = safe_decode(self.var.get(var, _eval=False, default=u''))
+            val = safe_decode(self.var.get(var, _eval=False, default=''))
             if val != editor.toPlainText():
                 editor.setPlainText(val)
 
@@ -724,7 +716,7 @@ class QtItem:
                     self.var.set(var, val)
                     continue
                 # If no text was entered, we use a default if available ...
-                if hasattr(edit, u'default'):
+                if hasattr(edit, 'default'):
                     self.var.set(var, edit.default)
                     continue
                 # ... or unset the variable if no default is available.
@@ -752,7 +744,7 @@ class QtItem:
             if isinstance(var, int):
                 continue
             if checkbox.isEnabled() and isinstance(var, str):
-                val = u'yes' if checkbox.isChecked() else u'no'
+                val = 'yes' if checkbox.isChecked() else 'no'
                 self.var.set(var, val)
 
         for var, editor in self.auto_editor.items():

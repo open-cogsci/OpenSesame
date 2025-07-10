@@ -25,7 +25,6 @@ from libqtopensesame.items.experiment import Experiment
 from libopensesame import metadata
 from libopensesame.exceptions import OSException
 from libopensesame.oslogging import oslogger
-from libopensesame import misc
 import os
 import sys
 import warnings
@@ -33,6 +32,7 @@ import platform
 import traceback
 import subprocess
 from libqtopensesame.misc.translate import translation_context
+from pyqt_code_editor import watchdog
 _ = translation_context('qtopensesame', category='core')
 oslogger.start('gui')
 
@@ -634,6 +634,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         if not self.save_unsaved_changes():
             e.ignore()
             return
+        watchdog.shutdown()
         self.save_state()
         self.experiment.pool.clean_up()
         self.extension_manager.fire('close')

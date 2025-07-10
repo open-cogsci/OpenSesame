@@ -18,40 +18,35 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from qtpy import QtWidgets
+from pyqt_code_editor.code_editors import create_editor
 from libqtopensesame.widgets.base_widget import BaseWidget
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'general_script_editor', category=u'core')
+_ = translation_context('general_script_editor', category='core')
 
 
 class GeneralScriptEditor(BaseWidget):
 
-    r"""The general script editor."""
+    """The general script editor."""
     def __init__(self, main_window):
-        r"""Constructor.
+        """Constructor.
 
         Parameters
         ----------
         main_window
             A qtopensesame object.
         """
-        from libqtopensesame.pyqode_extras.widgets import OpenSesameCodeEdit
-        super().__init__(main_window, ui=u'widgets.general_script_editor')
-        self.ui.editor = OpenSesameCodeEdit()
-        self.extension_manager.fire(
-            u'register_editor',
-            editor=self.ui.editor,
-            mime_type='text/opensesame'
-        )
+        super().__init__(main_window, ui='widgets.general_script_editor')
+        self.ui.editor = create_editor(language='opensesame', parent=self)
         self.ui.layout_vbox.addWidget(self.ui.editor)
         self.ui.button_apply.clicked.connect(self._apply)
-        self.tab_name = u'__general_script__'
+        self.tab_name = '__general_script__'
 
     def _apply(self):
         r"""Confirms and applies the script changes."""
         resp = QtWidgets.QMessageBox.question(
             self.main_window,
-            _(u'Apply?'),
-            _(u'Are you sure you want to apply the changes to the general script?'),
+            _('Apply?'),
+            _('Are you sure you want to apply the changes to the general script?'),
             QtWidgets.QMessageBox.Yes,
             QtWidgets.QMessageBox.No
         )
@@ -66,9 +61,7 @@ class GeneralScriptEditor(BaseWidget):
     def refresh(self):
         r"""Refreshes the contents of the general script."""
         self.ui.editor.setPlainText(
-            self.main_window.experiment.to_string(),
-            u'text/generic',
-            u'utf-8'
+            self.main_window.experiment.to_string()
         )
 
 

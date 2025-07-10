@@ -1,5 +1,3 @@
-# -*- coding:utf-8 -*-
-
 """
 This file is part of OpenSesame.
 
@@ -17,24 +15,23 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from qtpy.QtWidgets import QSizePolicy
-from qtpy.QtCore import Qt
+from qtpy.QtWidgets import QSizePolicy, QTabWidget, QVBoxLayout, QWidget
 import ast
 from libopensesame.inline_script import InlineScript as InlineScriptRuntime
 from libopensesame.oslogging import oslogger
 from libqtopensesame.items.qtplugin import QtPlugin
 from libqtopensesame.misc.translate import translation_context
-from pyqode.core.api.utils import TextHelper
-_ = translation_context(u'inline_script', category=u'item')
+from pyqt_code_editor.code_editors import create_editor
+_ = translation_context('inline_script', category='item')
 
 
 class InlineScript(InlineScriptRuntime, QtPlugin):
     """The inline_script GUI controls"""
     
-    description = _(u'Executes Python code')
-    help_url = u'manual/python/about'
-    ext = u'.py'
-    mime_type = u'text/x-python'
+    description = _('Executes Python code')
+    help_url = 'manual/python/about'
+    ext = '.py'
+    mime_type = 'text/x-python'
 
     def __init__(self, name, experiment, string=None):
         self._var_cache = None
@@ -42,8 +39,8 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         QtPlugin.__init__(self)
 
     def apply_edit_changes(self):
-        sp = self._pyqode_prepare_editor.toPlainText()
-        sr = self._pyqode_run_editor.toPlainText()
+        sp = self._prepare_editor.toPlainText()
+        sr = self._run_editor.toPlainText()
         self._set_modified()
         self.var._prepare = sp
         self.var._run = sr
@@ -51,67 +48,68 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         super().apply_edit_changes()
 
     def _set_modified(self, prepare=False, run=False):
-        self._pyqode_prepare_editor.document().setModified(prepare)
-        self._pyqode_run_editor.document().setModified(run)
-        self._pyqode_tab_bar.setTabText(
+        self._prepare_editor.document().setModified(prepare)
+        self._run_editor.document().setModified(run)
+        self._tab_widget.setTabText(
             0, ('* ' if prepare else '') + _('Prepare'))
-        self._pyqode_tab_bar.setTabText(
-            1, ('* ' if prepare else '') + _('Run'))
+        self._tab_widget.setTabText(
+            1, ('* ' if run else '') + _('Run'))
 
     def set_focus(self):
-        self._pyqode_tab_widget.setFocus()
+        self._tab_widget.setFocus()
 
     def init_edit_widget(self):
-        from pyqode.core.widgets import SplittableCodeEditTabWidget
-
         super().init_edit_widget(stretch=False)
-        self._pyqode_tab_widget = SplittableCodeEditTabWidget(
-            tabs_movable=False,
-            plus_button=False,
-            tab_context_menu=False,
-            empty_context_menu=False
-        )
-        self._pyqode_tab_widget.setSizePolicy(
+        
+        # Create tab widget manually since pyqt_code_editor doesn't provide one
+        self._tab_widget = QTabWidget()
+        self._tab_widget.setSizePolicy(
             QSizePolicy.Expanding,
             QSizePolicy.Expanding
         )
-        self._pyqode_tab_bar = self._pyqode_tab_widget.main_tab_widget.tabBar()
-        self._pyqode_tab_bar.setTabsClosable(False)
-        self._pyqode_prepare_editor = \
-            self._pyqode_tab_widget.create_new_document('Prepare', self.ext)
-        self._pyqode_run_editor = \
-            self._pyqode_tab_widget.create_new_document('Run', self.ext)
-        self._pyqode_run_editor.focusOutEvent = self._editor_focus_out
-        self._pyqode_prepare_editor.focusOutEvent = self._editor_focus_out
+        self._tab_widget.setTabsClosable(False)
+        
+        # Create prepare phase editor
+        prepare_container = QWidget()
+        prepare_layout = QVBoxLayout(prepare_container)
+        prepare_layout.setContentsMargins(0, 0, 0, 0)
+        self._prepare_editor = create_editor(language='python',
+                                             parent=prepare_container)
+        prepare_layout.addWidget(self._prepare_editor)
+        
+        # Create run phase editor
+        run_container = QWidget()
+        run_layout = QVBoxLayout(run_container)
+        run_layout.setContentsMargins(0, 0, 0, 0)
+        self._run_editor = create_editor(language='python',
+                                         parent=run_container)
+        run_layout.addWidget(self._run_editor)
+        
+        # Add tabs
+        self._tab_widget.addTab(prepare_container, _('Prepare'))
+        self._tab_widget.addTab(run_container, _('Run'))
+        
+        # Set up focus out events
+        self._run_editor.focusOutEvent = self._editor_focus_out
+        self._prepare_editor.focusOutEvent = self._editor_focus_out
+        
         self._set_modified()
-        self.extension_manager.fire(
-            u'register_editor',
-            editor=self._pyqode_run_editor
-        )
-        self.extension_manager.fire(
-            u'register_editor',
-            editor=self._pyqode_prepare_editor
-        )
-        self.edit_vbox.addWidget(self._pyqode_tab_widget)
+        self.edit_vbox.addWidget(self._tab_widget)
+        
+        # Set initial tab
         if not self.var._run and self.var._prepare:
-            self._pyqode_tab_widget.main_tab_widget.setCurrentIndex(0)
+            self._tab_widget.setCurrentIndex(0)
         else:
-            self._pyqode_tab_widget.main_tab_widget.setCurrentIndex(1)
+            self._tab_widget.setCurrentIndex(1)
 
     def edit_widget(self):
         super().edit_widget()
         _prepare = safe_decode(self.var._prepare)
-        if _prepare != self._pyqode_prepare_editor.toPlainText():
-            self._pyqode_prepare_editor.setPlainText(
-                _prepare,
-                mime_type=self.mime_type
-            )
+        if _prepare != self._prepare_editor.toPlainText():
+            self._prepare_editor.setPlainText(_prepare)
         _run = safe_decode(self.var._run)
-        if _run != self._pyqode_run_editor.toPlainText():
-            self._pyqode_run_editor.setPlainText(
-                _run,
-                mime_type=self.mime_type
-            )
+        if _run != self._run_editor.toPlainText():
+            self._run_editor.setPlainText(_run)
 
     def get_ready(self):
         if self.container_widget is None:
@@ -123,12 +121,17 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         if 'phase' not in kwargs:
             return
         tab_index = 1 if kwargs['phase'] == 'run' else 0
-        self._pyqode_tab_widget.main_tab_widget.setCurrentIndex(tab_index)
+        self._tab_widget.setCurrentIndex(tab_index)
         # The line number is always passed as the first optional argument
         if 'args' in kwargs:
             line = int(kwargs['args'][0])
-            edit = self._pyqode_tab_widget.main_tab_widget.currentWidget()
-            TextHelper(edit).goto_line(line, move=True)
+            edit = self._prepare_editor if tab_index == 0 else self._run_editor
+            # Move cursor to the specified line
+            cursor = edit.textCursor()
+            cursor.movePosition(cursor.Start)
+            cursor.movePosition(cursor.Down, cursor.MoveAnchor, line - 1)
+            edit.setTextCursor(cursor)
+            edit.centerCursor()
 
     def var_info(self):
         if self._var_cache is None:

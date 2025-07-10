@@ -1,5 +1,3 @@
-# -*- coding:utf-8 -*-
-
 """
 This file is part of OpenSesame.
 
@@ -18,15 +16,12 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 import os
-import sys
 import mimetypes
 from openexp import resources
 from libopensesame.oslogging import oslogger
 from qtpy import QtGui, QtCore, QtWidgets
 from libqtopensesame.items.qtitem import QtItem
 from libqtopensesame.widgets.color_edit import ColorEdit
-from libopensesame import misc
-from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.translate import translation_context
 from libqtopensesame._input.conditional_expression import ConditionalExpression
 _ = translation_context(u'qtplugin', category=u'core')
@@ -416,65 +411,53 @@ class QtPlugin(QtItem):
             self.auto_line_edit[var] = edit
         self.add_control(label, edit, **kwdict)
         return edit
-
     def add_editor_control(self, var, label, syntax=False, language='python'):
-        """Adds an editor that is linked to a variable.
+            """Adds an editor that is linked to a variable.
 
-        Parameters
-        ----------
-        var
-            The associated variable.
-        label
-            The label text.
-        syntax:	bool, optional
-            	A boolean indicating whether Python syntax highlighting should be
-             activated.
-        language: str, optional
-            The name of a programming language.
+            Parameters
+            ----------
+            var
+                The associated variable.
+            label
+                The label text.
+            syntax:	bool, optional
+                	A boolean indicating whether Python syntax highlighting should be
+                 activated.
+            language: str, optional
+                The name of a programming language.
 
-        Returns
-        -------
-        An editor widget.
-        """
-        if syntax:
-            if language == 'python':
-                from libqtopensesame.pyqode_extras.widgets import \
-                    PythonCodeEdit as CodeEdit
+            Returns
+            -------
+            An editor widget.
+            """
+            from pyqt_code_editor.code_editors import create_editor
+        
+            if syntax:
+                editor = create_editor(language=language, parent=self.main_window)
             else:
-                from libqtopensesame.pyqode_extras.widgets import \
-                    FallbackCodeEdit as CodeEdit
-        else:
-            from libqtopensesame.pyqode_extras.widgets import \
-                TextCodeEdit as CodeEdit
-        editor = CodeEdit(self.main_window)
-        if syntax and language != 'python':
-            editor.setPlainText(
-                '',
-                mime_type=mimetypes.guess_type('basename.' + language)
-            )
-        editor.focusOutEvent = self._editor_focus_out
-        if var is not None:
-            self.auto_editor[var] = editor
-        # This is a horrible hack to avoid the situation in which newly created
-        # editors are closed on the open_experiment event, which should only
-        # close editors linked to the old experiment. This only affects editors
-        # that bypass the lazy-init system, and for these editors the close()
-        # function should be bypassed exactly once.
-        if not self.lazy_init:
-            def ignore_close_once(editor):
-                def inner():
-                    oslogger.debug(
-                        'ignoring close() once for {}'.format(editor)
-                    )
-                    editor.close = orig_close
-                orig_close = editor.close
-                return inner
-            editor.close = ignore_close_once(editor)
-        self.edit_vbox.addWidget(editor)
-        self.set_focus_widget(editor)
-        self.extension_manager.fire(u'register_editor', editor=editor)
-        return editor
-
+                editor = create_editor(language='text', parent=self.main_window)
+            
+            editor.focusOutEvent = self._editor_focus_out
+            if var is not None:
+                self.auto_editor[var] = editor
+            # This is a horrible hack to avoid the situation in which newly created
+            # editors are closed on the open_experiment event, which should only
+            # close editors linked to the old experiment. This only affects editors
+            # that bypass the lazy-init system, and for these editors the close()
+            # function should be bypassed exactly once.
+            if not self.lazy_init:
+                def ignore_close_once(editor):
+                    def inner():
+                        oslogger.debug(
+                            'ignoring close() once for {}'.format(editor)
+                        )
+                        editor.close = orig_close
+                    orig_close = editor.close
+                    return inner
+                editor.close = ignore_close_once(editor)
+            self.edit_vbox.addWidget(editor)
+            self.set_focus_widget(editor)
+            return editor
     def _editor_focus_out(self, event):
         self.apply_edit_changes()
 
@@ -524,7 +507,7 @@ class QtPlugin(QtItem):
         True if changes have been made, False otherwise.
         """
         for var, editor in self.auto_editor.items():
-            if editor.dirty:
+            if editor.document().isModified():
                 oslogger.debug(u'applying pending editor changes')
                 self.apply_edit_changes()
                 return True
