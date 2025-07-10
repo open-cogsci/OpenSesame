@@ -1,5 +1,3 @@
-# -*- coding:utf-8 -*-
-
 """
 This file is part of OpenSesame.
 
@@ -22,8 +20,8 @@ from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 
 
 class ConsoleBridge(BaseSubcomponent):
-
-    r"""A base console for debug-window consoles."""
+    """A base console for debug-window consoles."""
+    
     def __init__(self, main_window):
 
         super(ConsoleBridge, self).__init__()
@@ -35,37 +33,25 @@ class ConsoleBridge(BaseSubcomponent):
 
         oslogger.debug(s)
         if self._writing:
-            oslogger.warning(u'recursive write() call')
-            print(safe_decode(s, errors=u'ignore'))
+            oslogger.warning('recursive write() call')
+            print(safe_decode(s, errors='ignore'))
             return
         self._writing = True
-        if hasattr(self, u'extension_manager'):
-            self.extension_manager.fire(u'jupyter_write', msg=s)
+        if hasattr(self, 'extension_manager'):
+            self.extension_manager.fire('jupyter_write', msg=s)
         else:
             oslogger.info(s)
         self._writing = False
 
-    def reset(self):
-
-        self.main_window.set_run_status(u'inactive')
-        self.extension_manager.fire(u'jupyter_restart')
-
-    def get_workspace_globals(self):
-
-        if self._jupyter_console is None:
-            try:
-                self._jupyter_console = self.extension_manager['JupyterConsole']
-            except Exception:
-                return {}
-        return self._jupyter_console.get_workspace_globals()
-
     def set_workspace_globals(self, _globals={}):
 
+        print('***** GLOBALS')
+        print(_globals)
         self.extension_manager.fire(
-            u'set_workspace_globals',
+            'set_workspace_globals',
             global_dict=_globals
         )
 
     def show_prompt(self):
 
-        self.extension_manager.fire(u'jupyter_show_prompt')
+        self.extension_manager.fire('jupyter_show_prompt')
