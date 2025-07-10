@@ -18,22 +18,23 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 from openexp import resources
-from libopensesame import misc
 from libqtopensesame.widgets.base_widget import BaseWidget
 from libqtopensesame.misc import theme
 from libqtopensesame.misc.config import cfg
 from libopensesame.oslogging import oslogger
 from libqtopensesame.runners import RUNNER_LIST, DEFAULT_RUNNER
 from qtpy import QtCore, QtWidgets
-from qtpy.QtGui import QIcon
 import os
+from pyqt_code_editor.components.settings_panel import SettingsWidget
+from libqtopensesame.misc.translate import translation_context
+_ = translation_context('preferences', category='core')
 
 
 class PreferencesWidget(BaseWidget):
 
-    r"""The widget for the preferences tab."""
+    """The widget for the preferences tab."""
     def __init__(self, main_window):
-        r"""Constructor.
+        """Constructor.
 
         Parameters
         ----------
@@ -69,6 +70,11 @@ class PreferencesWidget(BaseWidget):
                 self.ui.layout_advanced.addRow(w, None)
             else:
                 self.ui.layout_preferences.addRow(w, None)
+        pyqt_code_editor_settings_widget = SettingsWidget(
+            self.main_window,
+            visible_categories=['Appearance', 'Codestral'])
+        self.ui.tab_widget.insertTab(1, pyqt_code_editor_settings_widget,
+                                     _('Code editor settings'))
         self.ui.container_widget.adjustSize()
         self._refresh_plugins()
             
@@ -89,7 +95,7 @@ class PreferencesWidget(BaseWidget):
         self.ui.layout_plugins.addStretch()
 
     def set_controls(self):
-        r"""Updates the controls."""
+        """Updates the controls."""
         if self.lock:
             return
         self.lock = True

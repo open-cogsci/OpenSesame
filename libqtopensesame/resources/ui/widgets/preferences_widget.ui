@@ -13,10 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>18</number>
-   </property>
+  <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>12</number>
    </property>
@@ -29,18 +26,8 @@
    <property name="bottomMargin">
     <number>12</number>
    </property>
-   <item>
-    <widget class="QLabel" name="label_8">
-     <property name="text">
-      <string>Some changes require a restart to take effect</string>
-     </property>
-     <property name="wordWrap">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QTabWidget" name="tabWidget">
+   <item row="1" column="0">
+    <widget class="QTabWidget" name="tab_widget">
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -78,7 +65,7 @@
             <x>0</x>
             <y>0</y>
             <width>769</width>
-            <height>559</height>
+            <height>567</height>
            </rect>
           </property>
           <layout class="QFormLayout" name="layout_preferences">
@@ -299,10 +286,23 @@
             <x>0</x>
             <y>0</y>
             <width>769</width>
-            <height>559</height>
+            <height>567</height>
            </rect>
           </property>
-          <layout class="QFormLayout" name="layout_advanced"/>
+          <layout class="QFormLayout" name="layout_advanced">
+           <property name="leftMargin">
+            <number>12</number>
+           </property>
+           <property name="topMargin">
+            <number>12</number>
+           </property>
+           <property name="rightMargin">
+            <number>12</number>
+           </property>
+           <property name="bottomMargin">
+            <number>12</number>
+           </property>
+          </layout>
          </widget>
         </widget>
        </item>
@@ -397,7 +397,7 @@
                <x>0</x>
                <y>0</y>
                <width>749</width>
-               <height>496</height>
+               <height>502</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="layout_plugins">
@@ -422,6 +422,16 @@
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Some changes require a restart to take effect</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
   </layout>
