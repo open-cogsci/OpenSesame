@@ -28,7 +28,7 @@ OpenSesame is a graphical experiment builder. OpenSesame provides an easy to use
 OpenSesame relies on a number repositories that are all hosted by the [Cogsci.nl](https://github.com/open-cogsci/) organization on GitHub. The most important of these are:
 
 - [opensesame](https://github.com/open-cogsci/opensesame) contains core OpenSesame functionality
-- [sigmund analyst](https://github.com/open-cogsci/sigmund-analystr) is a code editor and a PyQt widgets
+- [sigmund analyst](https://github.com/open-cogsci/sigmund-analyst) is a code editor and a PyQt widgets
 - [osweb](https://github.com/open-cogsci/osweb) implements OSWeb, the online OpenSesame runtime
 - [opensesame-extension-osweb](https://github.com/open-cogsci/opensesame-extension-osweb) embeds OSWeb into the OpenSesame user interface
 - [datamatrix](https://github.com/open-cogsci/python-datamatrix) implements a tabular data structure that is used by the `loop` item
