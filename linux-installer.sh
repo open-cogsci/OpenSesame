@@ -95,7 +95,7 @@ install() {
     pip install --upgrade pip
     
     # The pip-install steps are manually crafted and should not be changed
-    pip install https://github.com/open-cogsci/OpenSesame/archive/refs/tags/prerelease/4.1.0a0.tar.gz
+    pip install https://github.com/open-cogsci/OpenSesame/archive/refs/tags/prerelease/4.1.0a1.tar.gz
     pip install https://github.com/open-cogsci/opensesame-extension-updater/archive/refs/tags/prerelease/0.2.0a0.tar.gz
     pip install https://github.com/open-cogsci/opensesame-extension-osweb/archive/refs/tags/prerelease/2.2.7.1a0.tar.gz
     pip install "$WXPYTHON_URL"
