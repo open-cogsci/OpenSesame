@@ -437,7 +437,7 @@ class QtPlugin(QtItem):
             else:
                 editor = create_editor(language='text', parent=self.main_window)
             
-            editor.focusOutEvent = self._editor_focus_out
+            editor.lost_focus.connect(self._editor_focus_out)
             if var is not None:
                 self.auto_editor[var] = editor
             # This is a horrible hack to avoid the situation in which newly created

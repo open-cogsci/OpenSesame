@@ -89,8 +89,8 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         self._tab_widget.addTab(run_container, _('Run'))
         
         # Set up focus out events
-        self._run_editor.focusOutEvent = self._editor_focus_out
-        self._prepare_editor.focusOutEvent = self._editor_focus_out
+        self._run_editor.lost_focus.connect(self._editor_focus_out)
+        self._prepare_editor.lost_focus.connect(self._editor_focus_out)
         
         self._set_modified()
         self.edit_vbox.addWidget(self._tab_widget)
