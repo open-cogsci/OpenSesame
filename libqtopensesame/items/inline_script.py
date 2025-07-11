@@ -30,8 +30,7 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
     
     description = _('Executes Python code')
     help_url = 'manual/python/about'
-    ext = '.py'
-    mime_type = 'text/x-python'
+    language = 'python'
 
     def __init__(self, name, experiment, string=None):
         self._var_cache = None
@@ -73,7 +72,7 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         prepare_container = QWidget()
         prepare_layout = QVBoxLayout(prepare_container)
         prepare_layout.setContentsMargins(0, 0, 0, 0)
-        self._prepare_editor = create_editor(language='python',
+        self._prepare_editor = create_editor(language=self.language,
                                              parent=prepare_container)
         prepare_layout.addWidget(self._prepare_editor)
         
@@ -81,7 +80,7 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         run_container = QWidget()
         run_layout = QVBoxLayout(run_container)
         run_layout.setContentsMargins(0, 0, 0, 0)
-        self._run_editor = create_editor(language='python',
+        self._run_editor = create_editor(language=self.language,
                                          parent=run_container)
         run_layout.addWidget(self._run_editor)
         
