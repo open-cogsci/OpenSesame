@@ -129,6 +129,7 @@ class BaseSubcomponent(BaseComponent):
         ----------
         e : Exception
         """
+        oslogger.error(e)
         self.tabwidget.open_markdown(e.markdown(), 'os-finished-error',
                                      e.title())
 
