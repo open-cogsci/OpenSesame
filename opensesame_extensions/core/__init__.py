@@ -6,4 +6,4 @@ from libopensesame.metadata import __version__
 packages = ['opensesame', 'opensesame-core', 'datamatrix', 'qdatamatrix',
             'python-pseudorandom', 'pseudorandom', 'python-qnotifications',
             'qnotifications', 'python-fileinspector', 'fileinspector',
-            'pyqode.python', 'pyqode.core', 'pyqode3-python', 'pyqode3-core']
+            'pyqt_code_editor']
