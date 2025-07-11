@@ -20,8 +20,12 @@ WRAPPER_OPENSESAME="$HOME/.local/bin/${APP_NAME_OPENSESAME}-launch"
 WRAPPER_SIGMUND_ANALYST="$HOME/.local/bin/${APP_NAME_SIGMUND_ANALYST}-launch"
 DESKTOP_FILE_OPENSESAME="$HOME/.local/share/applications/${APP_NAME_OPENSESAME}.desktop"
 DESKTOP_FILE_SIGMUND_ANALYST="$HOME/.local/share/applications/${APP_NAME_SIGMUND_ANALYST}.desktop"
-ICON_OPENSAME="https://github.com/open-cogsci/OpenSesame/raw/refs/heads/milgram/mime/opensesame.svg"
-ICON_SIGMUND_ANALYST="https://github.com/open-cogsci/sigmund-ai/blob/master/artwork/sigmund-avatar.png?raw=true"
+ICON_DIR="$HOME/.local/share/icons"
+ICON_OPENSESAME_PATH="$ICON_DIR/${APP_NAME_OPENSESAME}.svg"
+ICON_SIGMUND_ANALYST_PATH="$ICON_DIR/${APP_NAME_SIGMUND_ANALYST}.png"
+ICON_OPENSESAME="https://github.com/open-cogsci/OpenSesame/raw/refs/heads/milgram/mime/opensesame.svg"
+ICON_SIGMUND_ANALYST="https://raw.githubusercontent.com/open-cogsci/opensesame-extension-sigmund/refs/heads/master/opensesame_extensions/sigmund/sigmund/sigmund.png"
+MIME_FILE="$HOME/.local/share/mime/packages/opensesame.xml"
 PYTHON_BIN="/usr/bin/python3"
 
 # Function to detect if we're in a virtual environment
@@ -44,6 +48,7 @@ check_virtual_env() {
 # Function to detect Python version and get appropriate wxpython wheel
 get_wxpython_url() {
     local python_cp_version=$("$PYTHON_BIN" -c "import sys; print(f'cp{sys.version_info.major}{sys.version_info.minor}')")
+    # Don't change these URLs. Capitalization matters! Only Python 3.10 and above are supported.
     case "$python_cp_version" in
         cp310)
             echo "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-24.04/wxpython-4.2.3-cp310-cp310-linux_x86_64.whl"
@@ -58,8 +63,8 @@ get_wxpython_url() {
             echo "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-24.04/wxpython-4.2.3-cp313-cp313-linux_x86_64.whl"
             ;;
         *)
-            echo "❌  Error: Unsupported Python version: $python_version"
-            echo "    Supported versions are Python 3.10 through 3.12"
+            echo "❌  Error: Unsupported Python version: $python_cp_version" >&2
+            echo "    Supported versions are Python 3.10 through 3.12" >&2
             exit 1
             ;;
     esac
@@ -103,6 +108,11 @@ install() {
     pip install psychopy_visionscience psychopy_sounddevice
     deactivate
     
+    echo "▶ Downloading icons ..."
+    mkdir -p "$ICON_DIR"
+    curl -L -s -o "$ICON_OPENSESAME_PATH" "$ICON_OPENSESAME"
+    curl -L -s -o "$ICON_SIGMUND_ANALYST_PATH" "$ICON_SIGMUND_ANALYST"
+    
     echo "▶ Creating wrapper in $WRAPPER_OPENSESAME ..."
     mkdir -p "$(dirname "$WRAPPER_OPENSESAME")"
     cat > "$WRAPPER_OPENSESAME" << EOF
@@ -121,11 +131,12 @@ EOF
 Type=Application
 Name=OpenSesame 4.1
 Comment=OpenSesame experiment builder
-Exec=$WRAPPER_OPENSESAME
-Icon=accessories-text-editor
+Exec=$WRAPPER_OPENSESAME %F
+Icon=$ICON_OPENSESAME_PATH
 Terminal=false
-Categories=Development;IDE;
+Categories=Development;IDE;Science;Education;
 StartupNotify=true
+MimeType=application/x-opensesame-experiment;
 EOF
     
     echo "▶ Creating wrapper in $WRAPPER_SIGMUND_ANALYST ..."
@@ -147,13 +158,29 @@ Type=Application
 Name=Sigmund Analyst
 Comment=AI-enhanced code editor for data analysis
 Exec=$WRAPPER_SIGMUND_ANALYST
-Icon=accessories-text-editor
+Icon=$ICON_SIGMUND_ANALYST_PATH
 Terminal=false
 Categories=Development;IDE;
 StartupNotify=true
 EOF
     
-    # Refresh desktop-file cache (non-fatal if the cmd is missing)
+    echo "▶ Registering MIME type for .osexp files ..."
+    mkdir -p "$(dirname "$MIME_FILE")"
+    cat > "$MIME_FILE" << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-opensesame-experiment">
+    <comment>OpenSesame Experiment</comment>
+    <glob pattern="*.osexp"/>
+    <icon name="$ICON_OPENSESAME_PATH"/>
+  </mime-type>
+</mime-info>
+EOF
+    
+    # Update MIME database
+    update-mime-database "$(dirname "$(dirname "$MIME_FILE")")" 2>/dev/null || true
+    
+    # Refresh desktop-file cache
     update-desktop-database "$(dirname "$DESKTOP_FILE_OPENSESAME")" 2>/dev/null || true
     
     echo
@@ -161,6 +188,8 @@ EOF
     echo "    You can also launch them from the command line:"
     echo "    - $WRAPPER_OPENSESAME"
     echo "    - $WRAPPER_SIGMUND_ANALYST"
+    echo ""
+    echo "    .osexp files are now associated with OpenSesame - you can double-click to open them!"
 }
 
 uninstall() {
@@ -194,6 +223,24 @@ uninstall() {
     if [[ -f "$DESKTOP_FILE_SIGMUND_ANALYST" ]]; then
         echo "▶ Removing Sigmund Analyst desktop entry ..."
         rm -f "$DESKTOP_FILE_SIGMUND_ANALYST"
+    fi
+    
+    # Remove icons
+    if [[ -f "$ICON_OPENSESAME_PATH" ]]; then
+        echo "▶ Removing OpenSesame icon ..."
+        rm -f "$ICON_OPENSESAME_PATH"
+    fi
+    
+    if [[ -f "$ICON_SIGMUND_ANALYST_PATH" ]]; then
+        echo "▶ Removing Sigmund Analyst icon ..."
+        rm -f "$ICON_SIGMUND_ANALYST_PATH"
+    fi
+    
+    # Remove MIME type registration
+    if [[ -f "$MIME_FILE" ]]; then
+        echo "▶ Removing MIME type registration ..."
+        rm -f "$MIME_FILE"
+        update-mime-database "$(dirname "$(dirname "$MIME_FILE")")" 2>/dev/null || true
     fi
     
     # Refresh desktop-file cache
