@@ -28,7 +28,6 @@ class QuickSwitcherDialog(QuickOpenDialog):
         super().__init__(parent, items, title=_("Quick switcher"))
 
     def on_item_selected(self, item_dict: dict):
-        print(item_dict)
         item_dict['action']()
 
 
