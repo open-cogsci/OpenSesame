@@ -85,6 +85,9 @@ class JupyterConsole(BaseExtension):
             self._original_stderr = None        
         self.jupyter_widget._show_interpreter_prompt()
         
+    def event_jupyter_run_code(self, code):        
+        self._jupyter_console.execute_code(code)
+        
     def _is_simple_value(self, value, visited=None):
         """Check if a value is simple or a standard iterable containing only
         simple types
