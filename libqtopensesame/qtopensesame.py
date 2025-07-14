@@ -958,7 +958,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self._runner.kill()
         self.ui.action_kill.setDisabled(True)
 
-    def run_experiment(self, dummy=None, fullscreen=True, quick=False):
+    def run_experiment(self, dummy=None, quick=False):
         """
         Runs the current experiment.
 
@@ -979,7 +979,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         print('\n')
         oslogger.debug('using %s runner' % cfg.runner)
         self._runner = self.runner_cls(self)
-        self._runner.run(fullscreen=fullscreen, quick=quick)
+        self._runner.run(quick=quick)
         self.enable(True)
     
     def notify(self, msg, title=None, icon=None, **kwargs):
@@ -1005,7 +1005,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def run_quick(self):
         """Run the experiment without asking for subject nr and logfile"""
-        self.run_experiment(fullscreen=False, quick=True)
+        self.run_experiment(quick=True)
 
     def enable(self, enabled=True):
         """Enable or disable parts of the GUI (i.e. those parts that should be
