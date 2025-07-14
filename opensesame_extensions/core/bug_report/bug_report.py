@@ -96,3 +96,4 @@ class BugReport(BaseExtension):
         }
         self.tabwidget.open_markdown(md, title=_(u'Oops ...'))
         sys.stderr.write(self.traceback)
+        self.main_window.enable()
