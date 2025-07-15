@@ -53,6 +53,7 @@ class JupyterConsole(BaseExtension):
         # Store original stdout and stderr
         self._original_stdout = None
         self._original_stderr = None
+        self._global_dict = {}
         self.set_busy(False)
         
     @property
@@ -127,13 +128,25 @@ class JupyterConsole(BaseExtension):
         if not filtered_dict:
             return        
         oslogger.debug(f'Sending {len(filtered_dict)} variables to Jupyter console')
+        
+        # Use repr() to properly escape the JSON string for Python
+        json_str = json.dumps(filtered_dict)
+        self._global_dict = filtered_dict
+        escaped_json = repr(json_str)
+        
         code = f"""
 import json
-_workspace_vars = json.loads('''{json.dumps(filtered_dict)}''')
+_workspace_vars = json.loads({escaped_json})
 globals().update(_workspace_vars)
 del _workspace_vars
 """
         self.jupyter_widget.kernel_client.execute(code, silent=False)
+        
+    def provide_jupyter_workspace_variable(self, name=None):
+        # We don't actually query the jupyter kernel, but simply use the global
+        # dict as it was set last. This is a shortcut, but for practical 
+        # purposes it doesn't matter.
+        return self._global_dict.get(name)
 
     def event_jupyter_write(self, msg):
         self.write(msg)

@@ -252,10 +252,10 @@ class BaseRunner:
         
         # Normal mode - show dialog with intelligent defaults
         default_subject_nr = self._get_next_subject_number()
-        default_logfile = os.path.join(
+        default_logfile = os.path.normpath(os.path.join(
             cfg.default_logfile_folder,
             f'subject-{default_subject_nr}.csv'
-        )
+        ))
         
         dialog = ExperimentSettingsDialog(
             self.main_window.ui.centralwidget,
