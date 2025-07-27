@@ -19,7 +19,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import random
 import math
-import warnings
 # The classes below are unused, but imported so that they are available in the
 # workspace.
 from openexp.canvas_elements import (Rect, Line, Text, Ellipse, Circle,
@@ -28,11 +27,17 @@ from openexp.canvas_elements import (Rect, Line, Text, Ellipse, Circle,
 from libopensesame.widgets.widget_factory import (Label, Button, ImageWidget,
                                                   ImageButton, TextInput,
                                                   RatingScale, Checkbox)
+from openexp._canvas.canvas import Canvas as BaseCanvas
+from openexp._keyboard.keyboard import Keyboard as BaseKeyboard
+from openexp._mouse.mouse import Mouse as BaseMouse
+from openexp._sampler.sampler import Sampler as BaseSampler
+from libopensesame.widgets import Form as RuntimeForm
+from libopensesame.experiment import Experiment as RuntimeExperiment
 
 
 # Factory functions
 def Experiment(osexp_path=None, log_path='defaultlog.csv', fullscreen=False,
-               subject_nr=0, **kwargs):
+               subject_nr=0, **kwargs) -> RuntimeExperiment:
     """A factory function that creates a new `Experiment` object. This is only
     useful when implementing an experiment entirely through a Python script,
     rather than through the user interface.
@@ -82,8 +87,7 @@ def Experiment(osexp_path=None, log_path='defaultlog.csv', fullscreen=False,
         An (exp, win, clock, log) tuple corresponding to the Experiment,
         window handle (backend-specific), Clock, and Log objects.
     """
-    global experiment
-    from libopensesame.experiment import Experiment as RuntimeExperiment
+    global experiment    
     if osexp_path is None:
         from libopensesame.syntax import Syntax
         syntax = Syntax(None)
@@ -102,7 +106,7 @@ def Experiment(osexp_path=None, log_path='defaultlog.csv', fullscreen=False,
     return experiment, experiment.window, experiment.clock, experiment.log
 
 
-def Form(*args, **kwargs):
+def Form(*args, **kwargs) -> RuntimeForm:
     r"""A factory function that creates a new `Form` object. For a
     description
     of possible keywords, see:
@@ -122,12 +126,11 @@ def Form(*args, **kwargs):
     >>> form.set_widget(label, (0,0))
     >>> form.set_widget(button, (0,1))
     >>> form._exec()
-    """
-    from libopensesame.widgets import form
-    return form(experiment, **kwargs)
+    """    
+    return RuntimeForm(experiment, **kwargs)
 
 
-def Canvas(auto_prepare=True, **style_args):
+def Canvas(auto_prepare=True, **style_args) -> BaseCanvas:
     r"""A factory function that creates a new `Canvas` object. For a
     description of possible keywords, see:
 
@@ -149,7 +152,7 @@ def Canvas(auto_prepare=True, **style_args):
     return Canvas(experiment, auto_prepare=auto_prepare, **style_args)
 
 
-def Keyboard(**resp_args):
+def Keyboard(**resp_args) -> BaseKeyboard:
     r"""A factory function that creates a new `Keyboard` object. For a
     description of possible keywords, see:
 
@@ -169,7 +172,7 @@ def Keyboard(**resp_args):
     return Keyboard(experiment, **resp_args)
 
 
-def Mouse(**resp_args):
+def Mouse(**resp_args) -> BaseMouse:
     r"""A factory function that creates a new `Mouse` object. For a
     description
     of possible keywords, see:
@@ -190,7 +193,7 @@ def Mouse(**resp_args):
     return Mouse(experiment, **resp_args)
 
 
-def Sampler(src, **playback_args):
+def Sampler(src, **playback_args) -> BaseSampler:
     r"""A factory function that creates a new `Sampler` object. For a
     description of possible keywords, see:
 
@@ -215,7 +218,7 @@ def Sampler(src, **playback_args):
 
 
 def Synth(osc="sine", freq=440, length=100, attack=0, decay=5,
-          **playback_args):
+          **playback_args) -> BaseSampler:
     """A factory function that synthesizes a sound and returns it as a
     `Sampler` object.
 
@@ -250,7 +253,7 @@ def Synth(osc="sine", freq=440, length=100, attack=0, decay=5,
                  decay=decay, **playback_args)
 
 
-def copy_sketchpad(name):
+def copy_sketchpad(name) -> BaseCanvas:
     r"""Returns a copy of a `sketchpad`'s canvas.
 
     Parameters
@@ -303,7 +306,7 @@ def set_subject_nr(nr):
     experiment.set_subject(nr)
 
 
-def sometimes(p=.5):
+def sometimes(p=.5) -> float:
     r"""Returns True with a certain probability. (For more advanced
     randomization, use the Python `random` module.)
 
@@ -350,7 +353,7 @@ def register_cleanup_function(fnc):
     experiment.cleanup_functions.append(fnc)
 
 
-def xy_from_polar(rho, phi, pole=(0, 0)):
+def xy_from_polar(rho, phi, pole=(0, 0)) -> tuple[float, float]:
     r"""Converts polar coordinates (distance, angle) to Cartesian coordinates
     (x, y).
 
@@ -394,7 +397,7 @@ def xy_from_polar(rho, phi, pole=(0, 0)):
     return x, y
 
 
-def xy_to_polar(x, y, pole=(0, 0)):
+def xy_to_polar(x, y, pole=(0, 0)) -> tuple[float, float]:
     r"""Converts Cartesian coordinates (x, y) to polar coordinates (distance,
     angle).
 
@@ -435,7 +438,7 @@ def xy_to_polar(x, y, pole=(0, 0)):
     return rho, phi
 
 
-def xy_distance(x1, y1, x2, y2):
+def xy_distance(x1, y1, x2, y2) -> float:
     r"""Gives the distance between two points.
 
     Parameters
@@ -464,7 +467,7 @@ def xy_distance(x1, y1, x2, y2):
     return math.sqrt((x1-x2)**2+(y1-y2)**2)
 
 
-def xy_circle(n, rho, phi0=0, pole=(0, 0)):
+def xy_circle(n, rho, phi0=0, pole=(0, 0)) -> list[tuple[float, float]]:
     r"""Generates a list of points (x,y coordinates) in a circle. This can be
     used to draw stimuli in a circular arrangement.
 
@@ -513,7 +516,7 @@ def xy_circle(n, rho, phi0=0, pole=(0, 0)):
     return l
 
 
-def xy_grid(n, spacing, pole=(0, 0)):
+def xy_grid(n, spacing, pole=(0, 0)) -> list[tuple[float, float]]:
     r"""Generates a list of points (x,y coordinates) in a grid. This can be
     used to draw stimuli in a grid arrangement.
 
@@ -577,7 +580,7 @@ def xy_grid(n, spacing, pole=(0, 0)):
     return l
 
 
-def xy_random(n, width, height, min_dist=0, pole=(0, 0)):
+def xy_random(n, width, height, min_dist=0, pole=(0, 0)) -> list[tuple[float, float]]:
     r"""Generates a list of random points (x,y coordinates) with a minimum
     spacing between each pair of points. This function will raise an
     Exception when the coordinate list cannot be generated,  typically because

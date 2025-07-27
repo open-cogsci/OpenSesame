@@ -1,83 +1,90 @@
-# coding=utf-8
-
-"""
-This file is part of OpenSesame.
-
-OpenSesame is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-OpenSesame is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
-"""
-from libopensesame.py3compat import *
 from openexp import backend
 
 
 class ElementFactory:
 
     def __init__(self, *args, **kwargs):
-
         self._args = args
         self._kwargs = kwargs
 
     def construct(self, canvas):
-
-        bck = backend.backend_guess(canvas.experiment, u'canvas')
-        mod = __import__('openexp._canvas._%s.%s' % (self.mod, bck),
+        bck = backend.backend_guess(canvas.experiment, 'canvas')
+        mod = __import__(f'openexp._canvas._{self.mod}.{bck}',
                          fromlist=['dummy'])
         cls = getattr(mod, bck.capitalize())
         return cls(canvas, *self._args, **self._kwargs)
 
 
-class Line(ElementFactory):
-    mod = 'line'
+def Line(sx, sy, ex, ey, **properties):
+    class LineFactory(ElementFactory):
+        mod = 'line'
+    return LineFactory(sx, sy, ex, ey, **properties)
 
 
-class Rect(ElementFactory):
-    mod = 'rect'
+def Rect(x, y, w, h, **properties):
+    class RectFactory(ElementFactory):
+        mod = 'rect'
+    return RectFactory(x, y, w, h, **properties)
 
 
-class Ellipse(ElementFactory):
-    mod = 'ellipse'
+def Ellipse(x, y, w, h, **properties):
+    class EllipseFactory(ElementFactory):
+        mod = 'ellipse'
+    return EllipseFactory(x, y, w, h, **properties)
 
 
-class Circle(ElementFactory):
-    mod = 'circle'
+def Circle(x, y, r, **properties):
+    class CircleFactory(ElementFactory):
+        mod = 'circle'
+    return CircleFactory(x, y, r, **properties)
 
 
-class FixDot(ElementFactory):
-    mod = 'fixdot'
+def FixDot(x=None, y=None, style='default', **properties):
+    class FixDotFactory(ElementFactory):
+        mod = 'fixdot'
+    return FixDotFactory(x, y, style, **properties)
 
 
-class Polygon(ElementFactory):
-    mod = 'polygon'
+def Polygon(vertices, **properties):
+    class PolygonFactory(ElementFactory):
+        mod = 'polygon'
+    return PolygonFactory(vertices, **properties)
 
 
-class Image(ElementFactory):
-    mod = 'image'
+def Image(fname, center=True, x=None, y=None, scale=None, rotation=None,
+          **properties):
+    class ImageFactory(ElementFactory):
+        mod = 'image'
+    return ImageFactory(fname, center, x, y, scale, rotation, **properties)
 
 
-class Gabor(ElementFactory):
-    mod = 'gabor'
+def Gabor(x=0, y=0, orient=0, freq=.05, env='gaussian', size=96, stdev=12,
+          phase=0, col1='white', col2='black', bgmode='avg'):
+    class GaborFactory(ElementFactory):
+        mod = 'gabor'
+    return GaborFactory(x, y, orient, freq, env, size, stdev, phase, col1, col2,
+                        bgmode)
 
 
-class NoisePatch(ElementFactory):
-    mod = 'noise_patch'
+def NoisePatch(x=0, y=0, env="gaussian", size=96, stdev=12, col1="white",
+               col2="black", bgmode="avg"):
+    class NoisePatchFactory(ElementFactory):
+        mod = 'noise_patch'
+    return NoisePatchFactory(x, y, env, size, stdev, col1, col2, bgmode)
 
 
-class RichText(ElementFactory):
-    mod = 'richtext'
+def RichText(text, center=True, x=None, y=None, max_width=None, **properties):
+    class RichTextFactory(ElementFactory):
+        mod = 'richtext'
+    return RichTextFactory(text, center, x, y, max_width, **properties)
 
 
-class Arrow(ElementFactory):
-    mod = 'arrow'
+def Arrow(sx, sy, ex, ey, body_length=0.8, body_width=.5, head_width=30,
+          **properties):
+    class ArrowFactory(ElementFactory):
+        mod = 'arrow'
+    return ArrowFactory(sx, sy, ex, ey, body_length, body_width, head_width,
+                        **properties)
 
 
 Text = RichText

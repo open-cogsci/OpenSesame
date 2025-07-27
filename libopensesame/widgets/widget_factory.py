@@ -1,65 +1,67 @@
-# coding=utf-8
-
-"""
-This file is part of OpenSesame.
-
-OpenSesame is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-OpenSesame is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
-"""
-from libopensesame.py3compat import *
-from openexp import backend
-
-
 class WidgetFactory:
-
+    
     def __init__(self, *args, **kwargs):
-
         self._args = args
         self._kwargs = kwargs
 
     def construct(self, form):
-
-        mod = __import__(
-            'libopensesame.widgets._%s' % self.mod,
-            fromlist=['dummy']
-        )
-        cls = getattr(mod, self.__class__.__name__)
+        mod = __import__(f'libopensesame.widgets._{self.mod}',
+                         fromlist=['dummy'])
+        cls = getattr(mod, self.class_name)
         return cls(form, *self._args, **self._kwargs)
 
 
-class Label(WidgetFactory):
-    mod = 'label'
+def Label(text='label', frame=False, center=True):
+    class LabelFactory(WidgetFactory):
+        mod = 'label'
+        class_name = 'Label'
+    return LabelFactory(text, frame, center) 
 
 
-class Button(WidgetFactory):
-    mod = 'button'
+def Button(text='button', frame=True, center=True, var=None):
+    class ButtonFactory(WidgetFactory):
+        mod = 'button'
+        class_name = 'Button'
+    return ButtonFactory(text, frame, center, var)
 
 
-class ImageButton(WidgetFactory):
-    mod = 'image_button'
+def ImageButton(path=None, adjust=True, frame=False, image_id=None, var=None):
+    class ImageButtonFactory(WidgetFactory):
+        mod = 'image_button'
+        class_name = 'ImageButton'
+    return ImageButtonFactory(path, adjust, frame, image_id, var)
 
 
-class ImageWidget(WidgetFactory):
-    mod = 'image'
+# The corresponding class is actually called Image, rather than ImageWidget. The
+# factory should be called ImageWidget though, to avoid clashing with an existing
+# image class
+def ImageWidget(path=None, adjust=True, frame=False):
+    class ImageWidgetFactory(WidgetFactory):
+        mod = 'image'
+        class_name = 'ImageWidget'
+    return ImageWidgetFactory(path, adjust, frame)
 
 
-class RatingScale(WidgetFactory):
-    mod = 'rating_scale'
+def RatingScale(nodes=5, click_accepts=False, orientation='horizontal',
+                var=None, default=None):
+    class RatingScaleFactory(WidgetFactory):
+        mod = 'rating_scale'
+        class_name = 'RatingScale'
+    return RatingScaleFactory(nodes, click_accepts, orientation, var, default)
 
 
-class TextInput(WidgetFactory):
-    mod = 'text_input'
+def TextInput(text='', frame=True, center=False, stub='Type here ...',
+              return_accepts=False, var=None, key_filter=None):
+    class TextInputFactory(WidgetFactory):
+        mod = 'text_input'
+        class_name = 'TextInput'
+    return TextInputFactory(text, frame, center, stub, return_accepts, var,
+                            key_filter)
 
 
-class Checkbox(WidgetFactory):
-    mod = 'checkbox'
+def Checkbox(text='checkbox', frame=False, group=None, checked=False,
+             click_accepts=False, var=None):
+    class CheckboxFactory(WidgetFactory):
+        mod = 'checkbox'
+        class_name = 'Checkbox'
+    return CheckboxFactory(text, frame, group, checked, click_accepts, var)

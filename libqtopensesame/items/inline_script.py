@@ -14,7 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-from libopensesame.py3compat import *
+from libopensesame.py3compat import safe_decode
 from qtpy.QtWidgets import QSizePolicy, QTabWidget, QVBoxLayout, QWidget
 import ast
 from libopensesame.inline_script import InlineScript as InlineScriptRuntime
@@ -22,7 +22,43 @@ from libopensesame.oslogging import oslogger
 from libqtopensesame.items.qtplugin import QtPlugin
 from libqtopensesame.misc.translate import translation_context
 from pyqt_code_editor.code_editors import create_editor
+from pyqt_code_editor.environment_manager import environment_manager
 _ = translation_context('inline_script', category='item')
+
+
+# This import prefix helps Jedi know about the Python workspace API
+IMPORT_PREFIX = '''from libopensesame.python_workspace_api import (
+    # Core factory functions
+    Experiment, Form, Canvas, Keyboard, Mouse, Sampler, Synth,
+    # Canvas elements
+    Rect, Line, Text, Ellipse, Circle, FixDot, Gabor, NoisePatch, Image, Arrow,
+    Polygon,
+    # Widget factories
+    Label, Button, ImageWidget, ImageButton, TextInput, RatingScale, Checkbox,
+    # Utility functions
+    copy_sketchpad, reset_feedback, set_subject_nr, sometimes, pause,
+    register_cleanup_function, xy_from_polar, xy_to_polar, xy_distance,
+    xy_circle, xy_grid, xy_random
+)
+
+# Available objects with type hints for Jedi
+from libopensesame.experiment import Experiment
+exp: Experiment = None  # type: ignore
+from libopensesame.var_store import VarStore
+var: VarStore = None # type: ignore
+from libopensesame.item_store import ItemStore
+items: ItemStore = None  # type: ignore
+from openexp._clock.clock import Clock
+clock: Clock = None  # type: ignore
+from openexp._log.log import Log
+log: Log = None  # type: ignore
+from libopensesame.response_store import ResponseStore
+responses: ResponseStore = None  # type: ignore
+data_files: list = None  # type: ignore
+AbortCoroutines: Exception = None  # type: ignore
+from libopensesame.file_pool_store import FilePoolStore
+pool: FilePoolStore = None  # type: ignore
+'''
 
 
 class InlineScript(InlineScriptRuntime, QtPlugin):
@@ -67,6 +103,7 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
             QSizePolicy.Expanding
         )
         self._tab_widget.setTabsClosable(False)
+        self._tab_widget.currentChanged.connect(self.update_script_prefix)
         
         # Create prepare phase editor
         prepare_container = QWidget()
@@ -115,6 +152,32 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
             return
         self.apply_edit_changes()
         
+    def update_script_prefix(self):
+        """Determines the prefix for the inline script. This consists of a set of
+        manually crafted import statements and object definitions as specified
+        in IMPORT_PREFIX, followed by the prepare and run scripts of all items
+        except the phase of the current one.
+        """
+        scripts = [IMPORT_PREFIX]
+        index = self._tab_widget.currentIndex()
+        for item in self.experiment.items.values():
+            if item.item_type != 'inline_script':
+                continue
+            if item != self or index == 1:
+                scripts.append(f'''
+# START_PREPARE_PHASE (item: {item.name})
+{item.var._prepare}
+# END_PREPARE_PHASE (item: {item.name})
+''')        
+            if item != self or index == 0:
+                scripts.append(f'''
+# START_RUN_PHASE (item: {item.name})
+{item.var._run}
+# END_RUN_PHASE (item: {item.name})
+''')
+        environment_manager.prefix = '\n'.join(scripts)
+        print(environment_manager.prefix)
+        
     def open_tab(self, select_in_tree=True, **kwargs):
         super().open_tab(select_in_tree=select_in_tree, **kwargs)
         if 'phase' not in kwargs:
@@ -131,6 +194,10 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
             cursor.movePosition(cursor.Down, cursor.MoveAnchor, line - 1)
             edit.setTextCursor(cursor)
             edit.centerCursor()
+            
+    def show_tab(self):
+        self.update_script_prefix()
+        super().show_tab()
 
     def var_info(self):
         if self._var_cache is None:
