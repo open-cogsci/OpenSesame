@@ -390,11 +390,7 @@ class Form:
         is retrieved and returned.
         """
         if isinstance(widget, WidgetFactory):
-            factory_id = id(widget)
-            if factory_id in self._widget_factory_map:
-                return self._widget_factory_map[factory_id]
             widget = widget.construct(self)
-            self._widget_factory_map[factory_id] = widget
         return widget
 
 
