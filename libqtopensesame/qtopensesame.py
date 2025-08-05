@@ -53,6 +53,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
     app : QApplication
     parent : QObject, optional
     """
+    mode = 'default'  # deprecated
     
     def __init__(self, app, parent=None):
         """Constructor. This does very little, except prepare the app to be 
@@ -185,15 +186,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.extension_manager = ExtensionManager(self)
         self.extension_manager.register_extension(self.ui.toolbar_items)
         self.extension_manager.fire('startup')
-
-    @property
-    def mode(self):
-        """A property that determines the application mode, falling back to
-        'default'.
-        """
-        if self.options.mode is None:
-            return 'default'
-        return self.options.mode
 
     def _tooltip_shortcut(self, action):
         """Adds a shortcut between parentheses to the tooltip of an action.
