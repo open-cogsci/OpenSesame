@@ -176,7 +176,6 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
 # END_RUN_PHASE (item: {item.name})
 ''')
         environment_manager.prefix = '\n'.join(scripts)
-        print(environment_manager.prefix)
         
     def open_tab(self, select_in_tree=True, **kwargs):
         super().open_tab(select_in_tree=select_in_tree, **kwargs)
