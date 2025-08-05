@@ -461,7 +461,7 @@ class QtItem:
                     # Use QTextCursor to select the offending line
                     cursor = self._script_widget.textCursor()
                     cursor.movePosition(cursor.Start)
-                    for _ in range(line_nr - 1):
+                    for i in range(line_nr - 1):
                         cursor.movePosition(cursor.Down)
                     cursor.movePosition(cursor.StartOfLine)
                     cursor.movePosition(cursor.EndOfLine, cursor.KeepAnchor)
@@ -469,10 +469,10 @@ class QtItem:
                     break
             self.extension_manager.fire(
                 'notify',
-                message=_(
-                    'Failed to parse script. See debug window for details'),
+                message=str(e),
                 category='warning',
-                always_show=True
+                always_show=True,
+                timeout=None
             )
             return False
 
