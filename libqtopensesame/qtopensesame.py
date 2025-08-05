@@ -307,22 +307,10 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             help="Specify localization"
         )
         group.add_option(
-            "--catch-translatables",
-            action="store_true",
-            dest="catch_translatables",
-            help="Log all translatable text (for developers)"
-        )
-        group.add_option(
             "--performance-profile",
             action="store_true",
             dest="profile",
             help="Profile OpenSesame performance (for developers)"
-        )
-        group.add_option(
-            "--no-global-resources",
-            action="store_true",
-            dest="no_global_resources",
-            help="Do not use global resources on *nix"
         )
         group.add_option(
             '-w',
@@ -330,19 +318,6 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             action="store_true",
             dest="warnings",
             help="Show elaborate warnings"
-        )
-        group.add_option(
-            "--mode",
-            action="store",
-            dest="mode",
-            help="Specify the application mode (default or ide)"
-        )
-        group.add_option(
-            "--no-chdir",
-            action="store_true",
-            default="false",
-            dest="no_chdir",
-            help="Don't change the working directory to that of the Pythone executable (Windows only)'"
         )
         parser.add_option_group(group)
         self.options, args = parser.parse_args(sys.argv)
