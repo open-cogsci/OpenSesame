@@ -16,292 +16,99 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-from libopensesame.py3compat import *
 import os
 import sys
 import platform
 import multiprocessing
+from pathlib import Path
 
+# Platform-specific initialization
 if platform.system() == 'Linux':
-    # The fork multiprocessing method, which is the default on Linux, seems
-    # unstable on some systems. Therefore, we use spawn as the default.
-    # However, setting the OPENSESAME_MULTIPROCESSING_METHOD environment
-    # variable allows users to customize this. See also:
-    # - <https://github.com/open-cogsci/OpenSesame/issues/782>
+    # The fork multiprocessing method can be unstable on some Linux systems.
+    # Use spawn as the default, but allow customization via environment 
+    # variable. See <https://github.com/open-cogsci/OpenSesame/issues/782>
     try:
         multiprocessing.set_start_method(
             os.environ.get('OPENSESAME_MULTIPROCESSING_METHOD', 'spawn'))
-    except RuntimeError as e:
-        print(f'failed to change multiprocessing start method: {e}')
-    except ValueError as e:
-        print(f'invalid multiprocessing start method: {e}')
-    # solves a library conflict for Linux with Nvidia drivers
-    # See https://forum.qt.io/topic/81328/ubuntu-qopenglshaderprogram-shader-program-is-not-linked/2
+    except (RuntimeError, ValueError) as e:
+        print(f'Failed to change multiprocessing start method: {e}')
+    
+    # Solves a library conflict for Linux with Nvidia drivers
     try:
         from OpenGL import GL
-    except ImportError:  # Rapunzel doesn't need OpenGL
+    except ImportError:
         pass
 
-# Attach a dummy console when launched with pythonw.exe. This is necessary for
-# some libraries.
-if sys.executable.endswith('pythonw.exe'):
-    sys.stdout = open(os.devnull, 'w')
-    sys.stderr = open(os.devnull, 'w')
-    sys.stdin = open(os.devnull)
+elif platform.system() == 'Windows':
+    # Attach dummy console when launched with pythonw.exe
+    if sys.executable.endswith('pythonw.exe'):
+        sys.stdout = open(os.devnull, 'w')
+        sys.stderr = open(os.devnull, 'w')
+        sys.stdin = open(os.devnull)
+    os.chdir(os.path.dirname(sys.executable))
 
-# On MacOS, the locations of the SSL cerfificates need to be explicitly
-# indicated when packaged # as an app, otherwise urllib.urlopen fails with an
-# SSL related error. To do so, we make use of the certifi package that can
-# provide this location, but it is unclear if certifi is always installed,
-# so let's fail gracefully if it isn't.
-if platform.system() == 'Darwin':
+elif platform.system() == 'Darwin':
+    # Set SSL certificate locations for macOS app bundles
     try:
         import certifi
         os.environ['SSL_CERT_FILE'] = certifi.where()
         os.environ['SSL_CERT_DIR'] = os.path.dirname(certifi.where())
     except ImportError:
-        pass  # Or log something here?
-    # Workaround for an incompatibility between Qt and Mac OS Big Sur. See:
-    # - https://forum.cogsci.nl/discussion/comment/21525/#Comment_21525
+        pass
+    
+    # Workaround for Qt and macOS compatibility
     os.environ['QT_MAC_WANTS_LAYER'] = '1'
+    # Avoid segmentation faults when loading QtWebEngine
+    os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
+    os.environ['QTWEBENGINE_CHROMIUM_FLAGS'] = '--disable-gpu'
 
+# Add resources
 from openexp import resources
-from pathlib import Path
-# Add the libqtopensesame resource folder, which contains ui files etc
 resources.add_resource_folder(Path(__file__).parent / 'resources')
-
-def patch_pyqt():
-    """This patches PyQt such that properties are removed from objects before
-    connectSlotsByName() tries to inspect the object. This is necessary because
-    in some versions, the introspection crashes when properties cannot be
-    accessed, for example because the object needs to be initialized first.
-    """
-    def _(fnc):
-
-        def make_object_safe(obj, cls):
-
-            tmp = {}
-            for name, value in list(cls.__dict__.items()):
-                try:
-                    getattr(obj, name)
-                except AttributeError:
-                    tmp[name] = value
-                    delattr(cls, name)
-            return tmp
-
-        def restore_object(cls, tmp):
-
-            for name, value in tmp.items():
-                setattr(cls, name, value)
-
-        def inner(obj):
-
-            tmp = {}
-            for cls in obj.__class__.mro():
-                tmp[cls] = make_object_safe(obj, cls)
-            fnc(obj)
-            for cls in tmp:
-                restore_object(cls, tmp[cls])
-
-        return inner
-
-    from qtpy import QtCore
-    QtCore.QMetaObject.connectSlotsByName = \
-        _(QtCore.QMetaObject.connectSlotsByName)
-
-
-def set_paths():
-
-    from libopensesame import misc
-    import sys
-    import platform
-    # On Windows, the working directory should be the folder with the Python
-    # interpreter. If not, Qt will have difficulty finding the correct paths.
-    # We can disable this behavior on the command line, because it will
-    # actually break things on some installations.
-    if platform.system() == 'Windows' and '--no-chdir' not in sys.argv:
-        os.chdir(os.path.dirname(sys.executable))
-    # Update the system path so that Qt can find itself
-    path = os.path.join(os.getcwd(), 'Library', 'bin')
-    if os.path.exists(path):
-        os.environ['PATH'] = path + ';' + os.environ['PATH']
-    # Add the Scripts subfolder, which is where Anaconda scripts are located
-    path = os.path.join(os.getcwd(), 'Scripts')
-    if os.path.exists(path):
-        os.environ['PATH'] = path + ';' + os.environ['PATH']
-    from qtpy import QtCore
-    # Add the folder that contains the OpenSesame modules to the path. This is
-    # generally only necessary if OpenSesame is directly run from source,
-    # instead from an installation.
-    if os.path.exists(os.path.join(os.getcwd(), 'libopensesame')):
-        sys.path.insert(0, os.getcwd())
-    # Add the Qt plugin folders to the library path, if they exists. Where
-    # these folders are depends on the version of Qt4, but these are two
-    # possible locations.
-    qt_plugin_path = os.path.join(
-        os.path.dirname(sys.executable), 'Library', 'plugins')
-    if os.path.isdir(qt_plugin_path):
-        QtCore.QCoreApplication.addLibraryPath(
-            safe_decode(qt_plugin_path, enc=sys.getfilesystemencoding()))
-    qt_plugin_path = os.path.join(
-        os.path.dirname(sys.executable), 'Library', 'lib', 'qt4', 'plugins')
-    if os.path.isdir(qt_plugin_path):
-        QtCore.QCoreApplication.addLibraryPath(
-            safe_decode(qt_plugin_path, enc=sys.getfilesystemencoding()))
 
 
 def opensesame():
-    """The entrty point for the OpenSesame GUI"""
-    set_paths()
-    patch_pyqt()
-    # Support for multiprocessing when packaged
-    # In OS X the multiprocessing module is horribly broken, but a fixed
-    # version has been released as the 'billiard' module
-    if platform.system() == 'Darwin':
-        # Use normal multiprocessing module from python 3.4 and on
-        if sys.version_info >= (3, 4):
-            from multiprocessing import freeze_support, set_start_method
-            freeze_support()
-            set_start_method('spawn')
-        else:
-            from billiard import freeze_support, forking_enable
-            freeze_support()
-            forking_enable(0)
-    else:
-        from multiprocessing import freeze_support
-        freeze_support()
-    # Parse the (optional) environment file that contains special paths, etc.
+    """Entry point for the OpenSesame GUI."""    
+    # Parse environment file for special paths
     from libopensesame import misc
     misc.parse_environment_file()
-    # Do the basic window initialization
+    
+    # Initialize Qt application
     from qtpy.QtWidgets import QApplication
     from qtpy.QtCore import Qt
-    # From Qt 5.6 on, QtWebEngine is the default way to render web pages
-    # QtWebEngineWidgets must be imported before a QCoreApplication instance is
-    # created.
+    
+    # Import QtWebEngine before creating QApplication
     try:
         from qtpy import QtWebEngineWidgets
     except ImportError:
         pass
-    # Enable High DPI pixmaps with PyQt5
-    if hasattr(Qt, 'AA_UseHighDpiPixmaps'):
-        QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
-    # Enable scaling for High DPI displays with PyQt5
-    if hasattr(Qt, 'AA_EnableHighDpiScaling'):
-        QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
-    # Enable proportional scaling so that things don't look disproportionately
-    # large on Windows
-    if hasattr(Qt, 'HighDpiScaleFactorRoundingPolicy'):
+    
+    # Configure high DPI settings for Qt6
+    # Note: Qt6 handles high DPI scaling automatically, but we can still
+    # set the rounding policy for better appearance
+    if hasattr(Qt.HighDpiScaleFactorRoundingPolicy, 'PassThrough'):
         QApplication.setHighDpiScaleFactorRoundingPolicy(
             Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    from libqtopensesame.qtopensesame import QtOpenSesame
+    
+    # Create application
     app = QApplication(sys.argv)
+    
+    # Initialize OpenSesame
+    from libqtopensesame.qtopensesame import QtOpenSesame
     opensesame = QtOpenSesame(app)
     opensesame.__script__ = __file__
     app.processEvents()
-    # Install the translator. For some reason, the translators need to be
-    # instantiated here and not in the set_locale() function, otherwise the
-    # locale is ignored.
+    
+    # Set up translators for internationalization
     from qtpy.QtCore import QTranslator
-    opensesame.set_locale([QTranslator(), QTranslator(), QTranslator(),
-                           QTranslator(), QTranslator(), QTranslator(),
-                           QTranslator(), QTranslator(), QTranslator(),
-                           QTranslator(), QTranslator(), QTranslator()])
-    # Now that the window is shown, load the remaining modules and resume the
-    # GUI initialization.
+    translators = [QTranslator() for _ in range(12)]
+    opensesame.set_locale(translators)
+    
+    # Complete initialization and show window
     opensesame.resume_init()
     opensesame.restore_window_state()
     opensesame.show()
-    # Added for OS X, otherwise Window will not appear
-    opensesame.raise_()
-    # Exit using the application exit status
-    sys.exit(app.exec_())
-
-
-def opensesamerun():
-    """The entrty point for the OpenSesameRun GUI"""
-    set_paths()
-    from libopensesame.oslogging import oslogger
-    oslogger.start('gui')
-    from libopensesame import misc
-    misc.parse_environment_file()
-    from libopensesame.experiment import Experiment
-    # Parse the command line options
-    options = misc.opensesamerun_options()
-    app = None
-    # If the command line options haven't provided sufficient information to
-    # run right away, present a GUI
-    while not misc.opensesamerun_ready(options):
-        # If PyQt is not available (e.g., this might be the case on Mac OS)
-        # give an error instead of showing a GUI. This makes sure that even
-        # without PyQt, people can still run experiments.
-        try:
-            from qtpy import QtGui, QtCore, QtWidgets
-        except Exception as e:
-            misc.messagebox("OpenSesame Run", "Incorrect or "
-                "missing options.\n\nRun 'opensesame --help' from a terminal "
-                "(or command prompt) to see a list of available options, or "
-                "install PyQt to enable the graphical user interface.")
-            sys.exit()
-        # Create the GUI and show it
-        from libqtopensesame.qtopensesamerun import QtOpenSesameRun
-        if app is None:
-            app = QtWidgets.QApplication(sys.argv)
-            myapp = QtOpenSesameRun(options)
-        myapp.show()
-        app.exec_()
-        # Update the options from the GUI
-        options = myapp.options
-        # Exit if the GUI was canceled
-        if not myapp.run:
-            sys.exit()
-    # Decode the experiment path and logfile
-    experiment = os.path.abspath(options.experiment)
-    if isinstance(experiment, bytes):
-        experiment = safe_decode(experiment, enc=sys.getfilesystemencoding(),
-                                 errors='ignore')
-    # experiment_path = os.path.dirname(experiment)
-    logfile = options.logfile
-    if isinstance(logfile, bytes):
-        logfile = safe_decode(logfile, enc=sys.getfilesystemencoding(),
-                              errors='ignore')
-    experiment_path = safe_decode(os.path.abspath(options.experiment),
-                                  enc=sys.getfilesystemencoding())
-    # In debug mode, don't try to catch any exceptions
-    if options.debug:
-        exp = Experiment("Experiment", experiment,
-                         experiment_path=experiment_path)
-        exp.set_subject(options.subject)
-        exp.var.fullscreen = options.fullscreen
-        exp.logfile = logfile
-        exp.run()
-        exp.end()
-        return
-    # Try to parse the experiment from a file
-    try:
-        exp = Experiment("Experiment", experiment,
-                         experiment_path=experiment_path)
-    except Exception as e:
-        misc.messagebox(
-            "OpenSesame Run",
-            misc.strip_tags(e)
-        )
-        sys.exit()
-    # Set some options
-    exp.set_subject(options.subject)
-    exp.var.fullscreen = 'yes' if options.fullscreen else 'no'
-    exp.logfile = logfile
-    # Initialize random number generator
-    import random
-    random.seed()
-    # Try to run the experiment
-    try:
-        exp.run()
-    except Exception as e:
-        misc.messagebox("OpenSesame Run", misc.strip_tags(e))
-    finally:
-        try:
-            exp.end()
-        except Exception as f:
-            misc.messagebox("OpenSesame Run", misc.strip_tags(f))
-    exp.pool.clean_up()
+    opensesame.raise_()  # Ensure window appears on macOS
+    
+    # Run application
+    sys.exit(app.exec())
