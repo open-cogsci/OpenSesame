@@ -16,20 +16,19 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-from libopensesame.py3compat import *
 from libopensesame.item_store import ItemStore
-from libopensesame import plugins
 from libqtopensesame.misc.translate import translation_context
 from libopensesame.oslogging import oslogger
+from libopensesame.exceptions import ItemTypeDoesNotExist
 _ = translation_context(u'qtitem_store', category=u'core')
 
 
 class QtItemStore(ItemStore):
-    r"""The GUI counterpart of the item store, which also distributes item
+    """The GUI counterpart of the item store, which also distributes item
     changes etc.
     """
     def __init__(self, experiment):
-        r"""Constructor.
+        """Constructor.
 
         Parameters
         ----------
@@ -60,7 +59,7 @@ class QtItemStore(ItemStore):
         return self.main_window.tabwidget
 
     def __delitem__(self, name):
-        r"""Deletes an item, and notifies other items of the deletion.
+        """Deletes an item, and notifies other items of the deletion.
 
         Parameters
         ----------
@@ -98,12 +97,15 @@ class QtItemStore(ItemStore):
                     self.error_log.append(e)
                     return
             else:
-                item = super(qtitem_store, self).new(
-                    _type=_type,
-                    name=name,
-                    script=script,
-                    allow_rename=allow_rename
-                )
+                try:
+                    item = super(qtitem_store, self).new(
+                        _type=_type,
+                        name=name,
+                        script=script,
+                        allow_rename=allow_rename)
+                except ModuleNotFoundError:
+                    raise ItemTypeDoesNotExist(_type)
+                
         if warning_list:
             import yaml
             import os
@@ -120,7 +122,7 @@ class QtItemStore(ItemStore):
         return item
 
     def rename(self, from_name, to_name):
-        r"""Renames an item and updates the interface. This function may show a
+        """Renames an item and updates the interface. This function may show a
         notification dialog.
 
         Parameters
@@ -166,7 +168,7 @@ class QtItemStore(ItemStore):
         return to_name
 
     def set_icon(self, name, icon):
-        r"""Changes an item's icon.
+        """Changes an item's icon.
 
         Parameters
         ----------
@@ -212,7 +214,7 @@ class QtItemStore(ItemStore):
         return _type in self.built_in_types or _type in self.plugin_manager
 
     def clear_cache(self):
-        r"""Clears the cache, currently only the cache with children for each
+        """Clears the cache, currently only the cache with children for each
         item.
         """
         for item in self.values():

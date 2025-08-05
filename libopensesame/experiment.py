@@ -27,15 +27,14 @@ from libopensesame.syntax import Syntax
 from libopensesame.exceptions import UserAborted, ItemDoesNotExist, \
     InvalidOpenSesameScript
 from libopensesame.item import Item
-from libopensesame import misc, metadata
+from libopensesame import metadata
 from libopensesame.item_stack import item_stack_singleton
 from libopensesame.oslogging import oslogger
-from libopensesame.py3compat import *
+from libopensesame.py3compat import safe_decode
 import os
 import sys
 import pickle
 import time
-import warnings
 import gc
 
 
@@ -145,12 +144,6 @@ class Experiment(Item):
         if self.var.get('is_template', 0):
             self.experiment_path = self.var.experiment_path = None
             del self.var.is_template
-        if not py3 and backend.backend_guess(self, 'sampler') == 'psycho':
-            self.var.sampler_backend = 'legacy'
-            oslogger.warning(
-                'The psycho sampler backend is not compatible with Python 2. '
-                'Falling back to legacy sampler backend'
-            )
 
     @property
     def default_title(self):
@@ -234,7 +227,6 @@ class Experiment(Item):
         line = next(s, None)
         if line is None:
             return None, ''
-        get_next = False
         while True:
             if len(line) > 0:
                 if line[0] != '\t':
@@ -257,7 +249,7 @@ class Experiment(Item):
         self.var.clear(preserve=['experiment_path', 'experiment_file'])
         self.reset()
         self.comments = []
-        oslogger.debug(u"building experiment")
+        oslogger.debug("building experiment")
         if string is None:
             return
         self.front_matter, string = self._syntax.parse_front_matter(string)
@@ -273,7 +265,7 @@ class Experiment(Item):
             if l:
                 self.parse_variable(line)
                 # Parse definitions
-                if l[0] == u"define":
+                if l[0] == "define":
                     if len(l) != 3:
                         raise InvalidOpenSesameScript(
                             'Failed to parse definition', line=line)
@@ -285,8 +277,7 @@ class Experiment(Item):
                         _type=item_type,
                         name=item_name,
                         script=def_str,
-                        allow_rename=False
-                    )
+                        allow_rename=False)
             # Advance to next line
             if get_next:
                 line = next(s, None)
@@ -342,7 +333,7 @@ class Experiment(Item):
         self.python_workspace.init_globals()
         self.reset_feedback()
         self.init_heartbeat()
-        oslogger.info(u"experiment started")
+        oslogger.info("experiment started")
         if self.var.start in self.items:
             item_stack_singleton.clear()
             if self.var.disable_garbage_collection == 'yes':
@@ -351,7 +342,7 @@ class Experiment(Item):
             self.items.execute(self.var.start)
         else:
             raise ItemDoesNotExist(self.var.start)
-        oslogger.info(u"experiment finished")
+        oslogger.info("experiment finished")
         self.end()
 
     def pause(self):
@@ -401,7 +392,7 @@ class Experiment(Item):
         """Calls all the cleanup functions."""
         while len(self.cleanup_functions) > 0:
             func = self.cleanup_functions.pop()
-            oslogger.debug(u"calling cleanup function")
+            oslogger.debug("calling cleanup function")
             func()
 
     def end(self):

@@ -16,13 +16,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-import re
 import sys
-from libopensesame.oslogging import oslogger
 from libopensesame.item_stack import item_stack_singleton
-from libopensesame.py3compat import *
 import traceback
-import time
 import markdown
 
 
@@ -71,18 +67,13 @@ Learn more about this error</a>
 This error occurred in the {self.phase} phase of item {self.item}.
 '''
 
-    def markdown(self):
-        return f'''
-# {self.title()}
-
-{self._msg}
-
-This error occurred in the __{self.phase}__ phase of item 
-<u><a href="opensesame://item.{self.item}.{self.phase}">
-{self.item}</a></u>.
-
-{self._read_more}
-'''
+    def markdown(self, include_source=True, include_readmore=True):
+        md = f'# {self.title()}\n\n{self._msg}'
+        if include_source:
+            md += f'\n\nThis error occurred in the __{self.phase}__ phase of item <u><a href="opensesame://item.{self.item}.{self.phase}">{self.item}</a></u>.'
+        if include_readmore:
+            md += f'\n\n{self._read_more}'
+        return md
     
     def title(self):
         return f'Error: {self.__class__.__name__}'
@@ -238,7 +229,16 @@ class ItemDoesNotExist(OSException):
     def __init__(self, item_name):
         super().__init__(f'Item {item_name} does not exist')
         
+
+class ItemTypeDoesNotExist(OSException):
+    """An `ItemTypeDoesNotExist` is raised when the experiment refers to an 
+    item type that does not exist. This can occur for different reasons. For
+    example, a script may use a plugin that is not installed on this system.
+    """
+    def __init__(self, item_type):
+        super().__init__(f'Item type {item_type} does not exist')
         
+
 class VariableDoesNotExist(OSException):
     """A `VariableDoesNotExist` is raised when the experiment refers to a
     variable that does not, or not yet, exist. This commonly reflects a mistake

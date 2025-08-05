@@ -16,17 +16,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-from libopensesame.py3compat import *
-import os
 from libopensesame.experiment import Experiment as ExperimentRuntime
 from libopensesame.base_python_workspace import BasePythonWorkspace
 import opensesame_plugins
 from libqtopensesame.misc.qtplugin_manager import QtPluginManager
 from libqtopensesame.misc.qtitem_store import QtItemStore
 from libqtopensesame.misc.qtsyntax import QtSyntax
-from qtpy import QtCore, QtWidgets, QtGui
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'experiment', category=u'item')
+_ = translation_context('experiment', category='item')
 
 
 class Experiment(ExperimentRuntime):
@@ -34,7 +31,7 @@ class Experiment(ExperimentRuntime):
     """Contains various GUI controls for the experiment"""
     def __init__(self, main_window, name='experiment', string=None,
                  pool_folder=None, experiment_path=None, resources={}):
-        r"""Constructor. The experiment is created automatically be OpenSesame
+        """Constructor. The experiment is created automatically be OpenSesame
         and you will generally not need to create it yourself.
 
         Parameters
@@ -60,9 +57,9 @@ class Experiment(ExperimentRuntime):
         self.ui = self.main_window.ui
         self.unused_items = []
         self.core_items = [
-            u"loop", u"sequence", u"sketchpad", u"feedback", u"sampler",
-            u"synth", u"keyboard_response", u"mouse_response", u"logger",
-            u"inline_script"
+            "loop", "sequence", "sketchpad", "feedback", "sampler",
+            "synth", "keyboard_response", "mouse_response", "logger",
+            "inline_script"
         ]
         self.items = QtItemStore(self)
         self._syntax = QtSyntax(self)
@@ -78,31 +75,31 @@ class Experiment(ExperimentRuntime):
 
     @property
     def default_title(self):
-        return _(u'New experiment')
+        return _('New experiment')
 
     @property
     def default_description(self):
-        return _(u'Default description')
+        return _('Default description')
 
     def module_container(self):
         """
         Specifies the module that is used to get items from.
 
         Returns:
-        u'libqtopensesame.items'
+        'libqtopensesame.items'
         """
-        return u'libqtopensesame.items'
+        return 'libqtopensesame.items'
         
     def item_prefix(self):
         """
         A prefix for the plug-in classes, so that [prefix][plugin] class is used
         instead of the [plugin] class.
         """
-        return u'qt'
+        return 'qt'
 
     def build_item_tree(self, toplevel=None, items=[], max_depth=-1,
                         select=None):
-        r"""Builds the overview area for the full experiment.
+        """Builds the overview area for the full experiment.
 
         Parameters
         ----------
@@ -156,12 +153,12 @@ class Experiment(ExperimentRuntime):
         Returns:
         True if the name is allowed, False otherwise.
         """
-        if name.strip() == u'':
-            return u'Empty names are not allowed.'
+        if name.strip() == '':
+            return 'Empty names are not allowed.'
         if name.lower() in [item.lower() for item in self.items.keys()]:
-            return u'An item with that name already exists.'
+            return 'An item with that name already exists.'
         if name != self.syntax.sanitize(name, strict=True, allow_vars=False):
-            return u'Name contains special characters. Only alphanumeric characters and underscores are allowed.'
+            return 'Name contains special characters. Only alphanumeric characters and underscores are allowed.'
         return True
 
     def delete(self, item_name, item_parent=None, index=None):
@@ -178,7 +175,7 @@ class Experiment(ExperimentRuntime):
         """
         if self.var.start == item_name:
             self.notify(
-                u'You cannot delete the entry point of the experiment!')
+                'You cannot delete the entry point of the experiment!')
             return
         for item in self.items:
             self.items[item].delete(item_name, item_parent, index)

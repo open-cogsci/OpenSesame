@@ -761,12 +761,8 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         try:
             exp = Experiment(self, "Experiment", path,
                              experiment_path=os.path.dirname(path))
-        except Exception as e:
-            md = _(
-                '# Failed to open\n\nFailed to open the file for the '
-                'following reason:\n\n- '
-            ) + safe_decode(e)
-            self.tabwidget.open_markdown(md)
+        except OSException as e:
+            self.tabwidget.open_markdown(e.markdown(include_source=False))
             traceback.print_exc()
             self.set_busy(False)
             return
@@ -873,11 +869,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                              experiment_path=self.experiment.experiment_path,
                              resources=self.experiment.resources)
         except OSException as e:
-            md = _(
-                '# Parsing error\n\nFailed to parse the script for the '
-                'following reason:\n\n- '
-            ) + e.markdown()
-            self.tabwidget.open_markdown(md)
+            self.tabwidget.open_markdown(e.markdown(include_source=False))
             return
         self.experiment = exp
         self.tabwidget.close_all()
