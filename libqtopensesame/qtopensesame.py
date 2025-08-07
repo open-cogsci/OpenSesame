@@ -407,6 +407,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def save_state(self):
         """Restores the state of the current window"""
+        settings.save()
         cfg.size = self.size()
         cfg.pos = self.pos()
         cfg._initial_window_geometry = self.saveGeometry()
