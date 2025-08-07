@@ -14,11 +14,11 @@ for path in Path(args.src_folder).glob('**/*.md'):
             continue
         dst.parent.mkdir(parents=True, exist_ok=True)
         print(dst)
-        response = openai.ChatCompletion.create(
+        client = openai.Client(api_key=API_KEY)
+        response = client.chat.completions.create(
             model=MODEL,
             messages=[{"role": "system", "content": MD_SYSTEM % language},
-                      {"role": "user", "content": source_text}],
-            request_timeout=300)
-        reply = response['choices'][0]['message']['content']
+                      {"role": "user", "content": source_text}]) 
+        reply = response.choices[0].message.content
         print(f'***\n{reply}\n***')
         dst.write_text(reply)
