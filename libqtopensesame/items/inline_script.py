@@ -58,6 +58,7 @@ data_files: list = None  # type: ignore
 AbortCoroutines: Exception = None  # type: ignore
 from libopensesame.file_pool_store import FilePoolStore
 pool: FilePoolStore = None  # type: ignore
+win: object = None  # type: ignore
 '''
 
 
@@ -76,19 +77,20 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
     def apply_edit_changes(self):
         sp = self._prepare_editor.toPlainText()
         sr = self._run_editor.toPlainText()
-        self._set_modified()
+        self._prepare_editor.set_modified(False)
+        self._run_editor.set_modified(False)
         self.var._prepare = sp
         self.var._run = sr
         self._var_cache = None
         super().apply_edit_changes()
-
-    def _set_modified(self, prepare=False, run=False):
-        self._prepare_editor.document().setModified(prepare)
-        self._run_editor.document().setModified(run)
+        
+    def _prepare_modified(self, editor, modified):
         self._tab_widget.setTabText(
-            0, ('* ' if prepare else '') + _('Prepare'))
+            0, ('* ' if modified else '') + _('Prepare'))
+        
+    def _run_modified(self, editor, modified):
         self._tab_widget.setTabText(
-            1, ('* ' if run else '') + _('Run'))
+            1, ('* ' if modified else '') + _('Run'))
 
     def set_focus(self):
         self._tab_widget.setFocus()
@@ -111,6 +113,7 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         prepare_layout.setContentsMargins(0, 0, 0, 0)
         self._prepare_editor = create_editor(language=self.language,
                                              parent=prepare_container)
+        self._prepare_editor.modification_changed.connect(self._prepare_modified)
         prepare_layout.addWidget(self._prepare_editor)
         
         # Create run phase editor
@@ -119,6 +122,7 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         run_layout.setContentsMargins(0, 0, 0, 0)
         self._run_editor = create_editor(language=self.language,
                                          parent=run_container)
+        self._run_editor.modification_changed.connect(self._run_modified)
         run_layout.addWidget(self._run_editor)
         
         # Add tabs
@@ -129,7 +133,6 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         self._run_editor.lost_focus.connect(self._editor_focus_out)
         self._prepare_editor.lost_focus.connect(self._editor_focus_out)
         
-        self._set_modified()
         self.edit_vbox.addWidget(self._tab_widget)
         
         # Set initial tab
