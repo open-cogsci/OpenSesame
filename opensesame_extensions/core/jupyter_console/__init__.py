@@ -14,7 +14,7 @@ settings = {
     },
     "jupyter_default_kernel": "python"
 }
-shortcut = "Ctrl+D"
+shortcut = "Ctrl+Shift+J"
 checkable = True
 menu = {
     "index": 8,
