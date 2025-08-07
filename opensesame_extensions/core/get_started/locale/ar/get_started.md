@@ -1,6 +1,4 @@
-# ابدأ!
-
-مرحبًا بك في OpenSesame! كيف يمكنني مساعدتك؟
+# ابدأ الآن!
 
 <table><tr><td>
 
@@ -11,14 +9,13 @@
 
 %(recent_experiments)s
 
+</td><td>
+
+احصل على المساعدة:<br />
+
+<a href="http://osdoc.cogsci.nl" class="button">&#x1F440;&nbsp;&nbsp; اقرأ التوثيق</a><br />
+<a href="http://forum.cogsci.nl" class="button">&#x1F4AC;&nbsp;&nbsp; اطرح سؤالاً في المنتدى</a><br />
+<a href="http://sigmundai.eu" class="button">&#129302;&nbsp;&nbsp; اسأل SigmundAI</a><br />
+<a href="http://professional.cogsci.nl" class="button">&#x1F9D0;&nbsp;&nbsp; احصل على دعم احترافي</a>
+
 </td></tr></table>
-
-Sigmund أفضل من ChatGPT لأسئلة OpenSesame. اشتراكك يدعمنا!
-
-[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
-
-أو:
-
-[&#x1F440;&nbsp;&nbsp; اقرأ التوثيق](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC;&nbsp;&nbsp; اطرح سؤالًا في المنتدى](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0;&nbsp;&nbsp; احصل على دعم احترافي](http://professional.cogsci.nl){: .button}<br />

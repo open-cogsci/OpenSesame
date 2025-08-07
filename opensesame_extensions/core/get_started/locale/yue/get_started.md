@@ -1,6 +1,4 @@
-# 開始使用！
-
-歡迎使用 OpenSesame！有咩可以幫到您？
+# 開始啦！
 
 <table><tr><td>
 
@@ -11,14 +9,13 @@
 
 %(recent_experiments)s
 
+</td><td>
+
+獲取幫助：<br />
+
+<a href="http://osdoc.cogsci.nl" class="button">&#x1F440;&nbsp;&nbsp; 閱讀說明文件</a><br />
+<a href="http://forum.cogsci.nl" class="button">&#x1F4AC;&nbsp;&nbsp; 去討論區發問</a><br />
+<a href="http://sigmundai.eu" class="button">&#129302;&nbsp;&nbsp; 問下 SigmundAI</a><br />
+<a href="http://professional.cogsci.nl" class="button">&#x1F9D0;&nbsp;&nbsp; 尋求專業支援</a>
+
 </td></tr></table>
-
-對於 OpenSesame 問題，Sigmund 優於 ChatGPT。您嘅訂閱可以支持我哋！
-
-[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
-
-或者：
-
-[&#x1F440;&nbsp;&nbsp; 閱讀文檔](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC;&nbsp;&nbsp; 喺論壇上提問](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0;&nbsp;&nbsp; 獲得專業支援](http://professional.cogsci.nl){: .button}<br />

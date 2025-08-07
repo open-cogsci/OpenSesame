@@ -1,24 +1,21 @@
 # Başlayın!
 
-OpenSesame'ye hoş geldiniz! Size nasıl yardımcı olabilirim?
-
 <table><tr><td>
 
-Yeni bir deney başlat:<br />
+Yeni bir deney başlatın:<br />
 %(templates)s
 
 </td><td>
 
 %(recent_experiments)s
 
+</td><td>
+
+Yardım alın:<br />
+
+<a href="http://osdoc.cogsci.nl" class="button">&#x1F440;&nbsp;&nbsp; Belgeleri okuyun</a><br />
+<a href="http://forum.cogsci.nl" class="button">&#x1F4AC;&nbsp;&nbsp; Forumda bir soru sorun</a><br />
+<a href="http://sigmundai.eu" class="button">&#129302;&nbsp;&nbsp; SigmundAI'ye sorun</a><br />
+<a href="http://professional.cogsci.nl" class="button">&#x1F9D0;&nbsp;&nbsp; Profesyonel destek alın</a>
+
 </td></tr></table>
-
-OpenSesame soruları için Sigmund, ChatGPT'den daha iyidir. Aboneliğiniz bizi destekliyor!
-
-[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
-
-Veya:
-
-[&#x1F440;&nbsp;&nbsp; Dokümanları okuyun](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC;&nbsp;&nbsp; Forumda bir soru sorun](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0;&nbsp;&nbsp; Profesyonel destek alın](http://professional.cogsci.nl){: .button}<br />

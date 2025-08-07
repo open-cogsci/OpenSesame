@@ -1,6 +1,4 @@
-# Inizia ora!
-
-Benvenuto in OpenSesame! Come posso aiutarti?
+# Inizia!
 
 <table><tr><td>
 
@@ -11,14 +9,13 @@ Avvia un nuovo esperimento:<br />
 
 %(recent_experiments)s
 
+</td><td>
+
+Ottieni aiuto:<br />
+
+<a href="http://osdoc.cogsci.nl" class="button">&#x1F440;&nbsp;&nbsp; Leggi la documentazione</a><br />
+<a href="http://forum.cogsci.nl" class="button">&#x1F4AC;&nbsp;&nbsp; Fai una domanda sul forum</a><br />
+<a href="http://sigmundai.eu" class="button">&#129302;&nbsp;&nbsp; Chiedi a SigmundAI</a><br />
+<a href="http://professional.cogsci.nl" class="button">&#x1F9D0;&nbsp;&nbsp; Ottieni supporto professionale</a>
+
 </td></tr></table>
-
-Sigmund è migliore di ChatGPT per le domande su OpenSesame. Il tuo abbonamento ci supporta!
-
-[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){: .button}
-
-Oppure:
-
-[&#x1F440;&nbsp;&nbsp; Leggi la documentazione](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC;&nbsp;&nbsp; Fai una domanda sul forum](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0;&nbsp;&nbsp; Ottieni supporto professionale](http://professional.cogsci.nl){: .button}<br />

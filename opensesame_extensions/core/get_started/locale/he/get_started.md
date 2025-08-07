@@ -1,6 +1,4 @@
-# בואו נתחיל!
-
-ברוכים הבאים ל-OpenSesame! כיצד אוכל לעזור לך?
+# התחל!
 
 <table><tr><td>
 
@@ -11,14 +9,13 @@
 
 %(recent_experiments)s
 
+</td><td>
+
+קבל עזרה:<br />
+
+<a href="http://osdoc.cogsci.nl" class="button">&#x1F440;&nbsp;&nbsp; קרא את התיעוד</a><br />
+<a href="http://forum.cogsci.nl" class="button">&#x1F4AC;&nbsp;&nbsp; שאל שאלה בפורום</a><br />
+<a href="http://sigmundai.eu" class="button">&#129302;&nbsp;&nbsp; שאל את SigmundAI</a><br />
+<a href="http://professional.cogsci.nl" class="button">&#x1F9D0;&nbsp;&nbsp; קבל תמיכה מקצועית</a>
+
 </td></tr></table>
-
-Sigmund טוב יותר מ-ChatGPT עבור שאלות לגבי OpenSesame. המנוי שלך תומך בנו!
-
-[&#128150;&nbsp;&nbsp; SigmundAI.eu](https://sigmundai.eu){:‏ .button}
-
-או:
-
-[&#x1F440;&nbsp;&nbsp; קרא את התיעוד](http://osdoc.cogsci.nl){: .button}<br />
-[&#x1F4AC;&nbsp;&nbsp; שאל שאלה בפורום](http://forum.cogsci.nl){: .button}<br />
-[&#x1F9D0;&nbsp;&nbsp; קבל תמיכה מקצועית](http://professional.cogsci.nl){: .button}<br />
