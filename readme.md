@@ -49,7 +49,7 @@ Each major version of OpenSesame lives in its own branch. The default branch is 
 - `koffka` - 3.2
 - `loewenfeld` - 3.3
 - `milgram` - 4.0
-- `TBA` - 4.1
+- `nightingale` - 4.1
 
 
 ## Citations
