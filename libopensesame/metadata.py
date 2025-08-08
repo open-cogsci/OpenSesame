@@ -20,7 +20,7 @@ from libopensesame.py3compat import *
 from distutils.version import StrictVersion
 import sys
 
-__version__ = '4.1.0a7'
+__version__ = '4.1.0a8'
 strict_version = StrictVersion(__version__)
 # The version without the prerelease (if any): e.g. 3.0.0
 main_version = '.'.join([str(i) for i in strict_version.version])
@@ -32,7 +32,7 @@ if strict_version.prerelease is None:
 else:
     deb_version = main_version + '+%s%d' % strict_version.prerelease
 python_version = '%d.%d.%d' % sys.version_info[:3]
-codename = 'TBA'
+codename = 'Neonatal Nightingale'
 channel = 'dev'
 api = StrictVersion('3.0')
 platform = sys.platform
