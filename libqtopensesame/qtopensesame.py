@@ -33,6 +33,7 @@ import traceback
 import subprocess
 from libqtopensesame.misc.translate import translation_context
 from pyqt_code_editor import watchdog, settings
+from pyqt_code_editor.worker import manager
 _ = translation_context('qtopensesame', category='core')
 oslogger.start('gui')
 # The default symbol browser shortcut is the same as the run shortcut. So we
@@ -980,6 +981,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         ----------
         enabled : bool
         """
+        manager.suspend()
         self.block_close_event = not enabled
         self.ui.dock_overview.setEnabled(enabled)
         self.ui.centralwidget.setEnabled(enabled)
@@ -995,6 +997,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.ui.menubar.setEnabled(enabled)
         self.ui.dock_pool.setEnabled(enabled)
         self.ui.dock_overview.setEnabled(enabled)
+        manager.resume()
         
     def new_window(self):
         """Launches a new instance of the application"""
