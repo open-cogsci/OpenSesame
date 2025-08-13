@@ -517,8 +517,7 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         for item_dict in data['items']:
             item = self.experiment.items.new(item_dict['item-type'],
                                              item_dict['item-name'],
-                                             item_dict['script'],
-                                             catch_exceptions=False)
+                                             item_dict['script'])
             if item_dict['item-name'] == data['main-item-name']:
                 main_item = item
             # If the item didn't get the suggested name

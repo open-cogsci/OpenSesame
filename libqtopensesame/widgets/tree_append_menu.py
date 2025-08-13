@@ -96,8 +96,7 @@ class AppendNewAction(BaseSubcomponent, QtWidgets.QAction):
             should be applied.
         """
         target_item = self.experiment.items[target_item_name]
-        item = self.experiment.items.new(
-            self.item_type, catch_exceptions=False)
+        item = self.experiment.items.new(self.item_type)
         if item is not None:
             target_item.insert_child_item(item.name, len(target_item.items))
 

@@ -27,17 +27,6 @@ class QtItemStore(ItemStore):
     """The GUI counterpart of the item store, which also distributes item
     changes etc.
     """
-    def __init__(self, experiment):
-        """Constructor.
-
-        Parameters
-        ----------
-        main_window : qtopensesame
-            The main window object.
-        """
-        super().__init__(experiment)
-        self.error_log = []
-
     @property
     def main_window(self):
         return self.experiment.main_window
@@ -79,45 +68,19 @@ class QtItemStore(ItemStore):
         self.experiment.build_item_tree()
         self.extension_manager.fire(u'delete_item', name=name)
 
-    def new(self, _type, name=None, script=None, catch_exceptions=False,
-            allow_rename=True):
-        """See item_store."""
-        import warnings
-
-        with warnings.catch_warnings(record=True) as warning_list:
-            if catch_exceptions:
-                try:
-                    item = super(qtitem_store, self).new(
-                        _type=_type,
-                        name=name,
-                        script=script,
-                        allow_rename=allow_rename
-                    )
-                except Exception as e:
-                    self.error_log.append(e)
-                    return
-            else:
-                try:
-                    item = super(qtitem_store, self).new(
-                        _type=_type,
-                        name=name,
-                        script=script,
-                        allow_rename=allow_rename)
-                except ModuleNotFoundError:
-                    raise ItemTypeDoesNotExist(_type)
-                
-        if warning_list:
-            import yaml
-            import os
-            try:
-                self.tabwidget.open_help(
-                    os.path.join(u'help', u'new_item_warning'))
-            except AttributeError:
-                # In case the experiment object doesn't exist yet, which causes
-                # the help page to fail.
-                pass
-            oslogger.warning(yaml.dump(warning_list))
-
+    def new(self, _type, name=None, script=None, allow_rename=True):
+        try:
+            item = super(qtitem_store, self).new(
+                _type=_type,
+                name=name,
+                script=script,
+                allow_rename=allow_rename)
+        except ModuleNotFoundError:
+            item = super(qtitem_store, self).new(
+                _type='missing_item',
+                name=name,
+                script=script,
+                allow_rename=allow_rename)
         self.main_window.set_unsaved(True)
         return item
 

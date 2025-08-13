@@ -671,23 +671,21 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
             cfg.default_logfile_folder = os.path.dirname(self.current_path)
         else:
             self.window_message("New experiment")
-            self.current_path = None
+            self.current_path = None        
         self.set_unsaved(False)
         self.ui.pool_widget.refresh()
         self.extension_manager.fire('open_experiment', path=path)
+        # Missing plugins are loaded as missing_item types. If this happens,
+        # notify the user.
+        for item in self.experiment.items.values():
+            if item.item_type == 'missing_item':
+                self.current_path = None
+                self.window_message("New experiment")
+                self.extension_manager.fire('notify',
+                    message=_("This experiment uses one or more plugins that are not available on your system"),
+                    category='warning', always_show=True, timeout=0)
+                break
         self.set_busy(False)
-        # Process non-fatal errors
-        if exp.items.error_log:
-            self.tabwidget.open_markdown(
-                _(f'Errors occurred while opening the file:\n\n') +
-                '\n\n'.join(
-                    [str(exc) for exc in exp.items.error_log]
-                ),
-                title=_('Error'),
-                icon='dialog-error'
-            )
-            self.window_message("New experiment")
-            self.current_path = None
 
     def open_file(self, dummy=None, path=None, add_to_recent=True):
         """Opens an experiment file.
