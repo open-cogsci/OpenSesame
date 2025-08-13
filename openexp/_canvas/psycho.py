@@ -25,7 +25,7 @@ from openexp._canvas.canvas import Canvas
 from openexp._coordinates.psycho import Psycho as PsychoCoordinates
 from openexp.color import Color
 from openexp.canvas_elements import Rect
-from psychopy import visual, event, core, logging
+from psychopy import visual, event, core, logging, plugins
 
 # Store the experiment as a singleton, to be used in the _time() function
 _experiment = None
@@ -125,13 +125,16 @@ class Psycho(Canvas, PsychoCoordinates):
         return len(self._elements)-1
 
     @staticmethod
-    def init_display(experiment):
-
-        if not py3:
-            from json_tricks import utils
-            utils.get_arg_names = _get_arg_names
+    def init_display(experiment):        
 
         global _experiment, _old_gamma
+        # Load all PsychoPy plugins
+        oslogger.info('scanning psychopy plugins')
+        plugins.scanPlugins()
+        for plugin in plugins.listPlugins():
+            oslogger.info(f'loading psychopy plugin: {plugin}')
+            plugins.loadPlugin(plugin)
+        
         _experiment = experiment
         # Set the PsychoPy monitor, default to testMonitor
         monitor = experiment.var.get(u'psychopy_monitor', u'testMonitor')
