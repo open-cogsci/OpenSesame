@@ -46,6 +46,11 @@ elif platform.system() == 'Windows':
         sys.stderr = open(os.devnull, 'w')
         sys.stdin = open(os.devnull)
     os.chdir(os.path.dirname(sys.executable))
+    # The Scripts folder is where anaconda puts pip and other important 
+    # executables on Windows. This should be in the path.
+    scripts_folder = os.path.abspath('Scripts')
+    if os.path.isdir(scripts_folder):
+        os.environ['PATH'] += f';{scripts_folder}'    
 
 elif platform.system() == 'Darwin':
     # Set SSL certificate locations for macOS app bundles
