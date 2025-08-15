@@ -16,7 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
-from libopensesame.py3compat import *
 from openexp._sampler.sampler import Sampler
 from libopensesame.oslogging import oslogger
 from openexp.backend import configurable
@@ -196,18 +195,27 @@ class Psycho(Sampler):
 
         global Sound, PLAYING
 
-        from psychopy import prefs
-        prefs.hardware['audioLib'] = [
-            experiment.var.get('psycho_audiolib', DEFAULT_AUDIOLIB)]
-        from psychopy import constants
+        from psychopy import prefs, plugins, constants, sound
+        audiolib = experiment.var.get('psycho_audiolib', DEFAULT_AUDIOLIB)
+        prefs.hardware['audioLib'] = [audiolib]
         PLAYING = constants.PLAYING
-        # Fixes a regression in psychopy introduced in
-        # - https://github.com/psychopy/psychopy/commit/\
-        #   45ed546b8e0a25ddb87156ef400687aaf31baf39
-        # Should be removed as soon as this is fixed upstream
-        import psychopy.sound._base
-        psychopy.sound._base.defaultStim = []
-        from psychopy.sound import Sound
+        # The psychopy-sounddevice plugin appears to not have been updated for
+        # the new psychopy plugin system. This prevents the plugin from being
+        # loaded automatically. Here we monkeypatch this issue, which ideally
+        # should be resolved upstream.
+        # - <https://github.com/psychopy/psychopy-sounddevice/issues/5>
+        if audiolib == 'sounddevice' and \
+                'psychopy-sounddevice' not in plugins.listPlugins():
+            oslogger.info('installing sounddevice plugin')
+            try:
+                import psychopy_sounddevice
+            except ImportError:
+                from libopensesame.exceptions import MissingDependency
+                raise MissingDependency('Please install `psychopy-sounddevice`')
+            import importlib
+            sound.backend_sounddevice = psychopy_sounddevice
+            importlib.reload(sound)
+        Sound = sound.Sound
 
     @staticmethod
     def close_sound(experiment):
