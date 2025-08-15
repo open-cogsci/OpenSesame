@@ -41,7 +41,7 @@ oslogger.start('gui')
 if settings.shortcut_symbols == 'Ctrl+R':
     oslogger.info('changing shortcut_symbols to avoid conflict')
     settings.shortcut_symbols = 'Ctrl+Shift+R'
-
+settings.set_font_family()  # detect best font
 
 SAVE_FILE_FILTER = 'OpenSesame files (*.osexp)'
 OPEN_FILE_FILTER = (
