@@ -36,11 +36,6 @@ from pyqt_code_editor import watchdog, settings
 from pyqt_code_editor.worker import manager
 _ = translation_context('qtopensesame', category='core')
 oslogger.start('gui')
-# The default symbol browser shortcut is the same as the run shortcut. So we
-# change this shortcut here if necessary.
-if settings.shortcut_symbols == 'Ctrl+R':
-    oslogger.info('changing shortcut_symbols to avoid conflict')
-    settings.shortcut_symbols = 'Ctrl+Shift+R'
 settings.set_font_family()  # detect best font
 
 SAVE_FILE_FILTER = 'OpenSesame files (*.osexp)'
