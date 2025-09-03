@@ -67,7 +67,7 @@
      <x>0</x>
      <y>0</y>
      <width>1042</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_file">
@@ -79,7 +79,8 @@
       <string>Recent files</string>
      </property>
      <property name="icon">
-      <iconset theme="folder-recent"/>
+      <iconset theme="folder-recent">
+       <normaloff>.</normaloff>.</iconset>
      </property>
      <addaction name="actionDummy"/>
     </widget>
@@ -98,7 +99,6 @@
      <string>Run</string>
     </property>
     <addaction name="action_run"/>
-    <addaction name="action_run_in_window"/>
     <addaction name="action_run_quick"/>
     <addaction name="separator"/>
     <addaction name="action_enable_auto_response"/>
