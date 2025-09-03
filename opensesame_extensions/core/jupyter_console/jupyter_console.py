@@ -28,7 +28,7 @@ import sys
 import json
 _ = translation_context(u'JupyterConsole', category=u'extension')
 
-SIMPLE_TYPES = int, str, float, bytes, bool, type(None)
+SERIABLE_TYPES = int, str, float, bool, type(None)
 ITERABLES = list, set, dict
 
 
@@ -101,7 +101,7 @@ class JupyterConsole(BaseExtension):
             return False
         visited.add(value_id)
         # Check if it's a simple type
-        if isinstance(value, SIMPLE_TYPES):
+        if isinstance(value, SERIABLE_TYPES):
             return True
         # Check if it's a standard iterable
         if isinstance(value, ITERABLES):
@@ -110,7 +110,7 @@ class JupyterConsole(BaseExtension):
         # Check if it's a dict with simple keys and values
         if isinstance(value, dict):
             return all(
-                isinstance(k, SIMPLE_TYPES)
+                isinstance(k, SERIABLE_TYPES)
                     and self._is_simple_value(v, visited)
                 for k, v in value.items())
         return False        
