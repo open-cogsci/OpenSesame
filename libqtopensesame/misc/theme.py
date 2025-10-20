@@ -26,7 +26,7 @@ from libopensesame.oslogging import oslogger
 from libqtopensesame.misc.config import cfg
 from qtpy import QtGui, QtWidgets, QtCore
 
-available_themes = [u'default', u'monokai']
+available_themes = ['default']
 
 # Fontawesome 4 (with the fa. prefix) has been removed in recent updates of
 # qtawesome. This is used by various packages, so here we monkeypatch the icon()
@@ -67,7 +67,7 @@ class Theme:
         self.main_window = main_window
         self.fallback_icon = QtGui.QIcon(resources['theme/fallback.png'])
         self.theme = cfg.theme if theme is None else theme
-        self.theme_folder = resources[f'theme/{self.theme}']
+        self.theme_folder = resources.get(f'theme/{self.theme}')
         self._icon_theme_path = self.theme_folder
         oslogger.debug(u"theme = '%s' (%s)" % (self.theme, self.theme_folder))
         # The theme folder must exist, and contain a file called __theme__.py,

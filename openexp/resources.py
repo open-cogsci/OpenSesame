@@ -39,6 +39,12 @@ class Resources:
                 return str(folder / key)
         raise FileNotFoundError(f'failed to find resource {key}')
         
+    def get(self, key, default=None):
+        try:
+            return self[key]
+        except FileNotFoundError:
+            return default
+        
     def __setitem__(self, key, path):
         self._resources[key] = path
 
