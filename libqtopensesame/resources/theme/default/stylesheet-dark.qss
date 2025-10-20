@@ -1,0 +1,126 @@
+#user_hint_widget QPushButton {
+	background-color: #03A9F4;
+}
+
+#label_size_warning {
+	background-color: #03A9F4;
+	color: #ffffff;
+	border-radius: 2px;
+	padding: 4px;
+}
+
+#user_hint_widget,
+#input_header {
+	background-color: #03A9F4;
+	border-radius: 2px;
+	padding: 0px;
+}
+
+#user_hint_widget QPushButton,
+#user_hint_widget QLabel,
+#input_header QLabel {
+	color: #ffffff;
+	padding-left: 4px;
+}
+
+#input_header QLabel {
+	font-size: 14pt;
+}
+
+#item_name {
+	font-family: 'Roboto Slab';
+	color: #64b5f6;
+	font-size: 16pt;
+}
+
+#item_type {
+	font-family: 'Roboto Slab';
+	font-size: 16pt;
+	color: #9e9e9e;
+}
+
+#label_summary,
+#control-info,
+#item_desc {
+	font-family: 'Roboto Condensed', sans;
+	color: #9e9e9e;
+}
+
+#quick_switcher #filter_line_edit {
+	font-size: 14pt;
+}
+
+#quick_switcher {
+	border-color: #64b5f6;
+	background-color: #03A9F4;
+}
+
+#quick_switcher QListWidget,
+#quick_switcher QLineEdit {
+	border: none;
+	border-radius: 2px;
+	background-color: #2d2d2d;
+	color: #e0e0e0;
+	padding: 4px;
+}
+
+#quick_switcher #label_quick_switcher_wait {
+	font-size: 14pt;
+	color: #ffffff;
+}
+
+#form_sketchpad * {
+	font-size: 8pt;
+}
+
+#form_sketchpad #label_cursor_pos {
+	font-family: monospace;
+}
+
+#toolbar_items QLabel {
+	font-size: 8pt;
+	font-family: "Roboto Condensed";
+}
+
+QTreeView::item {
+	padding: 4px;
+}
+
+/** QNotifications **/
+
+QNotification {
+	font-size: 16px;
+	padding: 0px;
+	margin: 0px;
+	border-radius: 6px;
+}
+
+QNotification #message{
+	color: #FFFFFF;
+	padding: 0px;
+	margin: 0px;
+}
+
+QNotification #closeButton{
+	color: #FFFFFF;
+	padding: 0px;
+	margin: 0px;
+}
+
+QNotification#info,
+QNotification#primary {
+	background-color: #039be5;
+	border-color: #64b5f6;
+}
+
+QNotification#success {
+	background-color: #43a047;
+	border-color: #2e7d32;
+}
+
+QNotification#danger,
+QNotification#warning {
+	background-color: #e53935;
+	border-color: #c62828;
+}
+

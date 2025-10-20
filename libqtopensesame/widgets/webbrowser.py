@@ -22,7 +22,7 @@ import platform
 from qtpy import QtCore
 from libopensesame.exceptions import ItemDoesNotExist
 from libqtopensesame.widgets.base_widget import BaseWidget
-from libopensesame import plugins, misc
+from libopensesame import misc
 from libqtopensesame.misc.markdown_parser import MarkdownParser
 from libqtopensesame.misc import display
 from libqtopensesame.misc.translate import translation_context

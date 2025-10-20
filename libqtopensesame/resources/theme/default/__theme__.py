@@ -16,6 +16,17 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
+from libopensesame.oslogging import oslogger
+from qtpy.QtGui import QGuiApplication
+from qtpy.QtCore import Qt
+
 icon_map = "icon_map.csv"
 icon_theme = "MokaSesame"
-qss = "stylesheet.qss"
+mode = 'light'
+try:
+    if QGuiApplication.styleHints().colorScheme() == Qt.ColorScheme.Dark:
+        mode = 'dark'
+except Exception as e:
+    oslogger.error(f'failed to detect dark mode: {e}')
+oslogger.info(f'using {mode} mode')      
+qss = f"stylesheet-{mode}.qss"

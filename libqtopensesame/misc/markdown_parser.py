@@ -22,6 +22,8 @@ from libqtopensesame.misc.base_subcomponent import BaseSubcomponent
 import re
 import os
 from libopensesame.oslogging import oslogger
+from qtpy.QtGui import QGuiApplication
+from qtpy.QtCore import Qt
 try:
     import markdown
     from markdown.extensions import attr_list, extra, toc
@@ -40,10 +42,10 @@ _ = translation_context(u'markdown', category=u'core')
 
 
 class MarkdownParser(BaseSubcomponent):
-
-    r"""A Markdown parser with syntax highlighting."""
+    """A Markdown parser with syntax highlighting."""
+    
     def __init__(self, main_window):
-        r"""Constructor.
+        """Constructor.
 
         Parameters
         ----------
@@ -51,8 +53,17 @@ class MarkdownParser(BaseSubcomponent):
             The main-window object.
         """
         self.setup(main_window)
+        mode = 'light'
+        try:
+            if QGuiApplication.styleHints().colorScheme() == Qt.ColorScheme.Dark:
+                mode = 'dark'
+        except Exception as e:
+            oslogger.error(f'failed to detect dark mode: {e}')
+        oslogger.info(f'using {mode} mode')        
+        
         self.css = u'<style type="text/css">'
-        with safe_open(self.main_window.theme.resource(u'markdown.css')) as fd:
+        with safe_open(self.main_window.theme.resource(
+            f'markdown-{mode}.css')) as fd:
             self.css += fd.read() % {u'background_image':
                                      os.path.abspath(self.main_window.theme.resource(
                                          u'background.png'))}
