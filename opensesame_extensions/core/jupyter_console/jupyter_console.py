@@ -29,7 +29,7 @@ import json
 _ = translation_context(u'JupyterConsole', category=u'extension')
 
 SERIABLE_TYPES = int, str, float, bool, type(None)
-ITERABLES = list, set, dict
+ITERABLES = list, tuple
 
 
 class JupyterConsole(BaseExtension):
