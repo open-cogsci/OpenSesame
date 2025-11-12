@@ -30,13 +30,19 @@ class QtStructureItem:
 
     def update(self):
         """See qtitem."""
+        children_before = self.children()        
         super().update()
-        self.experiment.build_item_tree()
+        self.experiment.items.clear_cache()
+        if children_before != self.children():
+            self.experiment.build_item_tree()        
 
     def apply_script_changes(self):
         """See qtitem."""
+        children_before = self.children()        
         super().apply_script_changes()
-        self.experiment.build_item_tree()
+        self.experiment.items.clear_cache()
+        if children_before != self.children():
+            self.experiment.build_item_tree()
 
     @staticmethod
     def clears_children_cache(fnc):
