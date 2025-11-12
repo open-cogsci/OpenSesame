@@ -59,6 +59,7 @@ AbortCoroutines: Exception = None  # type: ignore
 from libopensesame.file_pool_store import FilePoolStore
 pool: FilePoolStore = None  # type: ignore
 win: object = None  # type: ignore
+eyetracker: object = None  # type: ignore
 '''
 
 
