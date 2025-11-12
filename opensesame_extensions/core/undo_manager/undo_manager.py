@@ -1,5 +1,3 @@
-# -*- coding:utf-8 -*-
-
 """
 This file is part of OpenSesame.
 
@@ -19,7 +17,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 from libqtopensesame.extensions import BaseExtension, suspend_events
 from libqtopensesame.items.qtstructure_item import qtstructure_item
-from qtpy.QtWidgets import QMenu, QToolBar
 from .undo_stack import UndoStack
 import difflib
 from libqtopensesame.misc.translate import translation_context

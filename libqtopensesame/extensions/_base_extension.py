@@ -18,7 +18,6 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
 import os
-import time
 import functools
 import traceback
 from qtpy import QtWidgets, QtCore
