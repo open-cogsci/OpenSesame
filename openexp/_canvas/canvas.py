@@ -858,7 +858,11 @@ class Canvas(Backend):
         return 'stim%d' % self._stimnr
 
     def text_size(self, text, center=True, max_width=None, **style_args):
-        """Determines the size of a text string in pixels.
+        """Determines the size of a text string in pixels. The resulting 
+        dimensions reflect a bounding box around the text. This means that a tall
+        letter, such as 'l', will result in a larger height than a short letter,
+        such as 'o', and that a wide letter, such as 'm', will result in a larger
+        width than a narrow letter, such as 'i'.
 
         Parameters
         ----------
