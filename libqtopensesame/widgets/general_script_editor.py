@@ -60,6 +60,7 @@ class GeneralScriptEditor(BaseWidget):
 
     def refresh(self):
         r"""Refreshes the contents of the general script."""
+        self.extension_manager.fire('open_general_script')
         self.ui.editor.setPlainText(
             self.main_window.experiment.to_string()
         )

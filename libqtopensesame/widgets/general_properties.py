@@ -185,6 +185,7 @@ class GeneralProperties(BaseWidget):
 
     def refresh(self):
         """Updates the controls of the general tab."""
+        self.extension_manager.fire('open_general_properties')
         # Lock the general tab to prevent a recursive loop
         self.lock = True
         # Set the header containing the title etc
