@@ -31,16 +31,16 @@ class QtStructureItem:
     def update(self):
         """See qtitem."""
         children_before = self.children()        
-        self.experiment.items.clear_cache()
         super().update()
+        self.experiment.items.clear_cache()
         if children_before != self.children():
             self.experiment.build_item_tree()        
 
     def apply_script_changes(self):
         """See qtitem."""
         children_before = self.children()        
-        self.experiment.items.clear_cache()
         super().apply_script_changes()
+        self.experiment.items.clear_cache()
         if children_before != self.children():
             self.experiment.build_item_tree()
 
@@ -51,12 +51,8 @@ class QtStructureItem:
         """
         def inner(self, *args, **kwargs):
 
-            children_before = self.children()        
             self.experiment.items.clear_cache()
-            retval = fnc(self, *args, **kwargs)
-            if children_before != self.children():
-                self.experiment.build_item_tree()
-            return retval
+            return fnc(self, *args, **kwargs)
 
         return inner
 
