@@ -40,7 +40,7 @@ OpenSesame relies on a number repositories that are all hosted by the [Cogsci.nl
 
 ## Branches
 
-Each major version of OpenSesame lives in its own branch. The default branch is currently `milgram`.
+Each major version of OpenSesame lives in its own branch.
 
 - `gibson` - 2.8
 - `heisenberg` - 2.9
