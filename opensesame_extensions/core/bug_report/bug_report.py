@@ -20,13 +20,11 @@ from libopensesame.py3compat import *
 from libqtopensesame.extensions import BaseExtension
 from libqtopensesame.misc.config import cfg
 from libopensesame import metadata
-from qtpy import QtCore
 import sys
-import yaml
 import os
 import traceback
 from libqtopensesame.misc.translate import translation_context
-_ = translation_context(u'bug_report', category=u'extension')
+_ = translation_context('bug_report', category='extension')
 
 
 class BugReport(BaseExtension):
@@ -35,7 +33,7 @@ class BugReport(BaseExtension):
         sys.excepthook = self.captured_err
 
     def indent(self, s):
-        r"""Tab-indent a piece of text so that it's code for Markdown.
+        """Tab-indent a piece of text so that it's code for Markdown.
 
         Parameters
         ----------
@@ -46,10 +44,10 @@ class BugReport(BaseExtension):
         -------
         Indented text.
         """
-        return u'\t' + s.replace(u'\n', u'\n\t').replace(os.linesep, u'\n\t')
+        return '\t' + s.replace('\n', '\n\t').replace(os.linesep, '\n\t')
 
     def event_bug_report_send(self):
-        r"""Sends a bug report for the latest stacktrace. Also closes the
+        """Sends a bug report for the latest stacktrace. Also closes the
         current tab, which is the report tab, and shows a results tab.
         """
         self.main_window.tabwidget.close_current()
@@ -58,42 +56,42 @@ class BugReport(BaseExtension):
         if self.traceback is None:
             return
         q = urlencode({
-            u'traceback': safe_str(self.traceback, errors=u'ignore'),
-            u'version': safe_str(metadata.__version__, errors=u'ignore'),
-            u'python_version': safe_str(metadata.python_version,
-                                        errors=u'ignore'),
-            u'platform': safe_str(metadata.platform, errors=u'ignore'),
+            'traceback': safe_str(self.traceback, errors='ignore'),
+            'version': safe_str(metadata.__version__, errors='ignore'),
+            'python_version': safe_str(metadata.python_version,
+                                       errors='ignore'),
+            'platform': safe_str(metadata.platform, errors='ignore'),
         })
-        url = cfg.bug_report_url + u'?' + q
+        url = cfg.bug_report_url + '?' + q
         try:
             fd = urlopen(url)
-            resp = safe_decode(fd.read(), errors=u'ignore')
+            resp = safe_decode(fd.read(), errors='ignore')
             fd.close()
         except:
-            self.tabwidget.open_markdown(self.ext_resource(u'failure.md'),
-                                         title=_(u'Bug report not sent'))
+            self.tabwidget.open_markdown(self.ext_resource('failure.md'),
+                                         title=_('Bug report not sent'))
             return
-        if resp == u'OK':
-            self.tabwidget.open_markdown(self.ext_resource(u'success.md'),
-                                         title=_(u'Bug report sent'))
+        if resp == 'OK':
+            self.tabwidget.open_markdown(self.ext_resource('success.md'),
+                                         title=_('Bug report sent'))
         else:
-            self.tabwidget.open_markdown(self.ext_resource(u'failure.md'),
-                                         title=_(u'Bug report not sent'))
+            self.tabwidget.open_markdown(self.ext_resource('failure.md'),
+                                         title=_('Bug report not sent'))
 
     def captured_err(self, exception_type, value, tb):
         r"""Shows a report tab when an error message has been captured."""
         error_list = traceback.format_exception(exception_type, value, tb)
         self.traceback = u"".join([safe_decode(tb_line)
                                   for tb_line in error_list])
-        self.traceback_md = u'~~~ .traceback\n%s\n~~~\n' % self.traceback
-        md = safe_read(self.ext_resource(u'report.md')) % {
-            # u'traceback' : self.indent(self.stderr.buffer),
-            u'traceback': self.traceback_md,
-            u'version': metadata.__version__,
-            u'python_version': safe_str(metadata.python_version,
-                                        errors=u'ignore'),
-            u'platform': metadata.platform,
+        self.traceback_md = '~~~ .traceback\n%s\n~~~\n' % self.traceback
+        md = safe_read(self.ext_resource('report.md')) % {
+            # 'traceback' : self.indent(self.stderr.buffer),
+            'traceback': self.traceback_md,
+            'version': metadata.__version__,
+            'python_version': safe_str(metadata.python_version,
+                                        errors='ignore'),
+            'platform': metadata.platform,
         }
-        self.tabwidget.open_markdown(md, title=_(u'Oops ...'))
+        self.tabwidget.open_markdown(md, title=_('Oops ...'))
         sys.stderr.write(self.traceback)
         self.main_window.enable()
