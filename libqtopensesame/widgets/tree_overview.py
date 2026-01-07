@@ -216,8 +216,10 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         if col == 0:
             if hasattr(treeitem, 'name'):
                 from_name = treeitem.name
+                self.locked = True
                 to_name = self.experiment.items.rename(
                     from_name, treeitem.text(0))
+                self.locked = False
                 if to_name is None:
                     self.itemChanged.disconnect()
                     treeitem.setText(0, from_name)

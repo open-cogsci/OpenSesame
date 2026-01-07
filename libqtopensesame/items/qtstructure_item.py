@@ -51,8 +51,12 @@ class QtStructureItem:
         """
         def inner(self, *args, **kwargs):
 
+            children_before = self.children()        
             self.experiment.items.clear_cache()
-            return fnc(self, *args, **kwargs)
+            retval = fnc(self, *args, **kwargs)
+            if children_before != self.children():
+                self.experiment.build_item_tree()
+            return retval
 
         return inner
 
