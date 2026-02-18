@@ -26,8 +26,11 @@ from pyqt_code_editor.environment_manager import environment_manager
 _ = translation_context('inline_script', category='item')
 
 
-# This import prefix helps Jedi know about the Python workspace API
-IMPORT_PREFIX = '''from libopensesame.python_workspace_api import (
+# This import prefix helps Jedi know about the Python workspace API. It also
+# tells ruff to ignore certain errors, such as imports not at the top (E402)
+# which do not make sense in the context of OpenSesame.
+IMPORT_PREFIX = '''# # ruff: noqa: E402
+from libopensesame.python_workspace_api import (
     # Core factory functions
     Experiment, Form, Canvas, Keyboard, Mouse, Sampler, Synth,
     # Canvas elements
