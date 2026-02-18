@@ -65,8 +65,7 @@ class QtAutoPlugin(QtPlugin):
             # Check whether all required options have been specified
             if 'type' not in c:
                 raise RuntimeError(
-                    _('You must specify "type" for %s controls in info.yaml')
-                    % option)
+                    _('You must specify "type" for %controls in info.yaml'))
             for types, options in required:
                 if c['type'] in types:
                     for option in options:
@@ -131,13 +130,13 @@ class QtAutoPlugin(QtPlugin):
                 widget = self.add_text(c['label'])
             else:
                 raise Exception(_('"%s" is not a valid qtautoplugin control')
-                                % controls['type'])
+                                % c['type'])
             # Add an optional validator
             if 'validator' in c:
                 try:
                     validator = getattr(validators,
                                         '%s_validator' % c['validator'])
-                except:
+                except AttributeError:
                     raise RuntimeError(
                         'Invalid validator: %s' % c['validator'])
                 widget.setValidator(validator(self.main_window))

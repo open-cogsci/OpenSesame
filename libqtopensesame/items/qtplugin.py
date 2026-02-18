@@ -100,11 +100,6 @@ class QtPlugin(QtItem):
             return self.qicon
         return self.item_type
 
-    def edit_widget(self):
-        """Updates the GUI controls."""
-        super().edit_widget()
-        self.auto_edit_widget()
-
     def add_control(self, label, widget, tooltip=None, min_width=200,
                     info=None):
         """Adds a generic control QWidget.
@@ -411,6 +406,7 @@ class QtPlugin(QtItem):
             self.auto_line_edit[var] = edit
         self.add_control(label, edit, **kwdict)
         return edit
+        
     def add_editor_control(self, var, label, syntax=False, language='python'):
             """Adds an editor that is linked to a variable.
 
@@ -458,6 +454,7 @@ class QtPlugin(QtItem):
             self.edit_vbox.addWidget(editor)
             self.set_focus_widget(editor)
             return editor
+            
     def _editor_focus_out(self, event):
         self.apply_edit_changes()
 
