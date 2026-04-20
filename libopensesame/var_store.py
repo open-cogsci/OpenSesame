@@ -31,8 +31,8 @@ class VarStore:
     """__New in 4.0.0__: As of OpenSesame 4.0, all experimental variables are
     also available in the Python workspace. This means that you therefore 
     don't need the `var` object anymore.
-    
-    
+
+
     The `var` object provides access to experimental variables.
     Experimental variables are the variables that live in the GUI, and are
     commonly set as independent variables in the LOOP item, referred
@@ -211,9 +211,11 @@ class VarStore:
                 f'Variable {var} should be in {valid}, not {val}')
         if _eval:
             object.__setattr__(self, u'__lock__', var)
-            val = self.__item__.syntax.auto_type(
-                self.__item__.syntax.eval_text(val))
-            object.__setattr__(self, u'__lock__', None)
+            try:
+                val = self.__item__.syntax.auto_type(
+                    self.__item__.syntax.eval_text(val))
+            finally:
+                object.__setattr__(self, u'__lock__', None)
         return val
 
     def has(self, var):
@@ -337,7 +339,7 @@ class VarStore:
         >>>         print(varname, value)
         """
         return list(self.__vars__.items())
-        
+
     def is_default_loggable(self, var, val):
         """Checks whether a value is loggable by default. This includes int,
         str, byes, float, bool, and None values, as well as any type that is 
