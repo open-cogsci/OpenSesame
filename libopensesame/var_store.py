@@ -82,7 +82,6 @@ class VarStore:
         object.__setattr__(self, u'__item__', item)
         object.__setattr__(self, u'__parent__', parent)
         object.__setattr__(self, u'__vars__', {})
-        object.__setattr__(self, u'__lock__', None)
         self._copy_class_description()
 
     def _copy_class_description(self):
@@ -177,23 +176,18 @@ class VarStore:
 
         Examples
         --------
-        >>> print('my_variable = %s' % var.get(u'my_variable'))
+        >>> print('my_variable = %s' % var.get('my_variable'))
         >>> # Equivalent to:
         >>> print('my_variable = %s' % var.my_variable)
         >>> # But if you want to pass keyword arguments you need to use `get()`:
-        >>> var.get(u'my_variable', default=u'a_default_value')
+        >>> var.get('my_variable', default='a_default_value')
         """
         self._check_var_name(var)
-        if self.__lock__ == var:
-            raise OSException(f"Recursion detected! Is variable {var} defined "
-                              f"in terms of itself (e.g., 'var = [var]')")
         if var in self.__vars__:
             val = self.__vars__[var]
         elif hasattr(self.__item__, var):
             warnings.warn(
-                u'var %s is stored as attribute of item %s'
-                % (var, self.__item__.name)
-            )
+                f'var {var} is stored as attribute of item {self.__item__.name}')
             val = getattr(self.__item__, var)
         elif self.__parent__ is not None:
             val = self.__parent__.get(
@@ -210,12 +204,22 @@ class VarStore:
             raise InvalidValue(
                 f'Variable {var} should be in {valid}, not {val}')
         if _eval:
-            object.__setattr__(self, u'__lock__', var)
             try:
                 val = self.__item__.syntax.auto_type(
                     self.__item__.syntax.eval_text(val))
-            finally:
-                object.__setattr__(self, u'__lock__', None)
+            except RecursionError:
+                # Recursion during evaluation almost always indicates that a
+                # variable is (directly or indirectly) defined in terms of
+                # itself, e.g. var = [var], or var_a = [var_b] while
+                # var_b = [var_a]. We re-raise as a regular OSException so it
+                # is reported as a normal experiment error rather than as an
+                # opaque RecursionError. This error should almost never occur
+                # because f-strings do not allow recursion, but we still 
+                # check in case of older code.
+                raise OSException(
+                    f"Recursion detected while evaluating variable '{var}'. "
+                    f"Check whether '{var}' (or a variable that it refers to) "
+                    f"is defined in terms of itself.")
         return val
 
     def has(self, var):
@@ -293,7 +297,7 @@ class VarStore:
 
     def __iter__(self):
         r"""Implements the iterator."""
-        return var_store_iterator(self)
+        return VarStoreIterator(self)
 
     def __len__(self):
         r"""Returns the number of experimental variables that are stored in the
@@ -392,7 +396,7 @@ class VarStore:
         return d
 
     def __reduce__(self):
-        r"""Implements custom pickling. See var_store_pickle."""
+        r"""Implements custom pickling. See VarStorePickle."""
         try:
             # If the parent var store is specified and is not None, then this
             # is a var store of an item, and we don't pickle it.
@@ -400,7 +404,7 @@ class VarStore:
                 return None
         except AttributeError:
             pass
-        return (var_store_pickle, (self.inspect(), ))
+        return (VarStorePickle, (self.inspect(), ))
 
 
 class VarStorePickle(VarStore):
@@ -463,9 +467,3 @@ class VarStoreIterator:
         if len(self.vars) == 0:
             raise StopIteration
         return self.vars.pop()
-
-
-# Alias for backwards compatibility
-var_store = VarStore
-var_store_pickle = VarStorePickle
-var_store_iterator = VarStoreIterator

@@ -499,8 +499,8 @@ class Experiment(Item):
                 self.output_channel is None:
             self.heartbeat = None
             return
-        from libopensesame.heartbeat import heartbeat
-        self.heartbeat = heartbeat(self, interval=self.heartbeat_interval)
+        from libopensesame.heartbeat import Heartbeat
+        self.heartbeat = Heartbeat(self, interval=self.heartbeat_interval)
         self.heartbeat.start()
 
     def init_random(self):

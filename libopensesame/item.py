@@ -17,8 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
-from libopensesame.var_store import var_store
-import warnings
+from libopensesame.var_store import VarStore
 from libopensesame.misc import snake_case
 from libopensesame.exceptions import InvalidOpenSesameScript, InvalidValue, \
     IncompatibilityError
@@ -42,7 +41,7 @@ class Item:
 
     def __init__(self, name, experiment, string=None):
         if self.var is None:
-            self.var = var_store(self, parent=experiment.var)
+            self.var = VarStore(self, parent=experiment.var)
         self.name = name
         self.experiment = experiment
         self.debug = oslogger.debug_mode
