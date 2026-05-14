@@ -168,16 +168,8 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         scripts = [IMPORT_PREFIX]
         index = self._tab_widget.currentIndex()
         for item in self.experiment.items.values():
-            # For loop items, we include directions to ignore the variables
-            # defined in the loop table
-            if item.item_type == 'loop':
-                scripts.append(
-                    f'# Variables defined in {item.name} loop')
-                for colname, value in item.var_info():
-                    scripts.append(
-                        f'{colname}: {(value).__class__.__name__} = None  # type: ignore')
             # For inline_scripts, we simply include the scripts
-            elif item.item_type == 'inline_script':
+            if item.item_type == 'inline_script':
                 if item != self or index == 1:
                     scripts.append(f'''
 # START_PREPARE_PHASE (item: {item.name})
@@ -190,6 +182,14 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
 {item.var._run}
 # END_RUN_PHASE (item: {item.name})
 ''')
+            # For loop items, we include directions to ignore the variables
+            # offered by that item
+            else:
+                scripts.append(
+                    f'# Variables defined in {item.name}')
+                for colname, value in item.var_info():
+                    scripts.append(
+                        f'{colname}: {(value).__class__.__name__} = None  # type: ignore')
         environment_manager.prefix = '\n'.join(scripts)
         print(environment_manager.prefix)
         
