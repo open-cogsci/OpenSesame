@@ -29,7 +29,7 @@ _ = translation_context('inline_script', category='item')
 # This import prefix helps Jedi know about the Python workspace API. It also
 # tells ruff to ignore certain errors, such as imports not at the top (E402)
 # which do not make sense in the context of OpenSesame.
-IMPORT_PREFIX = '''# # ruff: noqa: E402
+IMPORT_PREFIX = '''# ruff: noqa: E402
 from libopensesame.python_workspace_api import (
     # Core factory functions
     Experiment, Form, Canvas, Keyboard, Mouse, Sampler, Synth,
@@ -168,21 +168,30 @@ class InlineScript(InlineScriptRuntime, QtPlugin):
         scripts = [IMPORT_PREFIX]
         index = self._tab_widget.currentIndex()
         for item in self.experiment.items.values():
-            if item.item_type != 'inline_script':
-                continue
-            if item != self or index == 1:
-                scripts.append(f'''
+            # For loop items, we include directions to ignore the variables
+            # defined in the loop table
+            if item.item_type == 'loop':
+                scripts.append(
+                    f'# Variables defined in {item.name} loop')
+                for colname, value in item.var_info():
+                    scripts.append(
+                        f'{colname}: {(value).__class__.__name__} = None  # type: ignore')
+            # For inline_scripts, we simply include the scripts
+            elif item.item_type == 'inline_script':
+                if item != self or index == 1:
+                    scripts.append(f'''
 # START_PREPARE_PHASE (item: {item.name})
 {item.var._prepare}
 # END_PREPARE_PHASE (item: {item.name})
 ''')        
-            if item != self or index == 0:
-                scripts.append(f'''
+                if item != self or index == 0:
+                    scripts.append(f'''
 # START_RUN_PHASE (item: {item.name})
 {item.var._run}
 # END_RUN_PHASE (item: {item.name})
 ''')
         environment_manager.prefix = '\n'.join(scripts)
+        print(environment_manager.prefix)
         
     def open_tab(self, select_in_tree=True, **kwargs):
         super().open_tab(select_in_tree=select_in_tree, **kwargs)
