@@ -26,50 +26,60 @@ from openexp.backend import configurable
 
 # Whitespace, backspace, and empty strings are not acceptable names for keys.
 # These should be converted to descriptions, e.g. '\t' to 'tab'
-invalid_unicode = [u'', u'\x08', u'\x7f'] + list(whitespace)
+invalid_unicode = ['', '\x08', '\x7f'] + list(whitespace)
 # On mac arrow keys are not accepted as valid input either. Add them to this list
 if platform.system() == "Darwin":
     invalid_unicode += [
-        u'\uf702',  # left
-        u'\uf703',  # right
-        u'\uf700',  # up
-        u'\uf701',  # down
-        u'\uf729',  # home
-        u'\uf72b',  # end
-        u'\uf72c',  # page up
-        u'\uf72d',  # page down
-        u'\uf728',  # delete
-        u'\uf739',  # numlock
+        '\uf702',  # left
+        '\uf703',  # right
+        '\uf700',  # up
+        '\uf701',  # down
+        '\uf729',  # home
+        '\uf72b',  # end
+        '\uf72c',  # page up
+        '\uf72d',  # page down
+        '\uf728',  # delete
+        '\uf739',  # numlock
     ]
 
 
 class Legacy(Keyboard):
 
-    r"""This is a keyboard backend built on top of PyGame. For function
+    """This is a keyboard backend built on top of PyGame. For function
     specifications and docstrings, see `openexp._keyboard.keyboard`.
     """
-    def __init__(self, experiment, **resp_args):
 
-        pygame.init()
-        self.key_code_to_name = {}
-        self.key_name_to_code = {}
+    # Class-level cache for key mappings (populated once on first init)
+    _key_code_to_name = None
+    _key_name_to_code = None
+
+    @classmethod
+    def _init_key_cache(cls):
+        """Populate the class-level key mapping caches (idempotent)."""
+        if cls._key_code_to_name is not None:
+            return
+        cls._key_code_to_name = {}
+        cls._key_name_to_code = {}
         for i in dir(pygame):
-            if i[:2] == u"K_":
+            if i[:2] == "K_":
                 code = getattr(pygame, i)
-                name1 = self.key_name(code).lower()
+                name1 = cls.key_name(code).lower()
                 name2 = name1.upper()
                 name3 = i[2:].lower()
                 name4 = name3.upper()
-                self.key_code_to_name[code] = [name1, name2, name3, name4]
-                try:
-                    i = int(name5)
-                    self.key_code_to_name[code].append(name5)
-                except:
-                    pass
-                self.key_name_to_code[name1] = code
-                self.key_name_to_code[name2] = code
-                self.key_name_to_code[name3] = code
-                self.key_name_to_code[name4] = code
+                cls._key_code_to_name[code] = [name1, name2, name3, name4]
+                cls._key_name_to_code[name1] = code
+                cls._key_name_to_code[name2] = code
+                cls._key_name_to_code[name3] = code
+                cls._key_name_to_code[name4] = code
+
+    def __init__(self, experiment, **resp_args):
+
+        self._init_key_cache()
+        # Instance-level references to the class-level caches (for backward
+        # compatibility with any code that accesses these as instance attrs)
+        self.key_code_to_name = self._key_code_to_name
+        self.key_name_to_code = self._key_name_to_code
         self.persistent_virtual_keyboard = False
         Keyboard.__init__(self, experiment, **resp_args)
 
@@ -95,7 +105,7 @@ class Legacy(Keyboard):
             # for example when composing a multicharacter Chinese or Japanese
             # string. That's why we process up all events, rather than
             # assuming that there's only a single relevant event in the queue.
-            key = u''
+            key = ''
             for event in pygame.event.get(event_type):
                 if event.key == pygame.K_ESCAPE:
                     self.experiment.pause()
@@ -103,12 +113,12 @@ class Legacy(Keyboard):
                 # we fall back to converting the key code straight to an ASCII
                 # value. This is not great, because it assumes a QWERTY
                 # keyboard layout.
-                if hasattr(event, u'unicode'):
+                if hasattr(event, 'unicode'):
                     ucode = event.unicode
                 elif event.key < 128:
                     ucode = chr(event.key)
                 else:
-                    ucode = u''
+                    ucode = ''
                 if ucode in invalid_unicode:
                     key += self.key_name(event.key)
                 else:
@@ -124,13 +134,13 @@ class Legacy(Keyboard):
         l = []
         mods = pygame.key.get_mods()
         if mods & KMOD_LSHIFT or mods & KMOD_RSHIFT or mods & KMOD_SHIFT:
-            l.append(u"shift")
+            l.append("shift")
         if mods & KMOD_LCTRL or mods & KMOD_RCTRL or mods & KMOD_CTRL:
-            l.append(u"ctrl")
+            l.append("ctrl")
         if mods & KMOD_LALT or mods & KMOD_RALT or mods & KMOD_ALT:
-            l.append(u"alt")
+            l.append("alt")
         if mods & KMOD_LMETA or mods & KMOD_RMETA or mods & KMOD_META:
-            l.append(u"meta")
+            l.append("meta")
         return l
 
     def valid_keys(self):
@@ -156,15 +166,15 @@ class Legacy(Keyboard):
         pygame.event.pump()
         return keypressed
 
-    def key_name(self, key):
+    @classmethod
+    def key_name(cls, key):
 
-        return str(pygame.key.name(key)).replace(u'[', u'').replace(u']',
-                                                                    u'')
+        return str(pygame.key.name(key)).replace('[', '').replace(']', '')
 
     def _keycode_to_str(self, keycode):
 
-        return safedecode(pygame.key.name(keycode)) \
-            .replace(u'[', u'').replace(u']', u'').lower()
+        return (safedecode(pygame.key.name(keycode))
+                .replace('[', '').replace(']', '').lower())
 
 
 # Non PEP-8 alias for backwards compatibility
