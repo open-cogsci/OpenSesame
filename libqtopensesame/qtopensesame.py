@@ -826,7 +826,8 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
 
     def regenerate(self, script):
         """Regenerates the current experiment from script, and updates the
-        GUI.
+        GUI. Returns a markdown error message if an error occurred, otherwise
+        returns None.
         """
         self.extension_manager.fire('prepare_regenerate')
         try:
@@ -836,8 +837,9 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                              experiment_path=self.experiment.experiment_path,
                              resources=self.experiment.resources)
         except OSException as e:
-            self.tabwidget.open_markdown(e.markdown(include_source=False))
-            return
+            err_msg = e.markdown(include_source=False)
+            self.tabwidget.open_markdown(err_msg)
+            return err_msg
         self.experiment = exp
         self.tabwidget.close_all()
         self.experiment.build_item_tree()
