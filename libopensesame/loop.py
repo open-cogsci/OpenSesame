@@ -19,10 +19,9 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 from libopensesame.py3compat import *
 import os
 from libopensesame.oslogging import oslogger
-from libopensesame.exceptions import InvalidOpenSesameScript, OSException, \
-    ItemDoesNotExist, LoopSourceFileDoesNotExist, UnsupportedLoopSourceFile, \
-    InvalidConditionalExpression, PythonError, InvalidValue, \
-    ConditionalExpressionError
+from libopensesame.exceptions import (InvalidOpenSesameScript, OSException,
+    ItemDoesNotExist, LoopSourceFileDoesNotExist, UnsupportedLoopSourceFile,
+    InvalidValue, ConditionalExpressionError)
 from libopensesame.item import Item
 from datamatrix import operations, DataMatrix, functional
 from pseudorandom import Enforce, MaxRep, MinDist
@@ -32,18 +31,18 @@ from openexp.keyboard import Keyboard
 class Loop(Item):
     """A loop item runs a single other item multiple times"""
     
-    description = u'Repeatedly runs another item'
-    valid_orders = u'sequential', u'random'
+    description = 'Repeatedly runs another item'
+    valid_orders = 'sequential', 'random'
     commands = [
-        u'fullfactorial',
-        u'shuffle',
-        u'shuffle_horiz',
-        u'slice',
-        u'sort',
-        u'sortby',
-        u'reverse',
-        u'roll',
-        u'weight',
+        'fullfactorial',
+        'shuffle',
+        'shuffle_horiz',
+        'slice',
+        'sort',
+        'sortby',
+        'reverse',
+        'roll',
+        'weight',
     ]
 
     def reset(self):
@@ -55,15 +54,15 @@ class Loop(Item):
         self.live_row = None
         self._operations = []
         self._constraints = []
-        self._item = u''
+        self._item = ''
 
         self.var.repeat = 1
-        self.var.continuous = u'no'
-        self.var.order = u'random'
-        self.var.break_if = u'never'
-        self.var.break_if_on_first = u'yes'
-        self.var.source = u'table'  # file or table
-        self.var.source_file = u''
+        self.var.continuous = 'no'
+        self.var.order = 'random'
+        self.var.break_if = 'never'
+        self.var.break_if_on_first = 'yes'
+        self.var.source = 'table'  # file or table
+        self.var.source_file = ''
 
     def from_string(self, string):
         """See item."""
@@ -72,16 +71,20 @@ class Loop(Item):
         self.reset()
         if string is None:
             return
-        for i in string.split(u'\n'):
+        for i in string.split('\n'):
             self.parse_variable(i)
             cmd, arglist, kwdict = self.syntax.parse_cmd(i)
-            if cmd == u'run':
+            if cmd == 'run':
+                # Sigmund may accidentally add a run-if expression. This should be
+                # ignored if it's simply True. Anything else should give an error.
+                if len(arglist) == 2 and arglist[1] == 'True':
+                    arglist.pop()
                 if len(arglist) != 1 or kwdict:
                     raise InvalidOpenSesameScript('Invalid run command', 
                                                   line=i)
                 self._item = arglist[0]
                 continue
-            if cmd == u'setcycle':
+            if cmd == 'setcycle':
                 if self.ef is not None or self._operations:
                     raise InvalidOpenSesameScript(
                         'setcycle must come before constraints and operations',
@@ -93,10 +96,10 @@ class Loop(Item):
                 if row >= len(self.dm):
                     self.dm.length = row + 1
                 if var not in self.dm:
-                    self.dm[var] = u''
+                    self.dm[var] = ''
                 self.dm[row][var] = val
                 continue
-            if cmd == u'constrain':
+            if cmd == 'constrain':
                 if self._operations:
                     raise InvalidOpenSesameScript(
                         'constraints must come before operations', line=i)
@@ -105,12 +108,12 @@ class Loop(Item):
                         'Invalid constrain command', line=i)
                 colname = arglist[0]
                 for constraint, value in kwdict.items():
-                    if constraint == u'maxrep':
+                    if constraint == 'maxrep':
                         constraint_cls = MaxRep
-                        kwargs = {u'maxrep': value}
-                    elif constraint == u'mindist':
+                        kwargs = {'maxrep': value}
+                    elif constraint == 'mindist':
                         constraint_cls = MinDist
-                        kwargs = {u'mindist': value}
+                        kwargs = {'mindist': value}
                     else:
                         raise InvalidOpenSesameScript(
                             'Unknown constraint', line=i)
@@ -125,12 +128,12 @@ class Loop(Item):
         if len(self.dm) == 0:
             self.dm.length = 1
         if len(self.dm.columns) == 0:
-            self.dm.empty_column = u''
+            self.dm.empty_column = ''
         # Backwards compatibility: Older version of OpenSesame can specify the
         # number of cycles through the cycles variable. If the specified number
         # of cycles doesn't match the length of the datamatrix, we change the
         # length of the datamatrix.
-        if u'cycles' in self.var and isinstance(self.var.cycles, int) \
+        if 'cycles' in self.var and isinstance(self.var.cycles, int) \
                 and self.var.cycles != len(self.dm):
             self.dm.length = self.var.cycles
 
@@ -142,15 +145,15 @@ class Loop(Item):
         s = super().to_string()
         for i, row in enumerate(self.dm):
             for name, val in row:
-                s += u'\t%s\n' % \
-                    self.syntax.create_cmd(u'setcycle', [i, name, val])
+                s += '\t%s\n' % \
+                    self.syntax.create_cmd('setcycle', [i, name, val])
         for constraint_cls, colname, kwargs in self._constraints:
-            s += u'\t%s\n' % self.syntax.create_cmd(
-                u'constrain', [colname], kwargs
+            s += '\t%s\n' % self.syntax.create_cmd(
+                'constrain', [colname], kwargs
             )
         for cmd, arglist in self._operations:
-            s += u'\t%s\n' % self.syntax.create_cmd(cmd, arglist)
-        s += u'\t%s\n' % self.syntax.create_cmd(u'run', [self._item])
+            s += '\t%s\n' % self.syntax.create_cmd(cmd, arglist)
+        s += '\t%s\n' % self.syntax.create_cmd('run', [self._item])
         return s
 
     def _require_arglist(self, cmd, arglist, minlen=1):
@@ -177,7 +180,7 @@ class Loop(Item):
         DataMatrix
             A live DataMatrix.
         """
-        src_dm = self.dm if self.var.source == u'table' else self._read_file()
+        src_dm = self.dm if self.var.source == 'table' else self._read_file()
         for column_name in src_dm.column_names:
             if not self.syntax.valid_var_name(column_name):
                 raise InvalidOpenSesameScript(
@@ -193,7 +196,7 @@ class Loop(Item):
         dm = DataMatrix(length=0)
         while len(dm) < length:
             i = min(length-len(dm), len(src_dm))
-            if self.var.order == u'random':
+            if self.var.order == 'random':
                 dm <<= operations.shuffle(src_dm)[:i]
             else:
                 dm <<= src_dm[:i]
@@ -202,7 +205,7 @@ class Loop(Item):
         if len(dm) == 0:
             oslogger.warning('loop table is empty')
             return dm
-        if self.var.order == u'random':
+        if self.var.order == 'random':
             dm = operations.shuffle(dm)
         # Constraints come before loop operations
         if self._constraints:
@@ -237,17 +240,17 @@ class Loop(Item):
                 except (IndexError, AttributeError):
                     raise InvalidOpenSesameScript(
                         f'Column {arglist[-1]} does not exist')
-            if cmd == u'fullfactorial':
+            if cmd == 'fullfactorial':
                 try:
                     dm = operations.fullfactorial(dm)
                 except MemoryError:
-                    raise OSException(u'DataMatrix too large for fullfact')
-            elif cmd == u'shuffle':
+                    raise OSException('DataMatrix too large for fullfact')
+            elif cmd == 'shuffle':
                 if not arglist:
                     dm = operations.shuffle(dm)
                 else:
                     dm[colname] = operations.shuffle(col)
-            elif cmd == u'shuffle_horiz':
+            elif cmd == 'shuffle_horiz':
                 if not arglist:
                     dm = operations.shuffle_horiz(dm)
                 else:
@@ -263,21 +266,21 @@ class Loop(Item):
                     dm = operations.shuffle_horiz(
                         *[dm[_colname] for _colname in arglist]
                     )
-            elif cmd == u'slice':
+            elif cmd == 'slice':
                 self._require_arglist(cmd, arglist, minlen=2)
                 dm = dm[arglist[0]: arglist[1]]
-            elif cmd == u'sort':
+            elif cmd == 'sort':
                 self._require_arglist(cmd, arglist)
                 dm[colname] = operations.sort(col)
-            elif cmd == u'sortby':
+            elif cmd == 'sortby':
                 self._require_arglist(cmd, arglist)
                 dm = operations.sort(dm, by=col)
-            elif cmd == u'reverse':
+            elif cmd == 'reverse':
                 if not arglist:
                     dm = dm[::-1]
                 else:
                     dm[colname] = col[::-1]
-            elif cmd == u'roll':
+            elif cmd == 'roll':
                 self._require_arglist(cmd, arglist)
                 steps = arglist[0]
                 if not isinstance(steps, int):
@@ -286,7 +289,7 @@ class Loop(Item):
                     dm = dm[-steps:] << dm[:-steps]
                 else:
                     dm[colname] = list(col[-steps:]) + list(col[:-steps])
-            elif cmd == u'weight':
+            elif cmd == 'weight':
                 self._require_arglist(cmd, arglist)
                 # Evaluate the weights before passing them to the weight
                 # function, so that weights can be defined in terms of
@@ -306,8 +309,8 @@ class Loop(Item):
         """See item."""
         super().prepare()
         # Compile break-if statement
-        break_if = self.var.get(u'break_if', _eval=False)
-        if break_if not in (u'never', u''):
+        break_if = self.var.get('break_if', _eval=False)
+        if break_if not in ('never', ''):
             self._break_if = self.syntax.compile_cond(break_if)
         else:
             self._break_if = None
@@ -319,7 +322,7 @@ class Loop(Item):
 
     def run(self):
         self.set_item_onset()
-        if self.live_dm is None or self.var.continuous == u'no':
+        if self.live_dm is None or self.var.continuous == 'no':
             self.live_dm = self._create_live_datamatrix()
             self.live_row = 0
         first = True
@@ -343,9 +346,9 @@ class Loop(Item):
             # Evaluate the run if statement
             if (
                     self._break_if is not None and
-                    (not first or self.var.break_if_on_first == u'yes')
+                    (not first or self.var.break_if_on_first == 'yes')
             ):
-                self.python_workspace[u'self'] = self
+                self.python_workspace['self'] = self
                 try:
                     if self.python_workspace._eval(self._break_if):
                         break
@@ -357,7 +360,7 @@ class Loop(Item):
             # If the repeat_cycle flag was set, run the item again later
             if self.experiment.var.repeat_cycle:
                 self.live_dm <<= self.live_dm[self.live_row:self.live_row+1]
-                if self.var.order == u'random':
+                if self.var.order == 'random':
                     self.live_dm = self.live_dm[:self.live_row+1] \
                         << operations.shuffle(self.live_dm[self.live_row+1:])
             self.live_row += 1
@@ -379,7 +382,7 @@ class Loop(Item):
         src = self.experiment.pool[self.var.source_file]
         if not os.path.exists(src):
             raise LoopSourceFileDoesNotExist(self.var.source_file)
-        if src.endswith(u'.xlsx'):
+        if src.endswith('.xlsx'):
             try:
                 return io.readxlsx(src)
             except Exception as e:
@@ -416,7 +419,7 @@ class Loop(Item):
         """See item."""
         return super().var_info() + (
             self._var_info_table()
-            if self.var.source == u'table'
+            if self.var.source == 'table'
             else self._var_info_file()
         )
 

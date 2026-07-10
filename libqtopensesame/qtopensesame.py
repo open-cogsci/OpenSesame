@@ -837,7 +837,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
                              experiment_path=self.experiment.experiment_path,
                              resources=self.experiment.resources)
         except OSException as e:
-            err_msg = e.markdown(include_source=False)
+            err_msg = e.markdown(include_source=True)
             self.tabwidget.open_markdown(err_msg)
             return err_msg
         self.experiment = exp

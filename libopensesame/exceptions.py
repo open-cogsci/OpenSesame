@@ -135,7 +135,17 @@ class InvalidOpenSesameScript(OSException):
     OpenSesame script that defines the experiment and the items. This can 
     happen when you make a mistake while modifying the experiment script.
     """
-    pass
+    def __init__(self, msg, line=None):
+        self._line = line
+        super().__init__(msg)
+        
+    def markdown(self, include_source=True, include_readmore=True):
+        md = f'# {self.title()}\n\n{self._msg}'
+        if include_source:
+            md += f'\n\nThis error occurred for command line `{self._line}` of item <u><a href="opensesame://item.{self.item}.run">{self.item}</a></u>.'
+        if include_readmore:
+            md += f'\n\n{self._read_more}'
+        return md
 
 
 class InvalidFormGeometry(OSException):
