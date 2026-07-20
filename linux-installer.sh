@@ -36,7 +36,7 @@ check_virtual_env() {
         echo "    Please deactivate it first by running 'deactivate'"
         exit 1
     fi
-    
+
     # Check for active conda environment
     if [[ -n "${CONDA_DEFAULT_ENV:-}" ]] && [[ "${CONDA_DEFAULT_ENV}" != "base" ]]; then
         echo "❌  Error: A conda environment is currently active: $CONDA_DEFAULT_ENV"
@@ -62,9 +62,12 @@ get_wxpython_url() {
         cp313)
             echo "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-24.04/wxpython-4.2.3-cp313-cp313-linux_x86_64.whl"
             ;;
+        cp314)
+            echo "https://extras.wxpython.org/wxPython4/extras/linux/gtk3/ubuntu-24.04/wxpython-4.2.5-cp314-cp314-linux_x86_64.whl"
+            ;;
         *)
             echo "❌  Error: Unsupported Python version: $python_cp_version" >&2
-            echo "    Supported versions are Python 3.10 through 3.12" >&2
+            echo "    Supported versions are Python 3.10 through 3.14" >&2
             exit 1
             ;;
     esac
@@ -72,42 +75,70 @@ get_wxpython_url() {
 
 install() {
     echo "🚀 Starting OpenSesame and Sigmund Analyst installation..."
-    
+
     # Check for active virtual environments
     check_virtual_env
-    
+
     if ! "$PYTHON_BIN" --version &>/dev/null; then
         echo "❌  System python3 not found at $PYTHON_BIN"
         exit 1
     fi
-    
+
     # Get appropriate wxPython URL
     WXPYTHON_URL=$(get_wxpython_url)
-    
+
     echo "▶ Removing virtual-env in $VENV_DIR ..."
     rm -rf "$VENV_DIR"
-    
+
     echo "▶ Creating virtual-env in $VENV_DIR ..."
     "$PYTHON_BIN" -m venv "$VENV_DIR"
-    
+
     echo "▶ Installing packages ..."
     source "$VENV_DIR/bin/activate"
     pip install --upgrade pip
-    
+
+    # --- ffpyplayer handling ---
+    # ffpyplayer may not be available for this Python version (e.g. Python 3.14 on
+    # Ubuntu 26.04). We first try to install the real package. If that fails, we
+    # create a minimal stub so that psychopy's dependency is satisfied during
+    # installation.
+    FFPYPLAYER_STUB_INSTALLED=false
+    if ! pip install ffpyplayer; then
+        echo "⚠️  ffpyplayer could not be installed — creating a stub package ..."
+        FFPYPLAYER_STUB_INSTALLED=true
+        STUB_DIR=$(mktemp -d /tmp/ffpyplayer-stub.XXXXXX)
+        mkdir -p "$STUB_DIR/ffpyplayer"
+        cat > "$STUB_DIR/ffpyplayer/__init__.py" << 'STUBEOF'
+"""Stub ffpyplayer — the real package is not available for this Python version."""
+STUBEOF
+        cat > "$STUB_DIR/setup.py" << 'STUBEOF'
+from setuptools import setup, find_packages
+setup(name="ffpyplayer", version="4.3.2", packages=find_packages())
+STUBEOF
+        pip install "$STUB_DIR"
+        rm -rf "$STUB_DIR"
+    fi
+
     # The pip-install steps are manually crafted and should not be changed
     pip install opensesame-core opensesame-extension-updater opensesame-extension-osweb opensesame-plugin-psychopy opensesame-plugin-media_player_mpy --pre
     pip install https://github.com/smathot/PyGaze/archive/refs/tags/release/0.8.8.tar.gz
-    pip install https://github.com/open-cogsci/opensesame-windows-build-scripts/raw/refs/heads/master/libs/expyriment-0.10.0+opensesame2-py3-none-any.whl
+
+    # expyriment depends on pygame, which is not available for Python 3.14. We install
+    # with --no-deps and provide pygame-ce (a drop-in replacement) below instead.
+    pip install --no-deps https://github.com/open-cogsci/opensesame-windows-build-scripts/raw/refs/heads/master/libs/expyriment-0.10.0+opensesame2-py3-none-any.whl
+    pip install pygame-ce
+
     pip install "$WXPYTHON_URL"
     pip install psychopy --ignore-requires-python
     pip install psychopy_visionscience psychopy_sounddevice
+
     deactivate
-    
+
     echo "▶ Downloading icons ..."
     mkdir -p "$ICON_DIR"
     curl -L -s -o "$ICON_OPENSESAME_PATH" "$ICON_OPENSESAME"
     curl -L -s -o "$ICON_SIGMUND_ANALYST_PATH" "$ICON_SIGMUND_ANALYST"
-    
+
     echo "▶ Creating wrapper in $WRAPPER_OPENSESAME ..."
     mkdir -p "$(dirname "$WRAPPER_OPENSESAME")"
     cat > "$WRAPPER_OPENSESAME" << EOF
@@ -118,7 +149,7 @@ source "\$VENV_DIR/bin/activate"
 exec opensesame "\$@"
 EOF
     chmod +x "$WRAPPER_OPENSESAME"
-    
+
     echo "▶ Writing desktop entry $DESKTOP_FILE_OPENSESAME ..."
     mkdir -p "$(dirname "$DESKTOP_FILE_OPENSESAME")"
     cat > "$DESKTOP_FILE_OPENSESAME" << EOF
@@ -133,7 +164,7 @@ Categories=Development;IDE;Science;Education;
 StartupNotify=true
 MimeType=application/x-opensesame-experiment;
 EOF
-    
+
     echo "▶ Creating wrapper in $WRAPPER_SIGMUND_ANALYST ..."
     mkdir -p "$(dirname "$WRAPPER_SIGMUND_ANALYST")"
     cat > "$WRAPPER_SIGMUND_ANALYST" << EOF
@@ -144,7 +175,7 @@ source "\$VENV_DIR/bin/activate"
 exec sigmund-analyst "\$@"
 EOF
     chmod +x "$WRAPPER_SIGMUND_ANALYST"
-    
+
     echo "▶ Writing desktop entry $DESKTOP_FILE_SIGMUND_ANALYST ..."
     mkdir -p "$(dirname "$DESKTOP_FILE_SIGMUND_ANALYST")"
     cat > "$DESKTOP_FILE_SIGMUND_ANALYST" << EOF
@@ -158,7 +189,7 @@ Terminal=false
 Categories=Development;IDE;
 StartupNotify=true
 EOF
-    
+
     echo "▶ Registering MIME type for .osexp files ..."
     mkdir -p "$(dirname "$MIME_FILE")"
     cat > "$MIME_FILE" << EOF
@@ -171,13 +202,13 @@ EOF
   </mime-type>
 </mime-info>
 EOF
-    
+
     # Update MIME database
     update-mime-database "$(dirname "$(dirname "$MIME_FILE")")" 2>/dev/null || true
-    
+
     # Refresh desktop-file cache
     update-desktop-database "$(dirname "$DESKTOP_FILE_OPENSESAME")" 2>/dev/null || true
-    
+
     echo
     echo "✅  Done! Look for 'OpenSesame 4.1' and 'Sigmund Analyst' in your application menu."
     echo "    You can also launch them from the command line:"
@@ -189,7 +220,7 @@ EOF
 
 uninstall() {
     echo "🗑️  Starting OpenSesame and Sigmund Analyst uninstallation..."
-    
+
     # Remove virtual environment
     if [[ -d "$VENV_DIR" ]]; then
         echo "▶ Removing virtual environment at $VENV_DIR ..."
@@ -197,50 +228,50 @@ uninstall() {
     else
         echo "▶ Virtual environment not found at $VENV_DIR (skipping)"
     fi
-    
+
     # Remove wrappers
     if [[ -f "$WRAPPER_OPENSESAME" ]]; then
         echo "▶ Removing OpenSesame wrapper ..."
         rm -f "$WRAPPER_OPENSESAME"
     fi
-    
+
     if [[ -f "$WRAPPER_SIGMUND_ANALYST" ]]; then
         echo "▶ Removing Sigmund Analyst wrapper ..."
         rm -f "$WRAPPER_SIGMUND_ANALYST"
     fi
-    
+
     # Remove desktop entries
     if [[ -f "$DESKTOP_FILE_OPENSESAME" ]]; then
         echo "▶ Removing OpenSesame desktop entry ..."
         rm -f "$DESKTOP_FILE_OPENSESAME"
     fi
-    
+
     if [[ -f "$DESKTOP_FILE_SIGMUND_ANALYST" ]]; then
         echo "▶ Removing Sigmund Analyst desktop entry ..."
         rm -f "$DESKTOP_FILE_SIGMUND_ANALYST"
     fi
-    
+
     # Remove icons
     if [[ -f "$ICON_OPENSESAME_PATH" ]]; then
         echo "▶ Removing OpenSesame icon ..."
         rm -f "$ICON_OPENSESAME_PATH"
     fi
-    
+
     if [[ -f "$ICON_SIGMUND_ANALYST_PATH" ]]; then
         echo "▶ Removing Sigmund Analyst icon ..."
         rm -f "$ICON_SIGMUND_ANALYST_PATH"
     fi
-    
+
     # Remove MIME type registration
     if [[ -f "$MIME_FILE" ]]; then
         echo "▶ Removing MIME type registration ..."
         rm -f "$MIME_FILE"
         update-mime-database "$(dirname "$(dirname "$MIME_FILE")")" 2>/dev/null || true
     fi
-    
+
     # Refresh desktop-file cache
     update-desktop-database "$(dirname "$DESKTOP_FILE_OPENSESAME")" 2>/dev/null || true
-    
+
     echo
     echo "✅  Uninstallation complete!"
 }

@@ -82,7 +82,7 @@ Installation instructions and documentation are available on the documentation w
 
 The easiest way to install OpenSesame on Linux is to download and run the installer script. This will create a Virtual Environment, pip install OpenSesame and all dependencies into this environment, and add a Desktop file to your system to easily start Sigmund Analyst. To upgrade, simply run the script again.
 
-Currently, the Linux installer is tested on Ubuntu 24.04.
+Currently, the Linux installer is tested on Ubuntu 26.04.
 
 ```
 bash <(curl -L https://github.com/open-cogsci/OpenSesame/raw/refs/heads/4.1/linux-installer.sh) --install
