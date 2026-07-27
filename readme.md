@@ -2,7 +2,7 @@
 
 OpenSesame is a tool to create experiments for psychology, neuroscience, and experimental economics.
 
-Copyright, 2010-2025, Sebastiaan Mathôt and contributors.
+Copyright, 2010-2026, Sebastiaan Mathôt and contributors.
 
 <http://osdoc.cogsci.nl/>
 
@@ -85,5 +85,5 @@ The easiest way to install OpenSesame on Linux is to download and run the instal
 Currently, the Linux installer is tested on Ubuntu 26.04.
 
 ```
-bash <(curl -L https://github.com/open-cogsci/OpenSesame/raw/refs/heads/4.1/linux-installer.sh) --install
+bash <(curl -L https://github.com/open-cogsci/OpenSesame/raw/refs/heads/nightingale/linux-installer.sh) --install
 ```
