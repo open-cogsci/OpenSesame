@@ -120,7 +120,7 @@ STUBEOF
     fi
 
     # The pip-install steps are manually crafted and should not be changed
-    pip install opensesame-core opensesame-extension-updater opensesame-extension-osweb opensesame-plugin-psychopy opensesame-plugin-media_player_mpy pscript --pre
+    pip install opensesame-core opensesame-extension-updater opensesame-extension-osweb opensesame-plugin-psychopy opensesame-plugin-media_player_mpy --pre
     pip install https://github.com/smathot/PyGaze/archive/refs/tags/release/0.8.8.tar.gz
 
     # expyriment depends on pygame, which is not available for Python 3.14. We install
