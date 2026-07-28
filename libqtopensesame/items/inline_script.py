@@ -30,6 +30,7 @@ _ = translation_context('inline_script', category='item')
 # tells ruff to ignore certain errors, such as imports not at the top (E402)
 # which do not make sense in the context of OpenSesame.
 IMPORT_PREFIX = '''# ruff: noqa: E402
+# ruff: noqa: F401
 from libopensesame.python_workspace_api import (
     # Core factory functions
     Experiment, Form, Canvas, Keyboard, Mouse, Sampler, Synth,
@@ -63,6 +64,19 @@ from libopensesame.file_pool_store import FilePoolStore
 pool: FilePoolStore = None  # type: ignore
 win: object = None  # type: ignore
 eyetracker: object = None  # type: ignore
+width: int = None  # type: ignore
+height: int = None  # type: ignore
+subject_nr: int = None  # type: ignore
+subject_parity: int = None  # type: ignore
+foreground: str = None  # type: ignore
+background: str = None  # type: ignore
+average_response_time: float = None  # type: ignore
+avg_rt: float = None  # type: ignore
+accuracy: float = None  # type: ignore
+acc: float = None  # type: ignore
+correct: bool = None  # type: ignore
+response: str = None  # type: ignore
+response_time: float = None  # type: ignore
 '''
 
 
