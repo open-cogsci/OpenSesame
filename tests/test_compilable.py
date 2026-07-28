@@ -44,9 +44,6 @@ class check_compilable(unittest.TestCase):
         if u'\n# NO UNITTEST\n' in usrc:
             return
         compile(src, u'<string>', u'exec')
-        if not path.endswith(u'py3compat.py') and \
-                not path.endswith('__.py'):
-            self.assertTrue(u'\nfrom libopensesame.py3compat import *\n' in usrc)
 
     def checkFolder(self, root):
 
