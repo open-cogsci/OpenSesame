@@ -187,6 +187,7 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.extension_manager = ExtensionManager(self)
         self.extension_manager.register_extension(self.ui.toolbar_items)
         self.extension_manager.fire('startup')
+        self._start_pyqt_code_editor_worker_pool()
 
     def _tooltip_shortcut(self, action):
         """Adds a shortcut between parentheses to the tooltip of an action.
@@ -976,7 +977,8 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         ----------
         enabled : bool
         """
-        manager.suspend()
+        if not enabled:
+            manager.suspend()
         self.block_close_event = not enabled
         self.ui.dock_overview.setEnabled(enabled)
         self.ui.centralwidget.setEnabled(enabled)
@@ -992,7 +994,17 @@ class QtOpenSesame(QtWidgets.QMainWindow, BaseComponent):
         self.ui.menubar.setEnabled(enabled)
         self.ui.dock_pool.setEnabled(enabled)
         self.ui.dock_overview.setEnabled(enabled)
-        manager.resume()
+        if enabled:
+            manager.resume()
+            self._start_pyqt_code_editor_worker_pool()
+                
+    def _start_pyqt_code_editor_worker_pool(self):
+        # New versions of pyqt_code_editor also have a function to start the
+        # worker pool in advance.
+        try:
+            manager.start_worker_pool()
+        except AttributeError:
+            oslogger.warning('failed to start worker pool (please update pyqt_code_editor)')
         
     def new_window(self):
         """Launches a new instance of the application"""
