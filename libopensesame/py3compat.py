@@ -74,7 +74,7 @@ def safe_read(path):
 
 
 def safe_yaml_load(s):
-    return yaml.load(s, Loader=yaml.UnsafeLoader)
+    return yaml.safe_load(s)
 
 
 safe_str = safe_decode
