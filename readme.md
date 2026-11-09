@@ -87,3 +87,28 @@ Currently, the Linux installer is tested on Ubuntu 26.04.
 ```
 bash <(curl -L https://github.com/open-cogsci/OpenSesame/raw/refs/heads/nightingale/linux-installer.sh) --install
 ```
+
+### macOS installer (Apple Silicon and Intel)
+
+On macOS, the pre-built `.dmg` package is currently only available for Intel Macs. Apple Silicon users can install OpenSesame natively from PyPI by downloading and running the macOS installer script. This creates a Virtual Environment, pip installs OpenSesame and its dependencies, and adds an `OpenSesame.app` launcher to `~/Applications`.
+
+```sh
+bash <(curl -L https://github.com/open-cogsci/OpenSesame/raw/refs/heads/nightingale/macos-installer.sh) --install
+```
+
+Note that the PyPI package is named `opensesame-core` (not `opensesame`, which is an unrelated package).
+
+The installer requires Python 3.10 or later. If no suitable Python is found, install one first, for example with Homebrew:
+
+```sh
+brew install python@3.13
+```
+
+On macOS 13 and earlier, the installer automatically pins PyQt6 to version 6.11, which is the last release that supports those macOS versions. If you prefer to install manually with pip on macOS 13 or earlier, install the compatible Qt bindings first:
+
+```
+pip install "pyqt6<6.12" "pyqt6-webengine<6.12"
+pip install opensesame-core
+```
+
+To run experiments with the PsychoPy backend, the installer also attempts to install `psychopy`. If that step fails, OpenSesame still works with the legacy backend.
