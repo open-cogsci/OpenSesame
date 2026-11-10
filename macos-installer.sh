@@ -125,8 +125,18 @@ install() {
     # backend if this step fails.
     if ! pip install psychopy --ignore-requires-python psychopy_visionscience psychopy_sounddevice; then
         echo "Warning: PsychoPy could not be installed."
-        echo "OpenSesame will still work, but experiments that use the PsychoPy"
-        echo "backend will need psychopy installed separately."
+        local python_minor
+        python_minor=$("$PYTHON_BIN" -c 'import sys; print(sys.version_info.minor)' 2>/dev/null || echo 0)
+        if [[ "$python_minor" -ge 15 ]]; then
+            echo "On Python 3.15+, ffpyplayer has no prebuilt wheel and cannot be"
+            echo "compiled (FFmpeg no longer ships libpostproc)."
+            echo "Install Python 3.13 or 3.14 (e.g. 'brew install python@3.13')"
+            echo "and re-run this script to enable the PsychoPy backend."
+        else
+            echo "OpenSesame will still work, but experiments that use the PsychoPy"
+            echo "backend will need psychopy installed separately."
+        fi
+        echo "OpenSesame will still work with the legacy backend."
     fi
 
     deactivate
@@ -158,6 +168,16 @@ EOF
 
     echo "Creating macOS application bundle in $APP_DIR ..."
     mkdir -p "$APP_DIR/Contents/MacOS" "$APP_DIR/Contents/Resources"
+    # Copy the application icon from the installed package into the bundle.
+    local icon_src
+    icon_src=$("$VENV_DIR/bin/python" -I -c \
+        "import libqtopensesame, os; print(os.path.join(os.path.dirname(libqtopensesame.__file__), 'resources', 'opensesame.icns'))" \
+        2>/dev/null || true)
+    if [[ -n "$icon_src" && -f "$icon_src" ]]; then
+        cp "$icon_src" "$APP_DIR/Contents/Resources/opensesame.icns"
+    else
+        echo "Warning: opensesame.icns not found; the app will use a generic icon."
+    fi
     cat > "$APP_DIR/Contents/MacOS/OpenSesame" << EOF
 #!/usr/bin/env bash
 # OpenSesame launcher for macOS
@@ -179,6 +199,8 @@ EOF
     <string>OpenSesame</string>
     <key>CFBundleDisplayName</key>
     <string>OpenSesame</string>
+    <key>CFBundleIconFile</key>
+    <string>opensesame</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
