@@ -254,9 +254,9 @@ class Webbrowser(BaseWidget):
                 self.main_window.ui.tabwidget.open_help(cmd[1])
             elif len(cmd) == 3 and cmd[1] in ['extension', 'plugin']:
                 if cmd[1] == 'extension':
-                    folder == self.extension_manager[cmd[2]].folder
+                    folder = self.extension_manager[cmd[2]].extension_folder
                 else:
-                    folder == self.plugin_manager[cmd[2]].folder
+                    folder = self.plugin_manager[cmd[2]].folder
                 path = os.path.join(folder, cmd[2] + '.md')
                 self.load(path)
             return
