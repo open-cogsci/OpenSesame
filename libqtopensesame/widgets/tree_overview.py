@@ -31,6 +31,7 @@ from libqtopensesame.items.qtstructure_item import QtStructureItem
 from libopensesame.oslogging import oslogger
 from libopensesame.sequence import Sequence
 from libqtopensesame.misc.translate import translation_context
+from libqtopensesame.widgets.tree_item_item import TreeItemItem
 _ = translation_context('tree_overview', category='core')
 
 
@@ -569,7 +570,23 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         -------
         bool
             True if the drop was successful, False otherwise.
-        """
+        """    
+        def _resolve_target_treeitem(target_treeitem, target_item):
+            """Ensures that the target tree item exists in the tree, even if the
+            tree has been rebuilt, in which case we need to refind the item
+            based on the item name.
+            """
+            try:
+                target_treeitem.parent()
+            except RuntimeError:
+                oslogger.debug('Target tree item no longer exists. Refinding.')
+                for tree_item in self.items():
+                    if isinstance(tree_item, TreeItemItem) \
+                            and tree_item.item == target_item:
+                        return tree_item
+                raise ValueError('missing target tree item')
+            return target_treeitem
+            
         self.main_window.set_busy(True)
         if not drag_and_drop.matches(data,
                                      ['item-snippet', 'item-existing']):
@@ -650,6 +667,10 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
                     self.structure_change.emit()
                     self.main_window.set_busy(False)
                     self.end_drag()
+            # Refind the target tree item in case the drop resulted in 
+            # rebuilding the tree
+            target_treeitem = _resolve_target_treeitem(target_treeitem,
+                                                       target_item)
         inserted = False
         # If the item has no parent or if it is the experiment starting point,
         # we insert into it directly.
@@ -680,16 +701,10 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         # Otherwise, we find the parent of the target item, and insert the
         # new item at the correct position.
         if not inserted:
+            target_treeitem = _resolve_target_treeitem(target_treeitem,
+                                                       target_item)
             while True:
-                try:
-                    parent_treeitem = target_treeitem.parent()
-                except:
-                    # A race condition can occur in which the tree_overview has
-                    # been rebuild, thus destroying target_treeitem. If this
-                    # happens, we re-take target_treeitem based on the mouse
-                    # coordinates.
-                    target_treeitem = self.itemAt(e.pos())
-                    parent_treeitem = target_treeitem.parent()
+                parent_treeitem = target_treeitem.parent()
                 if parent_treeitem is None:
                     e.accept()
                     del self.experiment.items[item.name]
