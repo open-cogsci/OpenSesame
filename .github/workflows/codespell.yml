@@ -3,9 +3,9 @@ name: Codespell
 
 on:
   push:
-    branches: [milgram]
+    branches: [nightingale]
   pull_request:
-    branches: [milgram]
+    branches: [nightingale]
 
 permissions:
   contents: read
