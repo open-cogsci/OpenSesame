@@ -50,7 +50,7 @@ class check_gui(unittest.TestCase):
             Path(libqtopensesame.__file__).parent / 'resources')
         # Import QtWebEngine before creating the QApplication, just like the
         # regular entry point does, and create the application. An existing
-        # instance is re-used, because Qt doesn't allow more than one
+        # instance is reused, because Qt doesn't allow more than one
         # QApplication per process.
         try:
             from qtpy import QtWebEngineWidgets
@@ -60,20 +60,31 @@ class check_gui(unittest.TestCase):
         # The main window parses the command line during construction, so we
         # present it with the same arguments as the regular entry point. Qt
         # also requires a non-empty argument list, or QtWebEngine subprocesses
-        # will abort. The analytics extension is disabled, because it spins up
-        # a hidden web view and a network request, which is not appropriate
-        # for a unit test.
-        argv = ['opensesame', '--start-clean', '--config',
-                'disabled_extensions=analytics']
+        # will abort.
+        argv = ['opensesame', '--start-clean']
         old_argv = sys.argv[:]
         sys.argv = argv[:]
         app = QApplication.instance() or QApplication(argv)
         try:
+            from libqtopensesame.misc.config import cfg
+            # The analytics extension pings a server through a hidden web view
+            # when the application starts up, which is not appropriate during
+            # a unit test, so the extension is disabled. The corresponding
+            # configuration key needs to be registered first, because it's the
+            # extension itself that normally registers this key, whereas the
+            # extension manager checks it to decide whether the extension
+            # should be built at all.
+            cfg.register('plugin_enabled_analytics', True)
+            cfg.plugin_enabled_analytics = False
             from libqtopensesame.qtopensesame import QtOpenSesame
             win = None
             try:
                 win = QtOpenSesame(app)
                 win.resume_init()
+                # The analytics extension should not have been built.
+                self.assertFalse('Analytics' in [
+                    ext.name() for ext in win.extension_manager._extensions
+                ])
                 win.restore_window_state()
                 win.show()
                 app.processEvents()

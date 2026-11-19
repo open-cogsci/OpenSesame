@@ -22,9 +22,18 @@ import os
 from libopensesame.experiment import experiment
 from config.utils import DATA_PATH
 
+# The experiments are executed fully offscreen, so that no windows are opened
+# while the tests are running, and no real display is required. The legacy
+# canvas backend is based on pygame, which renders through SDL; the dummy SDL
+# driver emulates a display without opening a window. The Qt platform is set
+# to offscreen, because a Qt application is created as well.
+os.environ.setdefault('SDL_VIDEODRIVER', 'dummy')
+os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
+
 class check_headless(unittest.TestCase):
-    """Runs several experiments in headless mode (i.e. on a virtual X server) to
-    see if they execute correctly.
+    """Runs several experiments in headless mode (i.e. fully offscreen, so
+    that no windows are opened on the display) to see if they execute
+    correctly.
     """
     def runTest(self):
         experiment_path = DATA_PATH
