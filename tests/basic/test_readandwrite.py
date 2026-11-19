@@ -21,6 +21,7 @@ import os
 import unittest
 from libopensesame.experiment import experiment
 from libopensesame.osexpfile import osexpreader, osexpwriter
+from config.utils import DATA_PATH
 
 
 class check_readandwrite(unittest.TestCase):
@@ -38,7 +39,7 @@ class check_readandwrite(unittest.TestCase):
             The path to the basename file in the data subfolder.
         """
         
-        return os.path.join(os.path.dirname(__file__), u'data', basename)
+        return os.path.join(DATA_PATH, basename)
     
     def checkRead(self, path, fmt, pool=[]):
         

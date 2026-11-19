@@ -40,19 +40,6 @@ webcolors = "*"
 pillow = "*"
 markdown = "*"
 
-[tool.wheel2deb.dependencies]
-python = ">= 3.10"
-numpy = "*"
-qdatamatrix = ">= 0.1.34"
-pseudorandom = "*"
-qnotifications = ">= 2.0.6"
-fileinspector = ">= 1.0.2"
-yaml = "*"
-webcolors = "*"
-pil = "*"
-markdown = "*"
-
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

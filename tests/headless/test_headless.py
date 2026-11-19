@@ -20,32 +20,20 @@ along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 import unittest
 import os
 from libopensesame.experiment import experiment
+from config.utils import DATA_PATH
 
 class check_headless(unittest.TestCase):
-
-    """
-    desc:
-        Runs several experiments in headless mode (i.e. on a virtual X server)
-        to see if they execute correctly.
+    """Runs several experiments in headless mode (i.e. on a virtual X server) to
+    see if they execute correctly.
     """
     def runTest(self):
-
-        """
-        desc:
-            Walks through the test.
-        """
-        from qtpy.QtWidgets import QApplication
-        app = QApplication([])
-        experiment_path = os.path.join(os.path.dirname(__file__), u'data')
-        for experiment_file in [
-                u'sketchpad_test.osexp',
-                u'response_test.osexp',
-                u'loop_test.osexp'
-            ]:
-            print(u'Testing %s' % experiment_file)
-            for backend in (u'legacy',):
+        experiment_path = DATA_PATH
+        for experiment_file in ['sketchpad_test.osexp', 'response_test.osexp',
+                                'loop_test.osexp']:
+            print('Testing %s' % experiment_file)
+            for backend in ('legacy',):
                 e = experiment(
-                    logfile=u'/tmp/tmp.csv',
+                    logfile='/tmp/tmp.csv',
                     experiment_path=experiment_path,
                     string=os.path.join(experiment_path, experiment_file)
                 )

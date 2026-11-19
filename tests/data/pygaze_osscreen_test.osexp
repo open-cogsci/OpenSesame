@@ -1,0 +1,113 @@
+---
+API: 3
+OpenSesame: 4.0.9
+Platform: posix
+---
+set width 1024
+set title "PyGaze OSScreen test"
+set subject_parity even
+set subject_nr 0
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set sampler_backend legacy
+set round_decimals 2
+set mouse_backend legacy
+set keyboard_backend legacy
+set height 768
+set fullscreen no
+set form_clicks no
+set foreground white
+set font_underline no
+set font_size 18
+set font_italic False
+set font_family mono
+set font_bold False
+set experiment_path "/home/sebastiaan/Downloads"
+set disable_garbage_collection False
+set description "The main experiment item"
+set color_backend legacy
+set clock_backend legacy
+set canvas_backend legacy
+set background "#3d3846"
+
+define inline_script clear
+	set description "Executes Python code"
+	___run__
+	s.clear()
+	d.fill(s)
+	d.show()
+	__end__
+	set _prepare ""
+
+define inline_script copy
+	set description "Executes Python code"
+	___run__
+	s2 = Screen(disptype='opensesame')
+	s2.copy(s)
+	s2.draw_text('copy')
+	d.fill(s2)
+	d.show()
+	__end__
+	set _prepare ""
+
+define sequence experiment
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run pygaze_init True
+	run pygaze_script True
+	run keyboard_response True
+	run copy True
+	run keyboard_response True
+	run clear True
+	run keyboard_response True
+
+define keyboard_response keyboard_response
+	set timeout infinite
+	set flush yes
+	set event_type keypress
+	set duration keypress
+	set description "Collects keyboard responses"
+
+define pygaze_init pygaze_init
+	set tracker_type "Simple dummy"
+	set tobiiglasses_udpport 49152
+	set tobiiglasses_address "192.168.71.50"
+	set smi_send_port 4444
+	set smi_recv_port 5555
+	set smi_ip "127.0.0.1"
+	set sacc_vel_thr 35
+	set sacc_acc_thr 9500
+	set eyelink_pupil_size_mode area
+	set eyelink_force_drift_correct yes
+	set description "Initializes and calibrates the eye tracker"
+	set calibrate yes
+	set calbeep yes
+	set alea_api_key "Contact Alea for an API key"
+	set alea_animated_calibration no
+	set _logfile automatic
+
+define inline_script pygaze_script
+	set description "Executes Python code"
+	___run__
+	import random
+	from pygaze.libscreen import Display, Screen
+	
+	s = Screen(disptype='opensesame')
+	s.draw_fixation()
+	s.draw_circle(color='red', pos=(100, 100), r=50, pw=10)
+	s.draw_ellipse(color='red', x=200, y=100, w=50, h=100)
+	s.draw_rect(color='red', x=200, y=100, w=50, h=100)
+	s.draw_line(color='red', spos=(100, 100), epos=(200, 200))
+	s.draw_polygon(
+	    [(random.randint(100, 200), random.randint(100, 200)) for _ in range(10)],
+	    color='red')
+	s.set_background_colour(color='blue')
+	d = Display(disptype='opensesame')
+	d.fill(s)
+	d.show()
+	__end__
+	set _prepare ""
+
