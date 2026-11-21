@@ -1,0 +1,85 @@
+---
+API: 2.1
+OpenSesame: 4.1.24
+Platform: posix
+---
+set width 1024
+set uniform_coordinates yes
+set title "Mouse response test"
+set subject_parity even
+set subject_nr 0
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set sampler_backend legacy
+set round_decimals 2
+set mouse_backend legacy
+set keyboard_backend legacy
+set height 768
+set fullscreen no
+set form_clicks no
+set foreground white
+set font_underline no
+set font_size 18
+set font_italic no
+set font_family mono
+set font_bold no
+set experiment_path "tests/data"
+set disable_garbage_collection yes
+set description "Default description"
+set coordinates uniform
+set compensation 0
+set color_backend legacy
+set clock_backend legacy
+set canvas_backend legacy
+set bidi no
+set background black
+
+define sequence experiment
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run target always
+	run mouse_response always
+	run mouse_release always
+	run check always
+
+define sketchpad target
+	set duration 0
+	set description "Displays stimuli"
+	draw rect color=red fill=1 h=64 penwidth=1 show_if=always w=64 x=-32 y=-32 z_index=0
+
+define mouse_response mouse_response
+	set timeout 300
+	set flush yes
+	set duration mouseclick
+	set allowed_responses left_button;right_button
+	set correct_response left_button
+	set show_cursor yes
+	set event_type mouseclick
+	set linked_sketchpad target
+	set description "Collects mouse responses"
+
+define mouse_response mouse_release
+	set timeout 300
+	set flush yes
+	set duration mouseclick
+	set event_type mouserelease
+	set description "Collects mouse responses"
+
+define inline_script check
+	set description "Executes Python code"
+	___run__
+	# Both responses time out (no mouse input is available headless), so the
+	# cursor position is undefined and the responses are incorrect.
+	assert var.cursor_x == 'NA'
+	assert var.cursor_y == 'NA'
+	assert var.cursor_roi == 'undefined'
+	assert var.response_time_mouse_response is not None
+	assert var.response_time_mouse_response < 2000
+	assert var.response_time_mouse_release is not None
+	assert var.response_time_mouse_release < 2000
+	assert var.accuracy == 0
+	__end__
+	set _prepare ""

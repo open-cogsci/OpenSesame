@@ -1,0 +1,92 @@
+---
+API: 2.1
+OpenSesame: 4.1.24
+Platform: posix
+---
+set width 1024
+set uniform_coordinates yes
+set title "Loop break-if test"
+set subject_parity even
+set subject_nr 0
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set sampler_backend legacy
+set round_decimals 2
+set mouse_backend legacy
+set keyboard_backend legacy
+set height 768
+set fullscreen no
+set form_clicks no
+set foreground white
+set font_underline no
+set font_size 18
+set font_italic no
+set font_family mono
+set font_bold no
+set experiment_path "tests/data"
+set disable_garbage_collection yes
+set description "Default description"
+set coordinates uniform
+set compensation 0
+set color_backend legacy
+set clock_backend legacy
+set canvas_backend legacy
+set bidi no
+set background black
+set stop 0
+
+define sequence experiment
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run trial_loop always
+	run check always
+
+define loop trial_loop
+	set source_file ""
+	set source table
+	set repeat 1
+	set order sequential
+	set description "Repeatedly runs another item"
+	set cycles 6
+	set continuous no
+	set break_if_on_first no
+	set break_if "var.stop == 1"
+	setcycle 0 nr 1
+	setcycle 1 nr 2
+	setcycle 2 nr 3
+	setcycle 3 nr 4
+	setcycle 4 nr 5
+	setcycle 5 nr 6
+	run trial
+
+define sequence trial
+	set flush_keyboard yes
+	set description "One loop iteration"
+	run flag always
+
+define inline_script flag
+	set description "Executes Python code"
+	set _run ""
+	___run__
+	# Stop the loop after the second iteration by setting a variable that
+	# the loop's break-if condition checks.
+	if var.nr == 2:
+		var.stop = 1
+	__end__
+
+define inline_script check
+	set description "Executes Python code"
+	___run__
+	# The loop should have exited before running the third cycle: flag set
+	# var.stop = 1 during the second cycle, and the loop's break-if
+	# condition (var.stop == 1) is evaluated before each cycle. Loop
+	# variables are assigned before the break-if check, so var.nr is 3
+	# (the cycle that was about to run) even though flag only executed
+	# twice. Without an early exit the loop would run all six cycles.
+	assert var.nr == 3
+	assert var.stop == 1
+	__end__
+	set _prepare ""

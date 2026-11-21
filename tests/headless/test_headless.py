@@ -28,6 +28,9 @@ from config.utils import DATA_PATH
 # driver emulates a display without opening a window. The Qt platform is set
 # to offscreen, because a Qt application is created as well.
 os.environ.setdefault('SDL_VIDEODRIVER', 'dummy')
+# The sampler and synth items play sound through SDL audio; the dummy audio
+# driver emulates a sound device so no real audio hardware is required.
+os.environ.setdefault('SDL_AUDIODRIVER', 'dummy')
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 
 class check_headless(unittest.TestCase):
@@ -38,7 +41,11 @@ class check_headless(unittest.TestCase):
     def runTest(self):
         experiment_path = DATA_PATH
         for experiment_file in ['sketchpad_test.osexp', 'response_test.osexp',
-                                'loop_test.osexp']:
+                                'loop_test.osexp', 'mouse_response_test.osexp',
+                                'feedback_test.osexp', 'sampler_test.osexp',
+                                'form_test.osexp',
+                                'sketchpad_response_test.osexp',
+                                'loop_break_if_test.osexp']:
             print('Testing %s' % experiment_file)
             for backend in ('legacy',):
                 e = experiment(
@@ -48,6 +55,35 @@ class check_headless(unittest.TestCase):
                 )
                 e.var.canvas_backend = backend
                 e.run()
+
+class check_form_consent(unittest.TestCase):
+    """Runs an experiment with a form_consent item. The form's _exec method,
+    which waits for a real mouse click or keyboard press, is stubbed out to
+    simulate the participant checking the box and clicking accept; widget
+    construction and FormConsent.run() execute for real.
+    """
+    def runTest(self):
+        from libopensesame import widgets
+        orig_exec = widgets.Form._exec
+        def fake_exec(self, focus_widget=None):
+            # Widgets write their variables to the experiment var store when
+            # they are created, while FormConsent checks the item var store,
+            # so both need to be set to simulate a real acceptance.
+            for var_store in (self.item.var, self.item.experiment.var):
+                var_store.set('checkbox_status',
+                              self.item.var.get('checkbox_text'))
+                var_store.set('accept_status', 'yes')
+        widgets.Form._exec = fake_exec
+        try:
+            e = experiment(
+                logfile='/tmp/tmp.csv',
+                experiment_path=DATA_PATH,
+                string=os.path.join(DATA_PATH, 'form_consent_test.osexp')
+            )
+            e.var.canvas_backend = 'legacy'
+            e.run()
+        finally:
+            widgets.Form._exec = orig_exec
 
 if __name__ == '__main__':
     unittest.main()
