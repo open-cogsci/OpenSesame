@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
+from libopensesame.misc import yes_no_to_bool
 from libopensesame.sketchpad_elements._base_element import BaseElement
 
 
@@ -57,8 +58,8 @@ class Textline(BaseElement):
                                 html=properties[u'html'] == u'yes',
                                 font_family=properties[u'font_family'],
                                 font_size=properties[u'font_size'],
-                                font_italic=properties[u'font_italic'] == 'yes',
-                                font_bold=properties[u'font_bold'] == 'yes')
+                                font_italic=yes_no_to_bool(properties[u'font_italic']),
+                                font_bold=yes_no_to_bool(properties[u'font_bold']))
 
 
 # Alias for backwards compatibility

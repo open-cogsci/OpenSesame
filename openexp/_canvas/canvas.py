@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
+from libopensesame.misc import yes_no_to_bool
 import warnings
 import random
 import itertools
@@ -517,9 +518,9 @@ class Canvas(Backend):
             'background_color': self.experiment.var.background,
             'font_size': self.experiment.var.font_size,
             'font_family': self.experiment.var.font_family,
-            'font_bold': self.experiment.var.font_bold == 'yes',
-            'font_italic': self.experiment.var.font_italic == 'yes',
-            'font_underline': self.experiment.var.font_underline == 'yes',
+            'font_bold': yes_no_to_bool(self.experiment.var.font_bold),
+            'font_italic': yes_no_to_bool(self.experiment.var.font_italic),
+            'font_underline': yes_no_to_bool(self.experiment.var.font_underline),
         }
 
     @property

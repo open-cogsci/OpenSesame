@@ -22,6 +22,7 @@ from qtpy import QtWidgets
 from libqtopensesame.widgets.general_header_widget import GeneralHeaderWidget
 from libqtopensesame.widgets.base_widget import BaseWidget
 from libopensesame.exceptions import InvalidColor, MissingDependency
+from libopensesame.misc import yes_no_to_bool
 from openexp._color.color import Color
 from openexp import backend
 from libqtopensesame.misc.translate import translation_context
@@ -160,11 +161,14 @@ class GeneralProperties(BaseWidget):
         # Set the font
         self.experiment.var.font_family = self.ui.widget_font.family
         self.experiment.var.font_size = self.ui.widget_font.size
-        self.experiment.var.font_italic = self.ui.widget_font.italic
-        self.experiment.var.font_bold = self.ui.widget_font.bold
+        self.experiment.var.font_italic = \
+            u'yes' if self.ui.widget_font.italic else u'no'
+        self.experiment.var.font_bold = \
+            u'yes' if self.ui.widget_font.bold else u'no'
         # Other checkboxes
         self.experiment.var.disable_garbage_collection = \
-            self.ui.checkbox_disable_garbage_collection.isChecked()
+            u'yes' if self.ui.checkbox_disable_garbage_collection.isChecked() \
+            else u'no'
         # Refresh the interface and unlock the general tab
         self.lock = False
         self.main_window.extension_manager.fire(u'change_experiment')
@@ -221,7 +225,7 @@ class GeneralProperties(BaseWidget):
             self.experiment.var.background))
         self.ui.widget_font.initialize(self.experiment)
         self.ui.checkbox_disable_garbage_collection.setChecked(
-            self.experiment.var.disable_garbage_collection == u'yes')
+            yes_no_to_bool(self.experiment.var.disable_garbage_collection))
         # Release the general tab
         self.lock = False
 
