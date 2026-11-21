@@ -1,0 +1,91 @@
+---
+API: 2.1
+OpenSesame: 4.1.24
+Platform: posix
+---
+set width 1024
+set uniform_coordinates yes
+set title "Form test"
+set subject_parity even
+set subject_nr 0
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set sampler_backend legacy
+set round_decimals 2
+set mouse_backend legacy
+set keyboard_backend legacy
+set height 768
+set fullscreen no
+set form_clicks no
+set foreground white
+set font_underline no
+set font_size 18
+set font_italic no
+set font_family mono
+set font_bold no
+set experiment_path "tests/data"
+set disable_garbage_collection yes
+set description "Default description"
+set coordinates uniform
+set compensation 0
+set color_backend legacy
+set clock_backend legacy
+set canvas_backend legacy
+set bidi no
+set background black
+
+define sequence experiment
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run form_text_display always
+	run form_multiple_choice always
+	run form_text_input always
+	run wait always
+	run check always
+
+define form_text_display form_text_display
+	set timeout 300
+	set form_text 'Your message'
+	set form_title 'Title'
+	set ok_text 'Ok'
+	set rows 1;4;1
+	set cols 1;1;1
+	widget 0 0 3 1 label text={form_title}
+	widget 0 1 3 1 label text={form_text} center=no
+	widget 1 2 1 1 button text={ok_text}
+	set description "Displays a message and waits for a response"
+
+define form_multiple_choice form_multiple_choice
+	set timeout 300
+	set description "Presents a multiple choice question"
+
+define form_text_input form_text_input
+	set timeout 300
+	set form_question 'Your question'
+	set form_title Title
+	set form_var response
+	set rows 1;1;6
+	set cols 1
+	widget 0 0 1 1 label text={form_title}
+	widget 0 1 1 1 label text={form_question} center=no
+	widget 0 2 1 1 text_input return_accepts=yes focus=yes var={form_var} stub=""
+	set description "Presents a text input field"
+
+define advanced_delay wait
+	set duration 100
+	set jitter 0
+	set jitter_mode Uniform
+	set description "Waits a fixed amount of time"
+
+define inline_script check
+	set description "Executes Python code"
+	___run__
+	# All forms time out because there is no user input headless. The delay
+	# item should have recorded its actual duration.
+	assert var.delay_wait >= 50
+	assert var.delay_wait <= 150
+	__end__
+	set _prepare ""

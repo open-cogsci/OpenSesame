@@ -42,7 +42,10 @@ class check_headless(unittest.TestCase):
         experiment_path = DATA_PATH
         for experiment_file in ['sketchpad_test.osexp', 'response_test.osexp',
                                 'loop_test.osexp', 'mouse_response_test.osexp',
-                                'feedback_test.osexp', 'sampler_test.osexp']:
+                                'feedback_test.osexp', 'sampler_test.osexp',
+                                'form_test.osexp',
+                                'sketchpad_response_test.osexp',
+                                'loop_break_if_test.osexp']:
             print('Testing %s' % experiment_file)
             for backend in ('legacy',):
                 e = experiment(

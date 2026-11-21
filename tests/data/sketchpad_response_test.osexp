@@ -1,0 +1,64 @@
+---
+API: 2.1
+OpenSesame: 4.1.24
+Platform: posix
+---
+set width 1024
+set uniform_coordinates yes
+set title "Sketchpad response test"
+set subject_parity even
+set subject_nr 0
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set sampler_backend legacy
+set round_decimals 2
+set mouse_backend legacy
+set keyboard_backend legacy
+set height 768
+set fullscreen no
+set form_clicks no
+set foreground white
+set font_underline no
+set font_size 18
+set font_italic no
+set font_family mono
+set font_bold no
+set experiment_path "tests/data"
+set disable_garbage_collection yes
+set description "Default description"
+set coordinates uniform
+set compensation 0
+set color_backend legacy
+set clock_backend legacy
+set canvas_backend legacy
+set bidi no
+set background black
+
+define sequence experiment
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run target always
+	run check always
+
+define sketchpad target
+	set duration mouseclick
+	set timeout 300
+	set event_type mouseclick
+	set show_cursor yes
+	set description "Displays stimuli and collects a mouse response"
+	draw textline center=1 color=white font_bold=no font_family=mono font_italic=no font_size=32 html=no show_if=always text=respond x=0 y=0 z_index=0
+
+define inline_script check
+	set description "Executes Python code"
+	___run__
+	# The sketchpad collects a mouse response, which times out headless.
+	assert var.response_time_target is not None
+	assert var.response_time_target < 2000
+	assert var.cursor_x == 'NA'
+	assert var.cursor_y == 'NA'
+	assert var.correct_target == 'undefined'
+	__end__
+	set _prepare ""
