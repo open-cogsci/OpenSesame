@@ -1,0 +1,83 @@
+---
+API: 2.1
+OpenSesame: 4.1.24
+Platform: posix
+---
+set width 1024
+set uniform_coordinates yes
+set title "Feedback test"
+set subject_parity even
+set subject_nr 0
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set sampler_backend legacy
+set round_decimals 2
+set mouse_backend legacy
+set keyboard_backend legacy
+set height 768
+set fullscreen no
+set form_clicks no
+set foreground white
+set font_underline no
+set font_size 18
+set font_italic no
+set font_family mono
+set font_bold no
+set experiment_path "tests/data"
+set disable_garbage_collection yes
+set description "Default description"
+set coordinates uniform
+set compensation 0
+set color_backend legacy
+set clock_backend legacy
+set canvas_backend legacy
+set bidi no
+set background black
+
+define sequence experiment
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run keyboard_response always
+	run feedback always
+	run keyboard_release always
+	run check always
+
+define keyboard_response keyboard_response
+	set timeout 300
+	set flush yes
+	set duration keypress
+	set correct_response space
+	set description "Collects keyboard responses"
+
+define feedback feedback
+	set duration 200
+	set description "Provides feedback to the participant"
+	draw textline center=1 color=red font_bold=no font_family=mono font_italic=no font_size=32 html=no show_if=always text=incorrect x=0 y=0 z_index=0
+
+define keyboard_response keyboard_release
+	set timeout 300
+	set flush yes
+	set duration keypress
+	set event_type keyrelease
+	set description "Collects keyboard responses"
+
+define inline_script check
+	set description "Executes Python code"
+	___run__
+	# Both responses time out (no keyboard input is available headless), so
+	# they are incorrect and the accuracy is 0. The feedback item ran with
+	# the default reset_variables=yes, which only flags old responses as
+	# excluded from feedback and does not clear the logged variables.
+	assert var.response_time_keyboard_response is not None
+	assert var.response_time_keyboard_release is not None
+	assert var.correct_keyboard_response == 0
+	assert var.correct_keyboard_release == 'undefined'
+	# The only response that counts towards feedback (the keyrelease, which
+	# ran after the feedback item reset the feedback flags) has no correct
+	# response defined, so the accuracy is undefined.
+	assert var.accuracy == 'undefined'
+	__end__
+	set _prepare ""

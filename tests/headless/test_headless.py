@@ -28,6 +28,9 @@ from config.utils import DATA_PATH
 # driver emulates a display without opening a window. The Qt platform is set
 # to offscreen, because a Qt application is created as well.
 os.environ.setdefault('SDL_VIDEODRIVER', 'dummy')
+# The sampler and synth items play sound through SDL audio; the dummy audio
+# driver emulates a sound device so no real audio hardware is required.
+os.environ.setdefault('SDL_AUDIODRIVER', 'dummy')
 os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 
 class check_headless(unittest.TestCase):
@@ -38,7 +41,8 @@ class check_headless(unittest.TestCase):
     def runTest(self):
         experiment_path = DATA_PATH
         for experiment_file in ['sketchpad_test.osexp', 'response_test.osexp',
-                                'loop_test.osexp']:
+                                'loop_test.osexp', 'mouse_response_test.osexp',
+                                'feedback_test.osexp', 'sampler_test.osexp']:
             print('Testing %s' % experiment_file)
             for backend in ('legacy',):
                 e = experiment(

@@ -1,0 +1,79 @@
+---
+API: 2.1
+OpenSesame: 4.1.24
+Platform: posix
+---
+set width 1024
+set uniform_coordinates yes
+set title "Sampler and synth test"
+set subject_parity even
+set subject_nr 0
+set start experiment
+set sound_sample_size -16
+set sound_freq 48000
+set sound_channels 2
+set sound_buf_size 1024
+set sampler_backend legacy
+set round_decimals 2
+set mouse_backend legacy
+set keyboard_backend legacy
+set height 768
+set fullscreen no
+set form_clicks no
+set foreground white
+set font_underline no
+set font_size 18
+set font_italic no
+set font_family mono
+set font_bold no
+set experiment_path "tests/data"
+set disable_garbage_collection yes
+set description "Default description"
+set coordinates uniform
+set compensation 0
+set color_backend legacy
+set clock_backend legacy
+set canvas_backend legacy
+set bidi no
+set background black
+
+define sequence experiment
+	set flush_keyboard yes
+	set description "Runs a number of items in sequence"
+	run beep always
+	run sample always
+	run check always
+
+define synth beep
+	set freq 440
+	set length 100
+	set osc sine
+	set attack 0
+	set decay 5
+	set volume 1.0
+	set pan 0
+	set duration 500
+	set description "A basic sound synthesizer"
+
+define sampler sample
+	set sample test.wav
+	set pan 0
+	set pitch 1
+	set fade_in 0
+	set stop_after 0
+	set volume 1.0
+	set duration keypress
+	set timeout 300
+	set flush yes
+	set description "Plays a sound sample"
+
+define inline_script check
+	set description "Executes Python code"
+	___run__
+	# The sampler plays the sample and then waits for a keypress, which
+	# times out headless. The response time should be recorded.
+	assert var.response_time_sample is not None
+	assert var.response_time_sample < 2000
+	assert items['sample'].var.sample == 'test.wav'
+	__end__
+	set _prepare ""
