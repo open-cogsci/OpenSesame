@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with OpenSesame.  If not, see <http://www.gnu.org/licenses/>.
 """
 from libopensesame.py3compat import *
+from libopensesame.misc import yes_no_to_bool
 from qtpy import QtCore, QtGui, QtWidgets
 from libqtopensesame.widgets.base_widget import BaseWidget
 from libqtopensesame.misc.translate import translation_context
@@ -132,9 +133,11 @@ class FontWidgetBase(BaseWidget):
             experiment = self.experiment
         self.family = experiment.var.get(u'font_family', _eval=False) \
             if family is None else family
-        self.italic = experiment.var.get(u'font_italic', _eval=False) == u'yes' \
+        self.italic = yes_no_to_bool(
+            experiment.var.get(u'font_italic', _eval=False)) \
             if italic is None else italic
-        self.bold = experiment.var.get(u'font_bold', _eval=False) == u'yes' \
+        self.bold = yes_no_to_bool(
+            experiment.var.get(u'font_bold', _eval=False)) \
             if bold is None else bold
         self.size = experiment.var.get(u'font_size', _eval=False) \
             if size is None else size

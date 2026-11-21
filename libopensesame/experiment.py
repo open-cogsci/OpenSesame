@@ -28,6 +28,7 @@ from libopensesame.exceptions import UserAborted, ItemDoesNotExist, \
     InvalidOpenSesameScript
 from libopensesame.item import Item
 from libopensesame import metadata
+from libopensesame.misc import yes_no_to_bool
 from libopensesame.item_stack import item_stack_singleton
 from libopensesame.oslogging import oslogger
 from libopensesame.py3compat import safe_decode
@@ -336,7 +337,7 @@ class Experiment(Item):
         oslogger.info("experiment started")
         if self.var.start in self.items:
             item_stack_singleton.clear()
-            if self.var.disable_garbage_collection == 'yes':
+            if yes_no_to_bool(self.var.disable_garbage_collection):
                 oslogger.info('disabling garbage collection')
                 gc.disable()
             self.items.execute(self.var.start)

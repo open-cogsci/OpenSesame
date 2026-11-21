@@ -397,3 +397,19 @@ resource_folders = [
 ]
 if 'OPENSESAME_RESOURCES_PATH' in os.environ:
     resource_folders.append(os.environ['OPENSESAME_RESOURCES_PATH'])
+
+
+def yes_no_to_bool(val):
+    r"""Converts a yes/no experiment variable to a boolean.
+
+    Experiment variables are generally the strings 'yes' or 'no', but some
+    experiments were saved with Python booleans (True/False) because of a
+    bug in the General tab. This function treats 'yes', 'true' and True
+    (case-insensitively) as True, and everything else as False.
+
+    Parameters
+    ----------
+    val
+        The variable value.
+    """
+    return str(val).lower() in (u'yes', u'true')
