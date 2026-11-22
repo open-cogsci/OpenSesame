@@ -102,18 +102,18 @@ class QtItemStore(ItemStore):
             otherwise.
         """
         if from_name not in self:
-            self.notify(_(u'Item "%s" doesn\'t exist' % from_name))
+            self.main_window.notify(_(u'Item "%s" doesn\'t exist' % from_name))
             return None
         if from_name == to_name:
             return None
         to_name = self.valid_name(
             self[from_name].item_type, suggestion=to_name)
         if to_name in self:
-            self.notify(
+            self.main_window.notify(
                 _(u'An item with that name already exists.'))
             return None
         if to_name == u'':
-            self.notify(_(u'An item name cannot be empty.'))
+            self.main_window.notify(_(u'An item name cannot be empty.'))
             return None
         self.extension_manager.fire(u'prepare_rename_item',
                                     from_name=from_name, to_name=to_name)
