@@ -395,7 +395,7 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
         data: dict
             A drop-data dictionary
         e: QDropEvent, optional
-        target_tree_item: TreeItemItem, optional
+        target_treeitem: TreeItemItem, optional
         """
         if not drag_and_drop.matches(data, ['item-existing']):
             if e is not None:
@@ -563,7 +563,7 @@ class TreeOverview(BaseSubcomponent, BaseDraggable, QtWidgets.QTreeWidget):
             A drop-data dictionary.
         e : QDropEvent or None, optional
             A drop event or None if a target treeitem is provided.
-        target_treeite : TreeBaseItem or None, optional
+        target_treeitem : TreeBaseItem or None, optional
             A target tree item or None in a drop event is specified.
 
         Returns
